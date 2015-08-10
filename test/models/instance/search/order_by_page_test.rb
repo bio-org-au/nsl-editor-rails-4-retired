@@ -20,8 +20,9 @@ class OrderByPage < ActiveSupport::TestCase
 
   test "approximates numeric sorting" do
     name = names(:angophora_costata)
-    results = Instance.limit(400).ordered_by_page
-    #results.each {|i| puts i.page};
+    results = Instance.joins(:name).limit(400).ordered_by_page
+    #results.each {|i| puts "#{i.page} - #{i.full_name}"};
+    results.each_with_index {|i,ndx| puts "#{ndx}: #{i.page} - #{i.name.full_name}"};
     assert results.first.page == 'xx 1', "Wrong order at first value: #{results[0].page}."
     assert results.second.page == '2', "Wrong order at second value: #{results[1].page}."
     assert results.third.page == '3', "Wrong order at third value: #{results[2].page}."
@@ -32,7 +33,7 @@ class OrderByPage < ActiveSupport::TestCase
     assert results[10].page == '41', "Wrong order at eleventh value: #{results[10].page}."
     assert results[13].page == '75, t. 101', "Wrong order at the fourteenth value: #{results[13].page}."
     assert results[14].page == '75, t. 102', "Wrong order at the fifteenth value: #{results[14].page}."
-    assert results[17].page == 'xx 200,300', "Wrong order at the eighteenth value: #{results[17].page}."
+    assert results[16].page == 'xx 200,300', "Wrong order at the seventeenth value: #{results[16].page}."
   end
  
 end

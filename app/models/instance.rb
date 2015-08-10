@@ -48,7 +48,7 @@ class Instance < ActiveRecord::Base
                                            '^  *',''),                          
                                          '^,',''),                              
                                        ',.*',''),                               
-                                     12,'0'), page")}                                 
+                                     12,'0'), page,name.full_name")}
   
   attr_accessor :expanded_instance_type, :display_as, :relationship_flag, 
                 :give_me_focus, :legal_to_order_by, 
@@ -349,9 +349,7 @@ class Instance < ActiveRecord::Base
   def self.ref_usages(search_string, limit = 100, order_by = 'name', show_instances = true)
     logger.debug("Start new ref_usages: search string: #{search_string}; show_instances: #{show_instances}; limit: #{limit}; order by: #{order_by}")
     reference_id = search_string.to_i
-    logger.debug("ref_usages: reference_id: #{reference_id};")
     extra_search_terms = search_string.to_s.sub(/[0-9][0-9]*/,'')
-    logger.debug("extra search terms: #{extra_search_terms};")
     results = []
     rejected_pairings = []
     # But what if that reference no longer exists?
@@ -359,11 +357,8 @@ class Instance < ActiveRecord::Base
     unless reference.blank?
       reference.display_as_part_of_concept
       count = 0 
-      if order_by == 'page'
-        query = reference.instances.includes({name: :name_status}).ordered_by_page
-      else
-        query = reference.instances.includes({name: :name_status}).ordered_by_name
-      end
+      query = reference.instances.joins(:name).includes({name: :name_status}).includes(:instance_type).includes(this_is_cited_by: [:name, :instance_type])
+      query = order_by == 'page' ? query.ordered_by_page : query.ordered_by_name
       query.each do |instance|
         if count < limit
           if instance.cited_by_id.blank?
