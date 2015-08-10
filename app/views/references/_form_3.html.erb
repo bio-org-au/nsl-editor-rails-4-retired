@@ -1,0 +1,52 @@
+
+           
+<%= form_for(@reference,
+             url: @reference.id.present? ? reference_path(id: @reference.id) : references_path,
+             role: 'form', remote: params[:action].match(/\Ashow/)
+            ) do |f| %>
+ <% if @reference.errors.any? %>
+    <div id="error_explanation">
+      <h6><%= pluralize(@reference.errors.count, "error") %> prohibited this reference from being saved:</h6>
+
+      <ul>
+      <% @reference.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= hidden_field('form','name', value: 'form_3') %>
+	
+  <div class="form-group">
+    <label for="notes">DOI</label>
+    <%= f.text_field :doi, class: 'form-control give-me-focus', title: "Enter DOI URL", tabindex: increment_tab_index %>
+  </div>
+
+  <div class="form-group">
+    <label for="notes">ISBN</label>
+    <%= f.text_field :isbn, class: 'form-control', title: "Enter ISBN code", tabindex: increment_tab_index %>
+  </div>
+
+  <div class="form-group">
+    <label for="notes">ISSN</label>
+    <%= f.text_field :issn, class: 'form-control', title: "Enter ISSN code", tabindex: increment_tab_index %>
+  </div>
+
+  <div class="form-group">
+    <label for="notes">BHL</label>
+    <%= f.text_field :bhl_url, class: 'form-control', title: "Enter BHL URL", tabindex: increment_tab_index %>
+  </div>
+
+  <div class="form-group">
+    <label for="notes">TL2</label>
+    <%= f.text_field :tl2, class: 'form-control', title: "Enter TL2 URL", tabindex: increment_tab_index %>
+  </div>
+
+  <div class="form-group align-right">
+  <%= f.submit "Save", id: 'scientific-name-save', class: 'btn btn-primary width-5em', disabled: false, title: "Save changes", tabindex: increment_tab_index %>
+  </div>
+
+<% end %>
+
+
+

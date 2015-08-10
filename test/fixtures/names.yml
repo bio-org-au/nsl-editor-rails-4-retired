@@ -1,0 +1,1538 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined.  If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+#
+
+the_regnum:
+  author: haeckel
+  full_name: "Plantae Haeckel"
+  full_name_html: "<scientific><name id='54717'><element>Plantae</element> <authors><author id='3882' title='Haeckel, Ernst Heinrich Philipp August'>Haeckel</author></authors></name></scientific>"
+  name_element: "Plantae"
+  name_rank: regnum
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent_id: nil
+  simple_name: "Plantae"
+  simple_name_html: "<scientific><name id='54717'><element>Plantae</element></name></scientific>"
+  source_system: "PLANT_NAME"
+  created_by: "MCOSGROV"
+  updated_by: "MCOSGROV"
+
+a_division:
+  author: reveal
+  ex_author: cronquist
+  full_name: "Magnoliophyta Cronquist, Takht. & W.Zimm. ex Reveal"
+  full_name_html: "<scientific><name id='217746'><element>Magnoliophyta</element> <authors><ex id='5508' title='Cronquist, A.J., Takhtajan, A.L. &amp; Zimmermann, Walter M.'>Cronquist, Takht. & W.Zimm.</ex> ex <author id='2549' title='Reveal, J.L.'>Reveal</author></authors></name></scientific>"
+  name_element: "Magnoliophyta"
+  name_rank: division
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: the_regnum
+  simple_name: "Magnoliophyta"
+  simple_name_html: "<scientific><name id='217746'><element>Magnoliophyta</element></name></scientific>"
+  source_system: "PLANT_NAME"
+  created_by: "TWEESE"
+  updated_by: "TWEESE"
+
+a_classis:
+  author: brongn.
+  full_name: "Magnoliopsida Brongn."
+  full_name_html: "<scientific><name id='214952'><element>Magnoliopsida</element> <authors><author id='7026' title='Brongniart, A.T.'>Brongn.</author></authors></name></scientific>"
+  name_element: "Magnoliopsida"
+  name_rank: classis
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_division
+  simple_name: "Magnoliopsida"
+  simple_name_html: "<scientific><name id='214952'><element>Magnoliopsida</element></name></scientific>"
+  source_system: "PLANT_NAME"
+  created_by: "TWEESE"
+  updated_by: "TWEESE"
+
+a_subclassis: 
+  full_name: a_subclassis
+  simple_name: a_subclassis
+  name_element: a_subclassis
+  name_rank: subclassis
+  name_status: unknown
+  name_type: scientific
+  namespace: apni
+  parent: a_classis
+  updated_by: greg
+  created_by: greg
+
+a_superordo: 
+  full_name: 'a_superordo'
+  simple_name: 'a_superordo'
+  name_element: 'a_superordo'
+  name_rank: superordo
+  name_status: unknown
+  name_type: scientific
+  namespace: apni
+  parent: a_subclassis
+  updated_by: greg
+  created_by: greg
+
+an_ordo: 
+  full_name: 'an_ordo'
+  simple_name: 'an_ordo'
+  name_element: 'an_ordo'
+  name_rank: ordo
+  name_status: unknown
+  name_type: scientific
+  namespace: apni
+  parent: a_super_ordo
+  updated_by: greg
+  created_by: greg
+
+a_subordo: 
+  full_name: 'a_subordo'
+  simple_name: 'a_subordo'
+  name_element: 'a_subordo'
+  name_rank: subordo
+  name_status: unknown
+  name_type: scientific
+  namespace: apni
+  parent: an_ordo
+  updated_by: greg
+  created_by: greg
+
+a_family: 
+  full_name: 'a_family'
+  simple_name: 'a_family'
+  simple_name: 'a_family'
+  name_element: 'a_family'
+  name_rank: familia
+  name_status: unknown
+  name_type: scientific
+  namespace: apni
+  parent: a_super_ordo
+  updated_by: greg
+  created_by: greg
+
+a_subfamily: 
+  full_name: 'a_subfamily'
+  simple_name: 'a_subfamily'
+  simple_name: 'a_subfamily'
+  name_element: 'a_subfamily'
+  name_rank: subfamilia
+  name_status: unknown
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+a_tribus: 
+  full_name: 'a_tribus'
+  simple_name: 'a_tribus'
+  simple_name: 'a_tribus'
+  name_element: 'a_tribus'
+  name_rank: tribus
+  name_status: unknown
+  name_type: scientific
+  namespace: apni
+  parent: a_subfamily
+  updated_by: greg
+  created_by: greg
+
+a_subtribus: 
+  full_name: 'a_subtribus'
+  simple_name: 'a_subtribus'
+  simple_name: 'a_subtribus'
+  name_element: 'a_subtribus'
+  name_rank: subtribus
+  name_status: unknown
+  name_type: scientific
+  namespace: apni
+  parent: a_tribus
+  updated_by: greg
+  created_by: greg
+
+unknown_species: 
+  simple_name: 'unknown-species'
+  name_element: 'unknown-species'
+  name_rank: species
+  name_status: unknown
+  name_type: scientific
+  namespace: apni
+  parent: acacia
+  updated_by: greg
+  created_by: greg
+
+another_species: 
+  simple_name: 'another-species'
+  name_element: 'another-species'
+  name_rank: species
+  name_status: unknown
+  name_type: scientific
+  namespace: apni
+  parent: acacia
+  updated_by: greg
+  created_by: greg
+
+a_genus: 
+  simple_name: 'Agenus'
+  name_element: 'Agenus'
+  full_name: 'Agenus'
+  name_rank: genus
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+a_subgenus: 
+  simple_name: 'Asubgenus'
+  name_element: 'Asubgenus'
+  full_name: 'Asubgenus'
+  name_rank: subgenus
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_genus
+  updated_by: greg
+  created_by: greg
+
+a_sectio: 
+  simple_name: 'Asectio'
+  name_element: 'Asectio'
+  full_name: 'Asectio'
+  name_rank: sectio
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+a_subsectio: 
+  simple_name: 'Asubsectio'
+  name_element: 'Asubsectio'
+  full_name: 'Asubsectio'
+  name_rank: subsectio
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+a_series: 
+  simple_name: 'Aseries'
+  name_element: 'Aseries'
+  full_name: 'Aseries'
+  name_rank: series
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+a_subseries: 
+  simple_name: 'Asubseries'
+  name_element: 'Asubseries'
+  full_name: 'Asubseries'
+  name_rank: subseries
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+a_superspecies: 
+  simple_name: 'Asuperspecies'
+  name_element: 'Asuperspecies'
+  full_name: 'Asuperspecies'
+  name_rank: superspecies
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+a_species: 
+  simple_name: 'Aspecies'
+  name_element: 'Aspecies'
+  full_name: 'Aspecies'
+  name_rank: species
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+a_duplicate_species: 
+  simple_name: 'a duplicate species'
+  name_element: 'a duplicate species'
+  full_name: 'a duplicate species'
+  name_rank: species
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  duplicate_of: a_species
+  updated_by: greg
+  created_by: greg
+
+a_subspecies: 
+  simple_name: 'Asubspecies'
+  name_element: 'Asubspecies'
+  full_name: 'Asubspecies'
+  name_rank: subspecies
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+a_nothovarietas: 
+  simple_name: 'Anothovarietas'
+  name_element: 'Anothovarietas'
+  full_name: 'Anothovarietas'
+  name_rank: nothovarietas
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+a_varietas: 
+  simple_name: 'Avarietas'
+  name_element: 'Avarietas'
+  full_name: 'Avarietas'
+  name_rank: varietas
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+a_subvarietas: 
+  simple_name: 'Asubvarietas'
+  name_element: 'Asubvarietas'
+  full_name: 'Asubvarietas'
+  name_rank: subvarietas
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+a_subvarietas: 
+  simple_name: 'Asubvarietas'
+  name_element: 'Asubvarietas'
+  full_name: 'Asubvarietas'
+  name_rank: subvarietas
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+a_forma: 
+  simple_name: 'Aforma'
+  name_element: 'Aforma'
+  full_name: 'Aforma'
+  name_rank: forma
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+a_subforma: 
+  simple_name: 'Asubforma'
+  name_element: 'Asubforma'
+  full_name: 'Asubforma'
+  name_rank: subforma
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+triodia_basedowii: 
+  name_element: basedowii
+  simple_name: Triodia basedowii
+  full_name: Triodia basedowii E.Pritz
+  name_rank: species
+  name_status: unknown
+  name_type: scientific
+  namespace: apni
+  parent: acacia
+  author: bentham
+  updated_by: greg
+  created_by: greg
+
+crotalaria_distans: 
+  name_element: Crotalaria distens
+  simple_name: Crotalaria distens
+  full_name: Crotalaria distens Benth.
+  name_rank: species
+  name_status: unknown
+  name_type: scientific
+  namespace: apni
+  parent: acacia
+  author: bentham
+  updated_by: greg
+  created_by: greg
+
+acacia:
+  name_element: Acacia
+  simple_name: Acacia
+  full_name: Acacia
+  name_rank: genus
+  name_status: unknown
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  author: bentham
+  updated_by: greg
+  created_by: greg
+
+angophora:
+  name_element: Angophora
+  simple_name: Angophora
+  full_name: Angophora
+  name_rank: genus
+  name_status: unknown
+  name_type: scientific
+  namespace: apni
+  parent: 
+  author: bentham
+  updated_by: greg
+  created_by: greg
+
+metrosideros:
+  name_element: Metrosideros
+  simple_name: Metrosideros
+  full_name: Metrosideros
+  name_rank: genus
+  name_status: unknown
+  name_type: scientific
+  namespace: apni
+  parent: 
+  author: bentham
+  updated_by: greg
+  created_by: greg
+
+argyle_apple:
+  name_element: argyle apple
+  simple_name: argyle apple
+  full_name: argyle apple
+  name_rank: species
+  name_status: na
+  name_type: common
+  namespace: apni
+  parent: a_genus
+  author: bentham
+  updated_by: greg
+  created_by: greg
+
+scientific_name:
+  name_element: fred 
+  simple_name: fred 
+  full_name: fred
+  name_rank: species
+  name_status: na
+  name_type: scientific
+  namespace: apni
+  parent: acacia
+  author: bentham
+  updated_by: greg
+  created_by: greg
+
+scientific_name_without_author:
+  name_element: freddy 
+  simple_name: freddy
+  full_name: freddy
+  name_rank: species
+  name_status: na
+  name_type: scientific
+  namespace: apni
+  parent: acacia
+  updated_by: greg
+  created_by: greg
+
+var_tuberosus:
+  name_element: tuberosus 
+  full_name: Abelmoschus moschatus var. tuberosus 
+  simple_name: Abelmoschus moschatus var. tuberosus 
+  name_element: tuberosus
+  name_rank: varietas
+  name_status: na
+  name_type: scientific
+  namespace: apni
+  parent: acacia
+  author: 
+  updated_by: greg
+  created_by: greg
+
+nom_inval_prainiana:
+  name_element: prainiana  
+  simple_name: Abarema clypearia f. prainiana Kosterm.  
+  full_name: Abarema clypearia f. prainiana Kosterm.  
+  name_element: prainiana
+  name_rank: species
+  name_status: nom_inval
+  name_type: scientific
+  namespace: apni
+  parent: acacia
+  author: 
+  updated_by: greg
+  created_by: greg
+
+nom_inval_andrewsianum:
+  simple_name: Abarema clypearia f. prainiana Kosterm.  
+  full_name: Abarema clypearia f. prainiana Kosterm.
+  name_element: andrewsianum
+  name_rank: species
+  name_status: nom_inval_nom_nud
+  name_type: scientific
+  namespace: apni
+  parent: acacia
+  author: 
+  updated_by: greg
+  created_by: greg
+
+rusty_gum:
+  simple_name: Rusty Gum
+  full_name: Rusty Gum
+  name_element: Rusty Gum
+  name_rank: na
+  name_status: na
+  name_type: common
+  namespace: apni
+  updated_by: tester
+  created_by: tester
+
+metrosideros_costata: 
+  simple_name: Metrosideros costata Gaertn.
+  full_name: Metrosideros costata Gaertn.
+  name_element: costata
+  name_rank: species
+  name_status: unknown
+  name_type: scientific
+  namespace: apni
+  parent: metrosideros
+  updated_by: greg
+  created_by: greg
+
+angophora_costata: 
+  simple_name: angophora costata
+  full_name: Angophora costata (Gaertn.) Britten
+  name_element: costata
+  name_rank: species
+  name_status: unknown
+  name_type: scientific
+  namespace: apni
+  parent: angophora
+  updated_by: greg
+  created_by: greg
+
+by_authority_with_just_one_name: 
+  author: has_one_name_that_is_all
+  simple_name: By Authority With Just One Name 
+  full_name: By Authority With Just One Name 
+  name_element: By Authority With Just One Name
+  name_rank: species
+  name_status: unknown
+  name_type: scientific
+  namespace: apni
+  parent: angophora
+  updated_by: greg
+  created_by: greg
+    
+is_authored_by_the_name_authority_of_every_type: 
+  author: is_a_name_authority_of_every_type
+  simple_name: Is Authored by the name authority of every type
+  full_name: Is Authored by the name authority of every type
+  name_element: Is Authored by the name authority of every type
+  name_rank: species
+  name_status: unknown
+  name_type: scientific
+  namespace: apni
+  parent: angophora
+  updated_by: greg
+  created_by: greg
+    
+is_base_authored_by_the_name_authority_of_every_type: 
+  author: bentham
+  base_author: is_a_name_authority_of_every_type
+  simple_name: Is Base Authored by the name authority of every type
+  full_name: Is Base Authored by the name authority of every type
+  name_element: Is Base Authored by the name authority of every type
+  name_rank: species
+  name_status: unknown
+  name_type: scientific
+  namespace: apni
+  parent: angophora
+  updated_by: greg
+  created_by: greg
+    
+is_ex_base_authored_by_the_name_authority_of_every_type: 
+  author: bentham
+  base_author: cronquist
+  ex_base_author: is_a_name_authority_of_every_type
+  simple_name: Is Ex Base Authored by the name authority of every type
+  full_name: Is Ex Base Authored by the name authority of every type
+  name_element: Is Ex Base Authored by the name authority of every type
+  name_rank: species
+  name_status: unknown
+  name_type: scientific
+  namespace: apni
+  parent: angophora
+  updated_by: greg
+  created_by: greg
+    
+is_ex_authored_by_the_name_authority_of_every_type: 
+  author: bentham
+  ex_author: is_a_name_authority_of_every_type
+  simple_name: Is Ex Authored by the name authority of every type
+  full_name: Is Ex Authored by the name authority of every type
+  name_element: Is Ex Authored by the name authority of every type
+  name_rank: species
+  name_status: unknown
+  name_type: scientific
+  namespace: apni
+  parent: angophora
+  updated_by: greg
+  created_by: greg
+    
+is_sanction_authored_by_the_name_authority_of_every_type: 
+  author: bentham
+  sanctioning_author: is_a_name_authority_of_every_type
+  simple_name: Is Sanctioning Authored by the name authority of every type
+  full_name: Is Sanctioning Authored by the name authority of every type
+  name_element: Is Sanctioning Authored by the name authority of every type
+  name_rank: species
+  name_status: unknown
+  name_type: scientific
+  namespace: apni
+  parent: angophora
+  updated_by: greg
+  created_by: greg
+
+has_an_author_that_is_all:
+  author: has_authored_one_name_that_is_all
+  simple_name: Has an author that is all
+  full_name: Has an author that is all
+  name_element: Has an author that is all
+  name_rank: species
+  name_status: unknown
+  name_type: scientific
+  namespace: apni
+  parent: angophora
+  updated_by: greg
+  created_by: greg
+
+has_a_base_author_that_is_all:
+  author: bentham
+  base_author: has_base_authored_one_name_that_is_all
+  simple_name: Has a base author that is all
+  full_name: Has a base author that is all
+  name_element: Has a base author that is all
+  name_rank: species
+  name_status: unknown
+  name_type: scientific
+  namespace: apni
+  parent: angophora
+  created_by: greg
+  updated_by: greg
+
+has_an_ex_base_author_that_is_all:
+  author: bentham
+  base_author: bentham
+  ex_base_author: has_ex_base_authored_one_name_that_is_all
+  simple_name: Has an ex base author that is all
+  full_name: Has an ex base author that is all
+  name_element: Has an ex base author that is all
+  name_rank: species
+  name_status: unknown
+  name_type: scientific
+  namespace: apni
+  parent: angophora
+  created_by: greg
+  updated_by: greg
+
+has_an_ex_author_that_is_all:
+  author: bentham
+  ex_author: has_ex_authored_one_name_that_is_all
+  simple_name: Has an ex author that is all
+  full_name: Has an ex author that is all
+  name_element: Has an ex author that is all
+  name_rank: species
+  name_status: unknown
+  name_type: scientific
+  namespace: apni
+  parent: angophora
+  created_by: greg
+  updated_by: greg
+
+has_a_sanctioning_author_that_is_all:
+  sanctioning_author: has_sanctioned_one_name_that_is_all
+  simple_name: Has a sanctioning author that is all
+  full_name: Has a sanctioning author that is all
+  name_element: Has a sanctioning author that is all
+  name_rank: species
+  name_status: unknown
+  name_type: scientific
+  namespace: apni
+  parent: angophora
+  created_by: greg
+  updated_by: greg
+
+hybrid_name_with_unknown_2nd_parent:
+  simple_name: Hybrid formula with unknown 2nd parent
+  full_name: Hybrid formula with unknown 2nd parent
+  name_rank: na
+  name_status: na
+  name_type: hybrid_formula_unknown_2nd_parent 
+  parent: a_species
+  namespace: apni
+  created_by: greg
+  updated_by: greg
+
+hybrid_formula:
+  simple_name: Hybrid formula
+  full_name: Hybrid formula
+  name_type: hybrid_formula_parents_known
+  name_rank: species
+  name_status: na
+  parent: a_species
+  second_parent: another_species
+  namespace: apni
+  created_by: greg
+  updated_by: greg
+
+other_informal:
+  name_element: Other informal
+  simple_name: Other informal
+  full_name: Other informal
+  name_type: informal
+  name_rank: na
+  name_status: na
+  namespace: apni
+  created_by: greg
+  updated_by: greg
+
+without_names_from_service:
+  name_element: without
+  name_rank: species
+  name_status: unknown
+  name_type: scientific
+  namespace: apni
+  parent: acacia
+  created_by: greg
+  updated_by: greg
+    
+cultivar_hybrid_with_one_parent: 
+  name_element: Rambocano
+  name_rank: species
+  name_status: na
+  name_type: cultivar_hybrid
+  namespace: apni
+  parent: angophora
+  updated_by: greg
+  created_by: greg
+
+has_no_instances:
+  author: bentham
+  base_author: bentham
+  simple_name: has no instances
+  simple_name_html: has no instances
+  full_name: has no instances
+  full_name_html: has no instances
+  name_element: has no instances
+  name_rank: species
+  name_status: unknown
+  name_type: scientific
+  namespace: apni
+  parent: angophora
+  created_by: greg
+  updated_by: greg
+
+unranked_name_1:
+  author: bentham
+  simple_name: unranked name 1
+  simple_name_html: unranked name 1
+  full_name: unranked name 1
+  full_name_html: unranked name 1
+  name_element: unranked name 1
+  name_rank: unranked
+  name_status: unknown
+  name_type: scientific
+  namespace: apni
+  created_by: greg
+  updated_by: greg
+
+unranked_scientific_name_with_unranked_parent:
+  author: bentham
+  simple_name: unranked scientific name with unranked parent
+  simple_name_html: unranked scientific name with unranked parent
+  full_name: unranked scientific name with unranked parent
+  full_name_html: unranked scientific name with unranked parent
+  name_element: unranked scientific name with unranked parent
+  name_rank: unranked
+  name_status: unknown
+  name_type: scientific
+  parent: unranked_name_1
+  namespace: apni
+  created_by: greg
+  updated_by: greg
+
+a_duplicate_genus: 
+  simple_name: a duplicate genus
+  simple_name_html: a duplicate genus
+  name_element: a duplicate genus
+  full_name: a duplicate genus
+  full_name_html: a duplicate genus
+  name_rank: genus
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  duplicate_of: a_genus
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+not_a_duplicate_genus: 
+  simple_name: a duplicate genus not
+  simple_name_html: a duplicate genus not
+  name_element: a duplicate genus not
+  full_name: a duplicate genus not
+  full_name_html: a duplicate genus not
+  name_rank: genus
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+a_genus_without_an_instance:
+  simple_name: a genus without an instance
+  simple_name_html: a genus without an instance
+  name_element: a genus without an instance
+  full_name: a genus without an instance
+  full_name_html: a genus without an instance
+  name_rank: genus
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+a_species_without_an_instance:
+  simple_name: a species without an instance
+  simple_name_html: a species without an instance
+  name_element: a species without an instance
+  full_name: a species without an instance
+  full_name_html: a species without an instance
+  name_rank: species
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+an_unranked_with_an_instance:
+  simple_name: an unranked with an instance
+  simple_name_html: an unranked with an instance
+  name_element: an unranked with an instance
+  full_name: an unranked with an instance
+  full_name_html: an unranked with an instance
+  name_rank: unranked
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+belonia_korb_with_diacrit:
+  simple_name: Belonia Körb.
+  simple_name_html: Belonia Körb.
+  name_element: Belonia
+  full_name: Belonia Körb.
+  full_name_html: Belonia Körb.
+  name_rank: genus
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+casuarina_inophloia:
+  simple_name: Casuarina inophloia
+  simple_name_html: Casuarina inophloia
+  full_name: Casuarina inophloia F.Muell. & F.M.Bailey 
+  full_name_html: Casuarina inophloia F.Muell. & F.M.Bailey 
+  name_element: inophloia
+  name_rank: species
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  updated_by: greg
+  created_by: greg
+
+a_genus_with_one_instance:
+  simple_name: a genus with one instance
+  simple_name_html: a genus with one instance
+  name_element: a genus with one instance
+  full_name: a genus with one instance
+  full_name_html: a genus with one instance
+  name_rank: genus
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+a_genus_with_two_instances:
+  simple_name: a genus with two instances
+  simple_name_html: a genus with two instances
+  name_element: a genus with two instances
+  full_name: a genus with two instances
+  full_name_html: a genus with two instances
+  name_rank: genus
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+has_two_instances_the_same:
+  simple_name: has two instances the same
+  simple_name_html: has two instances the same
+  name_element: has two instances the same
+  full_name: has two instances the same
+  full_name_html: has two instances the same
+  name_rank: species
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+metrosideros_costata_gaertn:
+  author: gaertn
+  base_author_id: 
+  created_at: 2006-11-16 23:05:07.000000000 Z
+  created_by: KIRSTENC
+  ex_author_id: 
+  ex_base_author_id: 
+  full_name: Metrosideros costata Gaertn.
+  full_name_html: "<scientific><name id='110181'><scientific><name id='109596'><element><i>Metrosideros</i></element></name></scientific> <element><i>costata</i></element> <authors><author id='7066' title='Gaertner, J.'>Gaertn.</author></authors></name></scientific>"
+  name_element: costata
+  name_rank: species
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  orth_var: false
+  parent: a_genus
+  sanctioning_author_id: 
+  simple_name: Metrosideros costata
+  simple_name_html: "<scientific><name id='110181'><scientific><name id='109596'><element><i>Metrosideros</i></element></name></scientific> <element><i>costata</i></element></name></scientific>"
+  source_dup_of_id: 
+  source_id: 56558
+  source_id_string: '56558'
+  source_system: PLANT_NAME
+  status_summary: 
+  updated_at: 2006-11-16 23:05:07.000000000 Z
+  updated_by: KIRSTENC
+  valid_record: false
+  why_is_this_here_id: 
+  verbatim_rank: 
+
+angophora_lanceolata_cav:
+  author_id: cavanilles
+  created_at: 2006-11-16 22:41:02.000000000 Z
+  created_by: KIRSTENC
+  full_name: Angophora lanceolata Cav.
+  full_name_html: "<scientific><name id='91851'><scientific><name id='91714'><element><i>Angophora</i></element></name></scientific> <element><i>lanceolata</i></element> <authors><author id='6830' title='Cavanilles, A.J.'>Cav.</author></authors></name></scientific> name_element: lanceolata"
+  name_rank: species
+  name_status: nom_illeg
+  name_type: scientific
+  namespace: apni
+  orth_var: false
+  parent: a_genus
+  simple_name: Angophora lanceolata
+  simple_name_html: <scientific><name id='91851'><scientific><name id='91714'><element><i>Angophora</i></element></name></scientific> <element><i>lanceolata</i></element></name></scientific>
+  source_id: 37859
+  source_id_string: '37859'
+  source_system: PLANT_NAME
+  updated_at: 2006-11-16 22:41:02.000000000 Z
+  updated_by: KIRSTENC
+  valid_record: false
+  
+nothing_name_for_invalid_instance:
+  simple_name: nothing
+  simple_name_html: nothing
+  name_element: nothing
+  full_name: nothing
+  full_name_html: nothing
+  name_rank: species
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+legitimate_name_one_for_eflora:
+  simple_name: name one for eflora
+  simple_name_html: name one for eflora
+  name_element: name one for eflora
+  full_name: name one for eflora
+  full_name_html: name one for eflora
+  name_rank: species
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+default_name_one_for_eflora:
+  simple_name: name one for eflora
+  simple_name_html: name one for eflora
+  name_element: name one for eflora
+  full_name: name one for eflora
+  full_name_html: name one for eflora
+  name_rank: species
+  name_status: default
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+deleted_name_one_for_eflora:
+  simple_name: name one for eflora
+  simple_name_html: name one for eflora
+  name_element: name one for eflora
+  full_name: name one for eflora
+  full_name_html: name one for eflora
+  name_rank: species
+  name_status: deleted
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+na_name_one_for_eflora:
+  simple_name: name one for eflora
+  simple_name_html: name one for eflora
+  name_element: name one for eflora
+  full_name: name one for eflora
+  full_name_html: name one for eflora
+  name_rank: species
+  name_status: na
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+unknown_name_one_for_eflora:
+  simple_name: name one for eflora
+  simple_name_html: name one for eflora
+  name_element: name one for eflora
+  full_name: name one for eflora
+  full_name_html: name one for eflora
+  name_rank: species
+  name_status: unknown
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+isonym_name_one_for_eflora:
+  simple_name: name one for eflora
+  simple_name_html: name one for eflora
+  name_element: name one for eflora
+  full_name: name one for eflora
+  full_name_html: name one for eflora
+  name_rank: species
+  name_status: isonym
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+nom_cult_name_one_for_eflora:
+  simple_name: name one for eflora
+  simple_name_html: name one for eflora
+  name_element: name one for eflora
+  full_name: name one for eflora
+  full_name_html: name one for eflora
+  name_rank: species
+  name_status: nom_cult
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+nom_cult_nom_alt_name_one_for_eflora:
+  simple_name: name one for eflora
+  simple_name_html: name one for eflora
+  name_element: name one for eflora
+  full_name: name one for eflora
+  full_name_html: name one for eflora
+  name_rank: species
+  name_status: nom_cult_nom_alt
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+nom_et_orth_cons_name_one_for_eflora:
+  simple_name: name one for eflora
+  simple_name_html: name one for eflora
+  name_element: name one for eflora
+  full_name: name one for eflora
+  full_name_html: name one for eflora
+  name_rank: species
+  name_status: nom_et_orth_cons
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+nom_illeg_name_one_for_eflora:
+  simple_name: name one for eflora
+  simple_name_html: name one for eflora
+  name_element: name one for eflora
+  full_name: name one for eflora
+  full_name_html: name one for eflora
+  name_rank: species
+  name_status: nom_illeg
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+nom_illeg_nom_rej_name_one_for_eflora:
+  simple_name: name one for eflora
+  simple_name_html: name one for eflora
+  name_element: name one for eflora
+  full_name: name one for eflora
+  full_name_html: name one for eflora
+  name_rank: species
+  name_status: nom_illeg_nom_rej
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+nom_illeg_nom_superfl_name_one_for_eflora:
+  simple_name: name one for eflora
+  simple_name_html: name one for eflora
+  name_element: name one for eflora
+  full_name: name one for eflora
+  full_name_html: name one for eflora
+  name_rank: species
+  name_status: nom_illeg_nom_superfl
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+nom_inval_name_one_for_eflora:
+  simple_name: name one for eflora
+  simple_name_html: name one for eflora
+  name_element: name one for eflora
+  full_name: name one for eflora
+  full_name_html: name one for eflora
+  name_rank: species
+  name_status: nom_inval
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+nom_inval_nom_alt_name_one_for_eflora:
+  simple_name: name one for eflora
+  simple_name_html: name one for eflora
+  name_element: name one for eflora
+  full_name: name one for eflora
+  full_name_html: name one for eflora
+  name_rank: species
+  name_status: nom_inval_nom_alt
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+nom_inval_nom_ambig_name_one_for_eflora:
+  simple_name: name one for eflora
+  simple_name_html: name one for eflora
+  name_element: name one for eflora
+  full_name: name one for eflora
+  full_name_html: name one for eflora
+  name_rank: species
+  name_status: nom_inval_nom_ambig
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+nom_inval_nom_confus_name_one_for_eflora:
+  simple_name: name one for eflora
+  simple_name_html: name one for eflora
+  name_element: name one for eflora
+  full_name: name one for eflora
+  full_name_html: name one for eflora
+  name_rank: species
+  name_status: nom_inval_nom_confus
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+nom_inval_nom_dub_name_one_for_eflora:
+  simple_name: name one for eflora
+  simple_name_html: name one for eflora
+  name_element: name one for eflora
+  full_name: name one for eflora
+  full_name_html: name one for eflora
+  name_rank: species
+  name_status: nom_inval_nom_dub
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+nom_inval_nom_nud_name_one_for_eflora:
+  simple_name: name one for eflora
+  simple_name_html: name one for eflora
+  name_element: name one for eflora
+  full_name: name one for eflora
+  full_name_html: name one for eflora
+  name_rank: species
+  name_status: nom_inval_nom_nud
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+nom_inval_nom_prov_name_one_for_eflora:
+  simple_name: name one for eflora
+  simple_name_html: name one for eflora
+  name_element: name one for eflora
+  full_name: name one for eflora
+  full_name_html: name one for eflora
+  name_rank: species
+  name_status: nom_inval_nom_prov
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+nom_inval_nom_subnud_name_one_for_eflora:
+  simple_name: name one for eflora
+  simple_name_html: name one for eflora
+  name_element: name one for eflora
+  full_name: name one for eflora
+  full_name_html: name one for eflora
+  name_rank: species
+  name_status: nom_inval_nom_subnud
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+nom_inval_opera_name_one_for_eflora:
+  simple_name: name one for eflora
+  simple_name_html: name one for eflora
+  name_element: name one for eflora
+  full_name: name one for eflora
+  full_name_html: name one for eflora
+  name_rank: species
+  name_status: nom_inval_opera_utique_oppressa
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+nom_inval_pro_syn_name_one_for_eflora:
+  simple_name: name one for eflora
+  simple_name_html: name one for eflora
+  name_element: name one for eflora
+  full_name: name one for eflora
+  full_name_html: name one for eflora
+  name_rank: species
+  name_status: nom_inval_pro_syn
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+nom_inval_tautonym_name_one_for_eflora:
+  simple_name: name one for eflora
+  simple_name_html: name one for eflora
+  name_element: name one for eflora
+  full_name: name one for eflora
+  full_name_html: name one for eflora
+  name_rank: species
+  name_status: nom_inval_tautonym
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+nom_rej_name_one_for_eflora:
+  simple_name: name one for eflora
+  simple_name_html: name one for eflora
+  name_element: name one for eflora
+  full_name: name one for eflora
+  full_name_html: name one for eflora
+  name_rank: species
+  name_status: nom_rej
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+nom_superfl_name_one_for_eflora:
+  simple_name: name one for eflora
+  simple_name_html: name one for eflora
+  name_element: name one for eflora
+  full_name: name one for eflora
+  full_name_html: name one for eflora
+  name_rank: species
+  name_status: nom_superfl
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+nomino_utique_rejicienda_name_one_for_eflora:
+  simple_name: name one for eflora
+  simple_name_html: name one for eflora
+  name_element: name one for eflora
+  full_name: name one for eflora
+  full_name_html: name one for eflora
+  name_rank: species
+  name_status: nomina_utique_rejicienda
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+orth_var_name_one_for_eflora:
+  simple_name: name one for eflora
+  simple_name_html: name one for eflora
+  name_element: name one for eflora
+  full_name: name one for eflora
+  full_name_html: name one for eflora
+  name_rank: species
+  name_status: orth_var
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+name_two_for_eflora:
+  simple_name: name two for eflora
+  simple_name_html: name two for eflora
+  name_element: name two for eflora
+  full_name: name two for eflora
+  full_name_html: name two for eflora
+  name_rank: species
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+name_two_for_eflora_with_extra:
+  simple_name: name two for eflora with extra
+  simple_name_html: name two for eflora with extra
+  name_element: name two for eflora with extra
+  full_name: name two for eflora with extra
+  full_name_html: name two for eflora with extra
+  name_rank: species
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+name_three_for_eflora:
+  simple_name: name three for eflora
+  simple_name_html: name three for eflora
+  name_element: name three for eflora
+  full_name: name three for eflora
+  full_name_html: name three for eflora
+  name_rank: species
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+name_three_for_eflora_duplicate:
+  simple_name: name three for eflora
+  simple_name_html: name three for eflora
+  name_element: name three for eflora
+  full_name: name three for eflora duplicate
+  full_name_html: name three for eflora duplicate
+  name_rank: species
+  name_status: legitimate
+  name_type: scientific
+  duplicate_of: name_three_for_eflora
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+
+name_four_for_eflora_multi_1:
+  simple_name: name four for eflora
+  simple_name_html: name four for eflora
+  name_element: name four for eflora
+  full_name: name four for eflora duplicate
+  full_name_html: name four for eflora duplicate
+  name_rank: species
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_genus
+  updated_by: greg
+  created_by: greg
+
+name_four_for_eflora_multi_2:
+  simple_name: name four for eflora
+  simple_name_html: name four for eflora
+  name_element: name four for eflora
+  full_name: name four for eflora duplicate
+  full_name_html: name four for eflora duplicate
+  name_rank: species
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_genus
+  updated_by: greg
+  created_by: greg
+
+has_no_authors:
+  simple_name: has no authors
+  simple_name_html: has no authors
+  name_element: has no authors
+  full_name: has no authors
+  full_name_html: has no authors
+  name_rank: species
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_genus
+  updated_by: greg
+  created_by: greg
+
+has_no_parent:
+  simple_name: has no parent
+  simple_name_html: has no parent
+  name_element: has no parent
+  full_name: has no parent
+  full_name_html: has no parent
+  name_rank: species
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  updated_by: greg
+  created_by: greg
+
+has_no_duplicate_of:
+  simple_name: has no duplicate of
+  simple_name_html: has no duplicate of
+  name_element: has no duplicate of
+  full_name: has no duplicate of
+  full_name_html: has no duplicate of
+  name_rank: species
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  updated_by: greg
+  created_by: greg
+
+name_matches_another_1:
+  simple_name: name matches another
+  simple_name_html: name matches another
+  name_element: name matches another
+  full_name: name matches another
+  full_name_html: name matches another
+  name_rank: species
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  updated_by: greg
+  created_by: greg
+
+name_matches_another_2:
+  simple_name: name matches another
+  simple_name_html: name matches another
+  name_element: name matches another
+  full_name: name matches another
+  full_name_html: name matches another
+  name_rank: species
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  updated_by: greg
+  created_by: greg
+
+

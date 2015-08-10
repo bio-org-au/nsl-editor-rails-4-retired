@@ -1,0 +1,5 @@
+<div ng-if="loading"><i class="fa fa-spinner fa-spin fa-fw"/>&nbsp;Loading {{treeLabel}}.</div>
+<div ng-if="error"><i class="fa fa-warning fa-fw"/>&nbsp;Unable to load {{treeLabel}}: {{error}}.</div>
+<div ng-if="loaded">
+	<div tree-block/>
+</div>

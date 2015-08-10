@@ -1,0 +1,4 @@
+On receipt of  nsl-complete.dump.custom:
+
+createdb -O nsl nsl-from-peter
+pg_restore -c -d nsl-from-peter -U nsl -O nsl-complete.dump.custom

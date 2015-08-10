@@ -1,0 +1,4 @@
+debug("create name: <%= params[:random_id] %>");
+debug("create name: <%= @name.id %>");
+$('tr#new-name-<%= params[:random_id] %>').replaceWith("<%= escape_javascript(h(render partial: 'name_record', locals: {search_result: @name, give_me_focus: true})) %>");
+$('tr#search-result-<%= @name.id %> td.takes-focus a.show-details-link').focus();

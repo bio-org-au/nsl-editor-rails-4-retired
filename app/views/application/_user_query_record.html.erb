@@ -1,0 +1,28 @@
+<tr id="search-result-<%= search_result.id %>" 
+  class="search-result " 
+  tabindex="<%= increment_tab_index(100) %>" 
+  data-get-url="<%= user_query_path(search_result.id) %>"
+  data-edit-url="<%= user_query_path(search_result.id) %>"
+  data-base-url="<%= user_query_path(search_result.id) %>"
+  data-record-id="<%= search_result.id %>"
+  data-record-type="user_query"
+    >
+  <td class="checkbox-container">
+    <div tabindex="0"
+         class="stylish-checkbox acts-as-checkbox nsl-inline-block stylish-checkbox-unchecked" 
+         dir="ltr" 
+         role="checkbox" 
+         data-checked="false"> 
+    </div>
+  </td> 
+  <td class="nsl-small-icon-container takes-focus width-1-percent"></td>
+  <td class="text takes-focus width-10-percent <%= 'give-me-focus' if give_me_focus %>">
+    <%= search_result.search_model %>
+  </td>
+  <td class="text takes-focus width-70-percent">
+    <%= search_result.search_terms %>
+  </td>
+  <td class="takes-focus width-10-percent filler">&nbsp;</td>
+  <td class="takes-focus width-10-percent filler">&nbsp;</td>
+</tr>
+

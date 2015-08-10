@@ -1,0 +1,5 @@
+<%= form_tag(names_path, method: "put",id: 'attach-author-to-name-form') do %>
+  <%= text_field_tag(:id,'',id: 'id',name: 'name[id]') %>
+  <%= text_field_tag(:author_id, '', id: 'name-author-id', name: 'name[author_id]') %>
+  <%= submit_tag('Save', class: 'hXidden') %>
+<% end %>

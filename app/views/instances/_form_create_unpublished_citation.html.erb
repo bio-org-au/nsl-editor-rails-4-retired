@@ -1,0 +1,78 @@
+<%= form_for(Instance.new,  url: { action: "create_cited_by" }, remote: true) do |f| %>
+    <% if @instance.errors.any? %>
+        <div id="error_explanation">
+            <h2><%= pluralize(@instance.errors.count, "error") %> prohibited this instance from being saved:</h2>
+
+            <ul>
+                <% @instance.errors.full_messages.each do |msg| %>
+                    <li><%= msg %></li>
+                <% end %>
+            </ul>
+        </div>
+    <% end %>
+
+    In
+    <%= show_field_as_linked_lookup('',@instance.reference,'citation', search_path(query: %Q(id:#{@instance.reference_id}),query_on: 'reference'),'reference') %>
+    the name*
+    <div class="typeahead-container">
+      <section class='block width-100-percent'>
+        <input id="instance-name-typeahead"
+               class="typeahead form-control width-100-percent give-me-focus" 
+               title="Enter an instance.  Typeahead field on name."
+               required="true"
+               tabindex="<%= increment_tab_index %>"
+               type="text" 
+               placeholder="Instance for unpublished citation - typeahead using name"
+               value=""/>
+      </section>
+    </div>
+    <script> setUpInstanceName(); </script>
+    is used as a type*
+    <%= render partial: 'detail_line', locals: {
+            info: f.select(:instance_type_id, InstanceType.unpublished_citation_options,{include_blank: true},
+                           {value: @instance.instance_type_id,data:{update_url: instance_path},
+                            class: 'form-control width-50-percent', title: 'Enter instance type',
+                            required: true, tabindex: increment_tab_index}),
+            label:''
+    }
+    %>
+    of
+    <br>
+    <%= @instance.name.full_name %>
+    <br>
+    on page
+    <br>
+    <%= f.text_field :page, title: 'Enter page details', tabindex: increment_tab_index %>
+    <br>
+    with BHL URL
+    <%= f.text_field :bhl_url, class: "form-control", title: 'Enter BHL URL', tabindex: increment_tab_index %>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <%= f.hidden_field :name_id %>
+    <br>
+    <%= f.hidden_field :reference_id, value: @instance.reference_id %>
+    <br>
+    <%= f.hidden_field :cited_by_id, value: @instance.id %>
+    <br>
+    <%= f.hidden_field :cites_id %>
+    <br>
+    <%= f.submit class: 'btn-primary', title: 'Save changes', tabindex: increment_tab_index %>
+    <br>
+    <br>
+    <br>
+    <br>
+    <% refresh_page_link = link_to("Refresh page",
+                                   '#', 
+                                   id: "refresh-page-from-details-link",
+                                   class: "btn btn-default hidden",
+                                   title: "Refresh page",
+                                   data: {instance_note_id: @instance.id},
+                                   tabindex: increment_tab_index) 
+   %>
+   <%= refresh_page_link %>
+<% end %>
+
+

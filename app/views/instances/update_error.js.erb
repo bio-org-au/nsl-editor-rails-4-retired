@@ -1,0 +1,4 @@
+$('.message-container').html('');
+$('#search-result-details-error-message-container').html("Errors: <%= @error.try('to_s') %> <%= @instance.errors if @instance.errors.size > 0  %>");
+$('#search-result-details-error-message-container').html("<h6><%= pluralize(@instance.errors.count, "error") %> prohibited this instance from being saved:</h6> <ul> <% @instance.errors.full_messages.each do |message| %> <li><%= message %></li> <% end %> </ul>");
+

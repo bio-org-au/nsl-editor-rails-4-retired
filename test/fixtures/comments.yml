@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+author_comment:
+  text: MyText
+  author: haeckel
+  created_by: greg
+  updated_by: greg
+
+instance_comment:
+  text: MyText
+  instance: triodia-in-brassard
+  created_by: greg
+  updated_by: greg
+
+name_comment:
+  text: MyText
+  name: a_species
+  created_by: greg
+  updated_by: greg
+
+reference_comment:
+  text: MyText
+  reference: handbook_of_the_vascular_plants_of_sydney
+  created_by: greg
+  updated_by: greg

@@ -1,0 +1,27 @@
+
+<% unless defined? underline %>
+  <% underline = true %>
+<% end %>
+
+<% if label == '' %>
+  <% info_width = ' width-100-percent ' %>
+  <% label_width = ' width-0-percent ' %>
+<% elsif label.length <= 5 %>
+  <% info_width = ' width-90-percent ' %>
+  <% label_width = ' width-10-percent ' %>
+<% else %>
+  <% info_width = ' width-70-percent ' %>
+  <% label_width = ' width-30-percent ' %>
+<% end %>
+
+<div class="detail-line <%= 'underline' if underline %>">
+  <% if info.blank? %>
+    <span class="pull-left <%= info_width %> no-color">&nbsp;</span>
+  <% else %>
+    <span class="pull-left <%= info_width %>"><%= info %></span>
+  <% end %>
+  <span class="pull-right align-right <%= label_width %> field-label">
+    <label class="align-right"><%= label %></label>
+  </span>
+</div>
+<br>

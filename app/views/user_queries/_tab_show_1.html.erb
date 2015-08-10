@@ -1,0 +1,38 @@
+<% increment_tab_index(0) %>
+
+<%= render partial: 'detail_line', 
+           locals: {info: @user_query[:search_model], 
+                    label: 'on'} %>
+<%= render partial: 'detail_line', 
+           locals: {info: @user_query[:search_terms], 
+                    label: 'terms'} %>
+<%= render partial: 'detail_line', 
+           locals: {info: @user_query[:search_info], 
+                    label: 'info'} %>
+<% if @user_query[:query_completed] == 'Y' %> 
+  <%= render partial: 'detail_line', 
+             locals: {info: @user_query[:record_count], 
+                      label: 'records found'} %>
+  <%= render partial: 'detail_line', 
+    locals: {info: link_to('View',path_to_user_query(@user_query[:search_model], 
+                           @user_query[:id]),
+            {title:'View results retrieved when the query was run.'}),
+             label: "View the results"} %>
+<% else %>
+  <%= render partial: 'detail_line', 
+             locals: {info: 'Not finished yet.',
+                      label: ''} %>
+<% end %>
+<%= render partial: 'detail_line', 
+           locals: {info: @user_query[:search_started_at], 
+                    label: 'start'} %>
+<%= render partial: 'detail_line', 
+           locals: {info: @user_query[:search_finished_at], 
+                    label: 'finished'} %>
+<%= render partial: 'detail_line', 
+           locals: {info: (l @user_query[:created_at].to_time.in_time_zone,format: :default),
+                    label: 'created'} %>
+<%= divider %>
+
+data @user_query[:search_model]:
+<%= @user_query[:search_model] %>

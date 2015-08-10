@@ -1,0 +1,47 @@
+body * {
+  border: 1px solid gray;
+}
+
+*[tabindex] {
+  color: red;
+}
+
+input[tabindex] {
+  background: rgba(255, 0, 0, 0.2);
+}
+
+*[tabindex]:after {
+  content:attr(tabindex);
+  title: attr(tabindex);
+}
+
+a:focus {
+  border: 1px solid purple;
+}
+
+#search-form-container {
+  border: 1px solid black;
+}
+
+form {
+  border: 1px solid pink;
+  background: blue;
+}
+
+div#toolbar {
+  border: 1px solid red;
+}
+
+table tr td {
+  border: 1px solid black;
+}
+
+span.server-response-time {
+  display: inline;
+  color: purple;
+}
+
+.cited-by-instance-within-full-synonymy {
+  background: purple;
+}
+

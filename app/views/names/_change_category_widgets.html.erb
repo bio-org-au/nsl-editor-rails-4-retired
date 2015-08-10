@@ -1,0 +1,44 @@
+
+<%= "Current category is: <em>#{@name.raw_category.capitalize}</em>".html_safe unless @name.raw_category == @name.category %>
+
+
+<% if @name.id.present? && @name.raw_category == @name.category %>
+
+  <% if @name.category == Name::OTHER_CATEGORY %>
+
+    <%= link_to('Convert to scientific name', 
+                    '#', 
+                    class: "change-name-category-on-edit-tab btn btn-default", 
+                    data: {edit_url: name_edit_as_category_path(id: @name.id,
+                                                                tab: 'edit_name',
+                                                                new_category: Name::SCIENTIFIC_CATEGORY)}) %>
+
+  <% elsif @name.category == Name::SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY %>
+
+    <%= link_to('Convert to scientific hybrid with 2 parents', 
+                    '#', 
+                    class: "change-name-category-on-edit-tab btn btn-default", 
+                    data: {edit_url: name_edit_as_category_path(id: @name.id,
+                                                                tab: 'edit_name',
+                                                                new_category: Name::SCIENTIFIC_HYBRID_FORMULA_CATEGORY)}) %>
+
+  <% elsif @name.category == Name::CULTIVAR_HYBRID_CATEGORY && @name.second_parent_id.blank? %>
+
+    <%= link_to('Convert to cultivar', 
+                    '#', 
+                    class: "change-name-category-on-edit-tab btn btn-default", 
+                    data: {edit_url: name_edit_as_category_path(id: @name.id,
+                                                                tab: 'edit_name',
+                                                                new_category: Name::CULTIVAR_CATEGORY)}) %>
+  <% elsif @name.category == Name::CULTIVAR_CATEGORY %>
+
+    <%= link_to('Convert to cultivar hybrid', 
+                    '#', 
+                    class: "change-name-category-on-edit-tab btn btn-default", 
+                    data: {edit_url: name_edit_as_category_path(id: @name.id,
+                                                                tab: 'edit_name',
+                                                                new_category: Name::CULTIVAR_HYBRID_CATEGORY)}) %>
+  <% end %>
+
+<% end %>
+

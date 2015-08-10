@@ -1,0 +1,11 @@
+---
+  environment: production
+  port: 1521
+  root_dir: '.'
+  context_path: '/nsl'
+  threadsafe: true
+  #extensions:
+  #daemon:
+  ## optional by default the pid is written into a temporary directory :
+  #pid_file: './trinidad.pid'
+  #jvm_args: '-XX:MaxPermSize=1024m'

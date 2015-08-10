@@ -1,0 +1,19 @@
+<% unless params[:query].blank? %>
+  <% if @count %>
+    <%= @count %>
+  <% else %>
+
+    <%= %Q(#{pluralize(@search_results.count, "reference") } \
+            #{" (limited) " if @limited} \
+            for #{link_to("#{params[:query]}",search_path(query_on: 'reference', query: params[:query]),
+              tabindex: 35,
+              id: "rerun-this-query",
+              class: 'rerun-query-link',
+              data: {no_turbolink: true},
+              title: 'Rerun this query.')}).html_safe if @search_results %><span id="ignored-search-criteria-label"><%= "(Ignored criteria: <span id='ignored-search-criteria'> #{@rejected_pairings.join(',')}</span>)".html_safe unless @rejected_pairings.blank? %></span>
+  <% end %>
+<% end %>
+
+
+
+        

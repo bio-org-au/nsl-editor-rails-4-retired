@@ -1,0 +1,4 @@
+$('tr#new-reference-<%= params[:random_id] %>').replaceWith("<%= escape_javascript(h(render partial: 'reference_record', locals: {reference: @reference, give_me_focus: true})) %>");
+$('tr#search-result-<%= @reference.id %> td.takes-focus a.show-details-link').focus();
+
+

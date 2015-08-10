@@ -1,0 +1,25 @@
+
+<div class="typeahead-container w70-30">
+  <%= render partial: 'typeahead_field', 
+             locals: {value: @reference.parent.try('title'),
+                      input_field_id: 'reference-parent-id-typeahead',
+                      input_field_placeholder: 'Parent',
+                      input_field_label: 'parent'} %>
+</div>
+
+<script> setUpReferenceParent(); </script>
+
+<%= form_for(@reference, 
+             url: reference_path(@reference), 
+             remote: true, 
+             html:{class:"edit-form",
+                     data: {type: :json,
+                            typeahead_field: 'reference-parent-id-typeahead'} 
+                    }) do |f| %>
+
+  <%= hidden_field(:reference,
+                   :parent_id,
+                   class:'save-on-blur')
+  %>
+<% end %>
+ 

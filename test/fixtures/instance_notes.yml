@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  instance: triodia_in_brassard
+  instance_note_key: neotype
+  value: MyString
+  namespace: apni
+  updated_by: x
+  created_by: x
+
+#
+#two:
+#value: MyString
+#updated_by: x
+#created_by: x

@@ -1,0 +1,261 @@
+
+default: 
+  name: "[default]"
+  name_category: na
+  name_group: botanical
+  scientific: false
+  autonym: false
+  hybrid: false
+  sort_order: 1
+  deprecated: false
+
+unknown: 
+  name: "[unknown]"
+  name_category: na
+  name_group: botanical
+  scientific: false
+  autonym: false
+  hybrid: false
+  sort_order: 2
+  deprecated: false
+
+na: 
+  name: "[n/a]"
+  name_category: na
+  name_group: botanical
+  scientific: false
+  autonym: false
+  hybrid: false
+  sort_order: 3
+  deprecated: false
+
+scientific: 
+  name: scientific
+  name_category: scientific
+  name_group: botanical
+  scientific: true
+  autonym: false
+  hybrid: false
+  sort_order: 4
+  deprecated: false
+
+sanctioned: 
+  name: sanctioned
+  name_category: scientific
+  name_group: botanical
+  scientific: true
+  autonym: false
+  hybrid: false
+  sort_order: 5
+  deprecated: false
+
+phrase_name: 
+  name: phrase name
+  name_category: scientific
+  name_group: botanical
+  scientific: true
+  autonym: false
+  hybrid: false
+  sort_order: 6
+  deprecated: false
+
+hybrid_formula_parents_known:
+  name: hybrid formula parents known
+  name_category: scientific
+  name_group: botanical
+  scientific: true
+  autonym: false
+  hybrid: true
+  sort_order: 7
+  deprecated: false
+
+hybrid_formula_unknown_2nd_parent: 
+  name: hybrid formula unknown 2nd parent
+  name_category: scientific
+  name_group: botanical
+  scientific: true
+  autonym: false
+  hybrid: true
+  sort_order: 8
+  deprecated: false
+
+named_hybrid: 
+  name: named hybrid
+  name_category: scientific
+  name_group: botanical
+  scientific: true
+  autonym: false
+  hybrid: true
+  sort_order: 9
+  deprecated: false
+
+named_hybrid_autonym: 
+  name: named hybrid autonym
+  name_category: scientific
+  name_group: botanical
+  scientific: true
+  autonym: true
+  hybrid: true
+  sort_order: 10
+  deprecated: false
+
+hybrid_autonym: 
+  name: hybrid autonym
+  name_category: scientific
+  name_group: botanical
+  scientific: true
+  autonym: true
+  hybrid: true
+  sort_order: 11
+  deprecated: false
+
+intergrade: 
+  name: intergrade
+  name_category: scientific
+  name_group: botanical
+  scientific: true
+  autonym: false
+  hybrid: true
+  sort_order: 12
+  deprecated: false
+
+autonym: 
+  name: autonym
+  name_category: scientific
+  name_group: botanical
+  scientific: true
+  autonym: true
+  hybrid: false
+  sort_order: 13
+  deprecated: false
+
+common: 
+  name: common
+  name_category: common
+  name_group: botanical
+  scientific: false
+  autonym: false
+  hybrid: false
+  sort_order: 15
+  deprecated: false
+
+cultivar: 
+  name: cultivar
+  name_category: cultivar
+  name_group: botanical
+  scientific: false
+  autonym: false
+  hybrid: false
+  cultivar: true
+  sort_order: 16
+  deprecated: false
+
+cultivar_hybrid: 
+  name: cultivar hybrid
+  name_category: cultivar
+  name_group: botanical
+  scientific: false
+  autonym: false
+  hybrid: true
+  cultivar: true
+  sort_order: 17
+  deprecated: false
+
+cultivar_hybrid_formula: 
+  name: cultivar hybrid formula
+  name_category: cultivar
+  name_group: botanical
+  scientific: false
+  autonym: false
+  hybrid: true
+  cultivar: true
+  sort_order: 18
+  deprecated: false
+
+acra: 
+  name: acra
+  name_category: cultivar
+  name_group: botanical
+  scientific: false
+  autonym: false
+  hybrid: false
+  cultivar: true
+  sort_order: 19
+  deprecated: true
+
+acra_hybrid: 
+  name: acra hybrid
+  name_category: cultivar
+  name_group: botanical
+  scientific: false
+  autonym: false
+  hybrid: true
+  cultivar: true
+  sort_order: 20
+  deprecated: true
+
+pbr: 
+  name: pbr
+  name_category: cultivar
+  name_group: botanical
+  scientific: false
+  autonym: false
+  hybrid: false
+  cultivar: true
+  sort_order: 21
+  deprecated: true
+
+pbr_hybrid: 
+  name: pbr hybrid
+  name_category: cultivar
+  name_group: botanical
+  scientific: false
+  autonym: false
+  hybrid: true
+  cultivar: true
+  sort_order: 22
+  deprecated: true
+
+trade: 
+  name: trade
+  name_category: cultivar
+  name_group: botanical
+  scientific: false
+  autonym: false
+  hybrid: false
+  cultivar: true
+  sort_order: 23
+  deprecated: true
+
+trade_hybrid: 
+  name: trade hybrid
+  name_category: cultivar
+  name_group: botanical
+  scientific: false
+  autonym: false
+  hybrid: true
+  cultivar: true
+  sort_order: 24
+  deprecated: true
+
+graft_chimera: 
+  name: graft/chimera
+  name_category: cultivar
+  name_group: botanical
+  scientific: false
+  autonym: false
+  hybrid: false
+  cultivar: true
+  sort_order: 25
+  deprecated: false
+
+informal: 
+  name: informal
+  name_category: informal
+  name_group: botanical
+  scientific: false
+  autonym: false
+  hybrid: false
+  sort_order: 26
+  deprecated: false
+

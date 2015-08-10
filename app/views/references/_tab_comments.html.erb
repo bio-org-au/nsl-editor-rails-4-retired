@@ -1,0 +1,18 @@
+<div id="search-result-details-info-message-container" class="message-container"></div>
+<div id="search-result-details-error-message-container" class="message-container"></div>
+<% increment_tab_index(0) %>
+
+
+<div id="reference-comments-fields" >
+
+    <% @reference.comments.sort{|x,y| x.created_at <=> y.created_at}.each do |comment| %>
+        <div id="container-for-comment-<%= comment.id %>">
+            <%= render partial: 'comments/form', locals: {comment: comment} %>
+        </div>
+    <% end %>
+
+<h5>Add Comment</h5>
+    <%= render partial: 'comments/form_new', locals: {comment: Comment.new, parent_entity_type: 'reference', parent_id: @reference.id} %>
+</div>
+
+

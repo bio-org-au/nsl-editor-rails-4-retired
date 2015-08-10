@@ -1,0 +1,222 @@
+<%= form_for(@name, as: 'name', role: 'form', remote: true) do |f| %>
+   <% if @name.errors.any? %>
+    <div id="error_explanation" class="red">
+      <h6><%= pluralize(@name.errors.count, "error") %> prohibited this name from being saved:</h6>
+      <ul>
+      <% @name.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <input type="hidden" name="random_id" value="<%= params[:random_id] %>"/>
+  <input type="hidden" name="category" value="<%= params[:category] %>"/>
+  <% if @name.id.present? %>
+    <% edit_title = "<strong class='pull-left'>Edit " %>
+    <% unless @name.category == @name.raw_category %>
+      <% edit_title += 'as' %>
+    <% end %>
+    <% edit_title += "#{@name.category} name" %>
+    <% edit_title += "</strong>" %>
+  <% else %>
+    <% edit_title = "" %>
+  <% end %>
+
+  <% if @name.needs_top_buttons? %>
+    <div class="inline-block align-right">
+      <%= edit_title.html_safe %>
+      <% if @name.id.blank? %>
+        <%= link_to 'Cancel','/cancel-new-form', class: "btn btn-primary cancel-new-record-link", data: {element_id: "new-name-#{params[:random_id]}"}  %>
+      <% end %>
+      <%= f.submit "Save", id: 'save-name-at-top', class: 'btn btn-primary width-5em', disabled: false %>
+    </div>
+  <% else %>
+    <%= edit_title.html_safe %><br>
+  <% end %>
+  <div id="search-result-details-info-message-container" class="message-container"></div>
+  <div id="search-result-details-error-message-container" class="message-container"></div>
+  <div class="form-group">
+    <label for="name_type_id">Type*</label>
+    <% if @name.has_only_one_type? %>
+      <%= f.select('name_type_id', NameType.options_for_category(@name.category),{prompt: 'Choose one'}, autocomplete: "off", class: "form-control give-me-focus", required: true) %>
+    <% else %>
+      <%= f.select('name_type_id', NameType.options_for_category(@name.category),{}, autocomplete: "off", class: "form-control give-me-focus", required: true) %>
+    <% end %>
+  </div>
+
+  <% if @name.takes_rank? %> 
+
+  <div class="form-group">
+    <label for="name_rank_id">Rank*</label>
+    <%= select('name','name_rank_id',NameRank.options_for_category(@name.category),
+               {include_blank: false}, autocomplete: "off", class: "form-control", disabled: false, required: true) %>
+  </div>
+
+  <% else %>
+    <%= f.hidden_field :name_rank_id %>
+  <% end %>
+
+  <div class="form-group">
+    <label for="name_status_id">Status*</label>
+    <%= select('name','name_status_id',@name.status_options,{include_blank: false}, autocomplete: "off", class:"form-control", disabled: false, required: true) %>
+  </div>
+
+
+  <% if @name.takes_parent_1? %>
+    <div class="form-group">
+      <label for="name-parent-typeahead"><%= 'First ' if @name.hybrid? %>Parent<%= "*" if @name.requires_parent_1? %></label> <%= " [#{@name.parent_rule}]" %><br>
+      <input id="name-parent-typeahead"
+             name="name[parent_typeahead]"
+             class="typeahead form-control requires-rank"
+             data-name-id="<%= @name.id %>"
+             <% if @name.requires_parent_1? %>
+               required 
+             <% end %>
+             type="text" 
+             title="Name parents will be suggested as you type, so please select from the list. Duplicates and names without instances are excluded.  Rank restrictions also apply."
+             value="<%= @name.parent.try('full_name') %>"/>
+      <p> 
+        <span class="hide-if-rank <%= 'hidden' if @name.name_rank %>">
+          Cannot be set if there is no rank.
+        </span>
+      </p>
+    </div>
+    <%= hidden_field(:name,:parent_id, value: @name.parent_id) %>
+    <% if @name.takes_hybrid_scoped_parent? %>   
+      <script>setUpNameHybridParentTypeahead();</script>
+    <% elsif @name.takes_cultivar_scoped_parent? %>   
+      <script>setUpNameCultivarParentTypeahead();</script>
+    <% else %>
+      <script>setUpNameParentTypeahead();</script>
+    <% end %>
+  <% end %>
+  
+  <% if @name.takes_parent_2? %>
+
+    <div class="form-group">
+      <label for="name-second-parent-typeahead">Second parent<%= "*" if @name.requires_parent_2? %></label><%= " [#{@name.second_parent_rule}]" %><br>
+      <input id="name-second-parent-typeahead"
+             name="name[second_parent_typeahead]"
+             class="typeahead form-control requires-rank"
+             <% if @name.requires_parent_2? %>
+               required
+             <% end %>
+             type="text" 
+             value="<%= @name.second_parent.try('full_name') %>"/>
+      <p> 
+        <span class="hide-if-rank <%= 'hidden' if @name.name_rank %>">
+          Cannot be set if there is no rank.
+        </span>
+      </p>
+    </div>
+    <%= hidden_field(:name,:second_parent_id, value: @name.second_parent_id) %>
+
+    <% if @name.takes_cultivar_scoped_parent? %>   
+      <script>setUpNameCultivarSecondParentTypeahead();</script>
+    <% else %>
+      <script>setUpNameSecondParentTypeahead();</script>
+    <% end %>
+
+  <% end %>
+
+  <% if @name.takes_name_element? %>
+
+  <div class="form-group">
+    <label for="name">Name<%= "*" if @name.requires_name_element? %></label>
+   <%= f.text_field :name_element, class: 'form-control', required: @name.requires_name_element?, autofocus: true %>
+  </div>
+
+  <% end %>
+
+  <% if @name.takes_authors? %>
+
+  <div class="form-group">
+    <label for="ex-base-author-by-abbrev">Ex Base Author</label><br>
+    <input id="ex-base-author-by-abbrev"
+           name="name[ex_base_author_typeahead]"   
+           class="typeahead form-control"
+           type="text" 
+           value="<%= @name.ex_base_author.try('abbrev_if_possible') %>"/>
+  </div>
+  <%= f.hidden_field(:ex_base_author_id) %>
+
+  <div class="form-group base-author">
+    <label for="base-author-by-abbrev">Base Author</label><br>
+    <input id="base-author-by-abbrev"
+           name="name[base_author_typeahead]"   
+           class="typeahead form-control"
+           type="text" 
+           value="<%= @name.base_author.try('abbrev_if_possible') %>"/>
+  </div>
+  <%= f.hidden_field(:base_author_id) %>
+
+
+  <div class="form-group">
+    <label for="ex-author-by-abbrev">Ex Author</label><br>
+    <input id="ex-author-by-abbrev"
+           name="name[ex_author_typeahead]"   
+           class="typeahead form-control"
+           type="text" 
+           value="<%= @name.ex_author.try('abbrev_if_possible') %>"/>
+  </div>
+  <%= f.hidden_field(:ex_author_id) %>
+
+  <div class="form-group author">
+    <label for="author-by-abbrev">Author</label><br>
+    <input id="author-by-abbrev"
+           name="name[author_typeahead]"   
+           class="typeahead form-control" 
+           type="text" 
+           value="<%= @name.author.try('abbrev_if_possible') %>"/>
+  </div>
+  <%= f.hidden_field(:author_id) %>
+
+  <div class="form-group">
+    <label for="sanctioning-author-by-abbrev">Sanctioning Author</label><br>
+    <input id="sanctioning-author-by-abbrev"
+           name="name[sanctioning_author_typeahead]"   
+           class="typeahead form-control" 
+           type="text" 
+           value="<%= @name.sanctioning_author.try('abbrev_if_possible') %>"/>
+  </div>
+  <%= f.hidden_field(:sanctioning_author_id) %>
+    <script>setUpAuthorByAbbrev(); </script>
+    <script>setUpExBaseAuthorByAbbrev();</script>
+    <script>setUpBaseAuthorByAbbrev();</script>
+    <script>setUpExAuthorByAbbrev();</script>
+    <script>setUpSanctioningAuthorByAbbrev();</script>
+<% end %><%# of takes_authors? %>
+
+ 
+  <% if @name.id.present? %>
+  <div class="form-group">
+    <label for="">Duplicate of</label><br>
+    <input id="duplicate-of-typeahead"
+           name="name[duplicate_of_typeahead]"   
+           class="typeahead form-control" 
+           type="text"
+           data-name-id="<%= @name.id %>"
+           value="<%= @name.duplicate_of.try('full_name') %>"/>
+    <%= f.hidden_field(:duplicate_of_id) %>
+  </div>
+  <script> setUpNameDuplicateOf(); </script>
+  <% end %>
+
+  <div class="form-group">
+    <label for="verbatim_rank">Verbatim rank</label><br>
+    <%= f.text_field :verbatim_rank, class: 'form-control', title: 'Verbatim rank' %>
+  </div>
+
+  <br>
+  <div class="form-group align-right">
+  <% if @name.id.blank? %>
+    <%= link_to 'Cancel','/cancel-new-form', class: "btn btn-primary cancel-new-record-link", data: {element_id: "new-name-#{params[:random_id]}"}  %>
+  <% end %>
+  <%= f.submit "Save", id: 'save-name', class: 'btn btn-primary width-5em', disabled: false %>
+  </div>
+
+
+<% end %>
+
+

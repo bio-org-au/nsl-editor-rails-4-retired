@@ -1,0 +1,9 @@
+$('.message-container').html('');
+$('input#reference-parent-typeahead').val('<%= @reference.parent.try('citation') %>');
+$('a#Reference-<%= @reference.id %>').html('<%= "#{@reference.citation} #{display_pages(@reference.pages)}" %>');
+$('a#tab-heading').html('<%= @reference.citation %>');
+$('#search-result-details-info-message-container').html('<%= @message %>');
+$('select#reference_ref_type_id').focus();
+<% unless @message.match(/^No change/) %> 
+  $('input#reference-author-typeahead').val('<%= @reference.author.try('name').try('html_safe') %>');
+<% end %>

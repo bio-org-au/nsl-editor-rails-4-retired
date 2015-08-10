@@ -1,0 +1,30 @@
+<%= link_to("#{@instance.name.try('full_name')} #{search_icon_on_tab}".html_safe,search_name_with_instances_path(@instance.name_id), title: 'Search for the name with its instances') %>
+  <%= " [#{@instance.name.try('name_status').try('name_without_brackets')}]" if @instance.try('name').try('name_status').try('legitimate?') %>
+
+  <% if @instance.name.try('apc?') %>
+    <span class="apc no-decoration">
+    <% if @instance.name.apc_excluded? %>
+      <%= icon('ban','',class: 'red') %>
+    <% else %>
+      <%= icon('check','',class: 'red') %>
+    <% end %>
+      <span class='apc small red strong'>APC</span>
+    </span>
+  <% end %>
+  &nbsp;
+  <%= link_to("APNI&nbsp;#{icon('external-link-square')}".html_safe, 
+              "#{Rails.configuration.nsl_links}apni-format/display/#{@instance.name_id}",
+              title: "APNI search. Opens in another named tab or window.",
+              target: "_editor_to_apni",
+              tabindex: increment_tab_index) %>
+  <br>
+  appears in
+  <br>
+  <%= link_to("#{@instance.reference.citation} #{search_icon_on_tab}".html_safe, search_path(query: %Q(id:#{@instance.reference_id}),query_on: 'reference'),title: "Search for the reference.") %>
+  <br>
+  as <%= @instance.instance_type.name_with_indefinite_article.sub(/ /,'<br>').html_safe %>
+  <%= "<br>on page #{@instance.page}".html_safe if @instance.page.present? %>
+  <%= "<br>with verbatim name #{@instance.verbatim_name_string}".html_safe if @instance.verbatim_name_string.present? %>
+  <br>
+  <%= link_to("and BHL entry #{icon('external-link')}".html_safe,@instance.bhl_url, title: "Follow this link to the BHL entry.") if @instance.bhl_url.present? %>
+

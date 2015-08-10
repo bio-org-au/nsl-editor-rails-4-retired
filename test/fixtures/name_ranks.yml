@@ -1,0 +1,340 @@
+regnum:
+  abbrev: reg.
+  deprecated: false
+  italicize: false
+  major: true
+  name: Regnum
+  name_group: botanical
+  sort_order: 10
+  visible_in_name: false
+
+division:
+  abbrev: div.
+  deprecated: false
+  italicize: false
+  major: true
+  name: Division
+  name_group: botanical
+  sort_order: 20
+  visible_in_name: false
+
+classis:
+  abbrev: cl.
+  deprecated: false
+  italicize: false
+  major: true
+  name: Classis
+  name_group: botanical
+  sort_order: 30
+  visible_in_name: false
+
+subclassis:
+  abbrev: subcl.
+  deprecated: false
+  italicize: false
+  major: false
+  name: Subclassis
+  name_group: botanical
+  sort_order: 40
+  visible_in_name: false
+
+superordo:
+  abbrev: superordo
+  deprecated: false
+  italicize: false
+  major: false
+  name: Superordo
+  name_group: botanical
+  sort_order: 50
+  visible_in_name: false
+
+ordo:
+  abbrev: ordo
+  deprecated: false
+  italicize: false
+  major: true
+  name: Ordo
+  name_group: botanical
+  sort_order: 60
+  visible_in_name: false
+
+subordo:
+  abbrev: subordo
+  deprecated: false
+  italicize: false
+  major: false
+  name: Subordo
+  name_group: botanical
+  sort_order: 70
+  visible_in_name: false
+
+familia:
+  abbrev: fam.
+  deprecated: false
+  italicize: false
+  major: true
+  name: Familia
+  name_group: botanical
+  sort_order: 80
+  visible_in_name: false
+
+subfamilia:
+  abbrev: subfam.
+  deprecated: false
+  italicize: false
+  major: false
+  name: Subfamilia
+  name_group: botanical
+  sort_order: 90
+  visible_in_name: true
+
+tribus:
+  abbrev: trib.
+  deprecated: false
+  italicize: false
+  major: true
+  name: Tribus
+  name_group: botanical
+  sort_order: 100
+  visible_in_name: true
+
+subtribus:
+  abbrev: subtrib.
+  deprecated: false
+  italicize: false
+  major: false
+  name: Subtribus
+  name_group: botanical
+  sort_order: 110
+  visible_in_name: true
+
+genus:
+  abbrev: gen.
+  deprecated: false
+  italicize: false
+  major: true
+  name: Genus
+  name_group: botanical
+  sort_order: 120
+  visible_in_name: false
+
+subgenus:
+  abbrev: subg.
+  deprecated: false
+  italicize: false
+  major: false
+  name: Subgenus
+  name_group: botanical
+  sort_order: 130
+  visible_in_name: true
+
+sectio:
+  abbrev: sect.
+  deprecated: false
+  italicize: false
+  major: false
+  name: Sectio
+  name_group: botanical
+  sort_order: 140
+  visible_in_name: true
+
+subsectio:
+  abbrev: subsect.
+  deprecated: false
+  italicize: false
+  major: false
+  name: Subsectio
+  name_group: botanical
+  sort_order: 150
+  visible_in_name: true
+
+series:
+  abbrev: ser.
+  deprecated: false
+  italicize: false
+  major: false
+  name: Series
+  name_group: botanical
+  sort_order: 160
+  visible_in_name: true
+
+subseries:
+  abbrev: subser.
+  deprecated: false
+  italicize: false
+  major: false
+  name: Subseries
+  name_group: botanical
+  sort_order: 170
+  visible_in_name: true
+
+superspecies:
+  abbrev: supersp.
+  deprecated: false
+  italicize: false
+  major: false
+  name: Superspecies
+  name_group: botanical
+  sort_order: 180
+  visible_in_name: true
+
+species:
+  abbrev: sp.
+  deprecated: false
+  italicize: false
+  major: true
+  name: Species
+  name_group: botanical
+  sort_order: 190
+  visible_in_name: false
+
+subspecies:
+  abbrev: subsp.
+  deprecated: false
+  italicize: false
+  major: false
+  name: Subspecies
+  name_group: botanical
+  sort_order: 200
+  visible_in_name: true
+
+nothovarietas:
+  abbrev: nothovar.
+  deprecated: false
+  italicize: false
+  major: false
+  name: Nothovarietas
+  name_group: botanical
+  sort_order: 210
+  visible_in_name: true
+
+varietas:
+  abbrev: var.
+  deprecated: false
+  italicize: false
+  major: false
+  name: Varietas
+  name_group: botanical
+  sort_order: 210
+  visible_in_name: true
+
+subvarietas:
+  abbrev: subvar.
+  deprecated: false
+  italicize: false
+  major: false
+  name: Subvarietas
+  name_group: botanical
+  sort_order: 220
+  visible_in_name: true
+
+forma:
+  abbrev: f.
+  deprecated: false
+  italicize: false
+  major: false
+  name: Forma
+  name_group: botanical
+  sort_order: 230
+  visible_in_name: true
+
+subforma:
+  abbrev: subf.
+  deprecated: false
+  italicize: false
+  major: false
+  name: Subforma
+  name_group: botanical
+  sort_order: 240
+  visible_in_name: true
+
+form_taxon:
+  abbrev: form taxon
+  deprecated: true
+  italicize: false
+  major: false
+  name: form taxon
+  name_group: botanical
+  sort_order: 250
+  visible_in_name: false
+
+morphological_var:
+  abbrev: morph.
+  deprecated: true
+  italicize: false
+  major: false
+  name: morphological var.
+  name_group: botanical
+  sort_order: 260
+  visible_in_name: false
+
+nothomorph:
+  abbrev: nothomorph
+  deprecated: true
+  italicize: false
+  major: false
+  name: nothomorph.
+  name_group: botanical
+  sort_order: 270
+  visible_in_name: false
+
+unranked:
+  abbrev: '[unranked]'
+  deprecated: false
+  italicize: false
+  major: false
+  name: '[unranked]'
+  name_group: botanical
+  sort_order: 500
+  visible_in_name: true
+
+na:
+  abbrev: '[n/a]'
+  deprecated: false
+  italicize: false
+  major: false
+  name: '[n/a]'
+  name_group: botanical
+  sort_order: 500
+  visible_in_name: false
+
+infragenus:
+  abbrev: '[infragenus]'
+  deprecated: false
+  italicize: false
+  major: false
+  name: '[infragenus]'
+  name_group: botanical
+  sort_order: 500
+  visible_in_name: false
+
+unknown:
+  abbrev: '[unknown]'
+  deprecated: true
+  italicize: false
+  major: false
+  name: '[unknown]'
+  name_group: botanical
+  sort_order: 500
+  visible_in_name: false
+
+infrafamily:
+  abbrev: '[infrafamily]'
+  deprecated: false
+  italicize: false
+  major: false
+  name: '[infrafamily]'
+  name_group: botanical
+  sort_order: 500
+  visible_in_name: false
+
+infraspecies:
+  abbrev: '[infraspecies]'
+  deprecated: false
+  italicize: false
+  major: false
+  name: '[infraspecies]'
+  name_group: botanical
+  sort_order: 500
+  visible_in_name: false
+

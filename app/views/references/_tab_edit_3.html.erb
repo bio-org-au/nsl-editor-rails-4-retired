@@ -1,0 +1,49 @@
+<%= render 'form_3' %>
+<br>
+<div class="error-message-container"></div>
+<div id="search-result-details-info-message-container" class="message-container"></div>
+<div id="search-result-details-error-message-container" class="message-container"></div>
+
+
+<% if @reference.has_children? %>
+  You cannot delete this reference because it has one or more children.
+<% end %>
+
+<% if @reference.has_instances? %>
+  You cannot delete this reference because it has one or more instances.
+<% end %>
+
+<% unless @reference.has_children? || @reference.has_instances? %>
+
+  <% delete_link = link_to("Delete the reference...",
+                           '#',
+                           id: "reference-delete-link",
+                           title: "Delete the entire reference.",
+                           class: "btn btn-warning unconfirmed-delete-link pull-right",
+                           data: {show_this_id: "confirm-or-cancel-link-container"})
+  %>
+  <% confirm_delete_link = link_to("Confirm delete",
+                                   reference_path(@reference.id),
+                                   class: "btn btn-danger",
+                                   remote: true,
+                                   method: :delete)
+  %>
+  <% cancel_delete_link = link_to("Cancel delete",
+                                  '#',
+                                  id: "cancel-delete-link",
+                                  class: "btn btn-default cancel-link",
+                                  data: {enable_this_id: 'reference-delete-link',
+                                         hide_this_id: 'confirm-or-cancel-link-container'})
+  %>
+  <% confirm_or_cancel_element = %Q(<div id="confirm-or-cancel-link-container"
+                                    class="instance-note confirm-or-cancel-delete-link pull-right hidden">
+                                    #{confirm_delete_link}
+                                    #{cancel_delete_link}</div>)
+  %>
+  
+  <%= divider %>
+  <br>
+  <div class="actions"> <%= delete_link.html_safe %> </div>
+  <div class="width-100-percent"> <%= confirm_or_cancel_element.html_safe %> </div>
+
+<% end %>

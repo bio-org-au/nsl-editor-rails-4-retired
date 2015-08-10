@@ -1,0 +1,27 @@
+
+<div class="typeahead-container w70-30">
+  <%= render partial: 'typeahead_field', 
+             locals: {value: @reference.duplicate_of.try('title'),
+                      input_field_id: 'reference-duplicate-of-id-typeahead',
+                      input_field_placeholder: 'Duplicate of Reference',
+                      input_field_label: 'duplicate of'} %>
+</div>
+
+  <script> setUpReferenceDuplicateOf(); </script>
+
+  <%= form_for(@reference, 
+               remote: true, 
+               url: reference_path(@reference), 
+               html:{class:"edit-form",
+                       data: {type: :json,
+                              typeahead_field: 'reference-duplicate-of-id-typeahead'} 
+                       }) do |f| %>
+
+    <%= hidden_field(:reference,
+                     :duplicate_of_id,
+                     class:'save-on-blur')
+    %>
+  <% end %>
+
+
+

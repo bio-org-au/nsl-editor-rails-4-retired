@@ -1,0 +1,1811 @@
+# select rt.name,prt.name,count(*) from reference ref inner join ref_type rt on ref.ref_type_id = rt.id inner join reference refp on ref.parent_id = refp.id inner join ref_type prt on refp.ref_type_id  = prt.id group by rt.name,prt.name order by 1,2;
+# name          |   name   | count
+# ------------------------+----------+-------
+# Book                   | Journal  |    76
+# Chapter                | Book     |     2
+# Database Record        | Book     |     1
+# Database Record        | Database |    57
+# Database Record        | Journal  |     2
+# Herbarium annotation   | Journal  |     4
+# Index                  | Book     |     3
+# Index                  | Journal  |     3
+# Paper                  | Book     |  2563
+# Paper                  | Database |     1
+# Paper                  | Journal  | 12860
+# Personal Communication | Journal  |     1
+# Section                | Book     |  5871
+# Unknown                | Book     |  2543
+# Unknown                | Journal  |  6740
+# Unknown                | Unknown  |  1638
+#
+# (16 rows)
+
+
+simple: 
+  title: "  Simple  "
+  citation: "  Simple  "
+  citation_html: "  Simple  "
+  display_title: Display Title
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: unknown
+  created_by: tester
+  updated_by: tester
+
+paper_by_brassard:
+  title: "  paper by brassard  "
+  citation: "  paper by brassard  "
+  citation_html: "  paper by brassard  "
+  display_title: Paper by Brassard
+  author: brassard
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: paper
+  year: 1987
+  created_by: tester
+  updated_by: tester
+
+section_with_brassard_author_same_as_parent: 
+  title: Section with brassard author same as parent
+  citation: Section with brassard author same as parent
+  citation_html: Section with brassard author same as parent
+  display_title: Section with Brassard Author same as Parent
+  author: brassard
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: section
+  parent: book_by_brassard
+  created_by: tester
+  updated_by: tester
+
+section_with_heyland_author_different_from_parent: 
+  title: Section Ref
+  citation: Section Ref
+  citation_html: Section Ref
+  display_title: Section Ref Display Title
+  author: heyland
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: section
+  parent: book_by_brassard
+  created_by: tester
+  updated_by: tester
+
+orphan_book_edited_by_brassard_no_year_no_publication_date:
+  title: "   Orphan book edited by brassard no year no publication date.   "
+  citation: "   Orphan book edited by brassard no year no publication date.   "
+  citation_html: "   Orphan book edited by brassard no year no publication date.   "
+  display_title: Orphan Book edited by Brassard no year no publication date.
+  author: brassard
+  language: undetermined
+  namespace: apni
+  ref_author_role: editor
+  ref_type: book
+  created_by: tester
+  updated_by: tester
+
+orphan_book_edited_by_brassard_with_year_no_publication_date:
+  title: "  Orphan book edited by brassard with year and no publication date.  "
+  citation: "  Orphan book edited by brassard with year and no publication date.  "
+  citation_html: "  Orphan book edited by brassard with year and no publication date.  "
+  display_title: Orphan Book edited by Brassard with year no publication date
+  author: brassard
+  language: undetermined
+  namespace: apni
+  ref_author_role: editor
+  ref_type: book
+  year: 1797
+  created_by: tester
+  updated_by: tester
+
+orphan_book_edited_by_brassard_with_year_and_publication_date:
+  title: "   Orphan book edited by brassard with year and publication date.  "
+  citation: "   Orphan book edited by brassard with year and publication date.  "
+  citation_html: "   Orphan book edited by brassard with year and publication date.  "
+  display_title: Orphan Book edited by Brassard with year and publication date
+  author: brassard
+  language: undetermined
+  namespace: apni
+  ref_author_role: editor
+  ref_type: book
+  year: 1790
+  publication_date: (1848) 
+  created_by: tester
+  updated_by: tester
+
+orphan_book_edited_by_brassard_with_no_year_but_publication_date:
+  title: "   Orphan book edited by brassard with no year but publication date   "
+  citation: "   Orphan book edited by brassard with no year but publication date   "
+  citation_html: "   Orphan book edited by brassard with no year but publication date   "
+  display_title: Orphan Book edited by Brassard with no year but publication date
+  author: brassard
+  language: undetermined
+  namespace: apni
+  ref_author_role: editor
+  ref_type: book
+  publication_date: (1870) 
+  created_by: tester
+  updated_by: tester
+
+series_edited_by_joe:
+  title: "  series edited by joe  "
+  citation: "  series edited by joe  "
+  citation_html: "  series edited by joe  "
+  display_title: Series edited by Joe
+  author: joe
+  language: undetermined
+  namespace: apni
+  ref_author_role: editor
+  ref_type: series
+  year: 1980
+  created_by: tester
+  updated_by: tester
+
+parented_book_edited_by_brassard:
+  title: "  parented book edited by brassard  "
+  citation: "  parented book edited by brassard  "
+  citation_html: "  parented book edited by brassard  "
+  display_title: Parented Book edited by Brassard
+  author: brassard
+  language: undetermined
+  namespace: apni
+  ref_author_role: editor
+  ref_type: book
+  parent: series_edited_by_joe
+  created_by: tester
+  updated_by: tester
+
+orphan_book_by_brassard_with_title_not_set:
+  title: "  Not set  "
+  citation: "  Not set  "
+  citation_html: "  Not set  "
+  display_title: xxx
+  author: brassard
+  language: undetermined
+  namespace: apni
+  ref_author_role: author
+  ref_type: book
+  created_by: tester
+  updated_by: tester
+
+orphan_book_by_blume_c_l_von:
+  title: "  Museum Botanicum Lugduno-Batavum sive "
+  citation: "  Museum Botanicum Lugduno-Batavum sive "
+  citation_html: "  Museum Botanicum Lugduno-Batavum sive "
+  display_title: "  Museum Botanicum Lugduno-Batavum sive "
+  author: blume_c_l_von
+  language: undetermined
+  namespace: apni
+  ref_author_role: author
+  ref_type: book
+  created_by: tester
+  updated_by: tester
+
+
+section_with_heyland_author_different_from_parent_editor: 
+  title: "  Section Ref  "
+  citation: "  Section Ref  "
+  citation_html: "  Section Ref  "
+  display_title: Section Ref Display Title
+  author: heyland
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: section
+  parent: parented_book_edited_by_brassard
+  created_by: tester
+  updated_by: tester
+
+paper_with_no_parent_no_year_no_publication_date:
+  title: "  paper with no parent no year no publication date  "
+  citation: "  paper with no parent no year no publication date  "
+  citation_html: "  paper with no parent no year no publication date  "
+  display_title: Paper Ref Display Title
+  author: brassard
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: paper
+  edition: 1
+  volume: "   2 "
+  created_by: tester
+  updated_by: tester
+
+unknown: 
+  title: "  Unknown Ref  "
+  citation: "  Unknown Ref  "
+  citation_html: "  Unknown Ref  "
+  display_title: Unknown Ref Display Title
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: unknown
+  edition: 1
+  volume: 2
+  created_by: tester
+  updated_by: tester
+
+database: 
+  title: "   Database Ref  "
+  citation: "   Database Ref  "
+  citation_html: "   Database Ref  "
+  display_title: Database Ref Display Title
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: database
+  edition: 1
+  volume: 2
+  created_by: tester
+  updated_by: tester
+
+personal_communication: 
+  title: "  Personal-communication Ref  "
+  citation: "  Personal-communication Ref  "
+  citation_html: "  Personal-communication Ref  "
+  display_title: Personal-communication Ref Display Title
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: personal_communication
+  created_by: tester
+  updated_by: tester
+
+herbarium_annotation:
+  title: "  Herbarium-annotation Ref  "
+  citation: "  Herbarium-annotation Ref  "
+  citation_html: "  Herbarium-annotation Ref  "
+  display_title: Herbarium-annotation Ref Display Title
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: personal_communication
+  edition: 1
+  volume: 2
+  created_by: tester
+  updated_by: tester
+
+database_record: 
+  title: "  Database-record Ref   "
+  citation: "  Database-record Ref   "
+  citation_html: "  Database-record Ref   "
+  display_title: Database-record Ref Display Title
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: database_record
+  edition: 1
+  volume: 2
+  created_by: tester
+  updated_by: tester
+
+paper_within_journal:
+  title: "  paper within journal   "
+  citation: "  paper within journal   "
+  citation_html: "  paper within journal   "
+  display_title: Paper Within Journal
+  author: brassard
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: paper
+  year: 1690
+  publication_date: (1648) 
+  parent: journal_with_papers
+  edition: 1
+  volume: 2
+  created_by: tester
+  updated_by: tester
+
+
+journal_with_papers:
+  title: "  journal with papers  "
+  citation: "  journal with papers  "
+  citation_html: "  journal with papers  "
+  display_title: Journal with Papers
+  author: blume_c_l_von
+  language: undetermined
+  namespace: apni
+  ref_author_role: editor
+  ref_type: journal
+  edition: 1
+  volume: 2
+  created_by: tester
+  updated_by: tester
+
+book_by_brassard:
+  title: "   book by brassard  "
+  citation_html: "   book by brassard  "
+  display_title: Book by Brassard
+  citation: "Brassard [x], (ed.) book by brassard. fixture-citation"
+  citation_html: "Brassard [x], (ed.) book by brassard. fixture-citation"
+  author: brassard
+  language: undetermined
+  namespace: apni
+  ref_author_role: author
+  ref_type: book
+  year: 1799
+  publication_date: (1849) 
+  edition: 1
+  volume: 2
+  created_by: tester
+  updated_by: tester
+
+book_with_extra_space_in_title:
+  title: "  book  with extra space in title  "
+  citation: "  book  with extra space in title  "
+  citation_html: "  book  with extra space in title  "
+  display_title: Book With Extra Space in Title
+  author: brassard
+  language: undetermined
+  namespace: apni
+  ref_author_role: author
+  ref_type: book
+  year: 1799
+  publication_date: (1849) 
+  created_by: tester
+  updated_by: tester
+
+
+book_with_ellipses_in_title:
+  title: "  book... with ellipses in title...  "
+  citation: "  book... with ellipses in title...  "
+  citation_html: "  book... with ellipses in title...  "
+  display_title: "Book... With Ellipses in Title..."
+  author: brassard
+  language: undetermined
+  namespace: apni
+  ref_author_role: author
+  ref_type: book
+  year: 1799
+  publication_date: (1849) 
+  created_by: tester
+  updated_by: tester
+
+paper_within_journal_title_has_full_stop:
+  title: "  paper within journal title has full stop.  "
+  citation: "  paper within journal title has full stop.  "
+  citation_html: "  paper within journal title has full stop.  "
+  display_title: Paper Within Journal
+  author: brassard
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: paper
+  year: 1690
+  publication_date: (1648) 
+  parent: journal_with_papers
+  edition: 1
+  volume: 2
+  created_by: tester
+  updated_by: tester
+
+paper_with_extra_space_in_title:
+  title: "  paper    with extra space in title  "
+  citation: "  paper    with extra space in title  "
+  citation_html: "  paper    with extra space in title  "
+  display_title: Paper    With Extra Space in Title
+  author: brassard
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: paper
+  year: 1690
+  publication_date: (1648) 
+  parent: journal_with_papers
+  edition: 1
+  volume: 2
+  created_by: tester
+  updated_by: tester
+
+unknown_in_journal_with_hooker_author_of_both:
+  title: "  Not Set  "
+  citation: "  Not Set  "
+  citation_html: "  Not Set  "
+  display_title: Not Set
+  author: hooker
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: paper
+  year: 1690
+  publication_date: (1648) 
+  parent: journal_by_hooker
+  edition: 1
+  volume: 2
+  created_by: tester
+  updated_by: tester
+
+journal_by_hooker:
+  title: "  botanical magazine  "
+  citation: "  botanical magazine  "
+  citation_html: "  botanical magazine  "
+  display_title: Botanical Magazine
+  author: hooker
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: paper
+  year: 1845
+  publication_date: (1845)
+  edition: 1
+  volume: 2
+  created_by: tester
+  updated_by: tester
+
+JRSWA30:
+  title: "  journal of the royal society of western australia 30.  "
+  citation: "  journal of the royal society of western australia 30.  "
+  citation_html: "  journal of the royal society of western australia 30.  "
+  display_title: Journal of the Royal Society of Western Australia 30.
+  author: dash
+  language: undetermined
+  namespace: apni
+  ref_author_role: unknown
+  ref_type: journal
+  year: 1946
+  volume: 30
+  created_by: tester
+  updated_by: tester
+
+burbidge_1946_JRSWA30:
+  title: "  Not set  "
+  citation: "  Not set  "
+  citation_html: "  Not set  "
+  display_title: Not set
+  author: burbidge
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: unknown
+  year: 1946
+  publication_date: (1648) 
+  parent: JRSWA30
+  created_by: tester
+  updated_by: tester
+
+hooker_jd_botany_of_the_antarctic_voyage:
+  title: "  Not set  "
+  citation: "  Not set  "
+  citation_html: "  Not set  "
+  display_title: Not set
+  author: hooker
+  language: undetermined
+  namespace: apni
+  ref_author_role: unknown
+  ref_type: unknown
+  year: 1844
+  volume: 1(6)
+  created_by: tester
+  updated_by: tester
+
+sturm_enumerato_plantarum:
+  title: "  Enumeratio Plantarum Vascularum Cryptogamicarum Chilensium  "
+  citation: "  Enumeratio Plantarum Vascularum Cryptogamicarum Chilensium  "
+  citation_html: "  Enumeratio Plantarum Vascularum Cryptogamicarum Chilensium  "
+  display_title: Not set
+  author: sturm
+  ref_author_role: unknown
+  language: undetermined
+  namespace: apni
+  ref_type: unknown
+  year: 1858
+  volume: 1(6)
+  created_by: tester
+  updated_by: tester
+
+distens_author_bentham:
+  title: "Distens"
+  citation: "Distens, Bentham"
+  citation_html: "Distens, Bentham"
+  display_title: "Some book, Bentham"
+  author: bentham
+  ref_author_role: author
+  language: undetermined
+  namespace: apni
+  ref_type: unknown
+  year: 1858
+  volume: 1(6)
+  created_at: 2014-02-11 11:02:57
+  created_by: tester
+  updated_by: tester
+
+book_with_name_and_common_name:
+  title: "Book with Name and Common Name"
+  citation: "Fred, Book with Name and Common Name"
+  citation_html: "Fred, Book with Name and Common Name"
+  display_title: "Book with Name and Common Name"
+  author: fred
+  ref_author_role: author
+  language: undetermined
+  namespace: apni
+  ref_type: book
+  year: 1978
+  volume: 1(6)
+  created_at: 2015-01-12 11:02:57
+  created_by: tester
+  updated_by: tester
+
+journal_of_botany_british_and_foreign:
+  title: "Journal of Botany, British and Foreign"
+  citation: "Journal of Botany, British and Foreign"
+  citation_html: "Journal of Botany, British and Foreign"
+  display_title: "Journal of Botany, British and Foreign"
+  author: na
+  ref_author_role: editor
+  language: undetermined
+  namespace: apni
+  ref_type: journal
+  publication_date: (1863-1942)
+  created_at: 2015-01-12 11:02:57
+  created_by: tester
+  updated_by: tester
+
+paper_by_britten_on_angophora:
+  title: Not set
+  citation: Britten, J., (1916) Journal of Botany, British and Foreign. 54 
+  citation_html: Britten, J., (1916) Journal of Botany, British and Foreign. 54 
+  display_title: Britten, J., (1916) Journal of Botany, British and Foreign. 54 
+  author: britten
+  ref_author_role: author
+  language: undetermined
+  namespace: apni
+  ref_type: paper
+  year: 1916
+  volume: 54
+  parent: journal_of_botany_british_and_foreign
+  created_at: 2015-01-12 11:02:57
+  created_by: tester
+  updated_by: tester
+
+de_fructibus_et_seminibus_plantarum:
+  title: De Fructibus et Seminibus Plantarum 
+  citation: Gaertner, J, (1788) De Fructibus et Seminibus Plantarum. 1
+  citation_html: Gaertner, J, (1788) De Fructibus et Seminibus Plantarum. 1
+  display_title: Gaertner, J, (1788) De Fructibus et Seminibus Plantarum. 1
+  author: gaertn
+  ref_author_role: author
+  language: undetermined
+  namespace: apni
+  ref_type: book
+  year: 1788
+  volume: 1
+  created_by: tester
+  updated_by: tester
+
+handbook_of_the_vascular_plants_of_sydney:
+  title: Handbook of the Vascular Plants of the Sydney District and Blue Mountains 
+  citation: Beadle, N.C.W., Evans, O.D. & Carolin, R.C., (1962) Handbook of the Vascular Plants of the Sydney District and Blue Mountains
+  citation_html: Beadle, N.C.W., Evans, O.D. & Carolin, R.C., (1962) Handbook of the Vascular Plants of the Sydney District and Blue Mountains
+  display_title: Handbook of the Vascular Plants of the Sydney District and Blue Mountains 
+  author: beadle_evans_carolin
+  ref_author_role: author
+  language: undetermined
+  namespace: apni
+  ref_type: book
+  year: 1962
+  created_by: tester
+  updated_by: tester
+
+journal_with_papers:
+  title: "  journal with papers  "
+  citation: "Journal by Blume, C.L. [von] (Editor)"
+  citation_html: "Journal by Blume, C.L. [von] (Editor)"
+  citation_html: "Journal by Blume, C.L. [von] (Editor)"
+  display_title: Journal with Papers
+  author: blume_c_l_von
+  language: undetermined
+  namespace: apni
+  ref_author_role: editor
+  ref_type: journal
+  edition: 1
+  volume: 2
+  created_by: tester
+  updated_by: tester
+
+journal_with_children:
+  title: "journal with children"
+  citation: "Journal by Blume, C.L. [von] (Editor)"
+  citation_html: "Journal by Blume, C.L. [von] (Editor)"
+  citation_html: "Journal by Blume, C.L. [von] (Editor)"
+  display_title: Journal with Children
+  author: blume_c_l_von
+  language: undetermined
+  namespace: apni
+  ref_author_role: editor
+  ref_type: journal
+  edition: 1
+  volume: 2
+  created_by: tester
+  updated_by: tester
+
+ref_without_children:
+  title: "Book without children"
+  citation: "Book by Blume"
+  citation_html: "Book by Blume"
+  display_title: Book by Blume
+  author: blume_c_l_von
+  language: undetermined
+  namespace: apni
+  parent: journal_with_children
+  ref_author_role: author
+  ref_type: book
+  edition: 1
+  volume: 2
+  created_by: tester
+  updated_by: tester
+
+bucket_reference_for_default_instances:
+  title: Bucket for default instances
+  citation: Bucket for default instances
+  citation_html: Bucket for default instances
+  display_title: Bucket for default instances
+  author: blume_c_l_von
+  language: undetermined
+  namespace: apni
+  ref_author_role: author
+  ref_type: book
+  edition: 1
+  volume: 2
+  created_by: tester
+  updated_by: tester
+
+nuytsia:
+  title: Nuytsia
+  citation: (1970-) Nuytsia
+  citation_html: (1970-) Nuytsia
+  display_title: (1970-) Nuytsia
+  author: dash
+  language: undetermined
+  namespace: apni
+  ref_author_role: unknown
+  ref_type: journal
+  publication_date: 1970-
+  created_by: tester
+  updated_by: tester
+
+telford_in_nuytsia:
+  title: Synostemon hamersleyensis (Phyllanthaceae), a new species endemic to the Pilbara, Western Australia
+  citation: "Telford, I.R.H. & Naaykens, J., (2015) Synostemon hamersleyensis (Phyllanthaceae), a new species endemic to the Pilbara, Western Australia. Nuytsia. 25 : 31-37"
+  citation_html: "Telford, I.R.H. & Naaykens, J., (2015) Synostemon hamersleyensis (Phyllanthaceae), a new species endemic to the Pilbara, Western Australia. Nuytsia. 25 : 31-37"
+  display_title: "Telford, I.R.H. & Naaykens, J., (2015) Synostemon hamersleyensis (Phyllanthaceae), a new species endemic to the Pilbara, Western Australia. Nuytsia. 25 : 31-37"
+  author: telford_and_naaykens
+  language: undetermined
+  namespace: apni
+  ref_author_role: author
+  ref_type: paper
+  year: 2015
+  volume: 25
+  created_by: tester
+  updated_by: tester
+
+by_author_with_just_one_reference:
+  title: By Author With Just One Reference
+  citation: By Author With Just One Reference
+  citation_html: By Author With Just One Reference
+  display_title: By Author With Just One Reference
+  author: has_one_reference_that_is_all
+  language: undetermined
+  namespace: apni
+  ref_author_role: author
+  ref_type: book
+  year: 2015
+  volume: 25
+  created_by: tester
+  updated_by: tester
+
+maslin_wattle_book:
+  title: Wattle - Acacias of Australia
+  display_title: Wattle - Acacias of Australia
+  citation: Maslin, B.R., (2000) Wattle - Acacias of Australia
+  citation_html: Maslin, B.R., (2000) Wattle - Acacias of Australia
+  author: maslin_without_abbrev
+  language: undetermined
+  namespace: apni
+  ref_author_role: author
+  ref_type: book
+  year: 2001
+  published: true
+  created_by: tester
+  updated_by: tester
+
+adams_paper_in_walsh_book:
+  title: Caryophyllaceae
+  display_title: Caryophyllaceae
+  citation: Adams, L.G. in Walsh, N.G. & Entwisle, T.J., (ed.) (1996) Caryophyllaceae. Flora of Victoria. 3 
+  citation_html: Adams, L.G. in Walsh, N.G. & Entwisle, T.J., (ed.) (1996) Caryophyllaceae. Flora of Victoria. 3 
+  author: adams_l_g
+  language: undetermined
+  namespace: apni
+  ref_author_role: author
+  ref_type: paper
+  year: 1996
+  created_by: tester
+  updated_by: tester
+
+walsh_paper_in_walsh_book:
+  title: Campanulaceae
+  display_title: Campanulaceae
+  citation: "Albrecht, D.E. & Walsh, N.G. in Walsh, N.G. & Entwisle, T.J., (ed.) (1999) Flora of Victoria. 4 : 553-578"
+  citation_html: "Albrecht, D.E. & Walsh, N.G. in Walsh, N.G. & Entwisle, T.J., (ed.) (1999) Flora of Victoria. 4 : 553-578"
+  author: albrecht_and_walsh
+  language: undetermined
+  namespace: apni
+  ref_author_role: author
+  ref_type: paper
+  year: 1999
+  created_by: tester
+  updated_by: tester
+
+chaplin_book:
+  title: chaplin Book
+  display_title: chaplin Book
+  citation: chaplin Book
+  citation_html: chaplin Book
+  author: chaplin
+  language: undetermined
+  namespace: apni
+  ref_author_role: author
+  ref_type: book
+  year: 1996
+  created_by: tester
+  updated_by: tester
+
+chaplin_chaplin_book:
+  title: chaplin chaplin Book
+  display_title: chaplin chaplin Book
+  citation: chaplin chaplin Book
+  citation_html: chaplin chaplin Book
+  author: chaplin
+  language: undetermined
+  namespace: apni
+  ref_author_role: author
+  ref_type: book
+  year: 1996
+  created_by: tester
+  updated_by: tester
+
+chaplin_chaplin_chaplin_book:
+  title: chaplin chaplin chaplin Book
+  display_title: chaplin chaplin chaplin Book
+  citation: chaplin chaplin chaplin Book
+  citation_html: chaplin chaplin chaplin Book
+  author: chaplin
+  language: undetermined
+  namespace: apni
+  ref_author_role: author
+  ref_type: book
+  year: 1996
+  created_by: tester
+  updated_by: tester
+
+chaplin_journal:
+  title: chaplin journal
+  display_title: chaplin journal
+  citation: chaplin journal
+  citation_html: chaplin journal
+  author: chaplin
+  language: undetermined
+  namespace: apni
+  ref_author_role: author
+  ref_type: journal
+  year: 1996
+  created_by: tester
+  updated_by: tester
+
+chaplin_chaplin_journal:
+  title: chaplin chaplin journal
+  display_title: chaplin chaplin journal
+  citation: chaplin chaplin journal
+  citation_html: chaplin chaplin journal
+  author: chaplin
+  language: undetermined
+  namespace: apni
+  ref_author_role: author
+  ref_type: journal
+  year: 1996
+  created_by: tester
+  updated_by: tester
+
+chaplin_chaplin_chaplin_journal:
+  title: chaplin chaplin chaplin Journal
+  display_title: chaplin chaplin chaplin Journal
+  citation: chaplin chaplin chaplin Journal
+  citation_html: chaplin chaplin chaplin Journal
+  author: chaplin
+  language: undetermined
+  namespace: apni
+  ref_author_role: editor
+  ref_type: journal
+  year: 1996
+  created_by: tester
+  updated_by: tester
+
+for_change_detection:
+  title: the title
+  display_title: the title
+  citation: the citation
+  citation_html: the citation
+  author: albrecht_and_walsh
+  language: undetermined
+  namespace: apni
+  ref_author_role: author
+  ref_type: series
+  year: 1999
+  created_by: tester
+  updated_by: tester
+
+for_resolving_typeaheads:
+  title: the title
+  display_title: the title
+  citation: the citation
+  citation_html: the citation
+  author: albrecht_and_walsh
+  language: undetermined
+  namespace: apni
+  parent: unpublished_book_for_change_detection
+  ref_author_role: author
+  ref_type: book
+  year: 1999
+  created_by: tester
+  updated_by: tester
+
+for_whole_record_change_detection:
+  title: the title
+  display_title: the title
+  citation: the citation
+  citation_html: the citation
+  ref_author_role: author
+  author: albrecht_and_walsh
+  language: undetermined
+  namespace: apni
+  ref_type: section
+  year: 1999
+  published: true
+  parent: for_resolving_typeaheads
+  created_by: tester
+  updated_by: tester
+
+paper_in_bulletin_of_torrey_botanical_club:
+  title: Not Set
+  display_title: Not Set
+  citation: the citation
+  citation_html: the citation
+  ref_author_role: author
+  author: albrecht_and_walsh
+  language: undetermined
+  namespace: apni
+  ref_type: paper
+  year: 1907
+  published: true
+  parent: bulletin_of_torrey_botanical_club
+  created_by: tester
+  updated_by: tester
+
+bulletin_of_torrey_botanical_club:
+  title: Bulletin of the Torrey Botanical Club
+  display_title: Bulletin of the Torrey Botanical Club
+  citation: (1870-) Bulletin of the Torrey Botanical Club
+  citation_html: (1870-) Bulletin of the Torrey Botanical Club
+  ref_author_role: editor
+  author: dash
+  language: undetermined
+  namespace: apni
+  ref_type: journal
+  publication_date: 1870-
+  published: true
+  created_by: tester
+  updated_by: tester
+
+unpublished_book_for_change_detection:
+  title: some title
+  display_title: some title
+  citation: some citation
+  citation_html: some citation
+  author: dummy_author_1
+  language: undetermined
+  namespace: apni
+  ref_author_role: author
+  ref_type: book
+  year: 2001
+  published: false
+  parent: bulletin_of_torrey_botanical_club
+  created_by: tester
+  updated_by: tester
+
+mueller_1882_section:
+  title: Not set 
+  display_title:  Not set
+  citation:	Mueller, F.J.H. von, (1882) Systematic Census of Australian Plants 
+  citation_html:	Mueller, F.J.H. von, (1882) Systematic Census of Australian Plants 
+  author: mueller_von
+  language: undetermined
+  namespace: apni
+  ref_author_role: author
+  ref_type: section
+  year: 1882
+  published: true
+  publication_date: 1882
+  created_by: tester
+  updated_by: tester
+
+australasian_chemist_and_druggist:
+  title: Not set 
+  display_title:  Not set
+  citation:	Mueller, F.J.H. von & Bailey, F.M., (1882) Australasian Chemist and Druggist
+  citation_html:	Mueller, F.J.H. von & Bailey, F.M., (1882) Australasian Chemist and Druggist
+  author: mueller_von_and_bailey
+  language: undetermined
+  namespace: apni
+  ref_author_role: unknown
+  ref_type: unknown
+  year: 1882
+  published: true
+  publication_date: (Apr. 1882)
+  created_by: tester
+  updated_by: tester
+
+bailey_catalogue_qld_plants:
+  title: Not set 
+  display_title:  Not set
+  citation:	Bailey, F.M., (1913) Comprehensive Catalogue of Queensland Plants
+  citation_html:	Bailey, F.M., (1913) Comprehensive Catalogue of Queensland Plants
+  author: bailey_fm
+  language: undetermined
+  namespace: apni
+  ref_author_role: unknown
+  ref_type: section
+  year: 1913
+  published: true
+  publication_date: early 1913
+  created_by: tester
+  updated_by: tester
+
+stanley_and_ross_1986_flora_of_se_qld:
+  author: stanley_and_ross
+  bhl_url: 
+  citation: Stanley, T.D. & Ross, E.M., (1983-1989) Flora of South-eastern Queensland
+  citation_html: Stanley, T.D. & Ross, E.M., (1983-1989) <i>Flora of South-eastern Queensland</i>
+  created_at: 1996-05-22 14:00:00.000000000 Z
+  created_by: ApniDump
+  display_title: Flora of South-eastern Queensland
+  doi: 
+  edition: 
+  language: undetermined
+  namespace: apni
+  publication_date: 1983-1989
+  published: true
+  published_location: Brisbane
+  publisher: Queensland Herbarium
+  ref_author_role: unknown
+  ref_type: book
+  source_id: 131964
+  source_id_string: '131964'
+  source_system: PUBLICATION
+  title: Flora of South-eastern Queensland
+  tl2: 
+  updated_at: 2012-01-05 13:00:00.000000000 Z
+  updated_by: CUL07D
+  valid_record: false
+  verbatim_author: 
+  verbatim_citation: 
+  verbatim_reference: 
+  volume: 
+  year: 
+  
+stanley_in_stanley_and_ross:
+  author: stanley
+  citation: Stanley, T.D. in Stanley, T.D. & Ross, E.M., (1986) Flora of South-eastern Queensland. 2
+  citation_html: Stanley, T.D. in Stanley, T.D. & Ross, E.M., (1986) <i>Flora of South-eastern Queensland</i>. 2
+  created_by: CUL07D
+  display_title: Myrtaceae
+  language: undetermined
+  namespace: apni
+  pages: 119-218
+  parent: stanley_and_ross_1986_flora_of_se_qld
+  publication_date: '1986'
+  published: true
+  published_location: 
+  publisher: 
+  ref_author_role: unknown
+  ref_type: section
+  source_id_string: '191688'
+  source_system: REFERENCE
+  title: Myrtaceae
+  updated_by: BLEPSCHI
+  valid_record: false
+  verbatim_author: 
+  verbatim_citation: Stanley, T.D. in Stanley, T.D. & Ross, E.M., (1986) <i>Flora of South-eastern Queensland</i> 2.
+  verbatim_reference: 
+  volume: '2'
+  year: 1986
+
+cavanilles_icones:
+  title: Not set 
+  display_title:  Not set
+  citation:	"Cavanilles, A.J., (1797) Icones et Descriptiones Plantarum. 4(1)"
+  citation_html:	"Cavanilles, A.J., (1797) Icones et Descriptiones Plantarum. 4(1)"
+  author: cav
+  language: undetermined
+  namespace: apni
+  ref_author_role: unknown
+  ref_type: section
+  year: 1797
+  published: true
+  publication_date: Sep. Dec. 1797
+  created_by: tester
+  updated_by: tester
+
+never_used:
+  title: Not set 
+  display_title:  Not set
+  citation:	"Never Used"
+  citation_html:	"Never Used"
+  author: cav
+  language: undetermined
+  namespace: apni
+  ref_author_role: unknown
+  ref_type: section
+  year: 1797
+  published: true
+  publication_date: Sep. Dec. 1797
+  created_by: tester
+  updated_by: tester
+    
+master:
+  title: Not set 
+  display_title:  Not set
+  citation:	"Master"
+  citation_html:	"Master"
+  author: cav
+  language: undetermined
+  namespace: apni
+  ref_author_role: unknown
+  ref_type: section
+  year: 1797
+  published: true
+  publication_date: Sep. Dec. 1797
+  created_by: tester
+  updated_by: tester
+
+duplicate:
+  title: Not set 
+  display_title:  Not set
+  citation:	"Duplicate"
+  citation_html:	"Duplicate"
+  author: cav
+  language: undetermined
+  namespace: apni
+  ref_author_role: unknown
+  ref_type: section
+  year: 1797
+  published: true
+  publication_date: Sep. Dec. 1797
+  created_by: tester
+  updated_by: tester
+  duplicate_of: master
+
+dummy_reference_for_eflora_service:
+  title: dummy reference for eflora services
+  citation: dummy reference for eflora services
+  citation_html: dummy reference for eflora services
+  display_title: dummy reference for eflora services
+  author: dummy_author_for_eflora_service
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: paper
+  year: 1987
+  created_by: tester
+  updated_by: tester
+
+book_without_parent: 
+  title: book without parent
+  citation: book without parent
+  citation_html: book without parent
+  display_title: book without parent
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: book
+  created_by: tester
+  updated_by: tester
+
+chapter_without_parent: 
+  title: chapter without parent
+  citation: chapter without parent
+  citation_html: chapter without parent
+  display_title: chapter without parent
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: chapter
+  created_by: tester
+  updated_by: tester
+
+database_record_without_parent: 
+  title: database record without parent
+  citation: database record without parent
+  citation_html: database record without parent
+  display_title: database record without parent
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: database_record
+  created_by: tester
+  updated_by: tester
+
+paper_without_parent: 
+  title: paper without parent
+  citation: paper without parent
+  citation_html: paper without parent
+  display_title: paper without parent
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: paper
+  created_by: tester
+  updated_by: tester
+
+section_without_parent: 
+  title: section without parent
+  citation: section without parent
+  citation_html: section without parent
+  display_title: section without parent
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: section
+  created_by: tester
+  updated_by: tester
+
+series_without_parent: 
+  title: series without parent
+  citation: series without parent
+  citation_html: series without parent
+  display_title: series without parent
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: series
+  created_by: tester
+  updated_by: tester
+
+unknown_without_parent: 
+  title: unknown without parent
+  citation: unknown without parent
+  citation_html: unknown without parent
+  display_title: unknown without parent
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: unknown
+  created_by: tester
+  updated_by: tester
+
+book_with_series_parent: 
+  title: book with series parent
+  citation: book with series parent
+  citation_html: book with series parent
+  display_title: book with series parent
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: book
+  parent: parent_series
+  created_by: tester
+  updated_by: tester
+
+chapter_with_book_parent: 
+  title: chapter with book parent
+  citation: chapter with book parent
+  citation_html: chapter with book parent
+  display_title: chapter with book parent
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: chapter
+  parent: a_book
+  created_by: tester
+  updated_by: tester
+
+parent_series:
+  title: parent series
+  citation: parent series
+  citation_html: parent series
+  display_title: parent series
+  author: joe
+  language: undetermined
+  namespace: apni
+  ref_author_role: editor
+  ref_type: series
+  year: 1989
+  created_by: tester
+  updated_by: tester
+
+book_with_book_parent: 
+  title: book with book parent
+  citation: book with book parent
+  citation_html: book with book parent
+  display_title: book with book parent
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: book
+  parent: book_by_brassard
+  created_by: tester
+  updated_by: tester
+
+section_with_book_parent: 
+  title: section with book parent
+  citation: section with book parent
+  citation_html: section with book parent
+  display_title: section with book parent
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: section
+  parent: a_book
+  created_by: tester
+  updated_by: tester
+
+paper_with_journal_parent: 
+  title: paper with journal parent
+  citation: paper with journal parent
+  citation_html: paper with journal parent
+  display_title: paper with journal parent
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: paper
+  parent: a_journal
+  created_by: tester
+  updated_by: tester
+
+chapter_by_dummy:
+  title: chapter by dummy
+  citation: chapter by dummy
+  citation_html: chapter by dummy
+  display_title: chapter by dummy
+  author: dummy_author_1
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: chapter
+  year: 1987
+  created_by: tester
+  updated_by: tester
+
+ref_type_is_book: 
+  title: Ref type is book
+  citation: Ref type is book
+  citation_html: Ref type is book
+  display_title: Ref type is book
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: book
+  created_by: tester
+  updated_by: tester
+
+ref_type_is_chapter: 
+  title: Ref type is chapter
+  citation: Ref type is chapter
+  citation_html: Ref type is chapter
+  display_title: Ref type is chapter
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: chapter
+  created_by: tester
+  updated_by: tester
+
+
+ref_type_is_database: 
+  title: Ref type is database
+  citation: Ref type is database
+  citation_html: Ref type is database
+  display_title: Ref type is database
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: database
+  created_by: tester
+  updated_by: tester
+
+
+ref_type_is_herbarium_annotation: 
+  title: Ref type is herbarium annotation
+  citation: Ref type is herbarium annotation
+  citation_html: Ref type is herbarium annotation
+  display_title: Ref type is herbarium annotation
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: herbarium_annotation
+  created_by: tester
+  updated_by: tester
+
+ref_type_is_index: 
+  title: Ref type is index
+  citation: Ref type is index
+  citation_html: Ref type is index
+  display_title: Ref type is index
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: index
+  created_by: tester
+  updated_by: tester
+
+ref_type_is_journal: 
+  title: Ref type is journal
+  citation: Ref type is journal
+  citation_html: Ref type is journal
+  display_title: Ref type is journal
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: journal
+  created_by: tester
+  updated_by: tester
+
+ref_type_is_series: 
+  title: Ref type is series
+  citation: Ref type is series
+  citation_html: Ref type is series
+  display_title: Ref type is series
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: series
+  created_by: tester
+  updated_by: tester
+
+ref_type_is_personal_communication: 
+  title: Ref type is personal communication
+  citation: Ref type is personal communication
+  citation_html: Ref type is personal communication
+  display_title: Ref type is personal communication
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: personal_communication
+  created_by: tester
+  updated_by: tester
+
+ref_type_is_database_record: 
+  title: Ref type is database record
+  citation: Ref type is database record
+  citation_html: Ref type is database record
+  display_title: Ref type is database record
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: database_record
+  created_by: tester
+  updated_by: tester
+
+ref_type_is_paper: 
+  title: Ref type is paper
+  citation: Ref type is paper
+  citation_html: Ref type is paper
+  display_title: Ref type is paper
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: paper
+  created_by: tester
+  updated_by: tester
+
+ref_type_is_section: 
+  title: Ref type is section
+  citation: Ref type is section
+  citation_html: Ref type is section
+  display_title: Ref type is section
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: section
+  created_by: tester
+  updated_by: tester
+
+ref_type_is_unknown: 
+  title: Ref type is unknown
+  citation: Ref type is unknown
+  citation_html: Ref type is unknown
+  display_title: Ref type is unknown
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: unknown
+  created_by: tester
+  updated_by: tester
+
+a_book:
+  title: a book
+  citation: a book
+  citation_html: a book
+  display_title: a book
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: book
+  created_by: tester
+  updated_by: tester
+
+a_journal:
+  title: a journal
+  citation: a journal
+  citation_html: a journal
+  display_title: a journal
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: journal
+  created_by: tester
+  updated_by: tester
+
+a_paper:
+  title: a paper
+  citation: a paper
+  citation_html: a paper
+  display_title: a paper
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: paper
+  created_by: tester
+  updated_by: tester
+
+a_chapter:
+  title: a chapter
+  citation: a chapter
+  citation_html: a chapter
+  display_title: a chapter
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: chapter
+  created_by: tester
+  updated_by: tester
+
+a_database:
+  title: a database
+  citation: a database
+  citation_html: a database
+  display_title: a database
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: database
+  created_by: tester
+  updated_by: tester
+
+a_database_record:
+  title: a database record
+  citation: a database record
+  citation_html: a database record
+  display_title: a database record
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: database_record
+  created_by: tester
+  updated_by: tester
+
+an_herbarium_annotation:
+  title: an herbarium annotation
+  citation: an herbarium annotation
+  citation_html: an herbarium annotation
+  display_title: an herbarium annotation
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: herbarium_annotation
+  created_by: tester
+  updated_by: tester
+
+an_index:
+  title: an index
+  citation: an index
+  citation_html: an index
+  display_title: an index
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: index
+  created_by: tester
+  updated_by: tester
+
+a_series:
+  title: a series
+  citation: a series
+  citation_html: a series
+  display_title: a series
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: series
+  created_by: tester
+  updated_by: tester
+
+a_section:
+  title: a section
+  citation: a section
+  citation_html: a section
+  display_title: a section
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: section
+  created_by: tester
+  updated_by: tester
+
+a_xpaper:
+  title: a paper
+  citation: a paper
+  citation_html: a paper
+  display_title: a paper
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: paper
+  created_by: tester
+  updated_by: tester
+
+an_unknown:
+  title: an unknown
+  citation: an unknown
+  citation_html: an unknown
+  display_title: an unknown
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: unknown
+  created_by: tester
+  updated_by: tester
+
+journal_for_citation_for_parent_test:
+  title: some text journal_one_word and more
+  citation: some text journal_one_word and more
+  citation_html: some text journal_one_word and more
+  display_title: some text journal_one_word and more
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: journal
+  created_by: tester
+  updated_by: tester
+
+journal_two_for_citation_for_parent_test:
+  title: some text journal_one_word
+  citation: some text journal_one_word
+  citation_html: some text journal_one_word
+  display_title: some text journal_one_word
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: journal
+  created_by: tester
+  updated_by: tester
+
+database_with_parent: 
+  title: database with parent
+  citation: database with parent
+  citation_html: database with parent
+  display_title: database with parent
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: database
+  parent: book_by_brassard
+  created_by: tester
+  updated_by: tester
+
+database_record_with_database_parent: 
+  title: database record with database parent
+  citation: database record with database parent
+  citation_html: database record with database parent
+  display_title: database record with database parent
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: database_record
+  parent: database_with_parent
+  created_by: tester
+  updated_by: tester
+
+herbarium_annotation_with_parent: 
+  title: herbarium annotation with parent
+  citation: herbarium annotation with parent
+  citation_html: herbarium annotation with parent
+  display_title: herbarium annotation with parent
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: herbarium_annotation
+  parent: book_by_brassard
+  created_by: tester
+  updated_by: tester
+
+
+index_with_parent: 
+  title: index with parent
+  citation: index with parent
+  citation_html: index with parent
+  display_title: index with parent
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: index
+  parent: book_by_brassard
+  created_by: tester
+  updated_by: tester
+
+
+journal_with_parent: 
+  title: journal with parent
+  citation: journal with parent
+  citation_html: journal with parent
+  display_title: journal with parent
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: journal
+  parent: book_by_brassard
+  created_by: tester
+  updated_by: tester
+
+
+series_with_parent: 
+  title: series with parent
+  citation: series with parent
+  citation_html: series with parent
+  display_title: series with parent
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: series
+  parent: book_by_brassard
+  created_by: tester
+  updated_by: tester
+
+personal_communication_with_parent: 
+  title: personal communication with parent
+  citation: personal communication with parent
+  citation_html: personal communication with parent
+  display_title: personal communication with parent
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: personal_communication
+  parent: book_by_brassard
+  created_by: tester
+  updated_by: tester
+
+series_a_b:
+  title: aaaa bbbb
+  citation: aaaa bbbb
+  citation_html: aaaa bbbb
+  display_title: aaaa bbbb
+  author: joe
+  language: undetermined
+  namespace: apni
+  ref_author_role: editor
+  ref_type: series
+  year: 1989
+  created_by: tester
+  updated_by: tester
+
+unknown_with_unknown_parent: 
+  title: unknown with unknown parent
+  citation: unknown with unknown parent
+  citation_html: unknown with unknown parent
+  display_title: unknown with unknown parent
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: unknown
+  parent: an_unknown
+  created_by: tester
+  updated_by: tester
+
+has_a_matching_citation_1: 
+  title: has a matching citation
+  citation: has a matching citation
+  citation_html: has a matching citation
+  display_title: has a matching citation
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: unknown
+  parent: an_unknown
+  created_by: tester
+  updated_by: tester
+
+has_a_matching_citation_2: 
+  title: has a matching citation
+  citation: has a matching citation
+  citation_html: has a matching citation
+  display_title: has a matching citation
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: unknown
+  parent: an_unknown
+  created_by: tester
+  updated_by: tester
+
+origin_of_species: 
+  title: on the origin of species
+  citation: on the origin of species
+  citation_html: on the origin of species
+  display_title: on the origin of species
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: dash
+  ref_type: unknown
+  parent: an_unknown
+  created_by: tester
+  updated_by: tester
+

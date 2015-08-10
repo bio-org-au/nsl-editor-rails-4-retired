@@ -1,0 +1,13 @@
+<h5>Create a synonym</h5>
+
+<%= render partial: 'form_create_synonymy' %>
+<div id="search-result-details-info-message-container" class="message-container"></div>
+<div id="search-result-details-error-message-container" class="message-container"></div>
+<br>
+<br>
+<div class="hidden instance-form-success-message">
+  <%= link_to("Refresh", 
+              search_path(query_on: 'instance', query_field: 'name-id', query: @instance.name_id), 
+              class: 'btn btn-primary',
+              title: "Re-query instances for #{@instance.name.full_name}") %>
+</div>

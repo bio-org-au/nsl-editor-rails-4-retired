@@ -1,0 +1,17 @@
+<div class="focus-details <%= 'freshly-created' if Time.now.strftime("%Y%m%d") == @name.created_at.strftime("%Y%m%d") &&
+                          (@name.created_at - @name.updated_at).abs < 10 %>">
+  <% if notice %> <p id="notice"><%= notice %></p> <% end %>
+
+  <br>
+
+  <%= link_to(@name.full_name, search_path(query_on: 'name', query: %Q(id:#{@name.id})),id: 'tab-heading') %>
+
+  <div>&nbsp;</div>
+
+  <%= render partial: 'names/tabs/tabs' %>
+
+  <%= render partial: "names/tabs/#{@tab}" %>
+
+  <span class='server-response-time'><%= "(#{(Time.now - @start_time).round(2)}s)" if @start_time %></span>
+
+</div><!-- /end .focus-details -->

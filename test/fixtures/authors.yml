@@ -1,0 +1,404 @@
+haeckel:
+  name: "Haeckel, Ernst Heinrich Philipp August"
+  abbrev: Haeckel
+  namespace_id: namespace.apni
+  created_by: kirstenc
+  updated_by: kirstenc
+
+reveal:
+  name: "Reveal"
+  abbrev: Reveal
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+cronquist:
+  name: "Cronquist, A.J., Takhtajan, A.L. & Zimmermann, Walter M."
+  abbrev: "Cronquist, Takht. & W.Zimm."
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+brongn:
+  name: "Brongniart, A.T."
+  abbrev: "Brongn."
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+unknown: 
+  name: "-"
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+brassard: 
+  name: " Brassard [x] "
+  abbrev: "x"
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+heyland: 
+  name: "   Heyland [y]  "
+  abbrev: "x"
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+bentham:
+  name: "  A B Bentham "
+  abbrev: "Benth."
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+joe:
+  name: "  Joe  "
+  abbrev: "J."
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+blume_c_l_von:
+  name: "  Blume, C.L. [von]  "
+  abbrev: "Blum."
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+hooker:
+  name: "Hooker, W.J."
+  abbrev: "Hook."
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+burbidge:
+  name: "Burbidge, N.T."
+  abbrev: "Burb."
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+dash:
+  name: "-"
+  abbrev: "-"
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+sturm:
+  name: "Sturm, J.W."
+  abbrev: "SJW"
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+for_typeahead_on_name_null_abbrev:
+  name: 'for typeahead on name null abbrev'
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+for_typeahead_on_name_has_abbrev:
+  name: 'for typeahead on name null abbrev'
+  abbrev: 'ftonna'
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+for_typeahead_on_name_empty_string_abbrev:
+  name: 'for typeahead on name empty string abbrev'
+  abbrev: ''
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+fred:
+  name: "Fred"
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+britten:
+  name: "Britten, J."
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+beadle_evans_carolin:
+  name: "Beadle, N.C.W., Evans, O.D. & Carolin, R.C."
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+duplicate_abbrev_1:
+  abbrev: "Dupe."
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+duplicate_abbrev_2:
+  abbrev: "Dupe."
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+unique_abbrev:
+  abbrev: "Unique."
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+gaertn:
+  abbrev: "Gaertn."
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+telford_and_naaykens:
+  name: Telford, I.R.H. & Naaykens, J.
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+author_that_can_be_deleted:
+  name: Author that can be deleted
+  abbrev: AuthorToDelete
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+has_one_name_that_is_all:
+  name: Has One Name That Is All
+  abbrev: HasOneNameThatIsAll
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+has_one_reference_that_is_all:
+  name: Has One Reference That Is All
+  abbrev: HasOneReferenceThatIsAll
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+has_one_duplicate_that_is_all:
+  name: Has One Duplicate That Is All
+  abbrev: HasOneDuplicateThatIsAll
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+is_a_duplicate_of_that_is_all:
+  name: Is A Duplicate Of That Is All
+  abbrev: IsADuplicateOfThatIsAll
+  duplicate_of: has_one_duplicate_that_is_all
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+is_a_name_authority_of_every_type:
+  name: Is A Name Authority Of Every Type
+  abbrev: IsANameAuthorityOfEveryType
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+has_authored_one_name_that_is_all:
+  name: Has Authored One Name That Is All
+  abbrev: HasAuthoredOneNameThatIsAll
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+has_base_authored_one_name_that_is_all:
+  name: Has Base Authored One Name That Is All
+  abbrev: HasBaseAuthoredOneNameThatIsAll
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+has_ex_base_authored_one_name_that_is_all:
+  name: Has Ex Base Authored One Name That Is All
+  abbrev: HasExBaseAuthoredOneNameThatIsAll
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+has_ex_authored_one_name_that_is_all:
+  name: Has Ex Authored One Name That Is All
+  abbrev: HasExAuthoredOneNameThatIsAll
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+has_sanctioned_one_name_that_is_all:
+  name: Has Sanctioned One Name That Is All
+  abbrev: HasSanctionedOneNameThatIsAll
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+has_no_abbrev:
+  name: Has No Abbrev
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+maslin_with_abbrev:
+  name: Maslin, B.R.
+  abbrev: Maslin
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+maslin_without_abbrev:
+  name: Maslin, B.R.
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+adams_l_g:
+  name: Adams, L.G.
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+albrecht_and_walsh:
+  name: "Albrecht, D.E. & Walsh, N.G."
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+has_abbrev_only:
+  abbrev: hasabbrevonly
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+has_name_only:
+  name: hasnameonly
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+dummy_author_1:
+  name: dummy 1
+  abbrev: dummy 1
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+dummy_author_2:
+  name: dummy 2
+  abbrev: dummy 2
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+mueller_von:
+  name: Mueller, F.J.H. von
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+mueller_von_and_bailey:
+  name: Mueller, F.J.H. von & Bailey, F.M.
+  abbrev: F.Muell. & F.M.Bailey
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+bailey_fm:
+  name: Bailey, F.M.
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+muller_f_with_umlaut:
+  name: Müller, F.
+  abbrev: Fr.Müll.
+  full_name: Müller, Fritz (fl. 1901)
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+accent_grave_cedilla_etc:
+  name: éàç
+  abbrev: éàç
+  full_name: éàç
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+stanley:
+  name: stanley
+  full_name: stanley
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+stanley_and_ross:
+  name: Stanley & Ross
+  full_name: 
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+cav:
+  name: Cavanilles, A.J.
+  abbrev: Cav.
+  namespace_id: apni
+  created_by: greg
+  updated_by: greg
+
+dummy_author_for_eflora_service:
+  name: dummy author for eflora service
+  namespace_id: namespace.apni
+  created_by: kirstenc
+  updated_by: kirstenc
+
+chaplin:
+  name: chaplin
+  abbrev: chaplin
+  namespace_id: namespace.apni
+  created_by: tester
+  updated_by: tester
+
+has_matching_abbrev_1:
+  name: has matching abbrev
+  abbrev: has matching abbrev
+  namespace_id: namespace.apni
+  created_by: tester
+  updated_by: tester
+
+has_matching_abbrev_2:
+  name: has matching abbrev
+  abbrev: has matching abbrev
+  namespace_id: namespace.apni
+  created_by: tester
+  updated_by: tester
+
+has_matching_name_1:
+  name: has matching name
+  abbrev: has matching name
+  namespace_id: namespace.apni
+  created_by: tester
+  updated_by: tester
+
+has_matching_name_2:
+  name: has matching name
+  abbrev: has matching name
+  namespace_id: namespace.apni
+  created_by: tester
+  updated_by: tester
+
+moe:
+  name: moe
+  abbrev: moe
+  namespace_id: namespace.apni
+  created_by: tester
+  updated_by: tester
+

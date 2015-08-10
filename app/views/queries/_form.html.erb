@@ -1,0 +1,82 @@
+  <div id="query-form-container" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+<%= form_for(@query) do |f| %>
+  <% if @query.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@query.errors.count, "error") %> prohibited this query from being saved:</h2>
+
+      <ul>
+      <% @query.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+    <div id="query-form-name-container" class="simple-border col-lg-3">
+    <h3>Name</h3> 
+
+    <%= render partial: 'text_field', locals: {id: 'name-full-name', label: 'Full name'} %>
+    <%= render partial: 'text_field', locals: {id: 'name-simple-name', label: 'Simple name'} %>
+    <%= render partial: 'text_field', locals: {id: 'name-name-element', label: 'Name element'} %>
+    <%= render partial: 'text_field', locals: {id: 'name-name-type', label: 'Name type'} %>
+    <%= render partial: 'text_field', locals: {id: 'name-not-name-type', label: 'Not name type'} %>
+    <%= render partial: 'text_field', locals: {id: 'name-author-name', label: 'Author name'} %>
+    <%= render partial: 'text_field', locals: {id: 'name-ex-author-name', label: 'Ex-author name'} %>
+    <%= render partial: 'text_field', locals: {id: 'name-base-author-name', label: 'Base-author name'} %>
+    <%= render partial: 'text_field', locals: {id: 'name-ex-base-author-name', label: 'Ex-base-author name'} %>
+    <%= render partial: 'text_field', locals: {id: 'name-name-rank', label: 'Name rank'} %>
+
+  </div>
+
+ 
+    <div id="query-form-reference-container" class="simple-border col-lg-3">
+    <h3>Reference</h3> 
+    <label for="reference-citation" class="">Citation</label>
+    <input id="reference-citation" 
+           type="text" 
+           value="<%= @parsed_search_string[:rc] %>" 
+           name="query[reference-citation]" 
+           class="form-control 
+           query-field"/>
+    <label for="reference-title" class="">Title</label>
+    <input id="reference-title" 
+           type="text" 
+           value="<%= @parsed_search_string[:rc] %>" 
+           name="query[reference-title]" 
+           class="form-control 
+           query-field"/>
+    <label for="reference-year" class="">Year</label>
+    <input id="reference-year" 
+           type="text" 
+           value="<%= @parsed_search_string[:ry] %>" 
+           name="query[reference-year]" 
+           class="form-control query-field"/>
+    <label for="reference-parent-title" class="">Parent title</label>
+    <input id="reference-parent-title" 
+           name="query[reference-parent-title]" 
+           type="text" 
+           value="<%= @parsed_search_string[:rpt] %>" 
+           class="form-control query-field"/>
+    </div>
+    <div id="query-form-author-container" class="simple-border col-lg-3">
+    <h3>Author</h3> 
+    <label for="author-name" class="">Name</label>
+    <input id="author-name" 
+           name="query[author-name]" 
+           type="text" 
+           value="<%= @parsed_search_string[:an] %>" 
+           class="form-control query-field"/>
+    </div>
+
+    <br>
+    <div class="actions">
+      <%= f.submit value: "Search", 
+                   class:"btn btn-primary build-query-button",
+                   title: "Run the advanced search through the main search field" %>
+      <%= f.submit value: "Cancel", 
+                   class:"btn btn-primary cancel-advanced-search-button",
+                   title: "Cancel the advanced search screen." %>
+    </div>
+
+  </div>
+<% end %>

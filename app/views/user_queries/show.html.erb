@@ -1,0 +1,64 @@
+<div class="focus-details " >
+  <% tab_tab_index = @tab_index %>
+  <% if notice %>
+    <p id="notice"><%= notice %></p>
+  <% end %>
+  <div class="inner">
+    <h3>Query</h3>  
+    <ul class="nav nav-tabs">
+      <% this_tab = 'tab_show_1' %>
+      <% if @tab.match(Regexp.new(this_tab+'\z')) %>
+        <li class='active first' >
+          <%= link_to "Details",
+                      '#',
+                      id:"user-query-show-tab",
+                      class: 'tab',
+                      "data-tab-name"=>"#{this_tab}", 
+                      tabindex:"#{increment_tab_index(1)}",
+                      "data-prev-tab"=>".search-result.showing-details" %>
+        </li>
+      <% else %>
+        <li class='non-active first'>
+          <%= link_to "Details", 
+                      '#',
+                      id:"user-query-show-tab", 
+                      class:'tab edit-details-tab', 
+                      "data-edit-url"=>user_query_tab_path(@user_query,tab:"#{this_tab}"),
+                      title: 'View a summary.',
+                      tabindex:"#{@tab_index}",
+                      "data-prev-tab"=>".search-result.showing-details" %>
+        </li>
+      <% end %>
+            
+      <% this_tab = 'tab_identity' %>
+      <% if @tab.match(Regexp.new(this_tab)) %>
+        <li class='active last' >
+          <%= link_to "Identity",
+                      '#',
+                      id:"user-query-identity-tab",
+                      class: 'tab',
+                      "data-tab-name"=>"#{this_tab}", 
+                      tabindex:"#{increment_tab_index(20)}",
+                      "data-arrow-right"=>".search-result.showing-details" %>
+        </li>
+      <% else %>
+        <li class='non-active last'>
+          <%= link_to "Identity", 
+                      '#',
+                      id:"user-query-identity-tab", 
+                      class:'tab edit-details-tab', 
+                      "data-edit-url"=>user_query_tab_path(@user_query,tab:"#{this_tab}"),
+                      title: 'View a summary.',
+                      tabindex:"#{increment_tab_index(20)}",
+                      "data-arrow-right"=>".search-result.showing-details" %>
+        </li>
+      <% end %>
+
+    </ul>
+
+      <%= render partial: "#{@tab}" %>
+    <br>
+    <span class='server-response-time'><%= "(#{(Time.now - @start_time).round(2)}s)" if @start_time %></span>
+
+  </div><!-- /end .inner -->
+</div><!-- /end .focus-details -->

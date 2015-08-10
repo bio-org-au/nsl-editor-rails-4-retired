@@ -1,0 +1,30 @@
+
+<li class="dropdown define-left-border-when-active">
+    <a href="#"
+       id="help-dropdown-menu-link"
+       class="dropdown-toggle"
+       tabindex="3"
+       data-toggle="dropdown">Help<span class="caret"></span>
+    </a>
+    <ul id="create-dropdown-menu" class="dropdown-menu" role="menu">
+      <li role="presentation">
+        <%= link_to "Editor help", help_index_path, title: 'View editor help', tabindex: '-1' %>
+      </li>
+      <li role="presentation">
+        <%= link_to "Name rules", name_rules_path, title: 'See the name rules', tabindex: '-1' %>
+      </li>
+      <li role="presentation">
+        <%= link_to "Reference type rules", ref_type_rules_path, title: 'See reference type rules', tabindex: '-1' %>
+      </li>
+      <li role="presentation">
+        <%= link_to "History of changes to the editor", history_path, title: 'See the history of changes to the editor', tabindex: '-1' %>
+      </li>
+      <li role="presentation">
+        <%= link_to "Instance models", instance_models_path, title: 'See diagrams modelling instances', tabindex: '-1' %>
+      </li>
+      <li role="presentation">
+        <%= link_to "Typeaheads", typeaheads_path, title: 'About typeahead fields', tabindex: '-1' %>
+      </li>
+    </ul>
+</li>
+

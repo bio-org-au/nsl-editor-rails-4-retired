@@ -1,0 +1,35 @@
+
+<% delete_link = link_to("Delete Comment",
+                         '#',
+                         id: "comment-delete-link",
+                         class: "btn btn-warning unconfirmed-delete-link pull-right",
+                         tabindex: increment_tab_index,
+                         data: {show_this_id: "confirm-or-cancel-link-container-#{comment.id}"})
+%>
+
+<% confirm_delete_link = link_to("Confirm delete",
+                                 comment_path(comment.id),
+                                 class: "btn btn-danger",
+                                 tabindex: increment_tab_index,
+                                 remote: true,
+                                 method: :delete)
+%>
+
+<% cancel_delete_link = link_to("Cancel delete",
+                                '#',
+                                id: "cancel-delete-link",
+                                class: "btn btn-default cancel-link",
+                                tabindex: increment_tab_index,
+                                data: {enable_this_id: 'comment-delete-link',
+                                       hide_this_id: "confirm-or-cancel-link-container-#{comment.id}"})
+%>
+
+<% confirm_or_cancel_element = %Q(<div id="confirm-or-cancel-link-container-#{comment.id}"
+                                  class="comment confirm-or-cancel-delete-link pull-right hidden">
+                                  #{confirm_delete_link}
+#{cancel_delete_link}</div>)
+%>
+
+<div class="actions"> <%= delete_link.html_safe %> </div>
+<div class="width-100-percent"> <%= confirm_or_cancel_element.html_safe %> </div>
+

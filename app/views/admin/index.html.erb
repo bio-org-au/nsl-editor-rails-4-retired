@@ -1,0 +1,93 @@
+<div id="search-results" class="col-xs-12 col-sm-8 col-md-9 col-lg-9 nothing-selected stylish-scrollbar">
+  <div id="search-results-inner" class="no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 search-results-inner">
+    <table  id="search-results-table" class="table table-condensed search-results" data-summary="Results of the latest search.">
+    <tr><td colspan="99" width="80-percent">
+        
+    <h2>Admin</h2>
+    <h3>Configuration</h3>
+
+    <table class="table table-condensed search-results width-100-percent">
+    <tr><td class="text">Rails.configuration.services_clientside_root_url</td><td> <%= Rails.configuration.services_clientside_root_url %> </td></tr>
+    <tr><td>Rails.configuration.services</td><td> <%= Rails.configuration.services %> </td></tr>
+    <tr><td>Rails.configuration.name_services</td><td> <%= Rails.configuration.name_services %> </td></tr>
+    <tr><td>Rails.configuration.reference_services</td><td> <%= Rails.configuration.reference_services %> </td></tr>
+
+    <tr><td>Rails.configuration.nsl_links</td><td> <%= Rails.configuration.nsl_links %> </td></tr>
+
+    <tr><td>Rails.configuration.ldap_admin_username</td><td> <%= Rails.configuration.ldap_admin_username %> </td></tr>
+
+    <tr><td colspan="2">&nbsp;</td></tr>
+
+    <tr><td>Rails.configuration.ldap_base</td><td> <%= Rails.configuration.ldap_base %> </td></tr>
+
+    <tr><td>Rails.configuration.ldap_host</td><td> <%= Rails.configuration.ldap_host %> </td></tr>
+
+    <tr><td>Rails.configuration.ldap_port</td><td> <%= Rails.configuration.ldap_port %> </td></tr>
+
+    <tr><td>Rails.configuration.ldap_users</td><td> <%= Rails.configuration.ldap_users %> </td></tr>
+
+    <tr><td>Rails.configuration.ldap_groups</td><td> <%= Rails.configuration.ldap_groups %> </td></tr>
+
+    <tr><td colspan="2">&nbsp;</td></tr>
+
+    <tr><td>Rails.configuration.relative_url_root</td><td> <%= Rails.configuration.relative_url_root %> </td></tr>
+
+    <tr><td>Rails.configuration.session_key_tag</td><td> <%= Rails.configuration.session_key_tag %> </td></tr>
+
+    <tr><td>Rails.configuration.display_as_test</td><td> <%= Rails.configuration.try('display_as_test') %> </td></tr>
+
+    <tr><td>Rails.env</td><td> <%= Rails.env %> </td></tr>
+
+    <tr><td>Ruby platform</td><td> <%= RUBY_PLATFORM %> </td></tr>
+    <tr><td>Ruby version</td><td> <%= RUBY_VERSION %> </td></tr>
+
+    <tr><td>Rails</td><td> <%= Rails::VERSION::STRING %> </td></tr>
+
+    <tr><td>Database</td><td> <%= Rails.configuration.database_configuration[Rails.env]["database"] %> </td></tr>
+
+    <tr><td>Schema version</td><td> <%= DbVersion.current %> </td></tr>
+
+    <tr><td colspan="2">&nbsp;</td></tr>
+
+
+    <tr><td>Path to NSL Web APP</td><td> <%= Rails.configuration.path_to_nsl_web_app_root = '/nsl/services/' %> </td></tr>
+
+    <tr><td>Path to NSL suggestions</td><td> <%= Rails.configuration.path_to_nsl_suggest = "/nsl/services/suggest/" %> </td></tr>
+
+    <tr><td>Path to broadcast file</td><td> <%= Rails.configuration.path_to_broadcast_file = "#{ENV['HOME']}/.nsl/broadcast.txt" %> </td></tr>
+
+    <tr><td colspan="2">&nbsp;</td></tr>
+
+    <tr><td colspan="2"><strong>Services used in the editor</strong></td></tr>
+    <% service_url = "#{Rails.configuration.services_clientside_root_url}docs/main.html" %>
+    <tr><td>API Doc </td><td> <%= link_to(service_url, service_url) %> </td></tr>
+
+    <tr><td colspan="2"><strong>Services that do not change data</strong></td></tr>
+    <% service_url = "#{Rails.configuration.services_clientside_root_url}api/tree/name/APC/91759" %>
+    <tr><td>A client side service </td><td> <%= link_to(service_url, service_url) %> </td></tr>
+		
+    <% service_url = "#{Rails.configuration.services_clientside_root_url}name/apni/91759/api/apc.json" %>
+    <tr><td>In APC?</td><td> <%= link_to(service_url, service_url) %> </td></tr>
+		
+    <% service_url = "#{Rails.configuration.services_clientside_root_url}name/apni/91759/api/apni.json" %>
+    <tr><td>In APNI? </td><td> <%= link_to(service_url, service_url) %> </td></tr>
+		
+    <% service_url = "#{Rails.configuration.services_clientside_root_url}name/apni/91759/api/family.json" %>
+    <tr><td>APNI Name Information</td><td> <%= link_to(service_url, service_url) %> </td></tr>
+
+    <% service_url = "#{Rails.configuration.services_clientside_root_url}name/apni/91759/api/name-strings.json" %>
+    <tr><td>Name strings</td><td> <%= link_to(service_url, service_url) %> </td></tr>
+		
+    <% service_url = "#{Rails.configuration.services_clientside_root_url}reference/apni/17525/api/citation-strings.json" %>
+    <tr><td>Reference strings</td><td> <%= link_to(service_url, service_url) %> </td></tr>
+
+   <tr><td colspan="2">&nbsp;</td></tr>
+
+    <tr><td>Test exception logging.</td><td><%= link_to icon('bomb','',class: 'black fa-2x'), throw_path, title:"Throw an exception" %></td></tr>
+
+    </table>
+
+    </td><td class="width-5-percent">&nbsp;</td></tr></table>
+  </div>
+</div>
+

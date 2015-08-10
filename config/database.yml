@@ -1,0 +1,17 @@
+
+
+# Get database config and credentials.
+
+<% File.open("#{ENV['HOME']}/.nsl/editor-database.yml", 'r') do |file| %>
+<% while line = file.gets %>
+<%= line %>
+<% end %>
+<% end %>
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  host: localhost
+  database: ned_test
+  username: gregc
+  password: gregc

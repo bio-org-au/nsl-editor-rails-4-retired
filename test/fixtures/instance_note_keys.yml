@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+neotype:
+  name: NEOTYPE
+  sort_order: 0
+
+ex_distribution:
+  name: EX.DISTRIBUTION
+  sort_order: 1
+
+apc_comment:
+  name: APC COMMENT
+  sort_order: 2
+
+common:
+  name: COMMON
+  sort_order: 16
+
+etymology:
+  name: ETYMOLOGY
+  sort_order: 17
+
+apni:
+  name: APNI
+  sort_order: 19

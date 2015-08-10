@@ -1,0 +1,63 @@
+
+<%= form_for(Instance.new,  url: { controller: 'instances', action: "create" }, remote: true) do |f| %>
+    <% if @instance && @instance.errors.any? %>
+        <div id="error_explanation">
+            <h2><%= pluralize(@instance.errors.count, "error") %> prohibited this instance from being saved:</h2>
+
+            <ul>
+                <% @instance.errors.full_messages.each do |msg| %>
+                    <li><%= msg %></li>
+                <% end %>
+            </ul>
+        </div>
+    <% end %>
+    The name
+    <div class="typeahead-container">
+      <section class='block width-100-percent'>
+        <input id="instance-name-typeahead"
+               class="typeahead form-control width-100-percent give-me-focus" 
+               tabindex="<%= increment_tab_index %>"
+               type="text" 
+               placeholder="Name"
+               value=""/>
+      </section>
+    </div>
+    <script> setUpInstanceName(); </script>
+    appears in
+    <%= show_field_as_linked_lookup('',@reference,'citation', search_path(query: %Q(id:#{@reference.id}),query_on: 'reference'),'reference') %>
+    on page
+    <%= f.text_field :page, tabindex: increment_tab_index %>
+    <br>
+    as an instance type*
+    <%= render partial: 'detail_line', locals: {
+            info: f.select(:instance_type_id, InstanceType.standalone_options,{include_blank: true},
+                           {value: @instance.try('instance_type_id'),data:{update_url: instance_path},
+                            class: 'form-control width-50-percent', title: "Select instance type", required: true, tabindex: increment_tab_index}),
+            label:''
+    }
+    %>
+    with verbatim name
+    <br>
+    <%= f.text_field :verbatim_name_string, class: "form-control", tabindex: increment_tab_index %>
+    with BHL URL
+    <%= f.text_field :bhl_url, class: "form-control", tabindex: increment_tab_index %>
+    <br>
+    <%= f.hidden_field :name_id %>
+    <br>
+    <%= f.hidden_field :reference_id, value: @reference.id %>
+    <br>
+    <%= f.submit class: 'btn-primary', tabindex: increment_tab_index %>
+    <br>
+    <br>
+    <% refresh_page_link = link_to("Refresh page",
+                                   '#', 
+                                   id: "refresh-page-from-details-link",
+                                   class: "btn btn-default hidden",
+                                   title: "Refresh page",
+                                   data: {instance_note_id: @instance.try('id')}) 
+   %>
+   <%= refresh_page_link %>
+<% end %>
+
+
+

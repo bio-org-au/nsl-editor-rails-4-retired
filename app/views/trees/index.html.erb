@@ -1,0 +1,31 @@
+<% title "Tree: #{params[:query]}" %>
+<% content_for :search_result_summary do %>
+  <%= render partial: 'trees/search_result_header' %>
+<% end %>
+
+<script type="text/javascript">
+    $(function() {
+        $('#apc-tree-component').on('change.nsl-tree', function(event, data) {
+            //$('#selected-stuff').text(JSON.stringify(data));
+        });
+    });
+
+</script>
+
+<div id="selected-stuff"></div>
+
+<div id="search-results" class="col-xs-12 col-sm-8 col-md-9 col-lg-9 nothing-selected stylish-scrollbar">
+    <div id="search-results-inner" class="no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 search-results-inner">
+
+        <div
+        ng-app="au.org.biodiversity.nsl.tree-browser"
+        main-tree
+        data-tree-label="APC"
+        data-name-id="<%= params[:query] %>"
+        id="apc-tree-component"
+        >
+            </div>
+
+    </div>
+</div>
+

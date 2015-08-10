@@ -1,0 +1,19 @@
+scientific: 
+  name: Scientific
+  sort_order: 0
+
+informal: 
+  name: Informal
+  sort_order: 2
+
+cultivar: 
+  name: Cultivar
+  sort_order: 1
+
+common: 
+  name: Common
+  sort_order: 3
+
+na: 
+  name: "n/a"
+  sort_order: 99

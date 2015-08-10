@@ -1,0 +1,7 @@
+<%= comment.text %><br>
+<% if comment.created_at == comment.updated_at %>
+  <%= "- #{comment.created_by.downcase}, #{as_date(comment.created_at)}" %>
+<% else %>
+  <%= "- #{comment.created_by.downcase}, #{as_date(comment.created_at)}, updated #{comment.updated_by.downcase}, #{as_date(comment.updated_at)}" %>
+<% end %>
+

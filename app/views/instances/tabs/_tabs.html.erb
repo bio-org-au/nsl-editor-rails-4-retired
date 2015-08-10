@@ -1,0 +1,115 @@
+<% increment_tab_index %>
+
+<ul class="nav nav-tabs">
+
+  <% this_tab = 'tab_show_1' %>
+
+  <% if @tabs_to_offer.include?('tab_show_1') %>
+
+    <%= render partial: 'instances/tabs/tab', locals: {first: true,
+                                      last: false,
+                                      this_tab: 'tab_show_1', 
+                                      link_text: "Details".html_safe,
+                                      link_id: 'instance-show-tab', 
+                                      link_title: 'Details',
+                                      tab_index: @tab_index,
+                                      prev_tab: '.search-result.show-details', 
+                                      next_tab: '' } %>
+  <% end %>
+
+  <% if @tabs_to_offer.include?('tab_edit') %>
+
+    <%= render partial: 'instances/tabs/tab', locals: {first: false,
+                                        last: false,
+                                        this_tab: 'tab_edit', 
+                                        link_text: "Edit".html_safe,
+                                        link_id: 'instance-edit-tab', 
+                                        link_title: 'Edit',
+                                        tab_index: increment_tab_index,
+                                        prev_tab: '',
+                                        next_tab: '' } %>
+  <% end %>
+
+  <% if @tabs_to_offer.include?('tab_edit_notes') %>
+  
+    <%= render partial: 'instances/tabs/tab', locals: {first: false,
+                                        last: false,
+                                        this_tab: 'tab_edit_notes', 
+                                        link_text: "Notes".html_safe,
+                                        link_id: 'instance-edit-notes-tab', 
+                                        link_title: 'Notes',
+                                        tab_index: increment_tab_index,
+                                        prev_tab: '',
+                                        next_tab: '' } %>
+  <% end %>
+  
+  <% if @tabs_to_offer.include?('tab_synonymy') %>
+  
+      <%= render partial: 'instances/tabs/tab', locals: {first: false,
+                                          last: false,
+                                          this_tab: 'tab_synonymy',
+                                          link_text: "Syn".html_safe,
+                                          link_id: 'instance-cite-this-instance-tab',
+                                          link_title: 'Synonym',
+                                          tab_index: increment_tab_index,
+                                          prev_tab: '',
+                                          next_tab: ''} %>
+  <% end %>
+
+  <% if @tabs_to_offer.include?('tab_unpublished_citation') %>
+
+    <%= render partial: 'instances/tabs/tab', locals: {first: false,
+                                          last: false,
+                                          this_tab: 'tab_unpublished_citation',
+                                          link_text: "Unpub".html_safe,
+                                          link_id: 'unpublished-citation-tab',
+                                          link_title: 'Unpublished citation',
+                                          tab_index: increment_tab_index,
+                                          prev_tab: '',
+                                          next_tab: ''} %>
+
+  <% end %>
+
+  <% if @tabs_to_offer.include?('tab_apc_placement') %>
+
+      <%= render partial: 'instances/tabs/tab', locals: {first: false,
+                                          last: false,
+                                          this_tab: 'tab_apc_placement',
+                                          link_text: "APC".html_safe,
+                                          link_id: 'instance-apc-placement-tab',
+                                          link_title: 'APC',
+                                          tab_index: increment_tab_index,
+                                          prev_tab: '',
+                                          next_tab: ''} %>
+  <% end %>
+
+  <% if @tabs_to_offer.include?('tab_comments') %>
+
+    <%= render partial: 'instances/tabs/tab', locals: {first: false,
+                                        last: true,
+                                        this_tab: 'tab_comments', 
+                                        link_text: "Adnot".html_safe,
+                                        link_id: 'instance-comments-tab', 
+                                        link_title: 'Adnot',
+                                        tab_index: increment_tab_index,
+                                        prev_tab: '',
+                                        next_tab: '' } %>
+  <% end %>
+
+  <% if @tabs_to_offer.include?('tab_copy_to_new_reference') %>
+	  <% if can? :qa, 'anything' %>
+      <%= render partial: 'instances/tabs/tab', locals: {first: false,
+                                        last: true,
+                                        this_tab: 'tab_copy_to_new_reference', 
+                                        link_text: "Copy".html_safe,
+                                        link_id: 'instance-copy-to-new-reference-tab', 
+                                        link_title: 'Copy the instance',
+                                        tab_index: increment_tab_index,
+                                        prev_tab: '',
+                                        next_tab: '.search-result.show-details' } %>
+    <% end %>
+  <% end %>
+
+</ul>
+
+

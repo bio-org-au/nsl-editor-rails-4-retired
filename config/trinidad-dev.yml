@@ -1,0 +1,7 @@
+---
+  environment: development
+  port: 2014
+  root_dir: '.'
+  context_path: '/nsl/editor'
+  context: '/nsl/editor'
+  threadsafe: true

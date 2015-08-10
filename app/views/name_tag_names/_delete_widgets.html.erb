@@ -1,0 +1,35 @@
+
+
+<% delete_link = link_to("Remove #{name_tag_name.name_tag.name} Tag",
+                         '#',
+                         id: "tag-delete-link-#{name_tag_name.tag_id}",
+                         class: "btn btn-warning unconfirmed-delete-link pull-right width-10em",
+                         tabindex: increment_tab_index,
+                         data: {show_this_id: "confirm-or-cancel-link-container-#{name_tag_name.tag_id}"})
+%>
+
+<% confirm_delete_link = link_to("Confirm delete",
+                                 delete_name_tag_name_path(name_id:name_tag_name.name_id,tag_id: name_tag_name.tag_id),
+                                 class: "btn btn-danger",
+                                 tabindex: increment_tab_index,
+                                 remote: true,
+                                 method: :delete)
+%>
+
+<% cancel_delete_link = link_to("Cancel delete",
+                                '#',
+                                id: "cancel-delete-link",
+                                class: "btn btn-default cancel-link",
+                                tabindex: increment_tab_index,
+                                data: {enable_this_id: "tag-delete-link-#{name_tag_name.tag_id}",
+                                       hide_this_id: "confirm-or-cancel-link-container-#{name_tag_name.tag_id}"})
+%>
+
+<% confirm_or_cancel_element = %Q(<div id="confirm-or-cancel-link-container-#{name_tag_name.tag_id}"
+                                  class="name_tag confirm-or-cancel-delete-link pull-right hidden">
+                                  #{confirm_delete_link} #{cancel_delete_link}</div>)
+%>
+<span class="actions"> <%= delete_link.html_safe %> </span>
+<span class="width-100-percent"> <%= confirm_or_cancel_element.html_safe %> </span>
+
+

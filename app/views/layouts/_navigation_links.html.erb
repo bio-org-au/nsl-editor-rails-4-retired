@@ -1,0 +1,12 @@
+
+<% if can? :edit, 'anything' %>
+  <li> <%= render partial: 'layouts/new_menu'   %> </li>
+  <li> <%= render partial: 'layouts/help_menu'  %> </li>
+  <li> <%= render partial: 'layouts/user_menu'  %> </li>
+<% elsif can? :read, 'anything' %>
+  <li> <%= render partial: 'layouts/help_menu'  %> </li>
+  <li> <%= render partial: 'layouts/user_menu'  %> </li>
+<% end %>
+<% if can? :admin, 'anything' %>
+  <li> <%= render partial: 'layouts/admin_menu' %> </li>
+<% end %>

@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sandi Chart</title>
+  <link rel="stylesheet" href="assets/normalize.css">
+  <link rel="stylesheet" href="assets/morris.css">
+  <link rel="stylesheet" href="assets/style.css">
+  <script src="assets/jquery.js"></script>
+  <script src="assets/chart.js"></script>
+  <script src="assets/script.js"></script>
+  <script type="text/javascript">
+    var data = [{"r10":418,"r11":59,"r20":296,"r21":155,"r30":1724,"r31":13,"r40":6,"r41":10,"timestamp":1435625472000}];
+  </script>
+</head>
+<body>
+  <a href="https://github.com/makaroni4/sandi_meter"><img style="position: absolute; top: 0; left: 0; border: 0;" src="assets/forkme.png" alt="Fork me on GitHub"></a>
+  <div class="container">
+    <header>
+      <h1 class="main-title">Sandi Metz rules</h1>
+      <h2 class="main-description js-report-date"></h2>
+    </header>
+    <section class="pie-charts">
+      <div id="pie1" class="pie-charts-item"></div>
+      <div id="pie2" class="pie-charts-item"></div>
+      <div id="pie3" class="pie-charts-item"></div>
+      <div id="pie4" class="pie-charts-item"></div>
+      <div class="clearfix"></div>
+    </section>
+    <nav class="main-menu">
+      <a href="#" class="main-menu-active js-menu-item" data-rel=".js-charts">Rules</a>
+      <a href="#" class="js-menu-item" data-rel=".js-charts-percentage">Rules %</a>
+      <a href="#" class="js-menu-item" data-rel=".js-progress">Progress %</a>
+      <a href="#" class="js-menu-item" data-rel=".js-details">Details</a>
+    </nav>
+    <section class="plot-charts js-charts js-tab-item">
+      <div class="plot-charts-item">
+        <div class="plot-charts-item-caption">Number of 100 line classes vs time</div>
+        <div class="plot-charts-item-graph plot1"></div>
+      </div>
+      <div class="plot-charts-item">
+        <div class="plot-charts-item-caption">Number of 5 line methods vs time</div>
+        <div class="plot-charts-item-graph plot2"></div>
+      </div>
+      <div class="clearfix"></div>
+      <div class="plot-charts-item">
+        <div class="plot-charts-item-caption">Number of methods calls with 4 params vs time</div>
+        <div class="plot-charts-item-graph plot3"></div>
+      </div>
+      <div class="plot-charts-item">
+        <div class="plot-charts-item-caption">Number of controllers with 1 instance variable vs time</div>
+        <div class="plot-charts-item-graph plot4"></div>
+      </div>
+      <div class="clearfix"></div>
+    </section>
+    <section class="details js-details js-tab-item">
+      <h2>Classes with 100+ lines</h2>
+<table class="details-stats">
+  <thead>
+    <tr>
+<th class="" title="">Class name</th>
+<th class="" title="">Size</th>
+<th class="" title="">Path</th>
+</tr>
+
+  </thead>
+  <tbody>
+    <tr>
+<td class="" title="">AuthorsController</td>
+<td class="" title="">104</td>
+<td class="" title="">./app/controllers/authors_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">InstancesController</td>
+<td class="" title="">207</td>
+<td class="" title="">./app/controllers/instances_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">NamesController</td>
+<td class="" title="">278</td>
+<td class="" title="">./app/controllers/names_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">ReferencesController</td>
+<td class="" title="">140</td>
+<td class="" title="">./app/controllers/references_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">Author::AsSearchEngine</td>
+<td class="" title="">107</td>
+<td class="" title="">./app/models/author/as_search_engine.rb</td>
+</tr>
+<tr>
+<td class="" title="">Author</td>
+<td class="" title="">111</td>
+<td class="" title="">./app/models/author.rb</td>
+</tr>
+<tr>
+<td class="" title="">Instance</td>
+<td class="" title="">677</td>
+<td class="" title="">./app/models/instance.rb</td>
+</tr>
+<tr>
+<td class="" title="">Name::AsSearchEngine</td>
+<td class="" title="">198</td>
+<td class="" title="">./app/models/name/as_search_engine.rb</td>
+</tr>
+<tr>
+<td class="" title="">Name::AsTypeahead</td>
+<td class="" title="">201</td>
+<td class="" title="">./app/models/name/as_typeahead.rb</td>
+</tr>
+<tr>
+<td class="" title="">Name</td>
+<td class="" title="">467</td>
+<td class="" title="">./app/models/name.rb</td>
+</tr>
+<tr>
+<td class="" title="">NameRank</td>
+<td class="" title="">195</td>
+<td class="" title="">./app/models/name_rank.rb</td>
+</tr>
+<tr>
+<td class="" title="">NameType</td>
+<td class="" title="">138</td>
+<td class="" title="">./app/models/name_type.rb</td>
+</tr>
+<tr>
+<td class="" title="">Reference::AsEdited</td>
+<td class="" title="">158</td>
+<td class="" title="">./app/models/reference/as_edited.rb</td>
+</tr>
+<tr>
+<td class="" title="">Reference</td>
+<td class="" title="">570</td>
+<td class="" title="">./app/models/reference.rb</td>
+</tr>
+<tr>
+<td class="" title="">Search</td>
+<td class="" title="">303</td>
+<td class="" title="">./app/models/search.rb</td>
+</tr>
+<tr>
+<td class="" title="">NamesControllerTest</td>
+<td class="" title="">166</td>
+<td class="" title="">./test/controllers/names_controller_test.rb</td>
+</tr>
+<tr>
+<td class="" title="">NamesCreateCultivarTest</td>
+<td class="" title="">108</td>
+<td class="" title="">./test/integration/names_create_cultivar_test.rb</td>
+</tr>
+<tr>
+<td class="" title="">NamesCreateScientific2Test</td>
+<td class="" title="">327</td>
+<td class="" title="">./test/integration/names_create_scientific_2_test.rb</td>
+</tr>
+<tr>
+<td class="" title="">NamesSearchTest</td>
+<td class="" title="">247</td>
+<td class="" title="">./test/integration/names_search_test.rb</td>
+</tr>
+<tr>
+<td class="" title="">InstanceTest</td>
+<td class="" title="">111</td>
+<td class="" title="">./test/models/instance_test.rb</td>
+</tr>
+<tr>
+<td class="" title="">FixtureTest</td>
+<td class="" title="">194</td>
+<td class="" title="">./test/models/name/fixture_test.rb</td>
+</tr>
+<tr>
+<td class="" title="">NameRankTest</td>
+<td class="" title="">139</td>
+<td class="" title="">./test/models/name/parent_rank_test.rb</td>
+</tr>
+<tr>
+<td class="" title="">OptionsForScientificCategoryTest</td>
+<td class="" title="">140</td>
+<td class="" title="">./test/models/name_status/options_for_scientific_category_test.rb</td>
+</tr>
+<tr>
+<td class="" title="">ReferenceTest</td>
+<td class="" title="">150</td>
+<td class="" title="">./test/models/reference_test.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented classes">ApplicationController</td>
+<td class="warning" title="Misindented classes"></td>
+<td class="warning" title="Misindented classes">./app/controllers/application_controller.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented classes">Author::AsEdited</td>
+<td class="warning" title="Misindented classes"></td>
+<td class="warning" title="Misindented classes">./app/models/author/as_edited.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented classes">Author::AsQuery</td>
+<td class="warning" title="Misindented classes"></td>
+<td class="warning" title="Misindented classes">./app/models/author/as_query.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented classes">Author::AsTypeahead</td>
+<td class="warning" title="Misindented classes"></td>
+<td class="warning" title="Misindented classes">./app/models/author/as_typeahead.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented classes">Instance::AsQuery</td>
+<td class="warning" title="Misindented classes"></td>
+<td class="warning" title="Misindented classes">./app/models/instance/as_query.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented classes">Name::AsCopier</td>
+<td class="warning" title="Misindented classes"></td>
+<td class="warning" title="Misindented classes">./app/models/name/as_copier.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented classes">Name::AsEdited</td>
+<td class="warning" title="Misindented classes"></td>
+<td class="warning" title="Misindented classes">./app/models/name/as_edited.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented classes">Name::AsQuery</td>
+<td class="warning" title="Misindented classes"></td>
+<td class="warning" title="Misindented classes">./app/models/name/as_query.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented classes">Reference::AsQuery</td>
+<td class="warning" title="Misindented classes"></td>
+<td class="warning" title="Misindented classes">./app/models/reference/as_query.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented classes">Reference::AsTypeahead</td>
+<td class="warning" title="Misindented classes"></td>
+<td class="warning" title="Misindented classes">./app/models/reference/as_typeahead.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented classes">User</td>
+<td class="warning" title="Misindented classes"></td>
+<td class="warning" title="Misindented classes">./app/models/user.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented classes">SessionsControllerTest</td>
+<td class="warning" title="Misindented classes"></td>
+<td class="warning" title="Misindented classes">./test/controllers/sessions_controller_test.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented classes">AvailableFieldsTest</td>
+<td class="warning" title="Misindented classes"></td>
+<td class="warning" title="Misindented classes">./test/integration/instances/create/synonymy/available_fields_test.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented classes">AvailableFieldsTest</td>
+<td class="warning" title="Misindented classes"></td>
+<td class="warning" title="Misindented classes">./test/integration/instances/create/unpublished/available_fields_test.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented classes">AvailableFieldsForOrdinaryEditorTest</td>
+<td class="warning" title="Misindented classes"></td>
+<td class="warning" title="Misindented classes">./test/integration/instances/edit/standalone/available_fields_for_ordinary_editor_test.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented classes">AvailableFieldsForQAEditorTest</td>
+<td class="warning" title="Misindented classes"></td>
+<td class="warning" title="Misindented classes">./test/integration/instances/edit/standalone/available_fields_for_QA_editor_test.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented classes">AvailableFieldsTest</td>
+<td class="warning" title="Misindented classes"></td>
+<td class="warning" title="Misindented classes">./test/integration/instances/edit/standalone/available_fields_test.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented classes">AvailableFieldsTest</td>
+<td class="warning" title="Misindented classes"></td>
+<td class="warning" title="Misindented classes">./test/integration/instances/edit/synonymy/available_fields_test.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented classes">AuthorAsTypeaheadOnAbbrevAuthorFoundTest</td>
+<td class="warning" title="Misindented classes"></td>
+<td class="warning" title="Misindented classes">./test/models/author/as_typeahead/on_abbrev/author_found_test.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented classes">AuthorAsTypeaheadOnNameExcludingAuthorExcludedTest</td>
+<td class="warning" title="Misindented classes"></td>
+<td class="warning" title="Misindented classes">./test/models/author/as_typeahead/on_name_excluding_one/author_excluded_test.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented classes">AuthorAsTypeaheadOnNameExcludingOneSimpleTest</td>
+<td class="warning" title="Misindented classes"></td>
+<td class="warning" title="Misindented classes">./test/models/author/as_typeahead/on_name_excluding_one/author_not_excluded_test.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented classes">OtherTest</td>
+<td class="warning" title="Misindented classes"></td>
+<td class="warning" title="Misindented classes">./test/models/name_type/options_for_category/other_test.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented classes">ScientificTest</td>
+<td class="warning" title="Misindented classes"></td>
+<td class="warning" title="Misindented classes">./test/models/name_type/options_for_category/scientific_test.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented classes">TypeaheadsOnCitationWordCountThreeWalshesTest</td>
+<td class="warning" title="Misindented classes"></td>
+<td class="warning" title="Misindented classes">./test/models/reference/typeaheads/on_citation/word_count/three_walshes_test.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented classes">TypeaheadsOnCitationWordCountTwoWalshesTest</td>
+<td class="warning" title="Misindented classes"></td>
+<td class="warning" title="Misindented classes">./test/models/reference/typeaheads/on_citation/word_count/two_walshes_test.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented classes">TypeaheadsOnCitationTwoWordsCorrectOrder</td>
+<td class="warning" title="Misindented classes"></td>
+<td class="warning" title="Misindented classes">./test/models/reference/typeaheads/on_citation/word_order/correct_order_two_words_test.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented classes">TypeaheadsOnCitationTwoWordsReverseOrder</td>
+<td class="warning" title="Misindented classes"></td>
+<td class="warning" title="Misindented classes">./test/models/reference/typeaheads/on_citation/word_order/reverse_order_two_words_test.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented classes">TypeaheadsOnCitationForDuplicateWordCountThreeWalshesTest</td>
+<td class="warning" title="Misindented classes"></td>
+<td class="warning" title="Misindented classes">./test/models/reference/typeaheads/on_citation_for_duplicate/word_count/three_walshes_test.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented classes">TypeaheadsOnCitationForDuplicateWordCountTwoWalshesTest</td>
+<td class="warning" title="Misindented classes"></td>
+<td class="warning" title="Misindented classes">./test/models/reference/typeaheads/on_citation_for_duplicate/word_count/two_walshes_test.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented classes">TypeaheadsOnCitationForDuplicateTwoWordsCorrectOrder</td>
+<td class="warning" title="Misindented classes"></td>
+<td class="warning" title="Misindented classes">./test/models/reference/typeaheads/on_citation_for_duplicate/word_order/correct_order_two_words_test.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented classes">TypeaheadsOnCitationForDuplicateTwoWordsReverseOrder</td>
+<td class="warning" title="Misindented classes"></td>
+<td class="warning" title="Misindented classes">./test/models/reference/typeaheads/on_citation_for_duplicate/word_order/reverse_order_two_words_test.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented classes">Struct</td>
+<td class="warning" title="Misindented classes"></td>
+<td class="warning" title="Misindented classes">./test/test_mock_services/app.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented classes">Reference</td>
+<td class="warning" title="Misindented classes"></td>
+<td class="warning" title="Misindented classes">./test/test_mock_services/app.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented classes">Name</td>
+<td class="warning" title="Misindented classes"></td>
+<td class="warning" title="Misindented classes">./test/test_mock_services/app.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented classes">InApc</td>
+<td class="warning" title="Misindented classes"></td>
+<td class="warning" title="Misindented classes">./test/test_mock_services/app.rb</td>
+</tr>
+
+  </tbody>
+</table>
+<div class="hint">NOTE: Red classes are misindented. Start improving your project by fixing them.</div><h2>Methods with 5+ lines</h2>
+<table class="details-stats">
+  <thead>
+    <tr>
+<th class="" title="">Class name</th>
+<th class="" title="">Method name</th>
+<th class="" title="">Size</th>
+<th class="" title="">Path</th>
+</tr>
+
+  </thead>
+  <tbody>
+    <tr>
+<td class="" title="">Search</td>
+<td class="" title="">run_search</td>
+<td class="" title="">91</td>
+<td class="" title="">./app/models/search.rb</td>
+</tr>
+<tr>
+<td class="" title="">AdvancedSearch</td>
+<td class="" title="">generic_bindings_to_where</td>
+<td class="" title="">51</td>
+<td class="" title="">./lib/advanced_search.rb</td>
+</tr>
+<tr>
+<td class="" title="">Search</td>
+<td class="" title="">which_model</td>
+<td class="" title="">42</td>
+<td class="" title="">./app/models/search.rb</td>
+</tr>
+<tr>
+<td class="" title="">Search</td>
+<td class="" title="">initialize</td>
+<td class="" title="">40</td>
+<td class="" title="">./app/models/search.rb</td>
+</tr>
+<tr>
+<td class="" title="">Reference::AsEdited</td>
+<td class="" title="">would_change?</td>
+<td class="" title="">36</td>
+<td class="" title="">./app/models/reference/as_edited.rb</td>
+</tr>
+<tr>
+<td class="" title="">NamesController</td>
+<td class="" title="">create_or_update_parent</td>
+<td class="" title="">33</td>
+<td class="" title="">./app/controllers/names_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">NamesController</td>
+<td class="" title="">create_or_update_second_parent</td>
+<td class="" title="">33</td>
+<td class="" title="">./app/controllers/names_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">Name::AsTypeahead</td>
+<td class="" title="">resolve_typeahead_author</td>
+<td class="" title="">33</td>
+<td class="" title="">./app/models/name/as_typeahead.rb</td>
+</tr>
+<tr>
+<td class="" title="">AdvancedSearch</td>
+<td class="" title="">generic_bindings_to_order_by</td>
+<td class="" title="">31</td>
+<td class="" title="">./lib/advanced_search.rb</td>
+</tr>
+<tr>
+<td class="" title="">Instance::AsCopier</td>
+<td class="" title="">copy_with_citations_to_new_reference</td>
+<td class="" title="">31</td>
+<td class="" title="">./app/models/instance/as_copier.rb</td>
+</tr>
+<tr>
+<td class="" title="">Name</td>
+<td class="" title="">raw_category</td>
+<td class="" title="">30</td>
+<td class="" title="">./app/models/name.rb</td>
+</tr>
+<tr>
+<td class="" title="">Instance</td>
+<td class="" title="">change_synonymy_to_unpublished_citation</td>
+<td class="" title="">30</td>
+<td class="" title="">./app/models/instance.rb</td>
+</tr>
+<tr>
+<td class="" title="">Name::AsTypeahead</td>
+<td class="" title="">resolve_typeahead_id</td>
+<td class="" title="">30</td>
+<td class="" title="">./app/models/name/as_typeahead.rb</td>
+</tr>
+<tr>
+<td class="" title="">Search</td>
+<td class="" title="">extract_search_target</td>
+<td class="" title="">29</td>
+<td class="" title="">./app/models/search.rb</td>
+</tr>
+<tr>
+<td class="" title="">NameType</td>
+<td class="" title="">category</td>
+<td class="" title="">28</td>
+<td class="" title="">./app/models/name_type.rb</td>
+</tr>
+<tr>
+<td class="" title="">UserQuery</td>
+<td class="" title="">run_search</td>
+<td class="" title="">28</td>
+<td class="" title="">./app/models/user_query.rb</td>
+</tr>
+<tr>
+<td class="" title="">InstancesController</td>
+<td class="" title="">create_cites_and_cited_by</td>
+<td class="" title="">26</td>
+<td class="" title="">./app/controllers/instances_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">SearchController</td>
+<td class="" title="">search</td>
+<td class="" title="">25</td>
+<td class="" title="">./app/controllers/search_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">Search</td>
+<td class="" title="">execute_query</td>
+<td class="" title="">24</td>
+<td class="" title="">./app/models/search.rb</td>
+</tr>
+<tr>
+<td class="" title=""></td>
+<td class="" title="">make_sure_details_are_showing</td>
+<td class="" title="">23</td>
+<td class="" title="">./test/test_helper.rb</td>
+</tr>
+<tr>
+<td class="" title="">AdvancedSearch</td>
+<td class="" title="">add_token_wildcards</td>
+<td class="" title="">20</td>
+<td class="" title="">./lib/advanced_search.rb</td>
+</tr>
+<tr>
+<td class="" title="">CommentsController</td>
+<td class="" title="">create</td>
+<td class="" title="">20</td>
+<td class="" title="">./app/controllers/comments_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">ApplicationHelper</td>
+<td class="" title="">tab_for_instance_type</td>
+<td class="" title="">19</td>
+<td class="" title="">./app/helpers/application_helper.rb</td>
+</tr>
+<tr>
+<td class="" title="">AdvancedSearch</td>
+<td class="" title="">interpret_sort_component</td>
+<td class="" title="">18</td>
+<td class="" title="">./lib/advanced_search.rb</td>
+</tr>
+<tr>
+<td class="" title="">Name::AsTypeahead</td>
+<td class="" title="">resolved_typeahead_params</td>
+<td class="" title="">18</td>
+<td class="" title="">./app/models/name/as_typeahead.rb</td>
+</tr>
+<tr>
+<td class="" title="">CommentsController</td>
+<td class="" title="">update</td>
+<td class="" title="">18</td>
+<td class="" title="">./app/controllers/comments_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">InstanceNotesController</td>
+<td class="" title="">create</td>
+<td class="" title="">18</td>
+<td class="" title="">./app/controllers/instance_notes_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">InstanceNotesController</td>
+<td class="" title="">update</td>
+<td class="" title="">18</td>
+<td class="" title="">./app/controllers/instance_notes_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">SessionsController</td>
+<td class="" title="">create</td>
+<td class="" title="">18</td>
+<td class="" title="">./app/controllers/sessions_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">Reference::AsEdited</td>
+<td class="" title="">update_if_changed</td>
+<td class="" title="">17</td>
+<td class="" title="">./app/models/reference/as_edited.rb</td>
+</tr>
+<tr>
+<td class="" title="">Name</td>
+<td class="" title="">set_names!</td>
+<td class="" title="">17</td>
+<td class="" title="">./app/models/name.rb</td>
+</tr>
+<tr>
+<td class="" title="">NamesController</td>
+<td class="" title="">new</td>
+<td class="" title="">17</td>
+<td class="" title="">./app/controllers/names_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">NameTagNamesController</td>
+<td class="" title="">create</td>
+<td class="" title="">16</td>
+<td class="" title="">./app/controllers/name_tag_names_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">Reference</td>
+<td class="" title="">set_citation!</td>
+<td class="" title="">16</td>
+<td class="" title="">./app/models/reference.rb</td>
+</tr>
+<tr>
+<td class="" title="">NamesController</td>
+<td class="" title="">update</td>
+<td class="" title="">16</td>
+<td class="" title="">./app/controllers/names_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">Name</td>
+<td class="" title="">create_parent</td>
+<td class="" title="">15</td>
+<td class="" title="">./app/models/name.rb</td>
+</tr>
+<tr>
+<td class="" title="">NameRank</td>
+<td class="" title="">parent</td>
+<td class="" title="">15</td>
+<td class="" title="">./app/models/name_rank.rb</td>
+</tr>
+<tr>
+<td class="" title="">Name</td>
+<td class="" title="">apc?</td>
+<td class="" title="">14</td>
+<td class="" title="">./app/models/name.rb</td>
+</tr>
+<tr>
+<td class="" title=""></td>
+<td class="" title="">assert_successful_create_for</td>
+<td class="" title="">13</td>
+<td class="" title="">./test/test_helper.rb</td>
+</tr>
+<tr>
+<td class="" title="">InstancesController</td>
+<td class="" title="">typeahead_for_name_showing_references_to_update_instance</td>
+<td class="" title="">13</td>
+<td class="" title="">./app/controllers/instances_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">InstancesController</td>
+<td class="" title="">create_cited_by</td>
+<td class="" title="">12</td>
+<td class="" title="">./app/controllers/instances_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">InstancesController</td>
+<td class="" title="">change_reference</td>
+<td class="" title="">12</td>
+<td class="" title="">./app/controllers/instances_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">Instance</td>
+<td class="" title="">would_change?</td>
+<td class="" title="">12</td>
+<td class="" title="">./app/models/instance.rb</td>
+</tr>
+<tr>
+<td class="" title="">Instance</td>
+<td class="" title="">deprec_selectable_types</td>
+<td class="" title="">12</td>
+<td class="" title="">./app/models/instance.rb</td>
+</tr>
+<tr>
+<td class="" title="">SearchController</td>
+<td class="" title="">index</td>
+<td class="" title="">12</td>
+<td class="" title="">./app/controllers/search_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">NamesController</td>
+<td class="" title="">show</td>
+<td class="" title="">12</td>
+<td class="" title="">./app/controllers/names_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">NamesController</td>
+<td class="" title="">create</td>
+<td class="" title="">12</td>
+<td class="" title="">./app/controllers/names_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">NamesCreateScientific2Test</td>
+<td class="" title="">assert_successful_create_for</td>
+<td class="" title="">11</td>
+<td class="" title="">./test/integration/names_create_scientific_2_test.rb</td>
+</tr>
+<tr>
+<td class="" title="">NameTagsController</td>
+<td class="" title="">create</td>
+<td class="" title="">11</td>
+<td class="" title="">./app/controllers/name_tags_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">AuthorsController</td>
+<td class="" title="">create</td>
+<td class="" title="">11</td>
+<td class="" title="">./app/controllers/authors_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">NamesEditTest</td>
+<td class="" title="">set_up_an_author</td>
+<td class="" title="">11</td>
+<td class="" title="">./test/integration/names_edit_test.rb</td>
+</tr>
+<tr>
+<td class="" title=""></td>
+<td class="" title="">wait_for</td>
+<td class="" title="">11</td>
+<td class="" title="">./test/test_helper.rb</td>
+</tr>
+<tr>
+<td class="" title=""></td>
+<td class="" title="">fill_in_typeahead</td>
+<td class="" title="">11</td>
+<td class="" title="">./test/test_helper.rb</td>
+</tr>
+<tr>
+<td class="" title="">UserQueriesController</td>
+<td class="" title="">create</td>
+<td class="" title="">11</td>
+<td class="" title="">./app/controllers/user_queries_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">UserQueriesController</td>
+<td class="" title="">update</td>
+<td class="" title="">11</td>
+<td class="" title="">./app/controllers/user_queries_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">InstancesController</td>
+<td class="" title="">destroy</td>
+<td class="" title="">11</td>
+<td class="" title="">./app/controllers/instances_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">NamesCreateCultivarTest</td>
+<td class="" title="">set_up_an_author</td>
+<td class="" title="">11</td>
+<td class="" title="">./test/integration/names_create_cultivar_test.rb</td>
+</tr>
+<tr>
+<td class="" title="">NamesCreateOtherTest</td>
+<td class="" title="">set_up_an_author</td>
+<td class="" title="">11</td>
+<td class="" title="">./test/integration/names_create_other_test.rb</td>
+</tr>
+<tr>
+<td class="" title="">QueriesController</td>
+<td class="" title="">create</td>
+<td class="" title="">11</td>
+<td class="" title="">./app/controllers/queries_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">ApplicationHelper</td>
+<td class="" title="">index_path</td>
+<td class="" title="">10</td>
+<td class="" title="">./app/helpers/application_helper.rb</td>
+</tr>
+<tr>
+<td class="" title="">Search</td>
+<td class="" title="">format_search_terms</td>
+<td class="" title="">10</td>
+<td class="" title="">./app/models/search.rb</td>
+</tr>
+<tr>
+<td class="" title="">InstancesController</td>
+<td class="" title="">show</td>
+<td class="" title="">10</td>
+<td class="" title="">./app/controllers/instances_controller.rb</td>
+</tr>
+<tr>
+<td class="" title=""></td>
+<td class="" title="">try_typeahead_single</td>
+<td class="" title="">10</td>
+<td class="" title="">./test/test_helper.rb</td>
+</tr>
+<tr>
+<td class="" title="">Comment</td>
+<td class="" title="">validate_only_one_parent</td>
+<td class="" title="">10</td>
+<td class="" title="">./app/models/comment.rb</td>
+</tr>
+<tr>
+<td class="" title="">SearchTools</td>
+<td class="" title="">format_search_terms</td>
+<td class="" title="">10</td>
+<td class="" title="">./lib/search_tools.rb</td>
+</tr>
+<tr>
+<td class="" title="">InstancesController</td>
+<td class="" title="">update</td>
+<td class="" title="">10</td>
+<td class="" title="">./app/controllers/instances_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">ApplicationHelper</td>
+<td class="" title="">show_field_as_link</td>
+<td class="" title="">10</td>
+<td class="" title="">./app/helpers/application_helper.rb</td>
+</tr>
+<tr>
+<td class="" title="">ApplicationHelper</td>
+<td class="" title="">show_path</td>
+<td class="" title="">10</td>
+<td class="" title="">./app/helpers/application_helper.rb</td>
+</tr>
+<tr>
+<td class="" title="">ApplicationHelper</td>
+<td class="" title="">show_children_query_link</td>
+<td class="" title="">10</td>
+<td class="" title="">./app/helpers/application_helper.rb</td>
+</tr>
+<tr>
+<td class="" title="">ApplicationHelper</td>
+<td class="" title="">show_ref_children_link</td>
+<td class="" title="">10</td>
+<td class="" title="">./app/helpers/application_helper.rb</td>
+</tr>
+<tr>
+<td class="" title="">InstancesController</td>
+<td class="" title="">copy_standalone</td>
+<td class="" title="">10</td>
+<td class="" title="">./app/controllers/instances_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">ActiveSupport::Logger::SimpleFormatter</td>
+<td class="" title="">call</td>
+<td class="" title="">10</td>
+<td class="" title="">./config/initializers/log_formatting.rb</td>
+</tr>
+<tr>
+<td class="" title="">Reference</td>
+<td class="" title="">title_citation</td>
+<td class="" title="">9</td>
+<td class="" title="">./app/models/reference.rb</td>
+</tr>
+<tr>
+<td class="" title=""></td>
+<td class="" title="">sign_in</td>
+<td class="" title="">9</td>
+<td class="" title="">./test/test_helper.rb</td>
+</tr>
+<tr>
+<td class="" title="">Reference::AsEdited</td>
+<td class="" title="">resolved_typeahead_params</td>
+<td class="" title="">9</td>
+<td class="" title="">./app/models/reference/as_edited.rb</td>
+</tr>
+<tr>
+<td class="" title="">QueriesController</td>
+<td class="" title="">update</td>
+<td class="" title="">9</td>
+<td class="" title="">./app/controllers/queries_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">InstanceNotesController</td>
+<td class="" title="">destroy</td>
+<td class="" title="">9</td>
+<td class="" title="">./app/controllers/instance_notes_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">NamesCreateCultivarTest</td>
+<td class="" title="">load_the_form</td>
+<td class="" title="">9</td>
+<td class="" title="">./test/integration/names_create_cultivar_test.rb</td>
+</tr>
+<tr>
+<td class="" title="">Name::AsTypeahead</td>
+<td class="" title="">set_typeahead_from_params</td>
+<td class="" title="">9</td>
+<td class="" title="">./app/models/name/as_typeahead.rb</td>
+</tr>
+<tr>
+<td class="" title="">NamesController</td>
+<td class="" title="">edit_as_category</td>
+<td class="" title="">9</td>
+<td class="" title="">./app/controllers/names_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">ApplicationHelper</td>
+<td class="" title="">show_field</td>
+<td class="" title="">9</td>
+<td class="" title="">./app/helpers/application_helper.rb</td>
+</tr>
+<tr>
+<td class="" title="">ApplicationHelper</td>
+<td class="" title="">show_field_as_linked_lookup</td>
+<td class="" title="">9</td>
+<td class="" title="">./app/helpers/application_helper.rb</td>
+</tr>
+<tr>
+<td class="" title="">ApplicationHelper</td>
+<td class="" title="">show_ref_parent_link</td>
+<td class="" title="">9</td>
+<td class="" title="">./app/helpers/application_helper.rb</td>
+</tr>
+<tr>
+<td class="" title="">CommentsController</td>
+<td class="" title="">destroy</td>
+<td class="" title="">9</td>
+<td class="" title="">./app/controllers/comments_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">ReferencesController</td>
+<td class="" title="">create</td>
+<td class="" title="">9</td>
+<td class="" title="">./app/controllers/references_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">Author</td>
+<td class="" title="">name_and_or_abbrev</td>
+<td class="" title="">9</td>
+<td class="" title="">./app/models/author.rb</td>
+</tr>
+<tr>
+<td class="" title="">InstanceBackDoor</td>
+<td class="" title="">change_reference</td>
+<td class="" title="">8</td>
+<td class="" title="">./app/models/instance_back_door.rb</td>
+</tr>
+<tr>
+<td class="" title="">NamesCreateCultivarTest</td>
+<td class="" title="">assert_successful_create_for</td>
+<td class="" title="">8</td>
+<td class="" title="">./test/integration/names_create_cultivar_test.rb</td>
+</tr>
+<tr>
+<td class="" title="">ApplicationHelper</td>
+<td class="" title="">entity_icon</td>
+<td class="" title="">8</td>
+<td class="" title="">./app/helpers/application_helper.rb</td>
+</tr>
+<tr>
+<td class="" title="">ApplicationHelper</td>
+<td class="" title="">treated_label</td>
+<td class="" title="">8</td>
+<td class="" title="">./app/helpers/application_helper.rb</td>
+</tr>
+<tr>
+<td class="" title="">Ldap</td>
+<td class="" title="">admin_search</td>
+<td class="" title="">8</td>
+<td class="" title="">./app/models/ldap.rb</td>
+</tr>
+<tr>
+<td class="" title="">NamesCreateOtherTest</td>
+<td class="" title="">assert_successful_create_for</td>
+<td class="" title="">8</td>
+<td class="" title="">./test/integration/names_create_other_test.rb</td>
+</tr>
+<tr>
+<td class="" title="">ApplicationHelper</td>
+<td class="" title="">treated_content</td>
+<td class="" title="">8</td>
+<td class="" title="">./app/helpers/application_helper.rb</td>
+</tr>
+<tr>
+<td class="" title="">ApplicationHelper</td>
+<td class="" title="">editable_check_box</td>
+<td class="" title="">8</td>
+<td class="" title="">./app/helpers/application_helper.rb</td>
+</tr>
+<tr>
+<td class="" title="">NamesEditTest</td>
+<td class="" title="">assert_successful_create_for</td>
+<td class="" title="">8</td>
+<td class="" title="">./test/integration/names_edit_test.rb</td>
+</tr>
+<tr>
+<td class="" title="">ReferencesController</td>
+<td class="" title="">update</td>
+<td class="" title="">8</td>
+<td class="" title="">./app/controllers/references_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">Instance::AsCopier</td>
+<td class="" title="">copy_with_new_name_id</td>
+<td class="" title="">7</td>
+<td class="" title="">./app/models/instance/as_copier.rb</td>
+</tr>
+<tr>
+<td class="" title="">NamesController</td>
+<td class="" title="">copy</td>
+<td class="" title="">7</td>
+<td class="" title="">./app/controllers/names_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">Instance</td>
+<td class="" title="">type_of_instance</td>
+<td class="" title="">7</td>
+<td class="" title="">./app/models/instance.rb</td>
+</tr>
+<tr>
+<td class="" title="">NameRank</td>
+<td class="" title="">epithet_type</td>
+<td class="" title="">7</td>
+<td class="" title="">./app/models/name_rank.rb</td>
+</tr>
+<tr>
+<td class="" title="">ApplicationHelper</td>
+<td class="" title="">typeahead_field</td>
+<td class="" title="">7</td>
+<td class="" title="">./app/helpers/application_helper.rb</td>
+</tr>
+<tr>
+<td class="" title="">InstanceType</td>
+<td class="" title="">standalone_options</td>
+<td class="" title="">7</td>
+<td class="" title="">./app/models/instance_type.rb</td>
+</tr>
+<tr>
+<td class="" title="">NamesController</td>
+<td class="" title="">new_row</td>
+<td class="" title="">7</td>
+<td class="" title="">./app/controllers/names_controller.rb</td>
+</tr>
+<tr>
+<td class="" title=""></td>
+<td class="" title="">load_new_hybrid_formula_form</td>
+<td class="" title="">7</td>
+<td class="" title="">./test/test_helper.rb</td>
+</tr>
+<tr>
+<td class="" title="">ApplicationHelper</td>
+<td class="" title="">display_pages</td>
+<td class="" title="">7</td>
+<td class="" title="">./app/helpers/application_helper.rb</td>
+</tr>
+<tr>
+<td class="" title="">UserQueriesController</td>
+<td class="" title="">destroy</td>
+<td class="" title="">7</td>
+<td class="" title="">./app/controllers/user_queries_controller.rb</td>
+</tr>
+<tr>
+<td class="" title=""></td>
+<td class="" title="">load_new_scientific_name_form</td>
+<td class="" title="">7</td>
+<td class="" title="">./test/test_helper.rb</td>
+</tr>
+<tr>
+<td class="" title="">Author</td>
+<td class="" title="">can_be_deleted?</td>
+<td class="" title="">7</td>
+<td class="" title="">./app/models/author.rb</td>
+</tr>
+<tr>
+<td class="" title="">AuthorsController</td>
+<td class="" title="">new</td>
+<td class="" title="">6</td>
+<td class="" title="">./app/controllers/authors_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">AdvancedSearch</td>
+<td class="" title="">add_trailing_wildcard</td>
+<td class="" title="">6</td>
+<td class="" title="">./lib/advanced_search.rb</td>
+</tr>
+<tr>
+<td class="" title="">Search</td>
+<td class="" title="">where</td>
+<td class="" title="">6</td>
+<td class="" title="">./app/models/search.rb</td>
+</tr>
+<tr>
+<td class="" title="">Name</td>
+<td class="" title="">apni?</td>
+<td class="" title="">6</td>
+<td class="" title="">./app/models/name.rb</td>
+</tr>
+<tr>
+<td class="" title="">Ldap</td>
+<td class="" title="">user_full_name</td>
+<td class="" title="">6</td>
+<td class="" title="">./app/models/ldap.rb</td>
+</tr>
+<tr>
+<td class="" title="">Ldap</td>
+<td class="" title="">users_groups</td>
+<td class="" title="">6</td>
+<td class="" title="">./app/models/ldap.rb</td>
+</tr>
+<tr>
+<td class="" title="">InstanceType</td>
+<td class="" title="">name_with_indefinite_article</td>
+<td class="" title="">6</td>
+<td class="" title="">./app/models/instance_type.rb</td>
+</tr>
+<tr>
+<td class="" title="">NamesEditTest</td>
+<td class="" title="">load_the_form</td>
+<td class="" title="">6</td>
+<td class="" title="">./test/integration/names_edit_test.rb</td>
+</tr>
+<tr>
+<td class="" title="">Instance</td>
+<td class="" title="">cites_this</td>
+<td class="" title="">6</td>
+<td class="" title="">./app/models/instance.rb</td>
+</tr>
+<tr>
+<td class="" title="">Author</td>
+<td class="" title="">name_for_citation</td>
+<td class="" title="">6</td>
+<td class="" title="">./app/models/author.rb</td>
+</tr>
+<tr>
+<td class="" title=""></td>
+<td class="" title="">standard_page_assertions</td>
+<td class="" title="">6</td>
+<td class="" title="">./test/test_helper.rb</td>
+</tr>
+<tr>
+<td class="" title="">Ability</td>
+<td class="" title="">initialize</td>
+<td class="" title="">6</td>
+<td class="" title="">./app/models/ability.rb</td>
+</tr>
+<tr>
+<td class="" title=""></td>
+<td class="" title="">sign_in_as_editor</td>
+<td class="" title="">6</td>
+<td class="" title="">./test/test_helper.rb</td>
+</tr>
+<tr>
+<td class="" title=""></td>
+<td class="" title="">sign_in_as_qaonly</td>
+<td class="" title="">6</td>
+<td class="" title="">./test/test_helper.rb</td>
+</tr>
+<tr>
+<td class="" title=""></td>
+<td class="" title="">sign_in_as_qaeditor</td>
+<td class="" title="">6</td>
+<td class="" title="">./test/test_helper.rb</td>
+</tr>
+<tr>
+<td class="" title=""></td>
+<td class="" title="">sign_in_as_read_only_user</td>
+<td class="" title="">6</td>
+<td class="" title="">./test/test_helper.rb</td>
+</tr>
+<tr>
+<td class="" title="">ApplicationHelper</td>
+<td class="" title="">icon</td>
+<td class="" title="">6</td>
+<td class="" title="">./app/helpers/application_helper.rb</td>
+</tr>
+<tr>
+<td class="" title="">UserQueriesController</td>
+<td class="" title="">new</td>
+<td class="" title="">6</td>
+<td class="" title="">./app/controllers/user_queries_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">ReferencesController</td>
+<td class="" title="">new_row</td>
+<td class="" title="">6</td>
+<td class="" title="">./app/controllers/references_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">NamesController</td>
+<td class="" title="">name_parent_suggestions</td>
+<td class="" title="">6</td>
+<td class="" title="">./app/controllers/names_controller.rb</td>
+</tr>
+<tr>
+<td class="" title=""></td>
+<td class="" title="">load_new_hybrid_formula_unknown_2nd_parent_form</td>
+<td class="" title="">6</td>
+<td class="" title="">./test/test_helper.rb</td>
+</tr>
+<tr>
+<td class="" title=""></td>
+<td class="" title="">load_new_author_form</td>
+<td class="" title="">6</td>
+<td class="" title="">./test/test_helper.rb</td>
+</tr>
+<tr>
+<td class="" title=""></td>
+<td class="" title="">select_from_menu</td>
+<td class="" title="">6</td>
+<td class="" title="">./test/test_helper.rb</td>
+</tr>
+<tr>
+<td class="" title="">NameTagNamesController</td>
+<td class="" title="">destroy</td>
+<td class="" title="">6</td>
+<td class="" title="">./app/controllers/name_tag_names_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">InstancesController</td>
+<td class="" title="">create</td>
+<td class="" title="">6</td>
+<td class="" title="">./app/controllers/instances_controller.rb</td>
+</tr>
+<tr>
+<td class="" title=""></td>
+<td class="" title="">try_typeahead_multi</td>
+<td class="" title="">6</td>
+<td class="" title="">./test/test_helper.rb</td>
+</tr>
+<tr>
+<td class="" title="">AuthorsController</td>
+<td class="" title="">update</td>
+<td class="" title="">6</td>
+<td class="" title="">./app/controllers/authors_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">ReferenceTest</td>
+<td class="" title="">debug</td>
+<td class="" title="">6</td>
+<td class="" title="">./test/models/reference_test.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented methods">ApplicationController</td>
+<td class="warning" title="Misindented methods">show_login_page</td>
+<td class="warning" title="Misindented methods"></td>
+<td class="warning" title="Misindented methods">./app/controllers/application_controller.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented methods">ApplicationController</td>
+<td class="warning" title="Misindented methods">current_user</td>
+<td class="warning" title="Misindented methods"></td>
+<td class="warning" title="Misindented methods">./app/controllers/application_controller.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented methods">ApplicationController</td>
+<td class="warning" title="Misindented methods">show_request_info</td>
+<td class="warning" title="Misindented methods"></td>
+<td class="warning" title="Misindented methods">./app/controllers/application_controller.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented methods">ApplicationController</td>
+<td class="warning" title="Misindented methods">authenticate</td>
+<td class="warning" title="Misindented methods"></td>
+<td class="warning" title="Misindented methods">./app/controllers/application_controller.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented methods">Author::AsEdited</td>
+<td class="warning" title="Misindented methods">would_change?</td>
+<td class="warning" title="Misindented methods"></td>
+<td class="warning" title="Misindented methods">./app/models/author/as_edited.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented methods">Author::AsEdited</td>
+<td class="warning" title="Misindented methods">update_if_changed</td>
+<td class="warning" title="Misindented methods"></td>
+<td class="warning" title="Misindented methods">./app/models/author/as_edited.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented methods">Author::AsEdited</td>
+<td class="warning" title="Misindented methods">resolved_typeahead_params</td>
+<td class="warning" title="Misindented methods"></td>
+<td class="warning" title="Misindented methods">./app/models/author/as_edited.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented methods">Author::AsEdited</td>
+<td class="warning" title="Misindented methods">resolve_id_for_author_typeahead</td>
+<td class="warning" title="Misindented methods"></td>
+<td class="warning" title="Misindented methods">./app/models/author/as_edited.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented methods">Name::AsCopier</td>
+<td class="warning" title="Misindented methods">copy_with_username</td>
+<td class="warning" title="Misindented methods"></td>
+<td class="warning" title="Misindented methods">./app/models/name/as_copier.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented methods">Name::AsCopier</td>
+<td class="warning" title="Misindented methods">copy_with_all_instances</td>
+<td class="warning" title="Misindented methods"></td>
+<td class="warning" title="Misindented methods">./app/models/name/as_copier.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented methods">Name::AsCopier</td>
+<td class="warning" title="Misindented methods">copy_with_instances</td>
+<td class="warning" title="Misindented methods"></td>
+<td class="warning" title="Misindented methods">./app/models/name/as_copier.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented methods">Name::AsCopier</td>
+<td class="warning" title="Misindented methods">xyz</td>
+<td class="warning" title="Misindented methods"></td>
+<td class="warning" title="Misindented methods">./app/models/name/as_copier.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented methods">Name::AsEdited</td>
+<td class="warning" title="Misindented methods">would_change?</td>
+<td class="warning" title="Misindented methods"></td>
+<td class="warning" title="Misindented methods">./app/models/name/as_edited.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented methods">User</td>
+<td class="warning" title="Misindented methods">edit?</td>
+<td class="warning" title="Misindented methods"></td>
+<td class="warning" title="Misindented methods">./app/models/user.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented methods">User</td>
+<td class="warning" title="Misindented methods">admin?</td>
+<td class="warning" title="Misindented methods"></td>
+<td class="warning" title="Misindented methods">./app/models/user.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented methods">User</td>
+<td class="warning" title="Misindented methods">apc?</td>
+<td class="warning" title="Misindented methods"></td>
+<td class="warning" title="Misindented methods">./app/models/user.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented methods">User</td>
+<td class="warning" title="Misindented methods">qa?</td>
+<td class="warning" title="Misindented methods"></td>
+<td class="warning" title="Misindented methods">./app/models/user.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented methods">Struct</td>
+<td class="warning" title="Misindented methods">to_map</td>
+<td class="warning" title="Misindented methods"></td>
+<td class="warning" title="Misindented methods">./test/test_mock_services/app.rb</td>
+</tr>
+<tr>
+<td class="warning" title="Misindented methods">Struct</td>
+<td class="warning" title="Misindented methods">to_json</td>
+<td class="warning" title="Misindented methods"></td>
+<td class="warning" title="Misindented methods">./test/test_mock_services/app.rb</td>
+</tr>
+
+  </tbody>
+</table>
+<div class="hint">NOTE: Red methods are misindented. Continue your way to perfect code by fixing them.</div><h2>Method calls with 4+ arguments</h2>
+<table class="details-stats">
+  <thead>
+    <tr>
+<th class="" title=""># of arguments</th>
+<th class="" title="">Path</th>
+</tr>
+
+  </thead>
+  <tbody>
+    <tr>
+<td class="" title="">5</td>
+<td class="" title="">./app/controllers/comments_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">11</td>
+<td class="" title="">./app/controllers/instances_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">5</td>
+<td class="" title="">./app/controllers/names_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">16</td>
+<td class="" title="">./app/controllers/names_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">23</td>
+<td class="" title="">./app/controllers/references_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">6</td>
+<td class="" title="">./app/controllers/references_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">6</td>
+<td class="" title="">./app/controllers/search_controller.rb</td>
+</tr>
+<tr>
+<td class="" title="">9</td>
+<td class="" title="">./app/helpers/application_helper.rb</td>
+</tr>
+<tr>
+<td class="" title="">5</td>
+<td class="" title="">./app/helpers/application_helper.rb</td>
+</tr>
+<tr>
+<td class="" title="">5</td>
+<td class="" title="">./app/helpers/application_helper.rb</td>
+</tr>
+<tr>
+<td class="" title="">5</td>
+<td class="" title="">./app/helpers/application_helper.rb</td>
+</tr>
+<tr>
+<td class="" title="">5</td>
+<td class="" title="">./app/models/search.rb</td>
+</tr>
+<tr>
+<td class="" title="">5</td>
+<td class="" title="">./app/models/search.rb</td>
+</tr>
+
+  </tbody>
+</table>
+<h2>Controllers with 1+ instance variables</h2>
+<table class="details-stats">
+  <thead>
+    <tr>
+<th class="" title="">Controller name</th>
+<th class="" title="">Action name</th>
+<th class="" title="">Instance variables</th>
+</tr>
+
+  </thead>
+  <tbody>
+    <tr>
+<td class="" title="">AuthorsController</td>
+<td class="" title="">show</td>
+<td class="" title="">@tab, @tab_index</td>
+</tr>
+<tr>
+<td class="" title="">AuthorsController</td>
+<td class="" title="">new</td>
+<td class="" title="">@author, @no_search_result_details</td>
+</tr>
+<tr>
+<td class="" title="">AuthorsController</td>
+<td class="" title="">create</td>
+<td class="" title="">@random_id, @author, @no_search_result_details</td>
+</tr>
+<tr>
+<td class="" title="">CommentsController</td>
+<td class="" title="">create</td>
+<td class="" title="">@message, @comment</td>
+</tr>
+<tr>
+<td class="" title="">CommentsController</td>
+<td class="" title="">update</td>
+<td class="" title="">@message</td>
+</tr>
+<tr>
+<td class="" title="">InstanceNotesController</td>
+<td class="" title="">create</td>
+<td class="" title="">@message, @instance_note</td>
+</tr>
+<tr>
+<td class="" title="">InstanceNotesController</td>
+<td class="" title="">update</td>
+<td class="" title="">@message</td>
+</tr>
+<tr>
+<td class="" title="">InstancesController</td>
+<td class="" title="">show</td>
+<td class="" title="">@tab, @tab_index, @tabs_to_offer</td>
+</tr>
+<tr>
+<td class="" title="">InstancesController</td>
+<td class="" title="">create_cited_by</td>
+<td class="" title="">@instance</td>
+</tr>
+<tr>
+<td class="" title="">InstancesController</td>
+<td class="" title="">create_cites_and_cited_by</td>
+<td class="" title="">@instance</td>
+</tr>
+<tr>
+<td class="" title="">InstancesController</td>
+<td class="" title="">update</td>
+<td class="" title="">@updated</td>
+</tr>
+<tr>
+<td class="" title="">InstancesController</td>
+<td class="" title="">change_reference</td>
+<td class="" title="">@updated, @instance, @instance_back_door</td>
+</tr>
+<tr>
+<td class="" title="">InstancesController</td>
+<td class="" title="">destroy</td>
+<td class="" title="">@message</td>
+</tr>
+<tr>
+<td class="" title="">InstancesController</td>
+<td class="" title="">copy_standalone</td>
+<td class="" title="">@instance, @message</td>
+</tr>
+<tr>
+<td class="" title="">NameTagNamesController</td>
+<td class="" title="">create</td>
+<td class="" title="">@name_tag_name, @message</td>
+</tr>
+<tr>
+<td class="" title="">NamesController</td>
+<td class="" title="">show</td>
+<td class="" title="">@apni_query_path, @tab, @tab_index, @instance</td>
+</tr>
+<tr>
+<td class="" title="">NamesController</td>
+<td class="" title="">edit_as_category</td>
+<td class="" title="">@apni_query_path, @tab, @tab_index</td>
+</tr>
+<tr>
+<td class="" title="">NamesController</td>
+<td class="" title="">new_row</td>
+<td class="" title="">@random_id, @category</td>
+</tr>
+<tr>
+<td class="" title="">NamesController</td>
+<td class="" title="">new</td>
+<td class="" title="">@name, @no_search_result_details</td>
+</tr>
+<tr>
+<td class="" title="">NamesController</td>
+<td class="" title="">update</td>
+<td class="" title="">@message, @name</td>
+</tr>
+<tr>
+<td class="" title="">NamesController</td>
+<td class="" title="">copy</td>
+<td class="" title="">@name, @message</td>
+</tr>
+<tr>
+<td class="" title="">QueriesController</td>
+<td class="" title="">advanced_search_string</td>
+<td class="" title="">@query, @parsed_search_string, @no_search_result_details</td>
+</tr>
+<tr>
+<td class="" title="">ReferencesController</td>
+<td class="" title="">show</td>
+<td class="" title="">@tab, @tab_index</td>
+</tr>
+<tr>
+<td class="" title="">ReferencesController</td>
+<td class="" title="">new</td>
+<td class="" title="">@reference, @no_search_result_details, @tab_index</td>
+</tr>
+<tr>
+<td class="" title="">ReferencesController</td>
+<td class="" title="">create</td>
+<td class="" title="">@form, @random_id, @reference, @error</td>
+</tr>
+<tr>
+<td class="" title="">ReferencesController</td>
+<td class="" title="">update</td>
+<td class="" title="">@form, @reference</td>
+</tr>
+<tr>
+<td class="" title="">SearchController</td>
+<td class="" title="">index</td>
+<td class="" title="">@no_search_result_details, @search_results</td>
+</tr>
+<tr>
+<td class="" title="">SearchController</td>
+<td class="" title="">search</td>
+<td class="" title="">@debug, @ng_template_path, @search, @no_search_result_details, @autofocus_search</td>
+</tr>
+<tr>
+<td class="" title="">UserQueriesController</td>
+<td class="" title="">show</td>
+<td class="" title="">@tab, @tab_index</td>
+</tr>
+
+  </tbody>
+</table>
+
+    </section>
+    <section class="charts-percentage js-charts-percentage js-tab-item">
+    </section>
+    <section class="progress js-progress js-tab-item">
+      <div class="plot-charts-item">
+        <div class="plot-charts-item-caption">Overall progress</div>
+        <div class="plot-charts-item-graph plot"></div>
+        <div class="clearfix"></div>
+      </div>
+    </section>
+    <footer class="main-footer">
+      Scanned with love by <a href="https://github.com/makaroni4/sandi_meter">sandi_meter</a> gem.
+      Please, <a href="https://github.com/makaroni4/sandi_meter/issues/new">leave an issue</a> or
+      <a href="mailto:makaroni4@gmail.com">email</a> some feedback!
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<% typeahead_field_id = "name-part-typeahead-#{preceding_name_type.gsub(/ /,'-')}" %>
+
+<div class="typeahead-container w70-30">
+  <%= render partial: 'typeahead_field', 
+             locals: {value: name_part.preceding_name.try('full_name'),
+                      input_field_id: "#{typeahead_field_id}",
+                      input_field_placeholder: "#{preceding_name_type}",
+                      input_field_label: name_part.preceding_name_type} %>
+</div>
+
+  
+
+  <%= form_for(name_part, 
+               url: name_part_path(name_part), 
+               remote: true, 
+               html:{class:"edit-form",
+                       data: {type: :json,
+                              typeahead_field: "#{typeahead_field_id}"} 
+                      }) do |f| %>
+
+    <%= f.hidden_field(:preceding_name_id,
+                       id: "preceding-name-id-#{preceding_name_type.gsub(/ /,'-')}",
+                       class:'save-on-blur')
+    %>
+  <% end %>
+
+
+

@@ -1,0 +1,17 @@
+<div class="focus-details 
+            <%= 'freshly-created' if Time.now.strftime("%Y%m%d") == @author.created_at.strftime("%Y%m%d") &&  (@author.created_at - @author.updated_at).abs < 10 %>">
+  <% tab_tab_index = @tab_index %>
+  <% if notice %>
+    <p id="notice"><%= notice %></p>
+  <% end %>
+  <div class="inner">
+    <h3>
+      <%= link_to(@author.name_and_or_abbrev, search_path(query_on: 'author', query: %Q(id:#{@author.id})),id: 'tab-heading') %>
+    </h3>
+    <%= render partial: 'tabs' %>
+    <%= render partial: "#{@tab}" %>
+    <br>
+    <span class='server-response-time'><%= "(#{(Time.now - @start_time).round(2)}s)" if @start_time %></span>
+
+  </div><!-- /end .inner -->
+</div><!-- /end .focus-details -->

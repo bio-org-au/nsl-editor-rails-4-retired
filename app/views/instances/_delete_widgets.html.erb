@@ -1,0 +1,61 @@
+<% delete_link = link_to("Delete Instance",
+                         '#',
+                         id: "instance-delete-link",
+                         class: "btn btn-warning unconfirmed-delete-link pull-right",
+                         tabindex: increment_tab_index,
+                         data: {show_this_id: "confirm-or-cancel-link-container"})
+-%>
+<% if @instance.allow_delete? %>
+
+<% confirm_delete_link = link_to("Confirm delete",
+                                 instance_path(@instance.id),
+                                 class: "btn btn-danger",
+                                 tabindex: increment_tab_index,
+                                 remote: true,
+                                 method: :delete)
+-%>
+
+<% cancel_delete_link = link_to("Cancel delete",
+                                '#',
+                                id: "cancel-delete-link",
+                                class: "btn btn-default cancel-link",
+                                tabindex: increment_tab_index,
+                                data: {enable_this_id: 'instance-delete-link',
+                                       hide_this_id: 'confirm-or-cancel-link-container'})
+-%>
+
+<% confirm_or_cancel_element = %Q(<div id="confirm-or-cancel-link-container"
+                                  class="instance-note confirm-or-cancel-delete-link pull-right hidden">
+                                  #{confirm_delete_link}
+#{cancel_delete_link}</div>)
+-%>
+<div class="actions"> <%= delete_link.html_safe %> </div>
+<div class="width-100-percent"> <%= confirm_or_cancel_element.html_safe %> </div>
+<% else %>
+  You cannot delete this instance because other records use it:
+  <br>
+  <% if @instance.instance_notes.size > 0 %>
+    <span title="See the Notes tab." ><%= "Instance notes: #{@instance.instance_notes.size} (see the 'Notes' tab)" %></span>
+    <br>
+  <% end %>
+  <% if @instance.reverse_of_this_cites.size > 0 %>
+    <%= link_to("Instance is cited: #{@instance.reverse_of_this_cites.size} &nbsp; #{gray_search_icon}".html_safe,
+                 search_path(query: %Q(#{@instance.id}),
+                             query_on: 'instance', 
+                               query_field: 'reverse-of-cites-id-query'),
+               title: "Query the instances") %>
+    <br>
+  <% end %>
+  <% if @instance.reverse_of_this_is_cited_by.size > 0 %>
+    <%= link_to("Instance cited by #{citation_summary(@instance)} &nbsp; #{gray_search_icon}".html_safe,
+                 search_path(query: %Q(#{@instance.id}),
+                             query_on: 'instance', 
+                               query_field: 'reverse-of-cited-by-id-query'),
+                 title: "Query the instances this is cited by.") %>
+    <br>
+  <% end %>
+  <br>
+<% end %>
+<br>
+
+<div class="error-message-container"></div>

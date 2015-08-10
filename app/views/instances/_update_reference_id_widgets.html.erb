@@ -1,0 +1,58 @@
+<%= divider %>
+Change the reference for this instance and its 
+<%= link_to("#{pluralize(@instance.reverse_of_this_is_cited_by.size,'synonym')}. #{search_icon_on_tab}".html_safe,
+            search_path(query: @instance.id, query_on: 'instance', query_field: 'reverse-of-cited-by-id-query'),
+            tabindex: increment_tab_index,
+            title: "Search for the #{pluralize(@instance.reverse_of_this_is_cited_by.size,'synonym')}"
+           )%>
+
+<br>
+<br>
+<%= form_for(@instance, url: {action: 'change_reference'}, method: :patch, remote: true) do |f| %>
+    <% if @instance.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@instance.errors.count, "error") %> prohibited this instance from being saved:</h2>
+          <ul>
+            <% @instance.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+        <input id="instance-reference-typeahead"
+               name="instance[reference_typeahead]"
+               class="typeahead form-control"
+               required="required"
+               placeholder="Reference"
+               tabindex="<%= increment_tab_index %>"
+               type="text"
+               value="<%= @instance.reference.try('citation') %>"/>
+        <%= f.hidden_field :reference_id %>
+        <script> setUpInstanceReference(); </script>
+
+    <br>
+
+    <%= link_to("Change",
+                '#',
+                id: "update-reference-id-link",
+                class: "btn btn-warning unconfirmed-delete-link pull-right",
+                tile: "You will be asked to confirm the change to this instance and any synonyms.",
+                tabindex: increment_tab_index,
+                data: {show_this_id: "confirm-or-cancel-change-reference-id-container"}) %>
+
+    <div id="confirm-or-cancel-change-reference-id-container"
+         class="confirm-or-cancel-action-link pull-right hidden">
+      <%= link_to("Cancel change",
+                  '#',
+                  id: "cancel-delete-link",
+                  class: "btn btn-default cancel-link pull-right",
+                  tabindex: increment_tab_index,
+                  data: {enable_this_id: 'update-reference-id-link',
+                  hide_this_id: 'confirm-or-cancel-change-reference-id-container'})
+      %>
+      <%= f.submit class: 'btn btn-danger pull-right', value: 'Confirm change', tabindex: increment_tab_index %>
+    </div>
+<br>
+<br>
+<% end %>
+

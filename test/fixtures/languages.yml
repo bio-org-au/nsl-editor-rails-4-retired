@@ -1,0 +1,20 @@
+multiple-languages:
+  name: Multiple Languages
+  iso6393code: mul
+
+no-linguistic-content:
+  name: No linguistic content
+  iso6393code: zxx
+
+uncoded-languages:
+  name: Uncoded languages
+  iso6393code: mis
+
+undetermined:
+  name: Undetermined
+  iso6393code: und
+
+english:
+  name: English
+  iso6393code: eng
+  iso6391code: en

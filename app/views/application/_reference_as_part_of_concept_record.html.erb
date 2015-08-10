@@ -1,0 +1,32 @@
+<tr id="search-result-<%= reference.id %>" 
+  class="search-result <%= 'fresh' if reference.fresh? %>"
+  data-get-url="<%= reference_path(reference.id) %>"
+  data-edit-url="<%= reference_path(reference.id) %>"
+  data-base-url="<%= reference_path(reference.id) %>"
+  data-record-id="<%= reference.id %>"
+  data-record-type="reference"
+  tabindex="<%= increment_tab_index(100) %>" 
+    >
+  <td class="checkbox-container">
+    <div 
+      tabindex="<%= increment_tab_index %>" 
+      class="stylish-checkbox acts-as-checkbox nsl-inline-block stylish-checkbox-unchecked" 
+      dir="ltr" 
+      role="checkbox" 
+      data-checked="false"> 
+    </div>
+  </td> 
+  <td class="nsl-tiny-icon-container takes-focus width-1-percent"><%= record_icon('reference') %></td>
+  <td colspan="2" class="text takes-focus main-content <%= 'give-me-focus' if give_me_focus %> width-80-percent">
+      <a 
+        id="<%= reference.anchor_id %>"
+        class="show-details-link"
+        tabindex="<%= increment_tab_index %>" >
+        <%= reference.citation_html.try('html_safe') || '[No citation found.]' %>
+        <%= "(#{reference.year})" if reference.year.present? %>
+        <% if reference.duplicate? %> [Duplicate] <% end %>
+      </a>
+  </td>
+  <td class="text takes-focus width-10-percent filler">&nbsp;</td>
+
+</tr>

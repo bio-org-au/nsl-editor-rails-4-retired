@@ -1,0 +1,5 @@
+$('.message-container').html('');
+$('input#author_name').focus();
+$('#search-result-details-info-message-container').html('<%= @message %>');
+$('input#author-duplicate-of-typeahead').val('<%= @author.duplicate_of.try('name_and_or_abbrev') %>');
+

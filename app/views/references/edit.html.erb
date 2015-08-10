@@ -1,0 +1,100 @@
+<div class="focus-details">
+  <% tab_tab_index = @tab_index %>
+  <% if notice %>
+    <p id="notice"><%= notice %></p>
+  <% end %>
+  <div class="inner">
+    <ul class="tabs">
+      <% this_form = 'tab_show' %>
+      <% if @form.match(Regexp.new(this_form)) %>
+        <li class='active first' >
+          <%= link_to "Summary",
+                      '#',
+                      id:"reference-edit-show-tab", 
+                      "data-tab-name"=>"#{this_form}", 
+                      tabindex:"#{increment_tab_index(1)}",
+                      "data-prev-tab"=>".search-result.show-details" %>
+        </li>
+      <% else %>
+        <li class='non-active first'>
+          <%= link_to "Summary", 
+                      '#',
+                      id:"reference-edit-show-tab", 
+                      class:'edit-details-tab', 
+                      "data-edit-url"=>reference_tab_path(@reference,tab:"#{this_form}"),
+                      tabindex:"#{@tab_index}",
+                      "data-prev-tab"=>".search-result.show-details" %>
+        </li>
+      <% end %>
+      
+      <% this_form = 'tab_title' %>      
+      <% if @form.match(Regexp.new(this_form)) %>
+        <li class='active' >
+          <%= link_to "Title",
+                      '#',
+                      id:"reference-edit-title-tab", 
+                      "data-tab-name"=>"#{this_form}", 
+                      tabindex:"#{tab_tab_index + 20}" %>
+        </li>
+      <% else %>
+        <li class='non-active'>
+          <%= link_to "Title", 
+                      '#',
+                      id:"reference-edit-title-tab", 
+                      class:'edit-details-tab', 
+                      "data-edit-url"=>reference_tab_path(@reference,tab:"#{this_form}"),
+                      tabindex:"#{tab_tab_index + 20}" %>
+        </li>
+      <% end %>
+
+      <% this_form = 'tab_published' %>
+      <% if @form.match(Regexp.new(this_form)) %>
+        <li class='active' >
+          <%= link_to "Published", 
+                      '#',
+                      id:"reference-edit-published-tab",
+                      "data-tab-name"=>"#{this_form}", 
+                      tabindex:"#{tab_tab_index + 40}" %>
+        </li>
+      <% else %>
+        <li class='non-active'>
+          <%= link_to "Published", 
+                      '#',
+                      id:"reference-edit-published-tab", 
+                      class:'edit-details-tab',
+                      "data-edit-url"=>reference_tab_path(@reference,tab:"#{this_form}"), 
+                      tabindex:"#{tab_tab_index + 40}" %>
+        </li>
+      <% end %>
+
+      <% this_form = 'tab_other' %>
+      <% if @form.match(Regexp.new(this_form)) %>
+        <li class='active last' >
+          <%= link_to "Other", 
+                      '#', 
+                       id:"reference-edit-other-tab", 
+                      "data-tab-name"=>"#{this_form}", 
+                      tabindex:"#{tab_tab_index + 60}",
+                      "data-arrow-right"=>".search-result.show-details" %>
+        </li>
+      <% else %>
+        <li class='non-active last'>
+          <%= link_to "Other", 
+                      '#', 
+                      id:"reference-edit-other-tab", 
+                      class:'edit-details-tab',
+                      tabindex:"#{tab_tab_index + 60}",
+                      "data-edit-url"=>reference_tab_path(@reference,tab:"#{this_form}"),
+                      "data-arrow-right"=>".search-result.show-details",
+                      "data-next-tab"=>".search-result.show-details" %>
+        </li>
+      <% end %>      
+    </ul>
+
+      <%= render @form %>
+      <span>Citation: </span><%= @reference.citation %>
+    <br>
+    <span class='server-response-time'><%= "(#{(Time.now - @start_time).round(2)}s)" if @start_time %></span>
+
+  </div><!-- /end .inner -->
+</div><!-- /end .focus-details -->

@@ -1,0 +1,135 @@
+<% increment_tab_index %>
+
+<%= @reference.ref_type.name %> by 
+<%= link_to("#{@reference.author.name} (#{@reference.ref_author_role.name}) #{search_icon_on_tab}".html_safe, search_path(query_on: 'author', query: %Q(id:#{@reference.author_id})),title: 'Search for the author(s)/editor(s)...') %> 
+<br>
+<%= @reference.title %>
+<br>
+<% if @reference.parent %>
+  <%= link_to("#{@reference.parent.title} #{search_icon_on_tab}".html_safe, 
+              search_path(query: @reference.parent_id,
+                          query_on: 'reference',
+                          query_field: 'rp'),
+                          title: 'Search for the containing reference',
+                          tabindex: increment_tab_index ) %>
+<% end %>
+<% if @reference.published %>
+  <%= @reference.volume %>
+  <%= ": #{@reference.pages}" if @reference.pages.present? %>
+  <%  if @reference.publication_date.present? %>
+    (<%= @reference.publication_date %>)
+  <% else %>
+    (<%= @reference.year %>)
+  <% end %>
+	<%= "(#{@reference.language.name})" if @reference.language && @reference.language.determined? %>
+	<%= " in #{@reference.published_location}" if @reference.published_location.present? %>
+	<%= " published by #{@reference.publisher}" if @reference.publisher.present? %>
+	<%= " Edn. #{@reference.edition}" if @reference.edition.present? %>
+	<%= "<em>abbreviated to</em> #{@reference.abbrev_title}".html_safe if @reference.abbrev_title %>
+	<%= "verbatim reference is #{@reference.verbatim_reference}" if @reference.verbatim_reference %>
+	
+<% else %>
+  Unpublished.
+<% end %>
+  <br>
+
+<%= @reference.notes %>
+<% if @reference.children && @reference.children.size != 0 %>
+  <br>
+  <% label_string = pluralize(@reference.children.size,'child') %>
+  <%= link_to("#{label_string} #{search_icon_on_tab}".html_safe, 
+              search_path(query: @reference.id, query_on: 'reference', query_field: 'p'),
+              title: "Search for the #{label_string}", 
+              tabindex: increment_tab_index) %>
+<% end %>
+
+<% if @reference.duplicate_of.present? %>
+  Duplicate of 
+  <%= link_to("#{@reference.duplicate_of.citation} #{search_icon_on_tab}".html_safe,
+              search_path(query: "id:#{@reference.duplicate_of_id}",
+              query_on: 'reference'),
+              title: 'Search for the duplicate reference.') %>
+<% end %>
+
+<br>
+<br>
+<% instances_size = @reference.instances.count %>
+<% if instances_size > 0 %>
+  <% if instances_size == 1 %>
+    <%= link_to("1 Instance #{search_icon_on_tab}".html_safe,
+                          search_path(query_on: 'instance', 
+                                      query_field: 'ref-usages', 
+                                      query:  "#{@reference.id}"),
+                          tabindex: increment_tab_index, 
+                          title: 'Search for the instance.') %>
+  <% else %>
+    <%= "#{instances_size} Instances" %>
+    <br>
+    <%= link_to("&mdash; sorted by name #{search_icon_on_tab}".html_safe,
+                          search_path(query_on: 'instance', 
+                                      query_field: 'ref-usages', 
+                                      query_limit: '100', 
+                                      query_sort: 'name', 
+                                      query:  "#{@reference.id}"),
+                          tabindex: increment_tab_index, 
+                          title: 'Search for the instances, sorted by name.') %>
+  <br>
+  <%= link_to("&mdash; sorted by page #{search_icon_on_tab}".html_safe,
+                          search_path(query_on: 'instance', 
+                                      query_field: 'ref-usages', 
+                                      query_limit: '100', 
+                                      query_sort: 'page', 
+                                      query:  "#{@reference.id}"),
+                          tabindex: increment_tab_index, 
+                          title: 'Search for the instances, sorted by page.') %>
+          <% end %>
+<% else %>
+  No instances
+<% end %>
+
+<% unless @reference.doi.blank? %>
+  <%= link_to('DOI',@reference.doi) %>
+<% end %>
+
+<% unless @reference.isbn.blank? %>
+  <br>
+  <%= link_to('ISBN',@reference.isbn) %>
+<% end %>
+
+<% unless @reference.issn.blank? %>
+  <br>
+  <%= link_to('ISSN',@reference.issn) %>
+<% end %>
+
+<% unless @reference.bhl_url.blank? %>
+  <br>
+  <%= link_to('BHL',@reference.bhl_url) %>
+<% end %>
+
+<% unless @reference.tl2.blank? %>
+  <br>
+  <%= link_to('TL2',@reference.tl2) %>
+<% end %>
+
+<% if @reference.comments.size > 0  %>
+  <%= divider %>
+  <h5><%= pluralize(@reference.comments.size,'Comment') %></h5>
+  <% @reference.comments.sort{|x,y| x.created_at <=> y.created_at}.each do |comment|  %>
+    <%= render partial: 'comments/show', locals: {comment: comment} %>
+    <%= divider %>
+  <% end %>
+<% else %>
+  <%= divider %>
+<% end %>
+
+
+
+<h5>Reference #<%= @reference.id %></h5>
+
+<% created =  "#{@reference.created_by.downcase} #{formatted_timestamp(@reference.created_at)}" %>
+<% updated =  "#{@reference.updated_by.downcase} #{formatted_timestamp(@reference.updated_at)}" %>
+<%= render partial: 'detail_line', locals: {label: 'Created', info: created} %>
+<%= render partial: 'detail_line', locals: {label: 'Last updated', info: updated} %>
+<%= render partial: 'detail_line', locals: {label: 'System', info: "#{@reference.namespace.name}#{%Q(.#{@reference.source_system.downcase}.#{@reference.source_id}) if @reference.source_system}"} %>
+
+

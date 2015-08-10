@@ -1,0 +1,6 @@
+$('#copy-name-info-message-container').html('');
+$('#copy-name-info-message-container').addClass('hidden');
+$('#copy-name-error-message-container').html('<%= "#{icon('warning red')} #{@message}".html_safe %>');
+$('#copy-name-error-message-container').removeClass('hidden');
+
+

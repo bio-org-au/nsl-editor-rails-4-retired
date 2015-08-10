@@ -1,0 +1,79 @@
+<li class="dropdown define-left-border-when-active">
+    <a href="#"
+       id="new-dropdown-menu-link"
+       class="dropdown-toggle"
+       tabindex="2"
+       data-toggle="dropdown">New<span class="caret"></span>
+    </a>
+    <ul id="create-dropdown-menu" class="dropdown-menu" role="menu">
+      <li role="presentation">
+        <%= link_to "Author",
+                    author_new_row_path,
+                    title: 'Add a new Author',
+                    remote: true,
+                    tabindex: '-1' %>
+      </li>
+
+      <li role="presentation" class="divider"></li>
+
+      <li role="presentation">
+        <%= link_to "Scientific name",
+                    name_new_row_path('scientific'),
+                    title: 'Add a new scientific name',
+                    remote: true,
+                    tabindex: '-1' %>
+      </li>
+
+      <li role="presentation">
+        <%= link_to "Hybrid formula name",
+                    name_new_row_path('hybrid formula'),
+                    title: 'Add a new hybrid name',
+                    remote: true,
+                    tabindex: '-1' %>
+      </li>
+
+      <li role="presentation">
+        <%= link_to "Hybrid formula unknown 2nd parent name",
+                    name_new_row_path('hybrid-formula-unknown-2nd-parent'),
+                    title: 'Add a new hybrid formula unknown 2nd parent name',
+                    remote: true,
+                    tabindex: '-1' %>
+      </li>
+
+      <li role="presentation">
+        <%= link_to "Cultivar hybrid name",
+                    name_new_row_path('cultivar-hybrid'),
+                    title: 'Add a new cultivar hybrid name',
+                    remote: true,
+                    tabindex: '-1' %>
+      </li>
+
+      <li role="presentation">
+        <%= link_to "Cultivar name",
+                    name_new_row_path('cultivar'),
+                    title: 'Add a new cultivar name',
+                    remote: true,
+                    tabindex: '-1' %>
+      </li>
+
+      <li role="presentation">
+        <%= link_to "Other name",
+                    name_new_row_path('other'),
+                    title: 'Add a new other name',
+                    remote: true,
+                    tabindex: '-1' %>
+      </li>
+
+
+      <li role="presentation" class="divider"></li>
+
+        <li role="presentation">
+          <%= link_to "Reference",
+                    reference_new_row_path,
+                    title: 'Add a new reference',
+                    remote: true,
+                    tabindex: '-1' %>
+        </li>
+
+    </ul>
+</li>

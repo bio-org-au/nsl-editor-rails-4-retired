@@ -1,0 +1,29 @@
+<tr id="search-result-<%= search_result[:id] %>" 
+  class="search-result <%= 'fresh' if search_result.fresh? %>"
+  data-get-url="<%= name_path(search_result[:id]) %>"
+  data-edit-url="<%= name_path(search_result[:id]) %>"
+  data-base-url="<%= name_path(search_result[:id]) %>"
+  data-record-id="<%= search_result[:id] %>"
+  data-record-type="name"
+  tabindex="<%= increment_tab_index(100) %>"
+    >
+  <td class="checkbox-container">
+    <div 
+      tabindex="<%= increment_tab_index %>"
+      class="stylish-checkbox acts-as-checkbox nsl-inline-block stylish-checkbox-unchecked" 
+      dir="ltr" 
+      role="checkbox" 
+      data-checked="false"> 
+    </div>
+  </td> 
+  <td class="takes-focus nsl-tiny-icon-container width-1-percent"><%= record_icon('name') %></td>
+  <td class="text takes-focus abbrev main-content width-95-percent <%= ' give-me-focus' if give_me_focus %>">
+    <a href="#" 
+       class="show-details-link"
+       tabindex="<%= increment_tab_index %>" 
+       id="name-<%= search_result[:id] %>">
+       <%= render partial: 'name_as_search_result_content', locals: {search_result: search_result} %>
+    </a>
+  </td>
+  <td class="takes-focus width-5-percent filler">&nbsp;</td>
+</tr>

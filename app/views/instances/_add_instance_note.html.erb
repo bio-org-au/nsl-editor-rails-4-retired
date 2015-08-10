@@ -1,0 +1,20 @@
+<%= form_for(InstanceNote.new, 
+             url: instance_notes_path,
+             remote: true,
+             html:{class:"form-inline",
+                   data: {type: 'script'}
+                  }) do |f| %>
+    <%= lov_select_field("instance_note", 
+                         "instance_note_key_id",  
+                         InstanceNoteKey.options, 
+                         {include_blank: true },
+                         {'data-update-url'=>instance_note_path, 
+                          class:'form-control width-70-percent', 
+                          tabindex:"#{increment_tab_index}"},
+                         'Note type') %>
+
+    <%= f.text_area :value, rows: '3', class: 'width-80-percent' %>
+    <%= f.hidden_field 'instance_id', value: "#{@instance.id}" %>
+    <br>
+    <%= f.submit class: 'btn btn-primary width-6em', value: 'Create Note' %>
+<% end %> 

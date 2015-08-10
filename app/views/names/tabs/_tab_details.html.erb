@@ -1,0 +1,128 @@
+<h5>Name details</h5>
+<% increment_tab_index(0) %>
+
+<span class="full-name" title="Full name"><%= "#{@name.full_name}" %></span>
+<br>
+<%= "<span class='name-status' title='status'>#{@name.name_status.try('name').try('capitalize')}</span>".html_safe %>
+<%= "<span class='name-type' title='type'> #{@name.name_type.try('name')}</span>".html_safe %>
+<%= "<span class='name-rank' title='rank'>#{@name.name_rank.try('name').try('downcase')}</span> name ".html_safe %>
+<% if @name.has_parent? %>
+    <% if @name.has_second_parent? %>
+      between
+    <% else %>
+      within
+    <% end %>
+    <%= link_to(@name.parent.try('full_name_html').try('html_safe'), search_path(query_on: 'name', query_field: 'id', query: @name.parent_id),title: 'parent') %>
+<% end %>
+
+<% if @name.has_second_parent? %>
+    and
+<%= link_to(@name.second_parent.try('full_name_html').try('html_safe'), search_path(query_on: 'name', query_field: 'id', query: @name.second_parent_id),title: 'second parent') %>
+<% end %>
+
+<% if @name.name_type.scientific? %>
+  <br>
+  <% apni_tree = @name.apni? %>
+  <%= case apni_tree
+       when 'unknown'
+         'APNI: status unknown.'
+       when true
+         "APNI family: #{@name.apni_family_name}."
+       else
+         'Not in the APNI tree.'
+       end
+   %>
+<% end %>
+
+<% if @name.duplicate_of_id.present? %>
+  <br>
+  <% link = link_to(@name.duplicate_of.full_name, search_path(query_on: 'name', query_field: 'id', query: @name.duplicate_of_id)) %>
+  <%= "Duplicate of #{link}".html_safe %>
+  <br>
+<% end %>
+
+<% unless @name.ex_base_author.blank? %>
+  <br>
+  <% auth_link = link_to(@name.ex_base_author.abbrev_if_possible, search_path(query_on: 'author', query_field: 'id', query:  @name.ex_base_author_id)) %>
+  <%= "Ex Base Authored by #{auth_link}".html_safe  %>
+<% end %>
+
+<% unless @name.base_author.blank? %>
+    <br>
+    <% auth_link = link_to(@name.base_author.abbrev_if_possible, search_path(query_on: 'author', query_field: 'id', query: @name.base_author_id)) %>
+    <%= "Base Authored by #{auth_link}".html_safe  %>
+<% end %>
+
+<% unless @name.ex_author.blank? %>
+    <br>
+    <% auth_link = link_to(@name.ex_author.abbrev_if_possible, search_path(query_on: 'author', query_field: 'id', query: @name.ex_author_id)) %>
+    <%= "Ex Authored by #{auth_link}".html_safe  %>
+<% end %>
+
+<% unless @name.author.blank? %>
+    <br>
+    <% auth_link = link_to(@name.author.abbrev_if_possible, search_path(query_on: 'author', query_field: 'id', query: @name.author_id)) %>
+    <%= "Authored by #{auth_link}".html_safe  %>
+<% end %>
+<% unless @name.sanctioning_author.blank? %>
+    <br>
+    <% auth_link = link_to(@name.sanctioning_author.abbrev_if_possible, search_path(query_on: 'author', query_field: 'id', query: @name.sanctioning_author_id)) %>
+    <%= "Sanctioned by #{auth_link}".html_safe  %>
+<% end %>
+
+<% if @name.name_tags.present? %>
+<br>
+<span title='Name tags'>
+<%= icon('tags') %> <%= "<span class='name-tag' title='Name tag'>#{@name.name_tags.collect{|name_tag| name_tag.name}.join(',')}</span>".html_safe %>
+</span>
+<% end %> 
+<%= render partial: 'detail_line', locals: {label: 'Verbatim rank', info: @name.verbatim_rank} %>
+<br>
+<% if @name.instances.size > 0 %>
+  <%= link_to("#{pluralize(@name.instances.size,'instance')} #{icon('search')}".html_safe, 
+                        search_path(query: "id: #{@name.id}", 
+                        query_on: 'instance',
+                        query_field: 'name-instances'),
+                        tabindex: increment_tab_index,
+                        title: "Search for the #{pluralize(@name.instances.size,'instance')}",
+                        class: 'give-me-focus') %>
+  <br>
+  <br>
+  <%= link_to("APC tree #{icon('search')}".html_safe,
+            search_path(query: @name.id,
+                        query_on: 'tree',
+                        query_field: 'apc'),
+                        tabindex: increment_tab_index,
+                        title: "Load the APC tree for this instance.",
+                        class: '') %>
+  <br>
+  <br>
+  <%= link_to("APNI format #{icon('external-link')}".html_safe, 
+              "#{Rails.configuration.nsl_links}apniFormat/display/#{@name.id}",
+              title: "Go to the search site to view the name in APNI format",
+              tabindex: increment_tab_index) %>
+<% else %>
+  No instances.
+<% end %>
+
+
+<% if @name.comments.size > 0  %>
+  <%= divider %>
+  <h5><%= pluralize(@name.comments.size,'Comment') %></h5>
+  <% @name.comments.sort{|x,y| x.created_at <=> y.created_at}.each do |comment|  %>
+    <%= render partial: 'comments/show', locals: {comment: comment} %>
+    <%= divider %>
+  <% end %>
+<% end %>
+
+<h5>Name #<%= @name.id %></h5>
+
+simple name: <%= @name.simple_name %>
+<br>
+<% created =  "#{@name.created_by.downcase} #{formatted_timestamp(@name.created_at)}" %>
+<% updated =  "#{@name.updated_by.downcase} #{formatted_timestamp(@name.updated_at)}" %>
+<%= render partial: 'detail_line', locals: {label: 'Created', info: created} %>
+<%= render partial: 'detail_line', locals: {label: 'Last updated', info: updated} %>
+<%= render partial: 'detail_line', locals: {label: 'System', info: "#{@name.namespace.name}#{%Q(.#{@name.source_system.downcase}.#{@name.source_id}) if @name.source_system}"} %>
+
+

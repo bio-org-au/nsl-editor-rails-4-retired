@@ -1,0 +1,5 @@
+$('#copy-name-info-message-container').html('<%= link_to("1 Name copied #{icon('search')}".html_safe, query: "name: id:#{@name.id}") %>');
+$('#copy-name-info-message-container').removeClass('hidden');
+$('#confirm-or-cancel-copy-name-link-container').addClass('hidden');
+$('#copy-name-link').removeClass('disabled');
+

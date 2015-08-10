@@ -1,0 +1,664 @@
+triodia_in_brassard:
+  reference: paper_by_brassard
+  name: triodia_basedowii
+  instance_type: primary_reference
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  created_at: <%= Time.now + (24*60*60) %>
+  updated_at: <%= Time.now + (24*60*60) %>
+  page: "xx 200,300"
+ 
+# Standalone instance
+britten_created_angophora_costata:
+  reference: paper_by_britten_on_angophora
+  name: angophora_costata
+  instance_type: comb_nov
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: "xx 15"
+
+# Standalone instance
+gaertner_created_metrosideros_costata:
+  reference: de_fructibus_et_seminibus_plantarum
+  name: metrosideros_costata
+  instance_type: comb_nov
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: "xx 1"
+
+# Relationship instance - synonymy
+metrosideros_costata_is_basionym_of_angophora_costata:
+  reference: paper_by_britten_on_angophora
+  name: metrosideros_costata
+  this_is_cited_by: britten_created_angophora_costata
+  this_cites: gaertner_created_metrosideros_costata
+  instance_type: basionym
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: "xx,20,900"
+
+# Relationship instance - synonymy
+xyz_costata_is_synonym_of_angophora_costata:
+  reference: paper_by_britten_on_angophora
+  name: metrosideros_costata
+  this_is_cited_by: britten_created_angophora_costata
+  this_cites: gaertner_created_metrosideros_costata
+  instance_type: synonym
+  verbatim_name_string: 
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: xx,20,1000
+ 
+# Relationship instance - unpublished citation
+rusty_gum_is_a_common_name_of_angophora_costata:
+  reference: de_fructibus_et_seminibus_plantarum
+  name: rusty_gum
+  this_is_cited_by: gaertner_created_metrosideros_costata
+  instance_type: common_name
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: "41"
+ 
+# Relationship instance - invalid unpublished citation with unmatched reference
+invalid_unpublished_citation_with_unmatched_reference:
+  reference: paper_by_britten_on_angophora
+  name: nothing_name_for_invalid_instance
+  this_is_cited_by: gaertner_created_metrosideros_costata
+  reference: paper_by_britten_on_angophora
+  instance_type: common_name
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: "40"
+
+# Standalone instance
+invalid_publication_standalone_instance:
+  reference: de_fructibus_et_seminibus_plantarum
+  name: metrosideros_costata
+  instance_type: invalid_publication
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: "2"
+
+
+# Standalone instance guaranteed to have no source_system
+no_source_system:
+  reference: de_fructibus_et_seminibus_plantarum
+  name: angophora_costata 
+  instance_type: invalid_publication
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: "3"
+
+
+# Default instance so name can be offered as parent
+default_instance_for_the_regnum:
+  reference: bucket_reference_for_default_instances
+  name: the_regnum
+  instance_type: comb_nov
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: 19-20
+
+
+# Default instance so name can be offered as parent
+default_instance_for_a_division:
+  reference: bucket_reference_for_default_instances
+  name: a_division
+  instance_type: comb_nov
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: 75, t. 102
+
+
+# Default instance so name can be offered as parent
+default_instance_for_a_classis:
+  reference: bucket_reference_for_default_instances
+  name: a_classis
+  instance_type: comb_nov
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: 75, t. 101
+
+
+# Default instance so name can be offered as parent
+default_instance_for_a_subclassis:
+  reference: bucket_reference_for_default_instances
+  name: a_subclassis
+  instance_type: comb_nov
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: 74, t. 100
+
+
+# Default instance so name can be offered as parent
+default_instance_for_a_superordo:
+  reference: bucket_reference_for_default_instances
+  name: a_superordo
+  instance_type: comb_nov
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: 74, t. 99
+
+
+# Default instance so name can be offered as parent
+default_instance_for_an_ordo:
+  reference: bucket_reference_for_default_instances
+  name: an_ordo
+  instance_type: comb_nov
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: 999
+
+
+# Default instance so name can be offered as parent
+default_instance_for_a_subordo:
+  reference: bucket_reference_for_default_instances
+  name: a_subordo
+  instance_type: comb_nov
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: 999
+
+
+# Default instance so name can be offered as parent
+default_instance_for_a_family:
+  reference: bucket_reference_for_default_instances
+  name: a_family
+  instance_type: comb_nov
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: 999
+
+# Default instance so name can be offered as parent
+default_instance_for_a_subfamily:
+  reference: bucket_reference_for_default_instances
+  name: a_subfamily
+  instance_type: comb_nov
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: 999
+
+
+# Default instance so name can be offered as parent
+default_instance_for_a_tribus:
+  reference: bucket_reference_for_default_instances
+  name: a_tribus
+  instance_type: comb_nov
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: 999
+
+
+# Default instance so name can be offered as parent
+default_instance_for_a_subtribus:
+  reference: bucket_reference_for_default_instances
+  name: a_subtribus
+  instance_type: comb_nov
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: 999
+
+
+# Default instance so name can be offered as parent
+default_instance_for_a_genus:
+  reference: bucket_reference_for_default_instances
+  name: a_genus
+  instance_type: comb_nov
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: 999
+
+
+# Default instance so name can be offered as parent
+default_instance_for_a_subgenus:
+  reference: bucket_reference_for_default_instances
+  name: a_subgenus
+  instance_type: comb_nov
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+
+
+# Default instance so name can be offered as parent
+default_instance_for_a_sectio:
+  reference: bucket_reference_for_default_instances
+  name: a_sectio
+  instance_type: comb_nov
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: 999
+
+
+# Default instance so name can be offered as parent
+default_instance_for_a_subsectio:
+  reference: bucket_reference_for_default_instances
+  name: a_subsectio
+  instance_type: comb_nov
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: 999
+
+
+# Default instance so name can be offered as parent
+default_instance_for_a_series:
+  reference: bucket_reference_for_default_instances
+  name: a_series
+  instance_type: comb_nov
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: 999
+
+# Default instance so name can be offered as parent
+default_instance_for_a_subseries:
+  reference: bucket_reference_for_default_instances
+  name: a_subseries
+  instance_type: comb_nov
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: 999
+
+
+# Default instance so name can be offered as parent
+default_instance_for_a_species:
+  reference: bucket_reference_for_default_instances
+  name: a_species
+  instance_type: comb_nov
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: 999
+
+# Default instance so name can be offered as parent
+default_instance_for_a_superspecies:
+  reference: bucket_reference_for_default_instances
+  name: a_superspecies
+  instance_type: comb_nov
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: 999
+
+# Default instance so name can be offered as parent
+default_instance_for_a_subspecies:
+  reference: bucket_reference_for_default_instances
+  name: a_subspecies
+  instance_type: comb_nov
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: 999
+
+
+# Default instance so name can be offered as parent
+default_instance_for_a_nothovarietas:
+  reference: bucket_reference_for_default_instances
+  name: a_nothovarietas
+  instance_type: comb_nov
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: 999
+
+
+# Default instance so name can be offered as parent
+default_instance_for_a_varietas:
+  reference: bucket_reference_for_default_instances
+  name: a_varietas
+  instance_type: comb_nov
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: 999
+
+
+# Default instance so name can be offered as parent
+default_instance_for_a_subvarietas:
+  reference: bucket_reference_for_default_instances
+  name: a_subvarietas
+  instance_type: comb_nov
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: 999
+
+
+# Default instance so name can be offered as parent
+default_instance_for_a_forma:
+  reference: bucket_reference_for_default_instances
+  name: a_forma
+  instance_type: comb_nov
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: 999
+
+# Default instance so name can be offered as parent
+default_instance_for_a_subforma:
+  reference: bucket_reference_for_default_instances
+  name: a_subforma
+  instance_type: comb_nov
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: 999
+
+# Default instance so name can be offered as parent
+default_instance_for_a_duplicate_genus:
+  reference: bucket_reference_for_default_instances
+  name: a_duplicate_genus
+  instance_type: comb_nov
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: 999
+
+# Default instance so name can be offered as parent
+default_instance_for_an_unranked:
+  reference: bucket_reference_for_default_instances
+  name: an_unranked_with_an_instance
+  instance_type: unknown
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+
+casuarina_inophloia_by_mueller:
+  reference: mueller_1882_section
+  name: casuarina_inophloia
+  instance_type: secondary_reference
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+
+casuarina_inophloia_by_mueller_and_bailey:
+  reference: australasian_chemist_and_druggist
+  name: casuarina_inophloia
+  instance_type: tax_nov
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+
+casuarina_inophloia_in_bailey_catalogue_qld_plants:
+  reference: bailey_catalogue_qld_plants
+  name: casuarina_inophloia
+  instance_type: secondary_reference
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+
+for_a_genus_with_one_instance:
+  reference: bailey_catalogue_qld_plants
+  name: a_genus_with_one_instance
+  instance_type: tax_nov
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+
+for_a_genus_with_two_instances_first:
+  reference: bailey_catalogue_qld_plants
+  name: a_genus_with_two_instances
+  instance_type: tax_nov
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+
+for_a_genus_with_two_instances_second:
+  reference: telford_in_nuytsia
+  name: a_genus_with_two_instances
+  instance_type: tax_nov
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+
+for_a_genus_with_two_instances_the_same_first:
+  reference: bailey_catalogue_qld_plants
+  name: has_two_instances_the_same
+  instance_type: tax_nov
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+
+for_a_genus_with_two_instances_the_same_second:
+  reference: bailey_catalogue_qld_plants
+  name: has_two_instances_the_same
+  instance_type: tax_nov
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+
+angophora_costata_in_stanley:
+  reference: stanley_in_stanley_and_ross
+  name: angophora_costata
+  instance_type: secondary_reference
+  page: 146
+  namespace: apni
+  verbatim_name_string: Angophora costata (Gaertn.) Britten
+  created_by: tester
+  updated_by: tester
+
+metrosideros_costata_gaertn:
+  bhl_url:
+  cited_by_id: gaertner_created_metrosideros_costata.id
+  cites_id: angophora_costata_in_stanley.id
+  created_at: 2011-11-29 13:00:00.000000000 Z
+  created_by: CUL07D
+  draft: false
+  instance_type: nomenclatural_synonym
+  name_id: metrosideros_costata_gaertn
+  namespace: apni
+  nomenclatural_status:
+  page: '146'
+  parent_id:
+  reference_id: de_fructibus_et_seminibus_plantarum
+  source_id: 177748
+  source_id_string: '177748'
+  source_system: SYNONYMY
+  updated_at: 2011-12-14 13:00:00.000000000 Z
+  updated_by: CUL07D
+  valid_record: false
+  verbatim_name_string:
+
+# Relationship instance - unpublished citation
+angophora_lanceolata_cav_in_stanley:
+  reference: stanley_in_stanley_and_ross
+  name: rusty_gum
+  cites_id: britten_created_angophora_costata.id
+  instance_type: common_name
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+
+# Relationship instance - synonymy
+in_stanley_metrosideros_costata_is_a_nomenclatural_synonym_of_angophora_costata_in_britten:
+  reference: stanley_in_stanley_and_ross
+  name: metrosideros_costata
+  this_is_cited_by: angophora_costata_in_stanley
+  this_cites: gaertner_created_metrosideros_costata
+  instance_type: nomenclatural_synonym
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: xx,20,700
+
+# Relationship instance - synonymy
+in_stanley_angophora_lanceolata_is_a_taxonomic_synonym_of_angophora_costata_in_britten:
+  reference: stanley_in_stanley_and_ross
+  name: angophora_lanceolata_cav
+  this_is_cited_by: angophora_costata_in_stanley
+  this_cites: gaertner_created_metrosideros_costata
+  instance_type: taxonomic_synonym
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: xx,20,600
+
+legitimate_name_one_for_eflora_instance:
+  reference: dummy_reference_for_eflora_service
+  name: legitimate_name_one_for_eflora
+  instance_type: primary_reference
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  created_at: <%= Time.now + (24*60*60) %>
+  updated_at: <%= Time.now + (24*60*60) %>
+
+name_four_for_eflora_multi_1_instance:
+  reference: dummy_reference_for_eflora_service
+  name: name_four_for_eflora_multi_1
+  instance_type: primary_reference
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  created_at: <%= Time.now + (24*60*60) %>
+  updated_at: <%= Time.now + (24*60*60) %>
+
+name_four_for_eflora_multi_2_instance:
+  reference: dummy_reference_for_eflora_service
+  name: name_four_for_eflora_multi_2
+  instance_type: primary_reference
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  created_at: <%= Time.now + (24*60*60) %>
+  updated_at: <%= Time.now + (24*60*60) %>
+
+<% eflora_names = %w(default_name_one_for_eflora deleted_name_one_for_eflora default_name_one_for_eflora deleted_name_one_for_eflora 
+ na_name_one_for_eflora
+ unknown_name_one_for_eflora
+ isonym_name_one_for_eflora
+ nom_cult_name_one_for_eflora
+ nom_cult_nom_alt_name_one_for_eflora
+ nom_et_orth_cons_name_one_for_eflora
+ nom_illeg_name_one_for_eflora
+ nom_illeg_nom_rej_name_one_for_eflora
+ nom_illeg_nom_superfl_name_one_for_eflora
+ nom_inval_name_one_for_eflora
+ nom_inval_nom_alt_name_one_for_eflora
+ nom_inval_nom_ambig_name_one_for_eflora
+ nom_inval_nom_confus_name_one_for_eflora
+ nom_inval_nom_dub_name_one_for_eflora
+ nom_inval_nom_nud_name_one_for_eflora
+ nom_inval_nom_prov_name_one_for_eflora
+ nom_inval_nom_subnud_name_one_for_eflora
+ nom_inval_opera_name_one_for_eflora
+ nom_inval_pro_syn_name_one_for_eflora
+ nom_inval_tautonym_name_one_for_eflora
+ nom_rej_name_one_for_eflora
+ nom_superfl_name_one_for_eflora
+ nomino_utique_rejicienda_name_one_for_eflora
+ orth_var_name_one_for_eflora
+ name_two_for_eflora
+ name_two_for_eflora_with_extra
+ name_three_for_eflora
+ name_three_for_eflora_duplicate
+) %>
+
+<% eflora_names.each do |eflora_name| %>
+<%= "#{eflora_name}_instance" %>:
+  reference: dummy_reference_for_eflora_service
+  name: <%= eflora_name %>
+  instance_type: primary_reference
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  created_at: <%= Time.now + (24*60*60) %>
+  updated_at: <%= Time.now + (24*60*60) %>
+<% end %>
+
+
+
+#angophora_lanceolata_cav_in_stanley:
+    #cited_by_id: angophora_costata_in_stanley.id
+    #cites_id: angophora_costata_in_cav
+    #created_at: 2011-11-29 13:00:00.000000000 Z
+    #created_by: CUL07D
+    #draft: false
+    #instance_type_id: taxonomic_synonym
+    #name: angophora_costata
+    #namespace: apni
+    #page: '146'
+    #reference: stanley_in_stanley_and_ross
+    #source_id: 177749
+    #source_id_string: '177749'
+    #source_system: SYNONYMY
+    #updated_at: 2011-11-29 13:00:00.000000000 Z
+    #updated_by: CUL07D
+    #valid_record: false
+
+    #angophora_lanceolata_cav_in_cav:
+    #created_at: 2011-11-29 13:00:00.000000000 Z
+    #created_by: CUL07D
+    #draft: false
+    #instance_type_id: taxonomic_synonym
+    #name: angophora_costata
+    #namespace: apni
+    #page: '146'
+    #reference: cavanilles_icones
+    #source_id: 177749
+    #source_id_string: '177749'
+    #updated_at: 2011-11-29 13:00:00.000000000 Z
+    #updated_by: CUL07D
+    #valid_record: false
+    #verbatim_name_string:

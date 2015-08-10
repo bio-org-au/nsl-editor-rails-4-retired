@@ -1,0 +1,38 @@
+    <p>&copy; NSL <%= Time.now.strftime("%d-%m-%Y") %>
+    <span id="media-screen-xs" class="media-spec ">xs</span>
+    <span id="media-screen-sm" class="media-spec ">sm</span>
+    <span id="media-screen-md" class="media-spec ">md</span>
+    <span id="media-screen-lg" class="media-spec ">lg</span>
+    <span id="media-screen-xl" class="media-spec ">xl</span>
+    <% elapsed_time = @start_time ? (Time.now - @start_time).round(3) : '?' %></span>
+    <span class='page-response-time'><%= "(#{elapsed_time}s)" if @start_time %></span>
+    <% logger.info {"Page footer - elapsed time: #{elapsed_time}"} %> 
+    <% unless Rails.env.match(/production/i) %>
+      <span id="media-max-width-1536px" class="media-spec">media-max-width-1536px;</span>
+      <span id="media-max-width-1200px" class="media-spec">media-max-width-1200px;</span>
+      <span id="media-width-800px-1000px" class="media-spec">media-width-800px-1000px;</span>
+      <span id="media-width-1000px-1199px" class="media-spec">media-width-1000px-1199px;</span>
+      <span id="media-width-1200px-" class="media-spec">media-width-1200px+;</span>
+
+      <span id="media-min-height-1201" class="media-spec">media-min-height-1201</span>
+      <span id="media-height-1151-1200" class="media-spec">media-height-1151-1200</span>
+      <span id="media-height-1101-1150" class="media-spec">media-height-1101-1150</span>
+      <span id="media-height-1051-1100" class="media-spec">media-height-1051-1100</span>
+      <span id="media-height-1001-1050" class="media-spec">media-height-1001-1050</span>
+      <span id="media-height-951-1000" class="media-spec">media-height-951-1000</span>
+      <span id="media-height-901-950" class="media-spec">media-height-901-950</span>
+      <span id="media-height-851-900" class="media-spec">media-height-851-900</span>
+      <span id="media-height-801-850" class="media-spec">media-height-801-850</span>
+      <span id="media-height-751-800" class="media-spec">media-height-751-800</span>
+      <span id="media-height-701-750" class="media-spec">media-height-701-750</span>
+      <span id="media-height-651-700" class="media-spec">media-height-651-700</span>
+      <span id="media-height-601-650" class="media-spec">media-max-height-601-650</span>
+      <span id="media-height-551-600" class="media-spec">media-max-height-551-600</span>
+      <span id="media-height-501-550" class="media-spec">media-max-height-501-550</span>
+      <span id="media-height-451-500" class="media-spec">media-max-height-451-500</span>
+      <span id="media-height-max-450" class="media-spec">media-max-height-max-450</span>
+      <span id="media-height-401-450" class="media-spec">media-max-height-401-450</span>
+      <span id="media-height-351-400" class="media-spec">media-max-height-351-400</span>
+      <span id="media-ipad" class="media-spec">media-ipad</span>
+    <% end %>
+    </p>

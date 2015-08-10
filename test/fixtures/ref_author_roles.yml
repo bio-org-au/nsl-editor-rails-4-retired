@@ -1,0 +1,14 @@
+author:
+  name: Author
+
+dash:
+  name: "-"
+
+compiler:
+  name: Compiler
+
+editor:
+  name: Editor
+
+unknown:
+  name: Unknown

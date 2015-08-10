@@ -1,0 +1,20 @@
+<div class="focus-details 
+  <%= 'fresh' if @instance.fresh? %>">
+  <% tab_tab_index = @tab_index %>
+  <% if notice %>
+    <p id="notice"><%= notice %></p>
+  <% end %>
+  <div class="inner">
+    <h3 class="heading-for-show-details"><%= link_to "#{@instance.type_of_instance} instance",
+                                                     search_path(query_on: 'instance', query: %Q(id: #{@instance.id})) %></h3>
+
+    <%= render partial: "#{'instances/tabs/tabs'}" %>
+    <%= render partial: "instances/tabs/#{tab_for_instance_type(@tab,params['row-type'])}" %>
+
+    <br>
+    <span class='server-response-time'><%= "(#{(Time.now - @start_time).round(2)}s)" if @start_time %></span>
+
+  </div><!-- /end .inner -->
+</div><!-- /end .focus-details -->
+
+

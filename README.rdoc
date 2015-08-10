@@ -1,0 +1,75 @@
+== README
+
+This is the NSL (National Species List) Editor Application developed at the Australian National Botanic Gardens in
+association with CHAH, the ALA and the IBIS team.
+
+This code is Licensed under the Apache 2 License and we welcome contributions from the taxonomic community.
+
+Please use Github issues for any bug reports.
+
+== Development Environment
+
+* Ruby version: jruby-1.7.20
+* Startup:     jruby -S trinidad -p 2014 --threadsafe
+* Using rbenv: ruby 1.9.3-p551
+
+
+=== Running in Development with Trinidad on the command line
+
+    $ jruby -S trinidad -p 2014 --threadsafe
+    Deploying from /Users/gregc/rails/ned as /
+    Initializing ProtocolHandler ["http-bio-127.0.0.1-2014"]
+    jruby 1.7.12 (1.9.3p392) 2014-04-15 643e292 on Java HotSpot(TM) 64-Bit Server VM 1.7.0_21-b12 [darwin-x86_64]
+    using a shared (threadsafe!) runtime
+    The signal QUIT is in use by the JVM and will not work correctly on this platform
+    Starting ProtocolHandler ["http-bio-127.0.0.1-2014"]
+
+
+=== Running Trinidad with a config file and a context path:
+
+    $ trinidad -f ./config/trinidad-dev.yml
+    Deploying from /Users/gregc/rails/ned as /nsldev
+    Initializing ProtocolHandler ["http-bio-127.0.0.1-2014"]
+    jruby 1.7.12 (1.9.3p392) 2014-04-15 643e292 on Java HotSpot(TM) 64-Bit Server VM 1.7.0_21-b12 [darwin-x86_64]
+    using a shared (threadsafe!) runtime
+    The signal QUIT is in use by the JVM and will not work correctly on this platform
+    Starting ProtocolHandler ["http-bio-127.0.0.1-2014"]
+
+    http://localhost:2014/nsl/editor/
+
+* System dependencies
+
+* Configuration
+    * Set up config files
+
+* Database creation
+
+* Database initialization
+
+* Set up LDAP
+
+
+* How to run the test suite
+
+    rake test:controllers
+    rake test:models
+
+    Integration tests are very slow.
+
+
+
+* Services (job queues, cache servers, search engines, etc.)
+
+* Deployment instructions
+
+
+    create user web;
+    grant select, insert, update, delete on author to web;
+    etc
+
+    grant select on nsl_global_seq to web;
+
+    grant select on reference_vw to web;
+
+
+

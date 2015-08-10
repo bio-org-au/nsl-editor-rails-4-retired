@@ -1,0 +1,43 @@
+                  
+<li class="dropdown">
+  <a href="#" id="user-dropdown-menu-link" tabindex="4" class="dropdown-toggle <%= 'active' if params[:controller].match(/session/) %>" data-toggle="dropdown">
+    <%= icon('user') %>&nbsp;<%= @current_user.try('full_name') || 'Not logged in' %> <span class="caret"></span></a>
+  <ul id="help-dropdown-menu" class="dropdown-menu" role="menu"> 
+    <li class="dropdown-submenu">
+      <a tabindex="-1" href="#"><%= pluralize(@current_user.try('groups').try('size'),'Group') %></a>
+      <ul class="dropdown-menu">
+        <% @current_user.try('groups').try('each') do |group| %>
+          <% case group 
+             when 'edit'  then icon_name = 'edit' 
+             when 'admin' then icon_name = 'sliders' 
+             else icon_name = 'circle-o' 
+             end 
+           %>
+            <li role="presentation"><a><%= "#{icon(icon_name)} #{group == group.upcase ? group : group.capitalize}".html_safe %></a></li>
+        <% end %>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a tabindex="-1" href="#">Authorized to</a>
+      <ul class="dropdown-menu">
+        <% if can? :read, 'anything' %>
+          <li><a href="#">Read</a></li>
+        <% end %>
+        <% if can? :edit, 'anything' %>
+          <li><a href="#">Edit</a></li>
+        <% end %>
+        <% if can? :apc, 'anything' %>
+          <li><a href="#">Edit APC</a></li>
+        <% end %>
+        <% if can? :admin, 'anything' %>
+          <li><a href="#">Administer</a></li>
+        <% end %>
+      </ul>
+    </li>
+    <li class="" role="presentation">
+      <%= link_to "#{icon('sign-out')} Sign out".html_safe, sign_out_path, method: :delete %>
+    </li>
+  </ul>
+</li>
+
+
