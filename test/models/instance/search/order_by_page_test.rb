@@ -21,8 +21,7 @@ class OrderByPage < ActiveSupport::TestCase
   test "approximates numeric sorting" do
     name = names(:angophora_costata)
     results = Instance.joins(:name).limit(400).ordered_by_page
-    #results.each {|i| puts "#{i.page} - #{i.full_name}"};
-    results.each_with_index {|i,ndx| puts "#{ndx}: #{i.page} - #{i.name.full_name}"};
+    #results.each_with_index {|i,ndx| puts "#{ndx}: #{i.page} - #{i.name.full_name}"};
     assert results.first.page == 'xx 1', "Wrong order at first value: #{results[0].page}."
     assert results.second.page == '2', "Wrong order at second value: #{results[1].page}."
     assert results.third.page == '3', "Wrong order at third value: #{results[2].page}."
