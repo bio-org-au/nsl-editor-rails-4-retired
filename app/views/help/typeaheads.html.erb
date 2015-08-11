@@ -14,9 +14,10 @@ Users also cannot simply enter free text in these cases, because they may not kn
 
 The Editor provides "typeahead" fields for this type of data.  These are important and powerful controls for quickly identifying a single existing record out of many thousands without having to give its ID.
 
-### Understanding and using typeahead fields
+#### Understanding and using typeahead fields
 
-####Starting
+
+#####Starting
 
 Typeaheads look like normal text fields, but as you start typing in one, you will see a list of possible choices, or suggestions, appear below the field.
 
@@ -26,15 +27,15 @@ As you type, the Editor will keep searching and showing you the results.  The li
 
 If no list of suggestions appears, the first few characters may have excluded all options, so delete some characters and start again.
 
-#### Selecting
+##### Selecting
 
 If you see the component you want in the suggestion list, you can arrow down to the item and select it by pressing enter.  
 
 You can also select it with your mouse.
 
-#### Text Recognition (new)
+##### Text Recognition (new)
 
-**Text recognition** is now the primary way the Editor deals with saving a typeahead field. 
+Text recognition is now the primary way the Editor deals with saving a typeahead field. 
 
 The Editor has to find out which record you meant so it can store the ID.  It uses the text in the typeahead field to search the database and if it finds a single record it will assume that is the record you were referring to.
 
@@ -42,7 +43,7 @@ This means that in typeaheads with text recognition you can simply type enough t
 
 It also means you can paste text into a typeahead field and, providing it uniquely identifies a record, you're finished.
 
-The Editor implements **text recognition** in the following way:
+The Editor implements **text recognition** as follows:
 
 1. First it searches using just the text you entered, including any wildcards you supply, but not adding any of its own.  
 1. If it finds exactly one record, it has succeeded and will use that record.
@@ -55,15 +56,15 @@ The Editor implements **text recognition** in the following way:
 The 2-step approach just described means that, for example, 'acacia mill.' is enough to recognise Acacia Mill., even though it also matches a section and a subgenus that start out with the same string.  This would **not** be the case if it applied a trailing wildcard right from the start.
 
 
-#### Removing
+##### Removing
 
 Removing data from a typeahead field works just like any other field - simply remove the text and save. 
 
-#### You have to select from the list sometimes
+##### You have to select from the list sometimes
 
 Sometimes you cannot identify a single record with text alone, and in those cases you do need to select a suggestion with keyboard or mouse.  Having to select from the suggestion list should be rare, but it is important to know about.  Selecting from the suggestions puts the record's ID in a place the Editor can use, so it resolves any ambiguity in text recognition.
 
-#### Wildcards
+##### Wildcards
 
 You can include wildcards (percent, asterisk) as you type and this will be used in the suggestion search.
 
@@ -71,15 +72,15 @@ In some cases, the suggestion search will automatically include wildcards betwee
 
 The suggestion search engine does not generally apply a leading wildcard to the whole search term since this slows the search and often produces confusing results.  **Orderless fragment searching** is the exception, see below.
 
-#### Not case sensitive
+##### Not case sensitive
 
 The search for typeahead suggestions is **never** case-sensitive.  After you save a record, the typeahead field value will appear in its canonical version, including correct case.
 
-#### Duplicates
+##### Duplicates
 
 Duplicates are not included in typeahead suggestions.
 
-#### Orderless Fragment Searching
+##### Orderless Fragment Searching
 
 References often have long citations, and many references may share long sections of citation text, and this has made it hard to quickly type enough to reduce the suggestion list to a good, small size.  Often the term you want to use to reduce the suggestion occurs further back from your cursor, making it cumbersome to insert the term in the right place quickly.
 
@@ -89,7 +90,7 @@ Orderless fragment searching means that any words you enter are used in the sear
 
 Orderless fragment searching may slow some searching down, especially because it uses leading wildcards, so it is not used in all typeaheads - only in cases where the trade-off is worthwhile.  So far, that has only been for reference citations. (Now requested for author names.)
 
-#### Frequency searching
+##### Frequency searching
 
 When we originally added orderless fragment searching it didn't matter how many times you entered a search term.  For example, 'walsh walsh' just searched for '%walsh%' and '%walsh%' in the field.  Users found that frustrating and pointed to cases where searching for the same term occurring twice could quickly reduce a suggestion list.
 
@@ -97,7 +98,7 @@ Orderless fragment searching is now generally combined with **frequency searchin
 
 Frequency searching cannot be applied without ordeless fragment searching.
 
-#### What happens without Orderless Fragment Searching?
+##### What happens without Orderless Fragment Searching?
 
 The default arrangement for searching is for **strings** of text - not for **orderless fragments**.
 
@@ -120,11 +121,11 @@ If you type 'walsh walsh' in a **normal** typeahead, here is what will happen:
     - Records that start with 'walsh', followed by anything, followed by 'walsh', followed by anything, will be found.
 
 
-#### Extra information in the suggestion list  
+##### Extra information in the suggestion list  
 
 Typeahead field suggestions often show extra information about the suggested records - types and counts for example.  That extra information is shown on the right-hand side of a vertical bar or pipe symbol ("&#124;") in the list.  Don't try to type that extra information because it will mislead the Editor as it searches for suggestions.
 
-#### Identifying an ID
+##### Identifying an ID
 
 Typeahead fields ultimately store the ID of the component.  You might be typing a reference citation, but you are actually giving the Editor enough information to find a single unique ID in the database.  Sometimes that might help you understand why the typeaheads work in a particular way.
 
