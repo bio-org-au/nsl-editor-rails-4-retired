@@ -22,9 +22,7 @@
         id="<%= reference.anchor_id %>"
         class="show-details-link"
         tabindex="<%= increment_tab_index %>" >
-        <%= reference.citation_html.try('html_safe') || '[No citation found.]' %>
-        <%= "(#{reference.year})" if reference.year.present? %>
-        <% if reference.duplicate? %> [Duplicate] <% end %>
+        <%= render partial: 'reference_link_text', locals: {reference: reference} %>
       </a>
   </td>
   <td class="text takes-focus width-10-percent filler">&nbsp;</td>

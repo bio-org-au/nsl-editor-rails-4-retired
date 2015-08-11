@@ -1,0 +1,3 @@
+<%= reference.citation_html.try('html_safe') || '[No citation found.]' %>
+<%= display_pages(reference.pages) %>
+<% if reference.duplicate? %> [Duplicate] <% end %>

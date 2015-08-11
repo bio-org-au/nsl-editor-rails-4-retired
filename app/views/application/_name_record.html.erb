@@ -22,7 +22,7 @@
        class="show-details-link"
        tabindex="<%= increment_tab_index %>" 
        id="name-<%= search_result[:id] %>">
-       <%= render partial: 'name_as_search_result_content', locals: {search_result: search_result} %>
+       <%= render partial: 'name_link_text', locals: {search_result: search_result} %>
     </a>
   </td>
   <td class="takes-focus width-5-percent filler">&nbsp;</td>

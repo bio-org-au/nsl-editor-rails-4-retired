@@ -22,17 +22,12 @@
       class="show-details-link"
       tabindex="<%= increment_tab_index %>" 
       id="<%= %Q(#{search_result.class}-#{search_result.id}) %>">
-    <% if search_result.full_name.present? %>
-		  <%= "#{search_result.name} (#{search_result.full_name})" %>
-		<% else %>
-		  <%= "#{search_result.name}" %>
-		<% end %>
-    <% if search_result.duplicate? %> [Duplicate] <% end %></a>
+      <%= render partial: 'author_name_link_text', locals: {search_result: search_result} %>
   </td>
   <td 
     id="<%= %Q(#{search_result.class}-#{search_result.id}-abbrev) %>" 
     class="text takes-focus abbrev main-content width-50-percent max-width-60-percent">
-    <%= "#{ search_result.abbrev}" %>
+    <%= render partial: 'author_abbrev_link_text', locals: {search_result: search_result} %>
   </td>
   <td class="takes-focus width-5-percent filler">&nbsp;</td>
 </tr>
