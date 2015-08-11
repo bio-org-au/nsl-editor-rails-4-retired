@@ -18,8 +18,6 @@ window.debugObject = (obj) ->
 jQuery -> 
   notice('Start of fresh.js document ready')
   notice('jQuery version: ' + $().jquery)
-  $('body').on('click','.for-help-popup', (event) ->                   togglePopUpHelp(event,$(this)))
-  $('body').on('click','div#toolbar a.query-set', (event) ->           querySet())
   $('body').on('click','.edit-details-tab', (event) ->                 loadDetails(event,$(this),true))
   $('body').on('click','.change-name-category-on-edit-tab', (event) -> changeNameCategoryOnEditTab(event,$(this),true))
   $('body').on('click','#master-checkbox.stylish-checkbox', (event) -> masterCheckboxClicked(event,$(this)))
@@ -28,46 +26,24 @@ jQuery ->
 
   $('tr.search-result').keydown (event) ->                             searchResultKeyNavigation(event,$(this))
   $('body').on('focus','tr.search-result td.takes-focus', (event) ->   searchResultFocus(event,$(this).parent('tr')))
-  # New records, when saved, gain attributes via Ajax:
   $('body').on('click','tr.search-result td.takes-focus', (event) ->   searchResultFocus(event,$(this).parent('tr')))
 
   $('tr.search-result td.takes-focus').focus (event) ->                searchResultFocus(event,$(this).parent('tr'))
   # iPad
   $('tr.search-result td.takes-focus').click (event) ->                searchResultFocus(event,$(this).parent('tr'))
   # iPad
-  $('body').on('click','div#toolbar a.identify-duplicates', (event) -> identifyDuplicates(event,$(this)))
   $('body').on('click','div#search-results tr.search-result .stylish-checkbox', (event) -> clickSearchResultCB(event,$(this)))
   # 
-  $('body').on('click','#query-ref-instances', (event) ->              queryRefInstances(event,$(this)))
-  $('body').on('click','#query-ref-names', (event) ->                  queryRefNames(event,$(this)))
-  $('body').on('click','#query-name-usages', (event) ->                queryNameUsages(event,$(this)))
-  $('body').on('click','#query-name-synonymy', (event) ->              queryNameSynonymy(event,$(this)))
-  $('body').on('click','#query-similar-authors-for-author', (event) -> querySimilarAuthorsForAuthor(event,$(this)))
-  $('body').on('click','#query-instance-context', (event) ->           queryInstanceContext(event,$(this)))
-  $('body').on('click','#create-instance-with-name-and-reference-btn', (event) -> createInstanceWithNameAndReference(event,$(this)))
-  $('body').on('click','#attach-name-to-author-btn', (event) ->            attachNameToAuthor(event,$(this)))
-  $('body').on('click','#toggle-details-btn', (event) ->                   toggleDetails(event,$(this)))
   $('body').on('change','.save-on-blur', (event) ->                        editFormFieldHasChanged(event,$(this)))
-  $('body').on('ajax:error','form.edit-form', (event,xhr,status) ->        editFormAjaxError(event,xhr,status,$(this)))
-  #$('body').on('ajax:success','form.edit-form', (event,xhr,status) ->      editFormAjaxSuccess(event,xhr,status,$(this)))
   $('a#'+window.location.hash).click() if window.location.hash
   $('body').on('click','a.append-to-query-field', (event) ->               appendToQueryField(event,$(this)))
-  $('body').on('click','a.write-to-query-field', (event) ->                writeToQueryField(event,$(this)))
-  $('body').on('click','a.write-to-query-field-and-run-search', (event) -> writeToQueryFieldAndRunSearch(event,$(this)))
   $('body').on('click','a.clear-query-field', (event) ->                   clearQueryField(event,$(this)))
   $('body').on('click','a.instance-note-delete-link', (event) ->           deleteInstanceNote(event,$(this)))
   $('body').on('click','a.instance-note-cancel-delete-link', (event) ->    cancelDeleteInstanceNote(event,$(this)))
-  #$('body').on('click','a#instance-note-create-link', (event) ->           instanceNoteCreate(event,$(this)))
-  #$('body').on('click','a#instance-note-cancel-create-link', (event) ->    cancelInstanceNoteForm(event,$(this)))
-  #$('body').on('click','a#instance-notes-switch-on-editing', (event) ->    instanceNotesSwitchOnEditing(event,$(this))) 
-  #$('body').on('click','a#prevent-edit-instance-notes', (event) ->         instanceNotesSwitchOffEditing(event,$(this)))
   $('body').on('click','a.instance-note-cancel-edit-link', (event) ->      cancelInstanceNoteEdit(event,$(this)))
   $('body').on('change','.instance-note-key-id-select', (event) ->         instanceNoteKeyIdSelectChanged(event,$(this)))
   $('body').on('blur','.instance-note-value-text-area', (event) ->         instanceNoteValueTextAreaBlur(event,$(this)))
-  $('body').on('click','a.clear-an-element', (event) ->                    clearAnElement(event,$(this))) 
-  $('body').on('click','a.refresh-active-tab', (event) ->                  refreshActiveTab(event,$(this))) 
   $('body').on('click','.build-query-button', (event) ->                   buildQueryString(event,$(this)))
-  $('body').on('click','.cancel-advanced-search-button', (event) ->        cancelAdvancedSearch(event,$(this)))
   $('#search-field').change (event) ->                                     searchFieldChanged(event,$(this))
   $('body').on('change','select#query-on', (event) ->                      queryonSelectChanged(event,$(this)))
   $('body').on('click','li.dropdown', (event) ->                           dropdownClick(event,$(this)))
@@ -76,26 +52,15 @@ jQuery ->
   $('body').on('click','a.unconfirmed-action-link', (event) ->             unconfirmedActionLinkClick(event,$(this)))
   $('body').on('click','a.cancel-link', (event) ->                         cancelLinkClick(event,$(this)))
   $('body').on('click','a.cancel-action-link', (event) ->                  cancelLinkClick(event,$(this)))
-  #$('body').on('change','#name_name_type_id', (event) ->                   nameNameTypeIdChanged(event,$(this)))
-  #$('body').on('change','#name_name_rank_id', (event) ->                   nameNameRankIdChanged(event,$(this)))
   $('body').on('click','#refresh-page-from-details-link', (event) ->       refreshPageLinkClick(event,$(this)))
   $('body').on('click','.refresh-page-link', (event) ->                    refreshPageLinkClick(event,$(this)))
   $('body').on('change','#name_name_rank_id', (event) ->                   nameRankIdChanged(event,$(this)))
-  #$('body').on('change','#author-by-abbrev', (event) ->                    authorByAbbrevChanged(event,$(this)))
-  #$('body').on('change','#ex-author-by-abbrev', (event) ->                 exAuthorByAbbrevChanged(event,$(this)))
-  #$('body').on('change','#base-author-by-abbrev', (event) ->               baseAuthorByAbbrevChanged(event,$(this)))
   $('body').on('click','.cancel-new-record-link', (event) ->                cancelNewRecord(event,$(this)))
   $('body').on('click','#instance-reference-typeahead', (event) ->          $(this).select())
   $('body').on('click','.tree-row div.head', (event) ->                     treeRowClicked(event,$(this)))
-  # new way
-  #$('#apc-tree-component').on('change.nsl-tree',(event,data) ->             treeRowClicked2(event,$(this),data))
-
-  #$('body').on('click','input.typeahead', (event) ->                        $(this).select())
 
   # When tabbing to search-result record, need to click to trigger retrieval of details.
-  #$('#search-field').focus()
   $('a.show-details-link[tabindex]').focus (event) ->                      clickOnFocus(event,$(this))
-  #$('body').on('click','a.show-details-link[tabindex]', (event) ->          clickOnFocus(event,$(this)))
   $('table.search-results tr td.takes-focus a.show-details-link[tabindex]').first().focus() 
   notice('End of fresh.js document ready.')
 
@@ -116,18 +81,6 @@ window.cancelNewRecord = (event,$element) ->
 refreshPageLinkClick = (event,$element) ->
   debug("refreshPageLinkClick")
   location.reload()
-
-#authorByAbbrevChanged = (event,$element) ->
-#debug("authorByAbbrev changed to: #{$element.val()};")
-#setDependents('author-by-abbrev')
-
-#exAuthorByAbbrevChanged = (event,$element) ->
-#debug("exAuthorByAbbrev changed to: #{$element.val()};")
-#setDependents('ex-author-by-abbrev')
-
-#baseAuthorByAbbrevChanged = (event,$element) ->
-#debug("baseAuthorByAbbrev changed to: #{$element.val()};")
-#setDependents('base-author-by-abbrev')
 
 window.setDependents = (fieldId) ->
   debug("setDependents for fieldId: #{fieldId}")
@@ -157,14 +110,6 @@ nameRankIdChanged = (event,$element) ->
     $('.requires-rank').removeAttr('disabled')
     $('input.requires-rank').removeClass('disabled').addClass('enabled')
     $('.hide-if-rank').addClass('hidden')
-
-#nameNameTypeIdChanged = (event,$element) ->
-#  debug("nameNameTypeIdChanged to: #{$element.val()} ")
-#  $('#name-edit-tab').click()
-
-#nameNameRankIdChanged = (event,$element) ->
-# debug("nameNameRankIdChanged to: #{$element.val()} ")
-# $('#name-edit-tab').click()
 
 dropdownClick = (event,$element) ->
   debug("dropdownClick - showing")
@@ -255,11 +200,6 @@ searchFieldChanged = (event,$element) ->
   $('select#query-on').val('name') if $('#search-field').val().match(/names*:/)
   $('select#query-on').val('reference') if $('#search-field').val().match(/refs*:/)
 
-cancelAdvancedSearch = (event,$element) ->
-  debug('cancelAdvancedSearch')
-  window.history.back()
-  event.preventDefault()
-
 buildQueryString = (event,$element) ->
   debug('BuildQueryString')
   search_string = ''
@@ -282,13 +222,6 @@ buildQueryString = (event,$element) ->
   $('#search-field').val(search_string)
   event.preventDefault()
  
-clearAnElement = (event,$element) ->
-  debug('clearAnElement')
-  $($element.attr('data-target-element-selector')).text('')
-  $($element.attr('data-show-this-element-selector')).removeClass('hidden')
-  $($element.attr('data-hide-this-element-selector')).addClass('hidden')
-  event.preventDefault()
-
 instanceNoteKeyIdSelectChanged = (event,$element) ->
   debug('instanceNoteKeyIdSelectChanged')
   instanceNoteId = $element.attr('data-instance-note-id')
@@ -332,9 +265,6 @@ cancelInstanceNoteEdit = (event,$element) ->
   #event.preventDefault()
   return(false)
  
-refreshActiveTab = ->
-  $('li.active a.tab').click()
-
 cancelDeleteInstanceNote = (event,$element) ->
   debug('cancelDeleteInstanceNote')
   instanceNoteId = $element.attr('data-instance-note-id')
@@ -379,21 +309,6 @@ appendToQueryField = (event,$element) ->
   $('#search-field').val($('#search-field').val() + ' ' + $element.attr('data-value'))
   event.preventDefault()
 
-writeToQueryField = (event,$element) ->
-  $('#search-field').val($element.attr('data-value'))
-  event.preventDefault()
-
-writeToQueryFieldAndRunSearch = (event,$element) ->
-  writeToQueryField(event,$element)
-  $('#search-button').click()
-  event.preventDefault()
-
-editFormAjaxError = (event,xhr,status,$element) ->
-  debug("editFormAjaxError: " + status)
-  showFormFieldWasNotSaved($element)
-  showFormErrorMessage(xhr,$element)
-  return false
- 
 clickOnFocus = (event,$element) ->
   debug("clickOnFocus: id: #{$element.attr('id')}; event target: #{event.target}")
   $element.click()
@@ -435,80 +350,6 @@ clearFormErrorMessage = ($form) ->
   $form.find('div.field-error-message').html('')
   return
   
-# TODO: convert to using form submit?
-querySimilarAuthorsForAuthor = (event,$element) ->
-  debug('querySimilarAuthorsForAuthor start')
-  url = $element.attr('data-url')
-  $content = selectedRecords().first().closest('tr.search-result').find('td.main-content').html()
-  debug("$content: #{$content}")
-  url = url + '?query=' + jQuery.trim($content).replace(/&amp;/,'')
-  window.location = 'http://' + location.host + url  
-  return false
-
-queryInstanceContext = (event,$element) ->
-  debug('queryInstanceContext start')
-  $selected = selectedRecords()
-  debug($selected.length)
-  $record = $selected.first().closest('tr.search-result')
-  debug($record.attr('id'))
-  recordId = $record.attr('data-record-id')
-  recordType = $record.attr('data-record-type')
-  url = $element.attr('data-url')
-  debug("url: #{url}")
-  url = url + '?query=instance-context:'+recordId
-  debug("url: #{url}")
-  window.location = 'http://' + location.host + url  
-  return false
-
-#TODO: URGENT: Remove hard-coded protocol.  e.g. Convert to form submit.
-queryNameUsages = (event,$element) ->
-  debug('queryNameUsages')
-  $selected = selectedRecords()
-  url = $element.attr('data-url')
-  id = serializeSelectedIds()
-  url = url + '?query=name-usages:'+id
-  action =  $element.attr('data-action')
-  window.location = 'http://' + location.host + url  
-  return false
-
-#TODO: URGENT: Remove hard-coded protocol.  e.g. Convert to form submit.
-queryNameSynonymy = (event,$element) ->
-  debug('queryNameSynonymy start')
-  $selected = selectedRecords()
-  url = $element.attr('data-url')
-  id = serializeSelectedIds()
-  url = url + '?query=name-synonymy:'+id
-  debug("url: #{url}")
-  action =  $element.attr('data-action')
-  debug("action: #{action}")  
-  window.location = 'http://' + location.host + url  
-  return false
-
-
-#TODO: Remove hard-coded protocol.  Convert to form submit?
-queryRefInstances = (event,$element) ->
-  debug('queryRefInstances start')
-  $selected = selectedRecords()
-  args = 'records='+serializeSelectedRecords()
-  url = $element.attr('data-url')
-  id = serializeSelectedIds()
-  url = url + '?query=ref-instances:'+id
-  action =  $element.attr('data-action')
-  window.location = 'http://' + location.host + url  
-  return false
-
-#TODO: Remove hard-coded protocol.  Convert to form submit?
-queryRefNames = (event,$element) ->
-  debug('queryRefNames start')
-  $selected = selectedRecords()
-  args = 'records='+serializeSelectedRecords()
-  url = $element.attr('data-url')
-  id = serializeSelectedIds()
-  url = url + '?query=ref-names:'+id
-  action =  $element.attr('data-action')
-  window.location = 'http://' + location.host + url  
-  return false
-  
 selectedRecords = -> 
   return $('div#search-results tr td.checkbox-container .stylish-checkbox-checked')
 
@@ -524,10 +365,6 @@ serializeSelectedIds = () ->
   queryIds = ''
   selectedRecords().each (index) -> queryIds += $(this).closest('tr.search-result').attr('data-record-id')+','
   return queryIds.replace(/,$/,'')
-
-querySet = ->
-  $('#search-field').val("ids:#{serializeSelectedIds()}")
-  $('.search-button').click()
 
 window.loadTreeDetails = (event,inFocus,tabWasClicked = false) ->
   debug('window.loadTreeDetails')
@@ -590,10 +427,6 @@ recordCurrentActiveTab = (record_type) ->
   debug("  recordCurrentActiveTab: #{$('ul.nav-tabs li.active a').attr('data-tab-name')}")
   $('body').attr('data-active-'+record_type+'-tab',$('ul.nav-tabs li.active a').attr('data-tab-name'))  
   
-identifyDuplicates = (event,$this) ->
-  debug('markDuplicates not implemented yet')
-  false
-
 treeRowClicked2 = (event,$this,data) ->
   debug('treeRowClicked2')
 
@@ -677,9 +510,6 @@ searchResultsCheckedCount = ->
 window.hideTools = ->
   $('#toolbar a').addClass('hidden')
 
-# window.hideToolsForOneThingSelected = ->
-#   $('#toolbar a.show-when-one-thing-selected').addClass('hidden')
-      
 window.showToolsForNothingSelected = ->
   $('#toolbar a.show-when-nothing-selected').removeClass('hidden')
 
@@ -711,20 +541,6 @@ assignSingleSelectedIdToLinks = ->
 
 firstSelectedItem = ->
   $('tr.search-result td.checkbox-container .stylish-checkbox-checked').first().closest('tr')
-
-# Show the help, or hide it if already visible.
-# Set up one-time event to hide popup if user clicks elsewhere on page.
-togglePopUpHelp = (event,$this) ->
-  clickPosition = $this.position()
-  $this.attr('title','')  # intended to avoid messy display of tooltip while displaying help
-  targetSelector = '#' + $this.attr('data-popup-id')
-  $target = $(targetSelector + '.hidden')
-  closeOpenPopups()
-  if $target.hasClass('hidden')
-    positionOnTheRight(clickPosition,$target,50)
-    makeTargetVisible($target)
-    setOneClickHider($target)
-  false
 
 window.showMessage = (message) ->
   debug('showMessage')
@@ -768,15 +584,6 @@ toggleVisibleHidden = ($target) ->
     makeTargetVisible($target)
   else
     makeTargetInvisible($target)
-
-toggleDetails = (event,$button) ->
-  $target = $('div#search-result-details')
-  if $target.hasClass('hidden')
-    $target.removeClass('hidden')
-    $('#toggle-details-btn').html('Hide Details')
-  else
-    $target.addClass('hidden')
-    $('#toggle-details-btn').html('Show Details')
 
 window.moveUpOneSearchResult = (startRow) -> 
   if startRow.prev()
