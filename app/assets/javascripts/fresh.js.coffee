@@ -62,6 +62,7 @@ jQuery ->
   # When tabbing to search-result record, need to click to trigger retrieval of details.
   $('a.show-details-link[tabindex]').focus (event) ->                      clickOnFocus(event,$(this))
   $('table.search-results tr td.takes-focus a.show-details-link[tabindex]').first().focus() 
+  $('.firefox-notice').removeClass('hidden') if window.navigator.userAgent.indexOf("Firefox") < 0
   notice('End of fresh.js document ready.')
 
 window.showInstanceWasCreated = (recordId,fromRecordType,fromRecordId) ->
