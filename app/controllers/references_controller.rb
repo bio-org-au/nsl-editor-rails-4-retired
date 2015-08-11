@@ -54,10 +54,6 @@ class ReferencesController < ApplicationController
     render 'create_error.js', status: :unprocessable_entity
   end
 
-  def citation
-    render partial: 'citation'
-  end
-
   # PUT /references/1.json
   # Ajax only
   # Makes this compatible with create error processing.
