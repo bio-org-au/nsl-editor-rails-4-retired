@@ -29,21 +29,32 @@ class Author::AsTypeahead < Author
     results
   end 
 
-  # Collection of authors to be offered in a typeahead field based on a name fragment.
-  # Also shows count of authored references.
-  def self.on_name(term)
-    if term.blank?
-      results = []
-    elsif 
-      results = Author.lower_name_like(term+'%')\
-        .joins('left outer join reference on reference.author_id = author.id')\
-        .select('author.name as name, author.id as id, count(reference.id) as ref_count')\
-        .group('lower(author.name),author.id')\
-        .order('author.name').limit(SEARCH_LIMIT)\
-        .collect {|n| {value: n.ref_count == 0 ? "#{n.name}" : "#{n.name} | #{n.ref_count} #{'ref'.pluralize(n.ref_count)}", id: "#{n.id}"}} 
+  # Tokenize search terms so word order is not important.
+  # Recognise repeated search tokens 
+  # e.g. walsh in walsh should check for at least 2 walshes
+  def self.on_name(terms)
+    where = ""
+    binds = []
+    terms = terms.gsub(/\*/,'%')
+    terms_array = terms.split
+    terms_uniq = terms_array.uniq
+    terms_uniq.collect do |uniq_term|
+      {value: uniq_term, freq: terms_array.count(uniq_term)}
+    end.each do |hash|
+      where += " lower(name) like lower(?) and "
+      search_term = "#{hash[:value]}%" * hash[:freq]
+      binds.push "%#{search_term}"
     end
-    results
-  end 
+    where += " 1=1 "
+    results = Author.
+        where(binds.unshift(where)).
+        joins('left outer join reference on reference.author_id = author.id').
+        select('author.name as name, author.id as id, count(reference.id) as ref_count').
+        group('lower(author.name),author.id').
+        order('author.name').
+        limit(SEARCH_LIMIT).
+        collect {|n| {value: n.ref_count == 0 ? "#{n.name}" : "#{n.name} | #{n.ref_count} #{'ref'.pluralize(n.ref_count)}", id: "#{n.id}"}} 
+  end
 
   # Based on the on_name method, but also excludes :id passed in.
   # Used for offering duplicates_of records.
