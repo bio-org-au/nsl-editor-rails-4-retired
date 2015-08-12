@@ -1,3 +1,5 @@
+# encoding: UTF-8
+#
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -13,8 +15,8 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
-# encoding: UTF-8
+#
+
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -210,7 +212,7 @@ ActiveRecord::Schema.define(version: 0) do
     t.boolean  "valid_record",                       default: false, null: false
     t.integer  "why_is_this_here_id",   limit: 8
     t.string   "verbatim_rank",         limit: 50
-    t.index :name => "lower_f_unaccent_full_name", :expression => "lower(f_unaccent((full_name)::text))"
+    #t.index :name => "name_lower_f_unaccent_full_name_like", :expression => "lower(f_unaccent((full_name)::text))"
     t.index ["author_id"], :name => "name_author_index"
     t.index ["base_author_id"], :name => "name_baseauthor_index"
     t.index ["ex_author_id"], :name => "name_exauthor_index"
@@ -343,6 +345,7 @@ ActiveRecord::Schema.define(version: 0) do
     t.integer  "namespace_id",         limit: 8,                    null: false
     t.string   "nomenclatural_status", limit: 50
     t.string   "page"
+    t.string   "page_qualifier"
     t.integer  "parent_id",            limit: 8
     t.integer  "reference_id",         limit: 8,                    null: false
     t.integer  "source_id",            limit: 8
@@ -693,6 +696,10 @@ ActiveRecord::Schema.define(version: 0) do
     t.string   "taxon_name",            limit: 512,                  null: false
     t.datetime "updated_at"
     t.string   "updated_by"
+    t.string   "basionym",              limit: 512
+    t.string   "proto_citation",        limit: 512
+    t.integer  "proto_instance_id",     limit: 8
+    t.string   "replaced_synonym",      limit: 512
     t.foreign_key ["apc_instance_id"], "instance", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_lgtnu32ysbg6l2ys5d6bhfgmq"
     t.foreign_key ["family_nsl_id"], "name", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_on28vygd1e7aqn9owbhv3u23h"
     t.foreign_key ["genus_nsl_id"], "name", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_ctg301hhg3x41rjl09d7noti1"
@@ -700,6 +707,7 @@ ActiveRecord::Schema.define(version: 0) do
     t.foreign_key ["name_status_id"], "name_status", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_bexlla3pvlm2x8err16puv16f"
     t.foreign_key ["name_type_id"], "name_type", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_gbcxpwubk8cdlh5fxnd3ln4up"
     t.foreign_key ["parent_nsl_id"], "name", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_kquvd2hkcl7aj2vhylvp1k7vb"
+    t.foreign_key ["proto_instance_id"], "instance", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_59i6is32bt6v19i51ql9n2r9i"
     t.foreign_key ["second_parent_nsl_id"], "name", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_mvjeehgt584v9ep11ixe1iyok"
     t.foreign_key ["species_nsl_id"], "name", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_rpqdbhi21sdix5tmmj5ul61su"
   end

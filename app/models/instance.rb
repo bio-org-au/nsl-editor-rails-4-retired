@@ -694,11 +694,22 @@ class Instance < ActiveRecord::Base
     done
   end
 
+  # Temporary fix to instance delete
+  # Simple name table is going to be removed soonish, in which, remove this method and the call to it.
+  def remove_proto_instance_id
+    simple_name_entry = SimpleName.find_by(proto_instance_id: id)
+    unless simple_name_entry.blank?
+      simple_name_entry.proto_instance_id = nil
+      simple_name_entry.save!
+    end
+  end
+
   # Notes: 
   # - setting the updated_by column to audit the user who is deleting the record.
   # - avoid validation on that update - otherwise the delete will not occur.
   def delete_as_user(username)
     update_attribute(:updated_by, username) 
+    remove_proto_instance_id
     Instance::AsServices.delete(id)
   rescue => e
     logger.error("delete_as_user exception: #{e.to_s}")
