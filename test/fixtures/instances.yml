@@ -118,17 +118,25 @@ default_instance_for_the_regnum:
   updated_by: tester
   page: 19-20
 
-
-# Default instance so name can be offered as parent
 default_instance_for_a_division:
   reference: bucket_reference_for_default_instances
-  name: a_division
+  name: metrosideros_costata_gaertn
   instance_type: comb_nov
   verbatim_name_string: verbatim
   namespace: apni
   created_by: tester
   updated_by: tester
-  page: 75, t. 102
+  page: 75, t. 101
+
+secondary_reference_instance_for_a_division:
+  reference: bucket_reference_for_default_instances
+  name: metrosideros_costata_gaertn
+  instance_type: secondary_reference
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: 75
 
 
 # Default instance so name can be offered as parent
@@ -140,7 +148,7 @@ default_instance_for_a_classis:
   namespace: apni
   created_by: tester
   updated_by: tester
-  page: 75, t. 101
+  page: 75, t. 102
 
 
 # Default instance so name can be offered as parent
@@ -503,7 +511,7 @@ metrosideros_costata_gaertn:
   created_by: CUL07D
   draft: false
   instance_type: nomenclatural_synonym
-  name_id: metrosideros_costata_gaertn
+  name: metrosideros_costata_gaertn
   namespace: apni
   nomenclatural_status:
   page: '146'

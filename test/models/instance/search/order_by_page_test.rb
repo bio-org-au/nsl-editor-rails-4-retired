@@ -30,9 +30,10 @@ class OrderByPage < ActiveSupport::TestCase
     assert results[5].page.match(/\Axx,20,/), "Wrong order at sixth value: #{results[5].page}."
     assert results[9].page == '40', "Wrong order at tenth value: #{results[9].page}."
     assert results[10].page == '41', "Wrong order at eleventh value: #{results[10].page}."
-    assert results[13].page == '75, t. 101', "Wrong order at the fourteenth value: #{results[13].page}."
-    assert results[14].page == '75, t. 102', "Wrong order at the fifteenth value: #{results[14].page}."
-    assert results[16].page == 'xx 200,300', "Wrong order at the seventeenth value: #{results[16].page}."
+    assert results[13].page == '75, t. 102', "Wrong order at the fourteenth value: #{results[13].page}."
+    assert results[14].page == '75', "Wrong order at the fourteenth value: #{results[14].page}."
+    assert results[15].page == '75, t. 101', "Wrong order at the sixteenth value: #{results[15].page}."
+    assert results[18].page == 'xx 200,300', "Wrong order at the nineteenth value: #{results[18].page}."
   end
  
 end

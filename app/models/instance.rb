@@ -48,7 +48,7 @@ class Instance < ActiveRecord::Base
                                            '^  *',''),                          
                                          '^,',''),                              
                                        ',.*',''),                               
-                                     12,'0'), page,name.full_name")}
+                                     12,'0'),name.full_name")}
   
   attr_accessor :expanded_instance_type, :display_as, :relationship_flag, 
                 :give_me_focus, :legal_to_order_by, 
