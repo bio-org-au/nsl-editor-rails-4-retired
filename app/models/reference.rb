@@ -19,7 +19,7 @@ require 'search_tools'
 
 
 class Reference < ActiveRecord::Base
-  self.table_name = 'reference'  # access the view not the table
+  self.table_name = 'reference'  
   self.primary_key = 'id'
   self.sequence_name = 'nsl_global_seq'
   strip_attributes
