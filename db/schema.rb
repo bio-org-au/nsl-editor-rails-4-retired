@@ -726,6 +726,7 @@ ActiveRecord::Schema.define(version: 0) do
     t.string   "author"
     t.string   "authority"
     t.boolean  "autonym"
+    t.string   "basionym",              limit: 512
     t.string   "base_name_author"
     t.string   "classifications"
     t.datetime "created_at"
@@ -752,10 +753,13 @@ ActiveRecord::Schema.define(version: 0) do
     t.boolean  "nom_inval"
     t.string   "nom_stat"
     t.text     "parent_nsl_id"
+    t.string   "proto_citation",        limit: 512
+    t.text     "proto_instance_id"
     t.integer  "proto_year",            limit: 2
     t.string   "rank"
     t.string   "rank_abbrev"
     t.integer  "rank_sort_order"
+    t.string   "replaced_synonym",      limit: 512
     t.string   "sanctioning_author"
     t.boolean  "scientific"
     t.text     "second_parent_nsl_id"
