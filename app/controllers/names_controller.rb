@@ -133,33 +133,14 @@ class NamesController < ApplicationController
     render 'create_error.js', status: :unprocessable_entity
   end
 
+  # PUT /names/1.json
+  # Ajax only.
   def update
     @name = Name::AsEdited.find(params[:id])
     @message = @name.update_if_changed(name_params,typeahead_params,current_user.username)
     render 'update.js'
   rescue => e
     @message = e.to_s
-    render 'update_error.js', status: :unprocessable_entity
-  end
-
-  # PUT /names/1.json
-  # Ajax only.
-  def update_old
-    logger.debug('name update')
-    @message = ''
-    @name = Name::AsEdited.find(params[:id])
-    if @name.would_change?(name_params) || @name.would_change?(@name.resolved_typeahead_params(typeahead_params))
-      logger.debug("Yes it would change!!!!")
-      @name.set_typeahead_from_params(typeahead_params)
-      @name.update_attributes_with_username(name_params,current_user.username) || throw('update failed')
-      @name.set_names!
-      @message = 'Updated'
-    else
-      @message = 'No change'
-    end
-    render 'update.js'
-  rescue => e
-    logger.error("names update exception: #{e.to_s}")
     render 'update_error.js', status: :unprocessable_entity
   end
 
