@@ -105,6 +105,25 @@
   No instances.
 <% end %>
 
+<br>
+<% if @name.children.size > 0 %>
+  <%= link_to("#{pluralize(@name.children.size,'child')} #{icon('search')}".html_safe,
+    search_path(query: "parent-id: #{@name.id}",
+                        query_field: 'name'),
+                        tabindex: increment_tab_index,
+                        title: "Retrieve #{pluralize(@name.children.size,'child')}.",
+                        class: '') %>
+  <br>
+<% end %>
+<% if @name.parent_id.present? %>
+  <%= link_to("Parent: #{@name.parent.full_name} #{icon('search')}".html_safe,
+    search_path(query: "id: #{@name.parent_id}",
+                        query_field: 'name'),
+                        tabindex: increment_tab_index,
+                        title: "Retrieve the parent",
+                        class: '') %>
+  <br>
+<% end %>
 
 <% if @name.comments.size > 0  %>
   <%= divider %>

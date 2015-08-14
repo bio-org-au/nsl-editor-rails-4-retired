@@ -49,7 +49,8 @@ class Name::AsQuery < Name
       'ba-id' => 'base author id',
       'ea-id' => 'ex author id',
       'eba-id' => 'ex base author id',
-      'sa-id' => 'sanctioning author id'
+      'sa-id' => 'sanctioning author id',
+      'parent-id' => 'parent id',
     }
   end
 

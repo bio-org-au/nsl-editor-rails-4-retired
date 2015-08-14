@@ -187,6 +187,9 @@ class Name::AsSearchEngine < Name
           when 'with-tag'
             where += " and exists (select null from name_tag_name where name.id = name_tag_name.name_id and exists (select null from name_tag where lower(name_tag.name) like ? and name_tag_name.tag_id = name_tag.id))"
             binds.push(prepare_search_term_string(pairing[1]))
+          when 'parent-id'
+            where += " and parent_id = ? "
+            binds.push(pairing[1].to_i)
           else
             logger.error('no match')
             rejected_pairings.push(pairing.join(':'))
