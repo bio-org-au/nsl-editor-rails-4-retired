@@ -58,6 +58,7 @@ class Name::AsEdited < Name::AsTypeahead
     self.ex_base_author_id = Name::AsEdited.author_from_typeahead(params['ex_base_author_id'],params['ex_base_author_typeahead'],'Ex Base Author') if params.has_key?('ex_base_author_id')
     self.sanctioning_author_id = Name::AsEdited.author_from_typeahead(params['sanctioning_author_id'],params['sanctioning_author_typeahead'],'Sanctioning Author') if params.has_key?('sanctioning_author_id')
     self.parent_id = Name::AsEdited.parent_from_typeahead(params['parent_id'],params['parent_typeahead']) if params.has_key?('parent_id')
+    self.second_parent_id = Name::AsEdited.parent_from_typeahead(params['second_parent_id'],params['second_parent_typeahead']) if params.has_key?('second_parent_id')
     self.duplicate_of_id = Name::AsEdited.duplicate_of_from_typeahead(params['duplicate_of_id'],params['duplicate_of_typeahead']) if params.has_key?('duplicate_of_id')
   rescue => e
     logger.error("Name::AsEdited:resolve_typeahead_params:found error: #{e.to_s}")
