@@ -20,6 +20,7 @@
        tabindex="<%= increment_tab_index %>" 
        >
       <%= "#{search_result.expanded_instance_type || search_result.instance_type.name}: #{search_result.name.full_name}" %>
+    <%= "#{search_result.page}" %>
     </a>
     <%= "</td><td>[#{search_result.type}]::#{ search_result.try('display_as') || search_result.class.to_s};#{search_result.id }(by)---- #{Pathname.new(__FILE__).basename}".html_safe if @debug %>
 
