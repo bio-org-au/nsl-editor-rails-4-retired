@@ -16,10 +16,12 @@
 #   
 require 'test_helper'
 
-class NameDestroyRouteTest < ActionController::TestCase
-  tests NamesController
-  test "should route to destroy a name" do
-    assert_routing({method: 'delete', path: '/names/1'}, { controller: "names", action: "destroy", id: "1"})
-  end  
-end
+class NameAsServicesDeleteSuccessTest < ActiveSupport::TestCase
 
+  test "url" do
+    name_id = names(:name_to_delete).id
+    name = Name::AsServices.find(name_id)
+    assert name.delete_with_reason('200 this is the reason.....'), 'Should be true'
+  end
+
+end

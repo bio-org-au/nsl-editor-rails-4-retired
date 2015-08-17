@@ -1,0 +1,38 @@
+<% cancel_delete_link = link_to("Cancel delete",
+                                '#',
+                                id: "cancel-delete-link",
+                                class: "btn btn-default cancel-link",
+                                tabindex: increment_tab_index,
+                                data: {enable_this_id: 'name-delete-link',
+                                       hide_this_id: 'confirm-or-cancel-link-container'})
+-%>
+
+    <% names_delete = NamesDelete.new(name_id: @name.id) %>
+    <%= form_for(names_delete, as: 'names_delete', role: 'form', method: :delete, remote: true) do |f| %>
+    <br>
+    <%= f.hidden_field :name_id %>
+    <%= f.submit "Confirm delete", 
+      id: 'confirm-delete-name', 
+      title: 'Pressing this button will delete the name',
+      class: 'btn btn-danger width-8em', 
+      disabled: false %>
+    <%= cancel_delete_link %>
+    <br>
+    <br>
+    <br>
+    <div class="form-group">
+      <label for="names_delete_reason">Reason*</label>
+    <br>
+      <%= f.select('reason', names_delete.possible_reasons,{prompt: 'Choose a reason'}, autocomplete: "off", class: "form-control give-me-focus", required: true) %>
+    </div>
+    <div class="form-group">
+      <label for="names_delete_extra_info">Extra information</label>
+      <%= f.text_field :extra_info, class: 'form-control pull-left' %>
+    </div>
+    <br>
+    <br>
+    <br>
+    <p/>
+    You may have to wait 10 or 20 seconds after you confirm delete before the record is deleted.
+    <% end %>
+

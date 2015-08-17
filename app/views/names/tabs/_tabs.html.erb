@@ -34,33 +34,14 @@
   
         <%= render partial: 'names/tabs/tab', locals: {first: false,
                                             last: false,
-                                            this_tab: 'tab_comments', 
-                                            link_text: "Comments".html_safe,
-                                            link_id: 'name-comments-tab', 
-                                            link_title: 'Add, remove or edit comments about the name.',
+                                            this_tab: 'tab_more', 
+                                            link_text: "More".html_safe,
+                                            link_id: 'name-more-tab', 
+                                            link_title: 'See more tabs.',
                                             tab_index: increment_tab_index,
                                             prev_tab: '', 
                                             next_tab: ''} %>
   
-        <%= render partial: 'names/tabs/tab', locals: {first: false,
-                                            last: false,
-                                            this_tab: 'tab_name_tags', 
-                                            link_text: "Tag".html_safe,
-                                            link_id: 'name-tags-tab', 
-                                            link_title: 'Add or remove tags for the name.',
-                                            tab_index: increment_tab_index,
-                                            prev_tab: '', 
-                                            next_tab: ''} %>
-  
-        <%= render partial: 'names/tabs/tab', locals: {first: false,
-                                            last: true,
-                                            this_tab: 'tab_copy',
-                                            link_text: "Copy".html_safe,
-                                            link_id: 'name-copy-tab',
-                                            link_title: 'Copy the name.',
-                                            tab_index: increment_tab_index,
-                                            prev_tab: '',
-                                            next_tab: ''} %>
       <% end %>
 
     </ul>

@@ -1,1 +1,4 @@
-window.showRecordWasDeleted('<%= @name.id %>', 'name');
+$('#confirm-or-cancel-link-container a.btn-danger').addClass('disabled')
+$('#cancel-delete-link').addClass('disabled')
+$('#search-result-details-message-container').html('Record deleted.  <br><br>In a few moments it will disappear from the page.');
+setTimeout(function(){window.showRecordWasDeleted('<%= @name.id %>', 'name')},2000);

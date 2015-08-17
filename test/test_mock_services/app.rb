@@ -90,6 +90,25 @@ delete '/nsl/services/instance/apni/:id/api/delete' do |id|
   end
 end
 
+delete '/nsl/services/name/apni/:id/api/delete' do
+  content_type 'application/json'
+  id = params['id']
+  reason = params['reason']
+  case reason
+  when /200/
+    [200, {"ok":true}.to_json]
+  when /666/
+    [200, {"ok":false, "errors":["some silly error"]}.to_json]
+  when /404/
+    [404, {"action":"delete","error":["Object not found."]}.to_json]
+  when /5/
+    [500]
+  else
+    [200, {"ok":true}.to_json]
+  end
+end
+
+    #[200, {"name":{"class":"au.org.biodiversity.nsl.Name","_links":{"permalink":{"link":"http://localhost:8080/nsl/mapper/boa/name/apni/4463989","preferred":true,"resources":1}},"nameElement":"asdfasdfa"},"action":"delete","ok":true}.to_json]
 class Struct
   def to_map
     map = Hash.new

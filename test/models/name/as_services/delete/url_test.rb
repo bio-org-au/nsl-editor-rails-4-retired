@@ -16,10 +16,11 @@
 #   
 require 'test_helper'
 
-class NameDestroyRouteTest < ActionController::TestCase
-  tests NamesController
-  test "should route to destroy a name" do
-    assert_routing({method: 'delete', path: '/names/1'}, { controller: "names", action: "destroy", id: "1"})
-  end  
-end
+class NameAsServicesDeleteURLTest < ActiveSupport::TestCase
 
+  test "url" do
+    url = Name::AsServices.delete_url(12345,'this is the reason.....')
+    assert url.match(Regexp.escape(%Q(#{Rails.configuration.name_services}12345/api/delete?apiKey=#{Rails.configuration.api_key}&reason=this%20is%20the%20reason.....))),'URL is wrong.'
+  end
+
+end

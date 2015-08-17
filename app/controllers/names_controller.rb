@@ -21,7 +21,7 @@ class NamesController < ApplicationController
   include OpenURI
   before_filter :authorize_edit, except: [:index, :show, :rules]
   before_filter :javascript_only, except: [:rules]  # All text/html requests should go to the search page.
-  before_filter :find_name, only: [:show, :destroy, :edit_as_category, :refresh]
+  before_filter :find_name, only: [:show, :edit_as_category, :refresh]
 
   # GET /names/1
   # GET /names/1.json
@@ -143,15 +143,17 @@ class NamesController < ApplicationController
     @message = e.to_s
     render 'update_error.js', status: :unprocessable_entity
   end
-
+ 
   # DELETE /names/1
   # DELETE /names/1.json
   def destroy
-      if @name.destroy
-        render
-      else
-        render 'destroy_error'
-      end
+    raise 'problem'
+    @name = find_name_as_services
+    if @name.delete
+      render
+    else
+      render 'destroy_error'
+    end
   end
 
   def rules
@@ -182,8 +184,14 @@ class NamesController < ApplicationController
     redirect_to names_path
   end
 
+  def find_name_as_services
+    @name = Name::AsServices.find(params[:id])
+  rescue ActiveRecord::RecordNotFound 
+    flash[:alert] = "Could not find the name." 
+    redirect_to names_path
+  end
+
   def name_params
-      #params[:name].merge(params[:name_as_edited])
       params.require(:name).permit(:name_status_id, :name_rank_id, :name_type_id, :name_element, :verbatim_rank) 
   end
 

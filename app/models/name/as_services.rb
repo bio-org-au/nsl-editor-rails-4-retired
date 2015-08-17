@@ -39,6 +39,35 @@ class Name::AsServices < Name
     end
   end
 
-end
+  def self.delete_url(id,reason = 'Nolongerrequired')
+    api_key = Rails.configuration.api_key
+    "#{Rails.configuration.name_services}#{id}/api/delete?apiKey=#{api_key}&reason=#{ERB::Util.url_encode(reason)}"
+  end
 
+  # Service will send back 200 even if delete fails, but will also sometimes send back 404,
+  # so have to look at both.
+  # The interface *should* never let a user try to delete a name
+  # that cannot be deleted, so the chances of hitting a 'meaningful' error are small.
+  # The service error messages are not suitable for showing to users. e.g. "There are 1 that cite this.", raw database messages like multi-level foreign key technical errors,
+  # so just log them. 
+  def delete_with_reason(reason)
+    answer_json = {}
+    delete_url = Name::AsServices.delete_url(id,reason)
+    answer_string = RestClient.delete(delete_url,{accept: :json})
+    logger.debug(answer_string)
+    answer_json = JSON.load(answer_string)
+    raise "Could not delete that name [#{answer_string.try('code')}]" unless answer_string.code == 200 and answer_json["ok"] == true
+    true
+  rescue => e
+    logger.error("Name::AsServices.delete exception for delete url: #{delete_url}")
+    logger.error("Name::AsServices.delete exception with answer_string: #{answer_string}")
+    logger.error("Name::AsServices.delete exception with errors: #{answer_json['errors']}")
+    if answer_json.blank? || answer_json["errors"].blank?
+      raise
+    else
+      raise answer_json["errors"].join(';')
+    end
+  end
+
+end
 

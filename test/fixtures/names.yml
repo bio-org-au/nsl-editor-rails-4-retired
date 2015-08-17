@@ -169,6 +169,7 @@ unknown_species:
 another_species: 
   simple_name: 'another-species'
   name_element: 'another-species'
+  full_name: another-species
   name_rank: species
   name_status: unknown
   name_type: scientific
@@ -1528,6 +1529,19 @@ name_matches_another_2:
   name_element: name matches another
   full_name: name matches another
   full_name_html: name matches another
+  name_rank: species
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  updated_by: greg
+  created_by: greg
+
+name_to_delete:
+  simple_name: name to delete
+  simple_name_html: name to delete
+  name_element: name to delete
+  full_name: name to delete
+  full_name_html: name to delete
   name_rank: species
   name_status: legitimate
   name_type: scientific

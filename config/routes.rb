@@ -107,7 +107,8 @@ Rails.application.routes.draw do
   match 'names/:id/tab/:tab', as: "name_tab", to: "names#show", via: :get
   match 'names/:id/tab/:tab/as/:new_category', as: "name_edit_as_category", to: "names#edit_as_category", via: :get
   match 'names/:id/copy', as: "name_copy", to: "names#copy", via: :post
-  resources :names, only: [:show, :new, :create, :update]
+  resources :names, only: [:show, :new, :create, :update, :destroy]
+  match 'names_delete', as: "names_deletes", to: "names_deletes#confirm", via: :delete
 
   match 'authors/typeahead_on_abbrev', as: "authors_typeahead_on_abbrev", to: "authors#typeahead_on_abbrev", via: :get
   match 'authors/typeahead_on_name', as: "authors_typeahead_on_name", to: "authors#typeahead_on_name", via: :get

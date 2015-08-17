@@ -339,7 +339,7 @@ class Name < ActiveRecord::Base
   end
 
   def allow_delete?
-    instances.blank? 
+    instances.blank? && children.blank? && comments.blank?
   end
 
   def migrated_from_apni?
