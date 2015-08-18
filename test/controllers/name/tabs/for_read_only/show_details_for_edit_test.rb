@@ -26,7 +26,8 @@ class NameShowDetailsInsteadOfEditForReadOnlyTest < ActionController::TestCase
     @request.headers["Accept"] = "application/javascript"
     get(:show,{id: @name.id,tab: 'tab_edit'},{username: 'fred', user_full_name: 'Fred Jones', groups: []})
     assert_response :success
-    assert_select 'h5', 'Name details', "Should show 'Name details'."
+    assert_select 'a#name-details-tab', 'Detail', "Should show 'Detail' tab."
+    assert_select 'div.focus-details span.full-name', 'Aspecies', "Should show 'Aspecies'."
   end
 
 end

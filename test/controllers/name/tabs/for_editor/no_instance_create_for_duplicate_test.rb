@@ -30,7 +30,6 @@ class NoInstanceCreateForDuplicateTest < ActionController::TestCase
     assert_template "names/tabs/_tab"
     assert_template "names/tabs/_tab_instances"
     assert_select ".focus-details" do
-      assert_select 'h5','Create instance'
       assert_select 'span.message', 'Cannot create instances for a duplicate name.'
     end
     assert_template partial: "instances/form_create", count: 0

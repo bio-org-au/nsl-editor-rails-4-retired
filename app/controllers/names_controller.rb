@@ -144,18 +144,6 @@ class NamesController < ApplicationController
     render 'update_error.js', status: :unprocessable_entity
   end
  
-  # DELETE /names/1
-  # DELETE /names/1.json
-  def destroy
-    raise 'problem'
-    @name = find_name_as_services
-    if @name.delete
-      render
-    else
-      render 'destroy_error'
-    end
-  end
-
   def rules
     @no_search_result_details = true
   end
