@@ -1,5 +1,4 @@
 <%= render partial: 'names/tabs/tabs2' unless @tab.match(/tab_more/) %>
-<h5>Add or remove comments</h5>
 <div id="search-result-details-info-message-container" class="message-container"></div>
 <div id="search-result-details-error-message-container" class="message-container"></div>
 <% increment_tab_index(0) %>
@@ -12,7 +11,6 @@
         </div>
     <% end %>
 
-<h5>Add Comment</h5>
     <%= render partial: 'comments/form_new', locals: {comment: Comment.new, parent_entity_type: 'name', parent_id: @name.id} %>
 </div>
 

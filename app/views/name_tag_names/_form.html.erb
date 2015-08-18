@@ -4,8 +4,7 @@
   <%= f.hidden_field(:name_id, value: name_tag_name.name_id) %>
   <div class="form-group">
     <label for="name_tag_name_tag_id">Tag*</label>
-    <%= f.select :tag_id, (NameTag.all - name.name_tags).collect{|name_tag| [name_tag.name,name_tag.id]}, {include_blank: ''}, required: true, class: 'form-control width-10em', tabindex: increment_tab_index %>
-    <br>
-    <%= f.submit 'Add', class: 'form-control width-10em', title: 'Tag the name with the selected tag' %>
+    <%= f.select :tag_id, (NameTag.all - name.name_tags).collect{|name_tag| [name_tag.name,name_tag.id]}, {include_blank: ''}, required: true, class: 'form-control inline-block width-10em', tabindex: increment_tab_index %>
+    <%= f.submit 'Add', class: 'width-10em btn btn-primary pull-right', title: 'Tag the name with the selected tag' %>
   </div>
 <% end %>

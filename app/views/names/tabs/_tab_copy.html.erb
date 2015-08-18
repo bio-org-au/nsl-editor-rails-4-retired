@@ -3,11 +3,6 @@
 <div id="search-result-details-error-message-container" class="message-container"></div>
 <% increment_tab_index %>
 
-<h5>Copy the Name</h5>
-
-
-<%= render partial: 'names/tabs/details' %>
-<br>
 <br>
 
 <%= form_for(@name, url: name_copy_path(id: @name.id), role: 'form', remote: true, method: :post) do |f| %>

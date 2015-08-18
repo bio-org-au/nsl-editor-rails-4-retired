@@ -13,11 +13,11 @@
   <input type="hidden" name="random_id" value="<%= params[:random_id] %>"/>
   <input type="hidden" name="category" value="<%= params[:category] %>"/>
   <% if @name.id.present? %>
-    <% edit_title = "<strong class='pull-left'>Edit " %>
+    <% edit_title = "<strong class='pull-left'>" %>
     <% unless @name.category == @name.raw_category %>
-      <% edit_title += 'as' %>
+      <% edit_title += 'Edit as' %>
     <% end %>
-    <% edit_title += "#{@name.category} name" %>
+    <% edit_title += "#{@name.category.capitalize} name" %>
     <% edit_title += "</strong>" %>
   <% else %>
     <% edit_title = "" %>

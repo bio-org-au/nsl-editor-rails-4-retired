@@ -1,6 +1,6 @@
 <% if @name.allow_delete? %>
 
-  Delete <%= @name.full_name %> 
+  <br>
   <br>
   <br>
   <br>
@@ -22,7 +22,7 @@
 
 </div>
 <% else %>
-  Cannot delete <%= @name.full_name %> 
+  Cannot delete:
   <br>
   <% if @name.instances.size > 0 %>
     <br>
