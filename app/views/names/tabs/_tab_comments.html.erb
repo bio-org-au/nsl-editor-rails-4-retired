@@ -1,4 +1,4 @@
-<%= render partial: 'names/tabs/tabs2' %>
+<%= render partial: 'names/tabs/tabs2' unless @tab.match(/tab_more/) %>
 <h5>Add or remove comments</h5>
 <div id="search-result-details-info-message-container" class="message-container"></div>
 <div id="search-result-details-error-message-container" class="message-container"></div>
