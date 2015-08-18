@@ -12,7 +12,7 @@
     <br>
     <%= f.hidden_field :name_id %>
     <%= f.submit "Confirm delete", 
-      id: 'confirm-delete-name', 
+      id: 'confirm-delete-name-button', 
       title: 'Pressing this button will delete the name',
       class: 'btn btn-danger width-8em', 
       disabled: false %>
@@ -32,7 +32,8 @@
     <br>
     <br>
     <br>
-    <p/>
-    You may have to wait 10 or 20 seconds after you confirm delete before the record is deleted.
+    <p id="name-delete-possible-delay-message" class="hidden">
+    This may take some time...
+    </p>
     <% end %>
 

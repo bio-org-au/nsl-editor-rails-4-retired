@@ -27,7 +27,7 @@ class NamesDelete < ActiveType::Object
   validates :extra_info, presence: true, if: :reason_is_other?
 
   def possible_reasons
-    %w(reason1 reason2 YAGNI Other)
+    %w(YAGNI Other)
   end
 
   def assembled_reason

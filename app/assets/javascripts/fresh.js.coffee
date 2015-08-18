@@ -47,7 +47,7 @@ jQuery ->
   $('#search-field').change (event) ->                                     searchFieldChanged(event,$(this))
   $('body').on('change','select#query-on', (event) ->                      queryonSelectChanged(event,$(this)))
   $('body').on('click','li.dropdown', (event) ->                           dropdownClick(event,$(this)))
-  $('body').on('blur','li.dropdown', (event) ->                            dropdownBlur(event,$(this)))
+  #$('body').on('blur','li.dropdown', (event) ->                            dropdownBlur(event,$(this)))
   $('body').on('click','a.unconfirmed-delete-link', (event) ->             unconfirmedActionLinkClick(event,$(this)))
   $('body').on('click','a.unconfirmed-action-link', (event) ->             unconfirmedActionLinkClick(event,$(this)))
   $('body').on('click','a.cancel-link', (event) ->                         cancelLinkClick(event,$(this)))
@@ -55,9 +55,10 @@ jQuery ->
   $('body').on('click','#refresh-page-from-details-link', (event) ->       refreshPageLinkClick(event,$(this)))
   $('body').on('click','.refresh-page-link', (event) ->                    refreshPageLinkClick(event,$(this)))
   $('body').on('change','#name_name_rank_id', (event) ->                   nameRankIdChanged(event,$(this)))
-  $('body').on('click','.cancel-new-record-link', (event) ->                cancelNewRecord(event,$(this)))
-  $('body').on('click','#instance-reference-typeahead', (event) ->          $(this).select())
-  $('body').on('click','.tree-row div.head', (event) ->                     treeRowClicked(event,$(this)))
+  $('body').on('click','.cancel-new-record-link', (event) ->               cancelNewRecord(event,$(this)))
+  $('body').on('click','#instance-reference-typeahead', (event) ->         $(this).select())
+  $('body').on('click','.tree-row div.head', (event) ->                    treeRowClicked(event,$(this)))
+  $('body').on('click','#confirm-delete-name-button', (event) ->           confirmDeleteNameButtonClick(event,$(this)))
 
   # When tabbing to search-result record, need to click to trigger retrieval of details.
   $('a.show-details-link[tabindex]').focus (event) ->                      clickOnFocus(event,$(this))
@@ -74,52 +75,64 @@ window.showRecordWasDeleted = (recordId,recordType) ->
   $("#search-result-#{recordId}").addClass('hidden')
 
 window.cancelNewRecord = (event,$element) ->
-  debug('cancelNewRecord')
   $("#search-result-details").addClass('hidden')
   $("##{$element.attr('data-element-id')}").addClass('hidden')
   return false
 
+confirmDeleteNameButtonClick = (event,$element) ->
+  $element.attr('disabled','true')
+  $('#cancel-delete-link').attr('disabled','true')
+  $('#name-delete-tab').attr('disabled','true').addClass('disabled')
+  setTimeout (->
+    $('#name-delete-possible-delay-message').removeClass('hidden')
+    return
+  ), 2000
+  setTimeout (->
+    $('#name-delete-possible-delay-message').html('This may take some time.  Still waiting for that service to get back to us....')
+    return
+  ), 7000
+  setTimeout (->
+    $('#name-delete-possible-delay-message').html('This may take some time.  Still waiting for that service to get back to us.... and we\'re still waiting...')
+    return
+  ), 12000
+  setTimeout (->
+    $('#name-delete-possible-delay-message').html('This may take some time.  Still waiting for that service to get back to us.... and we\'re still waiting...hmmmm, hopefully we\'ll hear something soon...')
+    return
+  ), 20000
+
 refreshPageLinkClick = (event,$element) ->
-  debug("refreshPageLinkClick")
   location.reload()
 
 window.setDependents = (fieldId) ->
-  debug("setDependents for fieldId: #{fieldId}")
   fieldSelector = "##{fieldId}"
   fieldValue = $(fieldSelector).val()
   fieldValue = fieldValue.replace(/\s/g,'')
   if fieldValue == ''
-    debug("setDependents: #{fieldId} is empty")
     $(".requires-#{fieldId}[value=='']").attr('disabled','true')
     $("input.requires-#{fieldId}").removeClass('enabled').addClass('disabled')
     $(".hide-if-#{fieldId}").removeClass('hidden')
   else
-    debug("setDependents: #{fieldId} is not empty")
     $(".requires-#{fieldId}").removeAttr('disabled')
     $("input.requires-#{fieldId}").removeClass('disabled').addClass('enabled')
     $(".hide-if-#{fieldId}").addClass('hidden')
 
 nameRankIdChanged = (event,$element) ->
-  debug("nameRankId changed to: #{$element.val()} ")
   if $element.val() == ""
-    debug("nameRankId is empty")
     $('.requires-rank').attr('disabled','true')
     $('input.requires-rank').removeClass('enabled').addClass('disabled')
     $('.hide-if-rank').removeClass('hidden')
   else
-    debug("nameRankId is not empty")
     $('.requires-rank').removeAttr('disabled')
     $('input.requires-rank').removeClass('disabled').addClass('enabled')
     $('.hide-if-rank').addClass('hidden')
 
 dropdownClick = (event,$element) ->
-  debug("dropdownClick - showing")
   setTimeout (->
     hideSearchResultDetailsIfMenusOpen()
     return
   ), 600
 
-dropdownBlur = (event,$element) ->
+xdropdownBlur = (event,$element) ->
   debug("dropdownBlur - showing")
   setTimeout (->
     showSearchResultDetailsIfMenusClosed()
@@ -377,8 +390,6 @@ window.loadTreeDetails = (event,inFocus,tabWasClicked = false) ->
   debug("tabIndex: #{tabIndex}")
   url = "#{inFocus.attr('data-edit-url').replace(/0/,'')}#{inFocus.attr('data-instance-id')}?tab=#{currentActiveTab(record_type)}&tabIndex=#{tabIndex}&rowType=#{inFocus.attr('data-row-type')}"
   debug("url: #{url}")
-	
-  debug("url: #{url}")
   $('#search-result-details').load  url, -> 
     debug("after get")
     recordCurrentActiveTab(record_type)
@@ -594,5 +605,5 @@ window.moveDownOneSearchResult = (startRow) ->
   startRow.next().find('a.show-details-link').focus()
 
 window.moveToSearchResultDetails = (searchResultDetail,liElementHasClass) -> 
-	$('#search-result-details ul li.'+liElementHasClass + ' a').focus()
+  $('#search-result-details ul li.'+liElementHasClass + ' a').focus()
 
