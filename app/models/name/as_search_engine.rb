@@ -205,6 +205,10 @@ class Name::AsSearchEngine < Name
             where += " and exists (select null from comment where comment.name_id = name.id) "
           when 'with-comments-but-no-instances'
             where += " and exists (select null from comment where comment.name_id = name.id) and not exists (select null from instance where name_id = name.id)"
+          when 'orth-var-but-no-orth-var-instances' 
+            #where += " and name_status_id in (select id from name_status ns where lower(ns.name) = 'orth. var.') and not exists (select null from instance where name_id = name.id and instance_type_id in (select id from instance_type where instance_type.name = 'orthographic variant') "
+            where += " and name_status_id in (select id from name_status ns where lower(ns.name) = 'orth. var.') "
+            where += " and not exists (select null from instance i where i.name_id = name.id and i.instance_type_id in (select id from instance_type where instance_type.name = 'orthographic variant')) "
           when 'is-a-duplicate'
             where += " and duplicate_of_id is not null "
           else

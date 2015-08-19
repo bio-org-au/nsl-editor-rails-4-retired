@@ -38,6 +38,7 @@ class Name::AsQuery < Name
       'id' => 'with id',
       'duplicate-of' => 'duplicate of',
       'is-a-duplicate' => 'is a duplicate',
+      'orth-var-but-no-orth-var-instances' => 'orth var no ov inst',
       'ids' => 'with ids',
       'for-reference' => 'for reference',
       'hours-since-created' => 'hours since created',
