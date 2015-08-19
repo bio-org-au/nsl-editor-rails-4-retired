@@ -39,7 +39,7 @@ class Name::AsServices < Name
     end
   end
 
-  def self.delete_url(id,reason = 'Nolongerrequired')
+  def self.delete_url(id,reason = 'No longer required.')
     api_key = Rails.configuration.api_key
     "#{Rails.configuration.name_services}#{id}/api/delete?apiKey=#{api_key}&reason=#{ERB::Util.url_encode(reason)}"
   end

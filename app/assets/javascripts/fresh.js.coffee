@@ -83,22 +83,11 @@ confirmDeleteNameButtonClick = (event,$element) ->
   $element.attr('disabled','true')
   $('#cancel-delete-link').attr('disabled','true')
   $('#name-delete-tab').attr('disabled','true').addClass('disabled')
+  $('#search-result-details-error-message-container').html('')
   setTimeout (->
-    $('#name-delete-possible-delay-message').removeClass('hidden')
+    $('#name-delete-possible-delay-message').removeClass('hidden') if $('#search-result-details-error-message-container').is(':empty') && $('#search-result-details-info-message-container').is(':empty')
     return
   ), 2000
-  setTimeout (->
-    $('#name-delete-possible-delay-message').html('This may take some time.  Still waiting for that service to get back to us....')
-    return
-  ), 7000
-  setTimeout (->
-    $('#name-delete-possible-delay-message').html('This may take some time.  Still waiting for that service to get back to us.... and we\'re still waiting...')
-    return
-  ), 12000
-  setTimeout (->
-    $('#name-delete-possible-delay-message').html('This may take some time.  Still waiting for that service to get back to us.... and we\'re still waiting...hmmmm, hopefully we\'ll hear something soon...')
-    return
-  ), 20000
 
 refreshPageLinkClick = (event,$element) ->
   location.reload()
