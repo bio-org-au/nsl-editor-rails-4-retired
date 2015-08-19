@@ -24,6 +24,7 @@ class Name::AsQuery < Name
       'ba' => 'with base author',
       'with-comments' =>  'with comments',
       'with-comments-by' =>  'with comments by',
+      'with-comments-but-no-instances' =>  'comment no instan',
       'ea' => 'with ex author',
       'eba' => 'with ex base author',
       'fn' => 'with full name',

@@ -115,6 +115,9 @@ class Name::AsSearchEngine < Name
             where += " and exists (select null from comment where comment.name_id = name.id and (lower(comment.created_by) like ? or lower(comment.updated_by) like ?)) "
             binds.push(prepare_search_term_string(pairing[1]))
             binds.push(prepare_search_term_string(pairing[1]))
+          when 'with-comments-but-no-instances'
+            where += " and exists (select null from comment where comment.name_id = name.id and comment.text like ?) and not exists (select null from instance where name_id = name.id)"
+            binds.push(prepare_search_term_string(pairing[1]))
           when 'with-author'
             where += " and exists (select null from author where name.author_id = author.id and lower(author.name) like ? )"
             binds.push(prepare_search_term_string(pairing[1]))
@@ -200,6 +203,8 @@ class Name::AsSearchEngine < Name
         case pairing.downcase
           when 'with-comments'
             where += " and exists (select null from comment where comment.name_id = name.id) "
+          when 'with-comments-but-no-instances'
+            where += " and exists (select null from comment where comment.name_id = name.id) and not exists (select null from instance where name_id = name.id)"
           when 'is-a-duplicate'
             where += " and duplicate_of_id is not null "
           else
