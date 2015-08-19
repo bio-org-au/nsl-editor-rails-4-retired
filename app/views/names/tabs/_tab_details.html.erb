@@ -11,12 +11,12 @@
     <% else %>
       within
     <% end %>
-    <%= link_to(@name.parent.try('full_name_html').try('html_safe'), search_path(query_on: 'name', query_field: 'id', query: @name.parent_id),title: 'parent') %>
+    <%= link_to(@name.parent.try('full_name_html').try('html_safe'), search_path(query_on: 'name', query_field: 'id', query: @name.parent_id),tabindex: increment_tab_index, title: 'parent') %>
 <% end %>
 
 <% if @name.has_second_parent? %>
     and
-<%= link_to(@name.second_parent.try('full_name_html').try('html_safe'), search_path(query_on: 'name', query_field: 'id', query: @name.second_parent_id),title: 'second parent') %>
+<%= link_to(@name.second_parent.try('full_name_html').try('html_safe'), search_path(query_on: 'name', query_field: 'id', query: @name.second_parent_id),tabindex: increment_tab_index, title: 'second parent') %>
 <% end %>
 
 <% if @name.name_type.scientific? %>
@@ -35,37 +35,37 @@
 
 <% if @name.duplicate_of_id.present? %>
   <br>
-  <% link = link_to(@name.duplicate_of.full_name, search_path(query_on: 'name', query_field: 'id', query: @name.duplicate_of_id)) %>
+  <% link = link_to(@name.duplicate_of.full_name, search_path(query_on: 'name', query_field: 'id', query: @name.duplicate_of_id),title: 'Retrieve duplicate of', tabindex: increment_tab_index) %>
   <%= "Duplicate of #{link}".html_safe %>
   <br>
 <% end %>
 
 <% unless @name.ex_base_author.blank? %>
   <br>
-  <% auth_link = link_to(@name.ex_base_author.abbrev_if_possible, search_path(query_on: 'author', query_field: 'id', query:  @name.ex_base_author_id)) %>
+  <% auth_link = link_to(@name.ex_base_author.abbrev_if_possible, search_path(query_on: 'author', query_field: 'id', query:  @name.ex_base_author_id), title: "Retrieve ex base author", tabindex: increment_tab_index) %>
   <%= "Ex Base Authored by #{auth_link}".html_safe  %>
 <% end %>
 
 <% unless @name.base_author.blank? %>
     <br>
-    <% auth_link = link_to(@name.base_author.abbrev_if_possible, search_path(query_on: 'author', query_field: 'id', query: @name.base_author_id)) %>
+    <% auth_link = link_to(@name.base_author.abbrev_if_possible, search_path(query_on: 'author', query_field: 'id', query: @name.base_author_id), title: "Retrieve ex base author", tabindex: increment_tab_index) %>
     <%= "Base Authored by #{auth_link}".html_safe  %>
 <% end %>
 
 <% unless @name.ex_author.blank? %>
     <br>
-    <% auth_link = link_to(@name.ex_author.abbrev_if_possible, search_path(query_on: 'author', query_field: 'id', query: @name.ex_author_id)) %>
+    <% auth_link = link_to(@name.ex_author.abbrev_if_possible, search_path(query_on: 'author', query_field: 'id', query: @name.ex_author_id), title: "Retrieve ex base author", tabindex: increment_tab_index) %>
     <%= "Ex Authored by #{auth_link}".html_safe  %>
 <% end %>
 
 <% unless @name.author.blank? %>
     <br>
-    <% auth_link = link_to(@name.author.abbrev_if_possible, search_path(query_on: 'author', query_field: 'id', query: @name.author_id)) %>
+    <% auth_link = link_to(@name.author.abbrev_if_possible, search_path(query_on: 'author', query_field: 'id', query: @name.author_id), title: "Retrieve ex base author", tabindex: increment_tab_index) %>
     <%= "Authored by #{auth_link}".html_safe  %>
 <% end %>
 <% unless @name.sanctioning_author.blank? %>
     <br>
-    <% auth_link = link_to(@name.sanctioning_author.abbrev_if_possible, search_path(query_on: 'author', query_field: 'id', query: @name.sanctioning_author_id)) %>
+    <% auth_link = link_to(@name.sanctioning_author.abbrev_if_possible, search_path(query_on: 'author', query_field: 'id', query: @name.sanctioning_author_id), title: "Retrieve ex base author", tabindex: increment_tab_index) %>
     <%= "Sanctioned by #{auth_link}".html_safe  %>
 <% end %>
 

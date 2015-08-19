@@ -28,18 +28,18 @@
     }
     %>
     <%= show_field('','on page') %>
-    <%= f.text_field :page, tabindex: increment_tab_index %>
+    <%= f.text_field :page, title: "Enter page details", tabindex: increment_tab_index %>
     <br>
     with verbatim name
     <br>
-    <%= f.text_field :verbatim_name_string, class: "form-control", tabindex: increment_tab_index %>
+    <%= f.text_field :verbatim_name_string, class: "form-control", title: "Enter verbatim name", tabindex: increment_tab_index %>
     and BHL URL
-    <%= f.text_field :bhl_url, class: "form-control", tabindex: increment_tab_index %>
+    <%= f.text_field :bhl_url, class: "form-control", title: "Enter BHL URL", tabindex: increment_tab_index %>
     <br>
     <%= f.hidden_field :name_id %>
     <%= f.hidden_field :reference_id %>
     <br>
-    <%= f.submit class: 'btn-primary', tabindex: increment_tab_index %>
+    <%= f.submit class: 'btn-primary', title: "Save changes", tabindex: increment_tab_index %>
     <br>
     <br>
     <% refresh_page_link = link_to("Refresh page",
@@ -47,6 +47,7 @@
                                    id: "refresh-page-from-details-link",
                                    class: "btn btn-default hidden",
                                    title: "Refresh page",
+                                   tabindex: increment_tab_index,
                                    data: {instance_note_id: @instance.try('id')}) 
    %>
    <%= refresh_page_link %>

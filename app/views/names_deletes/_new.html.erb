@@ -14,6 +14,7 @@
     <%= f.submit "Confirm delete", 
       id: 'confirm-delete-name-button', 
       title: 'Pressing this button will delete the name',
+      tabindex: increment_tab_index,
       class: 'btn btn-danger width-8em', 
       disabled: false %>
     <%= cancel_delete_link %>
@@ -23,11 +24,18 @@
     <div class="form-group">
       <label for="names_delete_reason">Reason*</label>
     <br>
-      <%= f.select('reason', names_delete.possible_reasons,{prompt: 'Choose a reason'}, autocomplete: "off", class: "form-control give-me-focus", required: true) %>
+    <%= f.select('reason', 
+                 names_delete.possible_reasons,
+                 {prompt: 'Choose a reason'}, 
+                 title: "Select a reason for delete", 
+                 tabindex: increment_tab_index, 
+                 autocomplete: "off", 
+                 class: "form-control give-me-focus", 
+                 required: true) %>
     </div>
     <div class="form-group">
       <label for="names_delete_extra_info">Extra information</label>
-      <%= f.text_field :extra_info, class: 'form-control pull-left' %>
+      <%= f.text_field :extra_info, title: "Enter any extra information about the reason for delete", tabindex: increment_tab_index, class: 'form-control pull-left' %>
     </div>
     <br>
     <br>
