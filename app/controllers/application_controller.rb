@@ -80,67 +80,12 @@ class ApplicationController < ActionController::Base
     @search_result_details_width = "col-md-5 col-lg-5"
   end
 
-    
-  def reassemble_saved_query
-    user_query = UserQuery.find(params[:user_query])
-    params[:query] = user_query.search_terms
-    @search_results = user_query.search_result
-  end
-  private :reassemble_saved_query
-
   def set_debug
     @debug = false
   end
   
-  def replay_latest_session_query
-    unless session[:instance_queries].blank?
-      params[:query] = session[:instance_queries].last.gsub(/save:[^ ]*/,'')
-      run_search
-    end
-  end
-  private :replay_latest_session_query
-
   def start_timer
     @start_time = Time.now
-  end
-
-  def set_defaults
-    @search_results,@rejected_pairings,@limited,@save_search,@search_info  = [],false,[],false,false,''
-  end
-
-  def save_search?
-    save_search = !params[:query].match(/save:/).nil?
-    return save_search
-  end
-
-  def run_search
-    logger.debug('run_search') 
-    @tab_index = 200
-    @save_search = false
-    add_query_to_session(10)
-    if params[:query].blank?
-      set_defaults
-    elsif save_search?
-      save_search
-      @save_search = true
-    else
-      @search_results ||= []
-      @rejected_pairings ||= []
-      @limited ||= false
-      @focus_anchor_id ||= ''
-      @search_info ||= ''
-      search_results,
-        rejected_pairings,
-        limited,
-        focus_anchor_id,
-        search_info,
-        save_search  = do_the_search
-      @search_results.concat(search_results)
-      @rejected_pairings += rejected_pairings
-      @limited = limited
-      @focus_anchor_id = focus_anchor_id
-      @search_info += search_info unless search_info.blank?
-    end
   end
 
   def check_system_broadcast
