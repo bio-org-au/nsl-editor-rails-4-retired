@@ -37,6 +37,7 @@ class Reference::AsTypeahead < Reference
     where += " 1=1 "
     results = Reference.includes(:ref_type).
         where.not(ref_type: {name: 'Journal'}).
+        not_duplicate.
         where.not(reference: {id: excluded_id}).
         where(binds.unshift(where)).
         order('citation').
@@ -67,6 +68,7 @@ class Reference::AsTypeahead < Reference
     where += " 1=1 "
     results = Reference.includes(:ref_type).
         where.not(reference: {id: current_id}).
+        not_duplicate.
         where(binds.unshift(where)).
         order('citation').
         limit(SEARCH_LIMIT)
@@ -105,6 +107,7 @@ class Reference::AsTypeahead < Reference
     where += " 1=1 "
     results = Reference.joins(:ref_type).includes(:ref_type).
         where.not(reference: {id: current_id}).
+        not_duplicate.
         where(binds.unshift(where)).
         where(ref_type_id: RefType.find(best_ref_type_id).parent_id). 
         order('citation').

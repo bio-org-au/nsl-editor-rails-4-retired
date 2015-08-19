@@ -30,6 +30,7 @@ class Reference < ActiveRecord::Base
   attr_accessor :display_as, :message
   scope :lower_citation_equals, ->(string) { where("lower(citation) = ? ",string.downcase) }
   scope :lower_citation_like, ->(string) { where("lower(citation) like ? ",string.gsub(/\*/,'%').downcase) }
+  scope :not_duplicate, -> { where("duplicate_of_id is null") }
 
   belongs_to :ref_type, foreign_key: 'ref_type_id'
   belongs_to :ref_author_role, foreign_key: 'ref_author_role_id'
