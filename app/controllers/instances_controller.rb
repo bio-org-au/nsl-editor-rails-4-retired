@@ -24,21 +24,15 @@ class InstancesController < ApplicationController
   # Sets up RHS details panel on the search results page.  Displays a specified or default tab.
   # ToDo: fix stick tabs to handle different tabs for standalone and relationships.
   def show 
-    logger.debug("show params[:tab]: #{params[:tab]}")
     @tab = "#{ (params[:tab] && !params[:tab].blank? && params[:tab] != 'undefined') ? params[:tab] : 'tab_show_1' }"
-    logger.debug("show @tab: #{@tab}")
     @tab = authorized_tab(@tab,'tab_show_1')
-    logger.debug("show authorized @tab: #{@tab}")
     @tab_index = (params[:tabIndex]||'1').to_i
     @tabs_to_offer = tabs_to_offer
-    logger.debug("@tab: #{@tab}")
-    logger.debug("@tabs_to_offer: #{@tabs_to_offer}")
     render 'show', layout: false
   end
 
   # Create the lesser version of relationship instance.
   def create_cited_by
-    logger.debug('Creating a cited_by instance.....')
     if instance_params[:name_id].blank?
       @instance = Instance.new
       @instance.errors.add(:base, 'You must choose a name.')
@@ -54,7 +48,6 @@ class InstancesController < ApplicationController
 
   # Create full synonymy instance.
   def create_cites_and_cited_by
-    logger.debug('Creating a cites_and_cited_by instance.....')
     if instance_params[:cites_id].blank?
       @instance = Instance.new
       @instance.errors.add(:base, 'You must choose an instance.')
@@ -97,7 +90,6 @@ class InstancesController < ApplicationController
   # PUT /instances/1.json
   def update
     @updated = false
-    logger.debug("Instance update:  instance_params: #{instance_params}")
     if @instance.would_change?(instance_params)
       @instance.update_attributes_with_username!(instance_params,current_user.username)
       @updated = true
@@ -111,7 +103,6 @@ class InstancesController < ApplicationController
   # PUT /instances/reference/1
   # PUT /instances/reference/1.json
   def change_reference
-    logger.debug("change reference")
     @updated = false
     @instance = Instance.find(params[:id])
     @instance_back_door = InstanceBackDoor.find(params[:id])
@@ -160,7 +151,6 @@ class InstancesController < ApplicationController
   # Copy an instance with its citations
   def copy_standalone
     raise 'Unauthorized' unless can? :qa, 'anything'
-    logger.debug('copy_standalone')
     current_instance = Instance::AsCopier.find(params[:id])
     @instance = current_instance.copy_with_citations_to_new_reference(instance_params,current_user.username)
     @message = 'Instance was copied'
@@ -206,10 +196,8 @@ class InstancesController < ApplicationController
 
   def authorized_tab(tab_name,read_only_tab = 'tab_details')
     if can? :edit, 'anything'
-      logger.debug('Authorized to edit anything.')
       tab_name
     else
-      logger.debug('NOT authorized to edit anything.')
       read_only_tab
     end
   end
