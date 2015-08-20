@@ -60,7 +60,7 @@ function ApcTabController($scope, $http, $element, $sce) {
         return $http.get(NSL_SUGGEST_URL + 'apc-search', {
             params: {
                 term: val,
-                nameId: name.id
+                instanceId: $scope.instanceId
             }
         }).then(function(response){
             return response.data;
