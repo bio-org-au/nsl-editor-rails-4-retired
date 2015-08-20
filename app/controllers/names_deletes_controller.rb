@@ -16,9 +16,7 @@
 #   
 class NamesDeletesController < ApplicationController
 
-  def new
-    build_form
-  end
+  before_filter :authorize_edit
 
   # Confirm user wants to delete the name
   def confirm
