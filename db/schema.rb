@@ -293,7 +293,7 @@ ActiveRecord::Schema.define(version: 0) do
     t.integer  "language_id",        limit: 8,                    null: false
     t.integer  "namespace_id",       limit: 8,                    null: false
     t.string   "notes",              limit: 1000
-    t.string   "pages",              limit: 100
+    t.string   "pages"
     t.integer  "parent_id",          limit: 8
     t.string   "publication_date",   limit: 50
     t.boolean  "published",                       default: false, null: false

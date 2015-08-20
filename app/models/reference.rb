@@ -62,7 +62,7 @@ class Reference < ActiveRecord::Base
   validates :published, inclusion: { in: [true, false] }
   validates_length_of :volume, maximum: 50, message: "cannot be longer than 50 characters"
   validates_length_of :edition, maximum: 50, message: "cannot be longer than 50 characters"
-  validates_length_of :pages, maximum: 100, message: "cannot be longer than 100 characters"
+  validates_length_of :pages, maximum: 255, message: "cannot be longer than 255 characters"
   validates_presence_of :ref_type_id, :author_id, :ref_author_role_id, message: 'cannot be empty.'
   # Title and display_title are mandatory columns, but many records have simply a single space in these column.
   # But a single space is not enough to avoid the validates_presence_of test, so using this length test instead.
