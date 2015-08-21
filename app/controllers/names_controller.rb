@@ -204,10 +204,8 @@ class NamesController < ApplicationController
 
   def authorized_tab(tab_name,read_only_tab = 'tab_details')
     if can? :edit, 'anything'
-      logger.debug('Authorized to edit anything.')
       tab_name
     else
-      logger.debug('NOT authorized to edit anything.')
       read_only_tab
     end
   end

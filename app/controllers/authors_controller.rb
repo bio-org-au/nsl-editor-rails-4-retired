@@ -24,6 +24,7 @@ class AuthorsController < ApplicationController
   def show 
     # ToDo: refactor next line
     @tab = "#{ (params[:tab] && !params[:tab].blank? && params[:tab] != 'undefined') ? params[:tab] : 'tab_show_1' }"
+    @tab = authorized_tab(@tab,'tab_show_1')
     @tab_index = (params[:tabIndex]||'1').to_i
     render 'show', layout: false
   end
@@ -113,6 +114,14 @@ class AuthorsController < ApplicationController
 
   def typeahead_params
     params.require(:author).permit(:duplicate_of_id, :duplicate_of_typeahead)
+  end
+
+  def authorized_tab(tab_name,read_only_tab = 'tab_details')
+    if can? :edit, 'anything'
+      tab_name
+    else
+      read_only_tab
+    end
   end
 
 end

@@ -16,26 +16,17 @@
 #   
 require 'test_helper'
 
-class ShowEditTest < ActionController::TestCase
-  tests NamesController
+class ReferenceEditorShowNewInstanceTabTest < ActionController::TestCase
+  tests ReferencesController
   setup do
-    @name = names(:a_species)
+    @reference = references(:a_book)
   end
 
-  test "should show edit tab if editor requests edit tab" do
+  test "should show editor reference new instance tab" do
     @request.headers["Accept"] = "application/javascript"
-    get(:show,{id: @name.id,tab: 'tab_edit'},{username: 'fred', user_full_name: 'Fred Jones', groups: ['edit']})
-    assert_response :success
-    assert_select 'a#name-edit-tab', 'Edit', "Should show 'Edit' tab."
-    assert_select 'form'
-    assert_select 'select#name_name_type_id'
-    assert_select 'select#name_name_status_id'
-    assert_select 'select#name_name_rank_id'
-    assert_select 'input#name_author_id'
-    assert_select 'input#name_base_author_id'
-    assert_select 'input#name_ex_base_author_id'
-    assert_select 'input#name_ex_author_id'
-    assert_select 'input#name_sanctioning_author_id'
+    get(:show,{id: @reference.id,tab: 'tab_new_instance'},{username: 'fred', user_full_name: 'Fred Jones', groups: ['edit']})
+    assert_select 'li.active a#reference-new-instance-tab', /New instance/, "Should show 'New instance' tab."
+    assert_select 'form', true
   end
 
 end

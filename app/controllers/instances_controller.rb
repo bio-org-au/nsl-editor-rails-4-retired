@@ -176,6 +176,7 @@ class InstancesController < ApplicationController
                    :expanded_instance_type, :cites_id, :cited_by_id, :bhl_url, :reference_id)
   end
 
+  # Need this because different types of instances require different sets of tabs.
   def tabs_to_offer
     offer = ['tab_show_1']
     if can? :edit, 'anything'

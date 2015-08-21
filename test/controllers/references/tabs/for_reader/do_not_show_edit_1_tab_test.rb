@@ -16,18 +16,18 @@
 #   
 require 'test_helper'
 
-class NameShowDetailsInsteadOfEditForReadOnlyTest < ActionController::TestCase
-  tests NamesController
+class ReferenceEditorNotShowEdit1Test < ActionController::TestCase
+  tests ReferencesController
   setup do
-    @name = names(:a_species)
+    @reference = references(:a_book)
   end
 
-  test "should show details tab if reader requests edit tab" do
+  test "should not show reader reference edit 1 tab" do
     @request.headers["Accept"] = "application/javascript"
-    get(:show,{id: @name.id,tab: 'tab_edit'},{username: 'fred', user_full_name: 'Fred Jones', groups: []})
+    get(:show,{id: @reference.id,tab: 'tab_edit_1'},{username: 'fred', user_full_name: 'Fred Jones', groups: []})
     assert_response :success
-    assert_select 'a#name-details-tab', 'Detail', "Should show 'Detail' tab."
-    assert_select 'div.focus-details span.full-name', 'Aspecies', "Should show 'Aspecies'."
+    assert_select 'li.active a#reference-edit-show-1-tab', /Details/, "Should show Reference 'Details' tab instead of 'Edit' tab to reader"
+    assert_select 'form', false, "Should be no form"
   end
 
 end
