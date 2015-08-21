@@ -45,6 +45,4 @@ end
 
 # path_to_nsl_web_app_root, aka "Webb Application Context"
 
-Rails.configuration.path_to_nsl_web_app_root = '/nsl/services/'
-Rails.configuration.path_to_nsl_suggest = "/nsl/services/suggest/"
 Rails.configuration.path_to_broadcast_file = "#{ENV['HOME']}/.nsl/broadcast.txt"
