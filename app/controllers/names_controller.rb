@@ -27,7 +27,6 @@ class NamesController < ApplicationController
   # GET /names/1.json
   # Sets up RHS details panel on the search results page.  Displays a specified or default tab.
   def show
-    @apni_query_path = APNI_QUERY_PATH_FOR_NAME
     @tab = "#{ (params[:tab] && !params[:tab].blank? && params[:tab] != 'undefined') ? params[:tab] : 'tab_details' }"
     @tab = authorized_tab(@tab)
     @tab_index = (params[:tabIndex]||'1').to_i
@@ -81,7 +80,6 @@ class NamesController < ApplicationController
 
   def edit_as_category
     logger.debug('edit_as_category')
-    @apni_query_path = APNI_QUERY_PATH_FOR_NAME
     @tab = 'tab_edit'
     @tab_index = 1 
     if params[:new_category].present?

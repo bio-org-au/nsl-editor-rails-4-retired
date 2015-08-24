@@ -25,8 +25,6 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActionController::InvalidAuthenticityToken, with: :show_login_page
 
-  APNI_QUERY_PATH_FOR_NAME = "http://www.anbg.gov.au/cgi-bin/apni?00TAXON_NAME=" 
-
   def show_login_page
     logger.info("Show login page - invalid authenticity token.")
     show_request_info
