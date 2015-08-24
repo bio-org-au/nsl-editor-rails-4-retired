@@ -32,7 +32,7 @@ class ReferencesController < ApplicationController
     logger.debug('New reference...')
     @reference = Reference::AsNew.default
     @no_search_result_details = true
-    @tab_index = 105
+    @tab_index = (params[:tabIndex]||'40').to_i
     render 'new.js'
   end
   

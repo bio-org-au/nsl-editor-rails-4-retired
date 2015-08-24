@@ -103,6 +103,7 @@ class NamesController < ApplicationController
   # GET /names/new
   def new
     logger.debug('new')
+    @tab_index = (params[:tabIndex]||'40').to_i
     case params[:category]
     when 'scientific'
       @name = Name::AsNew.scientific

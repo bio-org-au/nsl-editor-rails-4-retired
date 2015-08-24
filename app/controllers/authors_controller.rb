@@ -42,6 +42,7 @@ class AuthorsController < ApplicationController
   def new
     @author = Author.new
     @no_search_result_details = true
+    @tab_index = (params[:tabIndex]||'40').to_i
     respond_to do |format|
       format.html {}
       format.js {}
