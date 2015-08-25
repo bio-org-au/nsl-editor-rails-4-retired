@@ -20,9 +20,9 @@ class AdminControllerTest < ActionController::TestCase
   setup do
   end
   
-  test "edit should not get index" do
+  test "editor should not get index" do
     get(:index,{},{username: 'fred', user_full_name: 'Fred Jones', groups: [:edit]})
-    assert_response :redirect
+    assert_response :forbidden
   end
   
   test "admin user should get index" do

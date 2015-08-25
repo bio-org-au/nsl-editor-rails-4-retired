@@ -15,17 +15,17 @@
 #   limitations under the License.
 #   
 class ReferencesController < ApplicationController
-  before_filter :authorize_edit, except: [:show]
-  before_filter :find_reference, only: [:edit, :update, :destroy, :show, :citation, :generated_citation]
+  before_filter :find_reference, only: [:edit, :update, :destroy, :show, :tab ]
   
   # GET /references/1/tab/:tab
   # Sets up RHS details panel on the search results page.  Displays a specified or default tab.
   def show
     @tab = "#{ (params[:tab] && !params[:tab].blank? && params[:tab] != 'undefined') ? params[:tab] : 'tab_show_1' }"
-    @tab = authorized_tab(@tab,'tab_show_1')
     @tab_index = (params[:tabIndex]||'1').to_i + 2
     render 'show', layout: false
   end
+
+  alias tab show
 
   # GET /references/new
   def new
@@ -145,14 +145,6 @@ private
     params.require(:reference).permit(:parent_id, :parent_typeahead,
                                       :author_id, :author_typeahead,
                                       :duplicate_of_id, :duplicate_of_typeahead)
-  end
-
-  def authorized_tab(tab_name,read_only_tab = 'tab_details')
-    if can? :edit, 'anything'
-      tab_name
-    else
-      read_only_tab
-    end
   end
 
 end

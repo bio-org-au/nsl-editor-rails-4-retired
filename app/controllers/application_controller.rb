@@ -19,9 +19,13 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-  before_action :start_timer, :set_debug, :set_layout, :check_system_broadcast, :authenticate, :show_request_info
+  before_action :start_timer, :set_debug, :set_layout, :check_system_broadcast, :authenticate, :show_request_info, :check_authorization
 
   rescue_from ActionController::InvalidAuthenticityToken, with: :show_login_page
+  rescue_from CanCan::AccessDenied do |exception|
+    logger.error('Access Denied')
+    head :forbidden
+  end
 
   def show_login_page
     logger.info("Show login page - invalid authenticity token.")
@@ -39,7 +43,17 @@ class ApplicationController < ActionController::Base
 
   protected
 
-
+  def check_authorization
+    logger.info("check_authorization: #{params[:controller]}; #{params[:tab]||params[:action]}")
+    logger.info("check_authorization: action: #{params[:action]}; tab: #{params[:tab]}")
+    if params[:tab].present?
+      pseudo_action = params[:tab]
+    else
+      pseudo_action = params[:action]
+    end
+    logger.info("check_authorization: pseudo_action: #{pseudo_action}")
+    authorize!(params[:controller], pseudo_action)
+  end
 
   def show_request_info
     logger.debug("#{'='*40}")
@@ -95,20 +109,6 @@ class ApplicationController < ActionController::Base
   rescue => e
     logger.error("Problem with system broadcast.")
     logger.error(e.to_s)
-  end
-
-  def authorize_edit
-    authorize! :edit, 'anything'
-  rescue => e
-    logger.error("Attempt to access unauthorized page: current_user: #{@current_user.username}; controller: #{params[:controller]}; action: #{params[:action]}.")
-    redirect_to search_path
-  end
-
-  def authorize_admin
-    authorize! :admin, 'anything'
-  rescue => e
-    logger.error("Attempt to access unauthorized page: current_user: #{@current_user.username}; controller: #{params[:controller]}; action: #{params[:action]}.")
-    redirect_to search_path
   end
 
   def javascript_only

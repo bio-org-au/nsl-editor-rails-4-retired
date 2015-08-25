@@ -1,7 +1,7 @@
 <tr id="search-result-<%= reference.id %>" 
   class="search-result <%= 'fresh' if reference.fresh? %>"
   data-get-url="<%= reference_path(reference.id) %>"
-  data-edit-url="<%= reference_path(reference.id) %>"
+  data-edit-url="<%= reference_tab_path(reference.id) %>"
   data-base-url="<%= reference_path(reference.id) %>"
   data-record-id="<%= reference.id %>"
   data-record-type="reference"

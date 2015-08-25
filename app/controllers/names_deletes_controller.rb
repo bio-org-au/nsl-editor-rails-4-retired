@@ -16,8 +16,6 @@
 #   
 class NamesDeletesController < ApplicationController
 
-  before_filter :authorize_edit
-
   # Confirm user wants to delete the name
   def confirm
     @names_delete = NamesDelete.new(names_delete_params)

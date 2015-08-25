@@ -10,7 +10,7 @@
                                           prev_tab: '',
                                           next_tab: '' } %>
 
-      <% if can? :edit, 'anything' %>
+      <% if can? 'names', 'update' %>
 
         <%= render partial: 'names/tabs/tab', locals: {first: false,
                                             last: false,
@@ -21,6 +21,9 @@
                                             tab_index: increment_tab_index,
                                             prev_tab: '', 
                                             next_tab: ''} %>
+      <% end %>
+
+      <% if can? 'instances', 'create' %>
   
         <%= render partial: 'names/tabs/tab', locals: {first: false,
                                             last: false,
@@ -31,6 +34,9 @@
                                             tab_index: increment_tab_index,
                                             prev_tab: '',
                                             next_tab: ''} %>
+      <% end %>
+
+      <% if can? 'names', 'update' %>
   
         <%= render partial: 'names/tabs/tab', locals: {first: false,
                                             last: false,

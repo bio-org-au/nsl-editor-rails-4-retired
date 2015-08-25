@@ -15,7 +15,6 @@
 #   limitations under the License.
 #   
 class QueriesController < ApplicationController
-  before_filter :authorize_edit, except: [:index, :show]
   before_action :set_query, only: [:show, :edit, :update, :destroy]
 
   # GET /queries/1

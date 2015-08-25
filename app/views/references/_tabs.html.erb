@@ -11,7 +11,7 @@
                                           prev_tab: '', 
                                           next_tab: '' } %> 
   
-      <% if can? :edit, 'anything' %>
+      <% if can? 'references', 'edit' %>
   
         <%= render partial: 'tab', locals: {first: false,
                                             last: false,
@@ -43,6 +43,10 @@
                                             prev_tab: '', 
                                             next_tab: ''} %>
   
+      <% end %>
+
+      <% if can? 'comments', 'create' %>
+
         <%= render partial: 'tab', locals: {first: false,
                                             last: false,
                                             this_tab: 'tab_comments',
@@ -52,6 +56,10 @@
                                             tab_index: increment_tab_index,
                                             prev_tab: '', 
                                             next_tab: ''} %>
+
+      <% end %>
+
+      <% if can? 'instances', 'create' %>
   
         <%= render partial: 'tab', locals: {first: false,
                                             last: true,

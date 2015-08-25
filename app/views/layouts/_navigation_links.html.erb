@@ -1,14 +1,15 @@
 
-<% if can? :edit, 'anything' %>
+<% if can? 'menu', 'new' %>
   <li> <%= render partial: 'layouts/new_menu'   %> </li>
+<% end %>
+<% if can? 'menu', 'help' %>
   <li> <%= render partial: 'layouts/help_menu'  %> </li>
-  <li> <%= render partial: 'layouts/user_menu'  %> </li>
-<% elsif can? :read, 'anything' %>
-  <li> <%= render partial: 'layouts/help_menu'  %> </li>
+<% end %>
+<% if can? 'menu', 'user' %>
   <li> <%= render partial: 'layouts/user_menu'  %> </li>
 <% end %>
-<% if can? :admin, 'anything' %>
+<% if can? 'menu', 'admin' %>
   <li> <%= render partial: 'layouts/admin_menu' %> </li>
 <% end %>
-  <li class="firefox-notice yellow hidden">This App runs better in Firefox.</li>
+  <li class="firefox-notice yellow hidden">App developed on Firefox.</li>
 

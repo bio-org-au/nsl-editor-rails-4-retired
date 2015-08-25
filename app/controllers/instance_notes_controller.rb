@@ -15,7 +15,6 @@
 #   limitations under the License.
 #   
 class InstanceNotesController < ApplicationController
-  before_filter :authorize_edit, except: [:show]
   before_action :set_instance_note, only: [:show, :edit, :update, :destroy]
 
   # GET /instance_notes/1

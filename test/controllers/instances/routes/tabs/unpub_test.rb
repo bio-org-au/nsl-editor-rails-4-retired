@@ -19,7 +19,7 @@ require 'test_helper'
 class InstanceRouteToUnpubTabTest < ActionController::TestCase
   tests InstancesController
   test "should route to instance unpub tab" do
-    assert_routing '/instances/1/tab/show', { controller: "instances", action: "show", id: "1", tab: 'show'}
+    assert_routing '/instances/1/tab/show', { controller: "instances", action: "tab", id: "1", tab: 'show'}
   end
 end
 

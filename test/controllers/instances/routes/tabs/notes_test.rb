@@ -19,7 +19,7 @@ require 'test_helper'
 class InstanceRouteToNotesTabTest < ActionController::TestCase
   tests InstancesController
   test "should route to instance notes tab" do
-    assert_routing '/instances/1/tab/notes', { controller: "instances", action: "show", id: "1", tab: 'notes'}
+    assert_routing '/instances/1/tab/notes', { controller: "instances", action: "tab", id: "1", tab: 'notes'}
   end
 end
 

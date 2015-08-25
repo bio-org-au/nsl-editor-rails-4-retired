@@ -5,21 +5,22 @@
   <% this_tab = 'tab_show_1' %>
 
   <% if @tabs_to_offer.include?('tab_show_1') %>
-
-    <%= render partial: 'instances/tabs/tab', locals: {first: true,
-                                      last: false,
-                                      this_tab: 'tab_show_1', 
-                                      link_text: "Details".html_safe,
-                                      link_id: 'instance-show-tab', 
-                                      link_title: 'Details',
-                                      tab_index: @tab_index,
-                                      prev_tab: '.search-result.show-details', 
-                                      next_tab: '' } %>
+    <% if can? 'instances', 'tab_show_1' %>
+      <%= render partial: 'instances/tabs/tab', locals: {first: true,
+                                        last: false,
+                                        this_tab: 'tab_show_1', 
+                                        link_text: "Details".html_safe,
+                                        link_id: 'instance-show-tab', 
+                                        link_title: 'Details',
+                                        tab_index: @tab_index,
+                                        prev_tab: '.search-result.show-details', 
+                                        next_tab: '' } %>
+    <% end %>
   <% end %>
 
   <% if @tabs_to_offer.include?('tab_edit') %>
-
-    <%= render partial: 'instances/tabs/tab', locals: {first: false,
+    <% if can? 'instances', 'edit' %>
+      <%= render partial: 'instances/tabs/tab', locals: {first: false,
                                         last: false,
                                         this_tab: 'tab_edit', 
                                         link_text: "Edit".html_safe,
@@ -28,11 +29,12 @@
                                         tab_index: increment_tab_index,
                                         prev_tab: '',
                                         next_tab: '' } %>
+    <% end %>
   <% end %>
 
   <% if @tabs_to_offer.include?('tab_edit_notes') %>
-  
-    <%= render partial: 'instances/tabs/tab', locals: {first: false,
+    <% if can? 'instance_notes', 'edit' %>
+      <%= render partial: 'instances/tabs/tab', locals: {first: false,
                                         last: false,
                                         this_tab: 'tab_edit_notes', 
                                         link_text: "Notes".html_safe,
@@ -41,10 +43,11 @@
                                         tab_index: increment_tab_index,
                                         prev_tab: '',
                                         next_tab: '' } %>
+    <% end %>
   <% end %>
   
   <% if @tabs_to_offer.include?('tab_synonymy') %>
-  
+    <% if can? 'instances', 'create' %>
       <%= render partial: 'instances/tabs/tab', locals: {first: false,
                                           last: false,
                                           this_tab: 'tab_synonymy',
@@ -54,11 +57,12 @@
                                           tab_index: increment_tab_index,
                                           prev_tab: '',
                                           next_tab: ''} %>
+    <% end %>
   <% end %>
 
   <% if @tabs_to_offer.include?('tab_unpublished_citation') %>
-
-    <%= render partial: 'instances/tabs/tab', locals: {first: false,
+    <% if can? 'instances', 'create' %>
+      <%= render partial: 'instances/tabs/tab', locals: {first: false,
                                           last: false,
                                           this_tab: 'tab_unpublished_citation',
                                           link_text: "Unpub".html_safe,
@@ -67,11 +71,11 @@
                                           tab_index: increment_tab_index,
                                           prev_tab: '',
                                           next_tab: ''} %>
-
+    <% end %>
   <% end %>
 
   <% if @tabs_to_offer.include?('tab_apc_placement') %>
-
+    <% if can? 'apc', 'place' %>
       <%= render partial: 'instances/tabs/tab', locals: {first: false,
                                           last: false,
                                           this_tab: 'tab_apc_placement',
@@ -81,11 +85,12 @@
                                           tab_index: increment_tab_index,
                                           prev_tab: '',
                                           next_tab: ''} %>
+    <% end %>
   <% end %>
 
   <% if @tabs_to_offer.include?('tab_comments') %>
-
-    <%= render partial: 'instances/tabs/tab', locals: {first: false,
+    <% if can? 'comments', 'create' %>
+      <%= render partial: 'instances/tabs/tab', locals: {first: false,
                                         last: true,
                                         this_tab: 'tab_comments', 
                                         link_text: "Adnot".html_safe,
@@ -94,6 +99,7 @@
                                         tab_index: increment_tab_index,
                                         prev_tab: '',
                                         next_tab: '' } %>
+    <% end %>
   <% end %>
 
   <% if @tabs_to_offer.include?('tab_copy_to_new_reference') %>

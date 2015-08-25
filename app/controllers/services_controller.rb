@@ -15,8 +15,7 @@
 #   limitations under the License.
 #   
 class ServicesController < ApplicationController
-
-  before_filter :authenticate, except: [:index,:ping]
+  skip_before_filter :authenticate
 
   def index
     render layout: 'services.html.erb'

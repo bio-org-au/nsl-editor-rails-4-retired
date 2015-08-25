@@ -16,14 +16,14 @@
 #   
 require 'test_helper'
 
-class InstanceDetailsTabRouteTest < ActionController::TestCase
+class InstanceDetailsTabForReaderTest < ActionController::TestCase
   tests InstancesController
   setup do
     @triodia_in_brassard = instances(:triodia_in_brassard)
   end
   test "should show instance details tab to reader" do
     @request.headers["Accept"] = "application/javascript"
-    get(:show,{id: @triodia_in_brassard.id,tab: 'tab_show_1'},{username: 'fred', user_full_name: 'Fred Jones', groups: [:read]})
+    get(:show,{id: @triodia_in_brassard.id,tab: 'tab_show_1'},{username: 'fred', user_full_name: 'Fred Jones', groups: []})
     assert_response :success
   end
 

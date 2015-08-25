@@ -22,15 +22,25 @@ class NameReaderOnlyDetailsTab < ActionController::TestCase
     @name = names(:a_species)
   end
 
-  test "should show details tab if reader requests edit tab" do
+  test "should not show reader the edit tab" do
     @request.headers["Accept"] = "application/javascript"
     get(:show,{id: @name.id,tab: 'tab_edit'},{username: 'fred', user_full_name: 'Fred Jones', groups: []})
+    assert_response :forbidden
+  end
+
+  setup do
+    @name = names(:a_species)
+  end
+
+  test "reader should see only details tab link" do
+    @request.headers["Accept"] = "application/javascript"
+    get(:show,{id: @name.id,tab: 'tab_details'},{username: 'fred', user_full_name: 'Fred Jones', groups: []})
     assert_response :success
-    assert_select 'li.active a#name-details-tab', 'Detail', "Should show 'Details' tab as active tab."
+    assert_select 'a#name-details-tab', true, "Should show 'Detail' tab."
     assert_select 'a#name-edit-tab', false, "Should not show 'Edit' tab."
-    assert_select 'a#name-instance-tab', false, "Should not show 'Instance' tab."
+    assert_select 'a#name-instances-tab', false, "Should not show 'Instance' tab."
     assert_select 'a#name-more-tab', false, "Should not show 'More' tab."
-    assert_select 'div.focus-details span.full-name', 'Aspecies', "Should show 'Aspecies'."
+    assert_select 'a#tab-heading', 'Aspecies', "Should show 'Aspecies'."
   end
 
 end

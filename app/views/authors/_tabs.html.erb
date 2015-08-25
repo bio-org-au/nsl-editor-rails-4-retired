@@ -8,7 +8,7 @@
                                       tab_index: @tab_index,
                                       prev_tab: '.search-result.show-details', 
                                       next_tab: '' } %> 
-  <% if can? :edit, 'anything' %>
+  <% if can? 'authors', 'update' %>
 
   <%= render partial: 'tab', locals: {first: false,
                                       last: false,
@@ -19,6 +19,10 @@
                                       tab_index: increment_tab_index,
                                       prev_tab: '', 
                                       next_tab: '.search-result.showing-details'} %> 
+
+  <% end %>
+
+  <% if can? 'comments', 'update' %>
 
   <%= render partial: 'tab', locals: {first: false,
                                       last: true,

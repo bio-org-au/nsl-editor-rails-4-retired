@@ -64,12 +64,13 @@ Rails.application.routes.draw do
         to: "instances#typeahead_for_name_showing_references_to_update_instance",
         via: :get
 
-  match 'instances/:id/tab/:tab', as: "instance_tab", to: "instances#show", via: :get
   match 'instances/create_cited_by', as: 'create_cited_by', to: "instances#create_cited_by", via: :post
   match 'instances/create_cites_and_cited_by', as: 'create_cites_and_cited_by', to: "instances#create_cites_and_cited_by", via: :post
   match 'instances/:id/reference', as: 'change_instance_reference', to: "instances#change_reference", via: :patch
   match 'instances/:id/standalone/copy', as: "copy_standalone", to: "instances#copy_standalone" , via: :post
-  resources :instances, only: [:show, :new, :create, :update, :destroy]
+  resources :instances, only: [:new, :create, :update, :destroy]
+  match 'instances/:id', as: 'instance_show', to: "instances#show", via: :get, defaults: {tab: 'tab_show_1'}
+  match 'instances/:id/tab/:tab', as: "instance_tab", to: "instances#tab", via: :get
 
   match 'name/refresh/:id', as: "refresh_name", to: "names#refresh", via: :get
   match 'names/typeahead_on_full_name', 
@@ -104,27 +105,30 @@ Rails.application.routes.draw do
 
   match 'names/new_row/:type', as: 'name_new_row', to: "names#new_row", via: :get, 
          type: /scientific|hybrid.*formula|hybrid-formula-unknown-2nd-parent|cultivar-hybrid|cultivar|other/ 
-  match 'names/:id/tab/:tab', as: "name_tab", to: "names#show", via: :get
+  match 'names/:id/tab/:tab', as: "name_tab", to: "names#tab", via: :get
   match 'names/:id/tab/:tab/as/:new_category', as: "name_edit_as_category", to: "names#edit_as_category", via: :get
   match 'names/:id/copy', as: "name_copy", to: "names#copy", via: :post
-  resources :names, only: [:show, :new, :create, :update, :destroy]
+  resources :names, only: [:new, :create, :update, :destroy]
+  match 'names/:id', as: 'name_show', to: "names#show", via: :get, defaults: {tab: 'tab_details'}
   match 'names_delete', as: "names_deletes", to: "names_deletes#confirm", via: :delete
 
   match 'authors/typeahead_on_abbrev', as: "authors_typeahead_on_abbrev", to: "authors#typeahead_on_abbrev", via: :get
   match 'authors/typeahead_on_name', as: "authors_typeahead_on_name", to: "authors#typeahead_on_name", via: :get
   match 'authors/typeahead/on_name/duplicate_of/:id', as: "authors_typeahead_on_name_duplicate_of_current", to: "authors#typeahead_on_name_duplicate_of_current", via: :get
-  match 'authors/:id/tab/:tab', as: "author_tab", to: "authors#show", via: :get
   match 'authors/new_row', as: 'author_new_row', to: "authors#new_row", via: :get
   match 'authors/new/:random_id', as: 'new_author_with_random_id', to: "authors#new", via: :get
-  resources :authors, only: [:show, :new, :create, :update, :destroy]
+  match 'authors/:id/tab/:tab', as: "author_tab", to: "authors#tab", via: :get
+  resources :authors, only: [:new, :create, :update, :destroy]
+  match 'authors/:id', as: 'author_show', to: "authors#show", via: :get, defaults: {tab: 'tab_show_1'}
 
   match 'references/typeahead/on_citation/duplicate_of/:id', as: "references_typeahead_on_citation_duplicate_of_current", to: "references#typeahead_on_citation_duplicate_of_current", via: :get
   match 'references/typeahead/on_citation', as: "references_typeahead_on_citation", to: "references#typeahead_on_citation", via: :get
   match 'references/typeahead/on_citation/for_duplicate/:id', as: "references_typeahead_on_citation_for_duplicate", to: "references#typeahead_on_citation_for_duplicate", via: :get
   match 'references/typeahead/on_citation/for_parent', as: "references_typeahead_on_citation_for_parent", to: "references#typeahead_on_citation_for_parent", via: :get
-  match 'references/:id/tab/:tab', as: "reference_tab", to: "references#show", via: :get
   match 'references/new_row', as: 'reference_new_row', to: "references#new_row", via: :get
-  resources :references, only: [:show, :new, :create, :update, :destroy]
+  resources :references, only: [:new, :create, :update, :destroy]
+  match 'references/:id', as: 'reference_show', to: "references#show", via: :get, defaults: {tab: 'tab_show_1'}
+  match 'references/:id/tab/:tab', as: "reference_tab", to: "references#tab", via: :get, defaults: {tab: 'tab_show_1'}
 
   match '/admin', as: "admin", to: "admin#index", via: :get
   match '/admin/throw', as: "throw", to: "admin#throw", via: :get

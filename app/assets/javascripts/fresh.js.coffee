@@ -402,6 +402,7 @@ window.loadDetails = (event,inFocus,tabWasClicked = false) ->
   $('#search-result-details').show()
   $('#search-result-details').removeClass('hidden')
   record_type = $('tr.showing-details').attr('data-record-type')
+  debug("current active tab: #{currentActiveTab(record_type)}")
   instance_type = $('tr.showing-details').attr('data-instance-type')
   row_type = $('tr.showing-details').attr('data-row-type')
   tabIndex = $('.search-result.showing-details a[tabindex]').attr('tabindex')

@@ -15,7 +15,6 @@
 #   limitations under the License.
 #   
 class UserQueriesController < ApplicationController
-  before_filter :authorize_edit, except: [:index, :show]
   before_filter :find_user_query, only: [:update] 
   before_filter :find_user_query_without_search_result, only: [:show] 
 

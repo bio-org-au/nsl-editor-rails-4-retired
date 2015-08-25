@@ -19,7 +19,7 @@ require 'test_helper'
 class NameShowRouteTest < ActionController::TestCase
   tests NamesController
   test "should route to show a name" do
-    assert_routing '/names/1', { controller: "names", action: "show", id: "1"}
+    assert_routing '/names/1', { controller: "names", action: "show", id: "1", tab: "tab_details"}
   end
 end
 

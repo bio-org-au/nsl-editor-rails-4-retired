@@ -15,7 +15,6 @@
 #   limitations under the License.
 #   
 class CommentsController < ApplicationController
-  before_filter :authorize_edit, except: [:index, :show]
   before_filter :javascript_only  # All text/html requests should go to the search page.
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
 

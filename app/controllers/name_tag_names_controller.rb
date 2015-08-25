@@ -15,7 +15,6 @@
 #   limitations under the License.
 #   
 class NameTagNamesController < ApplicationController
-  before_filter :authorize_edit, except: [:index, :show]
   before_action :set_name_tag_name, only: [:show, :edit, :update, :destroy]
 
   # GET /name_tag_names/1

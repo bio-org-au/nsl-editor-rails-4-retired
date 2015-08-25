@@ -54,6 +54,10 @@
                  title: "Query the instances this is cited by.") %>
     <br>
   <% end %>
+  <% if @instance.comments.size > 0 %>
+    <span title="See the Adnot tab." ><%= "Instance Adnot: #{@instance.comments.size} (see the 'Adnot' tab)" %></span>
+    <br>
+  <% end %>
   <br>
 <% end %>
 <br>

@@ -19,7 +19,7 @@ require 'test_helper'
 class AuthorsRouteShowTest < ActionController::TestCase
   tests AuthorsController
   test "should route to show a author" do
-    assert_routing '/authors/1', { controller: "authors", action: "show", id: "1"}
+    assert_routing '/authors/1', { controller: "authors", action: "show", id: "1", tab: 'tab_show_1'}
   end
 end
 

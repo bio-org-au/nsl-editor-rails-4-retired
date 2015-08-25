@@ -15,8 +15,7 @@
 #   limitations under the License.
 #   
 class AuthorsController < ApplicationController
-  before_filter :authorize_edit, except: [:index, :show]
-  before_filter :find_author, only: [:show, :destroy]
+  before_filter :find_author, only: [:show, :destroy, :tab]
   
   # GET /authors/1
   # GET /authors/1/tab/:tab
@@ -24,10 +23,11 @@ class AuthorsController < ApplicationController
   def show 
     # ToDo: refactor next line
     @tab = "#{ (params[:tab] && !params[:tab].blank? && params[:tab] != 'undefined') ? params[:tab] : 'tab_show_1' }"
-    @tab = authorized_tab(@tab,'tab_show_1')
     @tab_index = (params[:tabIndex]||'1').to_i
     render 'show', layout: false
   end
+
+  alias tab show
 
   # GET /authors/new_row
   def new_row
@@ -115,14 +115,6 @@ class AuthorsController < ApplicationController
 
   def typeahead_params
     params.require(:author).permit(:duplicate_of_id, :duplicate_of_typeahead)
-  end
-
-  def authorized_tab(tab_name,read_only_tab = 'tab_details')
-    if can? :edit, 'anything'
-      tab_name
-    else
-      read_only_tab
-    end
   end
 
 end

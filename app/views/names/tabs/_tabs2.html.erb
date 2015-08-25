@@ -1,6 +1,6 @@
     <ul class="nav nav-tabs">
 
-      <% if can? :edit, 'anything' %>
+      <%# if can? :edit, 'anything' %>
 
         <%= render partial: 'names/tabs/tab', locals: {first: false,
                                             last: false,
@@ -41,7 +41,7 @@
                                             tab_index: increment_tab_index,
                                             prev_tab: '',
                                             next_tab: ''} %>
-      <% end %>
+      <%# end %>
 
     </ul>
 

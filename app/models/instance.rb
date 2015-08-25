@@ -242,7 +242,7 @@ class Instance < ActiveRecord::Base
   end
 
   def allow_delete?
-    instance_notes.blank? && reverse_of_this_cites.blank? && reverse_of_this_is_cited_by.blank? 
+    instance_notes.blank? && reverse_of_this_cites.blank? && reverse_of_this_is_cited_by.blank? && comments.blank?
   end
 
   def anchor_id

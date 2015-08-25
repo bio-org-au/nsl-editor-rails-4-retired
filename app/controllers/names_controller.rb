@@ -19,16 +19,14 @@ require 'open-uri'
 class NamesController < ApplicationController
 
   include OpenURI
-  before_filter :authorize_edit, except: [:index, :show, :rules]
   before_filter :javascript_only, except: [:rules]  # All text/html requests should go to the search page.
-  before_filter :find_name, only: [:show, :edit_as_category, :refresh]
+  before_filter :find_name, only: [:show, :tab, :edit_as_category, :refresh]
 
   # GET /names/1
   # GET /names/1.json
   # Sets up RHS details panel on the search results page.  Displays a specified or default tab.
   def show
     @tab = "#{ (params[:tab] && !params[:tab].blank? && params[:tab] != 'undefined') ? params[:tab] : 'tab_details' }"
-    @tab = authorized_tab(@tab)
     @tab_index = (params[:tabIndex]||'1').to_i
     if params[:change_category_to].present?
       @name.change_category_to = 'scientific' 
@@ -39,6 +37,8 @@ class NamesController < ApplicationController
     end
     render 'show', layout: false
   end
+
+  alias tab show
 
   # Used on references - new instance tab
   def typeahead_on_full_name
@@ -201,13 +201,5 @@ class NamesController < ApplicationController
                                  :duplicate_of_typeahead)
   end
 
-  def authorized_tab(tab_name,read_only_tab = 'tab_details')
-    if can? :edit, 'anything'
-      tab_name
-    else
-      read_only_tab
-    end
-  end
-    
 end
 

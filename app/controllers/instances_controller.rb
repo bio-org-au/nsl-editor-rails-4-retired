@@ -16,8 +16,7 @@
 #   
 class InstancesController < ApplicationController
   include ActionView::Helpers::TextHelper
-  before_filter :authorize_edit, except: [:index, :show, :details]
-  before_filter :find_instance, only: [:show, :update, :destroy]
+  before_filter :find_instance, only: [:show, :tab, :update, :destroy]
 
   # GET /instances/1
   # GET /instances/1/tab/:tab
@@ -25,11 +24,12 @@ class InstancesController < ApplicationController
   # ToDo: fix stick tabs to handle different tabs for standalone and relationships.
   def show 
     @tab = "#{ (params[:tab] && !params[:tab].blank? && params[:tab] != 'undefined') ? params[:tab] : 'tab_show_1' }"
-    @tab = authorized_tab(@tab,'tab_show_1')
     @tab_index = (params[:tabIndex]||'1').to_i
     @tabs_to_offer = tabs_to_offer
     render 'show', layout: false
   end
+
+  alias tab show
 
   # Create the lesser version of relationship instance.
   def create_cited_by
@@ -150,7 +150,6 @@ class InstancesController < ApplicationController
  
   # Copy an instance with its citations
   def copy_standalone
-    raise 'Unauthorized' unless can? :qa, 'anything'
     current_instance = Instance::AsCopier.find(params[:id])
     @instance = current_instance.copy_with_citations_to_new_reference(instance_params,current_user.username)
     @message = 'Instance was copied'
@@ -176,32 +175,23 @@ class InstancesController < ApplicationController
                    :expanded_instance_type, :cites_id, :cited_by_id, :bhl_url, :reference_id)
   end
 
-  # Need this because different types of instances require different sets of tabs.
+  # Different types of instances require different sets of tabs.
   def tabs_to_offer
     offer = ['tab_show_1']
-    if can? :edit, 'anything'
-      offer << 'tab_edit'
-      offer << 'tab_edit_notes'
-      if @instance.simple?
-        offer << 'tab_synonymy'
-        offer << 'tab_unpublished_citation'
-        offer << 'tab_apc_placement'
-      end
-      offer << 'tab_comments'
-      if @instance.simple? && params['row-type'] == 'instance_as_part_of_concept_record' 
-        offer << 'tab_copy_to_new_reference'
-      end
+    offer << 'tab_edit'
+    offer << 'tab_edit_notes'
+    if @instance.simple?
+      offer << 'tab_synonymy'
+      offer << 'tab_unpublished_citation'
+      offer << 'tab_apc_placement'
+    end
+    offer << 'tab_comments'
+    if @instance.simple? && params['row-type'] == 'instance_as_part_of_concept_record' 
+      offer << 'tab_copy_to_new_reference'
     end
     offer
   end
 
-  def authorized_tab(tab_name,read_only_tab = 'tab_details')
-    if can? :edit, 'anything'
-      tab_name
-    else
-      read_only_tab
-    end
-  end
-    
+
 end
 
