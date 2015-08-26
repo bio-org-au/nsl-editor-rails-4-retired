@@ -2,6 +2,7 @@
 
 <% data = Hash.new %>
 <% data['edit-url'] = author_tab_path(@author,tab:"#{this_tab}") %>
+<% data['tab-url']  =  author_tab_path(id: @author,tab:"#{this_tab}") %>
 <% data['prev-tab'] = prev_tab unless prev_tab.blank? %>
 <% data['tab-name'] = this_tab %>
 

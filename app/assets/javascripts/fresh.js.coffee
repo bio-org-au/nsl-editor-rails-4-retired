@@ -402,13 +402,11 @@ window.loadDetails = (event,inFocus,tabWasClicked = false) ->
   $('#search-result-details').show()
   $('#search-result-details').removeClass('hidden')
   record_type = $('tr.showing-details').attr('data-record-type')
-  debug("current active tab: #{currentActiveTab(record_type)}")
   instance_type = $('tr.showing-details').attr('data-instance-type')
   row_type = $('tr.showing-details').attr('data-row-type')
   tabIndex = $('.search-result.showing-details a[tabindex]').attr('tabindex')
-  debug("tabIndex: #{tabIndex}")
-  url = inFocus.attr('data-edit-url')+'?tab='+currentActiveTab(record_type)+'&tabIndex='+tabIndex+'&row-type='+row_type+'&instance-type='+instance_type+'&rowType='+inFocus.attr('data-row-type')
-  debug("url: #{url}")
+  url = inFocus.attr('data-tab-url').replace(/active_tab_goes_here/,currentActiveTab(record_type))
+  url = url+'?tabIndex='+tabIndex+'&row-type='+row_type+'&instance-type='+instance_type+'&rowType='+inFocus.attr('data-row-type')
   $('#search-result-details').load  url, -> 
     recordCurrentActiveTab(record_type)
     if tabWasClicked

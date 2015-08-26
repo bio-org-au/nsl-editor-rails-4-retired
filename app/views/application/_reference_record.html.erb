@@ -1,6 +1,7 @@
 <tr id="search-result-<%= reference.id %>" 
   class="search-result <%= 'fresh' if reference.fresh? %>"
-  data-edit-url="<%= reference_tab_path(reference.id) %>"
+  data-edit-url="<%= reference_path(reference.id) %>"
+  data-tab-url="<%= reference_tab_path(id: reference.id,tab: 'active_tab_goes_here') %>"
   data-record-type="reference"
   tabindex="<%= increment_tab_index(100) %>"
     >

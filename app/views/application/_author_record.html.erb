@@ -3,6 +3,7 @@
   data-get-url="<%= author_path(search_result.id) %>"
   data-edit-url="<%= author_path(search_result.id) %>"
   data-base-url="<%= author_path(search_result.id) %>"
+  data-tab-url="<%= author_tab_path(id: search_result[:id],tab: 'active_tab_goes_here') %>"
   data-record-id="<%= search_result.id %>"
   data-record-type="author"
   tabindex="<%= increment_tab_index(100) %>"
