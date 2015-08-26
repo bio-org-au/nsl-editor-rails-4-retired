@@ -27,7 +27,7 @@ class NamesDelete < ActiveType::Object
   validates :extra_info, presence: true, if: :reason_is_other?
 
   def possible_reasons
-    ["Name does not exist","Name has not been applied to Australian flora","Name is an autonym that has not yet been established", "Other"]
+    ["Name does not exist","Name is represented elsewhere in NSL","Name has not been applied to Australian flora","Name is an autonym that has not yet been established", "Other"]
   end
 
   def assembled_reason
