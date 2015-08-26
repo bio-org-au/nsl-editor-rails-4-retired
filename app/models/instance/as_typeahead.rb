@@ -41,7 +41,7 @@ class Instance::AsTypeahead < Instance
     reference_binds = []
     reference_year = terms.gsub(/[^0-9]/,'')
     terms_without_year = terms.gsub(/[0-9]/,'').strip.gsub(/  /,' ')
-    if reference_year.present? && reference_year.to_i > 1000
+    if reference_year.present? && reference_year.to_i > 1000 && reference_year.to_i < 3000
       reference_binds.push( " year = ? ")
       reference_binds.push(reference_year)
     end
