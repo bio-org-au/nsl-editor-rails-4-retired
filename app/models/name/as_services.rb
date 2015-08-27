@@ -51,22 +51,19 @@ class Name::AsServices < Name
   # The service error messages are not suitable for showing to users. e.g. "There are 1 that cite this.", raw database messages like multi-level foreign key technical errors,
   # so just log them. 
   def delete_with_reason(reason)
-    answer_json = {}
-    delete_url = Name::AsServices.delete_url(id,reason)
-    answer_string = RestClient.delete(delete_url,{accept: :json})
-    logger.debug(answer_string)
-    answer_json = JSON.load(answer_string)
-    raise "Could not delete that name [#{answer_string.try('code')}]" unless answer_string.code == 200 and answer_json["ok"] == true
+    logger.info("Name::AsServices.delete")
+    json = {}
+    url = Name::AsServices.delete_url(id,reason)
+    s_response = RestClient.delete(url,{accept: :json})
+    json = JSON.load(s_response)
+    raise "Delete Service said: #{json["errors"].try("join")} [#{s_response.code}]" unless s_response.code == 200 and json["ok"] == true
     true
   rescue => e
-    logger.error("Name::AsServices.delete exception for delete url: #{delete_url}")
-    logger.error("Name::AsServices.delete exception with answer_string: #{answer_string}")
-    logger.error("Name::AsServices.delete exception with errors: #{answer_json['errors']}")
-    if answer_json.blank? || answer_json["errors"].blank?
-      raise
-    else
-      raise answer_json["errors"].join(';')
-    end
+    logger.error("Name::AsServices.delete exception : #{e.to_s}")
+    logger.error("Name::AsServices.delete exception for url: #{url}")
+    logger.error("Name::AsServices.delete exception with s_response: #{s_response}")
+    logger.error("Name::AsServices.delete exception with errors: #{json['errors']}")
+    raise
   end
 
 end

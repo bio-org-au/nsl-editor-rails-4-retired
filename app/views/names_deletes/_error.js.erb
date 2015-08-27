@@ -1,5 +1,5 @@
 $('.message-container').html('');
-$('#search-result-details-error-message-container').html("Error: <%= escape_javascript(@message) %> ");
+$('#search-result-details-error-message-container').html("<%= escape_javascript(@message) %> ");
 $('#name-delete-possible-delay-message').addClass('hidden');
 $('#confirm-delete-name-button').removeAttr('disabled');
 $('#cancel-delete-link').removeAttr('disabled');

@@ -27,14 +27,18 @@ class Instance::AsServices < Instance
   # The service error messages are not suitable for showing to users. e.g. "There are 1 instances that cite this."
   # so just log them. 
   def self.delete(id)
+    logger.info("Instance::AsServices.delete")
     api_key = Rails.configuration.api_key
-    resource = "#{Rails.configuration.services}instance/apni/#{id}/api/delete?apiKey=#{api_key}&reason=Edit"
-    response = RestClient.delete(resource,{accept: :json})
-    json = JSON.load(response)
-    raise "Could not delete that instance [#{response.try('code')}]" unless response.code == 200 and json["ok"] == true
+    url = "#{Rails.configuration.services}instance/apni/#{id}/api/delete?apiKey=#{api_key}&reason=Edit"
+    s_response = RestClient.delete(url,{accept: :json})
+    api_key = Rails.configuration.api_key
+    json = JSON.load(s_response)
+    raise "Delete Service said: #{json["errors"].try('join')} [#{s_response.code}]" unless s_response.code == 200 and json["ok"] == true
   rescue => e
-    logger.error("Instance::AsServices.delete exception for resource: #{resource}")
-    logger.error("Instance::AsServices.delete exception with response: #{response}")
+    logger.error("Instance::AsServices.delete exception : #{e.to_s}")
+    logger.error("Instance::AsServices.delete exception for url: #{url}")
+    logger.error("Instance::AsServices.delete exception with s_response: #{s_response}")
+    logger.error("Instance::AsServices.delete exception with errors: #{json['errors'] if json.present?}")
     raise 
   end
 

@@ -121,7 +121,7 @@ class InstancesController < ApplicationController
     @instance.delete_as_user(current_user.username)
   rescue => e
     logger.error("Instance#destroy exception: #{e.to_s}")
-    @message = "There was a problem deleting that instance."
+    @message = e.to_s
     render 'destroy_error.js'
   end
 
