@@ -49,7 +49,20 @@ class Instance < ActiveRecord::Base
                                          '^,',''),                              
                                        ',.*',''),                               
                                      12,'0'),name.full_name")}
-  
+ 
+  scope :in_nested_instance_type_order, -> {order(
+                         "          case instance_type.name " +
+                         "          when 'basionym' then 1 " +
+                         "          when 'common name' then 99 " +
+                         "          when 'vernacular name' then 99 " +
+                         "          else 2 end, " +
+                         "          case nomenclatural " +
+                         "          when true then 1 " +
+                         "          else 2 end, " +
+                         "          case taxonomic " +
+                         "          when true then 2 " +
+                         "          else 1 end ")}
+
   attr_accessor :expanded_instance_type, :display_as, :relationship_flag, 
                 :give_me_focus, :legal_to_order_by, 
                 :show_primary_instance_type, :show_apc_tick, :data_fix_in_process,
@@ -433,43 +446,6 @@ class Instance < ActiveRecord::Base
     results = instance.reverse_of_this_is_cited_by
   end
 
-  # Instances of a name algorithm: work on a single simple instance starts here.
-  # - display the instance as part of a concept
-  # - find all child instances using the cited_by_id column (all instances that say they are cited by the simple instance)
-  #   - display these relationship instances as cited_by the simple instance
-  def self.show_simple_instance_under_searched_for_name(instance)
-    logger.debug("show_simple_instance_under_searched_for_name for instance: #{instance.id}")
-    results = []
-    results.push(instance.display_as_part_of_concept)
-    Instance.find_by_sql("select i.* " +
-                         "  from instance i " +
-                         "       inner join instance_type t " +
-                         "       on i.instance_type_id = t.id " +
-                         "       inner join reference r " +
-                         "       on i.reference_id = r.id " +
-                         "       inner join name n " +
-                         "       on i.name_id = n.id " +
-                         " where i.cited_by_id = #{instance.id} " +
-                         " order by case t.name " +
-                         "          when 'basionym' then 1 " +
-                         "          when 'common name' then 99 " +
-                         "          when 'vernacular name' then 99 " +
-                         "          else 2 end, " +
-                         "          case nomenclatural " +
-                         "          when true then 1 " +
-                         "          else 2 end, " +
-                         "          case taxonomic " +
-                         "          when true then 2 " +
-                         "          else 1 end, " +
-                         "          r.year,lower(n.full_name)").each do |cited_by_original_instance|
-      logger.debug(cited_by_original_instance.id)
-      cited_by_original_instance.expanded_instance_type = cited_by_original_instance.instance_type.name
-      cited_by_original_instance.display_as = 'instance-is-cited-by'
-      results.push(cited_by_original_instance)
-    end
-    results
-  end
- 
   def self.show_simple_instance_within_all_synonyms(starting_point_name,instance)
     results = []
     instance.name.display_as_part_of_concept

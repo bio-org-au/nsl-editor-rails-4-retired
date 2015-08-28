@@ -67,9 +67,7 @@ class Name < ActiveRecord::Base
   has_many   :duplicates, class_name: 'Name', foreign_key: 'duplicate_of_id', dependent: :restrict_with_exception  #, order: 'name_element' 
   
   has_many   :instances, foreign_key: 'name_id', dependent: :restrict_with_error
-
-  # syntax error, unexpected '\n'
-  #has_many   :instances_with_the_lot, class_name: 'Instance', foreign_key: 'name_id', dependent: :restrict_with_error #, -> { includes :references }
+  #has_many   :instances_for_name_usages, -> { includes :instance_type}, class: Instance, foreign_key: 'name_id', dependent: :restrict_with_error
  
   belongs_to :parent, class_name: 'Name', foreign_key: 'parent_id'
   has_many   :children, class_name: 'Name', foreign_key: 'parent_id', dependent: :restrict_with_exception  

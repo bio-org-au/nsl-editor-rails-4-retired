@@ -63,7 +63,7 @@ rusty_gum_is_a_common_name_of_angophora_costata:
   reference: de_fructibus_et_seminibus_plantarum
   name: rusty_gum
   this_is_cited_by: gaertner_created_metrosideros_costata
-  instance_type: common_name
+  instance_type: vernacular_name
   verbatim_name_string: verbatim
   namespace: apni
   created_by: tester
@@ -433,6 +433,7 @@ casuarina_inophloia_by_mueller:
   reference: mueller_1882_section
   name: casuarina_inophloia
   instance_type: secondary_reference
+  page: zzzz99901
   namespace: apni
   created_by: tester
   updated_by: tester
@@ -441,6 +442,7 @@ casuarina_inophloia_by_mueller_and_bailey:
   reference: australasian_chemist_and_druggist
   name: casuarina_inophloia
   instance_type: tax_nov
+  page: zzzz99902
   namespace: apni
   created_by: tester
   updated_by: tester
@@ -449,6 +451,7 @@ casuarina_inophloia_in_bailey_catalogue_qld_plants:
   reference: bailey_catalogue_qld_plants
   name: casuarina_inophloia
   instance_type: secondary_reference
+  page: zzzz99903
   namespace: apni
   created_by: tester
   updated_by: tester
@@ -457,6 +460,7 @@ for_a_genus_with_one_instance:
   reference: bailey_catalogue_qld_plants
   name: a_genus_with_one_instance
   instance_type: tax_nov
+  page: zzzz99904
   namespace: apni
   created_by: tester
   updated_by: tester
@@ -465,6 +469,7 @@ for_a_genus_with_two_instances_first:
   reference: bailey_catalogue_qld_plants
   name: a_genus_with_two_instances
   instance_type: tax_nov
+  page: zzzz99905
   namespace: apni
   created_by: tester
   updated_by: tester
@@ -473,6 +478,7 @@ for_a_genus_with_two_instances_second:
   reference: telford_in_nuytsia
   name: a_genus_with_two_instances
   instance_type: tax_nov
+  page: zzzz99906
   namespace: apni
   created_by: tester
   updated_by: tester
@@ -481,6 +487,7 @@ for_a_genus_with_two_instances_the_same_first:
   reference: bailey_catalogue_qld_plants
   name: has_two_instances_the_same
   instance_type: tax_nov
+  page: zzzz99907
   namespace: apni
   created_by: tester
   updated_by: tester
@@ -489,6 +496,7 @@ for_a_genus_with_two_instances_the_same_second:
   reference: bailey_catalogue_qld_plants
   name: has_two_instances_the_same
   instance_type: tax_nov
+  page: zzzz99907
   namespace: apni
   created_by: tester
   updated_by: tester
@@ -512,6 +520,7 @@ metrosideros_costata_gaertn:
   draft: false
   instance_type: nomenclatural_synonym
   name: metrosideros_costata_gaertn
+  page: zzzz99909
   namespace: apni
   nomenclatural_status:
   page: '146'
@@ -532,6 +541,7 @@ angophora_lanceolata_cav_in_stanley:
   cites_id: britten_created_angophora_costata.id
   instance_type: common_name
   verbatim_name_string: verbatim
+  page: zzzz99910
   namespace: apni
   created_by: tester
   updated_by: tester
@@ -544,6 +554,7 @@ in_stanley_metrosideros_costata_is_a_nomenclatural_synonym_of_angophora_costata_
   this_cites: gaertner_created_metrosideros_costata
   instance_type: nomenclatural_synonym
   verbatim_name_string: verbatim
+  page: zzzz99911
   namespace: apni
   created_by: tester
   updated_by: tester
@@ -557,116 +568,65 @@ in_stanley_angophora_lanceolata_is_a_taxonomic_synonym_of_angophora_costata_in_b
   this_cites: gaertner_created_metrosideros_costata
   instance_type: taxonomic_synonym
   verbatim_name_string: verbatim
+  page: zzzz99912
   namespace: apni
   created_by: tester
   updated_by: tester
   page: xx,20,600
 
-legitimate_name_one_for_eflora_instance:
+doubtful_taxonomic_synonym_instance:
   reference: dummy_reference_for_eflora_service
   name: legitimate_name_one_for_eflora
-  instance_type: primary_reference
+  instance_type: doubtful_taxonomic_synonym
+  page: zzzz99913a
   namespace: apni
   created_by: tester
   updated_by: tester
   created_at: <%= Time.now + (24*60*60) %>
   updated_at: <%= Time.now + (24*60*60) %>
 
-name_four_for_eflora_multi_1_instance:
+doubtful_nomenclatural_synonym_instance:
   reference: dummy_reference_for_eflora_service
-  name: name_four_for_eflora_multi_1
-  instance_type: primary_reference
+  name: legitimate_name_one_for_eflora
+  instance_type: doubtful_nomenclatural_synonym
+  page: zzzz99913b
   namespace: apni
   created_by: tester
   updated_by: tester
   created_at: <%= Time.now + (24*60*60) %>
   updated_at: <%= Time.now + (24*60*60) %>
 
-name_four_for_eflora_multi_2_instance:
+doubtful_pro_parte_nomenclatural_synonym_instance:
   reference: dummy_reference_for_eflora_service
-  name: name_four_for_eflora_multi_2
-  instance_type: primary_reference
+  name: legitimate_name_one_for_eflora
+  instance_type: doubtful_pro_parte_nomenclatural_synonym
+  page: zzzz99913c
   namespace: apni
   created_by: tester
   updated_by: tester
   created_at: <%= Time.now + (24*60*60) %>
   updated_at: <%= Time.now + (24*60*60) %>
 
-<% eflora_names = %w(default_name_one_for_eflora deleted_name_one_for_eflora default_name_one_for_eflora deleted_name_one_for_eflora 
- na_name_one_for_eflora
- unknown_name_one_for_eflora
- isonym_name_one_for_eflora
- nom_cult_name_one_for_eflora
- nom_cult_nom_alt_name_one_for_eflora
- nom_et_orth_cons_name_one_for_eflora
- nom_illeg_name_one_for_eflora
- nom_illeg_nom_rej_name_one_for_eflora
- nom_illeg_nom_superfl_name_one_for_eflora
- nom_inval_name_one_for_eflora
- nom_inval_nom_alt_name_one_for_eflora
- nom_inval_nom_ambig_name_one_for_eflora
- nom_inval_nom_confus_name_one_for_eflora
- nom_inval_nom_dub_name_one_for_eflora
- nom_inval_nom_nud_name_one_for_eflora
- nom_inval_nom_prov_name_one_for_eflora
- nom_inval_nom_subnud_name_one_for_eflora
- nom_inval_opera_name_one_for_eflora
- nom_inval_pro_syn_name_one_for_eflora
- nom_inval_tautonym_name_one_for_eflora
- nom_rej_name_one_for_eflora
- nom_superfl_name_one_for_eflora
- nomino_utique_rejicienda_name_one_for_eflora
- orth_var_name_one_for_eflora
- name_two_for_eflora
- name_two_for_eflora_with_extra
- name_three_for_eflora
- name_three_for_eflora_duplicate
-) %>
-
-<% eflora_names.each do |eflora_name| %>
-<%= "#{eflora_name}_instance" %>:
+doubtful_pro_parte_taxonomic_synonym_instance:
   reference: dummy_reference_for_eflora_service
-  name: <%= eflora_name %>
-  instance_type: primary_reference
+  name: legitimate_name_one_for_eflora
+  instance_type: doubtful_pro_parte_taxonomic_synonym
+  page: zzzz99913d
   namespace: apni
   created_by: tester
   updated_by: tester
   created_at: <%= Time.now + (24*60*60) %>
   updated_at: <%= Time.now + (24*60*60) %>
-<% end %>
+
+pro_parte_nomenclatural_synonym_instance:
+  reference: dummy_reference_for_eflora_service
+  name: legitimate_name_one_for_eflora
+  instance_type: pro_parte_nomenclatural_synonym
+  page: zzzz99913e
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  created_at: <%= Time.now + (24*60*60) %>
+  updated_at: <%= Time.now + (24*60*60) %>
 
 
-
-#angophora_lanceolata_cav_in_stanley:
-    #cited_by_id: angophora_costata_in_stanley.id
-    #cites_id: angophora_costata_in_cav
-    #created_at: 2011-11-29 13:00:00.000000000 Z
-    #created_by: CUL07D
-    #draft: false
-    #instance_type_id: taxonomic_synonym
-    #name: angophora_costata
-    #namespace: apni
-    #page: '146'
-    #reference: stanley_in_stanley_and_ross
-    #source_id: 177749
-    #source_id_string: '177749'
-    #source_system: SYNONYMY
-    #updated_at: 2011-11-29 13:00:00.000000000 Z
-    #updated_by: CUL07D
-    #valid_record: false
-
-    #angophora_lanceolata_cav_in_cav:
-    #created_at: 2011-11-29 13:00:00.000000000 Z
-    #created_by: CUL07D
-    #draft: false
-    #instance_type_id: taxonomic_synonym
-    #name: angophora_costata
-    #namespace: apni
-    #page: '146'
-    #reference: cavanilles_icones
-    #source_id: 177749
-    #source_id_string: '177749'
-    #updated_at: 2011-11-29 13:00:00.000000000 Z
-    #updated_by: CUL07D
-    #valid_record: false
-    #verbatim_name_string:
