@@ -5,7 +5,7 @@
 <% if @instance.standalone? %>
 
   <%= render 'form_update_standalone' %>
-  <%= render 'update_reference_id_widgets' if can?(:qa,'anything') && !@instance.update_reference_allowed? %>
+  <%= render 'update_reference_id_widgets' if can?('instances','update_reference_id_widgets') && !@instance.update_reference_allowed? %>
 
 <% elsif @instance.synonymy? %>
 

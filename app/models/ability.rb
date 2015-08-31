@@ -34,7 +34,7 @@ class Ability
   # See the wiki for details:
   # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
   #
-
+ 
   def initialize(user)
     user ||= User.new(groups: []) # Some controller/actions are available to unauthenticated users.  This is for them.
     # A separate authentication check controls which pages are visible to non-authenticated users.
@@ -43,6 +43,7 @@ class Ability
     can 'authors',            'tab_show_1'
     can 'help',               :all
     can 'instances',          'tab_show_1'
+    can 'instances',          'update_reference_id_widgets'
     can 'menu',               'help'
     can 'menu',               'user'
     can 'names',              'rules'
