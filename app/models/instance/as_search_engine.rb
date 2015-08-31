@@ -13,7 +13,9 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
+#
 #   
+
 class Instance::AsSearchEngine < Instance
 
   # Instances of a name algorithm: work on a single name starts here.
@@ -31,8 +33,9 @@ class Instance::AsSearchEngine < Instance
       name.display_as_part_of_concept
       already_shown = []
       name.instances.sort do |i1,i2| 
-        [i1.reference.year||9998,i1.order_within_year,i1.reference.author.try('name')||'x'] <=> [i2.reference.year||9999, i2.order_within_year,i2.reference.author.try('name')||'y'] 
+        [i1.reference.year||9999,i1.instance_type.primaries_first,i1.reference.author.try('name')||'x'] <=> [i2.reference.year||9999,i2.instance_type.primaries_first,i2.reference.author.try('name')||'x'] 
       end.each do |instance|
+        logger.debug('after ruby sort')
         if instance.simple? # simple instance
           Instance::AsSearchEngine.show_simple_instance_under_searched_for_name(instance).each do |one_instance|
             one_instance.show_primary_instance_type = true
@@ -56,7 +59,6 @@ class Instance::AsSearchEngine < Instance
     results
   end
 
-  
   # Instances of a name algorithm: work on a single simple instance starts here.
   # - display the instance as part of a concept
   # - find all child instances using the cited_by_id column (all instances that say they are cited by the simple instance)

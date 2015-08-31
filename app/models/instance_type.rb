@@ -83,4 +83,8 @@ class InstanceType < ActiveRecord::Base
     end
   end
 
+  def primaries_first
+    primary_instance ? 'A' : 'B'
+  end
+
 end

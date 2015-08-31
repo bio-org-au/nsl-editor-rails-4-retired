@@ -26,11 +26,13 @@ class NameUsagesOrderByReferenceYear < ActiveSupport::TestCase
     search = Search.new("#{name.id}",'Instance','100','f','','name-usages')
     assert_equal search.results.class, Array, "Results should be an Array."
     assert_equal 4, search.results.size, "One record expected."
-    assert_equal name.id, search.results[1].name_id
-    assert_equal first_ref.id, search.results[1].reference_id
-    assert_equal second_ref.id, search.results[2].reference_id
-    assert_equal third_ref.id, search.results[3].reference_id
+    assert_equal name.id, search.results[1].name_id, 'Name not first'
+    #search.results.each {|result| puts "#{result.try('reference').try('year')}"}
+    assert_equal first_ref.id, search.results[1].reference_id, "First reference wrong: #{search.results[2].reference.year}"
+    assert_equal second_ref.id, search.results[2].reference_id, "Second reference wrong"
+    assert_equal third_ref.id, search.results[3].reference_id, "Third reference wrong"
   end
 
 end
   
+

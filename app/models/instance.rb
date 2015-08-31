@@ -411,14 +411,6 @@ class Instance < ActiveRecord::Base
     results
   end
  
-  def order_within_year
-    case instance_type.name
-    when 'primary reference' then 'Y'
-    when 'secondary reference' then 'Z'
-    else 'A'
-    end
-  end
-  
   # Instances targetted in nsl-720
   def self.nsl_720
     logger.debug("nsl_720")
