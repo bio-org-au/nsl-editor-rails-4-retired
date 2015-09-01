@@ -42,6 +42,7 @@ class Ability
     # We could theoretically relax authentication and have these authorization checks prevent non-editors changing data.
     can 'authors',            'tab_show_1'
     can 'help',               :all
+    can 'instance_types',     'index'
     can 'instances',          'tab_show_1'
     can 'instances',          'update_reference_id_widgets'
     can 'menu',               'help'

@@ -138,6 +138,7 @@ Rails.application.routes.draw do
   match 'help/instance_models', to: "help#instance_models", as: 'instance_models', via: :get
   match 'help/ref_type_rules', to: "help#ref_type_rules", as: 'ref_type_rules', via: :get
   match 'help/typeaheads', to: "help#typeaheads", as: 'typeaheads', via: :get
+  resources :instance_types, only: [:index]
 
   root to: "search#index"
   match '/*random', to: "search#index", via: [:get,:post,:delete,:patch]
