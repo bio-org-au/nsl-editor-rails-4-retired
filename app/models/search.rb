@@ -218,6 +218,21 @@ class Search
       elsif @field.match(/with-comments-by/)
         leading_search_descriptor = 'with-comments-by'
         @info.push(%Q(Instances search on with-comments-by for "#{@search_string}".))
+      elsif @field.match(/with-comments-by/)
+        leading_search_descriptor = 'with-comments-by'
+        @info.push(%Q(Instances search on with-comments-by for "#{@search_string}".))
+      elsif @field.match(/cr-a/)
+        leading_search_descriptor = 'cr-a'
+        @info.push(%Q(Search for instances created less than #{ActionController::Base.helpers.pluralize(@search_string.to_i,'day')} ago.))
+      elsif @field.match(/cr-b/)
+        leading_search_descriptor = 'cr-b'
+        @info.push(%Q(Search for instances created more than #{ActionController::Base.helpers.pluralize(@search_string.to_i,'day')} ago.))
+      elsif @field.match(/upd-a/)
+        leading_search_descriptor = 'upd-a'
+        @info.push(%Q(Search for instances updated less than #{ActionController::Base.helpers.pluralize(@search_string.to_i,'day')} ago.))
+      elsif @field.match(/upd-b/)
+        leading_search_descriptor = 'upd-b'
+        @info.push(%Q(Search for instances updated more than #{ActionController::Base.helpers.pluralize(@search_string.to_i,'day')} ago.))
       else
         leading_search_descriptor = 'instance-type' #Instance.new.default_descriptor
         @info.push(%Q(Instances search on instance type for "#{@search_string}".))

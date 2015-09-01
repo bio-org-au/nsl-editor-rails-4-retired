@@ -429,13 +429,13 @@ class Instance < ActiveRecord::Base
   end
 
   def self.reverse_of_cites_id_query(instance_id)
-    instance = Instance.find(instance_id.to_i)
-    results = instance.reverse_of_this_cites
+    instance = Instance.find_by(id: instance_id.to_i)
+    results = instance.present? ? instance.reverse_of_this_cites : []
   end
 
   def self.reverse_of_cited_by_id_query(instance_id)
-    instance = Instance.find(instance_id.to_i)
-    results = instance.reverse_of_this_is_cited_by
+    instance = Instance.find_by(id: instance_id.to_i)
+    results = instance.present? ? instance.reverse_of_this_is_cited_by : []
   end
 
   def self.show_simple_instance_within_all_synonyms(starting_point_name,instance)
