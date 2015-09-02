@@ -53,9 +53,10 @@ class Instance < ActiveRecord::Base
   scope :in_nested_instance_type_order, -> {order(
                          "          case instance_type.name " +
                          "          when 'basionym' then 1 " +
+                         "          when 'replaced synonym' then 2 " +
                          "          when 'common name' then 99 " +
                          "          when 'vernacular name' then 99 " +
-                         "          else 2 end, " +
+                         "          else 3 end, " +
                          "          case nomenclatural " +
                          "          when true then 1 " +
                          "          else 2 end, " +
