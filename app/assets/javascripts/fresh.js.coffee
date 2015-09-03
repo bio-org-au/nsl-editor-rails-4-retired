@@ -34,7 +34,6 @@ jQuery ->
   # iPad
   $('body').on('click','div#search-results tr.search-result .stylish-checkbox', (event) -> clickSearchResultCB(event,$(this)))
   # 
-  $('body').on('change','.save-on-blur', (event) ->                        editFormFieldHasChanged(event,$(this)))
   $('a#'+window.location.hash).click() if window.location.hash
   $('body').on('click','a.append-to-query-field', (event) ->               appendToQueryField(event,$(this)))
   $('body').on('click','a.clear-query-field', (event) ->                   clearQueryField(event,$(this)))
@@ -42,12 +41,10 @@ jQuery ->
   $('body').on('click','a.instance-note-cancel-delete-link', (event) ->    cancelDeleteInstanceNote(event,$(this)))
   $('body').on('click','a.instance-note-cancel-edit-link', (event) ->      cancelInstanceNoteEdit(event,$(this)))
   $('body').on('change','.instance-note-key-id-select', (event) ->         instanceNoteKeyIdSelectChanged(event,$(this)))
-  $('body').on('blur','.instance-note-value-text-area', (event) ->         instanceNoteValueTextAreaBlur(event,$(this)))
   $('body').on('click','.build-query-button', (event) ->                   buildQueryString(event,$(this)))
   $('#search-field').change (event) ->                                     searchFieldChanged(event,$(this))
   $('body').on('change','select#query-on', (event) ->                      queryonSelectChanged(event,$(this)))
   $('body').on('click','li.dropdown', (event) ->                           dropdownClick(event,$(this)))
-  #$('body').on('blur','li.dropdown', (event) ->                            dropdownBlur(event,$(this)))
   $('body').on('click','a.unconfirmed-delete-link', (event) ->             unconfirmedActionLinkClick(event,$(this)))
   $('body').on('click','a.unconfirmed-action-link', (event) ->             unconfirmedActionLinkClick(event,$(this)))
   $('body').on('click','a.cancel-link', (event) ->                         cancelLinkClick(event,$(this)))
@@ -118,13 +115,6 @@ nameRankIdChanged = (event,$element) ->
 dropdownClick = (event,$element) ->
   setTimeout (->
     hideSearchResultDetailsIfMenusOpen()
-    return
-  ), 600
-
-xdropdownBlur = (event,$element) ->
-  debug("dropdownBlur - showing")
-  setTimeout (->
-    showSearchResultDetailsIfMenusClosed()
     return
   ), 600
 
@@ -231,12 +221,6 @@ instanceNoteKeyIdSelectChanged = (event,$element) ->
   instanceNoteEnableOrDisableSaveButton(event,$element,instanceNoteId)
   event.preventDefault()
 
-instanceNoteValueTextAreaBlur = (event,$element) ->
-  debug('instanceNoteValueTextAreaBlur')
-  instanceNoteId = $element.attr('data-instance-note-id')
-  instanceNoteEnableOrDisableSaveButton(event,$element,instanceNoteId)
-  event.preventDefault()
-
 # Disable save button if either mandatory field is empty.
 instanceNoteEnableOrDisableSaveButton = (event,$element,instanceNoteId) ->
   debug('instanceNoteEnableOrDisableSaveButton')
@@ -316,43 +300,10 @@ clickOnFocus = (event,$element) ->
   debug("clickOnFocus: id: #{$element.attr('id')}; event target: #{event.target}")
   $element.click()
 
-editFormAjaxSuccess = (event,xhr,status,$element) ->
-  debug('editFormAjaxSuccess')
-  showFormFieldWasSaved($element)
-  clearFormErrorMessage($element)
-  return false
-
-window.editFormFieldHasChanged = (event,$element) ->
-  debug('editFormFieldHasChanged')
-  showFieldIsNotYetSaved($element)
-  $element.parents('form').submit()
-  return false
-
 showFieldIsNotYetSaved = ($element) ->
   $element.addClass('changed').addClass('not-saved')
   return
 
-showFormFieldWasSaved = ($form) ->
-  $form.find('.save-on-blur').removeClass('not-saved').addClass('saved')
-  $form.find('.save-on-blur-checkbox').removeClass('not-saved').addClass('saved')
-  debug('typeahead-field: '+$form.data('typeahead-field'))
-  $('#' + $form.data('typeahead-field')).removeClass('not-saved').addClass('saved')
-  return
-
-showFormFieldWasNotSaved = ($form) ->
-  $form.find('.save-on-blur').addClass('error')
-  $('#' + $form.data('typeahead-field')).addClass('error')
-  return
-  
-showFormErrorMessage = (xhr,$form) ->
-  debug('showFormErrorMessage')
-  $form.find('div.field-error-message').html(xhr.responseText)
-  return
-
-clearFormErrorMessage = ($form) ->
-  $form.find('div.field-error-message').html('')
-  return
-  
 selectedRecords = -> 
   return $('div#search-results tr td.checkbox-container .stylish-checkbox-checked')
 

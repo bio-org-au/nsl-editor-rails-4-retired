@@ -290,25 +290,6 @@ module ApplicationHelper
    
   end
 
-  def editable_check_box(form_field,label,label_is = :description, field_id)
-    content_tag(:section,form_field + 
-                         content_tag(:label,
-                                     treated_label(label,label_is),
-                                     for: field_id, 
-                                     class: 'for-check-box inline width-95-percent pull-right') +
-                                     tag(:div,class: 'field-error-message width-60-percent'),
-                class:'save-on-blur-check-box block')
-   
-  end
-
-
-  def editable_text_area(form_field,label,label_is = :description)
-    content_tag(:section,form_field + 
-                         content_tag(:label,treated_label(label,label_is),class: 'inline pull-right') +
-                         tag(:div,class: "field-error-message width-80-percent"),
-                         class:'editable-text-area block')
-  end
-    
   def lov_select_field(entity,attribute,cache,options,html_attributes,label = '',label_is = :description)
     content_tag(:section,select(entity,attribute, cache, options,html_attributes) + content_tag(:label,treated_label(label,label_is),
       class: 'inline pull-right'),class:'editable-text-field block') +
