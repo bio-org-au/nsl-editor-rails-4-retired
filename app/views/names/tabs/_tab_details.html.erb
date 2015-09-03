@@ -96,9 +96,10 @@
                         class: '') %>
   <br>
   <br>
-  <%= link_to("APNI format #{icon('external-link')}".html_safe, 
+  <%= link_to("APNI #{icon('external-link-square')}".html_safe, 
               "#{Rails.configuration.nsl_links}apniFormat/display/#{@name.id}",
-              title: "Go to the search site to view the name in APNI format",
+              title: "APNI search. Opens in another tab or window.",
+              target: "_editor_to_apni",
               tabindex: increment_tab_index) %>
 <% else %>
   No instances.
