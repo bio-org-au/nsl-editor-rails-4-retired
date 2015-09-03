@@ -103,7 +103,7 @@
   <% end %>
 
   <% if @tabs_to_offer.include?('tab_copy_to_new_reference') %>
-	  <% if can? :qa, 'anything' %>
+    <% if can? 'instances', 'copy_standalone' %>
       <%= render partial: 'instances/tabs/tab', locals: {first: false,
                                         last: true,
                                         this_tab: 'tab_copy_to_new_reference', 

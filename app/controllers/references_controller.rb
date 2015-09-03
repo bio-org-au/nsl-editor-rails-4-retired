@@ -85,6 +85,13 @@ class ReferencesController < ApplicationController
     render json: references
   end 
 
+  # Columns such as duplicate_of_id use a typeahead search.
+  def typeahead_on_citation_with_exclusion
+    references = []
+    references = Reference::AsTypeahead.on_citation(params[:term],params[:id]) unless params[:term].blank?
+    render json: references
+  end 
+
   # Columns such as parent and duplicate_of_id use a typeahead search.
   def typeahead_on_citation_duplicate_of_current
     references = []

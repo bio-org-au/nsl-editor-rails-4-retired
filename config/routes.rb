@@ -122,6 +122,7 @@ Rails.application.routes.draw do
   match 'authors/:id', as: 'author_show', to: "authors#show", via: :get, defaults: {tab: 'tab_show_1'}
 
   match 'references/typeahead/on_citation/duplicate_of/:id', as: "references_typeahead_on_citation_duplicate_of_current", to: "references#typeahead_on_citation_duplicate_of_current", via: :get
+  match 'references/typeahead/on_citation/exclude/:id', as: "references_typeahead_on_citation_with_exclusion", to: "references#typeahead_on_citation_with_exclusion", via: :get
   match 'references/typeahead/on_citation', as: "references_typeahead_on_citation", to: "references#typeahead_on_citation", via: :get
   match 'references/typeahead/on_citation/for_duplicate/:id', as: "references_typeahead_on_citation_for_duplicate", to: "references#typeahead_on_citation_for_duplicate", via: :get
   match 'references/typeahead/on_citation/for_parent', as: "references_typeahead_on_citation_for_parent", to: "references#typeahead_on_citation_for_parent", via: :get
