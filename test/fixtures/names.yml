@@ -1548,5 +1548,36 @@ name_to_delete:
   namespace: apni
   updated_by: greg
   created_by: greg
-
+    
+a_cultivar: 
+  name_element: acultivar
+  name_rank: species
+  name_status: na
+  name_type: cultivar
+  namespace: apni
+  parent: angophora
+  updated_by: greg
+  created_by: greg
+    
+a_cultivar_hybrid: 
+  name_element: a cultivar hybrid
+  name_rank: species
+  name_status: na
+  name_type: cultivar_hybrid
+  namespace: apni
+  parent: a_species
+  second_parent: another_species
+  updated_by: greg
+  created_by: greg
+    
+a_cultivar_hybrid_formula:
+  name_element: a cultivar hybrid formula
+  name_rank: species
+  name_status: na
+  name_type: cultivar_hybrid_formula
+  namespace: apni
+  parent: a_species
+  second_parent: another_species
+  updated_by: greg
+  created_by: greg
 
