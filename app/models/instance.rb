@@ -542,6 +542,9 @@ class Instance < ActiveRecord::Base
         when 'instance-note-key'
           where += " and exists (select null from instance_note where instance_note.instance_id = instance.id and exists (select null from instance_note_key where instance_note.instance_note_key_id in (select id from instance_note_key where lower(name) like '%'||lower(?)||'%'))) "
           binds.push(pairing[1])
+        when /\Anote\z/
+          where += " and exists (select null from instance_note where instance_note.instance_id = instance.id and lower(instance_note.value) like ?)"
+          binds.push(prepare_search_term_string(pairing[1]))
         when 'with-comments'
           where += " and exists (select null from comment where comment.instance_id = instance.id and comment.text like ?) "
           binds.push(prepare_search_term_string(pairing[1]))

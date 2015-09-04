@@ -1561,6 +1561,10 @@ a_cultivar:
     
 a_cultivar_hybrid: 
   name_element: a cultivar hybrid
+  simple_name: a cultivar hybrid
+  simple_name_html: a cultivar hybrid
+  full_name: a cultivar hybrid
+  full_name_html: a cultivar hybrid
   name_rank: species
   name_status: na
   name_type: cultivar_hybrid
@@ -1570,6 +1574,21 @@ a_cultivar_hybrid:
   updated_by: greg
   created_by: greg
     
+a_cultivar_hybrid_formula: 
+  name_element: a cultivar hybrid formula
+  simple_name: a cultivar hybrid formula
+  simple_name_html: a cultivar hybrid formula
+  full_name: a cultivar hybrid formula
+  full_name_html: a cultivar hybrid formula
+  name_rank: species
+  name_status: na
+  name_type: cultivar_hybrid_formula
+  namespace: apni
+  parent: a_species
+  second_parent: another_species
+  updated_by: greg
+  created_by: greg
+
 boronia_lipstick:
   name_element: Lipstick
   simple_name: "Boronia 'Lipstick'"

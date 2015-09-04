@@ -209,6 +209,7 @@ class Search
       Rails.logger.debug('run_search has checked all named instance searches...else')
       if @field.match(/note-key/)
         leading_search_descriptor = 'instance-note-key'
+        @info.push(%Q(Instances search: "note-key: #{@search_string}".))
       elsif @field.match(/instance-type/)
         leading_search_descriptor = 'instance-type'
         @info.push(%Q(Instances search on instance type for "#{@search_string}".))
