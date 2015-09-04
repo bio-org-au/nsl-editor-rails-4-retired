@@ -1570,11 +1570,15 @@ a_cultivar_hybrid:
   updated_by: greg
   created_by: greg
     
-a_cultivar_hybrid_formula:
-  name_element: a cultivar hybrid formula
-  name_rank: species
-  name_status: na
-  name_type: cultivar_hybrid_formula
+boronia_lipstick:
+  name_element: Lipstick
+  simple_name: "Boronia 'Lipstick'"
+  simple_name_html: "Boronia 'Lipstick'"
+  full_name: "Boronia 'Lipstick'"
+  full_name_html: "Boronia 'Lipstick'"
+  name_rank: unranked
+  name_status: default
+  name_type: cultivar_hybrid
   namespace: apni
   parent: a_species
   second_parent: another_species
