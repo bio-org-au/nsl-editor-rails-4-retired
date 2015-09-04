@@ -43,13 +43,13 @@
 <% unless @name.ex_base_author.blank? %>
   <br>
   <% auth_link = link_to(@name.ex_base_author.abbrev_if_possible, search_path(query_on: 'author', query_field: 'id', query:  @name.ex_base_author_id), title: "Retrieve ex base author", tabindex: increment_tab_index) %>
-  <%= "Ex Base Authored by #{auth_link}".html_safe  %>
+  <%= "Ex Base Name Authored by #{auth_link}".html_safe  %>
 <% end %>
 
 <% unless @name.base_author.blank? %>
     <br>
     <% auth_link = link_to(@name.base_author.abbrev_if_possible, search_path(query_on: 'author', query_field: 'id', query: @name.base_author_id), title: "Retrieve ex base author", tabindex: increment_tab_index) %>
-    <%= "Base Authored by #{auth_link}".html_safe  %>
+    <%= "Base Name Authored by #{auth_link}".html_safe  %>
 <% end %>
 
 <% unless @name.ex_author.blank? %>
