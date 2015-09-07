@@ -481,24 +481,6 @@ class Name < ActiveRecord::Base
     logger.debug('end of set_names! via exception')
   end
 
-  def create_parent(parent_id = '', parent_string = '')
-    logger.debug('create_parent')
-    logger.debug("parent_id: #{parent_id}")
-    logger.debug("parent_string: #{parent_string}")
-    if parent_id.blank? && parent_string.blank?
-      logger.debug('No ID and no Name so nothing to do.')
-    elsif parent_string.blank?
-      logger.debug('No Name so nothing to do.')
-    elsif !parent_id.blank? && parent_string.match(Regexp.escape(Name.find(parent_id).full_name))
-      logger.debug('Creating name part ....')
-      self.preceding_name_parts.create(preceding_name_id: parent_id, preceding_name_type: 'parent')
-    else
-      logger.debug('Mismatch!!!')
-      return false
-    end
-    return true
-  end
-
   def duplicate?
     !self.duplicate_of_id.blank?
   end
