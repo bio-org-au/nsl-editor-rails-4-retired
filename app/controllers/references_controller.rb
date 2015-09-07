@@ -71,7 +71,7 @@ class ReferencesController < ApplicationController
 
   # DELETE /references/1
   def destroy
-    if @reference.update_attributes({updated_by: current_user.username}) && @reference.destroy
+    if @reference.update_attribute(:updated_by, current_user.username) && @reference.destroy
       render
     else
       render :js => "alert('Could not delete that record.');"

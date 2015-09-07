@@ -72,7 +72,7 @@ class AuthorsController < ApplicationController
   # DELETE /authors/1
   # DELETE /authors/1.json
   def destroy
-    if @author.update_attributes({updated_by: current_user.username}) && @author.destroy
+    if @author.update_attribute(:updated_by, current_user.username) && @author.destroy
       render
     else
       render :js => "alert('Could not delete that record.');"

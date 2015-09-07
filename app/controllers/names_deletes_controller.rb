@@ -23,6 +23,7 @@ class NamesDeletesController < ApplicationController
       logger.debug('NamesDeletes confirmed!')
       @name = Name::AsServices.find(names_delete_params[:name_id])
       logger.debug("NamesDeletes is for name: #{@name.id}")
+      @name.update_attribute(:updated_by, current_user.username) 
       if @name.delete_with_reason(@names_delete.assembled_reason)
         render partial: 'ok.js'
       else
