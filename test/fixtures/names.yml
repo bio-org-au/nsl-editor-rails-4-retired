@@ -1604,3 +1604,15 @@ boronia_lipstick:
   updated_by: greg
   created_by: greg
 
+dummy_name_1:
+  name_element: dummy_name_1
+  name_rank: unranked
+  name_status: default
+  name_type: cultivar_hybrid
+  namespace: apni
+  parent: a_species
+  second_parent: another_species
+  updated_by: greg
+  created_by: greg
+
+

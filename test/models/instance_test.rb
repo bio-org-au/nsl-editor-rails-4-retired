@@ -111,21 +111,4 @@ class InstanceTest < ActiveSupport::TestCase
     assert_not synonymy_instance.valid?, "should not be valid"
   end
 
-  test "would change method with a change" do
-    synonymy_instance = instances(:metrosideros_costata_is_basionym_of_angophora_costata)
-    assert_not synonymy_instance.name_id == names(:angophora_costata)
-    assert synonymy_instance.would_change?({'name_id' => names(:rusty_gum).id}), 'should be changing'
-  end
-
-  test "would change method with no change" do
-    synonymy_instance = instances(:metrosideros_costata_is_basionym_of_angophora_costata)
-    assert_not synonymy_instance.name_id == names(:angophora_costata)
-    assert synonymy_instance.would_change?({'name_id' => names(:angophora_costata).id}), 'should not be changing'
-  end
-
-  test "would change method with rubbish" do
-    synonymy_instance = instances(:metrosideros_costata_is_basionym_of_angophora_costata)
-    assert_not synonymy_instance.would_change?('x'), 'should not be changing'
-  end
-
 end

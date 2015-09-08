@@ -1,11 +1,4 @@
 $('.message-container').html('');
-$('#search-result-details-info-message-container').html('<%= @updated ? 'Updated' : 'No change' %>');
-<% if @updated %>
-  $('#refresh-page-from-details-link').removeClass('hidden');
-<% end %>
-<% if params[:row_type].present? %>
-$('tr#search-result-<%= @instance.id %>').replaceWith(' <%= escape_javascript(
-           render(partial: params[:row_type], locals: {search_result: @instance, give_me_focus: true })) %>');
-$('a#Instance-<%= @instance.id %>').focus();
-<% end %>
+$('select#name_name_type_id').focus();
+$('#search-result-details-info-message-container').html('<%= @message %>');
 

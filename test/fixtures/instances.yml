@@ -628,5 +628,13 @@ pro_parte_nomenclatural_synonym_instance:
   updated_by: tester
   created_at: <%= Time.now + (24*60*60) %>
   updated_at: <%= Time.now + (24*60*60) %>
-
+ 
+# Standalone instance
+has_no_page_bhl_url_verbatim_name_string:
+  reference: dummy_reference_1
+  name: dummy_name_1
+  instance_type: comb_nov
+  namespace: apni
+  created_by: tester
+  updated_by: tester
 

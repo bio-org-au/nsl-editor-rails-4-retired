@@ -1825,3 +1825,20 @@ a_book:
   created_by: tester
   updated_by: tester
 
+
+dummy_reference_1:
+  title: dummy_reference_1 
+  citation: dummy_reference_1 
+  citation_html: dummy_reference_1 
+  display_title: dummy_reference_1 
+  author: fred
+  ref_author_role: author
+  language: undetermined
+  namespace: apni
+  ref_type: book
+  year: 1987
+  volume: 1(6)
+  created_at: 2015-01-12 11:02:57
+  created_by: tester
+  updated_by: tester
+

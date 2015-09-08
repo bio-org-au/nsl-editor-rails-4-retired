@@ -1,0 +1,35 @@
+#   Copyright 2015 Australian National Botanic Gardens
+#
+#   This file is part of the NSL Editor.
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+#   
+require 'test_helper'
+
+class InstanceUpdateVerbatimNameStringNoUpdateForStringOfSpacesTest < ActiveSupport::TestCase
+
+  test "instance verbatim name string no update for string of spaces" do
+    unchanged = instances(:has_no_page_bhl_url_verbatim_name_string)
+    assert unchanged.verbatim_name_string.blank?, "Verbatim name string should be blank for this test."
+    instance = Instance::AsEdited.find(unchanged.id)
+    spaces = '  '
+    message = instance.update_if_changed({'verbatim_name_string'=>spaces},'fred')
+    assert message.match(/\ANo change/), "Message should be 'No change' not '#{message}'"
+    assert instance.verbatim_name_string.blank?, "Verbatim name string should still be blank."
+    assert instance.updated_at == unchanged.updated_at, "Updated date-time should be untouched."
+    assert instance.updated_by != 'fred', "Updated by should be untouched."
+  end
+
+end
+
+

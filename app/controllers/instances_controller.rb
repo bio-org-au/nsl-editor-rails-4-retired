@@ -16,7 +16,7 @@
 #   
 class InstancesController < ApplicationController
   include ActionView::Helpers::TextHelper
-  before_filter :find_instance, only: [:show, :tab, :update, :destroy]
+  before_filter :find_instance, only: [:show, :tab, :destroy]
 
   # GET /instances/1
   # GET /instances/1/tab/:tab
@@ -89,30 +89,32 @@ class InstancesController < ApplicationController
   # PUT /instances/1
   # PUT /instances/1.json
   def update
-    @updated = false
-    if @instance.would_change?(instance_params)
-      @instance.update_attributes_with_username!(instance_params,current_user.username)
-      @updated = true
-    end
+    @instance = Instance::AsEdited.find(params[:id])
+    @message = @instance.update_if_changed(instance_params,current_user.username)
     render 'update.js'
   rescue => e
-    logger.error(e.to_s)
+    @message = e.to_s
     render 'update_error.js', status: :unprocessable_entity
   end
 
   # PUT /instances/reference/1
   # PUT /instances/reference/1.json
+  # Changing the reference for an instance is a special case - 
+  # there may/will exist denormalised ids in dependent instances.
+  # We have to temporarily bypass some validations to sort it out.
   def change_reference
-    @updated = false
+    @message = 'No change'
     @instance = Instance.find(params[:id])
-    @instance_back_door = InstanceBackDoor.find(params[:id])
-    if @instance.would_change?(instance_params)
-      @instance_back_door.change_reference(instance_params)
-      @updated = true
+    @instance.assign_attributes(instance_params)
+    if @instance.changed?
+      @instance_back_door = InstanceBackDoor.find(params[:id])
+      @instance_back_door.change_reference(instance_params,current_user.username)
+      @message = 'Updated'
     end
     render 'update.js'
   rescue => e
     logger.error(e.to_s)
+    @message = e.to_s
     render 'update_error.js', status: :unprocessable_entity
   end
 
@@ -172,8 +174,9 @@ class InstancesController < ApplicationController
   def instance_params
     params.require(:instance).permit(:instance_type, :name_id, :reference_id, 
                    :instance_type_id, :verbatim_name_string, :page,
-                   :expanded_instance_type, :cites_id, :cited_by_id, :bhl_url, :reference_id)
+                   :cites_id, :cited_by_id, :bhl_url)
   end
+
 
   # Different types of instances require different sets of tabs.
   def tabs_to_offer

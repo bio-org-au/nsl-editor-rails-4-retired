@@ -235,22 +235,6 @@ class Instance < ActiveRecord::Base
     update!(attributes)
   end
 
-  # Watch out for empty fields.
-  def would_change?(params)
-    Rails.logger.debug('Instance#would_change')
-    change = false
-    params.each do |name,value| 
-      Rails.logger.debug("Instance#would_change: field name: #{name}; param field value: #{value}; current field value: #{self[name].to_s}")
-      change = change || !(self[name] && value == self[name].to_s)
-      Rails.logger.debug("change: #{change}")
-    end
-    change
-  rescue => e
-    logger.error("Instance#would_change? exception.")
-    logger.error(e.to_s)
-    false
-  end
-
   def fresh?
     created_at > 1.hour.ago #|| (created_at == updated_at && created_at > 1.day.ago)
   end
