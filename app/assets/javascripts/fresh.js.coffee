@@ -56,6 +56,7 @@ jQuery ->
   $('body').on('click','#instance-reference-typeahead', (event) ->         $(this).select())
   $('body').on('click','.tree-row div.head', (event) ->                    treeRowClicked(event,$(this)))
   $('body').on('click','#confirm-delete-name-button', (event) ->           confirmDeleteNameButtonClick(event,$(this)))
+  $('body').on('click','#confirm-name-refresh-children-button', (event) -> confirmNameRefreshChildrenButtonClick(event,$(this)))
 
   # When tabbing to search-result record, need to click to trigger retrieval of details.
   $('a.show-details-link[tabindex]').focus (event) ->                      clickOnFocus(event,$(this))
@@ -75,6 +76,14 @@ window.cancelNewRecord = (event,$element) ->
   $("#search-result-details").addClass('hidden')
   $("##{$element.attr('data-element-id')}").addClass('hidden')
   return false
+
+confirmNameRefreshChildrenButtonClick = (event,$the_button) ->
+  debug('confirmNameRefreshChildrenButtonClick')
+  $the_button.attr('disabled','true')
+  $('#cancel-refresh-children-link').attr('disabled','true')
+  $('#name-refresh-tab').attr('disabled','true')
+  $('#search-result-details-error-message-container').html('')
+  $('#refresh-children-spinner').removeClass('hidden')
 
 confirmDeleteNameButtonClick = (event,$element) ->
   $element.attr('disabled','true')

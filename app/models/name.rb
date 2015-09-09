@@ -462,23 +462,21 @@ class Name < ActiveRecord::Base
   end
 
   def set_names!
-    logger.debug('set_names!')
+    logger.debug("set_names!")
     names_json = get_names_json
     self.full_name = names_json['result']['fullName']
     self.full_name_html = names_json['result']['fullMarkedUpName']
     self.simple_name = names_json['result']['simpleName']
     self.simple_name_html = names_json['result']['simpleMarkedUpName']
-    self.save!
-    logger.debug('end of set_names!')
+    if changed?
+      save!
+      1
+    else
+      0
+    end
   rescue => e
-    logger.error("set_names! error")
-    logger.error(e.to_s)
-    self.full_name = "#{self.name_element} name not constructed"
-    self.full_name_html = "#{self.name_element} name not constructed"
-    self.simple_name = "#{self.name_element} name not constructed"
-    self.simple_name_html = "#{self.name_element} name not constructed"
-    self.save!
-    logger.debug('end of set_names! via exception')
+    logger.error("set_names! exception: #{e.to_s}")
+    raise
   end
 
   def duplicate?

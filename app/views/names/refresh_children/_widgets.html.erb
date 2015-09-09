@@ -1,0 +1,45 @@
+<br>
+<%= link_to("#{pluralize(@name.children.size,'child')} #{icon('search')}".html_safe,
+    search_path(query: "parent-id: #{@name.id}",
+                        query_field: 'name'),
+                        tabindex: increment_tab_index,
+                        title: "Retrieve #{pluralize(@name.children.size,'child')}.",
+                        class: '') %>
+
+<br>
+
+  <%= link_to("Refresh children...",
+              '#',
+              id: "name-refresh-children-link",
+              class: "btn btn-primary unconfirmed-action-link pull-right",
+              title: "Refresh constructed parts of children of #{@name.full_name}.",
+              tabindex: increment_tab_index,
+              data: {show_this_id: "confirm-or-cancel-refresh-children-link-container"})
+  %>
+
+  <div class="width-100-percent"> 
+
+  <div id="confirm-or-cancel-refresh-children-link-container" class="confirm-or-cancel-link hidden">
+    <%= link_to "Confirm", 
+      refresh_children_name_path(@name.id), 
+      id: 'confirm-name-refresh-children-button', 
+      remote: true, 
+      class: 'btn btn-warning', 
+      title: "Confirm refresh." %>
+
+    <%= link_to("Cancel",
+               '#',
+               id: "cancel-refresh-children-link",
+               class: "btn btn-default cancel-action-link",
+               tabindex: increment_tab_index,
+               data: {enable_this_id: 'name-refresh-children-link',
+               hide_this_id: 'confirm-or-cancel-refresh-children-link-container'}) %>
+
+    <div id="refresh-children-spinner" class="hidden" </div>
+    Refreshing <%= pluralize(@name.children.size,'child') %>...    <i class="fa fa-spinner fa-spin"></i>
+    </div>
+
+
+  </div>
+
+<div class="error-message-container"></div>

@@ -1,0 +1,9 @@
+$('.message-container').html('');
+$('#confirm-name-refresh-button').removeAttr('disabled')
+$('#cancel-refresh-link').removeAttr('disabled')
+$('#name-refresh-link').removeClass('disabled');
+$('#confirm-or-cancel-refresh-link-container').addClass('hidden');
+
+$('#name-refresh-error-message-container').html('<%= "#{icon('warning red')} #{@message}".html_safe %>');
+
+

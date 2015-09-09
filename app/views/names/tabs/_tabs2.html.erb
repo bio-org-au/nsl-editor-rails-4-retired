@@ -1,6 +1,6 @@
     <ul class="nav nav-tabs">
 
-      <%# if can? :edit, 'anything' %>
+      <% if can? 'names', 'update' %>
 
         <%= render partial: 'names/tabs/tab', locals: {first: false,
                                             last: false,
@@ -23,7 +23,7 @@
                                             next_tab: ''} %>
   
         <%= render partial: 'names/tabs/tab', locals: {first: false,
-                                            last: true,
+                                            last: false,
                                             this_tab: 'tab_copy',
                                             link_text: "Copy".html_safe,
                                             link_id: 'name-copy-tab',
@@ -33,7 +33,7 @@
                                             next_tab: ''} %>
   
         <%= render partial: 'names/tabs/tab', locals: {first: false,
-                                            last: true,
+                                            last: false,
                                             this_tab: 'tab_delete',
                                             link_text: "Delete".html_safe,
                                             link_id: 'name-delete-tab',
@@ -41,7 +41,17 @@
                                             tab_index: increment_tab_index,
                                             prev_tab: '',
                                             next_tab: ''} %>
-      <%# end %>
+  
+        <%= render partial: 'names/tabs/tab', locals: {first: false,
+                                            last: true,
+                                            this_tab: 'tab_refresh',
+                                            link_text: "Refresh",
+                                            link_id: 'name-refresh-tab',
+                                            link_title: 'Refresh the constructed elements of the name or of its children.',
+                                            tab_index: increment_tab_index,
+                                            prev_tab: '',
+                                            next_tab: ''} %>
 
+      <% end %>
     </ul>
 

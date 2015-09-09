@@ -20,7 +20,7 @@ class NamesController < ApplicationController
 
   include OpenURI
   before_filter :javascript_only, except: [:rules]  # All text/html requests should go to the search page.
-  before_filter :find_name, only: [:show, :tab, :edit_as_category, :refresh]
+  before_filter :find_name, only: [:show, :tab, :edit_as_category, :refresh, :refresh_children]
 
   # GET /names/1
   # GET /names/1.json
@@ -159,7 +159,21 @@ class NamesController < ApplicationController
 
   def refresh
     @name.set_names!
-    render 'refresh.js'
+    render 'names/refresh/ok.js'
+  rescue => e
+    @message = e.to_s
+    render 'names/refresh/error.js'
+  end
+
+  def refresh_children
+    @total = 0
+    @name.children.each do |child|
+      @total += child.set_names!
+    end
+    render 'names/refresh_children/ok.js'
+  rescue => e
+    @message = e.to_s
+    render 'names/refresh_children/error.js'
   end
 
   private 

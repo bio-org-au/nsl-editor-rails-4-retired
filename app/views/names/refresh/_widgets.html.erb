@@ -1,0 +1,29 @@
+
+  <% refresh_link = link_to("Refresh...",
+                           '#',
+                           id: "name-refresh-link",
+                           class: "btn btn-primary unconfirmed-action-link pull-right",
+                           title: "Refresh constructed parts of #{@name.full_name}.",
+                           tabindex: increment_tab_index,
+                           data: {show_this_id: "confirm-or-cancel-refresh-link-container"})
+  -%>
+  <%= refresh_link.html_safe %> 
+
+  <div class="width-100-percent"> 
+
+  <div id="confirm-or-cancel-refresh-link-container" class="confirm-or-cancel-link hidden">
+    <%= link_to "Confirm", refresh_name_path(@name.id), remote: true, class: 'btn btn-warning', title: "Confirm refresh." %>
+    <%= link_to("Cancel",
+               '#',
+               id: "cancel-refresh-link",
+               class: "btn btn-default cancel-action-link",
+               tabindex: increment_tab_index,
+               data: {enable_this_id: 'name-refresh-link',
+               hide_this_id: 'confirm-or-cancel-refresh-link-container'})
+-%>
+
+  </div>
+
+  </div>
+
+<div class="error-message-container"></div>

@@ -1,0 +1,10 @@
+$('.message-container').html('');
+$('#confirm-name-refresh-children-button').removeAttr('disabled')
+$('#cancel-refresh-children-link').removeAttr('disabled')
+$('#name-refresh-children-link').removeClass('disabled');
+$('#refresh-children-spinner').addClass('hidden');
+$('#confirm-or-cancel-refresh-children-link-container').addClass('hidden');
+
+$('#name-refresh-children-error-message-container').html('<%= "#{icon('warning red')} #{@message}".html_safe %>');
+
+
