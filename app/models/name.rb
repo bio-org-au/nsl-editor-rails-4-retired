@@ -461,8 +461,8 @@ class Name < ActiveRecord::Base
   end
 
   # Use update_attribute to avoid validation errors
-  def set_names!
-    logger.debug("set_names!")
+  def refresh_constructed_name_fields!
+    logger.debug("refresh_constructed_name_fields!")
     is_changed = false
     names_json = get_names_json
     if full_name != names_json['result']['fullName']
@@ -481,8 +481,22 @@ class Name < ActiveRecord::Base
       update_attribute(:simple_name_html, names_json['result']['simpleMarkedUpName'])
       is_changed = true
     end
-    logger.debug("set_names! is_changed: #{is_changed}")
+    logger.debug("refresh_constructed_name_field! is_changed: #{is_changed}")
     is_changed ? 1 : 0
+  rescue => e
+    logger.error("refresh_constructed_name_field! exception: #{e.to_s}")
+    raise
+  end
+
+  def set_names!
+    logger.debug('set_names!')
+    names_json = get_names_json
+    self.full_name = names_json['result']['fullName']
+    self.full_name_html = names_json['result']['fullMarkedUpName']
+    self.simple_name = names_json['result']['simpleName']
+    self.simple_name_html = names_json['result']['simpleMarkedUpName']
+    self.save!
+    logger.debug('end of set_names!')
   rescue => e
     logger.error("set_names! exception: #{e.to_s}")
     raise

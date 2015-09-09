@@ -1,14 +1,17 @@
 $('.message-container').html('');
 $('select#name_name_type_id').focus();
 $('#search-result-details-info-message-container').html('<%= @message %>');
+$('#search-result-details-info-message-container2').html('<%= @message %>');
 <% unless @message.match(/^No change/) %> 
   $('a#name-<%= @name.id %>').html('<%= escape_javascript(render partial: 'name_link_text', locals: {search_result: @name}) %>');
   $('a#tab-heading').html('<%= @name.full_name %>');
-  $('input#name-parent-typeahead').val('<%= @name.parent.full_name.try('html_safe') %>');
-  $('input#duplicate-of-typeahead').val('<%= @name.duplicate_of.try('full_name').try('html_safe') %>');
-  $('input#author-by-abbrev').val('<%= @name.author.try('abbrev').try('html_safe') %>');
-  $('input#ex-author-by-abbrev').val('<%= @name.ex_author.try('abbrev').try('html_safe') %>');
-  $('input#ex-base-author-by-abbrev').val('<%= @name.ex_base_author.try('abbrev').try('html_safe') %>');
-  $('input#base-author-by-abbrev').val('<%= @name.base_author.try('abbrev').try('html_safe') %>');
-  $('input#sanctioning-author-by-abbrev').val('<%= @name.sanctioning_author.try('abbrev').try('html_safe') %>');
+
+  $('input#name-parent-typeahead').val('<%= escape_javascript(@name.parent.try('full_name').try('html_safe')) %>');
+  $('input#duplicate-of-typeahead').val('<%= escape_javascript(@name.try('duplicate_of').try('full_name').try('html_safe')) %>');
+  $('input#author-by-abbrev').val('<%= escape_javascript(@name.try('author').try('abbrev').try('html_safe')) %>');
+  $('input#ex-author-by-abbrev').val('<%= escape_javascript(@name.try('ex_author').try('abbrev').try('html_safe')) %>');
+  $('input#ex-base-author-by-abbrev').val('<%= escape_javascript(@name.try('ex_base_author').try('abbrev').try('html_safe')) %>');
+  $('input#base-author-by-abbrev').val('<%= escape_javascript(@name.try('base_author').try('abbrev').try('html_safe')) %>');
+
+  $('input#sanctioning-author-by-abbrev').val('<%= escape_javascript(@name.try('sanctioning_author').try('abbrev').try('html_safe')) %>');
 <% end %>

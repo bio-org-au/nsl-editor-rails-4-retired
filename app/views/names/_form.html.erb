@@ -21,7 +21,7 @@
     </span>
   <% end %>
   <span id="search-result-details-info-message-container" class="message-container"></span>
-  <span id="search-result-details-error-message-container" class="message-container"></span>
+  <span id="search-result-details-error-message-container" class="error-container"></span>
   <div class="form-group margin-top-1em">
     <label for="name_type_id">Type*</label>
     <% if @name.has_only_one_type? %>
@@ -130,6 +130,8 @@
            tabindex="<%= increment_tab_index %>"
            value="<%= @name.ex_base_author.try('abbrev_if_possible') %>"/>
   </div>
+  <p>[For all author fields, use standard abbreviations]</p>
+
   <%= f.hidden_field(:ex_base_author_id) %>
 
   <div class="form-group base-author">
@@ -216,7 +218,8 @@
   <% end %>
   <%= f.submit "Save", id: 'save-name', tabindex: increment_tab_index, title: 'Save changes', class: 'btn btn-primary width-5em', disabled: false %>
   </div>
-
+  <span id="search-result-details-info-message-container2" class="message-container"></span>
+  <span id="search-result-details-error-message-container2" class="error-container"></span>
 
 <% end %>
 

@@ -6,7 +6,7 @@ class NameChildrenRefresherJob
     ActiveRecord::Base.connection_pool.with_connection do 
       name = Name.find(name_id)
       name.children.each do |child|
-        total += child.set_names!
+        total += child.refresh_constructed_name_fields!
       end
     end
     return total

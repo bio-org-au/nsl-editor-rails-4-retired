@@ -41,7 +41,6 @@ class Name::AsEdited < Name::AsTypeahead
       set_names! 
       'Updated'
     else
-      logger.debug("Name::AsEdited: no change")
       'No change'
     end
   rescue => e
