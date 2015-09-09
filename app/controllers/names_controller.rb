@@ -166,11 +166,13 @@ class NamesController < ApplicationController
   end
 
   def refresh_children
-    @total = 0
-    @name.children.each do |child|
-      @total += child.set_names!
+    if @name.children.size > 50
+      NameChildrenRefresherJob.new.async.perform(@name.id)
+      render 'names/refresh_children/job_started.js'
+    else
+      @total = NameChildrenRefresherJob.new.perform(@name.id)
+      render 'names/refresh_children/ok.js'
     end
-    render 'names/refresh_children/ok.js'
   rescue => e
     @message = e.to_s
     render 'names/refresh_children/error.js'

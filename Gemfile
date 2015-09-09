@@ -89,3 +89,5 @@ gem 'exception_notification'
 gem 'composite_primary_keys', '=7.0.13' # for Rails 4.1
 gem 'cancancan', '~> 1.10'
 
+gem 'sucker_punch', '~> 1.0'
+gem 'activejob_backport'

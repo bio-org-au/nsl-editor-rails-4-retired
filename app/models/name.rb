@@ -170,8 +170,7 @@ class Name < ActiveRecord::Base
   end
 
   def validate
-    logger.debug("validate")
-    logger.debug("errors: #{self.errors[:base].size}")
+    logger.debug("before save validate - errors: #{self.errors[:base].size}")
     self.errors[:base].size == 0
   end
 
@@ -461,19 +460,29 @@ class Name < ActiveRecord::Base
     names_json = JSON.load(open(Name::AsServices.name_strings_url(id)))
   end
 
+  # Use update_attribute to avoid validation errors
   def set_names!
     logger.debug("set_names!")
+    is_changed = false
     names_json = get_names_json
-    self.full_name = names_json['result']['fullName']
-    self.full_name_html = names_json['result']['fullMarkedUpName']
-    self.simple_name = names_json['result']['simpleName']
-    self.simple_name_html = names_json['result']['simpleMarkedUpName']
-    if changed?
-      save!
-      1
-    else
-      0
+    if full_name != names_json['result']['fullName']
+      update_attribute(:full_name, names_json['result']['fullName'])
+      is_changed = true
     end
+    if full_name_html != names_json['result']['fullMarkedUpName']
+      update_attribute(:full_name_html, names_json['result']['fullMarkedUpName'])
+      is_changed = true
+    end
+    if simple_name != names_json['result']['simpleName']
+      update_attribute(:simple_name, names_json['result']['simpleName'])
+      is_changed = true
+    end
+    if simple_name_html != names_json['result']['simpleMarkedUpName']
+      update_attribute(:simple_name_html, names_json['result']['simpleMarkedUpName'])
+      is_changed = true
+    end
+    logger.debug("set_names! is_changed: #{is_changed}")
+    is_changed ? 1 : 0
   rescue => e
     logger.error("set_names! exception: #{e.to_s}")
     raise
