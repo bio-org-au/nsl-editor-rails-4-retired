@@ -97,6 +97,7 @@ class Name < ActiveRecord::Base
   validates_exclusion_of :duplicate_of_id, in: lambda{ |name| [name.id] }, allow_blank: true, message: 'and master cannot be the same record'
   validates_exclusion_of :parent_id, in: lambda{ |name| [name.id] }, allow_blank: true, message: 'cannot be the same record'
   validates_exclusion_of :second_parent_id, in: lambda{ |name| [name.id] }, allow_blank: true, message: 'cannot be the same record'
+  validates_exclusion_of :second_parent_id, in: lambda{ |name| [name.parent_id] }, allow_blank: true, message: 'cannot be the same as the parent'
 
   validates :second_parent_id, presence: true, if: :requires_parent_2? 
   validates :second_parent_id, absence: true, unless: :requires_parent_2? 
