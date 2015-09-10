@@ -193,6 +193,13 @@ class Name::AsSearchEngine < Name
           when 'parent-id'
             where += " and parent_id = ? "
             binds.push(pairing[1].to_i)
+          when 'second-parent-id'
+            where += " and second_parent_id = ? "
+            binds.push(pairing[1].to_i)
+          when 'children'
+            where += " and (parent_id = ? or second_parent_id = ?) "
+            binds.push(pairing[1].to_i)
+            binds.push(pairing[1].to_i)
           else
             logger.error('no match')
             rejected_pairings.push(pairing.join(':'))

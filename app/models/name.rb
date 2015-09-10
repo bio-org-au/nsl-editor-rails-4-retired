@@ -52,6 +52,7 @@ class Name < ActiveRecord::Base
   scope :name_rank_species_and_below,->{ where("name_rank.sort_order >= (select sort_order from name_rank sp where sp.name = 'Species')") }
   scope :name_rank_genus_and_below,->{ where("name_rank.sort_order >= (select sort_order from name_rank genus where genus.name = 'Genus')") }
   scope :avoids_id,->(avoid_id) { where("name.id != ?", avoid_id) }
+  scope :all_children,->(parent_id) { where("name.parent_id = ? or name.second_parent_id = ?", parent_id, parent_id) }
 
   belongs_to :name_rank
   belongs_to :name_type
@@ -119,6 +120,10 @@ class Name < ActiveRecord::Base
 
   before_create :set_defaults
   before_save :validate
+
+  def combined_children
+    Name.all_children(id)
+  end
 
   def name_type_must_match_category
     unless NameType.option_ids_for_category(category).include?(name_type_id)

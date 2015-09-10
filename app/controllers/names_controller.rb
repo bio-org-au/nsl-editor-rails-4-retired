@@ -166,7 +166,7 @@ class NamesController < ApplicationController
   end
 
   def refresh_children
-    if @name.children.size > 50
+    if @name.combined_children.size > 50
       NameChildrenRefresherJob.new.async.perform(@name.id)
       render 'names/refresh_children/job_started.js'
     else

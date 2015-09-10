@@ -53,6 +53,8 @@ class Name::AsQuery < Name
       'eba-id' => 'ex base author id',
       'sa-id' => 'sanctioning author id',
       'parent-id' => 'parent id',
+      'second-parent-id' => 'second parent id',
+      'children' => 'children'
     }
   end
 

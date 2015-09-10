@@ -1,12 +1,4 @@
-<br>
-<%= link_to("#{pluralize(@name.children.size,'child')} #{icon('search')}".html_safe,
-    search_path(query: "parent-id: #{@name.id}",
-                        query_field: 'name'),
-                        tabindex: increment_tab_index,
-                        title: "Retrieve #{pluralize(@name.children.size,'child')}.",
-                        class: '') %>
-
-<br>
+<%= render 'names/details/children' %>
 
   <%= link_to("Refresh children...",
               '#',
@@ -36,7 +28,7 @@
                hide_this_id: 'confirm-or-cancel-refresh-children-link-container'}) %>
 
     <div id="refresh-children-spinner" class="hidden" </div>
-    Refreshing <%= pluralize(@name.children.size,'child') %>...    <i class="fa fa-spinner fa-spin"></i>
+    Refreshing <%= pluralize(@name.combined_children.size,'child') %>...    <i class="fa fa-spinner fa-spin"></i>
     </div>
 
 
