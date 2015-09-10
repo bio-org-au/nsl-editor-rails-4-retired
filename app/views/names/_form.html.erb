@@ -129,8 +129,8 @@
            title="Ex Base Name Author field. Authors will be suggested as you type, so please select from the list or type enough to identify a single author by abbreviation."
            tabindex="<%= increment_tab_index %>"
            value="<%= @name.ex_base_author.try('abbrev_if_possible') %>"/>
-  </div>
   <p>[For all author fields, use standard abbreviations]</p>
+  </div>
 
   <%= f.hidden_field(:ex_base_author_id) %>
 
