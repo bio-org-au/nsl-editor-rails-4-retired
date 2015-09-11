@@ -247,18 +247,8 @@ class Instance < ActiveRecord::Base
     "Instance-#{self.id}"
   end
 
-  def apc_yn
-  #  Name.find_by_sql(["select apc_tree.is_apc_instance(?) apc_instance from dual", self.id]).first.apc_instance
-  #rescue => e
-    'U'
-  end
- 
   def show_apc_tick?
     name.apc? && id == name.apc_instance_id
-  end
-
-  def apc_accepted?
-    apc_yn == 'Y'
   end
 
   def apc_excluded?

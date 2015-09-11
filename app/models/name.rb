@@ -361,10 +361,6 @@ class Name < ActiveRecord::Base
     "Name-#{self.id}"
   end
 
-  def apc_accepted?
-    apc_instance_yn == 'Y'
-  end
-
   def apc_excluded?
     apc_instance_is_an_excluded_name == true
   end
