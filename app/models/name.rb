@@ -98,7 +98,11 @@ class Name < ActiveRecord::Base
   validates_exclusion_of :duplicate_of_id, in: lambda{ |name| [name.id] }, allow_blank: true, message: 'and master cannot be the same record'
   validates_exclusion_of :parent_id, in: lambda{ |name| [name.id] }, allow_blank: true, message: 'cannot be the same record'
   validates_exclusion_of :second_parent_id, in: lambda{ |name| [name.id] }, allow_blank: true, message: 'cannot be the same record'
-  validates_exclusion_of :second_parent_id, in: lambda{ |name| [name.parent_id] }, allow_blank: true, message: 'cannot be the same as the parent'
+  validates_exclusion_of :second_parent_id, 
+    in: lambda{ |name| [name.parent_id] }, 
+    allow_blank: true, 
+    message: "cannot be the same as the first parent",
+    unless: "cultivar_hybrid?"
 
   validates :second_parent_id, presence: true, if: :requires_parent_2? 
   validates :second_parent_id, absence: true, unless: :requires_parent_2? 
@@ -209,13 +213,13 @@ class Name < ActiveRecord::Base
                   when 'intergrade'                        then SCIENTIFIC_HYBRID_FORMULA_CATEGORY
                   when 'formula'                           then SCIENTIFIC_HYBRID_FORMULA_CATEGORY
                   when 'acra'                              then CULTIVAR_CATEGORY
-                  when 'acra hybrid'                       then CULTIVAR_HYBRID_CATEGORY
+                  when 'acra hybrid'                       then CULTIVAR_HYBRID_CATEGORY  # deprecated name type
                   when 'cultivar'                          then CULTIVAR_CATEGORY
                   when 'cultivar hybrid'                   then CULTIVAR_HYBRID_CATEGORY
                   when 'pbr'                               then CULTIVAR_CATEGORY
-                  when 'pbr hybrid'                        then CULTIVAR_HYBRID_CATEGORY
+                  when 'pbr hybrid'                        then CULTIVAR_HYBRID_CATEGORY  # deprecated name type
                   when 'trade'                             then CULTIVAR_CATEGORY
-                  when 'trade hybrid'                      then CULTIVAR_HYBRID_CATEGORY
+                  when 'trade hybrid'                      then CULTIVAR_HYBRID_CATEGORY  # deprecated name type
                   when '[default]'                         then OTHER_CATEGORY
                   when '[n/a]'                             then OTHER_CATEGORY
                   when '[unknown]'                         then OTHER_CATEGORY
@@ -510,6 +514,10 @@ class Name < ActiveRecord::Base
 
   def duplicate?
     !self.duplicate_of_id.blank?
+  end
+
+  def cultivar_hybrid?
+    category == CULTIVAR_HYBRID_CATEGORY
   end
 
   private
