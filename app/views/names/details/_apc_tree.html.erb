@@ -1,4 +1,5 @@
 <% if @name.apc_tree_path.present? %>
+  <%= divider %>
   <%= link_to("APC tree #{icon('search')}".html_safe,
             search_path(query: @name.id,
                         query_on: 'tree',

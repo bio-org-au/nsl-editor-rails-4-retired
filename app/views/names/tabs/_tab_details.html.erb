@@ -101,10 +101,10 @@
   <h5><%= pluralize(@name.comments.size,'Comment') %></h5>
   <% @name.comments.sort{|x,y| x.created_at <=> y.created_at}.each do |comment|  %>
     <%= render partial: 'comments/show', locals: {comment: comment} %>
-    <%= divider %>
   <% end %>
 <% end %>
 
+<%= divider %>
 <h5>Name #<%= @name.id %></h5>
 
 simple name: <%= @name.simple_name %>
