@@ -51,9 +51,9 @@ class Name::AsTypeahead < Name
         query = query.ranks_for_unranked
       else
         query = query.from_a_higher_rank(rank_id)
+        query = query.but_rank_not_too_high(rank_id)
       end
-      query = query.but_rank_not_too_high(rank_id).
-                   select_fields_for_parent_typeahead.
+      query = query.select_fields_for_parent_typeahead.
                    group("name.id, name.full_name, name_rank.name, name_status.name").
                    collect {|n| {value: "#{n.full_name} | #{n.name_rank_name} | #{n.name_status_name} | #{ActionController::Base.helpers.pluralize(n.instance_count,'instance')} ", id: n.id}} 
       results = query

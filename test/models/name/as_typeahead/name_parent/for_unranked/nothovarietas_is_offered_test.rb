@@ -17,12 +17,13 @@
 require 'test_helper'
 require 'models/name/as_typeahead/name_parent/name_parent_test_helper'
 
-class ForUnrankedTest < ActiveSupport::TestCase
+class NameParentNothovarietasIsOfferedForUnrankedTest < ActiveSupport::TestCase
 
-  test "name parent suggestion for unranked" do
+  test "name parent suggestion for unranked include nothovarietas" do
     avoid_id = 1
-    suggestions = Name::AsTypeahead.name_parent_suggestions('%',avoid_id,NameRank.find_by(name: '[unranked]').id)
-    suggestions_should_only_include(suggestions,'[unranked]',%w([unranked] Subforma Forma Subvarietas Varietas Nothovarietas Subspecies Species))
+    suggestions = Name::AsTypeahead.name_parent_suggestions('a_nothovarietas',avoid_id,NameRank.find_by(name: '[unranked]').id)
+    expected_ranks = %w(Nothovarietas)
+    suggestions_should_only_include(suggestions,'[unranked]',expected_ranks)
   end
 
 end

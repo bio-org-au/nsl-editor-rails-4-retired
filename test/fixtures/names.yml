@@ -25,7 +25,7 @@ the_regnum:
 a_division:
   author: reveal
   ex_author: cronquist
-  full_name: "Magnoliophyta Cronquist, Takht. & W.Zimm. ex Reveal"
+  full_name: "Magnoliophyta Cronquist, Takht. & W.Zimm. ex Reveal a_division"
   full_name_html: "<scientific><name id='217746'><element>Magnoliophyta</element> <authors><ex id='5508' title='Cronquist, A.J., Takhtajan, A.L. &amp; Zimmermann, Walter M.'>Cronquist, Takht. & W.Zimm.</ex> ex <author id='2549' title='Reveal, J.L.'>Reveal</author></authors></name></scientific>"
   name_element: "Magnoliophyta"
   name_rank: division
@@ -41,7 +41,7 @@ a_division:
 
 a_classis:
   author: brongn.
-  full_name: "Magnoliopsida Brongn."
+  full_name: "Magnoliopsida Brongn. a_classis"
   full_name_html: "<scientific><name id='214952'><element>Magnoliopsida</element> <authors><author id='7026' title='Brongniart, A.T.'>Brongn.</author></authors></name></scientific>"
   name_element: "Magnoliopsida"
   name_rank: classis
@@ -116,11 +116,11 @@ a_family:
   updated_by: greg
   created_by: greg
 
-a_subfamily: 
-  full_name: 'a_subfamily'
-  simple_name: 'a_subfamily'
-  simple_name: 'a_subfamily'
-  name_element: 'a_subfamily'
+a_subfamilia: 
+  full_name: 'a_subfamilia'
+  simple_name: 'a_subfamilia'
+  simple_name: 'a_subfamilia'
+  name_element: 'a_subfamilia'
   name_rank: subfamilia
   name_status: unknown
   name_type: scientific
@@ -179,9 +179,9 @@ another_species:
   created_by: greg
 
 a_genus: 
-  simple_name: 'Agenus'
-  name_element: 'Agenus'
-  full_name: 'Agenus'
+  simple_name: 'a_genus'
+  name_element: 'a_genus'
+  full_name: 'a_genus'
   name_rank: genus
   name_status: legitimate
   name_type: scientific
@@ -191,9 +191,9 @@ a_genus:
   created_by: greg
 
 a_subgenus: 
-  simple_name: 'Asubgenus'
-  name_element: 'Asubgenus'
-  full_name: 'Asubgenus'
+  simple_name: 'a_subgenus'
+  name_element: 'a_subgenus'
+  full_name: 'a_subgenus'
   name_rank: subgenus
   name_status: legitimate
   name_type: scientific
@@ -203,9 +203,9 @@ a_subgenus:
   created_by: greg
 
 a_sectio: 
-  simple_name: 'Asectio'
-  name_element: 'Asectio'
-  full_name: 'Asectio'
+  simple_name: 'a_sectio'
+  name_element: 'a_sectio'
+  full_name: 'a_sectio'
   name_rank: sectio
   name_status: legitimate
   name_type: scientific
@@ -215,9 +215,9 @@ a_sectio:
   created_by: greg
 
 a_subsectio: 
-  simple_name: 'Asubsectio'
-  name_element: 'Asubsectio'
-  full_name: 'Asubsectio'
+  simple_name: 'a_subsectio'
+  name_element: 'a_subsectio'
+  full_name: 'a_subsectio'
   name_rank: subsectio
   name_status: legitimate
   name_type: scientific
@@ -227,9 +227,9 @@ a_subsectio:
   created_by: greg
 
 a_series: 
-  simple_name: 'Aseries'
-  name_element: 'Aseries'
-  full_name: 'Aseries'
+  simple_name: 'a_series'
+  name_element: 'a_series'
+  full_name: 'a_series'
   name_rank: series
   name_status: legitimate
   name_type: scientific
@@ -239,9 +239,9 @@ a_series:
   created_by: greg
 
 a_subseries: 
-  simple_name: 'Asubseries'
-  name_element: 'Asubseries'
-  full_name: 'Asubseries'
+  simple_name: 'a_subseries'
+  name_element: 'a_subseries'
+  full_name: 'a_subseries'
   name_rank: subseries
   name_status: legitimate
   name_type: scientific
@@ -251,9 +251,9 @@ a_subseries:
   created_by: greg
 
 a_superspecies: 
-  simple_name: 'Asuperspecies'
-  name_element: 'Asuperspecies'
-  full_name: 'Asuperspecies'
+  simple_name: 'a_superspecies'
+  name_element: 'a_superspecies'
+  full_name: 'a_superspecies'
   name_rank: superspecies
   name_status: legitimate
   name_type: scientific
@@ -263,9 +263,9 @@ a_superspecies:
   created_by: greg
 
 a_species: 
-  simple_name: 'Aspecies'
-  name_element: 'Aspecies'
-  full_name: 'Aspecies'
+  simple_name: 'a_species'
+  name_element: 'a_species'
+  full_name: 'a_species'
   name_rank: species
   name_status: legitimate
   name_type: scientific
@@ -288,9 +288,9 @@ a_duplicate_species:
   created_by: greg
 
 a_subspecies: 
-  simple_name: 'Asubspecies'
-  name_element: 'Asubspecies'
-  full_name: 'Asubspecies'
+  simple_name: 'a_subspecies'
+  name_element: 'a_subspecies'
+  full_name: 'a_subspecies'
   name_rank: subspecies
   name_status: legitimate
   name_type: scientific
@@ -300,9 +300,9 @@ a_subspecies:
   created_by: greg
 
 a_nothovarietas: 
-  simple_name: 'Anothovarietas'
-  name_element: 'Anothovarietas'
-  full_name: 'Anothovarietas'
+  simple_name: 'a_nothovarietas'
+  name_element: 'a_nothovarietas'
+  full_name: 'a_nothovarietas'
   name_rank: nothovarietas
   name_status: legitimate
   name_type: scientific
@@ -312,9 +312,9 @@ a_nothovarietas:
   created_by: greg
 
 a_varietas: 
-  simple_name: 'Avarietas'
-  name_element: 'Avarietas'
-  full_name: 'Avarietas'
+  simple_name: 'a_varietas'
+  name_element: 'a_varietas'
+  full_name: 'a_varietas'
   name_rank: varietas
   name_status: legitimate
   name_type: scientific
@@ -324,9 +324,9 @@ a_varietas:
   created_by: greg
 
 a_subvarietas: 
-  simple_name: 'Asubvarietas'
-  name_element: 'Asubvarietas'
-  full_name: 'Asubvarietas'
+  simple_name: 'a_subvarietas'
+  name_element: 'a_subvarietas'
+  full_name: 'a_subvarietas'
   name_rank: subvarietas
   name_status: legitimate
   name_type: scientific
@@ -336,9 +336,9 @@ a_subvarietas:
   created_by: greg
 
 a_subvarietas: 
-  simple_name: 'Asubvarietas'
-  name_element: 'Asubvarietas'
-  full_name: 'Asubvarietas'
+  simple_name: 'a_subvarietas'
+  name_element: 'a_subvarietas'
+  full_name: 'a_subvarietas'
   name_rank: subvarietas
   name_status: legitimate
   name_type: scientific
@@ -348,9 +348,9 @@ a_subvarietas:
   created_by: greg
 
 a_forma: 
-  simple_name: 'Aforma'
-  name_element: 'Aforma'
-  full_name: 'Aforma'
+  simple_name: 'a_forma'
+  name_element: 'a_forma'
+  full_name: 'a_forma'
   name_rank: forma
   name_status: legitimate
   name_type: scientific
@@ -360,9 +360,9 @@ a_forma:
   created_by: greg
 
 a_subforma: 
-  simple_name: 'Asubforma'
-  name_element: 'Asubforma'
-  full_name: 'Asubforma'
+  simple_name: 'a_subforma'
+  name_element: 'a_subforma'
+  full_name: 'a_subforma'
   name_rank: subforma
   name_status: legitimate
   name_type: scientific

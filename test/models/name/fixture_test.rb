@@ -105,10 +105,10 @@ class FixtureTest < ActiveSupport::TestCase
     assert name.valid?, "Fixture a_family name should be valid.  Errors: #{name.errors.full_messages.join('; ')}"
   end
 
-  test "fixture a_subfamily name should be valid" do
-    name = names(:a_subfamily)
+  test "fixture a_subfamilia name should be valid" do
+    name = names(:a_subfamilia)
     assert name.present?, 'No such name'
-    assert name.valid?, "Fixture a_subfamily name should be valid.  Errors: #{name.errors.full_messages.join('; ')}"
+    assert name.valid?, "Fixture a_subfamilia name should be valid.  Errors: #{name.errors.full_messages.join('; ')}"
   end
 
   test "fixture a_tribus name should be valid" do
