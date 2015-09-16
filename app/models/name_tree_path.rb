@@ -30,7 +30,7 @@ class NameTreePath < ActiveRecord::Base
   end
 
   def collected
-    path.split('.').collect {|id| Name.find(id.to_i)}
+    name_id_path.split('.').collect {|id| Name.find(id.to_i)}
   end
 
 
