@@ -2,14 +2,7 @@
   <%= " [#{@instance.name.try('name_status').try('name_without_brackets')}]" if @instance.try('name').try('name_status').try('legitimate?') %>
 
   <% if @instance.name.try('apc?') %>
-    <span class="apc no-decoration">
-    <% if @instance.name.apc_excluded? %>
-      <%= icon('ban','',class: 'red') %>
-    <% else %>
-      <%= icon('check','',class: 'red') %>
-    <% end %>
-      <span class='apc small red strong'>APC</span>
-    </span>
+    <%= render(partial: 'instances/apc/widgets', locals: {instance: @instance}) %>
   <% end %>
   &nbsp;
   <%= link_to("APNI&nbsp;#{icon('external-link-square')}".html_safe, 

@@ -1615,4 +1615,14 @@ dummy_name_1:
   updated_by: greg
   created_by: greg
 
+in_apc:
+  name_element: in apc
+  name_rank: species
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_genus
+  updated_by: greg
+  created_by: greg
+
 

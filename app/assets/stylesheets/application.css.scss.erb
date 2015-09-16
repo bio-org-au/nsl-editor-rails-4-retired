@@ -36,6 +36,7 @@ $input-color-placeholder: rgba(156,57,255,0.3);
 @import "width-primitives";
 @import "controls";
 @import "typeahead";
+@import "colors";
 
 // possibly this should not be here, instead the tree search results page should declare it as a dependency
 @import "tree-extras/tree.css";
@@ -359,34 +360,14 @@ label.white {
   background: red;
   color: white;
 }
-*.red { color: red; }
-*.darkred { color: darkred; }
-*.green { color: green; }
-*.blue { color: blue; }
-a:hover.blue { color: blue; }
-*.purple { color: purple; }
-*.darkgray { color: darkgray; }
-*.white { color: white; }
-*.brown { color: brown; }
-*.yellow { color: yellow; }
-
-*.hover-white:hover {color: white}
 
 .showing-details *.red {
   background: red;
   color: white;
 }
-*.purple {
-  color: purple;
-}
-
 .showing-details *.purple {
   background: purple;
   color: white;
-}
-
-*.orange {
-  color: orange
 }
 
 .showing-details *.orange {
@@ -394,17 +375,9 @@ a:hover.blue { color: blue; }
   color: white;
 }
 
-*.brown {
-  color: brown;
-}
-
 .showing-details *.brown {
   background: brown;
   color: white;
-}
-
-*.sienna{
-  color: sienna;
 }
 
 .showing-details *.sienna {
@@ -412,9 +385,6 @@ a:hover.blue { color: blue; }
   color: white;
 }
 
-*.darkslateblue{
-  color: darkslateblue;
-}
 
 .showing-details *.darkslateblue {
   background: darkslateblue;
@@ -507,6 +477,11 @@ li.dropdown span.information  {
 
 ul.no-bullets li {
   list-style-type: none;
+}
+
+ul.tree {
+  list-style-type: none;
+  padding-left: 1em;
 }
 
 // nsl-478 //

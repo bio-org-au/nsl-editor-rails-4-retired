@@ -63,6 +63,7 @@ group :test do
   gem 'capybara_minitest_spec'
   gem 'selenium-webdriver', '~> 2.45', require: false
   gem 'launchy'
+  gem 'mocha', '~> 1.1.0'
 end
 
 platform :ruby do
@@ -91,3 +92,4 @@ gem 'cancancan', '~> 1.10'
 
 gem 'sucker_punch', '~> 1.0'
 gem 'activejob_backport'
+

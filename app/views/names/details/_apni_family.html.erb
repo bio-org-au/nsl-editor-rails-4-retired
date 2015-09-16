@@ -1,0 +1,14 @@
+<% if @name.name_type.scientific? %>
+  <br>
+  <% apni_tree = @name.apni? %>
+  <%= case apni_tree
+       when 'unknown'
+         'APNI: status unknown.'
+       when true
+         "APNI family: #{@name.apni_family_name}."
+       else
+         'Not in the APNI tree.'
+       end
+   %>
+<% end %>
+

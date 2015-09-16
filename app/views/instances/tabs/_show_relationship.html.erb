@@ -2,14 +2,7 @@
 <%= link_to("#{@instance.name.full_name} #{search_icon_on_tab}".html_safe,
             search_name_with_instances_path(@instance.name_id), title: 'Search for the name.') %>
     <% if @instance.name.apc? %>
-      <span class="apc no-decoration">
-      <% if @instance.name.apc_excluded? %>
-        <%= icon('ban','',class: 'red') %>
-      <% else %>
-        <%= icon('check','',class: 'red') %>
-      <% end %>
-        <span class='apc small red strong'>APC</span>
-      </span>
+      <%= render(partial: 'instances/apc/widgets', locals: {instance: @instance}) %>
     <% end %>
     &nbsp;
   <span class="apni-format-link-on-details"> 
@@ -33,14 +26,7 @@
               search_name_with_instances_path(@instance.this_is_cited_by.name_id),
               title:'Search for the instance this is cited under.') %>
   <% if @instance.this_is_cited_by.name.apc? %>
-    <span class="apc no-decoration">
-    <% if @instance.this_is_cited_by.name.apc_excluded? %>
-      <%= icon('ban','',class: 'red') %>
-    <% else %>
-      <%= icon('check','',class: 'red') %>
-    <% end %>
-      <span class='apc small red strong'>APC</span>
-    </span>
+    <%= render(partial: 'instances/apc/widgets', locals: {instance: @instance.this_is_cited_by}) %>
   <% end %>
   <br>
   by

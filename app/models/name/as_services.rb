@@ -28,15 +28,8 @@ class Name::AsServices < Name
     "#{Rails.configuration.name_services}#{id}/api/apni"
   end
 
-  def self.apni_info_url(id)
+  def self.apni_family_url(id)
     "#{Rails.configuration.name_services}#{id}/api/family"
-  end
-
-  def self.apni_info_json(id)    
-    Rails.cache.fetch("apni_family_name:#{id}", expires: 1.minute) do ||
-      logger.debug("Uncached service call for apni_family_name:#{id}")
-      JSON.load(open(Name::AsServices.apni_info_url(id)))
-    end
   end
 
   def self.delete_url(id,reason = 'No longer required.')

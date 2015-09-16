@@ -16,14 +16,17 @@
 #   
 require 'test_helper'
 
-class OnParentIdTest < ActiveSupport::TestCase
+class NameAPCDeclaredBTTest < ActiveSupport::TestCase
 
-  test "on parent ID" do
-    results, rejected_pairings,is_limited,focus_anchor_id,info = Name::AsSearchEngine.search("parent-id: #{names(:a_genus).id}")
-    assert_equal results.class, Name::ActiveRecord_Relation, "Results should be a Name::ActiveRecord_Relation."
-    assert_equal 7, results.size, "Expected 7 names."
+  test "name apc declared bt" do
+    name = Name.new
+    expected_instance_id = 44
+    name.stubs(:get_apc_json).returns({"inAPC"=> true, "excluded"=> false, "taxonId"=> expected_instance_id.to_s, "type"=> "DeclaredBt" })
+    assert_equal true, name.apc?, "Name should be in APC"
+    assert_equal expected_instance_id, name.apc_instance_id, "APC instance id should be set"
+    assert_equal false, name.apc_instance_is_an_excluded_name, "Should not be an excluded name"
+    assert_equal true, name.apc_declared_bt, "Name should be declared BT"
   end
-
+ 
 end
-
 

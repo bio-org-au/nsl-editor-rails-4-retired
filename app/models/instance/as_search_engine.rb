@@ -28,8 +28,6 @@ class Instance::AsSearchEngine < Instance
     names = Name.where(id: name_id)
     unless names.blank?
       name = names.first
-      show_apc = name.apc? # triggers service call
-      apc_instance_id = name.apc_instance_id if show_apc
       name.display_as_part_of_concept
       already_shown = []
       name.instances.sort do |i1,i2| 
@@ -39,15 +37,14 @@ class Instance::AsSearchEngine < Instance
         if instance.simple? # simple instance
           Instance::AsSearchEngine.show_simple_instance_under_searched_for_name(instance).each do |one_instance|
             one_instance.show_primary_instance_type = true
-            one_instance.show_apc_tick = (one_instance.id == name.apc_instance_id)
-            one_instance.consider_for_apc_tick = true
+            one_instance.consider_apc = true
             results.push(one_instance)
           end
         else # relationship instance
           citing_instance = instance.this_is_cited_by
           unless already_shown.include?(citing_instance.id)
             Instance::AsSearchEngine.show_relationship_instance_under_searched_for_name(name,citing_instance).each do |element|
-              element.consider_for_apc_tick = false
+              element.consider_apc = false
               results.push(element)
             end
             already_shown.push(citing_instance.id)

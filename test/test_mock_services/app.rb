@@ -56,7 +56,9 @@ get '/nsl/services/name/apni/:id/api/name-strings' do |id|
   result.to_json
 end
 
-get '/api/apc/:id' do |id|
+
+
+get '/nsl/services/name/apni/:id/api/apc.json' do |id|
   content_type 'application/json'
   result = InApc.new('silly name class',
                     {permalink: []},
@@ -74,6 +76,8 @@ get '/api/apc/:id' do |id|
                     )
   result.to_json
 end
+
+
 
 # http://localhost:8080/nsl/services/instance/apni/514039/api/delete?apiKey=d0d1e81d-181c-4ac6-ad75-ddd172594793&reason=Ixxxx
 delete '/nsl/services/instance/apni/:id/api/delete' do |id|
@@ -125,3 +129,4 @@ class Reference < Struct.new(:class,:_links, :name, :citation, :action, :result)
 class Name < Struct.new(:class,:_links, :name_element, :action, :result); end
 class InApc < Struct.new(:class,:_links, "nameElement","action","inAPC", "excluded", "operation", "nsl_name", "nameNs", "nameId", "taxonNs", "taxonId", "type"); end
  
+

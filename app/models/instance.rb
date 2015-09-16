@@ -66,8 +66,8 @@ class Instance < ActiveRecord::Base
 
   attr_accessor :expanded_instance_type, :display_as, :relationship_flag, 
                 :give_me_focus, :legal_to_order_by, 
-                :show_primary_instance_type, :show_apc_tick, :data_fix_in_process,
-                :consider_for_apc_tick
+                :show_primary_instance_type, :data_fix_in_process,
+                :consider_apc
   belongs_to :namespace, class_name: 'Namespace', foreign_key: 'namespace_id'
   belongs_to :reference
   belongs_to :name
@@ -247,7 +247,7 @@ class Instance < ActiveRecord::Base
     "Instance-#{self.id}"
   end
 
-  def show_apc_tick?
+  def show_apc?
     name.apc? && id == name.apc_instance_id
   end
 

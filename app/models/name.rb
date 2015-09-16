@@ -26,7 +26,7 @@ class Name < ActiveRecord::Base
   self.primary_key = 'id'
   self.sequence_name = 'nsl_global_seq'
   
-  attr_accessor :display_as, :give_me_focus, :apc_instance_id, :apc_instance_is_an_excluded_name, :change_category_to
+  attr_accessor :display_as, :give_me_focus, :apc_instance_id, :apc_instance_is_an_excluded_name, :apc_declared_bt, :change_category_to
   scope :not_common_or_cultivar, 
     -> { where([" name_type_id in (select id from name_type where not (cultivar or lower(name_type.name) = 'common'))"]) }
   scope :not_a_duplicate, -> { where(duplicate_of_id: nil) }
@@ -77,6 +77,12 @@ class Name < ActiveRecord::Base
   has_many   :comments
   has_many   :name_tag_names
   has_many   :name_tags, through: :name_tag_names
+  has_one   :apc_tree_path, 
+    -> {where "exists (select null from tree_arrangement ta where tree_id = ta.id and ta.description = 'Australian Plant Census')"},
+    class_name: 'NameTreePath'
+  has_one   :apni_tree_path, 
+    -> {where "exists (select null from tree_arrangement ta where tree_id = ta.id and ta.description = 'APNI names classification')"},
+    class_name: 'NameTreePath'
     
   validates :name_rank_id, presence: true
   validates :name_type_id, presence: true
@@ -121,6 +127,8 @@ class Name < ActiveRecord::Base
   CULTIVAR_CATEGORY = 'cultivar'
   CULTIVAR_HYBRID_CATEGORY = 'cultivar hybrid'
   OTHER_CATEGORY = 'other'
+
+  DECLARED_BT = 'DeclaredBt'
 
   before_create :set_defaults
   before_save :validate
@@ -365,39 +373,50 @@ class Name < ActiveRecord::Base
     apc_instance_is_an_excluded_name == true
   end
 
-  def apc_json
-    JSON.load(open(Name::AsServices.in_apc_url(id)))
+  def apc_declared_bt?
+    apc_declared_bt == true
+  end
+
+  def get_apc_json
+    Rails.cache.fetch("#{cache_key}/apc_info", expires_in: 2.minutes) do
+      JSON.load(open(Name::AsServices.in_apc_url(id)))
+    end
   rescue => e
-    logger.error("Name#apc_json error: #{e.to_s}")
+    logger.error("Name#get_apc_json exception: #{e.to_s} for URL: #{Name::AsServices.in_apc_url(id)}")
     '[unknown - service error]'
   end
 
   def apc?
-    json = apc_json
+    logger.debug("apc?")
+    json = get_apc_json 
     if json["inAPC"] == true
       self.apc_instance_id = json["taxonId"].to_i
-      self.apc_instance_is_an_excluded_name = (json["excluded"] == true)
+      self.apc_declared_bt = (json["type"] == DECLARED_BT)
+      self.apc_instance_is_an_excluded_name = (!apc_declared_bt && json["excluded"] == true)
     else
       self.apc_instance_id = nil
       self.apc_instance_is_an_excluded_name = false
+      self.apc_declared_bt = false
     end
     return !self.apc_instance_id.nil?
   rescue => e
-    logger.error('Name::apc? error.')
-    logger.error(e.to_s)
+    logger.error("Name::apc? exception: #{e.to_s}")
     self.apc_instance_id = nil
     false
   end
 
-  def apni_json
-    JSON.load(open(Name::AsServices.in_apni_url(id)))
+  def get_in_apni
+    logger.info("get_in_apni; service call unless cached...")
+    Rails.cache.fetch("#{cache_key}/in_apni", expires_in: 1.minutes) do
+      JSON.load(open(Name::AsServices.in_apni_url(id),{read_timeout: 1}))
+    end
   rescue => e
-    logger.error("Name#apni_json error: #{e.to_s}")
-    '[unknown - service error]'
+    logger.error("Name#get_in_apni error: #{e.to_s}")
+    raise
   end
   
   def apni?
-    json = apni_json
+    json = get_in_apni
     json["inAPNI"] == true
   rescue => e
     logger.error('Is this in APNI name error.')
@@ -405,12 +424,22 @@ class Name < ActiveRecord::Base
     false
   end
 
+  def get_apni_family
+    logger.info("get_apni_family; service call unless cached...")
+    Rails.cache.fetch("#{cache_key}/apni_info", expires_in: 1.minutes) do
+      JSON.load(open(Name::AsServices.apni_family_url(id),{read_timeout: 1}))
+    end
+  rescue => e
+    logger.error("Name#get_apni_family exception: #{e.to_s} for URL: #{Name::AsServices.apni_family_url(id)}")
+    raise
+  end
+
   def apni_family_name
-    json = Name::AsServices.apni_info_json(id)
+    json = get_apni_family
     json["familyName"]["name"]["simpleName"]
   rescue => e
     logger.error("apni_family_name error: #{e.to_s}")
-    'apni family unknown - service error'
+    "apni family unknown - service error: #{e.to_s}"
   end
 
   def has_parent?
