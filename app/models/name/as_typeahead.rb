@@ -49,6 +49,7 @@ class Name::AsTypeahead < Name
                    limit(SEARCH_LIMIT)
       if rank_id != 'undefined' && NameRank.id_is_unranked?(rank_id.to_i)
         query = query.ranks_for_unranked
+        query = query.but_rank_not_too_high(rank_id) # Switch off NSL-1443 until name construction rules upgraded. Remove this when they are.
       else
         query = query.from_a_higher_rank(rank_id)
         query = query.but_rank_not_too_high(rank_id)

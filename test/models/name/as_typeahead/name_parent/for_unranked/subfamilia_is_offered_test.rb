@@ -23,7 +23,8 @@ class NameParentSubfamiliaIsOfferedForUnrankedTest < ActiveSupport::TestCase
     avoid_id = 1
     suggestions = Name::AsTypeahead.name_parent_suggestions('a_subfamilia',avoid_id,NameRank.find_by(name: '[unranked]').id)
     expected_ranks = %w(Subfamilia)
-    suggestions_should_only_include(suggestions,'[unranked]',expected_ranks)
+    # Change "should_not_include" to "should_only_include" when 1443 is switched back on.
+    suggestions_should_not_include(suggestions,'[unranked]',expected_ranks)
   end
 
 end
