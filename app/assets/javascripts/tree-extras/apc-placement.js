@@ -35,7 +35,7 @@ function ApcTabController($scope, $http, $element, $sce) {
     $scope.error = false;
     $scope.data = null;
 
-    $scope.treeLabel = 'APC'
+    $scope.treeLabel = 'APC';
 
     $scope.placeParams = {
         superName: null,
@@ -66,7 +66,7 @@ function ApcTabController($scope, $http, $element, $sce) {
             return response.data;
         });
 
-    }
+    };
 
     $scope.fetchPlacement = function() {
         $scope.loading = true;
@@ -104,13 +104,13 @@ function ApcTabController($scope, $http, $element, $sce) {
                 $scope.loading = false;
                 $scope.error = data;
             });
-    }
+    };
 
     $scope.preprocessData = function() {
         var data = this.data;
-        // any pricessing that javascript needs to do, that only needs to be done once
-        // after fetcing the data from the server
-    }
+        // any processing that javascript needs to do, that only needs to be done once
+        // after fetching the data from the server
+    };
 
     $scope.reloadPlacementForm = function() {
         $scope.error = null;
@@ -124,7 +124,7 @@ function ApcTabController($scope, $http, $element, $sce) {
             $scope.placeParams.superName = null;
             $scope.placeParams.apcStatus = null;
         }
-    }
+    };
 
     $scope.placeInApc = function() {
         $scope.loaded = false;
@@ -135,7 +135,7 @@ function ApcTabController($scope, $http, $element, $sce) {
         $http.post(NSL_API_URL + 'tree/place-apc-instance', {
             instance: $scope.instanceId,
             supername: $scope.placeParams.superName ? $scope.placeParams.superName.id : null,
-            placementType: $scope.placeParams.apcStatus,
+            placementType: $scope.placeParams.apcStatus
         })
           .success(function(response){
             $scope.loading = false;
@@ -161,7 +161,7 @@ function ApcTabController($scope, $http, $element, $sce) {
                 $scope.loading = false;
                 $scope.error = data;
             });
-    }
+    };
 
     $scope.removeFromApc = function() {
         $scope.loaded = false;
@@ -195,7 +195,7 @@ function ApcTabController($scope, $http, $element, $sce) {
                 $scope.loading = false;
                 $scope.error = data;
             });
-    }
+    };
 
 
     $scope.fetchPlacement();
