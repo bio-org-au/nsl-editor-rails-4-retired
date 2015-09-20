@@ -134,6 +134,7 @@ Rails.application.routes.draw do
 
   match '/admin', as: "admin", to: "admin#index", via: :get
   match '/admin/throw', as: "throw", to: "admin#throw", via: :get
+  match '/admin/db_connections', as: "db_connections", to: "admin#db_connections", via: :get
 
   match 'help/index', to: "help#index", via: :get
   match 'help/history', to: "help#history", as: 'history', via: :get

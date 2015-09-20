@@ -118,4 +118,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def hide_details
+    @no_search_result_details = true
+  end
+
 end

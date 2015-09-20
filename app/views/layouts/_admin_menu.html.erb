@@ -3,9 +3,8 @@
   <a href="#" id="admin-dropdown-menu-link" class="dropdown-toggle" tabindex="5" <%= 'active' if params[:controller].match(/admin/) %> data-toggle="dropdown">Admin<span class="caret"></span></a>
   <ul id="admin-dropdown-menu" class="dropdown-menu" role="menu"> 
 
-    <li class="" role="presentation">
-      <%= link_to("Configuration settings", admin_path) %>
-    </li>
+    <li class="" role="presentation"> <%= link_to("Configuration settings", admin_path) %> </li>
+    <li class="" role="presentation"> <%= link_to("Database connections", db_connections_path) %> </li>
 
   </ul>
 </li>

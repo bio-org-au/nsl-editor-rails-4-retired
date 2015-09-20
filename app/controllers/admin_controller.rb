@@ -15,8 +15,12 @@
 #   limitations under the License.
 #   
 class AdminController < ApplicationController
+  before_filter :hide_details
 
   def index
+  end
+
+  def db_connections
   end
 
   def throw

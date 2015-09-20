@@ -14,27 +14,17 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #   
-class HelpController < ApplicationController
-  before_filter :hide_details
+require 'test_helper'
 
-  def index
-    @no_search_result_details = true
+class AdminControllerAdminUserCanSeeDBConnectionsTest < ActionController::TestCase
+  tests AdminController
+  
+  test "admin user should get db connections" do
+    get(:db_connections,{},{username: 'fred', user_full_name: 'Fred Jones', groups: ['admin']})
+    assert_response :success
   end
-
-  def history
-    @no_search_result_details = true
-  end
-
-  def instance_models
-    @no_search_result_details = true
-  end
-
-  def ref_type_rules
-    @no_search_result_details = true
-  end
-
-  def typeaheads
-  end
-
+ 
 end
+
+
 
