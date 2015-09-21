@@ -29,10 +29,23 @@ class NameTreePath < ActiveRecord::Base
     raise 'No create, update or destroy allowed for name_tree_path'
   end
 
+  # Retain for comparison.
   def collected
     name_id_path.split('.').collect {|id| Name.find(id.to_i)}
   end
 
+  def tree_order_name_ids
+    name_id_path.split('.').collect{|string| string.to_i}
+  end
+
+  # Aim is to supply name objects in tree order while avoiding n-queries.
+  def tree_ordered_names
+    tree_order_name_ids.collect {|name_id| queried_names[queried_names.index{|name| name[:id] == name_id}]};
+  end
+
+  def queried_names
+    @queried_names ||= Name.includes(:name_rank).where(id: name_id_path.split('.').collect{|x| x.to_i})
+  end
 
 end
 

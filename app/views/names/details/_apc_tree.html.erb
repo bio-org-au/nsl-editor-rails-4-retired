@@ -8,7 +8,7 @@
                         title: "Load the APC tree for this instance.",
                         class: '') %>
 <ul class="tree">
-<% @name.apc_tree_path.collected.each do |step| %>
+<% @name.apc_tree_path.tree_ordered_names.each do |step| %>
   <li>
     <%= link_to(%Q(#{step.full_name}<span class="pull-right">#{step.name_rank.name}</span>).html_safe,
                 search_path(query: step.id,
