@@ -1,0 +1,50 @@
+<div id="advanced-search" class="hidden">
+<div id="advanced-search-closer" class="closer pull-right" title="Close advanced search">X</div>
+
+<table class="table">
+  <tr>
+    <td>
+      <label for="list-or-count">List or count</label>
+    </td>
+    <td>
+    <select id="list-or-count" name="list-or-count" class="xform-control" tabindex="6">
+        <option value='Count'>Count</option>
+        <option value='List' selected>List</option>
+    </select>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label for="query-on">Query on</label>
+    </td>
+    <td>
+      <select id="query-on" name="query_on" class="xform-control" tabindex="7">
+        <option value='Names' selected>Names</option>
+        <option value='Authors'>Authors</option>
+        <option value='Instances'>Instances</option>
+        <option value='References'>References</option>
+        <option value='Tree'>Tree</option>
+      </select>
+    </td>
+  </tr>
+</table>
+
+<br>
+  <div class="pull-right">
+      <%# We don't want button in URL - so use raw html to avoid including a name attribute. %>
+      <input type="submit" 
+             id="advanced-search-button"
+             value="Search" 
+             class='btn btn-primary search-button pull-right' 
+             data-no-turbolink="true" 
+             tabindex="9"
+             title="Start searching"/>
+      <input type="button"
+             id="advanced-search-cancel"
+             value="Cancel"
+             class='btn btn-primary pull-right' 
+             tabindex="10"
+             title="Cancel and hide advanced search"/>
+  </div>
+
+</div>

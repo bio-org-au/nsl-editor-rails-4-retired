@@ -1,0 +1,39 @@
+    <script>
+<!--
+$('input[type=search]')
+    .wrap('<span>')
+    .after('<span class="clear">&hellip;</span>')
+    .parent()
+    .on('mouseenter mouseleave', function(e){
+        $(this).toggleClass('focused');
+    })
+    .find('span.clear')
+    .on('click', function(e){
+        $('#advanced-search.hidden').removeClass('hidden');
+        if (!!$('#new-search-field').val().match(/^auth/i))  {
+          $('#query-on').val('Authors');
+        }
+        if (!!$('#new-search-field').val().match(/^ref/i))  {
+          $('#query-on').val('References');
+        }
+    });
+
+    $('#advanced-search-closer').on('click',function(e) {
+      console.log('closer');
+      $('#advanced-search').addClass('hidden');
+    });
+
+    $('#advanced-search-cancel').on('click',function(e) {
+      console.log('cancel');
+      $('#advanced-search').addClass('hidden');
+    });
+
+    $('#advanced-search-button').on('click',function(e) {
+      console.log('search');
+      $('#new-search-field').val($('#query-on').val());
+      $('#advanced-search').addClass('hidden');
+    });
+-->
+    </script>
+
+

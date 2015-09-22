@@ -36,6 +36,7 @@
         div#search-summary { background: #663399; }
       </style>
     <% end %>
+    <%= render partial: 'search/advanced_style' %>
   </head>
  
   <body
@@ -58,7 +59,7 @@
         </div>
         <div id="searchbar-row" class="row">
           <div id="searchbar" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <%= render 'layouts/search_toolbar' unless @no_searchbar %>
+            <%= render 'layouts/new_search_form' unless @no_searchbar %>
           </div>
         </div>
         <% if @system_broadcast.present? %> 
@@ -113,6 +114,8 @@
       <%= render partial: 'references/query_dropdown_links' %>
     </div>
     <script type="text/javascript" src="https://www.anbg.gov.au/25jira/s/d41d8cd98f00b204e9800998ecf8427e/en-p174ip-1988229788/6265/3/1.4.7/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?collectorId=ff55c94b"></script>
+    <%= render partial: 'search/advanced' %>
+    <%= render partial: 'search/advanced_script' %>
  </body>
 </html>
  
