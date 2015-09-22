@@ -51,6 +51,7 @@ class Ability
     can 'names',              'tab_details'
     can 'references',         'tab_show_1'
     can 'search',             :all
+    can 'new_search',         :all
     can 'services',           :all
     can 'sessions',           :all
     if user.edit?
