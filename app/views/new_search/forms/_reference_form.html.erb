@@ -1,0 +1,97 @@
+<div id="advanced-search-reference-form-container" class="">
+
+<%= form_tag(new_search_path, method: :get, id: "advanced-search-name-form", class: 'form-inline')  do -%>
+
+<table border="1" class="table advanced-form-table">
+  <tr>
+    <td class="align-right width-15-percent">
+      <label for="list-or-count">List or count</label>
+    </td>
+    <td>
+    <select id="list-or-count" name="list-or-count" class="form-control" tabindex="6">
+        <option value='Count'>Count results</option>
+        <option value='List' selected>List results</option>
+    </select>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="align-right">
+      <label for="query-on">Citation</label>
+    </td>
+    <td>
+      <input type="text" class="" id="" placeholder="">
+    </td>
+  </tr>
+  <tr>
+    <td class="align-right">
+      <label for="query-on">Title</label>
+    </td>
+    <td>
+      <input type="text" class="" id="" placeholder="">
+    </td>
+  </tr>
+  <tr>
+    <td class="align-right">
+      <label for="query-on">Author</label>
+    </td>
+    <td>
+      <input type="text" class="" id="" placeholder="">
+    </td>
+  </tr>
+  <tr>
+    <td class="align-right">
+      <label for="query-on">Year</label>
+    </td>
+    <td>
+      <input type="text" class="" id="" placeholder="">
+    </td>
+  </tr>
+  <tr>
+    <td class="align-right">
+      <label for="query-on">Parent Citation</label>
+    </td>
+    <td>
+      <input type="text" class="" id="" placeholder="">
+    </td>
+  </tr>
+  <tr>
+    <td class="align-right">
+      <label for="query-on">Parent Title</label>
+    </td>
+    <td>
+      <input type="text" class="" id="" placeholder="">
+    </td>
+  </tr>
+  <tr>
+    <td class="align-right">
+      <label for="query-on">Type</label>
+    </td>
+    <td>
+      <input type="text" class="" id="" placeholder="">
+    </td>
+  </tr>
+  <tr>
+    <td class="align-right">
+      <label for="query-on">Comments</label>
+    </td>
+    <td>
+      <input type="text" class="" id="" placeholder="">
+    </td>
+  </tr>
+</table>
+
+<br>
+  <div class="pull-right">
+      <%# We don't want button in URL - so use raw html to avoid including a name attribute. %>
+      <input type="submit" 
+             id="advanced-search-button"
+             value="Search" 
+             class='btn btn-primary search-button pull-right' 
+             data-no-turbolink="true" 
+             tabindex="9"
+             title="Start searching"/>
+  </div>
+
+  <% end -%>
+</div>

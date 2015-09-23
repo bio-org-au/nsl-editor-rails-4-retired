@@ -46,40 +46,7 @@
       data-active-instance-tab="tab_show_1">
 
     <div id="screen-too-small-msg">Sorry.... your window is too small to show the editor.  It needs to be wider.</div>
-    <div id="big-navbar" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container-fluid">
-        <div class="row">
-          <div id="first-navbar" class="no-left-padding navbar-header col-sm-12 col-md-12">
-            <% if @no_navigation %>
-              <%= render 'layouts/no_navigation' %>
-            <% else %>
-              <%= render 'layouts/navigation' %>
-            <% end %>
-          </div>
-        </div>
-        <div id="searchbar-row" class="row">
-          <div id="searchbar" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <%= render 'new_search/search_form' unless @no_searchbar %>
-          </div>
-        </div>
-        <% if @system_broadcast.present? %> 
-          <div id="broadcast" class="">
-            <%= @system_broadcast.html_safe %>
-          </div>
-       <% elsif flash.present? %>
-          <div id="flash" class="">
-            <% flash.each do | key, value | %>
-              <%= value %>
-            <% end %>
-          </div>
-       <% end %>
-       <div id="search-summary-row" class="row">
-         <div id="search-summary" class="no-left-padding col-sm-12 col-md-12 col-lg-12">
-           <%= yield :search_result_summary %>
-         </div>
-       </div>
-      </div>
-    </div>
+    <%= render partial: 'new_search/big_navbar' %>
 
     <div id="main-content" class="container-fluid">
     <% if @no_search_result_details %>
@@ -88,7 +55,10 @@
       <div id="search-result-details" > </div>
     <% end %>
       <div class="row">
-        <div id="search-result-container" class="no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 sidebar">
+        <div id="advanced-search-container" class="no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 sidebar">
+          <%= render partial: 'new_search/advanced_search_inner' %>
+        </div>
+        <div id="search-result-container" class="no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 sidebar hidden">
           <%= yield %>
         </div>
       </div>
@@ -114,7 +84,6 @@
       <%= render partial: 'references/query_dropdown_links' %>
     </div>
     <script type="text/javascript" src="https://www.anbg.gov.au/25jira/s/d41d8cd98f00b204e9800998ecf8427e/en-p174ip-1988229788/6265/3/1.4.7/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?collectorId=ff55c94b"></script>
-    <%= render partial: 'new_search/advanced' %>
     <%= render partial: 'new_search/advanced_script' %>
  </body>
 </html>

@@ -1,5 +1,7 @@
     <script>
 <!--
+    $( document ).ready(function() {
+console.log('loading stuff now');
 $('input[type=search]')
     .wrap('<span>')
     .after('<span class="clear">&hellip;</span>')
@@ -33,6 +35,30 @@ $('input[type=search]')
       $('#new-search-field').val($('#query-on').val());
       $('#advanced-search').addClass('hidden');
     });
+
+    $('ul#search-results-tabset li a#search-form-tab-container-link').on('click',function(e) {
+      $('ul#search-results-tabset li').removeClass('active');
+      $(this).parent('li').addClass('active');
+      $('#advanced-search-container').removeClass('hidden');
+      $('#search-result-container').addClass('hidden');
+    });
+
+    $('ul#search-results-tabset li a#search-results-tab-container-link').on('click',function(e) {
+      $('ul#search-results-tabset li').removeClass('active');
+      $(this).parent('li').addClass('active');
+      $('#advanced-search-container').addClass('hidden');
+      $('#search-result-container').removeClass('hidden');
+    });
+
+    $('ul#advanced-search-tabset li a').on('click',function(e) {
+      console.log("advanced search tab click");
+      console.log($(this).attr('data-show-id'));
+      $('.advanced-search-tab').addClass('hidden');
+      $('ul#advanced-search-tabset li').removeClass('active');
+      $('#'+$(this).attr('data-show-id')).removeClass('hidden');
+      $(this).parent('li').addClass('active');
+    });
+});
 -->
     </script>
 

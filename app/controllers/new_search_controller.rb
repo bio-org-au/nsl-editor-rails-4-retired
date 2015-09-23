@@ -15,6 +15,7 @@
 #   limitations under the License.
 #   
 class NewSearchController < ApplicationController
+  before_filter :hide_details
 
   def search
     logger.debug("NewSearchController#search.")

@@ -1,0 +1,39 @@
+    <div id="big-navbar" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="row">
+          <div id="first-navbar" class="no-left-padding navbar-header col-sm-12 col-md-12">
+            <% if @no_navigation %>
+              <%= render 'layouts/no_navigation' %>
+            <% else %>
+              <%= render 'layouts/navigation' %>
+            <% end %>
+          </div>
+        </div>
+        <div id="searchbar-row" class="row">
+          <div id="searchbar" class="new-small-searchbar col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <%= render 'new_search/search_form' unless @no_searchbar %>
+          </div>
+        </div>
+        <% if @system_broadcast.present? %> 
+          <div id="broadcast" class="">
+            <%= @system_broadcast.html_safe %>
+          </div>
+       <% elsif flash.present? %>
+          <div id="broadcast" class="">
+            <% flash.each do | key, value | %>
+              <%= value %>
+            <% end %>
+          </div>
+       <% end %>
+       <div id="search-summary-row" class="row">
+         <div id="search-summary" class="no-left-padding col-sm-12 col-md-12 col-lg-12">
+           <%= yield :search_result_summary %>
+         </div>
+       </div>
+      </div>
+      <ul id="search-results-tabset" class="nav nav-tabs low">
+        <li role="presentation" class="active"><a id="search-form-tab-container-link" href="#">Search</a></li>
+        <li role="presentation"><a id="search-results-tab-container-link" href="#">Results</a></li>
+      </ul>
+    </div>
+

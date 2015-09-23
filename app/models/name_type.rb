@@ -36,7 +36,7 @@ class NameType < ActiveRecord::Base
   end
 
   def self.options
-    self.all.sort{|x,y| x.name <=> y.name}.collect{|n| [n.name, n.id, class: 'fred']}
+    self.all.sort{|x,y| x.name <=> y.name}.collect{|n| [n.name, n.id, class: '']}
   end
 
   def self.option_ids_for_category(name_category_string)

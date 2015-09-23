@@ -84,10 +84,14 @@ div.navbar-inverse a.navbar-nav.active {
   color: black;
 }
 
-
 div#searchbar {
   background: $navbar-background-color;
   height: 77px;
+  padding-top: 4px;
+}
+
+div#searchbar.new-small-searchbar {
+  height: 37px;
   padding-top: 4px;
 }
 
