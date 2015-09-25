@@ -55,10 +55,12 @@
       <div id="search-result-details" > </div>
     <% end %>
       <div class="row">
-        <div id="advanced-search-container" class="no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 sidebar">
-          <%= render partial: 'new_search/advanced_search_inner' %>
-        </div>
-        <div id="search-result-container" class="no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 sidebar hidden">
+        <% unless @no_advanced_search %>
+          <div id="advanced-search-container" class="no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 sidebar hidden">
+            <%= render partial: 'new_search/advanced_search_inner' %>
+          </div>
+        <% end %>
+        <div id="search-result-container" class="no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 sidebar" >
           <%= yield %>
         </div>
       </div>

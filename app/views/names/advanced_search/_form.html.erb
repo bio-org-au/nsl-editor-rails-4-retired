@@ -1,16 +1,17 @@
 <div id="advanced-search-name-form-container" class="">
-
 <%= form_tag(new_search_path, method: :get, id: "advanced-search-name-form", class: 'form-inline')  do -%>
 
+  <input name="search_target" value="names" type="hidden" >
+  <input name="search_from" value="fields" type="hidden" >
 <table class="table advanced-form-table" border="1" >
   <tr>
     <td class="align-right width-15-percent">
       <label for="list-or-count">List or count</label>
     </td>
     <td>
-      <select id="list-or-count" name="list-or-count" class="form-control">
-        <option value='Count'>Count results</option>
-        <option value='List' selected>List results</option>
+      <select id="list-or-count" name="list_or_count" class="form-control">
+        <option value='count' <%#= 'selected'  unless @search.try('list_or_count').try('match(/list/i)') %> >count records</option>
+        <option value='list' <%= 'selected' if @search.try('list_or_count') == 'list' || @search.blank? %> >list results</option>
     </select>
     </td>
   </tr>
@@ -19,7 +20,7 @@
       <label for="query-on">Name</label>
     </td>
     <td>
-      <input type="text" class="" id="" placeholder="">
+      <input name="name_search_name" value="<%= @search.try('name_search_name') %>" type="text" class="form-control min-width-20em" id="" placeholder="">
     </td>
   </tr>
   <tr>
@@ -27,9 +28,22 @@
       <label for="query-on">Type</label>
     </td>
     <td>
-      <%= select_tag('name_type_id_1', 
-                     options_for_select(NameType.options.unshift(['Any type','']),'Any type'),
+      <%= select_tag('name_search_name_type_id', 
+                                        options_for_select(NameType.options.unshift(['any type','']),@search.try('name_search_name_type_id')||'any type'),
                      title: 'Select one or more name types', 
+                     autocomplete: "off", 
+                     class: "form-control give-me-focus") 
+                   %>
+    </td>
+  </tr>
+  <tr>
+    <td class="align-right">
+      <label for="query-on">Rank</label>
+    </td>
+    <td>
+      <%= select_tag('name_search_name_rank_id', 
+                                        options_for_select(NameRank.options.unshift(['any rank','']),@search.try('name_search_name_rank_id')||'any rank'),
+                     title: 'Select one or more name ranks', 
                      autocomplete: "off", 
                      class: "form-control give-me-focus") 
                    %>
@@ -40,7 +54,7 @@
       <label for="query-on">Author</label>
     </td>
     <td>
-      <input type="text" class="" id="" placeholder="Use standard abbreviations">
+      <input name="name_search_author_abbrev" value="<%= @search.try('name_search_author_abbrev') %>" type="text" class="form-control min-width-20em" id="" placeholder="Use standard abbreviations">
     </td>
   </tr>
   <tr>
@@ -48,7 +62,7 @@
       <label for="query-on">Ex Author</label>
     </td>
     <td>
-      <input type="text" class="" id="" placeholder="Use standard abbreviations">
+      <input name="name_search_ex_author_abbrev" value="<%= @search.try('name_search_ex_author_abbrev') %>" type="text" class="form-control min-width-20em" id="" placeholder="Use standard abbreviations">
     </td>
   </tr>
   <tr>
@@ -56,7 +70,7 @@
       <label for="query-on">Base Author</label>
     </td>
     <td>
-      <input type="text" class="" id="" placeholder="Use standard abbreviations">
+      <input name="name_search_base_author_abbrev" value="<%= @search.try('name_search_base_author_abbrev') %>" type="text" class="form-control min-width-20em" id="" placeholder="Use standard abbreviations">
     </td>
   </tr>
   <tr>
@@ -64,7 +78,15 @@
       <label for="query-on">Ex-Base Author</label>
     </td>
     <td>
-      <input type="text" class="" id="" placeholder="Use standard abbreviations">
+      <input name="name_search_ex_base_author_abbrev" value="<%= @search.try('name_search_ex_base_author_abbrev') %>" type="text" class="form-control min-width-20em" id="" placeholder="Use standard abbreviations">
+    </td>
+  </tr>
+  <tr>
+    <td class="align-right">
+      <label for="query-on">Sanctioning Author</label>
+    </td>
+    <td>
+      <input name="name_search_sanctioning_author_abbrev" value="<%= @search.try('name_search_sanctioning_author_abbrev') %>" type="text" class="form-control min-width-20em" id="" placeholder="Use standard abbreviations">
     </td>
   </tr>
   <tr>
@@ -72,7 +94,7 @@
       <label for="query-on">Comments</label>
     </td>
     <td>
-      <input type="text" class="" id="" placeholder="">
+      <input name="name_search_comments" value="<%= @search.try('name_search_comments') %>" type="text" class="form-control min-width-20em" id="" placeholder="">
     </td>
   </tr>
   <tr>
@@ -80,7 +102,7 @@
       <label for="query-on">Comments By</label>
     </td>
     <td>
-      <input type="text" class="" id="" placeholder="">
+      <input name="name_search_comments_by" value="<%= @search.try('name_search_comments_by') %>" type="text" class="form-control min-width-20em" id="" placeholder="">
     </td>
   </tr>
 </table>
@@ -89,7 +111,25 @@
   <div class="pull-right">
       <%# We don't want button in URL - so use raw html to avoid including a name attribute. %>
       <input type="submit" 
+             id="advanced-search-preview-button"
+             name="preview"
+             value="Preview" 
+             class='btn btn-primary search-button pull-right' 
+             data-no-turbolink="true" 
+             title="Start searching"/>
+  </div>
+
+<br>
+  <div class="search-params-parsed">
+    <%= @search.try('parsed_params') %>
+  </div>
+<br>
+<br>
+  <div class="pull-right">
+      <%# We don't want button in URL - so use raw html to avoid including a name attribute. %>
+      <input type="submit" 
              id="advanced-search-button"
+             name="search"
              value="Search" 
              class='btn btn-primary search-button pull-right' 
              data-no-turbolink="true" 
@@ -97,5 +137,7 @@
   </div>
 
 <% end -%>
-
+  <br>
+  <%#= @search.to_s %>
+  <br>
 </div>

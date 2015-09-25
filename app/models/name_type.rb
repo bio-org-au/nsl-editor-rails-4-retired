@@ -31,12 +31,25 @@ class NameType < ActiveRecord::Base
     end
   end
 
+  def capitalised_name
+    case name
+    when /\bacra\b/
+      name.gsub(/\bacra\b/,'ACRA')
+    when /\bpbr\b/
+      name.gsub(/\bpbr\b/,'PBR')
+    when /\btrade\b/
+      name.gsub(/\btrade\b/,'Trade')
+    else
+      name
+    end
+  end
+
   def self.default
     NameType.where(name: 'scientific').push( NameType.order('name').limit(1).first).first
   end
 
   def self.options
-    self.all.sort{|x,y| x.name <=> y.name}.collect{|n| [n.name, n.id, class: '']}
+    self.all.sort{|x,y| x.name <=> y.name}.collect{|n| [n.capitalised_name, n.id, class: '']}
   end
 
   def self.option_ids_for_category(name_category_string)

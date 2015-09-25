@@ -14,14 +14,30 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #   
-class NewSearchController < ApplicationController
-  before_filter :hide_details
+class Search::Empty
 
-  def search
-    logger.debug("NewSearchController#search.")
-    new_search = Search::Base.new(params)
-    @search = new_search.specific_search
+  attr_reader :params, :query_string
+
+  def initialize(params)
+    Rails.logger.debug("Search::Empty start")
+    Rails.logger.debug("#{'=' * 40}")
+    @params = params
+    @query_string = params[:query_string]
+    params.each do |key,value|
+      Rails.logger.debug("#{key}: #{value}")
+    end
+    Rails.logger.debug("#{'=' * 40}")
+  end
+
+  def specific_search
+    @specific_search
+  end
+
+  def results
+    []
   end
 
 end
+
+
 

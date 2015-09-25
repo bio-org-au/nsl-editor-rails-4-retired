@@ -64,6 +64,7 @@ class SessionsController < ApplicationController
     @sign_in = SignIn.new(sign_in_params)
     @no_searchbar = true
     @no_search_result_details = true
+    @no_advanced_search = true
     @no_navigation = true
   end
 

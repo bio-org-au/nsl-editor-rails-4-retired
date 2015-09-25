@@ -31,9 +31,11 @@
          </div>
        </div>
       </div>
-      <ul id="search-results-tabset" class="nav nav-tabs low">
-        <li role="presentation" class="active"><a id="search-form-tab-container-link" href="#">Search</a></li>
-        <li role="presentation"><a id="search-results-tab-container-link" href="#">Results</a></li>
-      </ul>
+      <% unless @no_advanced_search %>
+        <ul id="search-results-tabset" class="nav nav-tabs low">
+          <li role="presentation" class="active"><a id="search-results-tab-container-link" href="#">Results</a></li>
+          <li role="presentation" class=""><a id="search-form-tab-container-link" href="#">Advanced</a></li>
+        </ul>
+      <% end %>
     </div>
 

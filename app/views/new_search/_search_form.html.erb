@@ -1,15 +1,16 @@
 <%= form_tag(new_search_path, method: :get, id: "search-form", class: 'form-inline')  do -%>
 
 
-  <%= search_field_tag 'query',
+  <input name="search_from" value="string" type="hidden" >
+  <%= search_field_tag 'query_string',
     '',
-    id:"new-search-field",
+    id:"query-string-field",
     tabindex: "8",
     placeholder: "Search terms",
     autofocus: @autofocus_search,
-    class:"col-xs-8 col-sm-6 col-md-5 col-lg-4 no-left-padding xform-control xbanner-query-field",
+    class:"col-xs-12 col-sm-11 col-md-10 col-lg-8 no-left-padding xform-control xbanner-query-field",
     results: 5,
-    value: params[:query],
+    value: "#{@search.query_string}",
     required: true %>
 
 
