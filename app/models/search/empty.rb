@@ -16,21 +16,14 @@
 #   
 class Search::Empty
 
-  attr_reader :params, :query_string
+  attr_reader :params, :query_string, :count
 
   def initialize(params)
     Rails.logger.debug("Search::Empty start")
     Rails.logger.debug("#{'=' * 40}")
     @params = params
-    @query_string = params[:query_string]
-    params.each do |key,value|
-      Rails.logger.debug("#{key}: #{value}")
-    end
-    Rails.logger.debug("#{'=' * 40}")
-  end
-
-  def specific_search
-    @specific_search
+    @query_string = nil
+    @count = false
   end
 
   def results

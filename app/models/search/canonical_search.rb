@@ -16,20 +16,24 @@
 #   
 class Search::CanonicalSearch
 
-  attr_reader :params, :supplied_string, :canonical_string, :tokens, :count, :list
+  attr_reader :params, :supplied_string, :canonical_string, :tokens, :count, :list, :list_limit
+  DEFAULT_LIST_LIMIT = 100
 
   def initialize(params)
-    Rails.logger.debug("Search::CanonicalSearch start")
-    Rails.logger.debug("#{'=' * 40}")
+    #show_debug(params)
     @params = params
     @supplied_string = params['query_string'] || ''
+    parse_string
+  end
+
+  def show_debug(params)
+    Rails.logger.debug("Search::CanonicalSearch start")
+    Rails.logger.debug("#{'=' * 40}")
     params.each do |key,value|
       Rails.logger.debug("#{key}: #{value}")
     end
     Rails.logger.debug("#{'=' * 40}")
-    parse_string
   end
-
 
   def canonical_string
     @params[:query_string]
@@ -39,6 +43,7 @@ class Search::CanonicalSearch
     @tokens = @supplied_string.split(/ /)
     remaining_tokens = @supplied_string.split(/ /)
     remaining_tokens = parse_count_or_list(remaining_tokens)
+    remaining_tokens = parse_list_limit(remaining_tokens)
   end
 
   def parse_count_or_list(tokens)
@@ -54,7 +59,17 @@ class Search::CanonicalSearch
       @list = true
       @count = !@list
     end
-    puts tokens.join(' ')
+    #puts tokens.join(' ')
+    tokens
+  end
+
+  def parse_list_limit(tokens)
+    if tokens.first.match(/\d+/)
+      @list_limit = tokens.first.to_i
+      tokens = tokens.drop(1)
+    else 
+      @list_limit = DEFAULT_LIST_LIMIT
+    end
     tokens
   end
 

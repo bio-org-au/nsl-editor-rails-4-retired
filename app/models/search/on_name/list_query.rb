@@ -14,13 +14,24 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #   
-class NewSearchController < ApplicationController
-  before_filter :hide_details
+class Search::OnName::ListQuery
 
-  def search
-    @search = params[:query_string].present? ? Search::Base.new(params) : Search::Empty.new(params) 
-    #render text: 'search'
+  def initialize(parsed_query)
+    @parsed_query = parsed_query
+  end
+
+  def sql
+    Rails.logger.debug("Search::OnName::ListQuery#sql")
+    sql = Name.includes(:name_status).includes(:name_tags) 
+    sql = Search::OnName::WhereClauses.new(@parsed_query,sql).sql
+    puts "Generated sql: #{sql.to_sql}"
+    sql = sql.order('full_name')
+    sql = sql.not_common_or_cultivar unless @parsed_query.common_and_cultivar
+    sql = sql.limit(@parsed_query.limit) 
+    sql
   end
 
 end
+
+
 

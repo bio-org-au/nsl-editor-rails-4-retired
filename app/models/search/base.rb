@@ -16,13 +16,49 @@
 #   
 class Search::Base
 
+  attr_reader :params, :query_string, :limit, :target_table, :common_and_cultivar, :order, :canonical_query_string, :where_arguments, :results, :count
+
   def initialize(params)
     Rails.logger.debug("Search::Base start")
-    search_from_string(params) if params['search_from'] == 'string'
-    search_from_fields(params) if params['search_from'] == 'fields'
-    empty_search(params) unless params['search_from'].present? && params['search_from'].match(/string|fields/) 
+    @params = params
+    parse_query
+    run_query
   end
 
+  def parse_query
+    @query_string = @params[:query_string]
+    @parsed_query = Search::ParsedQuery.new(@params)
+    @count = @parsed_query.count
+    @list = @parsed_query.list
+    @limit = @parsed_query.limit
+    @target_table = @parsed_query.target_table
+    @common_and_cultivar = @parsed_query.common_and_cultivar
+    @order = @parsed_query.order
+    @where_arguments = @parsed_query.where_arguments
+    @canonical_query_string = @parsed_query.canonical_query_string
+  end
+  
+  def run_query
+    case @target_table
+    when /any/
+      raise 'no such search'
+    when /author/
+      raise 'no such search'
+      'author'
+    when /instance/
+      raise 'no such search'
+      'instance'
+    when /reference/
+      raise 'no such search'
+      'reference'
+    else
+      Rails.logger.debug("\nSearching on names\n")
+      Rails.logger.debug(Name.class)
+      @results = Search::OnName::Base.new(@parsed_query).results
+    end
+  end
+
+  ########################################################################################
   def search_from_string(params)
     Rails.logger.debug("Search::Base -> search_from_string")
     @specific_search = Search::FromString.new(params)

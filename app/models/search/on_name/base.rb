@@ -14,13 +14,26 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #   
-class NewSearchController < ApplicationController
-  before_filter :hide_details
+class Search::OnName::Base
 
-  def search
-    @search = params[:query_string].present? ? Search::Base.new(params) : Search::Empty.new(params) 
-    #render text: 'search'
+  attr_reader :results
+
+  def initialize(parsed_query)
+    @results = run_query(parsed_query)
+  end
+
+  def run_query(parsed_query)
+    Rails.logger.debug('run_query')
+    if parsed_query.count
+      sql = Search::OnName::CountQuery.new(parsed_query).sql
+      sql.count
+    else
+      sql = Search::OnName::ListQuery.new(parsed_query).sql
+      sql.all
+    end
   end
 
 end
+
+
 

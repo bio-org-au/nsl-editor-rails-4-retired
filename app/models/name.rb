@@ -34,6 +34,7 @@ class Name < ActiveRecord::Base
   scope :full_name_like, ->(string) { where("lower(f_unaccent(full_name)) like f_unaccent(?) ",string.gsub(/\*/,'%').downcase+'%') }
   scope :lower_full_name_equals, ->(string) { where("lower(f_unaccent(full_name)) = f_unaccent(?) ",string.downcase) }
   scope :lower_full_name_like, ->(string) { where("lower(f_unaccent(full_name)) like f_unaccent(?) ",string.gsub(/\*/,'%').downcase) }
+  scope :lower_rank_like, ->(string) { where("name_rank_id in (select id from name_rank where lower(name) like ?)",string.gsub(/\*/,'%').downcase) }
   scope :order_by_full_name, ->{ order('lower(full_name)')}
   scope :select_fields_for_typeahead, ->{select(" name.id, name.full_name, name_rank.name name_rank_name, name_status.name name_status_name")}
   scope :select_fields_for_parent_typeahead, ->{select(" name.id, name.full_name, name_rank.name name_rank_name, name_status.name name_status_name, count(instance.id) instance_count")}
