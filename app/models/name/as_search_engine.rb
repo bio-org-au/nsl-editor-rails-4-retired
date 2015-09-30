@@ -119,13 +119,13 @@ class Name::AsSearchEngine < Name
             where += " and exists (select null from comment where comment.name_id = name.id and comment.text like ?) and not exists (select null from instance where name_id = name.id)"
             binds.push(prepare_search_term_string(pairing[1]))
           when 'with-author'
-            where += " and exists (select null from author where name.author_id = author.id and lower(author.name) like ? )"
+            where += " and exists (select null from author where name.author_id = author.id and lower(author.abbrev) like ? )"
             binds.push(prepare_search_term_string(pairing[1]))
           when 'na'
-            where += " and exists (select null from author where name.author_id = author.id and lower(author.name) like ? )"
+            where += " and exists (select null from author where name.author_id = author.id and lower(author.abbrev) like ? )"
             binds.push(prepare_search_term_string(pairing[1]))
           when 'a'
-            where += " and exists (select null from author where name.author_id = author.id and lower(author.name) like ? )"
+            where += " and exists (select null from author where name.author_id = author.id and lower(author.abbrev) like ? )"
             binds.push(prepare_search_term_string(pairing[1]))
           when 'a-id'
             where += " and author_id = ? "
@@ -152,13 +152,13 @@ class Name::AsSearchEngine < Name
             where += " and duplicate_of_id = ? "
             binds.push(pairing[1].to_i)
           when 'ba'
-            where += " and exists (select null from author where name.base_author_id = author.id and lower(author.name) like ? )"
+            where += " and exists (select null from author where name.base_author_id = author.id and lower(author.abbrev) like ? )"
             binds.push(prepare_search_term_string(pairing[1]))
           when 'ea'
-            where += " and exists (select null from author where name.ex_author_id = author.id and lower(author.name) like ? )"
+            where += " and exists (select null from author where name.ex_author_id = author.id and lower(author.abbrev) like ? )"
             binds.push(prepare_search_term_string(pairing[1]))
           when 'eba'
-            where += " and exists (select null from author where name.ex_base_author_id = author.id and lower(author.name) like ? )"
+            where += " and exists (select null from author where name.ex_base_author_id = author.id and lower(author.abbrev) like ? )"
             binds.push(prepare_search_term_string(pairing[1]))
           when 'n'
             where += " and lower(full_name) like ? "
@@ -185,7 +185,7 @@ class Name::AsSearchEngine < Name
             where += " and name_status_id in (select id from name_status ns where lower(ns.name) like ?) "
             binds.push(pairing[1].downcase)
           when 'sa'
-            where += " and exists (select null from author where name.sanctioning_author_id = author.id and lower(author.name) like ? )"
+            where += " and exists (select null from author where name.sanctioning_author_id = author.id and lower(author.abbrev) like ? )"
             binds.push(prepare_search_term_string(pairing[1]))
           when 'with-tag'
             where += " and exists (select null from name_tag_name where name.id = name_tag_name.name_id and exists (select null from name_tag where lower(name_tag.name) like ? and name_tag_name.tag_id = name_tag.id))"
