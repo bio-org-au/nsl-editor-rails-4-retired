@@ -145,7 +145,7 @@ Rails.application.routes.draw do
   match 'help/typeaheads', to: "help#typeaheads", as: 'typeaheads', via: :get
   resources :instance_types, only: [:index]
 
-  root to: "search#index"
-  match '/*random', to: "search#index", via: [:get,:post,:delete,:patch]
+  root to: "new_search#search"
+  match '/*random', to: "new_search#search", via: [:get,:post,:delete,:patch]
   
 end

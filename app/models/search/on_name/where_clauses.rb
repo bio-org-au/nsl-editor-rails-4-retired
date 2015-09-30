@@ -67,16 +67,37 @@ class Search::OnName::WhereClauses
       when /\Aname-rank:\z/
         @sql = @sql.where("name_rank_id in (select id from name_rank where lower(name) in (?))",value.split(',').collect {|v| v.strip})
       end
+    elsif field.match(/\Acomments-by:\z/)
+        @sql = @sql.where("exists (select null from comment where comment.name_id = name.id and (lower(comment.created_by) like ? or lower(comment.updated_by) like ?))",
+                          value,value)
+    elsif WHERE_INTEGER_VALUE_HASH.has_key?(field)
+      @sql = @sql.where(WHERE_INTEGER_VALUE_HASH[field],value.to_i)
     else
+      raise 'No such field.' unless WHERE_VALUE_HASH.has_key?(field)
       @sql = @sql.where(WHERE_VALUE_HASH[field],value)
     end
   end
 
+  WHERE_INTEGER_VALUE_HASH = { 
+    'author-id:' => "author_id = ? ",
+    'base-author-id:' => "base_author_id = ? ",
+    'ex-base-author-id:' => "ex_base_author_id = ? ",
+    'ex-author-id:' => "ex_author_id = ? "
+  }
+
   WHERE_VALUE_HASH = { 
     'name-rank:' => "name_rank_id in (select id from name_rank where lower(name) like ?)",
     'below-name-rank:' => "name_rank_id in (select id from name_rank where sort_order > (select sort_order from name_rank the_nr where lower(the_nr.name) like ?))",
-    'above-name-rank:' => "name_rank_id in (select id from name_rank where sort_order < (select sort_order from name_rank the_nr where lower(the_nr.name) like ?))"
+    'above-name-rank:' => "name_rank_id in (select id from name_rank where sort_order < (select sort_order from name_rank the_nr where lower(the_nr.name) like ?))",
+    'author-abbrev:' => "author_id in (select id from author where lower(abbrev) like ?)",
+    'ex-author-abbrev:' => "ex_author_id in (select id from author where lower(abbrev) like ?)",
+    'base-author-abbrev:' => "base_author_id in (select id from author where lower(abbrev) like ?)",
+    'ex-base-author-abbrev:' => "ex_base_author_id in (select id from author where lower(abbrev) like ?)",
+    'comments:' => " exists (select null from comment where comment.name_id = name.id and comment.text like ?) ",
+    'comments-but-no-instances:' => 
+      "exists (select null from comment where comment.name_id = name.id and comment.text like ?) and not exists (select null from instance where name_id = name.id)"
   }
+
 end
 
 
