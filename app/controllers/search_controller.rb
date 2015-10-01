@@ -16,7 +16,7 @@
 #   
 class SearchController < ApplicationController
 
-  def index
+  def xindex
     logger.debug("SearchController#index.")
     logger.debug(params.class)
     @no_search_result_details = true
@@ -28,6 +28,15 @@ class SearchController < ApplicationController
     else # assume anything else is a search
       @search_results = []
       search
+    end
+  end
+
+  def index
+    if params[:query].blank?
+      @search = Search::Empty.new(params) 
+    else
+      params[:query_string] = "#{params[:query_on]} #{params[:query]}"
+      @search = Search::Base.new(params)
     end
   end
 

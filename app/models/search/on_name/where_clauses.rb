@@ -16,48 +16,28 @@
 #   
 class Search::OnName::WhereClauses
 
-  def initialize(parsed_query, sql)
+  attr_reader  :sql
+
+  def initialize(parsed_query, incoming_sql)
     @parsed_query = parsed_query
-    @sql = sql
+    @sql = incoming_sql
+    build_sql
   end
 
-  def sql
+  def build_sql
     Rails.logger.debug("Search::OnName::WhereClause.sql")
     remaining_string = @parsed_query.where_arguments.downcase 
     x = 0 
     until remaining_string.blank?
-      Rails.logger.debug("loop")
       field,value,remaining_string = Search::OnName::NextCriterion.new(remaining_string).get 
-      puts("field: #{field}; value: #{value}; remaining_string: #{remaining_string}")
+      Rails.logger.info("field: #{field}; value: #{value}")
       add_clause(field,value)
       x += 1
       raise "endless loop #{x}" if x > 10
     end
-    @sql
   end
 
-  def xadd_clause(field,value)
-    if field.blank? && value.blank?
-      @sql
-    elsif field.blank?
-      @sql = @sql.lower_full_name_like(value.downcase)
-    else
-      case field
-      when /\Aname-rank:\z/
-        if value.split(/,/).size == 1
-          @sql = @sql.where("name_rank_id in (select id from name_rank where lower(name) like ?)",value)
-        else
-          @sql = @sql.where("name_rank_id in (select id from name_rank where lower(name) in (?))",value.split(',').collect {|v| v.strip})
-        end
-      when /\Abelow-name-rank:\z/
-        @sql = @sql.where("name_rank_id in (select id from name_rank where sort_order > (select sort_order from name_rank the_nr where lower(the_nr.name) like ?))",value)
-      when /\Aabove-name-rank:\z/
-        @sql = @sql.where("name_rank_id in (select id from name_rank where sort_order < (select sort_order from name_rank the_nr where lower(the_nr.name) like ?))",value)
-      end
-    end
-  end
-
-  def add_clause(field,value)
+  def xxadd_clause(field,value)
     if field.blank? && value.blank?
       @sql
     elsif field.blank?
@@ -66,6 +46,8 @@ class Search::OnName::WhereClauses
       case field
       when /\Aname-rank:\z/
         @sql = @sql.where("name_rank_id in (select id from name_rank where lower(name) in (?))",value.split(',').collect {|v| v.strip})
+      else
+        raise "This field does not handle multiple values separated by commas." 
       end
     elsif field.match(/\Acomments-by:\z/)
         @sql = @sql.where("exists (select null from comment where comment.name_id = name.id and (lower(comment.created_by) like ? or lower(comment.updated_by) like ?))",
@@ -78,25 +60,111 @@ class Search::OnName::WhereClauses
     end
   end
 
+  def add_clause(field,value)
+    if field.blank? && value.blank?
+      @sql
+    elsif field.blank?
+      @sql = @sql.lower_full_name_like(value.downcase)
+    else 
+      # we have a field
+      canonical_field = canon(field)
+      @common_and_cultivar_included = AUTO_INCLUDE_COMMON_AND_CULTIVAR_FIELDS.has_key?(canonical_field)
+      if ALLOWS_MULTIPLE_VALUES.has_key?(canonical_field) && value.split(/,/).size > 1
+        case canonical_field
+        when /\Aname-rank:\z/
+          @sql = @sql.where("name_rank_id in (select id from name_rank where lower(name) in (?))",value.split(',').collect {|v| v.strip})
+        else
+          raise "The field '#{field}' currently cannot handle multiple values separated by commas." 
+        end
+      elsif canonical_field.match(/\Acomments-by:\z/)
+        @sql = @sql.where("exists (select null from comment where comment.name_id = name.id and (lower(comment.created_by) like ? or lower(comment.updated_by) like ?))",
+                          value,value)
+      elsif WHERE_INTEGER_VALUE_HASH.has_key?(canonical_field)
+        @sql = @sql.where(WHERE_INTEGER_VALUE_HASH[canonical_field],value.to_i)
+      else
+        raise 'No way to handle field.' unless WHERE_VALUE_HASH.has_key?(canonical_field)
+        @sql = @sql.where(WHERE_VALUE_HASH[canonical_field],value)
+      end
+    end
+  end
+
+  def canon(field)
+    if WHERE_INTEGER_VALUE_HASH.has_key?(field)
+      field
+    elsif WHERE_VALUE_HASH.has_key?(field)
+      field
+    elsif CANONICAL_FIELD_NAMES.has_value?(field)
+      field
+    elsif CANONICAL_FIELD_NAMES.has_key?(field)
+      CANONICAL_FIELD_NAMES[field]
+    else
+      raise "No such field: #{field}." unless CANONICAL_FIELD_NAMES.has_key?(field)
+    end
+  end
+
+  def xadd_clause(field,value)
+    case
+      when field.blank? && value.blank?
+        @sql
+      when field.blank?
+        @sql = @sql.lower_full_name_like(value.downcase)
+      when value.split(/,/).size > 1
+        case field
+        when /\Aname-rank:\z/
+          @sql = @sql.where("name_rank_id in (select id from name_rank where lower(name) in (?))",value.split(',').collect {|v| v.strip})
+        end
+      when field.match(/\Acomments-by:\z/)
+        @sql = @sql.where("exists (select null from comment where comment.name_id = name.id and (lower(comment.created_by) like ? or lower(comment.updated_by) like ?))",
+                          value,value) when WHERE_INTEGER_VALUE_HASH.has_key?(field)
+        @sql = @sql.where(WHERE_INTEGER_VALUE_HASH[field],value.to_i)
+      when WHERE_VALUE_HASH.has_key?(field)
+        @sql = @sql.where(WHERE_VALUE_HASH[field],value)
+      else
+        raise 'No such field.' unless WHERE_VALUE_HASH.has_key?(field)
+    end
+  end
+
+  def common_and_cultivar_included?
+    @common_and_cultivar_included
+  end
+
   WHERE_INTEGER_VALUE_HASH = { 
     'author-id:' => "author_id = ? ",
     'base-author-id:' => "base_author_id = ? ",
     'ex-base-author-id:' => "ex_base_author_id = ? ",
-    'ex-author-id:' => "ex_author_id = ? "
+    'ex-author-id:' => "ex_author_id = ? ",
+    'sanctioning-author-id:' => "sanctioning_author_id = ? "
   }
 
   WHERE_VALUE_HASH = { 
     'name-rank:' => "name_rank_id in (select id from name_rank where lower(name) like ?)",
+    'name-type:' => "name_type_id in (select id from name_type where lower(name) like ?)",
     'below-name-rank:' => "name_rank_id in (select id from name_rank where sort_order > (select sort_order from name_rank the_nr where lower(the_nr.name) like ?))",
     'above-name-rank:' => "name_rank_id in (select id from name_rank where sort_order < (select sort_order from name_rank the_nr where lower(the_nr.name) like ?))",
     'author-abbrev:' => "author_id in (select id from author where lower(abbrev) like ?)",
     'ex-author-abbrev:' => "ex_author_id in (select id from author where lower(abbrev) like ?)",
     'base-author-abbrev:' => "base_author_id in (select id from author where lower(abbrev) like ?)",
     'ex-base-author-abbrev:' => "ex_base_author_id in (select id from author where lower(abbrev) like ?)",
+    'sanctioning-author-abbrev:' => "sanctioning_author_id in (select id from author where lower(abbrev) like ?)",
     'comments:' => " exists (select null from comment where comment.name_id = name.id and comment.text like ?) ",
+    'comments-by:' => " exists (select null from comment where comment.name_id = name.id and comment.text like ?) ",
     'comments-but-no-instances:' => 
       "exists (select null from comment where comment.name_id = name.id and comment.text like ?) and not exists (select null from instance where name_id = name.id)"
   }
+
+  CANONICAL_FIELD_NAMES = {
+    'nr:' => 'name-rank:',
+    'nt:' => 'name-type:'
+  }
+
+  AUTO_INCLUDE_COMMON_AND_CULTIVAR_FIELDS = {
+    'name-type:' => true 
+  }
+
+  ALLOWS_MULTIPLE_VALUES = {
+    'name-rank:' => true,
+  }
+
 
 end
 

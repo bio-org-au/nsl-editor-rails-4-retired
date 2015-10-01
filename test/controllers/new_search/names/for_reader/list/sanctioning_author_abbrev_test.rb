@@ -16,25 +16,12 @@
 #   
 require 'test_helper'
 
-class ReferencesControllerTest < ActionController::TestCase
-  setup do
-    @reference = references(:cavanilles_icones)
-  end
-
-  test "should route to reference typeahead suggestions by citation" do
-    assert_routing '/references/typeahead/on_citation', { controller: "references", action: "typeahead_on_citation"}
-  end
-
-  #test "should route to show a reference" do
-    #assert_routing '/references/1', { controller: "references", action: "show", id: "1", tab: "tab_show_1"}
-  #end
-
-  test "should show reference" do
-    @request.headers["Accept"] = "application/javascript"
-    get(:show,{id: @reference,tab: 'tab_show_1'},{username: 'fred', user_full_name: 'Fred Jones', groups: [:edit]})
+class ReaderNewSearchControllerNamesSanctioningAuthorAbbrevListTest < ActionController::TestCase
+  tests NewSearchController
+  
+  test "reader can search for a name by sanctioning author abbrev" do
+    get(:search,{search_from: 'string', query_string: 'sanctioning-author-abbrev: species'},{username: 'fred', user_full_name: 'Fred Jones', groups: []})
     assert_response :success
   end
 
 end
-
-

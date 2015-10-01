@@ -16,7 +16,8 @@
 #   
 class Search::Base
 
-  attr_reader :params, :query_string, :limit, :target_table, :common_and_cultivar, :order, :canonical_query_string, :where_arguments, :results, :count
+  attr_reader :params, :query_string, :limit, :target_table, :common_and_cultivar, :order, :canonical_query_string, :where_arguments, :results, :count, 
+    :limited, :info_for_display, :rejected_pairings, :common_and_cultivar_included
 
   def initialize(params)
     Rails.logger.debug("Search::Base start")
@@ -54,7 +55,12 @@ class Search::Base
     else
       Rails.logger.debug("\nSearching on names\n")
       Rails.logger.debug(Name.class)
-      @results = Search::OnName::Base.new(@parsed_query).results
+      run = Search::OnName::Base.new(@parsed_query)
+      @results = run.results
+      @limited = run.limited
+      @info_for_display = run.info_for_display
+      @rejected_pairings = run.rejected_pairings
+      @common_and_cultivar_included = run.common_and_cultivar_included
     end
   end
 

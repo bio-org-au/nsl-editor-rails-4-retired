@@ -19,7 +19,7 @@ require 'test_helper'
 class InstanceEditRouteTest < ActionController::TestCase
   tests InstancesController
   test "edit request should route to the catch-all" do
-    assert_routing '/instances/edit/1', { controller: "search", action: "index", random: "instances/edit/1"}
+    assert_routing '/instances/edit/1', { controller: "new_search", action: "search", random: "instances/edit/1"}
   end
 end
 

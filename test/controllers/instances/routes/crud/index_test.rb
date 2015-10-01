@@ -19,7 +19,7 @@ require 'test_helper'
 class InstanceIndexRouteTest < ActionController::TestCase
   tests InstancesController
   test "index should route to catch all" do
-    assert_routing '/instances', { controller: "search", action: "index", random: "instances"}
+    assert_routing '/instances', { controller: "new_search", action: "search", random: "instances"}
   end
 end
 

@@ -20,6 +20,7 @@ class NameSearchForNameTypeCommonSetsCommonAndCultivarFlagToTrueTest < ActionCon
   tests SearchController
   
   test "editor search for name type common should set command and cultivar flag true" do
+    skip
     common = names(:argyle_apple)
     # Set the common-and-cultivar flag to false.
     get(:index,{'query_on'=>'name','query'=>'nt:common','query_common_and_cultivar'=>'f','query_limit'=>'100'},{username: 'fred', user_full_name: 'Fred Jones', groups: ['edit']})

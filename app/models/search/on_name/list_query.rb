@@ -16,19 +16,31 @@
 #   
 class Search::OnName::ListQuery
 
+  attr_reader :sql, :limited, :info_for_display, :common_and_cultivar_included
+
   def initialize(parsed_query)
     @parsed_query = parsed_query
+    prepare_query
+    @limited = true
+    @info_for_display = "nothing yet from list query"
   end
 
-  def sql
-    Rails.logger.debug("Search::OnName::ListQuery#sql")
-    sql = Name.includes(:name_status).includes(:name_tags) 
-    sql = Search::OnName::WhereClauses.new(@parsed_query,sql).sql
-    puts "Generated sql: #{sql.to_sql}"
-    sql = sql.order('full_name')
-    sql = sql.not_common_or_cultivar unless @parsed_query.common_and_cultivar
-    sql = sql.limit(@parsed_query.limit) 
-    sql
+  def prepare_query
+    Rails.logger.debug("Search::OnName::ListQuery#prepare_query")
+    prepared_query = Name.includes(:name_status).includes(:name_tags) 
+    where_clauses = Search::OnName::WhereClauses.new(@parsed_query,prepared_query)
+    prepared_query = where_clauses.sql
+    if @parsed_query.common_and_cultivar || where_clauses.common_and_cultivar_included?
+      Rails.logger.debug("Search::OnName::ListQuery#prepare_query yes, we need common, cultivars")
+      @common_and_cultivar_included = true
+    else
+      Rails.logger.debug("Search::OnName::ListQuery#prepare_query no, we will not look for common, cultivars")
+      prepared_query = prepared_query.not_common_or_cultivar unless @parsed_query.common_and_cultivar
+      @common_and_cultivar_included = false
+    end
+    prepared_query = prepared_query.limit(@parsed_query.limit) 
+    prepared_query = prepared_query.order('full_name')
+    @sql = prepared_query
   end
 
 end

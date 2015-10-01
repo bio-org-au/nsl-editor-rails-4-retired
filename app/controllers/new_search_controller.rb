@@ -19,7 +19,6 @@ class NewSearchController < ApplicationController
 
   def search
     @search = params[:query_string].present? ? Search::Base.new(params) : Search::Empty.new(params) 
-    #render text: 'search'
   end
 
 end

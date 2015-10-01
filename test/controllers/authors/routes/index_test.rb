@@ -19,7 +19,7 @@ require 'test_helper'
 class AuthorsRouteIndexTest < ActionController::TestCase
   tests AuthorsController
   test "authors index should route to the catch all" do
-    assert_routing '/authors', { controller: "search", action: "index", random: "authors"}
+    assert_routing '/authors', { controller: "new_search", action: "search", random: "authors"}
   end
 end
 

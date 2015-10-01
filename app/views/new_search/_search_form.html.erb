@@ -10,8 +10,7 @@
     autofocus: @autofocus_search,
     class:"col-xs-12 col-sm-11 col-md-10 col-lg-8 no-left-padding xform-control xbanner-query-field",
     results: 5,
-    value: "#{@search.query_string}",
+    value: "#{@search.query_string if @search.present?}",
     required: true %>
-
 
 <% end %>

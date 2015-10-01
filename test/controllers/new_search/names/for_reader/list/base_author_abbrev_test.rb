@@ -19,7 +19,7 @@ require 'test_helper'
 class ReaderNewSearchControllerNamesBaseAuthorAbbrevListTest < ActionController::TestCase
   tests NewSearchController
   
-  test "reader can search for a name by base-author abbrev" do
+  test "reader can search for a name by base author abbrev" do
     get(:search,{search_from: 'string', query_string: 'base-author-abbrev: species'},{username: 'fred', user_full_name: 'Fred Jones', groups: []})
     assert_response :success
   end

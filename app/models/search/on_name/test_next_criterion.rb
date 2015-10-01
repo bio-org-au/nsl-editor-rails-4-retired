@@ -26,6 +26,7 @@ class Search::OnName::TestNextCriterion
     test_simple_search
     test_simple_search_with_criterion_following
     test_field_with_value
+    test_field_with_value_no_space_between
     summary
   end
 
@@ -62,6 +63,17 @@ class Search::OnName::TestNextCriterion
     input_field = "name-rank:"
     input_value = "genus"
     input_field_with_value = "#{input_field} #{input_value}"
+    nc = next_criterion(input_field_with_value)
+    field,value,remaining = nc.get
+    assert('Field with value search - field', !!field.match(/#{input_field}/), "Field should be #{input_field} not #{field}")
+    assert('Field with value search - value', !!value.match(/#{input_value}/),"Value should match #{input_value} but is #{value}")
+    assert('Field with value search - remainder', remaining.blank?,"Should be blank but is #{remaining}")
+  end
+
+  def test_field_with_value_no_space_between
+    input_field = "name-rank:"
+    input_value = "genus"
+    input_field_with_value = "#{input_field}#{input_value}"
     nc = next_criterion(input_field_with_value)
     field,value,remaining = nc.get
     assert('Field with value search - field', !!field.match(/#{input_field}/), "Field should be #{input_field} not #{field}")

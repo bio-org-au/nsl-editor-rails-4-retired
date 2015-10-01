@@ -21,7 +21,8 @@ class Search::OnName::NextCriterion
   end
 
   def get
-    @tokens = @criteria_string.split(/ /)
+    string = @criteria_string.sub(/:/,': ').sub(/:  /,': ')
+    @tokens = string.split(/ /)
     if first_is_a_field
       get_field
       get_value
