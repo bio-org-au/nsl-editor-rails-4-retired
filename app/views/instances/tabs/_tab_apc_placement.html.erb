@@ -1,11 +1,13 @@
 <div id="apc-tree-placement" ng-controller='apcTabController' data-instance-id="<%= @instance.id %>">
     <div ng-if="loading"><i class="fa fa-spinner fa-spin fa-fw"/>&nbsp;Loading &hellip;</div>
     <div ng-if="error" class="alert alert-warning" role="alert">
-        <button type="button" class="close" data-dismiss="alert"><i class="fa fa-close" aria-hidden="true"></i><span class="sr-only">Close</span></button>
+        <button type="button" class="close" data-dismiss="alert">
+            <i class="fa fa-close" aria-hidden="true"></i><span class="sr-only">Close</span></button>
         {{error}}
     </div>
     <div ng-if="serviceException" class="alert alert-warning alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert"><i class="fa fa-close" aria-hidden="true"></i><span class="sr-only">Close</span></button>
+        <button type="button" class="close" data-dismiss="alert">
+            <i class="fa fa-close" aria-hidden="true"></i><span class="sr-only">Close</span></button>
         {{serviceException.message["dcterms:title"]}}
         <div ng-repeat='m in serviceException.message.nested' style="margin-left: 1em; ">
             {{m["dcterms:title"]}}
@@ -72,51 +74,53 @@
         <div>&nbsp;</div>
 
         <accordion>
-            <accordion-group ng-if="!data.params.instance.citedBy" >
+            <accordion-group ng-if="!data.params.instance.citedBy">
                 <accordion-heading>
                     {{data.isPlaced?'Update APC for this instance':'Use this instance in APC'}}
                     <i class="pull-right fa fa-edit"></i>
                 </accordion-heading>
 
                 <div class="well">
-                    <div>
-                        <b>APC Status</b>
+                    <div class="form-group">
+                        <label>APC Status</label>
+
                         <form>
-                        <input type="radio"
-                               ng-model="placeParams.apcStatus"
-                               value="ApcConcept"
-                        >
+                            <input type="radio"
+                                   ng-model="placeParams.apcStatus"
+                                   value="ApcConcept"
+                                   title="Apc Concept">
                             <span ng_click="placeParams.apcStatus='ApcConcept'" style="cursor:default; ">Accepted</span>
-                        </input>
                             &nbsp;
-                        <input type="radio"
-                               ng-model="placeParams.apcStatus"
-                               value="ApcExcluded"
-                        >
+                            <input type="radio"
+                                   ng-model="placeParams.apcStatus"
+                                   value="ApcExcluded"
+                                   title="Apc Excluded">
                             <span ng_click="placeParams.apcStatus='ApcExcluded'" style="cursor:default; ">Excluded name</span>
 
-                        </input>
                             &nbsp;
-                        <input type="radio"
-                               ng-model="placeParams.apcStatus"
-                               value="DeclaredBt"
-                        >
+                            <input type="radio"
+                                   ng-model="placeParams.apcStatus"
+                                   value="DeclaredBt"
+                                   title="Declared Bt">
                             <span ng_click="placeParams.apcStatus='DeclaredBt'" style="cursor:default; ">Non-APC Parent</span>
 
-                        </input>
                         </form>
                     </div>
 
-                    <div>
-                        <b>APC Parent</b>
+                    <div class="form-group">
                         <span ng-show="loadingSuperNames"><i class="fa fa-spinner fa-spin fa-fw" class="pull-right"/></span>
+
+                        <label>APC Parent</label>
+
+                        show all ranks above:&nbsp;<input type="checkbox" ng-model="placeParams.allRanksAbove">
                         <input type="text"
                                ng-model="placeParams.superName"
                                typeahead="n as n.fullName for n in getApcName($viewValue) | filter:$viewValue"
                                typeahead-loading="loadingSuperNames"
                                typeahead-editable="false"
-                               class="form-control">
-
+                               class="form-control"
+                               title="APC Parent"
+                        >
                     </div>
                 </div>
                 <div>
@@ -144,7 +148,9 @@
                         <span ng-bind-html="data.params.instance.citationHtml |  trustAsHtml"/>
                     </div>
 
-                    <button class="btn-primary pull-right" ng-click="placeInApc()">{{data.isPlaced?'Update APC placement':'Place in APC'}}</button>
+                    <button class="btn-primary pull-right" ng-click="placeInApc()">{{data.isPlaced?'Update APC
+                        placement':'Place in APC'}}
+                    </button>
                 </div>
             </accordion-group>
 
@@ -170,9 +176,10 @@
                     <div ng-if="!removeParams.replacementName">
                         Remove without replacement.
                     </div>
- %>
+%>
 
-                    <span ng-bind-html="data.params.name.fullNameHtml |  trustAsHtml"/> will be removed from the current APC tree.
+                    <span ng-bind-html="data.params.name.fullNameHtml |  trustAsHtml"/> will be removed from the current
+                    APC tree.
 
                 </div>
 
