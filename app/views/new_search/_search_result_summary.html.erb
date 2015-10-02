@@ -1,22 +1,27 @@
-<% unless @search.blank? %>
-
+<% unless @search.empty %>
   <% if @search.count %> 
-    <%= "#{pluralize(@search.results,'name')} found.  " %>
+    <%= "Count: #{pluralize(@search.results,'name')}.  " %>
   <% else %>
     <% if @search.results.size == 0 %>
-      No records found.
+      No records found. Consider a trailing wildcard (*). 
     <% else %>
-      <%= "#{pluralize(@search.results.size,'record')} found." %>
+      <%= "#{pluralize(@search.results.size,'names')} shown." %>
     <% end %>
   <% end %>
-    <% if @search.target_table.match(/name/i) && @search.common_and_cultivar_included %>
-      <span id="includes-common-cultivar-notice">Includes common and cultivar names.</span>
-    <% else %>
-      <span id="excludes-common-cultivar-notice">Excludes common and cultivar names.</span>
-    <% end %>
-    <% if !@search.count && @search.results.size == @search.limit %>
-      <span id="search-results-limited-notice">
-        <%= "Results limited to #{@search.limit} records." %>
+  <% if @search.target_table.match(/name/i) && @search.common_and_cultivar_included %>
+    <span id="includes-common-cultivar-notice">Allows common and cultivar.</span>
+  <% else %>
+    <span id="excludes-common-cultivar-notice">Excludes common and cultivar.</span>
+  <% end %>
+  <% if !@search.count && @search.results.size == @search.limit %>
+    <span id="search-results-limited-notice">
+      <%= "Limited." %>
+    </span>
+  <% else %>
+    <% unless @search.results.size == 0 || @search.count %>
+      <span id="search-results-all-matching-notice">
+        <%= "All matching." %>
       </span>
     <% end %>
   <% end %>
+<% end %>

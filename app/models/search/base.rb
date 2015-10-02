@@ -16,12 +16,26 @@
 #   
 class Search::Base
 
-  attr_reader :params, :query_string, :limit, :target_table, :common_and_cultivar, :order, :canonical_query_string, :where_arguments, :results, :count, 
-    :limited, :info_for_display, :rejected_pairings, :common_and_cultivar_included
+  attr_reader :canonical_query_string, 
+              :common_and_cultivar, 
+              :common_and_cultivar_included,
+              :count, 
+              :empty, 
+              :info_for_display, 
+              :limit, 
+              :limited, 
+              :order, 
+              :params, 
+              :query_string, 
+              :rejected_pairings, 
+              :results, 
+              :target_table, 
+              :where_arguments 
 
   def initialize(params)
     Rails.logger.debug("Search::Base start")
     @params = params
+    @empty = false
     parse_query
     run_query
   end

@@ -36,7 +36,7 @@ $('input[type=search]')
       $('#advanced-search').addClass('hidden');
     });
 
-    $('ul#search-results-tabset li a#search-form-tab-container-link').on('click',function(e) {
+    $('ul#search-results-tabset li a#advanced-search-tab-container-link').on('click',function(e) {
       $('ul#search-results-tabset li').removeClass('active');
       $(this).parent('li').addClass('active');
       $('#advanced-search-container').removeClass('hidden');
@@ -57,6 +57,87 @@ $('input[type=search]')
       $('ul#advanced-search-tabset li').removeClass('active');
       $('#'+$(this).attr('data-show-id')).removeClass('hidden');
       $(this).parent('li').addClass('active');
+    });
+
+    $('#search-results-tab-container-link').on('click',function(e) {
+      $('div#search-result-details').removeClass('hidden');
+    });
+
+    $('#advanced-search-tab-container-link').on('click',function(e) {
+      $('div#search-result-details').addClass('hidden');
+    });
+
+    $('#name-advanced-search-capture').on('click',function(e) {
+      console.log('name-advanced-search-capture click');
+    });
+
+    $('#name-advanced-search-apply').on('click',function(e) {
+      console.log('name-advanced-search-apply click');
+      var str = '';
+      if ($('#name-advanced-search-list-or-count').val().trim().length > 0) {
+        str += $('#name-advanced-search-list-or-count').val().trim();
+      }
+      if ($('#name-advanced-search-name').val().trim().length > 0) {
+        str += ' name: ';
+        str += $('#name-advanced-search-name').val().trim();
+      }
+      if ($('#name_search_name_type_id').val().trim().length > 0) {
+        str += ' ';
+        str += $('#name_search_name_type_id').val().trim();
+      }
+      if ($('#name-advanced-search-name-type-list').val().trim().length > 0) {
+        str += ' name-type: ';
+        str += $('#name-advanced-search-name-type-list').val().trim();
+      }
+      if ($('#name_search_name_rank_id').val().trim().length > 0) {
+        str += ' ';
+        str += $('#name_search_name_rank_id').val().trim();
+      }
+      if ($('#name-advanced-search-name-rank-list').val().trim().length > 0) {
+        str += ' name-rank: ';
+        str += $('#name-advanced-search-name-rank-list').val().trim();
+      }
+      if ($('#name_search_name_ranked_below').val().trim().length > 0) {
+        str += ' ';
+        str += $('#name_search_name_ranked_below').val().trim();
+      }
+      if ($('#name_search_name_ranked_above').val().trim().length > 0) {
+        str += ' ';
+        str += $('#name_search_name_ranked_above').val().trim();
+      }
+      if ($('#name_search_name_status_id').val().trim().length > 0) {
+        str += ' ';
+        str += $('#name_search_name_status_id').val().trim();
+      }
+      if ($('#name-advanced-search-author-abbrev').val().trim().length > 0) {
+        str += ' author-abbrev: ';
+        str += $('#name-advanced-search-author-abbrev').val().trim();
+      }
+      if ($('#name-advanced-search-ex-author-abbrev').val().trim().length > 0) {
+        str += ' ex-author-abbrev: ';
+        str += $('#name-advanced-search-ex-author-abbrev').val().trim();
+      }
+      if ($('#name-advanced-search-base-author-abbrev').val().trim().length > 0) {
+        str += ' base-author-abbrev: ';
+        str += $('#name-advanced-search-base-author-abbrev').val().trim();
+      }
+      if ($('#name-advanced-search-ex-base-author-abbrev').val().trim().length > 0) {
+        str += ' ex-base-author-abbrev: ';
+        str += $('#name-advanced-search-ex-base-author-abbrev').val().trim();
+      }
+      if ($('#name-advanced-search-sanctioning-author-abbrev').val().trim().length > 0) {
+        str += ' sanctioning-author-abbrev: ';
+        str += $('#name-advanced-search-sanctioning-author-abbrev').val().trim();
+      }
+      if ($('#name-advanced-search-comments').val().trim().length > 0) {
+        str += ' comments: ';
+        str += $('#name-advanced-search-comments').val().trim();
+      }
+      if ($('#name-advanced-search-comments-by').val().trim().length > 0) {
+        str += ' comments-by: ';
+        str += $('#name-advanced-search-comments-by').val().trim();
+      }
+      $('#query-string-field').val(str);
     });
 });
 -->

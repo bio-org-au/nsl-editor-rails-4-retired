@@ -27,6 +27,7 @@ class Search::OnName::WhereClauses
   def build_sql
     Rails.logger.debug("Search::OnName::WhereClause.sql")
     remaining_string = @parsed_query.where_arguments.downcase 
+    @common_and_cultivar_included = @parsed_query.common_and_cultivar
     x = 0 
     until remaining_string.blank?
       field,value,remaining_string = Search::OnName::NextCriterion.new(remaining_string).get 
@@ -65,30 +66,39 @@ class Search::OnName::WhereClauses
       @sql
     elsif field.blank?
       @sql = @sql.lower_full_name_like(value.downcase)
+    elsif field.match(/\Aname:\z/)
+      @sql = @sql.lower_full_name_like(value.downcase)
     else 
       # we have a field
-      canonical_field = canon(field)
-      @common_and_cultivar_included = AUTO_INCLUDE_COMMON_AND_CULTIVAR_FIELDS.has_key?(canonical_field)
-      if ALLOWS_MULTIPLE_VALUES.has_key?(canonical_field) && value.split(/,/).size > 1
+      canonical_field = canon_field(field)
+      canonical_value = value.blank? ? '' : canon_value(value)
+      @common_and_cultivar_included = @common_and_cultivar_included || AUTO_INCLUDE_COMMON_AND_CULTIVAR_FIELDS.has_key?(canonical_field)
+      if ALLOWS_MULTIPLE_VALUES.has_key?(canonical_field) && canonical_value.split(/,/).size > 1
         case canonical_field
         when /\Aname-rank:\z/
-          @sql = @sql.where("name_rank_id in (select id from name_rank where lower(name) in (?))",value.split(',').collect {|v| v.strip})
+          @sql = @sql.where("name_rank_id in (select id from name_rank where lower(name) in (?))",canonical_value.split(',').collect {|v| v.strip})
+        when /\Aname-type:\z/
+          @sql = @sql.where("name_type_id in (select id from name_type where lower(name) in (?))",canonical_value.split(',').collect {|v| v.strip})
         else
           raise "The field '#{field}' currently cannot handle multiple values separated by commas." 
         end
       elsif canonical_field.match(/\Acomments-by:\z/)
         @sql = @sql.where("exists (select null from comment where comment.name_id = name.id and (lower(comment.created_by) like ? or lower(comment.updated_by) like ?))",
-                          value,value)
+                          canonical_value,canonical_value)
       elsif WHERE_INTEGER_VALUE_HASH.has_key?(canonical_field)
-        @sql = @sql.where(WHERE_INTEGER_VALUE_HASH[canonical_field],value.to_i)
+        @sql = @sql.where(WHERE_INTEGER_VALUE_HASH[canonical_field],canonical_value.to_i)
       else
         raise 'No way to handle field.' unless WHERE_VALUE_HASH.has_key?(canonical_field)
-        @sql = @sql.where(WHERE_VALUE_HASH[canonical_field],value)
+        @sql = @sql.where(WHERE_VALUE_HASH[canonical_field],canonical_value)
       end
     end
   end
 
-  def canon(field)
+  def canon_value(value)
+    value.gsub(/\*/,'%')
+  end
+
+  def canon_field(field)
     if WHERE_INTEGER_VALUE_HASH.has_key?(field)
       field
     elsif WHERE_VALUE_HASH.has_key?(field)
@@ -139,6 +149,7 @@ class Search::OnName::WhereClauses
   WHERE_VALUE_HASH = { 
     'name-rank:' => "name_rank_id in (select id from name_rank where lower(name) like ?)",
     'name-type:' => "name_type_id in (select id from name_type where lower(name) like ?)",
+    'name-status:' => "name_status_id in (select id from name_status where lower(name) like ?)",
     'below-name-rank:' => "name_rank_id in (select id from name_rank where sort_order > (select sort_order from name_rank the_nr where lower(the_nr.name) like ?))",
     'above-name-rank:' => "name_rank_id in (select id from name_rank where sort_order < (select sort_order from name_rank the_nr where lower(the_nr.name) like ?))",
     'author-abbrev:' => "author_id in (select id from author where lower(abbrev) like ?)",
@@ -163,6 +174,7 @@ class Search::OnName::WhereClauses
 
   ALLOWS_MULTIPLE_VALUES = {
     'name-rank:' => true,
+    'name-type:' => true
   }
 
 

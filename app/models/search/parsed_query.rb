@@ -57,7 +57,9 @@ class Search::ParsedQuery
   end
 
   def parse_limit(tokens)
-    if tokens.first.match(/^\d+$/)
+    if tokens.blank?
+      @limit = DEFAULT_LIST_LIMIT
+    elsif tokens.first.match(/^\d+$/)
       @limit = tokens.first.to_i
       tokens = tokens.drop(1)
     else 

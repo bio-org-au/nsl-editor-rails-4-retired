@@ -16,18 +16,41 @@
 #   
 class Search::Empty
 
-  attr_reader :params, :query_string, :count
+  attr_reader :canonical_query_string, 
+              :common_and_cultivar, 
+              :common_and_cultivar_included,
+              :count, 
+              :empty, 
+              :info_for_display, 
+              :limit, 
+              :limited, 
+              :order, 
+              :params, 
+              :query_string, 
+              :rejected_pairings, 
+              :results, 
+              :target_table, 
+              :where_arguments 
 
   def initialize(params)
     Rails.logger.debug("Search::Empty start")
     Rails.logger.debug("#{'=' * 40}")
     @params = params
-    @query_string = nil
+    @canonical_query_string = ''
+    @common_and_cultivar = ''
+    @common_and_cultivar_included= false
     @count = false
-  end
-
-  def results
-    []
+    @empty = true
+    @info_for_display = ''
+    @limit = 0
+    @limited = false
+    @order = ''
+    @params = {}
+    @query_string = ''
+    @rejected_pairings = []
+    @results = []
+    @target_table = ''
+    @where_arguments = ''
   end
 
 end

@@ -9,7 +9,7 @@
       <label for="list-or-count">List or count</label>
     </td>
     <td>
-      <select id="list-or-count" name="list_or_count" class="form-control">
+      <select id="name-advanced-search-list-or-count" name="list_or_count" class="form-control">
         <option value='count' <%#= 'selected'  unless @search.try('list_or_count').try('match(/list/i)') %> >count records</option>
         <option value='list' <%= 'selected' if @search.try('list_or_count') == 'list' || @search.blank? %> >list results</option>
     </select>
@@ -20,7 +20,7 @@
       <label for="query-on">Name</label>
     </td>
     <td>
-      <input name="name_search_name" value="<%= @search.try('name_search_name') %>" type="text" class="form-control min-width-20em" id="" placeholder="">
+      <input id="name-advanced-search-name" name="name_search_name" value="<%= @search.try('name_search_name') %>" type="text" class="form-control min-width-20em" placeholder="">
     </td>
   </tr>
   <tr>
@@ -29,7 +29,7 @@
     </td>
     <td>
       <%= select_tag('name_search_name_type_id', 
-                                        options_for_select(NameType.options.unshift(['any type','']),@search.try('name_search_name_type_id')||'any type'),
+                     options_for_select(NameType.query_form_options,@search.try('name_search_name_type_id')||'any type'),
                      title: 'Select one or more name types', 
                      autocomplete: "off", 
                      class: "form-control give-me-focus") 
@@ -38,11 +38,22 @@
   </tr>
   <tr>
     <td class="align-right">
+      <label for="query-on">List of types</label>
+    </td>
+    <td>
+      <input id="name-advanced-search-name-type-list" name="name_search_author_abbrev" 
+             value="" type="text" class="form-control min-width-20em" 
+             placeholder="Comma-separated list of name types">
+    </td>
+  </tr>
+  <tr>
+  <tr>
+    <td class="align-right">
       <label for="query-on">Rank</label>
     </td>
     <td>
       <%= select_tag('name_search_name_rank_id', 
-                                        options_for_select(NameRank.options.unshift(['any rank','']),@search.try('name_search_name_rank_id')||'any rank'),
+                     options_for_select(NameRank.query_form_options,@search.try('name_search_name_rank_id')||'Any rank'),
                      title: 'Select one or more name ranks', 
                      autocomplete: "off", 
                      class: "form-control give-me-focus") 
@@ -51,10 +62,71 @@
   </tr>
   <tr>
     <td class="align-right">
+      <label for="query-on">List of ranks</label>
+    </td>
+    <td>
+      <input id="name-advanced-search-name-rank-list" name="name_search_author_abbrev" 
+             value="" type="text" class="form-control min-width-20em" 
+             placeholder="Comma-separated list of name ranks">
+    </td>
+  </tr>
+  <tr>
+    <td class="align-right">
+      <label for="query-on">Ranked below</label>
+    </td>
+    <td>
+      <%= select_tag('name_search_name_ranked_below', 
+                     options_for_select(NameRank.query_form_ranked_below_options),
+                     title: 'Select one name rank', 
+                     autocomplete: "off", 
+                     include_blank: true,
+                     class: "form-control give-me-focus") 
+                   %>
+    </td>
+  </tr>
+  <tr>
+    <td class="align-right">
+      <label for="query-on">Ranked above</label>
+    </td>
+    <td>
+      <%= select_tag('name_search_name_ranked_above', 
+                     options_for_select(NameRank.query_form_ranked_above_options),
+                     title: 'Select one name rank', 
+                     autocomplete: "off", 
+                     include_blank: true,
+                     class: "form-control give-me-focus") 
+                   %>
+    </td>
+  </tr>
+  <tr>
+    <td class="align-right">
+      <label for="query-on">Status</label>
+    </td>
+    <td>
+      <%= select_tag('name_search_name_status_id', 
+                     options_for_select(NameStatus.query_form_options,@search.try('name_search_name_status_id')||'Any status'),
+                     title: 'Select one or more name statuses', 
+                     autocomplete: "off", 
+                     class: "form-control give-me-focus") 
+                   %>
+    </td>
+  </tr>
+  <tr>
+    <td class="align-right">
+      <label for="query-on">List of statuses</label>
+    </td>
+    <td>
+      <input id="name-advanced-search-name-status-list" name="name_search_author_abbrev" 
+             value="" type="text" class="form-control min-width-20em" 
+             placeholder="Comma-separated list of name statuses">
+    </td>
+  </tr>
+  <tr>
+    <td class="align-right">
       <label for="query-on">Author</label>
     </td>
     <td>
-      <input name="name_search_author_abbrev" value="<%= @search.try('name_search_author_abbrev') %>" type="text" class="form-control min-width-20em" id="" placeholder="Use standard abbreviations">
+      <input id="name-advanced-search-author-abbrev" name="name_search_author_abbrev" value="<%= @search.try('name_search_author_abbrev') %>" type="text" class="form-control min-width-20em" placeholder="Use standard abbreviations">
     </td>
   </tr>
   <tr>
@@ -62,7 +134,7 @@
       <label for="query-on">Ex Author</label>
     </td>
     <td>
-      <input name="name_search_ex_author_abbrev" value="<%= @search.try('name_search_ex_author_abbrev') %>" type="text" class="form-control min-width-20em" id="" placeholder="Use standard abbreviations">
+      <input id="name-advanced-search-ex-author-abbrev" name="name_search_ex_author_abbrev" value="<%= @search.try('name_search_ex_author_abbrev') %>" type="text" class="form-control min-width-20em" placeholder="Use standard abbreviations">
     </td>
   </tr>
   <tr>
@@ -70,7 +142,7 @@
       <label for="query-on">Base Author</label>
     </td>
     <td>
-      <input name="name_search_base_author_abbrev" value="<%= @search.try('name_search_base_author_abbrev') %>" type="text" class="form-control min-width-20em" id="" placeholder="Use standard abbreviations">
+      <input id="name-advanced-search-base-author-abbrev" name="name_search_base_author_abbrev" value="<%= @search.try('name_search_base_author_abbrev') %>" type="text" class="form-control min-width-20em" placeholder="Use standard abbreviations">
     </td>
   </tr>
   <tr>
@@ -78,7 +150,7 @@
       <label for="query-on">Ex-Base Author</label>
     </td>
     <td>
-      <input name="name_search_ex_base_author_abbrev" value="<%= @search.try('name_search_ex_base_author_abbrev') %>" type="text" class="form-control min-width-20em" id="" placeholder="Use standard abbreviations">
+      <input id="name-advanced-search-ex-base-author-abbrev" name="name_search_ex_base_author_abbrev" value="<%= @search.try('name_search_ex_base_author_abbrev') %>" type="text" class="form-control min-width-20em" placeholder="Use standard abbreviations">
     </td>
   </tr>
   <tr>
@@ -86,7 +158,7 @@
       <label for="query-on">Sanctioning Author</label>
     </td>
     <td>
-      <input name="name_search_sanctioning_author_abbrev" value="<%= @search.try('name_search_sanctioning_author_abbrev') %>" type="text" class="form-control min-width-20em" id="" placeholder="Use standard abbreviations">
+      <input id="name-advanced-search-sanctioning-author-abbrev" name="name_search_sanctioning_author_abbrev" value="<%= @search.try('name_search_sanctioning_author_abbrev') %>" type="text" class="form-control min-width-20em" placeholder="Use standard abbreviations">
     </td>
   </tr>
   <tr>
@@ -94,7 +166,7 @@
       <label for="query-on">Comments</label>
     </td>
     <td>
-      <input name="name_search_comments" value="<%= @search.try('name_search_comments') %>" type="text" class="form-control min-width-20em" id="" placeholder="">
+      <input id="name-advanced-search-comments" name="name_search_comments" value="<%= @search.try('name_search_comments') %>" type="text" class="form-control min-width-20em" placeholder="">
     </td>
   </tr>
   <tr>
@@ -102,11 +174,14 @@
       <label for="query-on">Comments By</label>
     </td>
     <td>
-      <input name="name_search_comments_by" value="<%= @search.try('name_search_comments_by') %>" type="text" class="form-control min-width-20em" id="" placeholder="">
+      <input id="name-advanced-search-comments-by" name="name_search_comments_by" value="<%= @search.try('name_search_comments_by') %>" type="text" class="form-control min-width-20em" placeholder="">
     </td>
   </tr>
 </table>
 
+<br> <div class="pull-right"> <a id="name-advanced-search-capture" href="#" class="btn btn-default" role="button">Capture</a> </div>
+<br>
+<br> <div class="pull-right"> <a id="name-advanced-search-apply" href="#" class="btn btn-default" role="button">Apply</a> </div>
 <br>
   <div class="pull-right">
       <%# We don't want button in URL - so use raw html to avoid including a name attribute. %>
@@ -114,13 +189,13 @@
              id="advanced-search-preview-button"
              name="preview"
              value="Preview" 
-             class='btn btn-primary search-button pull-right' 
+             class='btn btn-primary search-button pull-right hidden' 
              data-no-turbolink="true" 
              title="Start searching"/>
   </div>
 
 <br>
-  <div class="search-params-parsed">
+  <div class="search-params-parsed">[parsed params]
     <%= @search.try('parsed_params') %>
   </div>
 <br>
@@ -131,7 +206,7 @@
              id="advanced-search-button"
              name="search"
              value="Search" 
-             class='btn btn-primary search-button pull-right' 
+             class='btn btn-primary search-button pull-right hidden' 
              data-no-turbolink="true" 
              title="Start searching"/>
   </div>
