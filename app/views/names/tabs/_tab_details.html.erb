@@ -87,12 +87,11 @@
                         tabindex: increment_tab_index,
                         title: "Search for the #{pluralize(@name.instances.size,'instance')}",
                         class: 'give-me-focus') %>
-  <%= render 'names/details/children' %>
   <%#= render 'names/details/parents' %>
 <% else %>
-  No instances.<br>
+  No instances.
 <% end %>
-
+<%= render 'names/details/children' %>
 <%= render partial: 'names/details/apni_tree' %>
 <%= render partial: 'names/details/apc_tree' %>
 
