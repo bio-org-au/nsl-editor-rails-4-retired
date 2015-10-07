@@ -79,6 +79,8 @@ class Search::OnName::WhereClauses
           @sql = @sql.where("name_rank_id in (select id from name_rank where lower(name) in (?))",canonical_value.split(',').collect {|v| v.strip})
         when /\Aname-type:\z/
           @sql = @sql.where("name_type_id in (select id from name_type where lower(name) in (?))",canonical_value.split(',').collect {|v| v.strip})
+        when /\Aname-status:\z/
+          @sql = @sql.where("name_status_id in (select id from name_status where lower(name) in (?))",canonical_value.split(',').collect {|v| v.strip})
         else
           raise "The field '#{field}' currently cannot handle multiple values separated by commas." 
         end
@@ -174,6 +176,7 @@ class Search::OnName::WhereClauses
 
   ALLOWS_MULTIPLE_VALUES = {
     'name-rank:' => true,
+    'name-status:' => true,
     'name-type:' => true
   }
 

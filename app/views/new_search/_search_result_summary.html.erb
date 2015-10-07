@@ -1,6 +1,9 @@
 <% unless @search.empty %>
   <% if @search.count %> 
     <%= "Count: #{pluralize(@search.results,'name')}.  " %>
+    <% if @search.results == 0 %>
+      Consider a trailing wildcard (*). 
+    <% end %>
   <% else %>
     <% if @search.results.size == 0 %>
       No records found. Consider a trailing wildcard (*). 
@@ -9,9 +12,9 @@
     <% end %>
   <% end %>
   <% if @search.target_table.match(/name/i) && @search.common_and_cultivar_included %>
-    <span id="includes-common-cultivar-notice">Allows common and cultivar.</span>
+    <span id="includes-common-cultivar-notice">Search includes common and cultivar.</span>
   <% else %>
-    <span id="excludes-common-cultivar-notice">Excludes common and cultivar.</span>
+    <span id="excludes-common-cultivar-notice">Search excludes common and cultivar.</span>
   <% end %>
   <% if !@search.count && @search.results.size == @search.limit %>
     <span id="search-results-limited-notice">

@@ -62,6 +62,7 @@ jQuery ->
   $('a.show-details-link[tabindex]').focus (event) ->                      clickOnFocus(event,$(this))
   $('table.search-results tr td.takes-focus a.show-details-link[tabindex]').first().focus() 
   $('.firefox-notice').removeClass('hidden') if window.navigator.userAgent.indexOf("Firefox") < 0
+
   notice('End of fresh.js document ready.')
 
 window.showInstanceWasCreated = (recordId,fromRecordType,fromRecordId) ->
@@ -384,8 +385,7 @@ currentActiveTab = (record_type) ->
   return $('body').attr('data-active-'+record_type+'-tab')
 
 recordCurrentActiveTab = (record_type) -> 
-  debug("  recordCurrentActiveTab: #{$('ul.nav-tabs li.active a').attr('data-tab-name')}")
-  $('body').attr('data-active-'+record_type+'-tab',$('ul.nav-tabs li.active a').attr('data-tab-name'))  
+  $('body').attr('data-active-'+record_type+'-tab',$('div#search-result-details ul.nav-tabs li.active a').attr('data-tab-name'))  
   
 treeRowClicked2 = (event,$this,data) ->
   debug('treeRowClicked2')

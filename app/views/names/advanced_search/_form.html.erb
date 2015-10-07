@@ -1,8 +1,8 @@
 <div id="advanced-search-name-form-container" class="">
 <%= form_tag(new_search_path, method: :get, id: "advanced-search-name-form", class: 'form-inline')  do -%>
 
-  <input name="search_target" value="names" type="hidden" >
-  <input name="search_from" value="fields" type="hidden" >
+  <input name="search_target" value="names" type="hidden" />
+  <input name="search_from" value="fields" type="hidden" />
 <table class="table advanced-form-table" border="1" >
   <tr>
     <td class="align-right width-15-percent">
@@ -17,10 +17,19 @@
   </tr>
   <tr>
     <td class="align-right">
+      <label for="query-on">Set size</label>
+    </td>
+    <td>
+      <input id="name-advanced-search-set-size" name="name_search_name" value="100" type="number" class="form-control min-width-20em" placeholder="Number of records for a list search" min="1"/>
+    </td>
+  </tr>
+  <tr>
+  <tr>
+    <td class="align-right">
       <label for="query-on">Name</label>
     </td>
     <td>
-      <input id="name-advanced-search-name" name="name_search_name" value="<%= @search.try('name_search_name') %>" type="text" class="form-control min-width-20em" placeholder="">
+      <input id="name-advanced-search-name" name="name_search_name" value="<%= @search.try('name_search_name') %>" type="text" class="form-control min-width-20em" placeholder=""/>
     </td>
   </tr>
   <tr>
@@ -53,8 +62,9 @@
     </td>
     <td>
       <%= select_tag('name_search_name_rank_id', 
-                     options_for_select(NameRank.query_form_options,@search.try('name_search_name_rank_id')||'Any rank'),
-                     title: 'Select one or more name ranks', 
+                     options_for_select(NameRank.query_form_options),
+                     title: 'Select one name rank', 
+                     include_blank: true,
                      autocomplete: "off", 
                      class: "form-control give-me-focus") 
                    %>
@@ -104,8 +114,9 @@
     </td>
     <td>
       <%= select_tag('name_search_name_status_id', 
-                     options_for_select(NameStatus.query_form_options,@search.try('name_search_name_status_id')||'Any status'),
-                     title: 'Select one or more name statuses', 
+                     options_for_select(NameStatus.query_form_options),
+                     title: 'Select one name status', 
+                     include_blank: true,
                      autocomplete: "off", 
                      class: "form-control give-me-focus") 
                    %>
@@ -126,7 +137,7 @@
       <label for="query-on">Author</label>
     </td>
     <td>
-      <input id="name-advanced-search-author-abbrev" name="name_search_author_abbrev" value="<%= @search.try('name_search_author_abbrev') %>" type="text" class="form-control min-width-20em" placeholder="Use standard abbreviations">
+      <input id="name-advanced-search-author-abbrev" name="name_search_author_abbrev" value="<%= @search.try('name_search_author_abbrev') %>" type="text" class="form-control min-width-20em" placeholder="Use standard abbreviations"/>
     </td>
   </tr>
   <tr>
@@ -134,7 +145,7 @@
       <label for="query-on">Ex Author</label>
     </td>
     <td>
-      <input id="name-advanced-search-ex-author-abbrev" name="name_search_ex_author_abbrev" value="<%= @search.try('name_search_ex_author_abbrev') %>" type="text" class="form-control min-width-20em" placeholder="Use standard abbreviations">
+      <input id="name-advanced-search-ex-author-abbrev" name="name_search_ex_author_abbrev" value="<%= @search.try('name_search_ex_author_abbrev') %>" type="text" class="form-control min-width-20em" placeholder="Use standard abbreviations"/>
     </td>
   </tr>
   <tr>
@@ -142,7 +153,7 @@
       <label for="query-on">Base Author</label>
     </td>
     <td>
-      <input id="name-advanced-search-base-author-abbrev" name="name_search_base_author_abbrev" value="<%= @search.try('name_search_base_author_abbrev') %>" type="text" class="form-control min-width-20em" placeholder="Use standard abbreviations">
+      <input id="name-advanced-search-base-author-abbrev" name="name_search_base_author_abbrev" value="<%= @search.try('name_search_base_author_abbrev') %>" type="text" class="form-control min-width-20em" placeholder="Use standard abbreviations"/>
     </td>
   </tr>
   <tr>
@@ -150,7 +161,7 @@
       <label for="query-on">Ex-Base Author</label>
     </td>
     <td>
-      <input id="name-advanced-search-ex-base-author-abbrev" name="name_search_ex_base_author_abbrev" value="<%= @search.try('name_search_ex_base_author_abbrev') %>" type="text" class="form-control min-width-20em" placeholder="Use standard abbreviations">
+      <input id="name-advanced-search-ex-base-author-abbrev" name="name_search_ex_base_author_abbrev" value="<%= @search.try('name_search_ex_base_author_abbrev') %>" type="text" class="form-control min-width-20em" placeholder="Use standard abbreviations"/>
     </td>
   </tr>
   <tr>
@@ -158,7 +169,7 @@
       <label for="query-on">Sanctioning Author</label>
     </td>
     <td>
-      <input id="name-advanced-search-sanctioning-author-abbrev" name="name_search_sanctioning_author_abbrev" value="<%= @search.try('name_search_sanctioning_author_abbrev') %>" type="text" class="form-control min-width-20em" placeholder="Use standard abbreviations">
+      <input id="name-advanced-search-sanctioning-author-abbrev" name="name_search_sanctioning_author_abbrev" value="<%= @search.try('name_search_sanctioning_author_abbrev') %>" type="text" class="form-control min-width-20em" placeholder="Use standard abbreviations"/>
     </td>
   </tr>
   <tr>
@@ -166,7 +177,7 @@
       <label for="query-on">Comments</label>
     </td>
     <td>
-      <input id="name-advanced-search-comments" name="name_search_comments" value="<%= @search.try('name_search_comments') %>" type="text" class="form-control min-width-20em" placeholder="">
+      <input id="name-advanced-search-comments" name="name_search_comments" value="<%= @search.try('name_search_comments') %>" type="text" class="form-control min-width-20em" placeholder=""/>
     </td>
   </tr>
   <tr>
@@ -174,7 +185,7 @@
       <label for="query-on">Comments By</label>
     </td>
     <td>
-      <input id="name-advanced-search-comments-by" name="name_search_comments_by" value="<%= @search.try('name_search_comments_by') %>" type="text" class="form-control min-width-20em" placeholder="">
+      <input id="name-advanced-search-comments-by" name="name_search_comments_by" value="<%= @search.try('name_search_comments_by') %>" type="text" class="form-control min-width-20em" placeholder=""/>
     </td>
   </tr>
 </table>
@@ -212,7 +223,4 @@
   </div>
 
 <% end -%>
-  <br>
-  <%#= @search.to_s %>
-  <br>
 </div>

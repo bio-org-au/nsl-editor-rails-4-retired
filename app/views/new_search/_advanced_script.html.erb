@@ -1,7 +1,7 @@
     <script>
 <!--
     $( document ).ready(function() {
-console.log('loading stuff now');
+console.log('document ready');
 $('input[type=search]')
     .wrap('<span>')
     .after('<span class="clear">&hellip;</span>')
@@ -41,6 +41,7 @@ $('input[type=search]')
       $(this).parent('li').addClass('active');
       $('#advanced-search-container').removeClass('hidden');
       $('#search-result-container').addClass('hidden');
+      captureSearch(e,this);
     });
 
     $('ul#search-results-tabset li a#search-results-tab-container-link').on('click',function(e) {
@@ -67,18 +68,19 @@ $('input[type=search]')
       $('div#search-result-details').addClass('hidden');
     });
 
-    $('#name-advanced-search-capture').on('click',function(e) {
-      console.log('name-advanced-search-capture click');
-    });
-
     $('#name-advanced-search-apply').on('click',function(e) {
-      console.log('name-advanced-search-apply click');
       var str = '';
       if ($('#name-advanced-search-list-or-count').val().trim().length > 0) {
         str += $('#name-advanced-search-list-or-count').val().trim();
       }
+      if ($('#name-advanced-search-set-size').val().trim().length > 0) {
+        if ($('#name-advanced-search-list-or-count').val().match(/list/)) {
+          str += ' ';
+          str += $('#name-advanced-search-set-size').val().trim();
+        }
+      }
       if ($('#name-advanced-search-name').val().trim().length > 0) {
-        str += ' name: ';
+        str += ' ';
         str += $('#name-advanced-search-name').val().trim();
       }
       if ($('#name_search_name_type_id').val().trim().length > 0) {
@@ -141,6 +143,7 @@ $('input[type=search]')
     });
 });
 -->
+
     </script>
 
 

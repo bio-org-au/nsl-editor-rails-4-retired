@@ -1,5 +1,8 @@
 
 
+<div id="advanced-search-inner" 
+     style="overflow: auto; min-height: 300px; height: 80%; margin-bottom: 1em; padding-bottom: 1em;"
+     class="width-95-percent">
 
 <ul id="advanced-search-tabset" class="nav nav-tabs low">
   <li role="presentation" class="active"><a id="advanced-search-tab-link-name" href="#" data-show-id="advanced-search-name">Name</a></li>
@@ -11,7 +14,11 @@
   <li role="presentation"><a id="advanced-search-tab-link-saved-searches" href="#" data-show-id="advanced-search-saved-searches">Saved</a></li>
 </ul>
 
-<div id="advanced-search-inner" class="width-95-percent">
+  <div id="advanced-search-inner-form-container" 
+     style="overflow: hidden; padding-right: 1em; margin-right: 1em; padding-bottom: 2em; margin-bottom: 2em;" 
+       class="">
+
+
   <div id="advanced-search-name" class="advanced-search-tab">
     <%= render partial: 'new_search/tabs/name_tab' %>
   </div>
@@ -32,5 +39,7 @@
   </div>
   <div id="advanced-search-saved-searches" class="advanced-search-tab hidden">
     <%= render partial: 'new_search/tabs/saved_searches_tab' %>
+  </div>
+
   </div>
 </div>

@@ -81,8 +81,7 @@ class NameRank < ActiveRecord::Base
   end
 
   def self.query_form_options
-    self.where('deprecated is false').order(:sort_order).collect{|n| [n.name, "name-rank: #{n.name.downcase}"]}.
-      unshift(['any rank',''])
+    self.where('deprecated is false').order(:sort_order).collect{|n| [n.name, "name-rank: #{n.name.downcase}"]}
   end
 
   def self.query_form_ranked_below_options
