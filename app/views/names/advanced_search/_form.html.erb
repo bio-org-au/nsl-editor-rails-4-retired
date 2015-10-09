@@ -1,63 +1,119 @@
 <div id="advanced-search-name-form-container" class="">
-<%= form_tag(new_search_path, method: :get, id: "advanced-search-name-form", class: 'form-inline')  do -%>
-
+  <form class="form-inline">
   <input name="search_target" value="names" type="hidden" />
   <input name="search_from" value="fields" type="hidden" />
-<table class="table advanced-form-table" border="1" >
+<table class="table advanced-form-table" class="table table-bordered" >
+  <tr><td class="width-12-percent">Set up</td> <td></td><td></td></tr>
   <tr>
+    <td></td>
     <td class="align-right width-15-percent">
       <label for="list-or-count">List or count</label>
     </td>
     <td>
       <select id="name-advanced-search-list-or-count" name="list_or_count" class="form-control">
-        <option value='count' <%#= 'selected'  unless @search.try('list_or_count').try('match(/list/i)') %> >count records</option>
-        <option value='list' <%= 'selected' if @search.try('list_or_count') == 'list' || @search.blank? %> >list results</option>
+        <option value='count'>count records</option>
+        <option value='list' selected='selected'>list results</option>
     </select>
     </td>
   </tr>
   <tr>
-    <td class="align-right">
-      <label for="query-on">Set size</label>
+    <td></td>
+    <td class="align-right width-15-percent">
+    </td>
+    <td>
+    <%= radio_button_tag(:limited, "true", class:'form-control') %>
+    <%= label_tag(:limited_true, "limited") %>
+    <%= radio_button_tag(:limited, "false", class:'form-control') %>
+    <%= label_tag(:limited_false, "unlimited") %>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+    <td class="align-right width-15-percent">
+      <label for="query-on">List size</label>
     </td>
     <td>
       <input id="name-advanced-search-set-size" name="name_search_name" value="100" type="number" class="form-control min-width-20em" placeholder="Number of records for a list search" min="1"/>
     </td>
   </tr>
+</table>
+  </form>
+
+
+
+<form class="form-inline">
+  <table class="table advanced-form-table" class="table table-bordered" >
+  <tr> <td class="width-12-percent">Name</td><td></td><td></td> </tr>
   <tr>
-  <tr>
-    <td class="align-right">
-      <label for="query-on">Name</label>
+    <td></td>
+    <td class="align-right width-15-percent">
     </td>
     <td>
-      <input id="name-advanced-search-name" name="name_search_name" value="<%= @search.try('name_search_name') %>" type="text" class="form-control min-width-20em" placeholder=""/>
+      <input id="name-advanced-search-name" name="name_search_name" value="" type="text" class="form-control min-width-20em" placeholder="Name string, with optional wildcard (*)"/>
     </td>
   </tr>
+  </table>
+</form>
+
+
+
+  <form class="form-inline">
+<table class="table advanced-form-table" class="table table-bordered" >
+  <tr> <td class="width-12-percent">Name&nbsp;Type</td><td></td><td></td></tr>
   <tr>
-    <td class="align-right">
-      <label for="query-on">Type</label>
+    <td></td>
+    <td class="align-right width-15-percent">
+      <label for="query-on">Options</label>
     </td>
     <td>
-      <%= select_tag('name_search_name_type_id', 
-                     options_for_select(NameType.query_form_options,@search.try('name_search_name_type_id')||'any type'),
-                     title: 'Select one or more name types', 
-                     autocomplete: "off", 
-                     class: "form-control give-me-focus") 
-                   %>
+<select id="name-advanced-search-name-type-options" style="height: 10em;" class="form-control" title="Name type options. Comma-separated list. Or wildcard." multiple="multiple">
+<optgroup label="Scientific">
+<option class="" value="autonym">autonym</option>
+<option class="" value="hybrid autonym">hybrid autonym</option>
+<option class="" value="hybrid formula parents known">hybrid formula parents known</option>
+<option class="" value="hybrid formula unknown 2nd parent">hybrid formula unknown 2nd parent</option>
+<option class="" value="intergrade">intergrade</option>
+<option class="" value="named hybrid">named hybrid</option>
+<option class="" value="named hybrid autonym">named hybrid autonym</option>
+<option class="" value="phrase name">phrase name</option>
+<option class="" value="sanctioned">sanctioned</option>
+<option class="" value="scientific">scientific</option>
+<optgroup label="Cultivars">
+<option class="" value="cultivar">cultivar</option>
+<option class="" value="cultivar hybrid">cultivar hybrid</option>
+<option class="" value="cultivar hybrid formula">cultivar hybrid formula</option>
+<option class="" value="graft/chimera">graft/chimera</option>
+parent</option>
+<optgroup label="Common, informal">
+<option class="" value="common">common</option>
+<option class="" value="informal">informal</option>
+<optgroup label="Other">
+<option class="" value="[default]">[default]</option>
+<option class="" value="[n/a]">[n/a]</option>
+<option class="" value="[unknown]">[unknown]</option>
+</select>
     </td>
   </tr>
+
   <tr>
+    <td></td>
     <td class="align-right">
-      <label for="query-on">List of types</label>
+      <label for="query-on"></label>
     </td>
     <td>
       <input id="name-advanced-search-name-type-list" name="name_search_author_abbrev" 
-             value="" type="text" class="form-control min-width-20em" 
+             value="" type="text" style="width: 100%" class="form-control min-width-20em width-100-percent" 
              placeholder="Comma-separated list of name types">
     </td>
   </tr>
+</table>
+  </form>
+<form class="form-inline">
+  <table class="table advanced-form-table" class="table table-bordered" >
+    <tr> <td class="width-12-percent">Name&nbsp;Rank</td><td></td><td></td></tr>
   <tr>
-  <tr>
-    <td class="align-right">
+    <td></td>
+    <td class="align-right width-15-percent">
       <label for="query-on">Rank</label>
     </td>
     <td>
@@ -71,6 +127,7 @@
     </td>
   </tr>
   <tr>
+    <td></td>
     <td class="align-right">
       <label for="query-on">List of ranks</label>
     </td>
@@ -81,6 +138,7 @@
     </td>
   </tr>
   <tr>
+    <td></td>
     <td class="align-right">
       <label for="query-on">Ranked below</label>
     </td>
@@ -95,6 +153,7 @@
     </td>
   </tr>
   <tr>
+    <td></td>
     <td class="align-right">
       <label for="query-on">Ranked above</label>
     </td>
@@ -108,9 +167,18 @@
                    %>
     </td>
   </tr>
+  </table>
+</form>
+
+
+
+<form class="form-inline">
+  <table class="table xadvanced-form-table" class="table table-bordered" >
+    <tr> <td class="width-12-percent">Name&nbsp;Status</td><td></td><td></td> </tr>
   <tr>
-    <td class="align-right">
-      <label for="query-on">Status</label>
+    <td></td>
+    <td class="align-right width-15-percent">
+      <label for="query-on">Options</label>
     </td>
     <td>
       <%= select_tag('name_search_name_status_id', 
@@ -123,8 +191,8 @@
     </td>
   </tr>
   <tr>
+    <td></td>
     <td class="align-right">
-      <label for="query-on">List of statuses</label>
     </td>
     <td>
       <input id="name-advanced-search-name-status-list" name="name_search_author_abbrev" 
@@ -132,8 +200,14 @@
              placeholder="Comma-separated list of name statuses">
     </td>
   </tr>
+</table>
+  </form>
+  <form class="form-inline">
+<table class="table advanced-form-table" class="table table-bordered" >
+  <tr> <td class="width-12-percent">Authors</td><td></td><td></td> </tr>
   <tr>
-    <td class="align-right">
+    <td></td>
+    <td class="align-right width-15-percent">
       <label for="query-on">Author</label>
     </td>
     <td>
@@ -141,6 +215,7 @@
     </td>
   </tr>
   <tr>
+    <td></td>
     <td class="align-right">
       <label for="query-on">Ex Author</label>
     </td>
@@ -149,6 +224,7 @@
     </td>
   </tr>
   <tr>
+    <td></td>
     <td class="align-right">
       <label for="query-on">Base Author</label>
     </td>
@@ -157,6 +233,7 @@
     </td>
   </tr>
   <tr>
+    <td></td>
     <td class="align-right">
       <label for="query-on">Ex-Base Author</label>
     </td>
@@ -165,6 +242,7 @@
     </td>
   </tr>
   <tr>
+    <td></td>
     <td class="align-right">
       <label for="query-on">Sanctioning Author</label>
     </td>
@@ -172,8 +250,14 @@
       <input id="name-advanced-search-sanctioning-author-abbrev" name="name_search_sanctioning_author_abbrev" value="<%= @search.try('name_search_sanctioning_author_abbrev') %>" type="text" class="form-control min-width-20em" placeholder="Use standard abbreviations"/>
     </td>
   </tr>
+  </table>
+</form>
+<form class="form-inline">
+  <table class="table advanced-form-table" class="table table-bordered" >
+  <tr> <td class="width-12-percent">Comments</td><td></td><td></td> </tr>
   <tr>
-    <td class="align-right">
+    <td></td>
+    <td class="align-right width-15-percent">
       <label for="query-on">Comments</label>
     </td>
     <td>
@@ -181,46 +265,14 @@
     </td>
   </tr>
   <tr>
-    <td class="align-right">
+    <td></td>
+    <td class="align-right width-15-percent">
       <label for="query-on">Comments By</label>
     </td>
     <td>
       <input id="name-advanced-search-comments-by" name="name_search_comments_by" value="<%= @search.try('name_search_comments_by') %>" type="text" class="form-control min-width-20em" placeholder=""/>
     </td>
   </tr>
-</table>
-
-<br> <div class="pull-right"> <a id="name-advanced-search-capture" href="#" class="btn btn-default" role="button">Capture</a> </div>
-<br>
-<br> <div class="pull-right"> <a id="name-advanced-search-apply" href="#" class="btn btn-default" role="button">Apply</a> </div>
-<br>
-  <div class="pull-right">
-      <%# We don't want button in URL - so use raw html to avoid including a name attribute. %>
-      <input type="submit" 
-             id="advanced-search-preview-button"
-             name="preview"
-             value="Preview" 
-             class='btn btn-primary search-button pull-right hidden' 
-             data-no-turbolink="true" 
-             title="Start searching"/>
-  </div>
-
-<br>
-  <div class="search-params-parsed">[parsed params]
-    <%= @search.try('parsed_params') %>
-  </div>
-<br>
-<br>
-  <div class="pull-right">
-      <%# We don't want button in URL - so use raw html to avoid including a name attribute. %>
-      <input type="submit" 
-             id="advanced-search-button"
-             name="search"
-             value="Search" 
-             class='btn btn-primary search-button pull-right hidden' 
-             data-no-turbolink="true" 
-             title="Start searching"/>
-  </div>
-
-<% end -%>
+  </table>
+</form>
 </div>

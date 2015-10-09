@@ -16,14 +16,13 @@
 #   
 class Search::ParsedQuery
 
-  attr_reader :params, :query_string, :count, :list, :limit, :target_table, :common_and_cultivar, :order, :canonical_query_string, :where_arguments
+  attr_reader :params, :query_string, :count, :list, :limited, :limit, :target_table, :common_and_cultivar, :order, :canonical_query_string, :where_arguments
   DEFAULT_LIST_LIMIT = 100
+  NO_LIST_LIMIT = -1
 
   def initialize(params)
     Rails.logger.debug("Search::ParsedQuery start: params: #{params}")
     @params = params
-    #@auery_string = @params['query_string']
-    #Rails.logger.debug("Search::ParsedQuery initialize: @query_string: #{@query_string}")
     parse_query_string
   end
 
@@ -31,7 +30,7 @@ class Search::ParsedQuery
     Rails.logger.debug("Search::ParsedQuery parse_query_string start: @params: #{@params}")
     @query_string = @params['query_string']
     Rails.logger.debug("Search::ParseQueryString @query_string: #{@query_string}")
-    remaining_tokens = @query_string.split(/ /)
+    remaining_tokens = @query_string.strip.split(/ /)
     remaining_tokens = parse_count_or_list(remaining_tokens)
     remaining_tokens = parse_limit(remaining_tokens)
     remaining_tokens = parse_target_table(remaining_tokens)
@@ -57,10 +56,15 @@ class Search::ParsedQuery
   end
 
   def parse_limit(tokens)
+    @limited = @list
     if tokens.blank?
       @limit = DEFAULT_LIST_LIMIT
     elsif tokens.first.match(/^\d+$/)
       @limit = tokens.first.to_i
+      tokens = tokens.drop(1)
+    elsif tokens.first.match(/\Aall\z/i)
+      @limit = NO_LIST_LIMIT
+      @limited = false
       tokens = tokens.drop(1)
     else 
       @limit = DEFAULT_LIST_LIMIT
@@ -69,10 +73,30 @@ class Search::ParsedQuery
   end
 
   def parse_target_table(tokens)
-    @target_table = 'name'
+    default_table = 'name'
+    if tokens.blank?
+      @target_table = default_table
+    else
+      case tokens.first
+      when /\Aauthors\z/i
+        @target_table = 'author'
+        tokens = tokens.drop(1)
+      when /\Ainstances\z/i
+        @target_table = 'instance'
+        tokens = tokens.drop(1)
+      when /\Anames\z/i
+        @target_table = 'name'
+        tokens = tokens.drop(1)
+      when /\Areferences\z/i
+        @target_table = 'reference'
+        tokens = tokens.drop(1)
+      else
+        @target_table = default_table
+      end
+    end
     tokens
   end
-  
+
   def parse_common_and_cultivar(tokens)
     @common_and_cultivar = false
     tokens

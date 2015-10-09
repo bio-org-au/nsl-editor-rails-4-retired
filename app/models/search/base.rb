@@ -56,15 +56,15 @@ class Search::Base
   def run_query
     case @target_table
     when /any/
-      raise 'no such search'
+      raise "cannot run a 'any' search yet"
     when /author/
-      raise 'no such search'
+      raise "cannot run an 'author' search yet"
       'author'
     when /instance/
-      raise 'no such search'
+      raise "cannot run an 'instance' search yet"
       'instance'
     when /reference/
-      raise 'no such search'
+      raise "cannot run a 'reference' search yet"
       'reference'
     else
       Rails.logger.debug("\nSearching on names\n")

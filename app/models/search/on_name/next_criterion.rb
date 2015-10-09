@@ -44,7 +44,7 @@ class Search::OnName::NextCriterion
 
   # e.g. for ['a', 'b', 'c', 'd:', 'e','f'] 
   # @value = "a b c"
-  # @tokens = "a b c"
+  # @tokens = "d: e f"
   def get_value
     value = '' 
     found_field = false

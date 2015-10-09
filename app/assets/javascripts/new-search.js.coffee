@@ -11,17 +11,21 @@ window.captureSearch = (event,$capture_button) ->
   assignFields(fields)
 
 window.parseSearchString = (searchString, verbose = false) ->
+  console.log(" ")
   console.log("parseSearchString for: #{searchString}")
-  searchTokens = searchString.split(" ")
+  searchTokens = searchString.trim().split(" ")
   [action,searchTokens] = parseAction(searchTokens)
-  [setSize,searchTokens] = parseSetSize(searchTokens)
+  [setSize,limited, searchTokens] = parseSetSize(searchTokens)
   [target,searchTokens] = parseSearchTarget(searchTokens)
   [term,searchTokens] = parseDefaultSearchTerm(searchTokens)
-  fields = {action: action, setSize: setSize, target: target, conditions: "", format: "", term: term}
+  [wherePairs,searchTokens] = parseWherePairs(searchTokens)
+  fields = {action: action, limited: limited, setSize: setSize, target: target, conditions: "", format: "", term: term, wherePairs: wherePairs}
   console.log("Action: #{fields.action}")
   console.log("Target: #{fields.target}")
+  console.log("Limited: #{fields.limited}")
   console.log("SetSize: #{fields.setSize}")
   console.log("term: #{fields.term}")
+  console.log("wherePairs: #{fields.wherePairs}")
   fields
 
 parseAction = (tokens) ->
@@ -33,22 +37,24 @@ parseAction = (tokens) ->
   [action, tokens]
 
 parseSetSize = (tokens) ->
-  defaultSetSize = '100'
-  tokens = [defaultSetSize] unless tokens[0]
+  console.log("parseSetSize for tokens: #{tokens.join(',')}")
+  defaultSetSize = 100
+  tokens = [defaultSetSize.toString()] unless tokens[0]
   switch 
-    when tokens[0].match(/[0-9]+/) then setSize = parseInt(tokens[0]); tokens = _.rest(tokens)
-    else                                setSize = parseInt(defaultSetSize)
-  [setSize, tokens]
+    when tokens[0].match(/[0-9]+/) then limited = true; setSize = parseInt(tokens[0]); tokens = _.rest(tokens)
+    when tokens[0].match(/^all$/i) then limited = false; setSize = defaultSetSize; tokens = _.rest(tokens)
+    else                                limited = true; setSize = defaultSetSize
+  [setSize, limited, tokens]
 
 parseSearchTarget = (tokens) ->
-  tokens = ['name'] unless tokens[0]
   defaultTarget = 'names'
+  tokens = [defaultTarget] unless tokens[0]
   switch 
-    when tokens[0].match(/^author/i)    then target = "authors";  tokens = _.rest(tokens)
-    when tokens[0].match(/^name/i)      then target = "names";  tokens = _.rest(tokens)
-    when tokens[0].match(/^reference/i) then target = "references";  tokens = _.rest(tokens)
-    when tokens[0].match(/^instance/i)  then target = "instances";  tokens = _.rest(tokens)
-    when tokens[0].match(/^tree/i)      then target = "tree";  tokens = _.rest(tokens)
+    when tokens[0].match(/^authors$/i)    then target = "authors";  tokens = _.rest(tokens)
+    when tokens[0].match(/^names$/i)      then target = "names";  tokens = _.rest(tokens)
+    when tokens[0].match(/^references$/i) then target = "references";  tokens = _.rest(tokens)
+    when tokens[0].match(/^instances$/i)  then target = "instances";  tokens = _.rest(tokens)
+    when tokens[0].match(/^tree$/i)      then target = "tree";  tokens = _.rest(tokens)
     else                                    target = defaultTarget
   [target, tokens]
 
@@ -56,6 +62,7 @@ isFieldName = (str) ->
   str.match(/:/)
 
 parseDefaultSearchTerm = (tokens) ->
+  console.log("parseDefaultSearchTerm for tokens: #{tokens}")
   ndx = _.findIndex(tokens,isFieldName)
   if ndx >= 0
     termTokens = tokens.slice(0,ndx)
@@ -66,7 +73,42 @@ parseDefaultSearchTerm = (tokens) ->
     tokens = []
   [term,tokens]
 
-  #####
+parseWherePairs = (tokens) ->
+  console.log("parseWherePairs for: #{tokens.join(' ')}")
+  wherePairs = []
+  while tokens.length > 0
+    [pair, tokens] = parseOnePair(tokens)
+    wherePairs.push(pair) if pair
+  [wherePairs, tokens]
+
+parseOnePair = (tokens) ->
+  console.log("parseOneWherePair for: #{tokens.join(' ')}")
+  switch 
+    when tokens.length == 0
+      pair = null 
+      tokens = []
+    when isFieldName(tokens[0])
+      field = tokens[0]
+      [value,tokens] = parseOneValue(tokens.slice(1))
+      console.log("Got back value: #{value}")
+      pair = {field: field, value: value}
+    else
+      throw "Exception!!! Expected '#{tokens[0]}' to be a field name"
+  [pair, tokens]
+
+parseOneValue = (tokens) ->
+  console.log("parseOneValue for: #{tokens.join(' ')}")
+  value = ""
+  until tokens.length == 0 || isFieldName(tokens[0])
+    console.log("token zero: #{tokens[0]}")
+    value += " #{tokens[0]}"
+    tokens = tokens.slice(1)
+  console.log("Returning: value: #{value}")
+  [value.trim(), tokens]
+
+
+
+  ####
 
 jQuery -> 
   console.log('new search')

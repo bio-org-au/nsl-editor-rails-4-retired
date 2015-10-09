@@ -34,7 +34,7 @@ class Search::OnName::WhereClauses
       Rails.logger.info("field: #{field}; value: #{value}")
       add_clause(field,value)
       x += 1
-      raise "endless loop #{x}" if x > 10
+      raise "endless loop #{x}" if x > 50
     end
   end
 

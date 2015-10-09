@@ -12,7 +12,7 @@
     <% end %>
   <% end %>
   <% if @search.target_table.match(/name/i) && @search.common_and_cultivar_included %>
-    <span id="includes-common-cultivar-notice">Search includes common and cultivar.</span>
+    <span id="includes-common-cultivar-notice"></span>
   <% else %>
     <span id="excludes-common-cultivar-notice">Search excludes common and cultivar.</span>
   <% end %>
@@ -20,11 +20,5 @@
     <span id="search-results-limited-notice">
       <%= "Limited." %>
     </span>
-  <% else %>
-    <% unless @search.results.size == 0 || @search.count %>
-      <span id="search-results-all-matching-notice">
-        <%= "All matching." %>
-      </span>
-    <% end %>
   <% end %>
 <% end %>

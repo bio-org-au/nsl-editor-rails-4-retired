@@ -38,7 +38,7 @@ class Search::OnName::ListQuery
       prepared_query = prepared_query.not_common_or_cultivar unless @parsed_query.common_and_cultivar
       @common_and_cultivar_included = false
     end
-    prepared_query = prepared_query.limit(@parsed_query.limit) 
+    prepared_query = prepared_query.limit(@parsed_query.limit) if @parsed_query.limited
     prepared_query = prepared_query.order('full_name')
     @sql = prepared_query
   end
