@@ -112,7 +112,6 @@
 
                         <label>APC Parent</label>
 
-                        show all ranks above:&nbsp;<input type="checkbox" ng-model="placeParams.allRanksAbove">
                         <input type="text"
                                ng-model="placeParams.superName"
                                typeahead="n as n.fullName for n in getApcName($viewValue) | filter:$viewValue"
@@ -121,6 +120,8 @@
                                class="form-control"
                                title="APC Parent"
                         >
+                        Show higher ranks:&nbsp;<input type="checkbox" ng-model="placeParams.allRanksAbove">
+
                     </div>
                 </div>
                 <div>
