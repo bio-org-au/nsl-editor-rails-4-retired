@@ -28,6 +28,7 @@ class Search::OnName::WhereClauses
     Rails.logger.debug("Search::OnName::WhereClause.sql")
     remaining_string = @parsed_query.where_arguments.downcase 
     @common_and_cultivar_included = @parsed_query.common_and_cultivar
+    @sql = @sql.for_id(@parsed_query.id) if @parsed_query.id
     x = 0 
     until remaining_string.blank?
       field,value,remaining_string = Search::OnName::NextCriterion.new(remaining_string).get 
@@ -141,6 +142,8 @@ class Search::OnName::WhereClauses
   end
 
   WHERE_INTEGER_VALUE_HASH = { 
+    'id:' => "id = ? ",
+    'parent-id:' => "parent_id = ? ",
     'author-id:' => "author_id = ? ",
     'base-author-id:' => "base_author_id = ? ",
     'ex-base-author-id:' => "ex_base_author_id = ? ",
@@ -171,7 +174,9 @@ class Search::OnName::WhereClauses
   }
 
   AUTO_INCLUDE_COMMON_AND_CULTIVAR_FIELDS = {
-    'name-type:' => true 
+    'name-type:' => true,
+    'id:' => true,
+    'parent-id:' => true 
   }
 
   ALLOWS_MULTIPLE_VALUES = {

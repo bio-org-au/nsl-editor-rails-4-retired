@@ -21,7 +21,7 @@ class InstanceSearchOnInstanceNoteSimpleTest < ActionController::TestCase
 
   test "instance search on instance note with simple text" do
     instance = instances(:triodia_in_brassard)
-    get(:index,{'query_on'=>'instance','query'=>"note: *ystrin*",'query_common_and_cultivar'=>'f','query_limit'=>'100'},{username: 'fred', user_full_name: 'Fred Jones', groups: []})
+    get(:index,{'query'=>"instance note: *ystrin*"},{username: 'fred', user_full_name: 'Fred Jones', groups: []})
     assert_response :success
     assert_select "span#search-results-summary", /1 record /, "Should find 1 record"
     assert_select "tr#search-result-#{instance.id}", true, "Should find the instance."

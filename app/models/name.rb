@@ -54,6 +54,7 @@ class Name < ActiveRecord::Base
   scope :name_rank_genus_and_below,->{ where("name_rank.sort_order >= (select sort_order from name_rank genus where genus.name = 'Genus')") }
   scope :avoids_id,->(avoid_id) { where("name.id != ?", avoid_id) }
   scope :all_children,->(parent_id) { where("name.parent_id = ? or name.second_parent_id = ?", parent_id, parent_id) }
+  scope :for_id,->(id) { where("name.id = ?", id) }
 
   belongs_to :name_rank
   belongs_to :name_type

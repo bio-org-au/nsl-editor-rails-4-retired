@@ -16,9 +16,15 @@
 #   
 class Search::ParsedQuery
 
-  attr_reader :params, :query_string, :count, :list, :limited, :limit, :target_table, :common_and_cultivar, :order, :canonical_query_string, :where_arguments
+  attr_reader :params, :query_string, :count, :list, :limited, :limit, :target_table, :common_and_cultivar, :order, :canonical_query_string, :id, 
+    :where_arguments, :defined_query, :defined_query_arg
   DEFAULT_LIST_LIMIT = 100
+  MAX_LIST_LIMIT = 1000
   NO_LIST_LIMIT = -1
+  DEFINED_QUERIES = {
+    'instances-for-name-id:' => true,
+    'instances-for-name:' => true
+  }
 
   def initialize(params)
     Rails.logger.debug("Search::ParsedQuery start: params: #{params}")
@@ -33,10 +39,24 @@ class Search::ParsedQuery
     remaining_tokens = @query_string.strip.split(/ /)
     remaining_tokens = parse_count_or_list(remaining_tokens)
     remaining_tokens = parse_limit(remaining_tokens)
-    remaining_tokens = parse_target_table(remaining_tokens)
-    remaining_tokens = parse_common_and_cultivar(remaining_tokens)
-    remaining_tokens = parse_order(remaining_tokens)
-    remaining_tokens = gather_where_arguments(remaining_tokens)
+    remaining_tokens = parse_defined_query(remaining_tokens)
+    unless @defined_query
+      remaining_tokens = parse_target_table(remaining_tokens)
+      remaining_tokens = parse_common_and_cultivar(remaining_tokens)
+      remaining_tokens = parse_order(remaining_tokens)
+      remaining_tokens = gather_where_arguments(remaining_tokens)
+    end
+  end
+
+  def parse_defined_query(tokens)
+    if DEFINED_QUERIES.has_key?(tokens.first)
+      @defined_query = tokens.first
+      @defined_query_arg = tokens.drop(1).join(' ')
+      tokens = []
+    else
+      @defined_query = false  
+    end
+    tokens
   end
 
   def parse_count_or_list(tokens)
@@ -60,11 +80,13 @@ class Search::ParsedQuery
     if tokens.blank?
       @limit = DEFAULT_LIST_LIMIT
     elsif tokens.first.match(/^\d+$/)
-      @limit = tokens.first.to_i
+      # Safeguard
+      @limit = tokens.first.to_i > MAX_LIST_LIMIT ? MAX_LIST_LIMIT : tokens.first.to_i
       tokens = tokens.drop(1)
     elsif tokens.first.match(/\Aall\z/i)
-      @limit = NO_LIST_LIMIT
-      @limited = false
+      #@limit = NO_LIST_LIMIT
+      #@limited = false
+      @limit = tokens.first.to_i > MAX_LIST_LIMIT ? MAX_LIST_LIMIT : tokens.first.to_i
       tokens = tokens.drop(1)
     else 
       @limit = DEFAULT_LIST_LIMIT
@@ -78,16 +100,16 @@ class Search::ParsedQuery
       @target_table = default_table
     else
       case tokens.first
-      when /\Aauthors\z/i
+      when /\Aauthors{0,1}\z/i
         @target_table = 'author'
         tokens = tokens.drop(1)
-      when /\Ainstances\z/i
+      when /\Ainstances{0,1}\z/i
         @target_table = 'instance'
         tokens = tokens.drop(1)
-      when /\Anames\z/i
+      when /\Anames{0,1}\z/i
         @target_table = 'name'
         tokens = tokens.drop(1)
-      when /\Areferences\z/i
+      when /\Areferences{0,1}\z/i
         @target_table = 'reference'
         tokens = tokens.drop(1)
       else

@@ -38,8 +38,7 @@ class Search::Base
     @empty = false
     parse_query
     if @defined_query
-      Rails.logger.debug("Search::Base has a defined query: #{@defined_query}")
-      run_defined_query
+      defined_query(@parsed_query)
     else
       run_query
     end
@@ -96,25 +95,6 @@ class Search::Base
       @info_for_display = run.info_for_display
       @rejected_pairings = run.rejected_pairings
       @common_and_cultivar_included = run.common_and_cultivar_included
-    end
-  end
- 
-  def run_defined_query
-    case @defined_query
-    when /instances-for-name-id:/
-      Rails.logger.debug("\nrun_defined_query instances-for-name-id:\n")
-      @results = Instance::AsSearchEngine.name_usages(@defined_query_arg)
-      @limited = false 
-      @common_and_cultivar_included = true 
-      @target_table = 'instance'
-    when /instances-for-name:/
-      Rails.logger.debug("\nrun_defined_query instances-for-name:\n")
-      @results = Instance.name_instances(@defined_query_arg, @limit)
-      @limited = @results.size == @limit
-      @common_and_cultivar_included = true 
-      @target_table = 'instance'
-    else
-      raise "Run Defined Query has no match for #{@defined_query}"
     end
   end
 

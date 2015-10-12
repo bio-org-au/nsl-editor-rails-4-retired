@@ -14,17 +14,25 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #   
-class NewSearchController < ApplicationController
-  before_filter :hide_details
+class Search::OnReference::CountQuery
 
-  def search
-    @search = params[:query_string].present? ? Search::Base.new(params) : Search::Empty.new(params) 
+  attr_reader :sql, :info_for_display, :common_and_cultivar_included
+
+  def initialize(parsed_query)
+    @parsed_query = parsed_query
+    prepare_query
+    @info_for_display = "nothing yet from count query"
   end
 
-  def search_name_with_instances
-    @search = Search::Base.new({'query_string' => "instances-for-name-id: #{params[:name_id]}"}) 
-    render 'search'
+  def prepare_query
+    Rails.logger.debug("Search::OnReference::CountQuery#prepare_query")
+    prepared_query = Reference.includes(:ref_type)
+    where_clauses = Search::OnReference::WhereClauses.new(@parsed_query,prepared_query)
+    prepared_query = where_clauses.sql
+    @sql = prepared_query
   end
 
 end
+
+
 

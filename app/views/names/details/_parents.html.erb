@@ -1,31 +1,27 @@
 <% if @name.second_parent_id.present? %>
   <% if @name.parent_id.present? %>
     <%= link_to("First Parent: #{@name.parent.full_name} #{icon('search')}".html_safe,
-      search_path(query: "id: #{@name.parent_id}",
-                  query_field: 'name'),
+      search_path(query: "name id: #{@name.parent_id}"),
                   tabindex: increment_tab_index,
                   title: "Retrieve the first parent",
                   class: '') %>
     <br>
   <% end %>
   <%= link_to("Second Parent: #{@name.second_parent.full_name} #{icon('search')}".html_safe,
-    search_path(query: "id: #{@name.second_parent_id}",
-                query_field: 'name'),
+    search_path(query: "name id: #{@name.second_parent_id}"),
                 tabindex: increment_tab_index,
                 title: "Retrieve the second parent",
                 class: '') %>
   <br>
   <%= link_to("Both parents #{icon('search')}".html_safe,
-    search_path(query: "ids: #{@name.parent_id},#{@name.second_parent_id}",
-                query_field: 'name'),
+    search_path(query: "name ids: #{@name.parent_id},#{@name.second_parent_id}"),
                 tabindex: increment_tab_index,
                 title: "Retrieve the both parents",
                 class: '') %>
   <br>
 <% elsif @name.parent_id.present? %>
     <%= link_to("Parent: #{@name.parent.full_name} #{icon('search')}".html_safe,
-      search_path(query: "id: #{@name.parent_id}",
-                  query_field: 'name'),
+      search_path(query: "name id: #{@name.parent_id}"),
                   tabindex: increment_tab_index,
                   title: "Retrieve the parent",
                   class: '') %>

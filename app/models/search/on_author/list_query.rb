@@ -14,17 +14,28 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #   
-class NewSearchController < ApplicationController
-  before_filter :hide_details
+class Search::OnAuthor::ListQuery
 
-  def search
-    @search = params[:query_string].present? ? Search::Base.new(params) : Search::Empty.new(params) 
+  attr_reader :sql, :limited, :info_for_display, :common_and_cultivar_included
+
+  def initialize(parsed_query)
+    @parsed_query = parsed_query
+    prepare_query
+    @limited = true
+    @info_for_display = ""
   end
 
-  def search_name_with_instances
-    @search = Search::Base.new({'query_string' => "instances-for-name-id: #{params[:name_id]}"}) 
-    render 'search'
+  def prepare_query
+    Rails.logger.debug("Search::OnAuthor::ListQuery#prepare_query")
+    prepared_query = Author.where('1=1')
+    where_clauses = Search::OnAuthor::WhereClauses.new(@parsed_query,prepared_query)
+    prepared_query = where_clauses.sql
+    prepared_query = prepared_query.limit(@parsed_query.limit) if @parsed_query.limited
+    prepared_query = prepared_query.order('name')
+    @sql = prepared_query
   end
 
 end
+
+
 

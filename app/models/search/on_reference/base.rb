@@ -14,7 +14,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #   
-class Search::OnName::Base
+class Search::OnReference::Base
 
   attr_reader :results, :limited, :info_for_display, :rejected_pairings, :common_and_cultivar_included, :sql, :id
 
@@ -23,17 +23,19 @@ class Search::OnName::Base
   end
 
   def run_query(parsed_query)
-    Rails.logger.debug('Search::OnName::Base#run_query')
+    Rails.logger.debug('Search::OnReference::Base#run_query')
     if parsed_query.count
-      count_query = Search::OnName::CountQuery.new(parsed_query)
+      Rails.logger.debug('Search::OnReference::Base#run_query counting')
+      count_query = Search::OnReference::CountQuery.new(parsed_query)
       @sql = count_query.sql
       @results = sql.count
+      Rails.logger.debug("Search::OnReference::Base#run_query results: #{@results}")
       @limited = false
       @info_for_display = count_query.info_for_display
       @rejected_pairings = []
       @common_and_cultivar_included = count_query.common_and_cultivar_included
     else
-      list_query = Search::OnName::ListQuery.new(parsed_query)
+      list_query = Search::OnReference::ListQuery.new(parsed_query)
       @sql = list_query.sql
       @results = sql.all
       @limited = list_query.limited

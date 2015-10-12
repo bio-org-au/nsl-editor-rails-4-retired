@@ -7,9 +7,7 @@
 <br>
 <% if @reference.parent %>
   <%= link_to("#{@reference.parent.title} #{search_icon_on_tab}".html_safe, 
-              search_path(query: @reference.parent_id,
-                          query_on: 'reference',
-                          query_field: 'rp'),
+                          search_path(query: "reference parent-id:#{@reference.parent_id}"),
                           title: 'Search for the containing reference',
                           tabindex: increment_tab_index ) %>
 <% end %>

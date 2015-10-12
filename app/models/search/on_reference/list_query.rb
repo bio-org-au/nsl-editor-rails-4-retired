@@ -14,7 +14,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #   
-class Search::OnName::ListQuery
+class Search::OnReference::ListQuery
 
   attr_reader :sql, :limited, :info_for_display, :common_and_cultivar_included
 
@@ -26,20 +26,12 @@ class Search::OnName::ListQuery
   end
 
   def prepare_query
-    Rails.logger.debug("Search::OnName::ListQuery#prepare_query")
-    prepared_query = Name.includes(:name_status).includes(:name_tags) 
-    where_clauses = Search::OnName::WhereClauses.new(@parsed_query,prepared_query)
+    Rails.logger.debug("Search::OnReference::ListQuery#prepare_query")
+    prepared_query = Reference.includes(:ref_type)
+    where_clauses = Search::OnReference::WhereClauses.new(@parsed_query,prepared_query)
     prepared_query = where_clauses.sql
-    if @parsed_query.common_and_cultivar || where_clauses.common_and_cultivar_included?
-      Rails.logger.debug("Search::OnName::ListQuery#prepare_query yes, we need common, cultivars")
-      @common_and_cultivar_included = true
-    else
-      Rails.logger.debug("Search::OnName::ListQuery#prepare_query no, we will not look for common, cultivars")
-      prepared_query = prepared_query.not_common_or_cultivar unless @parsed_query.common_and_cultivar
-      @common_and_cultivar_included = false
-    end
     prepared_query = prepared_query.limit(@parsed_query.limit) if @parsed_query.limited
-    prepared_query = prepared_query.order('full_name')
+    prepared_query = prepared_query.order('citation')
     @sql = prepared_query
   end
 

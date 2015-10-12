@@ -18,7 +18,7 @@
       within
     <% end %>
     <%= link_to(@name.parent.try('full_name_html').try('html_safe'), 
-                search_path(query_on: 'name', query_field: 'id', query: @name.parent_id),
+                                        search_path(query: "name id: #{@name.parent_id}"),
                 class: 'rebeccapurple',
                 tabindex: increment_tab_index, 
                 title: "Query the parent") %>
@@ -27,7 +27,7 @@
 <% if @name.has_second_parent? %>
     and
     <%= link_to(@name.second_parent.try('full_name_html').try('html_safe'), 
-                search_path(query_on: 'name', query_field: 'id', query: @name.second_parent_id),
+                search_path(query: "name id:#{@name.second_parent_id}"),
                 class: 'rebeccapurple',
                 tabindex: increment_tab_index, 
                 title: 'second parent') %>
@@ -81,9 +81,7 @@
 <br>
 <% if @name.instances.size > 0 %>
   <%= link_to("#{pluralize(@name.instances.size,'instance')} #{icon('search')}".html_safe, 
-                        search_path(query: "id: #{@name.id}", 
-                        query_on: 'instance',
-                        query_field: 'name-instances'),
+                        search_path(query: "instances-for-name-id: #{@name.id}"), 
                         tabindex: increment_tab_index,
                         title: "Search for the #{pluralize(@name.instances.size,'instance')}",
                         class: 'give-me-focus') %>

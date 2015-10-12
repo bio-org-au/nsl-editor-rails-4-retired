@@ -38,12 +38,10 @@ Rails.application.routes.draw do
   match 'sign_out', as: "sign_out_get_for_firefox_bug", to: "sessions#destroy", via: :get
   match 'throw_invalid_authenticity_token', to: "sessions#throw_invalid_authenticity_token", via: :get
 
-  match 'search/name/with/instances/:query',
+  match 'search/name/with/instances/:name_id',
          as: 'search_name_with_instances',
-         to: 'search#index',
-         via: :get,
-         defaults: { query_on: 'instance',
-                     query_field: 'name-id' }
+         to: 'new_search#search_name_with_instances',
+         via: :get
 
   match '/search', as: "search", to: "search#index", via: :get
   match '/new_search', as: "new_search", to: "new_search#search", via: :get
