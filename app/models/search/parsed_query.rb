@@ -23,7 +23,9 @@ class Search::ParsedQuery
   NO_LIST_LIMIT = -1
   DEFINED_QUERIES = {
     'instances-for-name-id:' => true,
-    'instances-for-name:' => true
+    'instances-for-name:' => true,
+    'instances-for-ref-id:' => true,
+    'instances-for-ref-id-sort-by-page:' => true
   }
 
   def initialize(params)
@@ -34,9 +36,10 @@ class Search::ParsedQuery
 
   def parse_query_string
     Rails.logger.debug("Search::ParsedQuery parse_query_string start: @params: #{@params}")
-    @query_string = @params['query_string']
+    @query_string = @params['query_string'].gsub(/  */,' ')
     Rails.logger.debug("Search::ParseQueryString @query_string: #{@query_string}")
-    remaining_tokens = @query_string.strip.split(/ /)
+    # Before splitting on spaces, make sure every colon has at least one space after it.
+    remaining_tokens = @query_string.strip.gsub(/:/,': ').gsub(/:  /,': ').split(/ /)
     remaining_tokens = parse_count_or_list(remaining_tokens)
     remaining_tokens = parse_limit(remaining_tokens)
     remaining_tokens = parse_defined_query(remaining_tokens)
@@ -49,6 +52,7 @@ class Search::ParsedQuery
   end
 
   def parse_defined_query(tokens)
+    Rails.logger.debug("Search::ParsedQuery parse_defined_query start: tokens: #{tokens.join(',')}")
     if DEFINED_QUERIES.has_key?(tokens.first)
       @defined_query = tokens.first
       @defined_query_arg = tokens.drop(1).join(' ')
@@ -86,7 +90,7 @@ class Search::ParsedQuery
     elsif tokens.first.match(/\Aall\z/i)
       #@limit = NO_LIST_LIMIT
       #@limited = false
-      @limit = tokens.first.to_i > MAX_LIST_LIMIT ? MAX_LIST_LIMIT : tokens.first.to_i
+      @limit = MAX_LIST_LIMIT 
       tokens = tokens.drop(1)
     else 
       @limit = DEFAULT_LIST_LIMIT
@@ -110,6 +114,9 @@ class Search::ParsedQuery
         @target_table = 'name'
         tokens = tokens.drop(1)
       when /\Areferences{0,1}\z/i
+        @target_table = 'reference'
+        tokens = tokens.drop(1)
+      when /\Arefs{0,1}\z/i
         @target_table = 'reference'
         tokens = tokens.drop(1)
       else

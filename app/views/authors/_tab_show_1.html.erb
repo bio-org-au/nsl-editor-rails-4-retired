@@ -13,8 +13,6 @@
                                       title: 'See duplicate of'), 
                         label: 'duplicate'} %>
   <% end %>
-<% else %>
-  No duplicates
 <% end %>
 
 <% if @author.duplicate_of_id.present? %>
@@ -29,12 +27,11 @@
 
 <%= divider %>
 
-<% search_path = search_path(query: "author-id:#{@author.id}", query_on: 'reference') %>
 <% search_count = @author.references.count %>
 <% if search_count > 0 %>
 <%= render partial: 'detail_line', 
            locals: {info: link_to("#{pluralize(search_count,'authored reference')} ",
-                                  search_path,
+                                  search_path(query: "reference author-id:#{@author.id}"),
                                   title: 'See references'), 
                     label: 'references'} %>
 <% else %>
@@ -43,52 +40,34 @@
 
 <%= divider %>
 
-<% search_path = search_path(query: "a-id:#{@author.id}", query_on: 'name', query_limit: 100 ) %>
 <% search_count = @author.names.count %>
 <% if search_count > 0 %>
-   <%= link_to("#{pluralize(search_count,'authored name')} ",
-                                  search_path,
-                                  title: 'See names') %>
-<% else %>
-  No authored names.
+  <%= link_to("#{pluralize(search_count,'authored name')} ", search_path(query: "name author-id:#{@author.id} nt:*", title: 'See names')) %>
 <% end %>
 <br>
 
-<% search_path = search_path(query: "ea-id:#{@author.id}", query_on: 'name', query_limit: 100 ) %>
 <% search_count = @author.ex_names.count %>
 <% if search_count > 0 %>
-  <%= link_to("#{pluralize(search_count,'ex-authored name')} ",search_path,title: 'See ex names') %>
-<% else %>
-  No ex-authored names.
+  <%= link_to("#{pluralize(search_count,'ex-authored name')} ",search_path(query: "name ex-author-id:#{@author.id} nt:*",title: 'See ex names') )%>
 <% end %>
 <br>
 
-
-<% search_path = search_path(query: "ba-id:#{@author.id}", query_on: 'name', query_limit: 100 ) %>
 <% search_count = @author.base_names.count %>
 <% if search_count > 0 %>
-  <%= link_to("#{pluralize(search_count,'base authored name')} ",search_path,title: 'See base names') %>
-<% else %>
-  No base authored names.
+  <%= link_to("#{pluralize(search_count,'base authored name')} ",search_path(query: "name base-author-id:#{@author.id} nt:*",title: 'See base names') )%>
 <% end %>
 <br>
 
-<% search_path = search_path(query: "eba-id:#{@author.id}", query_on: 'name', query_limit: 100 ) %>
 <% search_count = @author.ex_base_names.count %>
 <% if search_count > 0 %>
-<%= link_to("#{pluralize(search_count,'ex-base authored name')} ",search_path,title: 'See ex-base names') %>
-<% else %>
-  No ex-base authored names.
+  <%= link_to("#{pluralize(search_count,'ex-base authored name')} ",search_path(query: "name ex-base-author-id:#{@author.id} nt:*",title: 'See ex-base names') )%>
 <% end %>
 <br>
 
 
-<% search_path = search_path(query: "sa-id:#{@author.id}", query_on: 'name', query_limit: 100 ) %>
 <% search_count = @author.sanctioned_names.count %>
 <% if search_count > 0 %>
-<%= link_to("#{pluralize(search_count,'sanctioned name')} ",search_path, title: 'See sanctioned names') %>
-<% else %>
-  No sanctioned names.
+  <%= link_to("#{pluralize(search_count,'sanctioned name')} ",search_path(query: "name sanctioning-author-id:#{@author.id} nt:*",title: 'See sanctioned names') ) %>
 <% end %>
 <br>
 

@@ -113,6 +113,18 @@ class Search::Base
       @limited = @results.size == @limit
       @common_and_cultivar_included = true 
       @target_table = 'instance'
+    when /instances-for-ref-id:/
+      Rails.logger.debug("\nrun_defined_query instances-for-ref-id:\n")
+      @results = Instance::AsSearchEngine.for_ref_id(@defined_query_arg, @limit,'name')
+      @limited = @results.size == @limit
+      @common_and_cultivar_included = true 
+      @target_table = 'instance'
+    when /instances-for-ref-id-sort-by-page:/
+      Rails.logger.debug("\nrun_defined_query instances-for-ref-id-sort-by-page:\n")
+      @results = Instance::AsSearchEngine.for_ref_id(@defined_query_arg, @limit,'page')
+      @limited = @results.size == @limit
+      @common_and_cultivar_included = true 
+      @target_table = 'instance'
     else
       raise "Run Defined Query has no match for #{@defined_query}"
     end

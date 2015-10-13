@@ -50,12 +50,13 @@ parseSearchTarget = (tokens) ->
   defaultTarget = 'names'
   tokens = [defaultTarget] unless tokens[0]
   switch 
-    when tokens[0].match(/^authors$/i)    then target = "authors";  tokens = _.rest(tokens)
-    when tokens[0].match(/^names$/i)      then target = "names";  tokens = _.rest(tokens)
-    when tokens[0].match(/^references$/i) then target = "references";  tokens = _.rest(tokens)
-    when tokens[0].match(/^instances$/i)  then target = "instances";  tokens = _.rest(tokens)
-    when tokens[0].match(/^tree$/i)      then target = "tree";  tokens = _.rest(tokens)
-    else                                    target = defaultTarget
+    when tokens[0].match(/^authors{0,1}$/i)    then target = "authors";  tokens = _.rest(tokens)
+    when tokens[0].match(/^names{0,1}$/i)      then target = "names";  tokens = _.rest(tokens)
+    when tokens[0].match(/^references$/i)      then target = "references";  tokens = _.rest(tokens)
+    when tokens[0].match(/^refs{0,1}$/i)       then target = "references";  tokens = _.rest(tokens)
+    when tokens[0].match(/^instances{0,1}$/i)  then target = "instances";  tokens = _.rest(tokens)
+    when tokens[0].match(/^tree$/i)            then target = "tree";  tokens = _.rest(tokens)
+    else                                            target = defaultTarget
   [target, tokens]
 
 isFieldName = (str) ->

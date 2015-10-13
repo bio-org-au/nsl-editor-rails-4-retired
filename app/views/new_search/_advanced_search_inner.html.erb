@@ -4,6 +4,8 @@
   <a id="name-advanced-search-capture" href="#" class="btn btn-default" role="button">Capture</a> 
   <br>
   <a id="name-advanced-search-apply" href="#" class="btn btn-default" role="button">Apply</a> 
+  <br>
+  <a id="advanced-search-run" href="#" class="btn btn-default" role="button">Search</a> 
 </div>
 
 <div id="advanced-search-inner" 
@@ -15,9 +17,11 @@
   <li role="presentation"><a id="advanced-search-tab-link-reference" href="#" data-show-id="advanced-search-reference">Reference</a></li>
   <li role="presentation"><a id="advanced-search-tab-link-instance" href="#" data-show-id="advanced-search-instance">Instance</a></li>
   <li role="presentation"><a id="advanced-search-tab-link-author" href="#" data-show-id="advanced-search-author">Author</a></li>
+  <!--
   <li role="presentation"><a id="advanced-search-tab-link-date-time" href="#" data-show-id="advanced-search-date-time">Date/Time</a></li>
   <li role="presentation"><a id="advanced-search-tab-link-reports" href="#" data-show-id="advanced-search-reports">Reports</a></li>
   <li role="presentation"><a id="advanced-search-tab-link-saved-searches" href="#" data-show-id="advanced-search-saved-searches">Saved</a></li>
+  -->
 </ul>
 
   <div id="advanced-search-inner-form-container" 
@@ -37,15 +41,16 @@
   <div id="advanced-search-author" class="advanced-search-tab hidden">
     <%= render partial: 'new_search/tabs/author_tab' %>
   </div>
+  <!--
   <div id="advanced-search-date-time" class="advanced-search-tab hidden">
-    <%= render partial: 'new_search/tabs/date_time_tab' %>
+    <%#= render partial: 'new_search/tabs/date_time_tab' %>
   </div>
   <div id="advanced-search-reports" class="advanced-search-tab hidden">
-    <%= render partial: 'new_search/tabs/reports_tab' %>
+    <%#= render partial: 'new_search/tabs/reports_tab' %>
   </div>
   <div id="advanced-search-saved-searches" class="advanced-search-tab hidden">
-    <%= render partial: 'new_search/tabs/saved_searches_tab' %>
+    <%#= render partial: 'new_search/tabs/saved_searches_tab' %>
   </div>
-
+  -->
   </div>
 </div>

@@ -50,11 +50,6 @@ class NameType < ActiveRecord::Base
     NameType.where(name: 'scientific').push( NameType.order('name').limit(1).first).first
   end
 
-  def self.xquery_form_options
-    self.all.sort{|x,y| x.name <=> y.name}.collect{|n| [n.capitalised_name, "name-type: #{n.name}", class: '']}.
-      unshift(['Include common, cultivars','name-type:*']).unshift(['Exclude common, cultivars',''])
-  end
-
   def self.query_form_options
     self.not_deprecated.sort{|x,y| x.name <=> y.name}.collect{|n| [n.capitalised_name, "#{n.name}", class: '']}.
       unshift(['Include common, cultivars','name-type:*']).unshift(['Exclude common, cultivars',''])

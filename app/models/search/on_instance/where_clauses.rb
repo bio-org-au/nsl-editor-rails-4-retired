@@ -27,12 +27,14 @@ class Search::OnInstance::WhereClauses
   def build_sql
     Rails.logger.debug("Search::OnInstance::WhereClause.sql")
     remaining_string = @parsed_query.where_arguments.downcase 
+    Rails.logger.debug("Search::OnInstance::WhereClause.sql remaining_string: #{remaining_string}")
     @common_and_cultivar_included = @parsed_query.common_and_cultivar
     @sql = @sql.for_id(@parsed_query.id) if @parsed_query.id
     x = 0 
     until remaining_string.blank?
       field,value,remaining_string = Search::NextCriterion.new(remaining_string).get 
       Rails.logger.info("field: #{field}; value: #{value}")
+      raise "No field for value: #{value}" if field.blank?
       add_clause(field,value)
       x += 1
       raise "endless loop #{x}" if x > 50

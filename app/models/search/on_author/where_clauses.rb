@@ -62,8 +62,10 @@ class Search::OnAuthor::WhereClauses
           raise "The field '#{field}' currently cannot handle multiple values separated by commas." 
         end
       elsif canonical_field.match(/\Acomments-by:\z/)
-        @sql = @sql.where("exists (select null from comment where comment.name_id = name.id and (lower(comment.created_by) like ? or lower(comment.updated_by) like ?))",
+        @sql = @sql.where("exists (select null from comment where comment.author_id = author.id and (lower(comment.created_by) like ? or lower(comment.updated_by) like ?))",
                           canonical_value,canonical_value)
+      elsif WHERE_ASSERTION_HASH.has_key?(canonical_field)
+        @sql = @sql.where(WHERE_ASSERTION_HASH[canonical_field])
       elsif WHERE_INTEGER_VALUE_HASH.has_key?(canonical_field)
         @sql = @sql.where(WHERE_INTEGER_VALUE_HASH[canonical_field],canonical_value.to_i)
       else
@@ -80,6 +82,8 @@ class Search::OnAuthor::WhereClauses
   def canon_field(field)
     if WHERE_INTEGER_VALUE_HASH.has_key?(field)
       field
+    elsif WHERE_ASSERTION_HASH.has_key?(field)
+      field
     elsif WHERE_VALUE_HASH.has_key?(field)
       field
     elsif CANONICAL_FIELD_NAMES.has_value?(field)
@@ -92,7 +96,12 @@ class Search::OnAuthor::WhereClauses
   end
 
   WHERE_INTEGER_VALUE_HASH = { 
-    'id:' => "id = ? "
+    'id:' => "id = ? ",
+    'duplicate-of-id:' => "duplicate_of_id = ? "
+  }
+
+  WHERE_ASSERTION_HASH = { 
+    'duplicate:' => " duplicate_of_id is not null"
   }
 
   WHERE_VALUE_HASH = { 

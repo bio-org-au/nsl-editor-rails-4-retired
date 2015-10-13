@@ -68,6 +68,8 @@ class Search::OnReference::WhereClauses
         @sql = @sql.where(WHERE_INTEGER_VALUE_HASH_TWICE[canonical_field],canonical_value.to_i,canonical_value.to_i)
       elsif WHERE_INTEGER_VALUE_HASH.has_key?(canonical_field)
         @sql = @sql.where(WHERE_INTEGER_VALUE_HASH[canonical_field],canonical_value.to_i)
+      elsif WHERE_ASSERTION_HASH.has_key?(canonical_field)
+        @sql = @sql.where(WHERE_ASSERTION_HASH[canonical_field])
       else
         raise 'No way to handle field.' unless WHERE_VALUE_HASH.has_key?(canonical_field)
         @sql = @sql.where(WHERE_VALUE_HASH[canonical_field],canonical_value)
@@ -81,6 +83,8 @@ class Search::OnReference::WhereClauses
 
   def canon_field(field)
     if WHERE_INTEGER_VALUE_HASH.has_key?(field)
+      field
+    elsif WHERE_ASSERTION_HASH.has_key?(field)
       field
     elsif WHERE_INTEGER_VALUE_HASH_TWICE.has_key?(field)
       field
@@ -96,17 +100,30 @@ class Search::OnReference::WhereClauses
   end
 
   WHERE_INTEGER_VALUE_HASH = { 
-    'id:' => "id = ? "
+    'id:' => "id = ? ",
+    'author-id:' => "author_id = ? "
   }
 
   WHERE_INTEGER_VALUE_HASH_TWICE = { 
     'parent-id:' => "id = ? or parent_id = ?"
   }
 
+  WHERE_ASSERTION_HASH = { 
+    'is-duplicate:' => " duplicate_of_id is not null",
+    'is-not-duplicate:' => " duplicate_of_id is null",
+    'is-parent:' => " exists (select null from reference child where child.parent_id = reference.id) ",
+    'is-not-parent:' => " not exists (select null from reference child where child.parent_id = reference.id) ",
+    'has-no-child:' => " not exists (select null from reference child where child.parent_id = reference.id) ",
+    'has-no-parent:' => " parent_id is null",
+    'is-child:' => " parent_id is not null",
+    'is-not-child:' => " parent_id is null",
+  }
+
   WHERE_VALUE_HASH = { 
     'citation:' => "lower(citation) like ?)",
     'comments:' => " exists (select null from comment where comment.reference_id = reference.id and comment.text like ?) ",
     'comments-by:' => " exists (select null from comment where comment.reference_id = reference.id and comment.created_by like ?) ",
+    'ref-type:' => "ref_type_id in (select id from ref_type where lower(name) like ?)"
   }
 
   CANONICAL_FIELD_NAMES = {

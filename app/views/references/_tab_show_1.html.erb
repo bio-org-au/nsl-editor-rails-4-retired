@@ -55,34 +55,22 @@
 <% if instances_size > 0 %>
   <% if instances_size == 1 %>
     <%= link_to("1 Instance #{search_icon_on_tab}".html_safe,
-                          search_path(query_on: 'instance', 
-                                      query_field: 'ref-usages', 
-                                      query:  "#{@reference.id}"),
+                          search_path(query: "instances-for-ref-id: #{@reference.id}"), 
                           tabindex: increment_tab_index, 
                           title: 'Search for the instance.') %>
   <% else %>
     <%= "#{instances_size} Instances" %>
     <br>
     <%= link_to("&mdash; sorted by name #{search_icon_on_tab}".html_safe,
-                          search_path(query_on: 'instance', 
-                                      query_field: 'ref-usages', 
-                                      query_limit: '100', 
-                                      query_sort: 'name', 
-                                      query:  "#{@reference.id}"),
+                          search_path(query: "instances-for-ref-id: #{@reference.id}"),
                           tabindex: increment_tab_index, 
                           title: 'Search for the instances, sorted by name.') %>
-  <br>
-  <%= link_to("&mdash; sorted by page #{search_icon_on_tab}".html_safe,
-                          search_path(query_on: 'instance', 
-                                      query_field: 'ref-usages', 
-                                      query_limit: '100', 
-                                      query_sort: 'page', 
-                                      query:  "#{@reference.id}"),
+    <br>
+    <%= link_to("&mdash; sorted by page #{search_icon_on_tab}".html_safe,
+                          search_path(query: "instances-for-ref-id-sort-by-page: #{@reference.id}"),
                           tabindex: increment_tab_index, 
                           title: 'Search for the instances, sorted by page.') %>
-          <% end %>
-<% else %>
-  No instances
+   <% end %>
 <% end %>
 
 <% unless @reference.doi.blank? %>

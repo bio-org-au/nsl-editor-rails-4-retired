@@ -39,29 +39,6 @@ class Search::OnName::WhereClauses
     end
   end
 
-  def xxadd_clause(field,value)
-    if field.blank? && value.blank?
-      @sql
-    elsif field.blank?
-      @sql = @sql.lower_full_name_like(value.downcase)
-    elsif value.split(/,/).size > 1
-      case field
-      when /\Aname-rank:\z/
-        @sql = @sql.where("name_rank_id in (select id from name_rank where lower(name) in (?))",value.split(',').collect {|v| v.strip})
-      else
-        raise "This field does not handle multiple values separated by commas." 
-      end
-    elsif field.match(/\Acomments-by:\z/)
-        @sql = @sql.where("exists (select null from comment where comment.name_id = name.id and (lower(comment.created_by) like ? or lower(comment.updated_by) like ?))",
-                          value,value)
-    elsif WHERE_INTEGER_VALUE_HASH.has_key?(field)
-      @sql = @sql.where(WHERE_INTEGER_VALUE_HASH[field],value.to_i)
-    else
-      raise 'No such field.' unless WHERE_VALUE_HASH.has_key?(field)
-      @sql = @sql.where(WHERE_VALUE_HASH[field],value)
-    end
-  end
-
   def add_clause(field,value)
     if field.blank? && value.blank?
       @sql
@@ -90,6 +67,8 @@ class Search::OnName::WhereClauses
                           canonical_value,canonical_value)
       elsif WHERE_INTEGER_VALUE_HASH.has_key?(canonical_field)
         @sql = @sql.where(WHERE_INTEGER_VALUE_HASH[canonical_field],canonical_value.to_i)
+      elsif WHERE_ASSERTION_HASH.has_key?(canonical_field)
+        @sql = @sql.where(WHERE_ASSERTION_HASH[canonical_field])
       else
         raise 'No way to handle field.' unless WHERE_VALUE_HASH.has_key?(canonical_field)
         @sql = @sql.where(WHERE_VALUE_HASH[canonical_field],canonical_value)
@@ -103,6 +82,8 @@ class Search::OnName::WhereClauses
 
   def canon_field(field)
     if WHERE_INTEGER_VALUE_HASH.has_key?(field)
+      field
+    elsif WHERE_ASSERTION_HASH.has_key?(field)
       field
     elsif WHERE_VALUE_HASH.has_key?(field)
       field
@@ -144,11 +125,24 @@ class Search::OnName::WhereClauses
   WHERE_INTEGER_VALUE_HASH = { 
     'id:' => "id = ? ",
     'parent-id:' => "parent_id = ? ",
+    'second-parent-id:' => "second_parent_id = ? ",
     'author-id:' => "author_id = ? ",
     'base-author-id:' => "base_author_id = ? ",
     'ex-base-author-id:' => "ex_base_author_id = ? ",
     'ex-author-id:' => "ex_author_id = ? ",
     'sanctioning-author-id:' => "sanctioning_author_id = ? "
+  }
+
+  WHERE_ASSERTION_HASH = { 
+    'is-duplicate:' => " duplicate_of_id is not null",
+    'is-not-duplicate:' => " duplicate_of_id is null",
+    'is-parent:' => " exists (select null from name child where child.parent_id = name.id) ",
+    'is-not-parent:' => " not exists (select null from name child where child.parent_id = name.id) ",
+    'has-no-parent:' => " parent_id is null",
+    'is-child:' => " parent_id is not null",
+    'is-not-child:' => " parent_id is null",
+    'is-second-parent:' => " second_parent_id is not null",
+    'has-no-second-parent:' => " second_parent_id is null"
   }
 
   WHERE_VALUE_HASH = { 

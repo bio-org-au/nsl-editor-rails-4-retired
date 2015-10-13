@@ -72,7 +72,69 @@ $('input[type=search]')
     });
     */
 
-    $('#name-advanced-search-apply').on('click',function(e) {
+    $('#advanced-search-run').on('click',function(e) {
+      console.log('run search');
+      console.log($('#advanced-search-tabset li.active').length);
+      console.log($('#advanced-search-tabset li.active > a').attr('data-show-id'));
+      var currentTab = $('#advanced-search-tabset li.active > a').attr('data-show-id');
+      console.log("current tab: " + currentTab);
+      if(currentTab == 'advanced-search-name') {
+        loadNameSearch();
+      } else if (currentTab == 'advanced-search-reference') {
+        loadReferenceSearch();
+      } else if (currentTab == 'advanced-search-instance') {
+        loadInstanceSearch();
+      } else if (currentTab == 'advanced-search-author') {
+        loadAuthorSearch();
+      } else {
+        console.log('which tab?');
+      }
+      $('form#search-form').submit();
+    });
+
+$( "select#name-advanced-search-name-type-options" )
+  .change(function () {
+    console.log('changed');
+    var str = "";
+    $( "select#name-advanced-search-name-type-options option:selected" ).each(function() {
+      if (str.trim().length == 0) {
+        str = $( this ).val();
+      }else{
+        str += ", " + $( this ).val() 
+      }
+    });
+    $( "input#name-advanced-search-name-type-list" ).val( str );
+  })
+  .change();
+
+$( "select#name-advanced-search-list-or-count" )
+  .change(function () {
+    var val = $(this).val();
+    if ( val == 'count' ) {
+      /*$("input[id^=name_limited]:radio").attr('disabled',true); */
+      $("input#name-advanced-search-set-size").attr('disabled',true);
+    } else {
+      /* $("input[id^=name_limited]:radio").attr('disabled',false); */
+      $("input#name-advanced-search-set-size").attr('disabled',false);
+    }
+
+  });
+});
+
+-->
+    </script>
+
+    <script>
+<!--
+
+    function loadAuthorSearch() { 
+      console.log('loadAuthorSearch')};
+    function loadInstanceSearch() {
+      console.log('loadInstanceSearch')};
+    function loadReferenceSearch() {
+      console.log('loadReferenceSearch')};
+
+    function loadNameSearch() {
       var str = '';
       if ($('#name-advanced-search-list-or-count').val().trim().length > 0) {
         str += $('#name-advanced-search-list-or-count').val().trim();
@@ -140,26 +202,7 @@ $('input[type=search]')
         str += $('#name-advanced-search-comments-by').val().trim();
       }
       $('#query-string-field').val(str);
-    });
-});
-
-$( "select#name-advanced-search-name-type-options" )
-  .change(function () {
-    console.log('changed');
-    var str = "";
-    $( "select#name-advanced-search-name-type-options option:selected" ).each(function() {
-      if (str.trim().length == 0) {
-        str = $( this ).val();
-      }else{
-        str += ", " + $( this ).val() 
-      }
-    });
-    $( "input#name-advanced-search-name-type-list" ).val( str );
-  })
-  .change();
-
+    };
 -->
 
     </script>
-
-

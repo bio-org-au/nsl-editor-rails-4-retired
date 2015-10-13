@@ -1,12 +1,11 @@
 <% unless @search.empty %>
   <% if @search.count %> 
     <%= "Count: #{pluralize(@search.results,@search.target_table)}.  " %>
-    <% if @search.results == 0 %>
-      Consider a trailing wildcard (*). 
-    <% end %>
+    <%# if @search.results == 0 %>
+    <%# end %>
   <% else %>
     <% if @search.results.size == 0 %>
-      No records found. Consider a trailing wildcard (*). 
+      No records found. 
     <% else %>
       <%= "#{pluralize(@search.results.size,'records')} shown." %>
     <% end %>
