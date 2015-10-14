@@ -33,13 +33,10 @@
                 title: 'second parent') %>
 <% end %>
 
-<%#= render 'names/details/apni_family' %>
-
 <% if @name.duplicate_of_id.present? %>
   <br>
   <% link = link_to(@name.duplicate_of.full_name, search_path(query_on: 'name', query_field: 'id', query: @name.duplicate_of_id),title: 'Retrieve duplicate of', tabindex: increment_tab_index) %>
   <%= "Duplicate of #{link}".html_safe %>
-  <br>
 <% end %>
 
 <% unless @name.ex_base_author.blank? %>
@@ -85,11 +82,10 @@
                         tabindex: increment_tab_index,
                         title: "Search for the #{pluralize(@name.instances.size,'instance')}",
                         class: 'give-me-focus') %>
-  <%= render 'names/details/children' %>
-  <%#= render 'names/details/parents' %>
 <% else %>
-  No instances.<br>
+No instances
 <% end %>
+<%= render 'names/details/children' %>
 
 <%= render partial: 'names/details/apni_tree' %>
 <%= render partial: 'names/details/apc_tree' %>

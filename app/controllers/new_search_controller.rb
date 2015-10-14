@@ -19,6 +19,9 @@ class NewSearchController < ApplicationController
 
   def search
     @search = params[:query_string].present? ? Search::Base.new(params) : Search::Empty.new(params) 
+  rescue => e
+    @search = Search::Error.new(params) 
+    @error = e.to_s
   end
 
   def search_name_with_instances
@@ -27,4 +30,4 @@ class NewSearchController < ApplicationController
   end
 
 end
-
+  

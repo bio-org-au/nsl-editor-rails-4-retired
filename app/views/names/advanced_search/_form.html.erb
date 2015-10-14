@@ -22,10 +22,10 @@
     <td class="align-right width-15-percent">
     </td>
     <td>
-    <%= radio_button_tag(:name_limited, "true", class:'form-control') %>
-    <%= label_tag(:name_limited_true, "limited") %>
-    <%= radio_button_tag(:name_limited, "false", class:'form-control') %>
-    <%= label_tag(:name_limited_false, "unlimited") %>
+    <%#= radio_button_tag(:name_limited, "true", class:'form-control') %>
+    <%#= label_tag(:name_limited_true, "limited") %>
+    <%#= radio_button_tag(:name_limited, "false", class:'form-control') %>
+    <%#= label_tag(:name_limited_false, "unlimited") %>
     </td>
   </tr>
   -->
@@ -288,38 +288,68 @@
     <td class="align-right width-15-percent">
       <label for="query-on">Duplication</label>
     </td>
-    <td> <input type="checkbox" name="is-a-duplicate" value="true"> Is a duplicate <br> </td>
+    <td> <label><input type="checkbox" class="name-search-assertion" name="is-a-duplicate" value="is-a-duplicate:"> Is a duplicate</label> </td>
   </tr>
   <tr>
     <td></td>
     <td class="align-right width-15-percent">
     </td>
-    <td> <input type="checkbox" name="is-not-a-duplicate" value="true"> Is not a duplicate <br> </td>
+    <td> <label><input type="checkbox" class="name-search-assertion" name="is-not-a-duplicate" value="is-not-a-duplicate:"> Is not a duplicate </label></td>
+  </tr>
   <tr>
     <td></td>
     <td class="align-right width-15-percent">
       <label for="query-on">Parent</label>
     </td>
-    <td> <input type="checkbox" name="is-a-parent" value="true"> Is a parent <br> </td>
+    <td> <label><input type="checkbox" class="name-search-assertion" name="is-a-parent" value="is-a-parent:"> Is a parent </label></td>
   </tr>
   <tr>
     <td></td>
     <td class="align-right width-15-percent">
     </td>
-    <td> <input type="checkbox" name="is-not-a-parent" value="true"> Is not a parent <br> </td>
+    <td> <label><input type="checkbox" class="name-search-assertion" name="is-not-a-parent" value="is-not-a-parent:"> Is not a parent </label></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td class="align-right width-15-percent">
+    </td>
+    <td> <label><input type="checkbox" class="name-search-assertion" name="has-no-parent" value="has-no-parent:"> Has no parent </label></td>
   </tr>
   <tr>
     <td></td>
     <td class="align-right width-15-percent">
       <label for="query-on">Child</label>
     </td>
-    <td> <input type="checkbox" name="is-a-child" value="true"> Is a child <br> </td>
+    <td> <label><input type="checkbox" class="name-search-assertion" name="is-a-child" value="is-a-child:"> Is a child </label></td>
   </tr>
   <tr>
     <td></td>
     <td class="align-right width-15-percent">
     </td>
-    <td> <input type="checkbox" name="is-not-a-child" value="true"> Is not a child <br> </td>
+    <td> <label><input type="checkbox" class="name-search-assertion" name="is-not-a-child" value="is-not-a-child:"> Is not a child </label></td>
+  <tr>
+    <td></td>
+    <td class="align-right width-15-percent">
+    </td>
+    <td> <label><input type="checkbox" class="name-search-assertion" name="has-a-second-parent" value="has-a-second-parent:"> Has a second parent </label></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td class="align-right width-15-percent"> </td>
+    <td> <label><input type="checkbox" class="name-search-assertion" name="has-no-second-parent" value="has-no-second-parent:"> Has no second parent </label></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td class="align-right width-15-percent">
+      <label for="query-on">Second Parent</label>
+    </td>
+    <td> <label><input type="checkbox" class="name-search-assertion" name="is-a-second-parent" value="is-a-second-parent:"> Is a second parent </label></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td class="align-right width-15-percent">
+    </td>
+    <td> <label><input type="checkbox" class="name-search-assertion" name="is-not-a-second-parent" value="is-not-a-second-parent:"> Is not a second parent </label></td>
   </tr>
   </table>
 </form>

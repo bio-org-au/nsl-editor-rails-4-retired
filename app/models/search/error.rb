@@ -14,7 +14,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #   
-class Search::Empty
+class Search::Error
 
   attr_reader :canonical_query_string, 
               :common_and_cultivar, 
@@ -37,21 +37,20 @@ class Search::Empty
               :defined_query
 
   def initialize(params)
-    Rails.logger.debug("Search::Empty start")
+    Rails.logger.debug("Search::Error start with query string: #{params[:query_string]}")
     Rails.logger.debug("#{'=' * 40}")
-    @params = params
+    params = params
     @canonical_query_string = ''
     @common_and_cultivar = ''
     @common_and_cultivar_included= false
     @count = false
-    @empty = true
-    @error = false
+    @empty = false
+    @error = true
     @info_for_display = ''
     @limit = 0
     @limited = false
     @order = ''
-    @params = {}
-    @query_string = ''
+    @query_string = params[:query_string]
     @rejected_pairings = []
     @results = []
     @target_table = ''

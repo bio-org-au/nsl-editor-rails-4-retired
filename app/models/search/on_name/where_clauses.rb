@@ -134,15 +134,17 @@ class Search::OnName::WhereClauses
   }
 
   WHERE_ASSERTION_HASH = { 
-    'is-duplicate:' => " duplicate_of_id is not null",
-    'is-not-duplicate:' => " duplicate_of_id is null",
-    'is-parent:' => " exists (select null from name child where child.parent_id = name.id) ",
-    'is-not-parent:' => " not exists (select null from name child where child.parent_id = name.id) ",
+    'is-a-duplicate:' => " duplicate_of_id is not null",
+    'is-not-a-duplicate:' => " duplicate_of_id is null",
+    'is-a-parent:' => " exists (select null from name child where child.parent_id = name.id) ",
+    'is-not-a-parent:' => " not exists (select null from name child where child.parent_id = name.id) ",
     'has-no-parent:' => " parent_id is null",
-    'is-child:' => " parent_id is not null",
-    'is-not-child:' => " parent_id is null",
-    'is-second-parent:' => " second_parent_id is not null",
-    'has-no-second-parent:' => " second_parent_id is null"
+    'is-a-child:' => " parent_id is not null",
+    'is-not-a-child:' => " parent_id is null",
+    'has-a-second-parent:' => " second_parent_id is not null",
+    'has-no-second-parent:' => " second_parent_id is null",
+    'is-a-second-parent:' => " exists (select null from name child where child.second_parent_id = name.id) ",
+    'is-not-a-second-parent:' => " not exists (select null from name child where child.second_parent_id = name.id) "
   }
 
   WHERE_VALUE_HASH = { 
@@ -151,11 +153,11 @@ class Search::OnName::WhereClauses
     'name-status:' => "name_status_id in (select id from name_status where lower(name) like ?)",
     'below-name-rank:' => "name_rank_id in (select id from name_rank where sort_order > (select sort_order from name_rank the_nr where lower(the_nr.name) like ?))",
     'above-name-rank:' => "name_rank_id in (select id from name_rank where sort_order < (select sort_order from name_rank the_nr where lower(the_nr.name) like ?))",
-    'author-abbrev:' => "author_id in (select id from author where lower(abbrev) like ?)",
-    'ex-author-abbrev:' => "ex_author_id in (select id from author where lower(abbrev) like ?)",
-    'base-author-abbrev:' => "base_author_id in (select id from author where lower(abbrev) like ?)",
-    'ex-base-author-abbrev:' => "ex_base_author_id in (select id from author where lower(abbrev) like ?)",
-    'sanctioning-author-abbrev:' => "sanctioning_author_id in (select id from author where lower(abbrev) like ?)",
+    'author:' => "author_id in (select id from author where lower(abbrev) like ?)",
+    'ex-author:' => "ex_author_id in (select id from author where lower(abbrev) like ?)",
+    'base-author:' => "base_author_id in (select id from author where lower(abbrev) like ?)",
+    'ex-base-author:' => "ex_base_author_id in (select id from author where lower(abbrev) like ?)",
+    'sanctioning-author:' => "sanctioning_author_id in (select id from author where lower(abbrev) like ?)",
     'comments:' => " exists (select null from comment where comment.name_id = name.id and comment.text like ?) ",
     'comments-by:' => " exists (select null from comment where comment.name_id = name.id and comment.text like ?) ",
     'comments-but-no-instances:' => 

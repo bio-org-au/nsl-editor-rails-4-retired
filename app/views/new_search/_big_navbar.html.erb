@@ -33,7 +33,10 @@
       </div>
       <% unless @no_advanced_search %>
         <ul id="search-results-tabset" class="nav nav-tabs low">
-          <li role="presentation" class="active"><a id="search-results-tab-container-link" title="Search Results" href="#">Results</a></li>
+          <li role="presentation" class="<%= 'active' unless @search.count || @search.empty || @search.error %>">
+            <a id="search-results-tab-container-link" title="Search Results" href="#">Results</a>
+          </li>
+          <li role="presentation" class=""><a id="example-search-tab-container-link" title="Example Searches" href="#">Examples</a></li>
           <li role="presentation" class=""><a id="advanced-search-tab-container-link" title="Advanced Search" href="#">Advanced</a></li>
         </ul>
       <% end %>

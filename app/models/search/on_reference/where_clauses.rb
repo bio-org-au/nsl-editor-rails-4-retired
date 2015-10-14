@@ -110,6 +110,7 @@ class Search::OnReference::WhereClauses
 
   WHERE_ASSERTION_HASH = { 
     'is-duplicate:' => " duplicate_of_id is not null",
+    'is-a-duplicate:' => " duplicate_of_id is not null",
     'is-not-duplicate:' => " duplicate_of_id is null",
     'is-parent:' => " exists (select null from reference child where child.parent_id = reference.id) ",
     'is-not-parent:' => " not exists (select null from reference child where child.parent_id = reference.id) ",

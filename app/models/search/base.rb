@@ -21,6 +21,7 @@ class Search::Base
               :common_and_cultivar_included,
               :count, 
               :empty, 
+              :error, 
               :info_for_display, 
               :limit, 
               :limited, 
@@ -30,12 +31,15 @@ class Search::Base
               :rejected_pairings, 
               :results, 
               :target_table, 
-              :where_arguments 
+              :where_arguments,
+              :defined_query,
+              :more_allowed
 
   def initialize(params)
     Rails.logger.debug("Search::Base start")
     @params = params
     @empty = false
+    @error = false
     parse_query
     if @defined_query
       Rails.logger.debug("Search::Base has a defined query: #{@defined_query}")
@@ -58,6 +62,31 @@ class Search::Base
     @order = @parsed_query.order
     @where_arguments = @parsed_query.where_arguments
     @canonical_query_string = @parsed_query.canonical_query_string
+  end
+
+  def query_string_for_more
+    query_string_without_limit.sub(/^ *list/i,'').sub(/^ *\d+/,'').sub(/^/,'all ')
+    raw_limit = @query_string.sub(/^ *list/i,'').trim().split.first
+
+    current_limit = case raw_limit
+    when /all/i
+      'all'
+    when /\d+/
+      raw_limit.to_i
+    else
+      100
+    end
+    if current_limit == 'all'
+      @more_allowed = false
+      new_limit = current_limit
+    elsif current_limit >= 1000
+      @more_allowed = false
+      new_limit = current_limit
+    else
+      @more_allowed = true
+      new_limit = current_limit + 500 > 1000 ? 1000 : current_limit + 500
+    end
+    "#{new_limit} #{query_string_without_limit}"
   end
   
   def run_query

@@ -1,0 +1,96 @@
+<div id="example-search-inner">
+
+<br>
+<p>Example search links.</p>
+<br>
+  <ul class="list-group example-searches">
+    <li class="list-group-item"><a href="javascript:void(0)" class="example-search-link width-100-percent" title="Link to search">
+        List 100 names starting with "acacia" | <span class="darkslateblue">acacia* </span></a></li> 
+  </ul
+  <br>
+  <ul class="list-group example-searches">
+    <li class="list-group-item"><a href="javascript:void(0)" class="example-search-link" title="Link to search">
+        Count names starting with "acacia" excluding common and cultivar names | <span class="darkslateblue">count acacia* </span>
+    </a></li> 
+  </ul
+  <br>
+  <ul class="list-group example-searches">
+    <li class="list-group-item"><a href="javascript:void(0)" class="example-search-link" title="Link to search">
+        Count <em>all</em> names starting with "acacia" | <span class="darkslateblue">count acacia* nt:*</span>
+    </a></li> 
+  </ul
+  <br>
+  <ul class="list-group example-searches">
+    <li class="list-group-item"><a href="javascript:void(0)" class="example-search-link" title="Link to search">
+        Count common or cultivar names starting with "acacia" | <span class="darkslateblue">count acacia* nt:common,cultivar </span>
+    </a></li> 
+  </ul
+  <br>
+  <ul class="list-group example-searches">
+    <li class="list-group-item"><a href="javascript:void(0)" class="example-search-link" title="Link to search">
+        List common or cultivar names starting with "acacia" | <span class="darkslateblue">acacia* nt:common,cultivar </span>
+    </a></li> 
+  </ul
+  <br>
+  <ul class="list-group example-searches">
+    <li class="list-group-item"><a href="javascript:void(0)" class="example-search-link" title="Link to search">
+        Explicitly list common or cultivar names starting with "acacia" | <span class="darkslateblue">list acacia* nt:common,cultivar </span>
+    </a></li> 
+  </ul
+  <br>
+  <ul class="list-group example-searches">
+    <li class="list-group-item"><a href="javascript:void(0)" class="example-search-link" title="Link to search">
+        Even more explicitly list common or cultivar names starting with "acacia" | <span class="darkslateblue">list name acacia* nt:common,cultivar </span>
+    </a></li> 
+  </ul
+  <br>
+  <ul class="list-group example-searches">
+    <li class="list-group-item"><a href="javascript:void(0)" class="example-search-link" title="Link to search">
+        List 5 names starting with "acacia" | <span class="darkslateblue">5 acacia* </span>
+    </a></li> 
+  </ul
+  <br>
+  <ul class="list-group example-searches">
+    <li class="list-group-item"><a href="javascript:void(0)" class="example-search-link" title="Link to search">
+        List 1000 names starting with "acacia" | <span class="darkslateblue">1000 acacia* </span>
+    </a></li> 
+  </ul
+  <br>
+  <ul class="list-group example-searches">
+    <li class="list-group-item"><a href="javascript:void(0)" class="example-search-link" title="Link to search">
+        List all names starting with "acacia" (currently capped at 1000) | <span class="darkslateblue">all acacia* </span>
+    </a></li> 
+  </ul
+  <br>
+
+  <p>Remove "count" to list the names</p>
+  <ul class="list-group example-searches">
+    <li class="list-group-item"><a href="javascript:void(0)">acacia* nt:common,cultivar</a> - List all common or cultivar names starting with acacia.</li> 
+    <li class="list-group-item"><a href="javascript:void(0)">list acacia* nt:common,cultivar</a> - this works too.</li> 
+  </ul
+  <br>
+
+  <p>Reference searches</p>
+  <ul class="list-group example-searches">
+    <li class="list-group-item"><a href="javascript:void(0)"> count ref </a> - adding "ref" at the start makes it a reference search</li> 
+  </ul>
+  <br>
+
+  <p>Use reference types</p>
+  <ul class="list-group example-searches">
+    <li class="list-group-item"><a href="javascript:void(0)"> count ref ref-type:paper </a> - count papers</li> 
+  </ul>
+
+  <p>Use assertions </p>
+  <ul class="list-group example-searches">
+    <li class="list-group-item"><a href="javascript:void(0)"> count ref has-no-parent: ref-type:paper </a> - count papers with no parent</li> 
+    <li class="list-group-item"><a href="javascript:void(0)"> count ref has-no-child: ref-type:journal </a> - count papers with no parent</li> 
+    <li class="list-group-item"><a href="javascript:void(0)"> count ref is-a-duplicate: </a> - count duplicate references</li> 
+  </ul>
+
+  </ul>
+  <ul class="list-group example-searches">
+    <li class="list-group-item"><a href="javascript:void(0)"> count author </a> - count all authors; adding "author" at the start makes it an author search </li> 
+  </ul>
+
+</div>

@@ -41,15 +41,27 @@ $('input[type=search]')
       $(this).parent('li').addClass('active');
       $('#advanced-search-container').removeClass('hidden');
       $('#search-result-container').addClass('hidden');
+      $('#example-search-container').addClass('hidden');
       captureSearch(e,this);
     });
 
     $('ul#search-results-tabset li a#search-results-tab-container-link').on('click',function(e) {
       $('ul#search-results-tabset li').removeClass('active');
       $(this).parent('li').addClass('active');
-      $('#advanced-search-container').addClass('hidden');
       $('#search-result-container').removeClass('hidden');
+      $('#advanced-search-container').addClass('hidden');
+      $('#example-search-container').addClass('hidden');
     });
+
+    $('ul#search-results-tabset li a#example-search-tab-container-link').on('click',function(e) {
+      $('ul#search-results-tabset li').removeClass('active');
+      $(this).parent('li').addClass('active');
+      $('#search-result-container').addClass('hidden');
+      $('#search-result-details').addClass('hidden');
+      $('#advanced-search-container').addClass('hidden');
+      $('#example-search-container').removeClass('hidden');
+    });
+
 
     $('ul#advanced-search-tabset li a').on('click',function(e) {
       $('.advanced-search-tab').addClass('hidden');
@@ -121,6 +133,12 @@ $( "select#name-advanced-search-list-or-count" )
   });
 });
 
+
+    $('ul.example-searches li a').on('click',function(e) {
+      $('#query-string-field').val($(this).html().replace(/.*\|/,'').replace(/<[^>]*>/g,''));
+      $('form#search-form').submit();
+    });
+
 -->
     </script>
 
@@ -174,23 +192,23 @@ $( "select#name-advanced-search-list-or-count" )
         str += $('#name_search_name_status_id').val().trim();
       }
       if ($('#name-advanced-search-author-abbrev').val().trim().length > 0) {
-        str += ' author-abbrev: ';
+        str += ' author: ';
         str += $('#name-advanced-search-author-abbrev').val().trim();
       }
       if ($('#name-advanced-search-ex-author-abbrev').val().trim().length > 0) {
-        str += ' ex-author-abbrev: ';
+        str += ' ex-author: ';
         str += $('#name-advanced-search-ex-author-abbrev').val().trim();
       }
       if ($('#name-advanced-search-base-author-abbrev').val().trim().length > 0) {
-        str += ' base-author-abbrev: ';
+        str += ' base-author: ';
         str += $('#name-advanced-search-base-author-abbrev').val().trim();
       }
       if ($('#name-advanced-search-ex-base-author-abbrev').val().trim().length > 0) {
-        str += ' ex-base-author-abbrev: ';
+        str += ' ex-base-author: ';
         str += $('#name-advanced-search-ex-base-author-abbrev').val().trim();
       }
       if ($('#name-advanced-search-sanctioning-author-abbrev').val().trim().length > 0) {
-        str += ' sanctioning-author-abbrev: ';
+        str += ' sanctioning-author: ';
         str += $('#name-advanced-search-sanctioning-author-abbrev').val().trim();
       }
       if ($('#name-advanced-search-comments').val().trim().length > 0) {
@@ -201,6 +219,9 @@ $( "select#name-advanced-search-list-or-count" )
         str += ' comments-by: ';
         str += $('#name-advanced-search-comments-by').val().trim();
       }
+      $('.name-search-assertion:checked').map(function() {
+        str += ' ' + this.value + ' ';
+      });
       $('#query-string-field').val(str);
     };
 -->

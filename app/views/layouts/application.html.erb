@@ -55,6 +55,9 @@
       <div id="search-result-details" > </div>
     <% end %>
       <div class="row">
+        <div id="search-result-container" class="no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 sidebar" >
+          <%= yield %>
+        </div>
         <% unless @no_advanced_search %>
           <div id="advanced-search-container" 
           style="height: 100%; min-height: 800px; overflow-y: scroll; height: 900px; min-height: 900px; padding-bottom: 4em; margin-bottom: 8em;" 
@@ -62,8 +65,10 @@
             <%= render partial: 'new_search/advanced_search_inner' %>
           </div>
         <% end %>
-        <div id="search-result-container" class="no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 sidebar" >
-          <%= yield %>
+        <div id="example-search-container" 
+             style="height: 100%; min-height: 800px; overflow-y: scroll; height: 900px; min-height: 900px; padding-bottom: 4em; margin-bottom: 8em;" 
+             class="no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 sidebar hidden">
+            <%= render partial: 'new_search/example_search_inner' %>
         </div>
       </div>
     </div>

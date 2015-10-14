@@ -1,25 +1,39 @@
-<% unless @search.empty %>
-  <% if @search.count %> 
-    <%= "Count: #{pluralize(@search.results,@search.target_table)}.  " %>
-    <%# if @search.results == 0 %>
-    <%# end %>
-  <% else %>
-    <% if @search.results.size == 0 %>
-      No records found. 
+<% if @search.defined_query %>
+  Defined query.
+<% end %>
+<% if @error.present? %>
+  <%= @error %>
+<% else %>
+  <% unless @search.empty %>
+    <% if @search.count %> 
+      <%= "Count: #{pluralize(@search.results,@search.target_table)}.  " %>
     <% else %>
-      <%= "#{pluralize(@search.results.size,'records')} shown." %>
+      <% if @search.results.size == 0 %>
+        No records found. 
+      <% else %>
+        <%= "#{pluralize(@search.results.size,'records')} shown." %>
+      <% end %>
     <% end %>
-  <% end %>
-  <% if @search.target_table.match(/name/i) %>
-    <% if @search.common_and_cultivar_included %>
-      <span id="includes-common-cultivar-notice"></span>
-    <% else %>
-      <span id="excludes-common-cultivar-notice">Search excludes common and cultivar.</span>
+    <% if @search.target_table.match(/name/i) %>
+      <% if @search.common_and_cultivar_included %>
+        <span id="includes-common-cultivar-notice"></span>
+      <% else %>
+        <span id="excludes-common-cultivar-notice">Search excludes common and cultivar. (make link to cc)</span>
+      <% end %>
     <% end %>
-  <% end %>
-  <% if !@search.count && @search.results.size == @search.limit %>
-    <span id="search-results-limited-notice">
-      <%= "Limited." %>
-    </span>
+    <% if !@search.count && @search.results.size == @search.limit %>
+      <span id="search-results-limited-notice">
+        <%= "Limited." %>
+        <%= link_to('List more', new_search_path(query_string: "#{@search.query_string.sub(/^ *\d+/,'').sub(/^/,%Q(#{@search.results.size+100} ))}"), title: 'List 100 more.') %>
+        <% if @search.more_allowed %>
+          <%= link_to('List more', new_search_path(query_string: "#{@search.query_string_for_more}"), title: 'List more.') %>
+        <% end %>
+        <%= link_to('Count', new_search_path(query_string: "count #{@search.query_string.sub(/list */i,'')}")) %>
+      </span>
+    <% end %>
+    <% if @search.count && @search.results > 0 %> 
+      <%= link_to('List', new_search_path(query_string: "#{@search.query_string.sub(/count */i,'')}")) %>
+    <% end %>
   <% end %>
 <% end %>
+[Always show count?]
