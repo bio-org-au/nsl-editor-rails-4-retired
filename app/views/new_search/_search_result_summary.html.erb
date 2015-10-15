@@ -6,29 +6,35 @@
 <% else %>
   <% unless @search.empty %>
     <% if @search.count %> 
-      <%= "Count: #{pluralize(@search.results,@search.target_table)}.  " %>
+      <%= "#{pluralize(@search.results,@search.target_table)}.  " %>
     <% else %>
       <% if @search.results.size == 0 %>
         No records found. 
       <% else %>
-        <%= "#{pluralize(@search.results.size,'records')} shown." %>
+        <% if @search.results.size == @search.limit %>
+          <% Rails.logger.debug('before count') %>
+          <% num = @search.results.except(:offset,:limit,:order).count %>
+          <% Rails.logger.debug('after count') %>
+        <% else %>
+          <% num = @search.results.size %>
+        <% end %>
+        <%= "#{pluralize(@search.results.size,"of #{num} records")} shown." %>
       <% end %>
     <% end %>
     <% if @search.target_table.match(/name/i) %>
       <% if @search.common_and_cultivar_included %>
         <span id="includes-common-cultivar-notice"></span>
       <% else %>
-        <span id="excludes-common-cultivar-notice">Search excludes common and cultivar. (make link to cc)</span>
+        <%= link_to('Include common,cultivar names.', new_search_path(query_string: "#{@search.query_string.strip} nt:*"), title: 'Query including cultivar and common.') %>
       <% end %>
     <% end %>
     <% if !@search.count && @search.results.size == @search.limit %>
       <span id="search-results-limited-notice">
-        <%= "Limited." %>
         <%= link_to('List more', new_search_path(query_string: "#{@search.query_string.sub(/^ *\d+/,'').sub(/^/,%Q(#{@search.results.size+100} ))}"), title: 'List 100 more.') %>
         <% if @search.more_allowed %>
           <%= link_to('List more', new_search_path(query_string: "#{@search.query_string_for_more}"), title: 'List more.') %>
         <% end %>
-        <%= link_to('Count', new_search_path(query_string: "count #{@search.query_string.sub(/list */i,'')}")) %>
+        <%= link_to('Just count', new_search_path(query_string: "count #{@search.query_string.sub(/list */i,'')}")) %>
       </span>
     <% end %>
     <% if @search.count && @search.results > 0 %> 
@@ -36,4 +42,3 @@
     <% end %>
   <% end %>
 <% end %>
-[Always show count?]

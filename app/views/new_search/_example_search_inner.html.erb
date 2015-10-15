@@ -1,78 +1,146 @@
-<div id="example-search-inner">
+<div id="example-search-inner" class="width-100-percent">
 
 <br>
-<p>Example search links.</p>
+<% excc = %Q(<span class="purple" title="Excluding common and cultivar">EXCC.</span>) %>
+<p>Search names.</p>
+<table class="example-searches table table-striped">
+  <% [{search_string: "acacia*",explanation: %Q(List names starting with "acacia".  Bare search is on names. 100 records is the default.)},
+      {search_string: "acacia* nt:*", 
+       explanation: %Q(Also include common and cultivar names which are normally excluded. (Default: <span class="purple" title="Excluding common and cultivar">EXCC</span>).)},
+      {search_string: "acacia", explanation: %Q(Find no names exactly matching "acacia".  A case for using wildcards. #{excc})},
+      {search_string: "acacia nt:*", explanation: %Q(Find names exactly matching "acacia", including common or cultivar.)},
+      {search_string: "acacia nt:common,cultivar", explanation: %Q(Find just common or cultivar names exactly matching "acacia".)},
+      {search_string: "acacia* nr: genus", explanation: %Q(List any name starting with "acacia" that is a genus. #{excc})},
+      {search_string: "acacia* nr: genus is-not-a-duplicate:", explanation: %Q(List any name starting with "acacia" that is a genus and is not a duplicate. #{excc})}
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent"><a href="javascript:void(0)" 
+           class="example-search width-100-percent" 
+           title="Link to search">
+           <span class="darkslateblue"><%= val[:search_string] %></span>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
 <br>
-  <ul class="list-group example-searches">
-    <li class="list-group-item"><a href="javascript:void(0)" class="example-search-link width-100-percent" title="Link to search">
-        List 100 names starting with "acacia" | <span class="darkslateblue">acacia* </span></a></li> 
-  </ul
-  <br>
-  <ul class="list-group example-searches">
-    <li class="list-group-item"><a href="javascript:void(0)" class="example-search-link" title="Link to search">
-        Count names starting with "acacia" excluding common and cultivar names | <span class="darkslateblue">count acacia* </span>
-    </a></li> 
-  </ul
-  <br>
-  <ul class="list-group example-searches">
-    <li class="list-group-item"><a href="javascript:void(0)" class="example-search-link" title="Link to search">
-        Count <em>all</em> names starting with "acacia" | <span class="darkslateblue">count acacia* nt:*</span>
-    </a></li> 
-  </ul
-  <br>
-  <ul class="list-group example-searches">
-    <li class="list-group-item"><a href="javascript:void(0)" class="example-search-link" title="Link to search">
-        Count common or cultivar names starting with "acacia" | <span class="darkslateblue">count acacia* nt:common,cultivar </span>
-    </a></li> 
-  </ul
-  <br>
-  <ul class="list-group example-searches">
-    <li class="list-group-item"><a href="javascript:void(0)" class="example-search-link" title="Link to search">
-        List common or cultivar names starting with "acacia" | <span class="darkslateblue">acacia* nt:common,cultivar </span>
-    </a></li> 
-  </ul
-  <br>
-  <ul class="list-group example-searches">
-    <li class="list-group-item"><a href="javascript:void(0)" class="example-search-link" title="Link to search">
-        Explicitly list common or cultivar names starting with "acacia" | <span class="darkslateblue">list acacia* nt:common,cultivar </span>
-    </a></li> 
-  </ul
-  <br>
-  <ul class="list-group example-searches">
-    <li class="list-group-item"><a href="javascript:void(0)" class="example-search-link" title="Link to search">
-        Even more explicitly list common or cultivar names starting with "acacia" | <span class="darkslateblue">list name acacia* nt:common,cultivar </span>
-    </a></li> 
-  </ul
-  <br>
-  <ul class="list-group example-searches">
-    <li class="list-group-item"><a href="javascript:void(0)" class="example-search-link" title="Link to search">
-        List 5 names starting with "acacia" | <span class="darkslateblue">5 acacia* </span>
-    </a></li> 
-  </ul
-  <br>
-  <ul class="list-group example-searches">
-    <li class="list-group-item"><a href="javascript:void(0)" class="example-search-link" title="Link to search">
-        List 1000 names starting with "acacia" | <span class="darkslateblue">1000 acacia* </span>
-    </a></li> 
-  </ul
-  <br>
-  <ul class="list-group example-searches">
-    <li class="list-group-item"><a href="javascript:void(0)" class="example-search-link" title="Link to search">
-        List all names starting with "acacia" (currently capped at 1000) | <span class="darkslateblue">all acacia* </span>
-    </a></li> 
-  </ul
-  <br>
+<p>Turn any list search into a count search.</p>
+<table class="example-searches table table-striped">
+  <% [{search_string: "count acacia*",explanation: %Q(Count names starting with "acacia". #{excc})},
+      {search_string: "count nr: genus is-not-a-duplicate:", explanation: %Q(Count non-duplicate genera. #{excc})},
+      {search_string: "count acacia* nt:*", explanation: %Q(Count names starting with "acacia".)},
+      {search_string: "count acacia* nt:common,cultivar", explanation: %Q(Count common or cultivar names starting with "acacia".)},
+      {search_string: "count is-a-duplicate:", explanation: %Q(Count duplicate names. #{excc})}
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent"><a href="javascript:void(0)" 
+           class="example-search width-100-percent" 
+           title="Link to search">
+           <span class="darkslateblue"><%= val[:search_string] %></span>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+<br>
 
-  <p>Remove "count" to list the names</p>
+<p>Control the number of records shown.</p>
+<table class="example-searches table table-striped">
+  <% [{search_string: "5 acacia*",explanation: %Q(List 5 names starting with "acacia". #{excc})},
+      {search_string: "50 acacia*", explanation: %Q(List 50 names starting with "acacia". #{excc})},
+      {search_string: "1000 acacia*", explanation: %Q(List 1000 names starting with "acacia". #{excc} <span class="red">1000 is the maximum.</span>)},
+      {search_string: "all acacia*", explanation: %Q(List 1000 names starting with "acacia". #{excc} <span class="red">1000 is the maximum.</span>)}
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent"><a href="javascript:void(0)" 
+           class="example-search width-100-percent" 
+           title="Link to search">
+           <span class="darkslateblue"><%= val[:search_string] %></span>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+<br>
+
+
+
+
   <ul class="list-group example-searches">
-    <li class="list-group-item"><a href="javascript:void(0)">acacia* nt:common,cultivar</a> - List all common or cultivar names starting with acacia.</li> 
-    <li class="list-group-item"><a href="javascript:void(0)">list acacia* nt:common,cultivar</a> - this works too.</li> 
-  </ul
+    <li class="list-group-item"><a href="javascript:void(0)" class="example-search width-100-percent" title="Link to search">
+        <span class="darkslateblue">acacia* </span><span class="pull-right">| List 100 names starting with "acacia"</span></a></li> 
+  </ul>
+  <br>
+  <ul class="list-group example-searches">
+    <li class="list-group-item"><a href="javascript:void(0)" class="example-search width-100-percent" title="Link to search">
+        List 100 names starting with "acacia" <span class="hidden">|</span> <span class="xpull-right darkslateblue">acacia* </span></a></li> 
+  </ul>
+  <br>
+  <ul class="list-group example-searches">
+    <li class="list-group-item"><a href="javascript:void(0)" class="example-search" title="Link to search">
+        Count names starting with "acacia" excluding common and cultivar names | <span class="xpull-right darkslateblue">count acacia* </span>
+    </a></li> 
+  </ul>
+  <br>
+  <ul class="list-group example-searches">
+    <li class="list-group-item"><a href="javascript:void(0)" class="example-search" title="Link to search">
+        Count <strong>all</strong> names starting with "acacia" | <span class="xpull-right darkslateblue">count acacia* nt:*</span>
+    </a></li> 
+  </ul>
+  <br>
+  <ul class="list-group example-searches">
+    <li class="list-group-item"><a href="javascript:void(0)" class="example-search" title="Link to search">
+        Count common or cultivar names starting with "acacia" | <span class="xpull-right darkslateblue">count acacia* nt:common,cultivar </span>
+    </a></li> 
+  </ul>
+  <br>
+  <ul class="list-group example-searches">
+    <li class="list-group-item"><a href="javascript:void(0)" class="example-search" title="Link to search">
+        List common or cultivar names starting with "acacia" | <span class="xpull-right darkslateblue">acacia* nt:common,cultivar </span>
+    </a></li> 
+  </ul>
+  <br>
+  <ul class="list-group example-searches">
+    <li class="list-group-item"><a href="javascript:void(0)" class="example-search" title="Link to search">
+        Explicitly list common or cultivar names starting with "acacia" | <span class="xpull-right darkslateblue">list acacia* nt:common,cultivar </span>
+    </a></li> 
+  </ul>
+  <br>
+  <ul class="list-group example-searches">
+    <li class="list-group-item"><a href="javascript:void(0)" class="example-search" title="Link to search">
+        Even more explicitly list common or cultivar names starting with "acacia" | <span class="xpull-right darkslateblue">list name acacia* nt:common,cultivar </span>
+    </a></li> 
+  </ul>
+  <br>
+  <ul class="list-group example-searches">
+    <li class="list-group-item"><a href="javascript:void(0)" class="example-search" title="Link to search">
+        List 5 names starting with "acacia" | <span class="xpull-right darkslateblue">5 acacia* </span>
+    </a></li> 
+  </ul>
+  <br>
+  <ul class="list-group example-searches">
+    <li class="list-group-item"><a href="javascript:void(0)" class="example-search" title="Link to search">
+        List 1000 names starting with "acacia" | <span class="xpull-right darkslateblue">1000 acacia* </span>
+    </a></li> 
+  </ul>
+  <br>
+  <ul class="list-group example-searches">
+    <li class="list-group-item"><a href="javascript:void(0)" class="example-search" title="Link to search">
+        List all names starting with "acacia" <span class="red">(currently capped at 1000)</span> | <span class="xpull-right darkslateblue">all acacia* </span>
+    </a></li> 
+  </ul>
   <br>
 
   <p>Reference searches</p>
   <ul class="list-group example-searches">
-    <li class="list-group-item"><a href="javascript:void(0)"> count ref </a> - adding "ref" at the start makes it a reference search</li> 
+    <li class="list-group-item"><a href="javascript:void(0)" class="example-search" title="Link to search">
+        Add "ref" after "count" makes it a reference search | <span class="xpull-right darkslateblue">count <strong>ref</strong> </span>
+    </a></li> 
+  </ul>
+  <ul class="list-group example-searches">
+    <li class="list-group-item"><a href="javascript:void(0)" class="example-search" title="Link to search">
+        Restrict by type | <span class="xpull-right darkslateblue">count ref <strong>ref-type:paper</strong> </span>
+    </a></li> 
   </ul>
   <br>
 
