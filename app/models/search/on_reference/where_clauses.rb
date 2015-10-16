@@ -32,7 +32,7 @@ class Search::OnReference::WhereClauses
     x = 0 
     until remaining_string.blank?
       field,value,remaining_string = Search::NextCriterion.new(remaining_string).get 
-      Rails.logger.info("field: #{field}; value: #{value}")
+      Rails.logger.debug("Search::OnReference::WhereClause.sql#build_sql; field: #{field}; value: #{value}")
       add_clause(field,value)
       x += 1
       raise "endless loop #{x}" if x > 50
@@ -40,11 +40,10 @@ class Search::OnReference::WhereClauses
   end
 
   def add_clause(field,value)
+    Rails.logger.debug("Search::OnReference::WhereClause.sql#add_clause; field: #{field}; value: #{value}")
     if field.blank? && value.blank?
       @sql
     elsif field.blank?
-      @sql = @sql.lower_citation_like(value.downcase)
-    elsif field.match(/\Acitation:\z/)
       @sql = @sql.lower_citation_like(value.downcase)
     else 
       # we have a field
@@ -52,17 +51,13 @@ class Search::OnReference::WhereClauses
       canonical_value = value.blank? ? '' : canon_value(value)
       if ALLOWS_MULTIPLE_VALUES.has_key?(canonical_field) && canonical_value.split(/,/).size > 1
         case canonical_field
-        when /\Aname-rank:\z/
-          @sql = @sql.where("name_rank_id in (select id from name_rank where lower(name) in (?))",canonical_value.split(',').collect {|v| v.strip})
-        when /\Aname-type:\z/
-          @sql = @sql.where("name_type_id in (select id from name_type where lower(name) in (?))",canonical_value.split(',').collect {|v| v.strip})
-        when /\Aname-status:\z/
-          @sql = @sql.where("name_status_id in (select id from name_status where lower(name) in (?))",canonical_value.split(',').collect {|v| v.strip})
+        when /\Atype:\z/
+          @sql = @sql.where("ref_type_id in (select id from ref_type where lower(name) in (?))",canonical_value.split(',').collect {|v| v.strip})
         else
           raise "The field '#{field}' currently cannot handle multiple values separated by commas." 
         end
       elsif canonical_field.match(/\Acomments-by:\z/)
-        @sql = @sql.where("exists (select null from comment where comment.name_id = name.id and (lower(comment.created_by) like ? or lower(comment.updated_by) like ?))",
+        @sql = @sql.where("exists (select null from comment where comment.reference_id = reference.id and (lower(comment.created_by) like ? or lower(comment.updated_by) like ?))",
                           canonical_value,canonical_value)
       elsif WHERE_INTEGER_VALUE_HASH_TWICE.has_key?(canonical_field)
         @sql = @sql.where(WHERE_INTEGER_VALUE_HASH_TWICE[canonical_field],canonical_value.to_i,canonical_value.to_i)
@@ -111,30 +106,35 @@ class Search::OnReference::WhereClauses
   WHERE_ASSERTION_HASH = { 
     'is-duplicate:' => " duplicate_of_id is not null",
     'is-a-duplicate:' => " duplicate_of_id is not null",
-    'is-not-duplicate:' => " duplicate_of_id is null",
-    'is-parent:' => " exists (select null from reference child where child.parent_id = reference.id) ",
-    'is-not-parent:' => " not exists (select null from reference child where child.parent_id = reference.id) ",
-    'has-no-child:' => " not exists (select null from reference child where child.parent_id = reference.id) ",
+    'is-not-a-duplicate:' => " duplicate_of_id is null",
+    'is-a-parent:' => " exists (select null from reference child where child.parent_id = reference.id) ",
+    'is-not-a-parent:' => " not exists (select null from reference child where child.parent_id = reference.id) ",
+    'has-no-children:' => " not exists (select null from reference child where child.parent_id = reference.id) ",
     'has-no-parent:' => " parent_id is null",
-    'is-child:' => " parent_id is not null",
-    'is-not-child:' => " parent_id is null",
+    'is-a-child:' => " parent_id is not null",
+    'is-not-a-child:' => " parent_id is null",
   }
 
   WHERE_VALUE_HASH = { 
-    'citation:' => "lower(citation) like ?)",
+    'citation:' => "lower(citation) like ?",
     'comments:' => " exists (select null from comment where comment.reference_id = reference.id and comment.text like ?) ",
     'comments-by:' => " exists (select null from comment where comment.reference_id = reference.id and comment.created_by like ?) ",
-    'ref-type:' => "ref_type_id in (select id from ref_type where lower(name) like ?)"
+    'type:' => "ref_type_id in (select id from ref_type where lower(name) like ?)",
+    'title:' => "lower(title) like ?"
   }
 
   CANONICAL_FIELD_NAMES = {
     'c:' => 'citation:',
     't:' => 'title:',
+    'ti:' => 'title:',
+    'ty:' => 'type:',
+    'ref-type:' => 'type:',
+    'rt:' => 'type:',
     'a:' => 'author:'
   }
 
   ALLOWS_MULTIPLE_VALUES = {
-    'name-type:' => true
+    'type:' => true
   }
 
 

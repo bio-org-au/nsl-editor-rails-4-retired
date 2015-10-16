@@ -50,7 +50,7 @@ class RefType < ActiveRecord::Base
   end
 
   def self.query_form_options
-    self.all.sort{|x,y| x.name <=> y.name}.collect{|n| [n.name, n.name, class: '']}
+    self.all.sort{|x,y| x.name <=> y.name}.collect{|n| [n.name, n.name.downcase, class: '']}
   end
 
   def rule

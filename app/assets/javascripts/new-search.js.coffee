@@ -107,6 +107,15 @@ parseOneValue = (tokens) ->
   console.log("Returning: value: #{value}")
   [value.trim(), tokens]
 
+assignFields = (fields) ->
+  switch 
+    when fields.target.match(/^authors$/i)    then window.assignAuthorFields(fields)
+    when fields.target.match(/^names$/i)      then window.assignNameFields(fields)
+    when fields.target.match(/^references$/i) then window.assignReferenceFields(fields)
+    when fields.target.match(/^instances$/i)  then window.assignInstanceFields(fields)
+    when fields.target.match(/^tree$/i)      then window.assignTreeFields(fields)
+    else                                     window.assignNameFields(fields)
+
 
 
   ####

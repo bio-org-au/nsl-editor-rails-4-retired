@@ -52,7 +52,7 @@ class NameType < ActiveRecord::Base
 
   def self.query_form_options
     self.not_deprecated.sort{|x,y| x.name <=> y.name}.collect{|n| [n.capitalised_name, "#{n.name}", class: '']}.
-      unshift(['Include common, cultivars','name-type:*']).unshift(['Exclude common, cultivars',''])
+      unshift(['Include common, cultivars','type:*']).unshift(['Exclude common, cultivars',''])
   end
 
   def self.options

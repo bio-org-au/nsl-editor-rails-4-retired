@@ -56,7 +56,9 @@
 //= require tree-extras/apc-placement.js
 //= require underscore
 //= require new-search
-//= require new-search-assign-fields
+//= require search/assign-name-fields
+//= require search/assign-reference-fields
+//= require search/load-reference-fields
 
 // possibly this should not be here, instead the tree search results page should declare it as a dependency
 //= require tree-extras/tree-view.js

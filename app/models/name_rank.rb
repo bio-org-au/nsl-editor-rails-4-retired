@@ -81,15 +81,15 @@ class NameRank < ActiveRecord::Base
   end
 
   def self.query_form_options
-    self.where('deprecated is false').order(:sort_order).collect{|n| [n.name, "name-rank: #{n.name.downcase}"]}
+    self.where('deprecated is false').order(:sort_order).collect{|n| [n.name, "rank: #{n.name.downcase}"]}
   end
 
   def self.query_form_ranked_below_options
-    self.where('deprecated is false').order(:sort_order).collect{|n| [n.name, "below-name-rank: #{n.name.downcase}"]}
+    self.where('deprecated is false').order(:sort_order).collect{|n| [n.name, "below-rank: #{n.name.downcase}"]}
   end
 
   def self.query_form_ranked_above_options
-    self.where('deprecated is false').order(:sort_order).collect{|n| [n.name, "above-name-rank: #{n.name.downcase}"]}
+    self.where('deprecated is false').order(:sort_order).collect{|n| [n.name, "above-rank: #{n.name.downcase}"]}
   end
 
   def self.cultivar_hybrid_options

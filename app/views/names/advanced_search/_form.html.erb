@@ -61,7 +61,7 @@
 
   <form class="form-inline">
 <table class="table advanced-form-table" class="table table-bordered" >
-  <tr> <td class="width-12-percent">Name&nbsp;Type</td><td></td><td></td></tr>
+  <tr> <td class="width-12-percent">Type</td><td></td><td></td></tr>
   <tr>
     <td></td>
     <td class="align-right width-15-percent">
@@ -108,14 +108,14 @@
     <td>
       <input id="name-advanced-search-name-type-list" name="name_search_author_abbrev" 
              value="" type="text" style="width: 100%" class="form-control min-width-20em width-100-percent" 
-             placeholder="Comma-separated list of name types">
+             placeholder="Comma-separated list of types">
     </td>
   </tr>
 </table>
   </form>
 <form class="form-inline">
   <table class="table advanced-form-table" class="table table-bordered" >
-    <tr> <td class="width-12-percent">Name&nbsp;Rank</td><td></td><td></td></tr>
+    <tr> <td class="width-12-percent">Rank</td><td></td><td></td></tr>
   <tr>
     <td></td>
     <td class="align-right width-15-percent">
@@ -179,7 +179,7 @@
 
 <form class="form-inline">
   <table class="table xadvanced-form-table" class="table table-bordered" >
-    <tr> <td class="width-12-percent">Name&nbsp;Status</td><td></td><td></td> </tr>
+    <tr> <td class="width-12-percent">Status</td><td></td><td></td> </tr>
   <tr>
     <td></td>
     <td class="align-right width-15-percent">
@@ -188,7 +188,7 @@
     <td>
       <%= select_tag('name_search_name_status_id', 
                      options_for_select(NameStatus.query_form_options),
-                     title: 'Select one name status', 
+                     title: 'Select one status', 
                      include_blank: true,
                      autocomplete: "off", 
                      class: "form-control give-me-focus") 
@@ -202,7 +202,7 @@
     <td>
       <input id="name-advanced-search-name-status-list" name="name_search_author_abbrev" 
              value="" type="text" class="form-control min-width-20em" 
-             placeholder="Comma-separated list of name statuses">
+             placeholder="Comma-separated list of statuses">
     </td>
   </tr>
 </table>
@@ -312,12 +312,6 @@
   <tr>
     <td></td>
     <td class="align-right width-15-percent">
-    </td>
-    <td> <label><input type="checkbox" class="name-search-assertion" name="has-no-parent" value="has-no-parent:"> Has no parent </label></td>
-  </tr>
-  <tr>
-    <td></td>
-    <td class="align-right width-15-percent">
       <label for="query-on">Child</label>
     </td>
     <td> <label><input type="checkbox" class="name-search-assertion" name="is-a-child" value="is-a-child:"> Is a child </label></td>
@@ -326,18 +320,7 @@
     <td></td>
     <td class="align-right width-15-percent">
     </td>
-    <td> <label><input type="checkbox" class="name-search-assertion" name="is-not-a-child" value="is-not-a-child:"> Is not a child </label></td>
-  <tr>
-    <td></td>
-    <td class="align-right width-15-percent">
-    </td>
-    <td> <label><input type="checkbox" class="name-search-assertion" name="has-a-second-parent" value="has-a-second-parent:"> Has a second parent </label></td>
-  </tr>
-  <tr>
-    <td></td>
-    <td class="align-right width-15-percent"> </td>
-    <td> <label><input type="checkbox" class="name-search-assertion" name="has-no-second-parent" value="has-no-second-parent:"> Has no second parent </label></td>
-  </tr>
+    <td> <label><input type="checkbox" class="name-search-assertion" name="is-not-a-child" value="is-not-a-child:"> Is not a child  (Has no parent)</label></td>
   <tr>
     <td></td>
     <td class="align-right width-15-percent">
@@ -350,6 +333,18 @@
     <td class="align-right width-15-percent">
     </td>
     <td> <label><input type="checkbox" class="name-search-assertion" name="is-not-a-second-parent" value="is-not-a-second-parent:"> Is not a second parent </label></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td class="align-right width-15-percent">
+      <label for="query-on">Child of Second Parent</label>
+    </td>
+    <td> <label><input type="checkbox" class="name-search-assertion" name="has-a-second-parent" value="has-a-second-parent:"> Has a second parent </label></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td class="align-right width-15-percent"> </td>
+    <td> <label><input type="checkbox" class="name-search-assertion" name="has-no-second-parent" value="has-no-second-parent:"> Has no second parent </label></td>
   </tr>
   </table>
 </form>

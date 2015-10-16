@@ -93,7 +93,7 @@ $('input[type=search]')
       if(currentTab == 'advanced-search-name') {
         loadNameSearch();
       } else if (currentTab == 'advanced-search-reference') {
-        loadReferenceSearch();
+        loadReferenceFields();
       } else if (currentTab == 'advanced-search-instance') {
         loadInstanceSearch();
       } else if (currentTab == 'advanced-search-author') {
@@ -148,12 +148,15 @@ $( "select#name-advanced-search-list-or-count" )
 <!--
 
     function loadAuthorSearch() { 
-      console.log('loadAuthorSearch')};
+      console.log('loadAuthorSearch')
+      var str = '';
+      $('#query-string-field').val(str);
+    };
     function loadInstanceSearch() {
-      console.log('loadInstanceSearch')};
-    function loadReferenceSearch() {
-      console.log('loadReferenceSearch')};
-
+      console.log('loadInstanceSearch')
+      var str = '';
+      $('#query-string-field').val(str);
+    };
     function loadNameSearch() {
       var str = '';
       if ($('#name-advanced-search-list-or-count').val().trim().length > 0) {
@@ -170,7 +173,7 @@ $( "select#name-advanced-search-list-or-count" )
         str += $('#name-advanced-search-name').val().trim();
       }
       if ($('#name-advanced-search-name-type-list').val().trim().length > 0) {
-        str += ' name-type: ';
+        str += ' type: ';
         str += $('#name-advanced-search-name-type-list').val().trim();
       }
       if ($('#name_search_name_rank_id').val().trim().length > 0) {
@@ -178,7 +181,7 @@ $( "select#name-advanced-search-list-or-count" )
         str += $('#name_search_name_rank_id').val().trim();
       }
       if ($('#name-advanced-search-name-rank-list').val().trim().length > 0) {
-        str += ' name-rank: ';
+        str += ' rank: ';
         str += $('#name-advanced-search-name-rank-list').val().trim();
       }
       if ($('#name_search_name_ranked_below').val().trim().length > 0) {

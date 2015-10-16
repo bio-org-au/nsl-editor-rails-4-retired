@@ -1,20 +1,10 @@
 
-
-window.assignFields = (fields) ->
-  switch 
-    when fields.target.match(/^authors$/i)    then assignAuthorFields(fields)
-    when fields.target.match(/^names$/i)      then assignNameFields(fields)
-    when fields.target.match(/^references$/i) then assignReferenceFields(fields)
-    when fields.target.match(/^instances$/i)  then assignInstanceFields(fields)
-    when fields.target.match(/^tree$/i)      then assignTreeFields(fields)
-    else                                     assignNameFields(fields)
-
-assignNameFields = (fields) ->
-  console.log("assignNameFields")
-  $('a#advanced-search-tab-link-name').click()
-  $('select#name-advanced-search-list-or-count').val(fields.action.toLowerCase())
-  $('#name-advanced-search-set-size').val(fields.setSize)
-  $('#name-advanced-search-name').val(fields.term)
+window.assignReferenceFields = (fields) ->
+  console.log("assignReferenceFields")
+  $('a#advanced-search-tab-link-reference').click()
+  $('select#ref-advanced-search-list-or-count').val(fields.action.toLowerCase())
+  $('#ref-advanced-search-set-size').val(fields.setSize)
+  $('#ref-advanced-search-citation').val(fields.term)
   _.each(fields.wherePairs,setFieldValue)
   setTypeOptions()
 
@@ -81,28 +71,13 @@ assignTreeFields = (fields) ->
   $('a#advanced-search-tab-link-tree').click()
 
 canonMap =
-  'nr:': 'name-rank:'
-  'nt:': 'name-rank:'
+  'c:': 'citation:'
 
 fieldMap =
-  'name-rank:': 'name_search_name_rank_id'
-  'below-name-rank:': 'name_search_name_ranked_below'
-  'above-name-rank:': 'name_search_name_ranked_above'
-  'name-type:': 'name-advanced-search-name-type-list'
-  'author:': 'name-advanced-search-author-abbrev'
-  'ex-author:': 'name-advanced-search-ex-author-abbrev'
-  'base-author:': 'name-advanced-search-base-author-abbrev'
-  'ex-base-author:': 'name-advanced-search-ex-base-author-abbrev'
-  'sanctioning-author:': 'name-advanced-search-sanctioning-author-abbrev'
-  'comments:': 'name-advanced-search-comments'
-  'comments-by:': 'name-advanced-search-comments-by'
+  'comments:': 'ref-advanced-search-comments'
+  'comments-by:': 'ref-advanced-search-comments-by'
 
 funMap =
-  'name-rank:': 'nameRankerize'
-  'below-name-rank:': 'belowNameRankerize'
-  'above-name-rank:': 'aboveNameRankerize'
-
-
-
+  'type:': 'xxxxRankerize'
 
 

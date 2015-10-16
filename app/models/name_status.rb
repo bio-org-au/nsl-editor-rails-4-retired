@@ -73,7 +73,7 @@ class NameStatus < ActiveRecord::Base
   end
 
   def self.query_form_options
-    self.all.ordered_by_name.collect{|n| [n.name, "name-status: #{n.name.downcase}"]}.unshift(['any status',''])
+    self.all.ordered_by_name.collect{|n| [n.name, "status: #{n.name.downcase}"]}.unshift(['any status',''])
   end
 
   def self.options(allow_delete = false)
