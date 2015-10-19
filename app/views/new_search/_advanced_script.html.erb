@@ -85,21 +85,19 @@ $('input[type=search]')
     */
 
     $('#advanced-search-run').on('click',function(e) {
-      console.log('run search');
-      console.log($('#advanced-search-tabset li.active').length);
-      console.log($('#advanced-search-tabset li.active > a').attr('data-show-id'));
+      console.log('#advanced-search-run');
       var currentTab = $('#advanced-search-tabset li.active > a').attr('data-show-id');
       console.log("current tab: " + currentTab);
       if(currentTab == 'advanced-search-name') {
-        loadNameSearch();
+        loadNameFields();
       } else if (currentTab == 'advanced-search-reference') {
         loadReferenceFields();
       } else if (currentTab == 'advanced-search-instance') {
-        loadInstanceSearch();
+        loadInstanceFields();
       } else if (currentTab == 'advanced-search-author') {
-        loadAuthorSearch();
+        loadAuthorFields();
       } else {
-        console.log('which tab?');
+        throw("#advanced-search-run was clicked but we don't know which search to load");
       }
       $('form#search-form').submit();
     });
@@ -147,17 +145,17 @@ $( "select#name-advanced-search-list-or-count" )
     <script>
 <!--
 
-    function loadAuthorSearch() { 
-      console.log('loadAuthorSearch')
+    function loadAuthorFields() { 
+      console.log('loadAuthorFields')
       var str = '';
       $('#query-string-field').val(str);
     };
-    function loadInstanceSearch() {
-      console.log('loadInstanceSearch')
+    function loadInstanceFields() {
+      console.log('loadInstanceFields')
       var str = '';
       $('#query-string-field').val(str);
     };
-    function loadNameSearch() {
+    function loadNameFields() {
       var str = '';
       if ($('#name-advanced-search-list-or-count').val().trim().length > 0) {
         str += $('#name-advanced-search-list-or-count').val().trim();

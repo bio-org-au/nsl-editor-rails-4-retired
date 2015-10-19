@@ -25,16 +25,15 @@ class Search::OnInstance::WhereClauses
   end
 
   def build_sql
-    Rails.logger.debug("Search::OnInstance::WhereClause.sql")
+    Rails.logger.debug("Search::OnInstance::WhereClause build_sql")
     remaining_string = @parsed_query.where_arguments.downcase 
-    Rails.logger.debug("Search::OnInstance::WhereClause.sql remaining_string: #{remaining_string}")
+    Rails.logger.debug("Search::OnInstance::WhereClause build_sql remaining_string: #{remaining_string}")
     @common_and_cultivar_included = @parsed_query.common_and_cultivar
     @sql = @sql.for_id(@parsed_query.id) if @parsed_query.id
     x = 0 
     until remaining_string.blank?
       field,value,remaining_string = Search::NextCriterion.new(remaining_string).get 
-      Rails.logger.info("field: #{field}; value: #{value}")
-      raise "No field for value: #{value}" if field.blank?
+      Rails.logger.debug("Search::OnInstance::WhereClause.sql#build_sql; field: #{field}; value: #{value}")
       add_clause(field,value)
       x += 1
       raise "endless loop #{x}" if x > 50
@@ -42,12 +41,13 @@ class Search::OnInstance::WhereClauses
   end
 
   def add_clause(field,value)
+    Rails.logger.debug("Search::OnInstance::WhereClause add_clause field: #{field}; value: #{value}")
     if field.blank? && value.blank?
       @sql
-    elsif field.blank?
-      @sql = @sql.lower_name_like(value.downcase)
-    elsif field.match(/\Aname:\z/)
-      @sql = @sql.lower_name_like(value.downcase)
+    elsif field.blank? || field.match(/\Aname:\z/)
+      # default field
+      canonical_value = value.blank? ? '' : canon_value(value)
+      @sql = @sql.where([' exists (select null from name where name.id = instance.name_id and lower(full_name) like ?)',canonical_value])
     else 
       # we have a field
       canonical_field = canon_field(field)
@@ -63,12 +63,13 @@ class Search::OnInstance::WhereClauses
         else
           raise "The field '#{field}' currently cannot handle multiple values separated by commas." 
         end
-      elsif canonical_field.match(/\Acomments-by:\z/)
-        @sql = @sql.where("exists (select null from comment where comment.name_id = name.id and (lower(comment.created_by) like ? or lower(comment.updated_by) like ?))",
-                          canonical_value,canonical_value)
       elsif WHERE_INTEGER_VALUE_HASH.has_key?(canonical_field)
         @sql = @sql.where(WHERE_INTEGER_VALUE_HASH[canonical_field],canonical_value.to_i)
+      elsif WHERE_ASSERTION_HASH.has_key?(canonical_field)
+        Rails.logger.debug('assertion!')
+        @sql = @sql.where(WHERE_ASSERTION_HASH[canonical_field])
       else
+        Rails.logger.error("Search::OnInstance::WhereClause add_clause - out of options")
         raise 'No way to handle field.' unless WHERE_VALUE_HASH.has_key?(canonical_field)
         @sql = @sql.where(WHERE_VALUE_HASH[canonical_field],canonical_value)
       end
@@ -82,6 +83,8 @@ class Search::OnInstance::WhereClauses
   def canon_field(field)
     if WHERE_INTEGER_VALUE_HASH.has_key?(field)
       field
+    elsif WHERE_ASSERTION_HASH.has_key?(field)
+      field
     elsif WHERE_VALUE_HASH.has_key?(field)
       field
     elsif CANONICAL_FIELD_NAMES.has_value?(field)
@@ -89,7 +92,7 @@ class Search::OnInstance::WhereClauses
     elsif CANONICAL_FIELD_NAMES.has_key?(field)
       CANONICAL_FIELD_NAMES[field]
     else
-      raise "No such field: #{field}." unless CANONICAL_FIELD_NAMES.has_key?(field)
+      raise "Cannot search instances for: #{field}." unless CANONICAL_FIELD_NAMES.has_key?(field)
     end
   end
 
@@ -100,19 +103,35 @@ class Search::OnInstance::WhereClauses
   WHERE_VALUE_HASH = { 
     'name:' => "lower(name) like ?)",
     'abbrev:' => "lower(abbrev) like ?)",
+    'type:' => " exists (select null from instance_type where instance_type_id = instance_type.id and instance_type.name like ?) ",
     'comments:' => " exists (select null from comment where comment.instance_id = instance.id and comment.text like ?) ",
     'comments-by:' => " exists (select null from comment where comment.instance_id = instance.id and comment.created_by like ?) ",
+    'page:' => " lower(page) like ?",
+    'page-qualifier:' => " lower(page_qualifier) like ?",
+    'note-key:' => " exists (select null from instance_note where instance_id = instance.id and exists (select null from instance_note_key where instance_note_key_id = instance_note_key.id and lower(instance_note_key.name) like ?)) ",
+    'note:' => " exists (select null from instance_note where instance_id = instance.id and lower(instance_note.value) like ?) ",
   }
 
   CANONICAL_FIELD_NAMES = {
     'n:' => 'name:',
-    'a:' => 'abbrev:'
+    'a:' => 'abbrev:',
+    'adnot:' => 'comments:',
+    'adnot-by:' => 'comments-by:',
+    'type:' => 'instance-type:',
+    'extra-page-info:' => 'page-qualifier:',
+    'epi:' => 'page-qualifier:'
   }
 
   ALLOWS_MULTIPLE_VALUES = {
     'ids:' => true
   }
 
+  WHERE_ASSERTION_HASH = { 
+    'cites-an-instance:' => " cites_id is not null",
+    'is-cited-by-an-instance:' => " cited_by_id is not null",
+    'does-not-cite-an-instance:' => " cites_id is null",
+    'is-not-cited-by-an-instance:' => " cited_by_id is null",
+  }
 
 end
 

@@ -42,9 +42,7 @@ class Search::OnName::WhereClauses
   def add_clause(field,value)
     if field.blank? && value.blank?
       @sql
-    elsif field.blank?
-      @sql = @sql.lower_full_name_like(value.downcase)
-    elsif field.match(/\Aname:\z/)
+    elsif field.blank? || field.match(/\Aname:\z/)
       @sql = @sql.lower_full_name_like(value.downcase)
     else 
       # we have a field
@@ -92,7 +90,7 @@ class Search::OnName::WhereClauses
     elsif CANONICAL_FIELD_NAMES.has_key?(field)
       CANONICAL_FIELD_NAMES[field]
     else
-      raise "No such field: #{field}." unless CANONICAL_FIELD_NAMES.has_key?(field)
+      raise "Cannot search names for: #{field}." unless CANONICAL_FIELD_NAMES.has_key?(field)
     end
   end
 

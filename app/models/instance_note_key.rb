@@ -22,4 +22,8 @@ class InstanceNoteKey < ActiveRecord::Base
     self.all.where(deprecated: false).order(:sort_order).collect{|n| [n.name, n.id]}
   end
 
+  def self.query_form_options
+    self.all.where(deprecated: false).sort{|x,y| x.name <=> y.name}.collect{|n| [n.name, n.name.downcase, class: '']}
+  end
+
 end

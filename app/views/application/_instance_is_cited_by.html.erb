@@ -10,16 +10,7 @@
   data-row-type="instance_is_cited_by"
   tabindex="<%= increment_tab_index(100) %>" 
     >
-  <td class="checkbox-container">
-    <div 
-      tabindex="<%= increment_tab_index %>" 
-      class="stylish-checkbox acts-as-checkbox nsl-inline-block stylish-checkbox-unchecked" 
-      dir="ltr" 
-      role="checkbox" 
-      data-checked="false"> 
-    </div>
-  </td> 
-  <td class="nsl-tiny-icon-container width-1-percent"><%= record_icon('instance') %></td>
+  <td class="<td class="nsl-tiny-icon-container width-1-percent"><%= record_icon('instance') %></td>
   <td colspan="1" class="text main-content takes-focus width-90-percent indent-level-1 <%= 'give-me-focus' if give_me_focus %> ">
     <a
       id="<%= %Q(#{search_result.class}-#{search_result.id}) %>"

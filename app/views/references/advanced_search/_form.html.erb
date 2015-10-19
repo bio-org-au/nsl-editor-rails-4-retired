@@ -1,11 +1,9 @@
 <div id="advanced-search-ref-form-container" class="">
   <form class="form-inline">
 <table class="table advanced-form-table" class="table table-bordered" >
-  <tr><td class="width-12-percent">Set up</td> <td></td><td></td></tr>
-  <tr>
-    <td></td>
+  <tr><td class="width-12-percent">List/count</td> 
     <td class="align-right width-15-percent">
-      <label for="list-or-count">List or count</label>
+      <label class="plain" class="plain" for="list-or-count">Options</label>
     </td>
     <td>
       <select id="ref-advanced-search-list-or-count" name="list_or_count" class="form-control">
@@ -17,30 +15,18 @@
   <tr>
     <td></td>
     <td class="align-right width-15-percent">
-      <label for="query-on">List size</label>
+      <label class="plain" for="query-on">Size</label>
     </td>
     <td>
       <input id="ref-advanced-search-set-size" name="set_size" value="100" type="number" class="form-control min-width-10em" placeholder="Number of records for a list search" min="1" max="1000"/>
     </td>
   </tr>
-</table>
-  </form>
-
-
-
-<form class="form-inline">
-  <table class="table advanced-form-table" class="table table-bordered" >
   <tr> <td class="width-12-percent">Citation</td>
     <td class="align-right width-15-percent"></td>
     <td>
       <input id="ref-advanced-search-citation" name="ref_search_citation" value="" type="text" class="form-control min-width-20em" placeholder="Citation string, with optional wildcard (*)"/>
     </td>
   </tr>
-  </table>
-</form>
-
-<form class="form-inline">
-  <table class="table advanced-form-table" class="table table-bordered" >
     <tr> 
       <td class="width-12-percent">Type</td>
       <td class="align-left width-15-percent"></td>
@@ -57,7 +43,7 @@
   <tr>
     <td></td>
     <td class="align-right">
-      <label for="query-on">List</label>
+      <label class="plain" for="query-on">List</label>
     </td>
     <td>
       <input id="ref-advanced-search-ref-type-list" name="ref_search_ref_type_list" 
@@ -66,15 +52,10 @@
     </td>
   </tr>
     -->
-  </table>
-</form>
-
-
-  <table class="table advanced-form-table" class="table table-bordered" >
   <tr>
     <td class="width-12-percent">Fields</td>
     <td class="width-15-percent align-right">
-      <label for="query-on">Author</label>
+      <label class="plain" for="query-on">Author</label>
     </td>
     <td>
       <input type="text" class="" id="ref-advanced-search-author" placeholder="Author name">
@@ -83,7 +64,7 @@
   <tr>
     <td></td>
     <td class="align-right">
-      <label for="query-on">Year</label>
+      <label class="plain" for="query-on">Year</label>
     </td>
     <td>
       <input type="text" class="" id="ref-advanced-search-year" placeholder="Year">
@@ -92,7 +73,7 @@
   <tr>
     <td></td>
     <td class="align-right">
-      <label for="query-on">Parent Citation</label>
+      <label class="plain" for="query-on">Parent Citation</label>
     </td>
     <td>
       <input type="text" class="" id="ref-advanced-search-parent-citation" placeholder="Parent citation">
@@ -101,24 +82,14 @@
   <tr>
     <td></td>
     <td class="align-right">
-      <label for="query-on">Parent Title</label>
+      <label class="plain" for="query-on">Parent Title</label>
     </td>
     <td>
       <input type="text" class="" id="ref-advanced-search-parent-title" placeholder="Parent title">
     </td>
   </tr>
-  </table>
-</form>
-
-
-
-<form class="form-inline">
-  <table class="table advanced-form-table" class="table table-bordered" >
-  <tr> <td class="width-12-percent">Comments</td><td></td><td></td> </tr>
-  <tr>
-    <td></td>
+  <tr> <td class="width-12-percent">Comments</td>
     <td class="align-right width-15-percent">
-      <label for="query-on">Comments</label>
     </td>
     <td>
       <input id="ref-advanced-search-comments" type="text" class="form-control min-width-20em" placeholder=""/>
@@ -127,56 +98,49 @@
   <tr>
     <td></td>
     <td class="align-right width-15-percent">
-      <label for="query-on">Comments By</label>
+      <label class="plain" for="query-on">By</label>
     </td>
     <td>
       <input id="ref-advanced-search-comments-by" type="text" class="form-control min-width-20em" placeholder=""/>
     </td>
   </tr>
-  </table>
-</form>
-
-<form class="form-inline">
-  <table class="table advanced-form-table" class="table table-bordered" >
-  <tr> <td class="width-12-percent">Assertions</td><td></td><td></td> </tr>
-  <tr>
-    <td></td>
+  <tr> <td class="width-12-percent">Assertions</td>
     <td class="align-right width-15-percent">
-      <label for="query-on">Duplication</label>
+      <label class="plain" for="query-on">Duplication</label>
     </td>
-    <td> <label><input type="checkbox" class="ref-search-assertion" name="is-a-duplicate" value="is-a-duplicate:"> Is a duplicate</label> </td>
+    <td> <label class="plain"><input type="checkbox" class="ref-search-assertion" name="is-a-duplicate" value="is-a-duplicate:"> Is a duplicate</label> </td>
   </tr>
   <tr>
     <td></td>
     <td class="align-right width-15-percent">
     </td>
-    <td> <label><input type="checkbox" class="ref-search-assertion" name="is-not-a-duplicate" value="is-not-a-duplicate:"> Is not a duplicate </label></td>
+    <td> <label class="plain"><input type="checkbox" class="ref-search-assertion" name="is-not-a-duplicate" value="is-not-a-duplicate:"> Is not a duplicate </label></td>
   </tr>
   <tr>
     <td></td>
     <td class="align-right width-15-percent">
-      <label for="query-on">Parent</label>
+      <label class="plain" for="query-on">Parent</label>
     </td>
-    <td> <label><input type="checkbox" class="ref-search-assertion" name="is-a-parent" value="is-a-parent:"> Is a parent </label></td>
-  </tr>
-  <tr>
-    <td></td>
-    <td class="align-right width-15-percent">
-    </td>
-    <td> <label><input type="checkbox" class="ref-search-assertion" name="is-not-a-parent" value="is-not-a-parent:"> Is not a parent </label></td>
-  </tr>
-  <tr>
-    <td></td>
-    <td class="align-right width-15-percent">
-      <label for="query-on">Child</label>
-    </td>
-    <td> <label><input type="checkbox" class="ref-search-assertion" name="is-a-child" value="is-a-child:"> Is a child </label></td>
+    <td> <label class="plain"><input type="checkbox" class="ref-search-assertion" name="is-a-parent" value="is-a-parent:"> Is a parent </label></td>
   </tr>
   <tr>
     <td></td>
     <td class="align-right width-15-percent">
     </td>
-    <td> <label><input type="checkbox" class="ref-search-assertion" name="is-not-a-child" value="is-not-a-child:"> Is not a child (Has no parent)</label></td>
+    <td> <label class="plain"><input type="checkbox" class="ref-search-assertion" name="is-not-a-parent" value="is-not-a-parent:"> Is not a parent </label></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td class="align-right width-15-percent">
+      <label class="plain" for="query-on">Child</label>
+    </td>
+    <td> <label class="plain"><input type="checkbox" class="ref-search-assertion" name="is-a-child" value="is-a-child:"> Is a child </label></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td class="align-right width-15-percent">
+    </td>
+    <td> <label class="plain"><input type="checkbox" class="ref-search-assertion" name="is-not-a-child" value="is-not-a-child:"> Is not a child (Has no parent)</label></td>
   </tr>
   </table>
 </form>

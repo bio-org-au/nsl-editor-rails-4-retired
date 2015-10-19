@@ -90,7 +90,7 @@ class Search::OnReference::WhereClauses
     elsif CANONICAL_FIELD_NAMES.has_key?(field)
       CANONICAL_FIELD_NAMES[field]
     else
-      raise "No such field: #{field}." unless CANONICAL_FIELD_NAMES.has_key?(field)
+      raise "Cannot search references for: #{field}." unless CANONICAL_FIELD_NAMES.has_key?(field)
     end
   end
 

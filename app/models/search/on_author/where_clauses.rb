@@ -42,9 +42,7 @@ class Search::OnAuthor::WhereClauses
   def add_clause(field,value)
     if field.blank? && value.blank?
       @sql
-    elsif field.blank?
-      @sql = @sql.lower_name_like(value.downcase)
-    elsif field.match(/\Aname:\z/)
+    elsif field.blank? 
       @sql = @sql.lower_name_like(value.downcase)
     else 
       # we have a field
@@ -54,16 +52,9 @@ class Search::OnAuthor::WhereClauses
         case canonical_field
         when /\Aname-rank:\z/
           @sql = @sql.where("name_rank_id in (select id from name_rank where lower(name) in (?))",canonical_value.split(',').collect {|v| v.strip})
-        when /\Aname-type:\z/
-          @sql = @sql.where("name_type_id in (select id from name_type where lower(name) in (?))",canonical_value.split(',').collect {|v| v.strip})
-        when /\Aname-status:\z/
-          @sql = @sql.where("name_status_id in (select id from name_status where lower(name) in (?))",canonical_value.split(',').collect {|v| v.strip})
         else
           raise "The field '#{field}' currently cannot handle multiple values separated by commas." 
         end
-      elsif canonical_field.match(/\Acomments-by:\z/)
-        @sql = @sql.where("exists (select null from comment where comment.author_id = author.id and (lower(comment.created_by) like ? or lower(comment.updated_by) like ?))",
-                          canonical_value,canonical_value)
       elsif WHERE_ASSERTION_HASH.has_key?(canonical_field)
         @sql = @sql.where(WHERE_ASSERTION_HASH[canonical_field])
       elsif WHERE_INTEGER_VALUE_HASH.has_key?(canonical_field)
@@ -91,7 +82,7 @@ class Search::OnAuthor::WhereClauses
     elsif CANONICAL_FIELD_NAMES.has_key?(field)
       CANONICAL_FIELD_NAMES[field]
     else
-      raise "No such field: #{field}." unless CANONICAL_FIELD_NAMES.has_key?(field)
+      raise "Cannot search authors for: #{field}" unless CANONICAL_FIELD_NAMES.has_key?(field)
     end
   end
 
@@ -105,15 +96,19 @@ class Search::OnAuthor::WhereClauses
   }
 
   WHERE_VALUE_HASH = { 
-    'name:' => "lower(name) like ?)",
+    'name:' => "lower(name) like ?",
+    'full_name:' => "lower(full_name) like ?",
     'abbrev:' => "lower(abbrev) like ?)",
     'comments:' => " exists (select null from comment where comment.author_id = author.id and comment.text like ?) ",
     'comments-by:' => " exists (select null from comment where comment.author_id = author.id and comment.created_by like ?) ",
+    'notes:' => " lower(notes) like ? ",
+    'ipni-id:' => "lower(ipni_id) like ?",
   }
 
   CANONICAL_FIELD_NAMES = {
     'n:' => 'name:',
-    'a:' => 'abbrev:'
+    'a:' => 'abbrev:',
+    'extra-name-text:' => 'full_name:'
   }
 
   ALLOWS_MULTIPLE_VALUES = {

@@ -47,7 +47,7 @@
 </table>
 <br>
 
-<h4 class="inline-block">Control lists</h4><span> - set the number of records</span>
+<h4 class="inline-block">List size</h4><span> - set the number of records</span>
 <table class="example-searches table table-striped">
   <% [{search_string: "5 acacia*",explanation: %Q(List 5 names starting with "acacia". #{excc})},
       {search_string: "50 acacia*", explanation: %Q(List 50 names starting with "acacia". #{excc})},
@@ -95,7 +95,7 @@
       {search_string: "count ref *nuytsia*", explanation: %Q(Counting without listing should be faster than listing for large sets.)},
       {search_string: "count ref type:journal", explanation: %Q(Because it's faster, counting may suit different types of searches.)},
       {search_string: "count ref type:journal has-no-children:", explanation: %Q(Use an assertion.)},
-      {search_string: "count ref type:paper has-no-parent:", explanation: %Q(User a different assertion)},
+      {search_string: "count ref type:paper has-no-parent:", explanation: %Q(Use a different assertion)},
       {search_string: "count ref type:journal has-no-children: is-a-duplicate:", explanation: %Q(Combine assertions.)}
       ].each do |val| %>
   <tr>
@@ -110,5 +110,84 @@
 </table>
 <br>
 
+<h4 class="">Count instances</h4>
+<table class="example-searches table table-striped">
+  <% [{search_string: "count instance",explanation: %Q(Start with "count instance" to count instances.)},
+      {search_string: "count instance acacia*", explanation: %Q(Counting without listing should be faster than listing for large sets.)},
+      {search_string: "count instance type:basionym", explanation: %Q(Count by type e.g. basionyms.)},
+      {search_string: "count instance type:comb. nov.", explanation: %Q(Count comb. novs.)},
+      {search_string: "count instance acacia* type:basionym", explanation: %Q(Count by name and type e.g. basionyms.)},
+      {search_string: "count instance acacia* type:comb. nov.", explanation: %Q(Count by name and type e.g. comb. nov.)},
+      {search_string: "count instance adnot:*", explanation: %Q(Count instances with an Adnot (comment).)},
+      {search_string: "count instance adnot-by:*", explanation: %Q(Count instances with an Adnot (comment) by someone.)},
+      {search_string: "count instance page:140", explanation: %Q(Count instances with page 140.)},
+      {search_string: "count instance page:14*", explanation: %Q(Count instances with page 14*.)},
+      {search_string: "count instance page:*fig*", explanation: %Q(Count instances with figure information.)},
+      {search_string: "count instance extra-page-info:*", explanation: %Q(Count instances with extra page information.)},
+      {search_string: "count instance note-key:apc dist.", explanation: %Q(Count instances with note key 'apc dist.'.)},
+      {search_string: "count instance note:*intermediate*", explanation: %Q(Count instances where 'intermediate' is noted.)},
+      {search_string: "count instance cites-an-instance:", explanation: %Q(Count instances that cite another instance.)}
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent"><a href="javascript:void(0)" 
+           class="example-search width-100-percent" 
+           title="Link to search">
+           <span class="darkslateblue"><%= val[:search_string] %></span>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+<br>
+
+<h4 class="">List authors</h4>
+<table class="example-searches table table-striped">
+  <% [{search_string: "author",explanation: %Q(Start with "author" to search authors. Lists will be ordered by name.)},
+      {search_string: "author bentham*", explanation: %Q(Authors starting with "bentham".)},
+      {search_string: "author *bentham*", explanation: %Q(Authors including "bentham".)},
+      {search_string: "author *bentham* name: *hooker*", explanation: %Q(Authors including "bentham" and "hooker".)},
+      {search_string: "author name: *bentham* name: *hooker*", explanation: %Q(Authors including "bentham" and "hooker".)},
+      {search_string: "author extra-name-text:*", explanation: %Q(Authors with extra name text.)},
+      {search_string: "author comments:*", explanation: %Q(Count commented authors by turning a text field into an assertion.)},
+      {search_string: "author comments-by:*", explanation: %Q(Count authors with a comment by someone.)},
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent"><a href="javascript:void(0)" 
+           class="example-search width-100-percent" 
+           title="Link to search">
+           <span class="darkslateblue"><%= val[:search_string] %></span>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+<br>
+
+<h4 class="">Count authors</h4>
+<table class="example-searches table table-striped">
+  <% [{search_string: "count author",explanation: %Q(Start with "count author" to count authors.)},
+      {search_string: "count author bentham*", explanation: %Q(Counting sets.)},
+      {search_string: "count author type:basionym", explanation: %Q(Count by type e.g. basionyms.)},
+      {search_string: "count author type:comb. nov.", explanation: %Q(Count comb. novs.)},
+      {search_string: "count author acacia* type:basionym", explanation: %Q(Count by name and type e.g. basionyms.)},
+      {search_string: "count author acacia* type:comb. nov.", explanation: %Q(Count by name and type e.g. comb. nov.)},
+      {search_string: "count comments:*", explanation: %Q(Count commented authors by turning a text field into an assertion.)},
+      {search_string: "count author comments-by:*", explanation: %Q(Count authors with a comment by someone.)},
+      {search_string: "count author notes:*", explanation: %Q(Count authors with notes by turning a text field into an assertion.)},
+      {search_string: "count author page:140", explanation: %Q(Count authors with page 140.)},
+      {search_string: "count author page:14*", explanation: %Q(Count authors with page 14*.)},
+      {search_string: "count author page:*fig*", explanation: %Q(Count authors with figure information.)},
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent"><a href="javascript:void(0)" 
+           class="example-search width-100-percent" 
+           title="Link to search">
+           <span class="darkslateblue"><%= val[:search_string] %></span>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+<br>
 
 </div>
