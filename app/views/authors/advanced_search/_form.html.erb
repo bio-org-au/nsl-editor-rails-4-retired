@@ -1,12 +1,10 @@
 <div id="advanced-search-author-form-container" class="">
   <form class="form-inline">
-  <input name="search_target" value="names" type="hidden" />
-  <input name="search_from" value="fields" type="hidden" />
 <table class="table advanced-form-table" class="table table-bordered" >
   <tr><td class="width-5-percent">List/count</td> 
     <td class="align-right width-15-percent"><label class="plain" for="query-on">Options</label></td>
     <td>
-      <select id="author-advanced-search-list-or-count" name="list_or_count" class="form-control">
+      <select id="author-advanced-search-list-or-count" class="form-control">
         <option value='count'>count records</option>
         <option value='list' selected='selected'>list results</option>
     </select>
@@ -18,35 +16,35 @@
       <label class="plain" for="query-on">Size</label>
     </td>
     <td>
-      <input id="author-advanced-search-set-size" name="name_search_name" value="100" type="number" class="form-control min-width-10em" placeholder="Number of records for a list search" min="1" max="1000"/>
+      <input id="author-advanced-search-set-size" value="100" type="number" class="form-control min-width-10em" placeholder="Number of records for a list search" min="1" max="1000"/>
     </td>
   </tr>
   <tr> <td class="width-5-percent">Name</td>
     <td class="align-right width-15-percent">
     </td>
     <td>
-      <input id="author-advanced-search-name" name="name_search_page" type="text" class="form-control min-width-20em" placeholder=""/>
+      <input id="author-advanced-search-name" type="text" class="form-control min-width-20em" placeholder=""/>
     </td>
   </tr>
   <tr> <td class="width-5-percent">Abbreviation</td>
     <td class="align-right width-15-percent">
     </td>
     <td>
-      <input id="author-advanced-search-abbrev" name="name_search_abbrev" type="text" class="form-control min-width-20em" placeholder=""/>
+      <input id="author-advanced-search-abbrev" type="text" class="form-control min-width-20em" placeholder=""/>
     </td>
   </tr>
-  <tr> <td class="width-5-percent">Extra name text</td>
+  <tr> <td class="width-5-percent">Full&nbsp;name or&nbsp;identifying&nbsp;text</td>
     <td class="align-right width-15-percent">
     </td>
     <td>
-      <input id="author-advanced-search-full-name" name="name_search_extra_name_text" type="text" class="form-control min-width-20em" placeholder=""/>
+      <input id="author-advanced-search-full-name" type="text" class="form-control min-width-20em" placeholder="Full name or identifying text"/>
     </td>
   </tr>
   <tr> <td class="width-5-percent">IPNI ID</td>
     <td class="align-right width-15-percent">
     </td>
     <td>
-      <input id="author-advanced-search-ipni_id" name="name_search_ipni_id" type="text" class="form-control min-width-20em" placeholder=""/>
+      <input id="author-advanced-search-ipni-id" type="text" class="form-control min-width-20em" placeholder=""/>
     </td>
   </tr>
   <tr>
@@ -55,7 +53,7 @@
       <label class="plain" for="query-on">Text</label>
     </td>
     <td>
-      <input id="author-advanced-search-comments" name="name_search_comments" type="text" class="form-control min-width-20em" placeholder=""/>
+      <input id="author-advanced-search-comments" type="text" class="form-control min-width-20em" placeholder=""/>
     </td>
   </tr>
   <tr>
@@ -64,19 +62,19 @@
       <label class="plain" for="query-on">By</label>
     </td>
     <td>
-      <input id="author-advanced-search-comments-by" name="name_search_comments_by" type="text" class="form-control min-width-20em" placeholder=""/>
+      <input id="author-advanced-search-comments-by" type="text" class="form-control min-width-20em" placeholder=""/>
     </td>
   </tr>
   <tr> <td class="width-5-percent">Assertions</td>
     <td class="align-right width-15-percent">
     </td>
-    <td> <label class="plain"><input type="checkbox" class="author-search-assertion" name="is-a-duplicate" value="is-a-duplicate:"> is a duplicate</label> </td>
+    <td> <label class="plain"><input type="checkbox" class="author-search-assertion" id="author-is-a-duplicate" value="is-a-duplicate:"> is a duplicate</label> </td>
   </tr>
   <tr>
     <td></td>
     <td class="align-right width-15-percent">
     </td>
-    <td> <label class="plain"><input type="checkbox" class="author-search-assertion" name="is-not-a-duplicate" value="not-a-duplicate"> is not a duplicate</label> </td>
+    <td> <label class="plain"><input type="checkbox" class="author-search-assertion" id="author-is-not-a-duplicate" value="is-not-a-duplicate:"> is not a duplicate</label> </td>
   </tr>
   </table>
 </form>

@@ -64,6 +64,10 @@ class Search::Base
     @canonical_query_string = @parsed_query.canonical_query_string
   end
 
+  def to_history
+    {query_string: @query_string, result_size: @count ? @results : @results.size, time_stamp: Time.now, error: false}
+  end
+
   def query_string_for_more
     query_string_without_limit.sub(/^ *list/i,'').sub(/^ *\d+/,'').sub(/^/,'all ')
     raw_limit = @query_string.sub(/^ *list/i,'').trim().split.first

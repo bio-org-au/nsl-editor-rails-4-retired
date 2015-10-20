@@ -92,13 +92,14 @@ class Search::OnAuthor::WhereClauses
   }
 
   WHERE_ASSERTION_HASH = { 
-    'duplicate:' => " duplicate_of_id is not null"
+    'is-a-duplicate:' => " duplicate_of_id is not null",
+    'is-not-a-duplicate:' => " duplicate_of_id is null"
   }
 
   WHERE_VALUE_HASH = { 
     'name:' => "lower(name) like ?",
     'full_name:' => "lower(full_name) like ?",
-    'abbrev:' => "lower(abbrev) like ?)",
+    'abbrev:' => "lower(abbrev) like ?",
     'comments:' => " exists (select null from comment where comment.author_id = author.id and comment.text like ?) ",
     'comments-by:' => " exists (select null from comment where comment.author_id = author.id and comment.created_by like ?) ",
     'notes:' => " lower(notes) like ? ",

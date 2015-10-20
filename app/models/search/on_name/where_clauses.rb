@@ -148,7 +148,7 @@ class Search::OnName::WhereClauses
   WHERE_VALUE_HASH = { 
     'rank:' => "name_rank_id in (select id from name_rank where lower(name) like ?)",
     'type:' => "name_type_id in (select id from name_type where lower(name) like ?)",
-    'name-status:' => "name_status_id in (select id from name_status where lower(name) like ?)",
+    'status:' => "name_status_id in (select id from name_status where lower(name) like ?)",
     'below-rank:' => "name_rank_id in (select id from name_rank where sort_order > (select sort_order from name_rank the_nr where lower(the_nr.name) like ?))",
     'above-rank:' => "name_rank_id in (select id from name_rank where sort_order < (select sort_order from name_rank the_nr where lower(the_nr.name) like ?))",
     'author:' => "author_id in (select id from author where lower(abbrev) like ?)",

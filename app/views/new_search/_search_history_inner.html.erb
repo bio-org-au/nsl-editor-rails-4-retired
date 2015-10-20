@@ -1,0 +1,25 @@
+<div id="search-history-inner" class="">
+
+
+<br>
+<% excc = %Q(<span class="purple" title="Excluding common and cultivar names by default.">EXCC</span>) %>
+<% incc = %Q(<span class="purple" title="Including common and cultivar names.">INCC</span>) %>
+<h4 class="">Recent searches</h4>
+<table class="search-history table table-striped">
+<% if session[:searches].present? %>
+<% session[:searches].reverse.try('each') do |search| %>
+  <tr>
+    <td class="width-30-percent"><a href="javascript:void(0)" 
+           class="example-search width-100-percent" 
+           title="Link to search">
+           <span class="darkslateblue"><%= search %></span>
+    </td>
+    <td>
+      <%#= link_to(search, new_search_path(query_string: search)) %>
+    </td>
+  </tr>
+  <% end %>
+  <% end %>
+</table>
+
+</div>

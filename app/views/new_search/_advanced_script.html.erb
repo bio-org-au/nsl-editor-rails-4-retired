@@ -42,6 +42,7 @@ $('input[type=search]')
       $('#advanced-search-container').removeClass('hidden');
       $('#search-result-container').addClass('hidden');
       $('#example-search-container').addClass('hidden');
+      $('#search-history-container').addClass('hidden');
       captureSearch(e,this);
     });
 
@@ -51,6 +52,7 @@ $('input[type=search]')
       $('#search-result-container').removeClass('hidden');
       $('#advanced-search-container').addClass('hidden');
       $('#example-search-container').addClass('hidden');
+      $('#search-history-container').addClass('hidden');
     });
 
     $('ul#search-results-tabset li a#example-search-tab-container-link').on('click',function(e) {
@@ -60,8 +62,18 @@ $('input[type=search]')
       $('#search-result-details').addClass('hidden');
       $('#advanced-search-container').addClass('hidden');
       $('#example-search-container').removeClass('hidden');
+      $('#search-history-container').addClass('hidden');
     });
 
+    $('ul#search-results-tabset li a#search-history-tab-container-link').on('click',function(e) {
+      $('ul#search-results-tabset li').removeClass('active');
+      $(this).parent('li').addClass('active');
+      $('#search-result-container').addClass('hidden');
+      $('#search-result-details').addClass('hidden');
+      $('#advanced-search-container').addClass('hidden');
+      $('#example-search-container').addClass('hidden');
+      $('#search-history-container').removeClass('hidden');
+    });
 
     $('ul#advanced-search-tabset li a').on('click',function(e) {
       $('.advanced-search-tab').addClass('hidden');
@@ -89,13 +101,13 @@ $('input[type=search]')
       var currentTab = $('#advanced-search-tabset li.active > a').attr('data-show-id');
       console.log("current tab: " + currentTab);
       if(currentTab == 'advanced-search-name') {
-        loadNameFields();
+        loadNameToString();
       } else if (currentTab == 'advanced-search-reference') {
-        loadReferenceFields();
+        loadReferenceToString();
       } else if (currentTab == 'advanced-search-instance') {
-        loadInstanceFields();
+        loadInstanceToString();
       } else if (currentTab == 'advanced-search-author') {
-        loadAuthorFields();
+        loadAuthorToString();
       } else {
         throw("#advanced-search-run was clicked but we don't know which search to load");
       }
@@ -145,17 +157,7 @@ $( "select#name-advanced-search-list-or-count" )
     <script>
 <!--
 
-    function loadAuthorFields() { 
-      console.log('loadAuthorFields')
-      var str = '';
-      $('#query-string-field').val(str);
-    };
-    function loadInstanceFields() {
-      console.log('loadInstanceFields')
-      var str = '';
-      $('#query-string-field').val(str);
-    };
-    function loadNameFields() {
+    function loadNameToString() {
       var str = '';
       if ($('#name-advanced-search-list-or-count').val().trim().length > 0) {
         str += $('#name-advanced-search-list-or-count').val().trim();

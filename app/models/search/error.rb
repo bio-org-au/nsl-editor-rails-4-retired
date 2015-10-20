@@ -60,6 +60,10 @@ class Search::Error
     @defined_query = false
   end
 
+  def to_history
+    {query_string: @query_string, result_size: 0, time_stamp: Time.now, error: true}
+  end
+
 end
 
 

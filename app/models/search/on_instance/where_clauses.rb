@@ -118,8 +118,9 @@ class Search::OnInstance::WhereClauses
     'adnot:' => 'comments:',
     'adnot-by:' => 'comments-by:',
     'type:' => 'instance-type:',
-    'extra-page-info:' => 'page-qualifier:',
-    'epi:' => 'page-qualifier:'
+    't:' => 'instance-type:',
+    'p:' => 'page:',
+    'pq:' => 'page-qualifier:'
   }
 
   ALLOWS_MULTIPLE_VALUES = {

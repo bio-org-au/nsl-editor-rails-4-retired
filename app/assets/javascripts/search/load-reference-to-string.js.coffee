@@ -1,5 +1,5 @@
 
-window.loadReferenceFields = (fields) ->
+window.loadReferenceToString = (fields) ->
   console.log("loadReferenceFields")
   settings = getSettings()
   fields =  _.reduce(fieldMap,appendOneField,'')

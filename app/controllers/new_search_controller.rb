@@ -18,9 +18,13 @@ class NewSearchController < ApplicationController
   before_filter :hide_details
 
   def search
+    session[:searches] ||= []
     @search = params[:query_string].present? ? Search::Base.new(params) : Search::Empty.new(params) 
+    #session[:searches].push(params[:query_string])
+    session[:searches].push(@search.to_history)
   rescue => e
     @search = Search::Error.new(params) 
+    session[:searches].push(@search.to_history)
     @error = e.to_s
   end
 

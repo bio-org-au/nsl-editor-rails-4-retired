@@ -47,7 +47,7 @@
 </table>
 <br>
 
-<h4 class="inline-block">List size</h4><span> - set the number of records</span>
+<h4 class="inline-block">Limit list size</h4><span> - set the number of records</span>
 <table class="example-searches table table-striped">
   <% [{search_string: "5 acacia*",explanation: %Q(List 5 names starting with "acacia". #{excc})},
       {search_string: "50 acacia*", explanation: %Q(List 50 names starting with "acacia". #{excc})},
@@ -94,9 +94,9 @@
   <% [{search_string: "count ref",explanation: %Q(Start with "count ref" to count references.)},
       {search_string: "count ref *nuytsia*", explanation: %Q(Counting without listing should be faster than listing for large sets.)},
       {search_string: "count ref type:journal", explanation: %Q(Because it's faster, counting may suit different types of searches.)},
-      {search_string: "count ref type:journal has-no-children:", explanation: %Q(Use an assertion.)},
+      {search_string: "count ref type:journal is-not-a-parent:", explanation: %Q(Use an assertion.)},
       {search_string: "count ref type:paper has-no-parent:", explanation: %Q(Use a different assertion)},
-      {search_string: "count ref type:journal has-no-children: is-a-duplicate:", explanation: %Q(Combine assertions.)}
+      {search_string: "count ref type:journal is-not-a-parent: is-a-duplicate:", explanation: %Q(Combine assertions.)}
       ].each do |val| %>
   <tr>
     <td class="width-30-percent"><a href="javascript:void(0)" 
@@ -123,7 +123,7 @@
       {search_string: "count instance page:140", explanation: %Q(Count instances with page 140.)},
       {search_string: "count instance page:14*", explanation: %Q(Count instances with page 14*.)},
       {search_string: "count instance page:*fig*", explanation: %Q(Count instances with figure information.)},
-      {search_string: "count instance extra-page-info:*", explanation: %Q(Count instances with extra page information.)},
+      {search_string: "count instance page-qualifier:*", explanation: %Q(Count instances with extra page information.)},
       {search_string: "count instance note-key:apc dist.", explanation: %Q(Count instances with note key 'apc dist.'.)},
       {search_string: "count instance note:*intermediate*", explanation: %Q(Count instances where 'intermediate' is noted.)},
       {search_string: "count instance cites-an-instance:", explanation: %Q(Count instances that cite another instance.)}
@@ -177,6 +177,7 @@
       {search_string: "count author page:140", explanation: %Q(Count authors with page 140.)},
       {search_string: "count author page:14*", explanation: %Q(Count authors with page 14*.)},
       {search_string: "count author page:*fig*", explanation: %Q(Count authors with figure information.)},
+      {search_string: "count author is-a-duplicate:", explanation: %Q(Count duplicate authors.)},
       ].each do |val| %>
   <tr>
     <td class="width-30-percent"><a href="javascript:void(0)" 

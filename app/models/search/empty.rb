@@ -61,6 +61,10 @@ class Search::Empty
     @defined_query = false
   end
 
+  def to_history
+    ''
+  end
+
 end
 
 

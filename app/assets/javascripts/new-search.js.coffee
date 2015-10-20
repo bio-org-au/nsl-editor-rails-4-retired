@@ -8,12 +8,12 @@ window.captureSearch = (event,$capture_button) ->
   str = $('#query-string-field').val();
   console.log(str)
   fields = parseSearchString(str)
-  assignFields(fields)
+  captureFields(fields)
 
 window.parseSearchString = (searchString, verbose = false) ->
   console.log(" ")
   console.log("parseSearchString for: #{searchString}")
-  searchTokens = searchString.trim().split(" ")
+  searchTokens = searchString.trim().replace(/:/g,': ').replace(/:  /g,': ').split(" ")
   [action,searchTokens] = parseAction(searchTokens)
   [setSize,limited, searchTokens] = parseSetSize(searchTokens)
   [target,searchTokens] = parseSearchTarget(searchTokens)
@@ -107,15 +107,17 @@ parseOneValue = (tokens) ->
   console.log("Returning: value: #{value}")
   [value.trim(), tokens]
 
-assignFields = (fields) ->
+captureFields = (fields) ->
   switch 
-    when fields.target.match(/^authors$/i)    then window.assignAuthorFields(fields)
-    when fields.target.match(/^names$/i)      then window.assignNameFields(fields)
-    when fields.target.match(/^references$/i) then window.assignReferenceFields(fields)
-    when fields.target.match(/^instances$/i)  then window.assignInstanceFields(fields)
-    when fields.target.match(/^tree$/i)      then window.assignTreeFields(fields)
-    else                                     window.assignNameFields(fields)
+    when fields.target.match(/^authors$/i)    then window.captureAuthorFields(fields)
+    when fields.target.match(/^names$/i)      then window.captureNameFields(fields)
+    when fields.target.match(/^references$/i) then window.captureReferenceFields(fields)
+    when fields.target.match(/^instances$/i)  then window.captureInstanceFields(fields)
+    when fields.target.match(/^tree$/i)      then window.captureTreeFields(fields)
+    else                                     window.captureNameFields(fields)
 
+captureTreeFields = (fields) ->
+  $('a#advanced-search-tab-link-tree').click()
 
 
   ####
