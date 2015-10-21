@@ -109,7 +109,7 @@ class Search::OnInstance::WhereClauses
     'page:' => " lower(page) like ?",
     'page-qualifier:' => " lower(page_qualifier) like ?",
     'note-key:' => " exists (select null from instance_note where instance_id = instance.id and exists (select null from instance_note_key where instance_note_key_id = instance_note_key.id and lower(instance_note_key.name) like ?)) ",
-    'note:' => " exists (select null from instance_note where instance_id = instance.id and lower(instance_note.value) like ?) ",
+    'notes:' => " exists (select null from instance_note where instance_id = instance.id and lower(instance_note.value) like ?) ",
   }
 
   CANONICAL_FIELD_NAMES = {
@@ -120,7 +120,8 @@ class Search::OnInstance::WhereClauses
     'type:' => 'instance-type:',
     't:' => 'instance-type:',
     'p:' => 'page:',
-    'pq:' => 'page-qualifier:'
+    'pq:' => 'page-qualifier:',
+    'note:' => 'notes:'
   }
 
   ALLOWS_MULTIPLE_VALUES = {

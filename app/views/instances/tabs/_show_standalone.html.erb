@@ -14,7 +14,7 @@
   <br>
   appears in
   <br>
-  <%= link_to("#{@instance.reference.citation} #{search_icon_on_tab}".html_safe, search_path(query: %Q(ref id:#{@instance.reference_id}),title: "Search for the reference.") %>
+  <%= link_to("#{@instance.reference.citation} #{search_icon_on_tab}".html_safe, search_path(query: %Q(ref id:#{@instance.reference_id})),title: "Search for the reference.") %>
   <br>
   as <%= @instance.instance_type.name_with_indefinite_article.sub(/ /,'<br>').html_safe %>
   <%= "<br>on page #{@instance.page}".html_safe if @instance.page.present? %>

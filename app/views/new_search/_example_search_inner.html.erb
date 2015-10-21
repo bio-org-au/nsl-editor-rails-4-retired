@@ -19,7 +19,7 @@
     <td class="width-30-percent"><a href="javascript:void(0)" 
            class="example-search width-100-percent" 
            title="Link to search">
-           <span class="darkslateblue"><%= val[:search_string] %></span>
+           <span class="blue"><%= val[:search_string] %></span>
     </td>
     <td><%= val[:explanation].html_safe %></td>
   </tr>
@@ -39,7 +39,7 @@
     <td class="width-30-percent"><a href="javascript:void(0)" 
            class="example-search width-100-percent" 
            title="Link to search">
-           <span class="darkslateblue"><%= val[:search_string] %></span>
+           <span class="blue"><%= val[:search_string] %></span>
     </td>
     <td><%= val[:explanation].html_safe %></td>
   </tr>
@@ -58,7 +58,7 @@
     <td class="width-30-percent"><a href="javascript:void(0)" 
            class="example-search width-100-percent" 
            title="Link to search">
-           <span class="darkslateblue"><%= val[:search_string] %></span>
+           <span class="blue"><%= val[:search_string] %></span>
     </td>
     <td><%= val[:explanation].html_safe %></td>
   </tr>
@@ -81,7 +81,7 @@
     <td class="width-30-percent"><a href="javascript:void(0)" 
            class="example-search width-100-percent" 
            title="Link to search">
-           <span class="darkslateblue"><%= val[:search_string] %></span>
+           <span class="blue"><%= val[:search_string] %></span>
     </td>
     <td><%= val[:explanation].html_safe %></td>
   </tr>
@@ -102,7 +102,7 @@
     <td class="width-30-percent"><a href="javascript:void(0)" 
            class="example-search width-100-percent" 
            title="Link to search">
-           <span class="darkslateblue"><%= val[:search_string] %></span>
+           <span class="blue"><%= val[:search_string] %></span>
     </td>
     <td><%= val[:explanation].html_safe %></td>
   </tr>
@@ -132,7 +132,7 @@
     <td class="width-30-percent"><a href="javascript:void(0)" 
            class="example-search width-100-percent" 
            title="Link to search">
-           <span class="darkslateblue"><%= val[:search_string] %></span>
+           <span class="blue"><%= val[:search_string] %></span>
     </td>
     <td><%= val[:explanation].html_safe %></td>
   </tr>
@@ -155,7 +155,7 @@
     <td class="width-30-percent"><a href="javascript:void(0)" 
            class="example-search width-100-percent" 
            title="Link to search">
-           <span class="darkslateblue"><%= val[:search_string] %></span>
+           <span class="blue"><%= val[:search_string] %></span>
     </td>
     <td><%= val[:explanation].html_safe %></td>
   </tr>
@@ -176,7 +176,26 @@
     <td class="width-30-percent"><a href="javascript:void(0)" 
            class="example-search width-100-percent" 
            title="Link to search">
-           <span class="darkslateblue"><%= val[:search_string] %></span>
+           <span class="blue"><%= val[:search_string] %></span>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+<br>
+
+<h4 class="">Defined searches</h4>
+<table class="example-searches table table-striped">
+  <% [
+      {search_string: "instances-for-ref-id: 53841",explanation: %Q(Instances for a reference ID.)},
+      {search_string: "1000 instances-for-ref-id: 53841",explanation: %Q(Instances for a reference ID, with limit 1000.)},
+      {search_string: "instances-for-name-id: 242009",explanation: %Q(Instances for a name ID.)},
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent"><a href="javascript:void(0)" 
+           class="example-search width-100-percent" 
+           title="Link to search">
+           <span class="blue"><%= val[:search_string] %></span>
     </td>
     <td><%= val[:explanation].html_safe %></td>
   </tr>

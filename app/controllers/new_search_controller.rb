@@ -18,23 +18,32 @@ class NewSearchController < ApplicationController
   before_filter :hide_details
 
   def search
-    session[:searches] ||= []
     if params[:query_string].present? 
       @search = Search::Base.new(params) 
-      session[:searches].push(@search.to_history)
+      save_search(@search)
     else
       @search = Search::Empty.new(params) 
     end
   rescue => e
     params[:error_message] = e.to_s
     @search = Search::Error.new(params) 
-    session[:searches].push(@search.to_history)
+    save_search(@search)
     @error = e.to_s
   end
 
   def search_name_with_instances
     @search = Search::Base.new({'query_string' => "instances-for-name-id: #{params[:name_id]}"}) 
     render 'search'
+  end
+ 
+  private
+
+  def save_search(search)
+    session[:searches] ||= []
+    session[:searches].push(@search.to_history)
+    if session[:searches].size > 5
+      session[:searches].pop
+    end
   end
 
 end
