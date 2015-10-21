@@ -36,6 +36,10 @@ class Search::Base
               :more_allowed,
               :error_message
 
+  DEFAULT_PAGE_SIZE = 100
+  PAGE_INCREMENT_SIZE = 500
+  MAX_PAGE_SIZE = 10000
+
   def initialize(params)
     Rails.logger.debug("Search::Base start")
     @params = params
@@ -70,6 +74,10 @@ class Search::Base
     {"query_string"=> @query_string, "result_size" => @count ? @results : @results.size, "time_stamp" => Time.now, "error" => false}
   end
 
+  def page_increment_size
+    PAGE_INCREMENT_SIZE
+  end
+
   def query_string_for_more
     query_string_without_limit.sub(/^ *list/i,'').sub(/^ *\d+/,'').sub(/^/,'all ')
     raw_limit = @query_string.sub(/^ *list/i,'').trim().split.first
@@ -85,12 +93,12 @@ class Search::Base
     if current_limit == 'all'
       @more_allowed = false
       new_limit = current_limit
-    elsif current_limit >= 1000
+    elsif current_limit >= MAX_PAGE_SIZE
       @more_allowed = false
       new_limit = current_limit
     else
       @more_allowed = true
-      new_limit = current_limit + 500 > 1000 ? 1000 : current_limit + 500
+      new_limit = (current_limit + PAGE_INCREMENT_SIZE > MAX_PAGE_SIZE) ? MAX_PAGE_SIZE : current_limit + PAGE_INCREMENT_SIZE
     end
     "#{new_limit} #{query_string_without_limit}"
   end

@@ -12,13 +12,11 @@
         No records found. 
       <% else %>
         <% if @search.results.size == @search.limit %>
-          <% Rails.logger.debug('before count') %>
-          <% num = @search.results.except(:offset,:limit,:order).count %>
-          <% Rails.logger.debug('after count') %>
+          <% total = @search.results.except(:offset,:limit,:order).count %>
         <% else %>
-          <% num = @search.results.size %>
+          <% total = @search.results.size %>
         <% end %>
-        <%= "#{pluralize(@search.results.size,"of #{num} records")} shown." %>
+        <%= "#{pluralize(@search.results.size,"of #{total} records")}." %>
       <% end %>
     <% end %>
     <% if @search.target_table.match(/name/i) %>
@@ -30,7 +28,7 @@
     <% end %>
     <% if !@search.count && @search.results.size == @search.limit %>
       <span id="search-results-limited-notice">
-        <%= link_to('List more', new_search_path(query_string: "#{@search.query_string.sub(/^ *\d+/,'').sub(/^/,%Q(#{@search.results.size+100} ))}"), title: 'List 100 more.') %>
+        <%= link_to("List #{@search.page_increment_size} more", new_search_path(query_string: "#{@search.query_string.sub(/^ *\d+/,'').sub(/^/,%Q(#{@search.results.size+@search.page_increment_size} ))}"), title: "List #{@search.page_increment_size} more.") %>
         <% if @search.more_allowed %>
           <%= link_to('List more', new_search_path(query_string: "#{@search.query_string_for_more}"), title: 'List more.') %>
         <% end %>

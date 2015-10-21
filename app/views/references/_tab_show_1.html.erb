@@ -7,7 +7,7 @@
 <br>
 <% if @reference.parent %>
   <%= link_to("#{@reference.parent.title} #{search_icon_on_tab}".html_safe, 
-                          search_path(query: "reference parent-id:#{@reference.parent_id}"),
+                          search_path(query: "ref parent-id:#{@reference.parent_id}"),
                           title: 'Search for the containing reference',
                           tabindex: increment_tab_index ) %>
 <% end %>
@@ -36,7 +36,7 @@
   <br>
   <% label_string = pluralize(@reference.children.size,'child') %>
   <%= link_to("#{label_string} #{search_icon_on_tab}".html_safe, 
-              search_path(query: "ref parent-id:#{@reference.id}"),
+              new_search_path(query_string: "ref parent-id:#{@reference.id}"),
               title: "Search for the #{label_string}", 
               tabindex: increment_tab_index) %>
 <% end %>
