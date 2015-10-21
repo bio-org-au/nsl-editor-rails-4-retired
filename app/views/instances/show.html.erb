@@ -6,7 +6,7 @@
   <% end %>
   <div class="inner">
     <h3 class="heading-for-show-details"><%= link_to "#{@instance.type_of_instance} instance",
-                                                     search_path(query_on: 'instance', query: %Q(id: #{@instance.id})) %></h3>
+                                                     search_path(query: "instance id: #{@instance.id}") %></h3>
 
     <%= render partial: "#{'instances/tabs/tabs'}" %>
     <%= render partial: "instances/tabs/#{tab_for_instance_type(@tab,params['row-type'])}" %>

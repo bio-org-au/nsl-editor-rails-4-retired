@@ -26,7 +26,7 @@
         <script> setUpInstanceReference(); </script>
     <% else %>
       <% focus_taken = false %>
-      <%= show_field_as_linked_lookup('',@instance.reference,'citation', search_path(query: %Q(id:#{@instance.reference_id}),query_on: 'reference'),'to the reference') %>
+      <%= show_field_as_linked_lookup('',@instance.reference,'citation', search_path(query: %Q(ref id:#{@instance.reference_id})),'to the reference') %>
     <% end %>
  
     as a* 

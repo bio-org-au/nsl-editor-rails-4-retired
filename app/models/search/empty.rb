@@ -34,7 +34,8 @@ class Search::Empty
               :target_table, 
               :where_arguments,
               :more_allowed,
-              :defined_query
+              :defined_query,
+              :error_message
 
   def initialize(params)
     Rails.logger.debug("Search::Empty start")
@@ -59,6 +60,7 @@ class Search::Empty
     @query_string_for_more = ''
     @more_allowed = false
     @defined_query = false
+    @error_message = ''
   end
 
   def to_history

@@ -1,7 +1,7 @@
 <% increment_tab_index %>
 
 <%= @reference.ref_type.name %> by 
-<%= link_to("#{@reference.author.name} (#{@reference.ref_author_role.name}) #{search_icon_on_tab}".html_safe, search_path(query_on: 'author', query: %Q(id:#{@reference.author_id})),title: 'Search for the author(s)/editor(s)...') %> 
+<%= link_to("#{@reference.author.name} (#{@reference.ref_author_role.name}) #{search_icon_on_tab}".html_safe, search_path(query: "author id:#{@reference.author_id}"),title: 'Search for the author(s)/editor(s)...') %> 
 <br>
 <%= @reference.title %>
 <br>
@@ -36,7 +36,7 @@
   <br>
   <% label_string = pluralize(@reference.children.size,'child') %>
   <%= link_to("#{label_string} #{search_icon_on_tab}".html_safe, 
-              search_path(query: @reference.id, query_on: 'reference', query_field: 'p'),
+              search_path(query: "ref parent-id:#{@reference.id}"),
               title: "Search for the #{label_string}", 
               tabindex: increment_tab_index) %>
 <% end %>
@@ -44,8 +44,7 @@
 <% if @reference.duplicate_of.present? %>
   Duplicate of 
   <%= link_to("#{@reference.duplicate_of.citation} #{search_icon_on_tab}".html_safe,
-              search_path(query: "id:#{@reference.duplicate_of_id}",
-              query_on: 'reference'),
+              search_path(query: "ref id:#{@reference.duplicate_of_id}"),
               title: 'Search for the duplicate reference.') %>
 <% end %>
 

@@ -6,7 +6,7 @@
   <% end %>
   <div class="inner">
     <h3>
-      <%= link_to(@author.name_and_or_abbrev, search_path(query_on: 'author', query: %Q(id:#{@author.id})),id: 'tab-heading') %>
+      <%= link_to(@author.name_and_or_abbrev, search_path(query: "author id:#{@author.id}"),id: 'tab-heading') %>
     </h3>
     <%= render partial: 'tabs' %>
     <%= render partial: "#{@tab}" %>

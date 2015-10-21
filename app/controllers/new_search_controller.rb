@@ -19,10 +19,14 @@ class NewSearchController < ApplicationController
 
   def search
     session[:searches] ||= []
-    @search = params[:query_string].present? ? Search::Base.new(params) : Search::Empty.new(params) 
-    #session[:searches].push(params[:query_string])
-    session[:searches].push(@search.to_history)
+    if params[:query_string].present? 
+      @search = Search::Base.new(params) 
+      session[:searches].push(@search.to_history)
+    else
+      @search = Search::Empty.new(params) 
+    end
   rescue => e
+    params[:error_message] = e.to_s
     @search = Search::Error.new(params) 
     session[:searches].push(@search.to_history)
     @error = e.to_s

@@ -12,7 +12,7 @@
     <% end %>
 
     In
-    <%= show_field_as_linked_lookup('',@instance.reference,'citation', search_path(query: %Q(id:#{@instance.reference_id}),query_on: 'reference'),'reference') %>
+    <%= show_field_as_linked_lookup('',@instance.reference,'citation', search_path(query: %Q(ref id:#{@instance.reference_id})),'reference') %>
     the name*
     <div class="typeahead-container">
       <section class='block width-100-percent'>

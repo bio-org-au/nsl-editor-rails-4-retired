@@ -6,7 +6,7 @@
 <% search_count = @author.master_of.try('count') || 0 %>
 <% if search_count > 0 %>
   <% @author.master_of.each do |duplicate| %>
-    <% search_path = search_path(query_on: 'author', query: "id:#{duplicate.id}") %>
+    <% search_path = search_path(query: "author id:#{duplicate.id}") %>
     <%= render partial: 'detail_line', 
                locals: {info: link_to(duplicate.name_and_or_abbrev,
                                       search_path,
@@ -18,8 +18,8 @@
 <% if @author.duplicate_of_id.present? %>
     <%= render partial: 'detail_line', 
                locals: {info: link_to(@author.duplicate_of.name_and_or_abbrev,
-                                      search_path(query_on: 'author', query_field: 'id', query: @author.duplicate_of_id),
-                                      title: 'See duplicate'), 
+                        search_path(query: "author id:#{@author.duplicate_of_id}"),
+                        title: 'See duplicate'), 
                         label: 'duplicate of'} %>
 <% end %>
 <br>

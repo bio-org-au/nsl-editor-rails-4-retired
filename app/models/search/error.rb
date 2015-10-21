@@ -34,7 +34,8 @@ class Search::Error
               :target_table, 
               :where_arguments,
               :more_allowed,
-              :defined_query
+              :defined_query,
+              :error_message
 
   def initialize(params)
     Rails.logger.debug("Search::Error start with query string: #{params[:query_string]}")
@@ -58,10 +59,11 @@ class Search::Error
     @query_string_for_more = ''
     @more_allowed = false
     @defined_query = false
+    @error_message = params[:error_message]
   end
 
   def to_history
-    {query_string: @query_string, result_size: 0, time_stamp: Time.now, error: true}
+    {"query_string" => @query_string, "result_size" => 0, "time_stamp" => Time.now, "error" => true, "error_message" => @error_message}
   end
 
 end

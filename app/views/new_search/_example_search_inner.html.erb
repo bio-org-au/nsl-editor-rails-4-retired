@@ -147,7 +147,7 @@
       {search_string: "author *bentham*", explanation: %Q(Authors including "bentham".)},
       {search_string: "author *bentham* name: *hooker*", explanation: %Q(Authors including "bentham" and "hooker".)},
       {search_string: "author name: *bentham* name: *hooker*", explanation: %Q(Authors including "bentham" and "hooker".)},
-      {search_string: "author extra-name-text:*", explanation: %Q(Authors with extra name text.)},
+      {search_string: "author full-name:*", explanation: %Q(Authors with full or extra name text.)},
       {search_string: "author comments:*", explanation: %Q(Count commented authors by turning a text field into an assertion.)},
       {search_string: "author comments-by:*", explanation: %Q(Count authors with a comment by someone.)},
       ].each do |val| %>
@@ -167,16 +167,9 @@
 <table class="example-searches table table-striped">
   <% [{search_string: "count author",explanation: %Q(Start with "count author" to count authors.)},
       {search_string: "count author bentham*", explanation: %Q(Counting sets.)},
-      {search_string: "count author type:basionym", explanation: %Q(Count by type e.g. basionyms.)},
-      {search_string: "count author type:comb. nov.", explanation: %Q(Count comb. novs.)},
-      {search_string: "count author acacia* type:basionym", explanation: %Q(Count by name and type e.g. basionyms.)},
-      {search_string: "count author acacia* type:comb. nov.", explanation: %Q(Count by name and type e.g. comb. nov.)},
       {search_string: "count comments:*", explanation: %Q(Count commented authors by turning a text field into an assertion.)},
       {search_string: "count author comments-by:*", explanation: %Q(Count authors with a comment by someone.)},
       {search_string: "count author notes:*", explanation: %Q(Count authors with notes by turning a text field into an assertion.)},
-      {search_string: "count author page:140", explanation: %Q(Count authors with page 140.)},
-      {search_string: "count author page:14*", explanation: %Q(Count authors with page 14*.)},
-      {search_string: "count author page:*fig*", explanation: %Q(Count authors with figure information.)},
       {search_string: "count author is-a-duplicate:", explanation: %Q(Count duplicate authors.)},
       ].each do |val| %>
   <tr>

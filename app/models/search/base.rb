@@ -33,13 +33,15 @@ class Search::Base
               :target_table, 
               :where_arguments,
               :defined_query,
-              :more_allowed
+              :more_allowed,
+              :error_message
 
   def initialize(params)
     Rails.logger.debug("Search::Base start")
     @params = params
     @empty = false
     @error = false
+    @error_message = ''
     parse_query
     if @defined_query
       Rails.logger.debug("Search::Base has a defined query: #{@defined_query}")
@@ -65,7 +67,7 @@ class Search::Base
   end
 
   def to_history
-    {query_string: @query_string, result_size: @count ? @results : @results.size, time_stamp: Time.now, error: false}
+    {"query_string"=> @query_string, "result_size" => @count ? @results : @results.size, "time_stamp" => Time.now, "error" => false}
   end
 
   def query_string_for_more

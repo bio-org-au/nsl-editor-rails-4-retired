@@ -40,6 +40,6 @@
     <% if @search.count && @search.results > 0 %> 
       <%= link_to('List', new_search_path(query_string: "#{@search.query_string.sub(/count */i,'')}")) %>
     <% end %>
-    <%= link_to('Rerun.', new_search_path(query_string: "#{@search.query_string}"), title: 'Rerun the query.') %>
+    <%= link_to("#{icon('refresh')}".html_safe, new_search_path(query_string: "#{@search.query_string}"), title: 'Rerun the query.') %>
   <% end %>
 <% end %>

@@ -98,7 +98,7 @@ class Search::OnAuthor::WhereClauses
 
   WHERE_VALUE_HASH = { 
     'name:' => "lower(name) like ?",
-    'full_name:' => "lower(full_name) like ?",
+    'full-name:' => "lower(full_name) like ?",
     'abbrev:' => "lower(abbrev) like ?",
     'comments:' => " exists (select null from comment where comment.author_id = author.id and comment.text like ?) ",
     'comments-by:' => " exists (select null from comment where comment.author_id = author.id and comment.created_by like ?) ",

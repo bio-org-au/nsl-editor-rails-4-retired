@@ -24,7 +24,7 @@
     </div>
     <script> setUpInstanceName(); </script>
     appears in
-    <%= show_field_as_linked_lookup('',@reference,'citation', search_path(query: %Q(id:#{@reference.id}),query_on: 'reference'),'reference') %>
+    <%= show_field_as_linked_lookup('',@reference,'citation', search_path(query: %Q(ref id:#{@reference.id})),'reference') %>
     on page
     <%= f.text_field :page, tabindex: increment_tab_index %>
     <br>
