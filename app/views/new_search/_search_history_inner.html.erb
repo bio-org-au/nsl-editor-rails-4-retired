@@ -29,12 +29,11 @@
         <%= search["result_size"] %>
       <% end %>
     </td>
-    <!--
     <td>
+      <%= search["time_stamp"] %>
       <%#= search["time_stamp"].to_time.to_formatted_s(:short) %>
-      (<%#= time_ago_in_words(search["time_stamp"].to_time) %> ago)
+      <%#= time_ago_in_words(search["time_stamp"].to_time) %> 
     </td>
-    -->
   </tr>
   <% end %>
   <% end %>

@@ -1,8 +1,8 @@
 <% if @search.defined_query %>
   Defined query.
 <% end %>
-<% if @error.present? %>
-  <%= @error %>
+<% if @search.error %>
+  <%= @search.error_message %>
 <% else %>
   <% unless @search.empty %>
     <% if @search.count %> 

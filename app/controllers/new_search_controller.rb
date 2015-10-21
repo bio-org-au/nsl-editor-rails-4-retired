@@ -28,7 +28,6 @@ class NewSearchController < ApplicationController
     params[:error_message] = e.to_s
     @search = Search::Error.new(params) 
     save_search(@search)
-    @error = e.to_s
   end
 
   def search_name_with_instances
@@ -42,7 +41,7 @@ class NewSearchController < ApplicationController
     session[:searches] ||= []
     session[:searches].push(@search.to_history)
     if session[:searches].size > 5
-      session[:searches].pop
+      session[:searches].shift
     end
   end
 
