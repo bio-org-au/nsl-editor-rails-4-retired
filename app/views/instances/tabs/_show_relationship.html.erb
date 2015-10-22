@@ -16,7 +16,7 @@
   <% if @instance.cites_id %>
     in
     <%= link_to("#{@instance.this_cites.try('reference').try('citation')}:#{ @instance.this_cites.page} #{search_icon_on_tab}".html_safe,
-                search_path(query: %Q(ref id:#{@instance.this_cites.try('reference_id')}),
+                search_path(query: %Q(ref id:#{@instance.this_cites.try('reference_id')})),
                             title: 'Search for the instance this cites.') %>
     <br>
   <% end %>
@@ -32,7 +32,7 @@
   by
   <br>
   <%= link_to("#{@instance.reference.citation}#{":" if @instance.page.present?}#{@instance.page} #{search_icon_on_tab}".html_safe,
-              search_path(query: %Q(ref id:#{@instance.reference_id}),title: 'Search for the reference this is cited by.') %>
+              search_path(query: %Q(ref id:#{@instance.reference_id})),title: 'Search for the reference this is cited by.') %>
   <br>
 
   as

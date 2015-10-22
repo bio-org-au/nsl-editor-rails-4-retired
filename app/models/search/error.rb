@@ -35,7 +35,9 @@ class Search::Error
               :where_arguments,
               :more_allowed,
               :defined_query,
-              :error_message
+              :error_message,
+              :count,
+              :sql
 
   def initialize(params)
     Rails.logger.debug("Search::Error start with query string: #{params[:query_string]}")
@@ -60,6 +62,7 @@ class Search::Error
     @more_allowed = false
     @defined_query = false
     @error_message = params[:error_message]
+    @count_allowed = false
   end
 
   def to_history

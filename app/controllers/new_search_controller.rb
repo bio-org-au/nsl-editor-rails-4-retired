@@ -18,7 +18,7 @@ class NewSearchController < ApplicationController
   before_filter :hide_details
 
   def search
-    if params[:query_string].present? 
+    if params[:query_string].present? || params[:query_target].present? 
       @search = Search::Base.new(params) 
       save_search(@search)
     else

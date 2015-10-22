@@ -34,7 +34,10 @@ class Search::Base
               :where_arguments,
               :defined_query,
               :more_allowed,
-              :error_message
+              :error_message,
+              :count_allowed,
+              :sql,
+              :parsed_query
 
   DEFAULT_PAGE_SIZE = 100
   PAGE_INCREMENT_SIZE = 500
@@ -71,7 +74,7 @@ class Search::Base
   end
 
   def to_history
-    {"query_string"=> @query_string, "result_size" => @count ? @results : @results.size, "time_stamp" => Time.now, "error" => false}
+    {"query_string"=> @query_string, "query_target" => @parsed_query.target_table, "result_size" => @count ? @results : @results.size, "time_stamp" => Time.now, "error" => false}
   end
 
   def page_increment_size
@@ -104,9 +107,11 @@ class Search::Base
   end
   
   def run_query
+    @count_allowed = true
+    @sql = ''
     case @target_table
     when /any/
-      raise "cannot run a 'any' search yet"
+      raise "cannot run an 'any' search yet"
     when /author/
       Rails.logger.debug("\nSearching authors\n")
       run = Search::OnAuthor::Base.new(@parsed_query)
@@ -140,9 +145,12 @@ class Search::Base
       @rejected_pairings = run.rejected_pairings
       @common_and_cultivar_included = run.common_and_cultivar_included
     end
+    @sql = run.relation.to_sql
   end
  
   def run_defined_query
+    @sql = ''
+    @count_allowed = false
     case @defined_query
     when /instances-for-name-id:/
       Rails.logger.debug("\nrun_defined_query instances-for-name-id:\n")

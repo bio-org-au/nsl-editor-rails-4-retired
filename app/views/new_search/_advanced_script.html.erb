@@ -143,6 +143,18 @@ $( "select#name-advanced-search-list-or-count" )
     }
 
   });
+
+
+    //document.getElementById('query-target').value = document.getElementById('search-target-button-text').innerHTML;
+
+    document.getElementById("search-target-list").addEventListener("click",function(e) {
+        if(e.target && e.target.nodeName == "A") {
+            document.getElementById('search-target-button-text').innerHTML = e.target.innerHTML;
+            document.getElementById('query-target').value = e.target.innerHTML;
+        }
+    });
+
+
 });
 
 
@@ -150,6 +162,7 @@ $( "select#name-advanced-search-list-or-count" )
       //$('#query-string-field').val($(this).html().replace(/.*\|/,'').replace(/<[^>]*>/g,''));
       //$('#query-string-field').val($(this).html().replace(/\|.*$/,'').replace(/<[^>]*>/g,'').trim());
       $('#query-string-field').val($(this).html().replace(/<[^>]*>/g,'').trim());
+      $('#query-target').val('');
       $('form#search-form').submit();
     });
 
@@ -231,6 +244,7 @@ $( "select#name-advanced-search-list-or-count" )
       });
       $('#query-string-field').val(str);
     };
+
 -->
 
     </script>

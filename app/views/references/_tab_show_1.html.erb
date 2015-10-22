@@ -1,13 +1,13 @@
 <% increment_tab_index %>
 
 <%= @reference.ref_type.name %> by 
-<%= link_to("#{@reference.author.name} (#{@reference.ref_author_role.name}) #{search_icon_on_tab}".html_safe, search_path(query: "author id:#{@reference.author_id}"),title: 'Search for the author(s)/editor(s)...') %> 
+<%= link_to("#{@reference.author.name} (#{@reference.ref_author_role.name}) #{search_icon_on_tab}".html_safe, new_search_path(query_string: "author id:#{@reference.author_id}"),title: 'Search for the author(s)/editor(s)...') %> 
 <br>
 <%= @reference.title %>
 <br>
 <% if @reference.parent %>
   <%= link_to("#{@reference.parent.title} #{search_icon_on_tab}".html_safe, 
-                          search_path(query: "ref parent-id:#{@reference.parent_id}"),
+                          new_search_path(query_string: "ref parent-id:#{@reference.parent_id}"),
                           title: 'Search for the containing reference',
                           tabindex: increment_tab_index ) %>
 <% end %>
@@ -44,7 +44,7 @@
 <% if @reference.duplicate_of.present? %>
   Duplicate of 
   <%= link_to("#{@reference.duplicate_of.citation} #{search_icon_on_tab}".html_safe,
-              search_path(query: "ref id:#{@reference.duplicate_of_id}"),
+              new_search_path(query_string: "ref id:#{@reference.duplicate_of_id}"),
               title: 'Search for the duplicate reference.') %>
 <% end %>
 
@@ -54,19 +54,19 @@
 <% if instances_size > 0 %>
   <% if instances_size == 1 %>
     <%= link_to("1 Instance #{search_icon_on_tab}".html_safe,
-                          search_path(query: "instances-for-ref-id: #{@reference.id}"), 
+                          new_search_path(query_string: "instances-for-ref-id: #{@reference.id}"), 
                           tabindex: increment_tab_index, 
                           title: 'Search for the instance.') %>
   <% else %>
     <%= "#{instances_size} Instances" %>
     <br>
     <%= link_to("&mdash; sorted by name #{search_icon_on_tab}".html_safe,
-                          search_path(query: "instances-for-ref-id: #{@reference.id}"),
+                          new_search_path(query_string: "instances-for-ref-id: #{@reference.id}"),
                           tabindex: increment_tab_index, 
                           title: 'Search for the instances, sorted by name.') %>
     <br>
     <%= link_to("&mdash; sorted by page #{search_icon_on_tab}".html_safe,
-                          search_path(query: "instances-for-ref-id-sort-by-page: #{@reference.id}"),
+                          new_search_path(query_string: "instances-for-ref-id-sort-by-page: #{@reference.id}"),
                           tabindex: increment_tab_index, 
                           title: 'Search for the instances, sorted by page.') %>
    <% end %>

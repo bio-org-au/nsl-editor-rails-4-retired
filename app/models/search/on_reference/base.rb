@@ -16,7 +16,7 @@
 #   
 class Search::OnReference::Base
 
-  attr_reader :results, :limited, :info_for_display, :rejected_pairings, :common_and_cultivar_included, :sql, :id
+  attr_reader :results, :limited, :info_for_display, :rejected_pairings, :common_and_cultivar_included, :relation, :id
 
   def initialize(parsed_query)
     run_query(parsed_query)
@@ -27,8 +27,8 @@ class Search::OnReference::Base
     if parsed_query.count
       Rails.logger.debug('Search::OnReference::Base#run_query counting')
       count_query = Search::OnReference::CountQuery.new(parsed_query)
-      @sql = count_query.sql
-      @results = sql.count
+      @relation = count_query.sql
+      @results = relation.count
       Rails.logger.debug("Search::OnReference::Base#run_query results: #{@results}")
       @limited = false
       @info_for_display = count_query.info_for_display
@@ -36,8 +36,8 @@ class Search::OnReference::Base
       @common_and_cultivar_included = count_query.common_and_cultivar_included
     else
       list_query = Search::OnReference::ListQuery.new(parsed_query)
-      @sql = list_query.sql
-      @results = sql.all
+      @relation = list_query.sql
+      @results = relation.all
       @limited = list_query.limited
       @info_for_display = list_query.info_for_display
       @rejected_pairings = []
