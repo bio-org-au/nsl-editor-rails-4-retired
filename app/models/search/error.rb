@@ -37,12 +37,15 @@ class Search::Error
               :defined_query,
               :error_message,
               :count,
-              :sql
+              :sql,
+              :target_button_text,
+              :parsed_request
 
   def initialize(params)
     Rails.logger.debug("Search::Error start with query string: #{params[:query_string]}")
     Rails.logger.debug("#{'=' * 40}")
     params = params
+    @parsed_request = Search::EmptyParsedRequest.new(params)
     @canonical_query_string = ''
     @common_and_cultivar = ''
     @common_and_cultivar_included= false
@@ -63,6 +66,7 @@ class Search::Error
     @defined_query = false
     @error_message = params[:error_message]
     @count_allowed = false
+    @target_button_text = 'Error...'
   end
 
   def to_history

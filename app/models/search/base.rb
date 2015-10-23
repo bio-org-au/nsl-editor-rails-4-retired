@@ -16,28 +16,15 @@
 #   
 class Search::Base
 
-  attr_reader :canonical_query_string, 
-              :common_and_cultivar, 
-              :common_and_cultivar_included,
-              :count, 
-              :empty, 
+  attr_reader :empty, 
               :error, 
-              :info_for_display, 
-              :limit, 
+              :parsed_request,
+              :common_and_cultivar_included,
               :limited, 
-              :order, 
-              :params, 
-              :query_string, 
-              :rejected_pairings, 
               :results, 
-              :target_table, 
-              :where_arguments,
-              :defined_query,
               :more_allowed,
               :error_message,
-              :count_allowed,
-              :sql,
-              :parsed_query
+              :sql
 
   DEFAULT_PAGE_SIZE = 100
   PAGE_INCREMENT_SIZE = 500
@@ -49,7 +36,7 @@ class Search::Base
     @empty = false
     @error = false
     @error_message = ''
-    parse_query
+    parse_request
     if @defined_query
       Rails.logger.debug("Search::Base has a defined query: #{@defined_query}")
       run_defined_query
@@ -58,23 +45,13 @@ class Search::Base
     end
   end
 
-  def parse_query
+  def parse_request
     @query_string = @params[:query_string]
-    @parsed_query = Search::ParsedQuery.new(@params)
-    @count = @parsed_query.count
-    @list = @parsed_query.list
-    @limit = @parsed_query.limit
-    @defined_query = @parsed_query.defined_query
-    @defined_query_arg = @parsed_query.defined_query_arg
-    @target_table = @parsed_query.target_table
-    @common_and_cultivar = @parsed_query.common_and_cultivar
-    @order = @parsed_query.order
-    @where_arguments = @parsed_query.where_arguments
-    @canonical_query_string = @parsed_query.canonical_query_string
+    @parsed_request = Search::ParsedRequest.new(@params)
   end
 
   def to_history
-    {"query_string"=> @query_string, "query_target" => @parsed_query.target_table, "result_size" => @count ? @results : @results.size, "time_stamp" => Time.now, "error" => false}
+    {"query_string"=> @query_string, "query_target" => @parsed_request.target_table, "result_size" => @count ? @results : @results.size, "time_stamp" => Time.now, "error" => false}
   end
 
   def page_increment_size
@@ -114,7 +91,7 @@ class Search::Base
       raise "cannot run an 'any' search yet"
     when /author/
       Rails.logger.debug("\nSearching authors\n")
-      run = Search::OnAuthor::Base.new(@parsed_query)
+      run = Search::OnAuthor::Base.new(@parsed_request)
       @results = run.results
       @limited = run.limited
       @info_for_display = run.info_for_display
@@ -122,7 +99,7 @@ class Search::Base
       @common_and_cultivar_included = run.common_and_cultivar_included
     when /instance/
       Rails.logger.debug("\nSearching instances\n")
-      run = Search::OnInstance::Base.new(@parsed_query)
+      run = Search::OnInstance::Base.new(@parsed_request)
       @results = run.results
       @limited = run.limited
       @info_for_display = run.info_for_display
@@ -130,7 +107,7 @@ class Search::Base
       @common_and_cultivar_included = run.common_and_cultivar_included
     when /reference/
       Rails.logger.debug("\nSearching references\n")
-      run = Search::OnReference::Base.new(@parsed_query)
+      run = Search::OnReference::Base.new(@parsed_request)
       @results = run.results
       @limited = run.limited
       @info_for_display = run.info_for_display
@@ -138,7 +115,7 @@ class Search::Base
       @common_and_cultivar_included = run.common_and_cultivar_included
     else
       Rails.logger.debug("\nSearching on names\n")
-      run = Search::OnName::Base.new(@parsed_query)
+      run = Search::OnName::Base.new(@parsed_request)
       @results = run.results
       @limited = run.limited
       @info_for_display = run.info_for_display
@@ -160,10 +137,14 @@ class Search::Base
       @target_table = 'instance'
     when /instances-for-name:/
       Rails.logger.debug("\nrun_defined_query instances-for-name:\n")
-      @results = Instance.name_instances(@defined_query_arg, @limit)
-      @limited = @results.size == @limit
-      @common_and_cultivar_included = true 
-      @target_table = 'instance'
+      #@results = Instance.name_instances(@defined_query_arg, @limit)
+      #@limited = @results.size == @limit
+      #@common_and_cultivar_included = true 
+      #@target_table = 'instance'
+      defined_query = Instance::DefinedQuery::NamesWithInstances.new(@parsed_request)
+      @results = defined_query.results
+      @limited = defined_query.limited
+      @common_and_cultivar_included = defined_query.limited
     when /instances-for-ref-id:/
       Rails.logger.debug("\nrun_defined_query instances-for-ref-id:\n")
       @results = Instance::AsSearchEngine.for_ref_id(@defined_query_arg, @limit,'name')

@@ -16,19 +16,19 @@
 #   
 require 'test_helper'
 
-class SearchParseQueryCountName < ActiveSupport::TestCase
+class SearchParsedRequestCountName < ActiveSupport::TestCase
 
   test "search parse query count name" do
     query_string = 'count names'
     params = {'query_string'=> query_string}
-    parsed_query = Search::ParsedQuery.new(params)
-    assert parsed_query.count, "This should be parsed as a count query."
-    assert !parsed_query.list, "This should not be parsed as a list query."
-    assert_match /\Aname\z/, parsed_query.target_table,"This should be parsed as a query on the name table."
-    assert !parsed_query.limited, "This should be parsed as a query with no limit."
-    assert_equal parsed_query.limit, 100, "This should be parsed as a query with a limit of 100."
-    assert !parsed_query.common_and_cultivar, "This should be parsed as a query excluding common and cultivars."
-    assert parsed_query.where_arguments.blank?, "This should be parsed as a query with no where arguments."
+    parsed_request = Search::ParsedRequest.new(params)
+    assert parsed_request.count, "This should be parsed as a count query."
+    assert !parsed_request.list, "This should not be parsed as a list query."
+    assert_match /\Aname\z/, parsed_request.target_table,"This should be parsed as a query on the name table."
+    assert !parsed_request.limited, "This should be parsed as a query with no limit."
+    assert_equal parsed_request.limit, 100, "This should be parsed as a query with a limit of 100."
+    assert !parsed_request.common_and_cultivar, "This should be parsed as a query excluding common and cultivars."
+    assert parsed_request.where_arguments.blank?, "This should be parsed as a query with no where arguments."
   end
 
 end

@@ -12,7 +12,7 @@
     autofocus: @autofocus_search,
     class:"col-xs-12 col-sm-11 col-md-10 col-lg-8 no-left-padding xform-control xbanner-query-field",
     results: 5,
-    value: "#{@search.query_string if @search.present?}",
+    value: "#{@search.parsed_request.query_string if @search.present?}",
     required: true %>
   -->
 
@@ -21,15 +21,24 @@
     <div class="input-group">
       <div class="input-group-btn">
         <button id="search-target-button" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <span id="search-target-button-text"><%= "Search #{@search.target_table}" || 'Search...' %></span><span class="caret"></span></button>
+          <span id="search-target-button-text">
+
+            <%#= "#{@search.empty ? 'Names with instances' : @search.target_table.capitalize.pluralize }" %>
+            <%= @search.parsed_request.target_button_text %>
+
+          </span>
+
+          &nbsp;<span class="caret"></span></button>
         <ul id="search-target-list" class="dropdown-menu">
-          <li><a id="search-target-item-authors" href="#">Search Authors</a></li>
-          <li><a id="search-target-item-instances" href="#">Search Instances</a></li>
-          <li><a id="search-target-item-names" href="#">Search Names</a></li>
-          <li><a id="search-target-item-references" href="#">Search References</a></li>
-          <li><a id="search-target-item-tree" href="#">Search Tree</a></li>
+          <li class="blue"><a id="search-target-item-authors" href="#">Names with instances</a></li>
+          <li><a id="search-target-item-authors" href="#">References with instances</a></li>
           <li role="separator" class="divider"></li>
-          <li><a href="#">Separated link</a></li>
+          <li><a id="search-target-item-authors" href="#">Authors</a></li>
+          <li><a id="search-target-item-instances" href="#">Instances</a></li>
+          <li><a id="search-target-item-names" href="#">Names</a></li>
+          <li><a id="search-target-item-references" href="#">References</a></li>
+          <li role="separator" class="divider"></li>
+          <li><a id="search-target-item-tree" href="#">Tree</a></li>
         </ul>
       </div><!-- /btn-group -->
       <input id="query-string-field" 
@@ -41,13 +50,14 @@
              placeholder = "Search terms"
              autofocus = "<%= @autofocus_search %>"
              results = "5"
-             value = "<%= @search.query_string if @search.present? %>"
+             value = "<%= @search.parsed_request.query_string if @search.present? %>"
              required
              >
     </div><!-- /input-group -->
   </div><!-- /.col-lg-6 -->
+</div><!-- /row -->
 
-  <input id="query-target" name="query_target" value="<%= "Search #{@search.target_table}" || '' %>" type="hidden" >
-  <input id="query-submit"name="query_submit" value="Go" type="submit" >
+  <input id="query-target" name="query_target" value="<%= @search.parsed_request.target_button_text %>" type="hidden" >
+  <input id="query-submit"name="query_submit" value="Search" type="submit" class="btn xform-control">
 
 <% end %>

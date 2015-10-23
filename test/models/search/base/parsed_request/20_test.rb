@@ -16,18 +16,18 @@
 #   
 require 'test_helper'
 
-class SearchParseQuery20Test < ActiveSupport::TestCase
+class SearchParsedRequest20Test < ActiveSupport::TestCase
 
   test "search parse query 20" do
     query_string = '20'
     params = {'query_string'=> query_string}
-    parsed_query = Search::ParsedQuery.new(params)
-    assert parsed_query.list, "This should be parsed as a list query."
-    assert !parsed_query.count, "This should not be parsed as a count query."
-    assert_match /\Aname\z/, parsed_query.target_table,"This should be parsed as a query on the name table."
-    assert_equal 20, parsed_query.limit, "This should be parsed as a query with a limit of 20."
-    assert parsed_query.common_and_cultivar, "This should be parsed as a query including common and cultivars."
-    assert parsed_query.where_arguments.blank?, "This should be parsed as a query with no where arguments."
+    parsed_request = Search::ParsedRequest.new(params)
+    assert parsed_request.list, "This should be parsed as a list query."
+    assert !parsed_request.count, "This should not be parsed as a count query."
+    assert_match /\Aname\z/, parsed_request.target_table,"This should be parsed as a query on the name table."
+    assert_equal 20, parsed_request.limit, "This should be parsed as a query with a limit of 20."
+    assert parsed_request.common_and_cultivar, "This should be parsed as a query including common and cultivars."
+    assert parsed_request.where_arguments.blank?, "This should be parsed as a query with no where arguments."
   end
 
 end

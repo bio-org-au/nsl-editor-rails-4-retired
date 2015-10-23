@@ -18,8 +18,8 @@ class Search::OnName::CountQuery
 
   attr_reader :sql, :info_for_display, :common_and_cultivar_included
 
-  def initialize(parsed_query)
-    @parsed_query = parsed_query
+  def initialize(parsed_request)
+    @parsed_request = parsed_request
     prepare_query
     @info_for_display = "nothing yet from count query"
   end
@@ -27,14 +27,14 @@ class Search::OnName::CountQuery
   def prepare_query
     Rails.logger.debug("Search::OnName::CountQuery#prepare_query")
     prepared_query = Name.includes(:name_status)
-    where_clauses = Search::OnName::WhereClauses.new(@parsed_query,prepared_query)
+    where_clauses = Search::OnName::WhereClauses.new(@parsed_request,prepared_query)
     prepared_query = where_clauses.sql
-    if @parsed_query.common_and_cultivar || where_clauses.common_and_cultivar_included?
+    if @parsed_request.common_and_cultivar || where_clauses.common_and_cultivar_included?
       Rails.logger.debug("Search::OnName::ListQuery#prepare_query yes, we need common, cultivars")
       @common_and_cultivar_included = true
     else
       Rails.logger.debug("Search::OnName::ListQuery#prepare_query no, we will not look for common, cultivars")
-      prepared_query = prepared_query.not_common_or_cultivar unless @parsed_query.common_and_cultivar
+      prepared_query = prepared_query.not_common_or_cultivar unless @parsed_request.common_and_cultivar
       @common_and_cultivar_included = false
     end
     @sql = prepared_query

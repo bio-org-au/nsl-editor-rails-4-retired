@@ -18,8 +18,8 @@ class Search::OnInstance::ListQuery
 
   attr_reader :sql, :limited, :info_for_display, :common_and_cultivar_included
 
-  def initialize(parsed_query)
-    @parsed_query = parsed_query
+  def initialize(parsed_request)
+    @parsed_request = parsed_request
     prepare_query
     @limited = true
     @info_for_display = ""
@@ -28,9 +28,9 @@ class Search::OnInstance::ListQuery
   def prepare_query
     Rails.logger.debug("Search::OnInstance::ListQuery#prepare_query")
     prepared_query = Instance.where('1=1')
-    where_clauses = Search::OnInstance::WhereClauses.new(@parsed_query,prepared_query)
+    where_clauses = Search::OnInstance::WhereClauses.new(@parsed_request,prepared_query)
     prepared_query = where_clauses.sql
-    prepared_query = prepared_query.limit(@parsed_query.limit) if @parsed_query.limited
+    prepared_query = prepared_query.limit(@parsed_request.limit) if @parsed_request.limited
     prepared_query = prepared_query.order('id')
     @sql = prepared_query
   end

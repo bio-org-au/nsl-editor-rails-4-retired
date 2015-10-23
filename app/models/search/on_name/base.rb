@@ -18,14 +18,14 @@ class Search::OnName::Base
 
   attr_reader :results, :limited, :info_for_display, :rejected_pairings, :common_and_cultivar_included, :relation, :id
 
-  def initialize(parsed_query)
-    run_query(parsed_query)
+  def initialize(parsed_request)
+    run_query(parsed_request)
   end
 
-  def run_query(parsed_query)
+  def run_query(parsed_request)
     Rails.logger.debug('Search::OnName::Base#run_query')
-    if parsed_query.count
-      count_query = Search::OnName::CountQuery.new(parsed_query)
+    if parsed_request.count
+      count_query = Search::OnName::CountQuery.new(parsed_request)
       @relation = count_query.sql
       @results = relation.count
       @limited = false
@@ -33,7 +33,7 @@ class Search::OnName::Base
       @rejected_pairings = []
       @common_and_cultivar_included = count_query.common_and_cultivar_included
     else
-      list_query = Search::OnName::ListQuery.new(parsed_query)
+      list_query = Search::OnName::ListQuery.new(parsed_request)
       @relation = list_query.sql
       @results = relation.all
       @limited = list_query.limited

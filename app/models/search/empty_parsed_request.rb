@@ -14,65 +14,39 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #   
-class Search::Empty
+class Search::EmptyParsedRequest
 
-  attr_reader :parsed_request,
+  attr_reader :empty,
               :canonical_query_string, 
               :common_and_cultivar, 
-              :common_and_cultivar_included,
               :count, 
-              :empty, 
-              :error, 
-              :info_for_display, 
+              :defined_query, 
+              :defined_query_arg,
+              :id, 
               :limit, 
               :limited, 
+              :list, 
               :order, 
               :params, 
               :query_string, 
-              :query_string_for_more, 
-              :rejected_pairings, 
-              :results, 
               :target_table, 
               :where_arguments,
-              :more_allowed,
-              :defined_query,
-              :error_message,
-              :count_allowed,
-              :sql,
+              :query_target,
               :target_button_text
 
   def initialize(params)
-    Rails.logger.debug("Search::Empty start")
-    Rails.logger.debug("#{'=' * 40}")
+    Rails.logger.debug("Search::EmptyParsedQuery start: params: #{params}")
     @params = params
-    @parsed_request = Search::EmptyParsedRequest.new(params)
-    @canonical_query_string = ''
-    @common_and_cultivar = ''
-    @common_and_cultivar_included= false
-    @count = false
     @empty = true
-    @error = false
-    @info_for_display = ''
-    @limit = 0
-    @limited = false
-    @order = ''
-    @params = {}
-    @query_string = ''
-    @rejected_pairings = []
-    @results = []
-    @target_table = ''
-    @where_arguments = ''
-    @query_string_for_more = ''
-    @more_allowed = false
     @defined_query = false
-    @error_message = ''
-    @count_allowed = false
-    @target_button_text = 'Names with instances'
+    @target_button_text = 'Names with ...'
+    @count = false
+    @list = false
+    @limited = false
+    @common_and_cultivar = false
+    @order = ''
   end
 
-  def to_history
-    ''
-  end
 
 end
 

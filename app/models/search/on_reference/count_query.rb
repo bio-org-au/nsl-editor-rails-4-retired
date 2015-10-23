@@ -18,8 +18,8 @@ class Search::OnReference::CountQuery
 
   attr_reader :sql, :info_for_display, :common_and_cultivar_included
 
-  def initialize(parsed_query)
-    @parsed_query = parsed_query
+  def initialize(parsed_request)
+    @parsed_request = parsed_request
     prepare_query
     @info_for_display = "nothing yet from count query"
   end
@@ -27,7 +27,7 @@ class Search::OnReference::CountQuery
   def prepare_query
     Rails.logger.debug("Search::OnReference::CountQuery#prepare_query")
     prepared_query = Reference.includes(:ref_type)
-    where_clauses = Search::OnReference::WhereClauses.new(@parsed_query,prepared_query)
+    where_clauses = Search::OnReference::WhereClauses.new(@parsed_request,prepared_query)
     prepared_query = where_clauses.sql
     @sql = prepared_query
   end

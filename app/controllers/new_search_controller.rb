@@ -24,10 +24,10 @@ class NewSearchController < ApplicationController
     else
       @search = Search::Empty.new(params) 
     end
-  rescue => e
-    params[:error_message] = e.to_s
-    @search = Search::Error.new(params) 
-    save_search(@search)
+  #rescue => e
+    #params[:error_message] = e.to_s
+    #@search = Search::Error.new(params) 
+    #save_search(@search)
   end
 
   def search_name_with_instances

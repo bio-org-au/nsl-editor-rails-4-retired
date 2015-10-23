@@ -18,17 +18,17 @@ class Search::OnAuthor::WhereClauses
 
   attr_reader  :sql
 
-  def initialize(parsed_query, incoming_sql)
-    @parsed_query = parsed_query
+  def initialize(parsed_request, incoming_sql)
+    @parsed_request = parsed_request
     @sql = incoming_sql
     build_sql
   end
 
   def build_sql
     Rails.logger.debug("Search::OnAuthor::WhereClause.sql")
-    remaining_string = @parsed_query.where_arguments.downcase 
-    @common_and_cultivar_included = @parsed_query.common_and_cultivar
-    @sql = @sql.for_id(@parsed_query.id) if @parsed_query.id
+    remaining_string = @parsed_request.where_arguments.downcase 
+    @common_and_cultivar_included = @parsed_request.common_and_cultivar
+    @sql = @sql.for_id(@parsed_request.id) if @parsed_request.id
     x = 0 
     until remaining_string.blank?
       field,value,remaining_string = Search::NextCriterion.new(remaining_string).get 

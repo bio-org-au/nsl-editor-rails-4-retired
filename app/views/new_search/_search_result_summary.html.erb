@@ -1,18 +1,18 @@
-<% if @search.defined_query %>
+<% if @search.parsed_request.defined_query %>
   Defined query.
   <%= "#{pluralize(@search.results.size,"record")}." %>
-  <%= link_to(%Q("#{@search.query_string}" #{icon('refresh')}).html_safe, new_search_path(query_string: "#{@search.query_string}",query_target: "#{params[:query_target]}"), title: 'Rerun the query.') %>
+  <%= link_to(%Q("#{@search.parsed_request.query_string}" #{icon('refresh')}).html_safe, new_search_path(query_string: "#{@search.parsed_request.query_string}",query_target: "#{params[:query_target]}"), title: 'Rerun the query.') %>
 <% elsif @search.error %>
   <%= @search.error_message %>
 <% else %>
   <% unless @search.empty %>
-    <% if @search.count %> 
-      <%= "#{pluralize(@search.results,@search.target_table)}.  " %>
+    <% if @search.parsed_request.count %> 
+      <%= "#{pluralize(@search.results,@search.parsed_request.target_table||'unknown')}.  " %>
     <% else %>
       <% if @search.results.size == 0 %>
         No records found. 
       <% else %>
-        <% if @search.results.size == @search.limit %>
+        <% if @search.results.size == @search.parsed_request.limit %>
           <% total = @search.results.except(:offset,:limit,:order).count %>
           <%= "#{pluralize(@search.results.size,"of #{total} record")}." %>
         <% else %>
@@ -22,34 +22,34 @@
       <% end %>
     <% end %>
 
-    <% if @search.target_table.match(/name/i) %>
+    <% if @search.parsed_request.query_target.match(/\Anames{1}\z/i) %>
       <% if @search.common_and_cultivar_included %>
         <span id="includes-common-cultivar-notice"></span>
       <% else %>
-        <%= link_to('Include common,cultivar names.', new_search_path(query_string: "#{@search.query_string.strip} nt:*",query_target: "#{params[:query_target]}"), title: 'Query including cultivar and common.') %>
+        <%= link_to('Include common,cultivar names.', new_search_path(query_string: "#{@search.parsed_request.query_string.strip} nt:*",query_target: "#{params[:query_target]}"), title: 'Query including cultivar and common.') %>
       <% end %>
     <% end %>
 
-    <% if !@search.count && total.present? && total > @search.limit %>
+    <% if !@search.parsed_request.count && total.present? && total > @search.parsed_request.limit %>
       <span id="search-results-limited-notice">
         <% next_limit_max = (@search.results.size + @search.page_increment_size) %>
         <% if total <= next_limit_max %>
-          <%= link_to("All", new_search_path(query_string: "#{@search.query_string.sub(/^ *\d+/,'').sub(/^/,%Q(#{total} ))}",query_target: "#{params[:query_target]}"), title: "List all.") %>
+          <%= link_to("All", new_search_path(query_string: "#{@search.parsed_request.query_string.sub(/^ *\d+/,'').sub(/^/,%Q(#{total} ))}",query_target: "#{params[:query_target]}"), title: "List all.") %>
         <% else %>
-          <%= link_to("List #{next_limit_max}", new_search_path(query_string: "#{@search.query_string.sub(/^ *\d+/,'').sub(/^/,%Q(#{next_limit_max} ))}",query_target: "#{params[:query_target]}"), title: "List #{@search.page_increment_size} more.") %>
+          <%= link_to("List #{next_limit_max}", new_search_path(query_string: "#{@search.parsed_request.query_string.sub(/^ *\d+/,'').sub(/^/,%Q(#{next_limit_max} ))}",query_target: "#{params[:query_target]}"), title: "List #{@search.page_increment_size} more.") %>
         <% end %>
         <% if @search.more_allowed %>
-          <%= link_to('List more', new_search_path(query_string: "#{@search.query_string_for_more}",query_target: "#{params[:query_target]}"), title: 'List more.') %>
+          <%= link_to('List more', new_search_path(query_string: "#{@search.parsed_request.query_string_for_more}",query_target: "#{params[:query_target]}"), title: 'List more.') %>
         <% end %>
-        <% if @search.count_allowed %>
-          <%= link_to('Count', new_search_path(query_string: "count #{@search.query_string.sub(/list */i,'')}"),query_target: "#{params[:query_target]}") %>
+        <% if @search.parsed_request.count_allowed %>
+          <%= link_to('Count', new_search_path(query_string: "count #{@search.parsed_request.query_string.sub(/list */i,'')}"),query_target: "#{params[:query_target]}") %>
         <% end %>
       </span>
     <% end %>
-    <% if @search.count && @search.results > 0 %> 
-      <%= link_to('List', new_search_path(query_string: "#{@search.query_string.sub(/count */i,'')}",query_target: "#{params[:query_target]}")) %>
+    <% if @search.parsed_request.count && @search.results > 0 %> 
+      <%= link_to('List', new_search_path(query_string: "#{@search.parsed_request.query_string.sub(/count */i,'')}",query_target: "#{params[:query_target]}")) %>
     <% end %>
-    <%= link_to(%Q(#{@search.parsed_query.query_target} "#{@search.query_string}" #{icon('refresh')}).html_safe, new_search_path(query_string: "#{@search.query_string}",query_target: "#{params[:query_target]}"), title: 'Rerun the query.') %>
+    <%= link_to(%Q(#{@search.parsed_request.query_target} "#{@search.parsed_request.query_string}" #{icon('refresh')}).html_safe, new_search_path(query_string: "#{@search.parsed_request.query_string}",query_target: "#{params[:query_target]}"), title: 'Rerun the query.') %>
   <% end %>
 <% end %>
 <%= params[:query_target] %>
