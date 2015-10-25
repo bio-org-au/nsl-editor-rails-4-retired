@@ -1,6 +1,6 @@
 
 
-<%= form_tag(new_search_path, method: :get, id: "search-form", class: 'xform-inline')  do -%>
+<%= form_tag(new_search_path, method: :get, id: "search-form", class: 'form-inline')  do -%>
 
 <!--
   <input name="search_from" value="string" type="hidden" >
@@ -15,15 +15,13 @@
     value: "#{@search.parsed_request.query_string if @search.present?}",
     required: true %>
   -->
-
 <div class="row">
-  <div class="col-xs-12 col-sm-11 col-md-10 col-lg-8">
-    <div class="input-group">
-      <div class="input-group-btn">
+  <div class="col-xs-11 col-sm-12 col-md-10 col-lg-9">
+    <div class="input-group width-80-percent">
+      <div id="search-target-btn" class="input-group-btn">
         <button id="search-target-button" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <span id="search-target-button-text">
 
-            <%#= "#{@search.empty ? 'Names with instances' : @search.target_table.capitalize.pluralize }" %>
             <%= @search.parsed_request.target_button_text %>
 
           </span>
@@ -44,7 +42,7 @@
       <input id="query-string-field" 
              name="query_string" 
              type="search" 
-             class="form-control" 
+             class="form-control width-100-percent" 
              aria-label="search field"
              tabindex = "8"
              placeholder = "Search terms"
@@ -54,10 +52,10 @@
              required
              >
     </div><!-- /input-group -->
-  </div><!-- /.col-lg-6 -->
+    <input id="query-submit"name="query_submit" value="Search" type="submit" class="btn xform-control">
+  </div><!-- /.col-lg-9 -->
 </div><!-- /row -->
 
   <input id="query-target" name="query_target" value="<%= @search.parsed_request.target_button_text %>" type="hidden" >
-  <input id="query-submit"name="query_submit" value="Search" type="submit" class="btn xform-control">
 
 <% end %>
