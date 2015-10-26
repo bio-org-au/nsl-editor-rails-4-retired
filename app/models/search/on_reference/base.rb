@@ -16,7 +16,7 @@
 #   
 class Search::OnReference::Base
 
-  attr_reader :results, :limited, :info_for_display, :rejected_pairings, :common_and_cultivar_included, :relation, :id
+  attr_reader :results, :limited, :info_for_display, :rejected_pairings, :common_and_cultivar_included, :relation, :id, :count
 
   def initialize(parsed_request)
     run_query(parsed_request)
@@ -34,6 +34,7 @@ class Search::OnReference::Base
       @info_for_display = count_query.info_for_display
       @rejected_pairings = []
       @common_and_cultivar_included = count_query.common_and_cultivar_included
+      @count = -1
     else
       list_query = Search::OnReference::ListQuery.new(parsed_request)
       @relation = list_query.sql
@@ -42,6 +43,7 @@ class Search::OnReference::Base
       @info_for_display = list_query.info_for_display
       @rejected_pairings = []
       @common_and_cultivar_included = list_query.common_and_cultivar_included
+      @count = -1
     end
   end
 

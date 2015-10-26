@@ -1,7 +1,7 @@
 <br>
 <% if @name.second_children.size > 0 %>
   <%= link_to("#{pluralize(@name.combined_children.size,'combined child')} #{icon('search')}".html_safe,
-    search_path(query: "children: #{@name.id}",
+    new_search_path(query_string: "parent-or-second-parent-id: #{@name.id}",
                 query_common_and_cultivar: "t",
                 query_field: 'name'),
                 tabindex: increment_tab_index,
@@ -11,7 +11,7 @@
 <% end %>
 <% if @name.children.size > 0 %>
   <%= link_to("#{pluralize(@name.children.size,'child')} #{icon('search')}".html_safe,
-    search_path(query: "parent-id: #{@name.id}",
+    new_search_path(query_string: "parent-id: #{@name.id}",
                 query_common_and_cultivar: "t",
                 query_field: 'name'),
                 tabindex: increment_tab_index,
@@ -21,7 +21,7 @@
 <% end %>
 <% if @name.second_children.size > 0 %>
   <%= link_to("#{pluralize(@name.second_children.size,'second parent child')} #{icon('search')}".html_safe,
-    search_path(query: "second-parent-id: #{@name.id}",
+    new_search_path(query_string: "second-parent-id: #{@name.id}",
                 query_common_and_cultivar: "t",
                 query_field: 'name'),
                 tabindex: increment_tab_index,

@@ -1,7 +1,7 @@
 
       <caption class="hidden">Results of the latest search</caption>
       <% @focus_anchor_id = params[:focus] unless params[:focus].blank? %>            
-    <% for record in @search.results %><%# Allow for hashes or ActiveRecords, so use hash key syntax. %>
+    <% for record in @search.executed_query.results %><%# Allow for hashes or ActiveRecords, so use hash key syntax. %>
       <% if record[:anchor_id] == @focus_anchor_id %>
         <% give_me_focus = true  %>
         <%  @focus_anchor_id = 'do not use again'  %>

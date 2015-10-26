@@ -39,12 +39,14 @@ class Search::ParsedRequest
   NO_LIST_LIMIT = -1
   DEFINED_QUERIES = {
     'instance-name-id:' => 'instances-for-name-id:',
-    'instances-for-name-id:' => 'instances-for-name-id:',
+    'instances-for-name-id' => 'instances-for-name-id:',
+    'instances for name id' => 'instances-for-name-id:',
     'names with instances' => 'instances-for-name:',
     'instance-name:' => 'instances-for-name:',
     'instances-for-name:' => 'instances-for-name:',
     'instance-ref-id:' => 'instances-for-ref-id:',
     'instances-for-ref-id:' => 'instances-for-ref-id:',
+    'instances for ref id' => 'instances-for-ref-id:',
     'instance-ref-id-sort-by-page:' => 'instances-for-ref-id-sort-by-page:',
     'instances-for-ref-id-sort-by-page:' => 'instances-for-ref-id-sort-by-page:'
   }
@@ -65,26 +67,33 @@ class Search::ParsedRequest
   DEFAULT_TARGET = 'name'
 
   def initialize(params)
-    Rails.logger.debug("Search::ParsedQuery start: params: #{params}")
+    debug("initialize: params: #{params}")
     @params = params
-    parse_query
+    parse_request
     @count_allowed = true
   end
 
-  def parse_query
-    Rails.logger.debug("Search::ParsedQuery parse_query start: ===============================")
-    Rails.logger.debug("Search::ParsedQuery parse_query start: @params: #{@params}")
+  def debug(s)
+    Rails.logger.debug("Search::ParsedRequest #{s}")
+  end
+
+  def inspect
+    "Parsed Query: defined_query: #{@defined_query}; where_arguments: #{@where_arguments}, defined_query_args: #{@defined_query_args}"
+  end
+
+  def parse_request
+    debug("parse_request start: ===============================")
+    debug("parse_request start: @params: #{@params}")
     @query_string = @params['query_string'].gsub(/  */,' ')
-    Rails.logger.debug("Search::ParseQueryString @query_string: #{@query_string}")
-    #@query_target = (@params['query_target']||'').sub(/Search /,'').sub(/s *$/,'').strip.downcase
+    debug("parse_request @query_string: #{@query_string}")
     @query_target = (@params['query_target']||'').strip.downcase
-    Rails.logger.debug("Search::ParseQueryString @query_target: #{@query_target}")
+    debug("parse_request @query_target: #{@query_target}")
     # Before splitting on spaces, make sure every colon has at least one space after it.
     remaining_tokens = @query_string.strip.gsub(/:/,': ').gsub(/:  /,': ').split(/ /)
     remaining_tokens = parse_query_target(remaining_tokens)
     #unless @defined_query
       remaining_tokens = parse_count_or_list(remaining_tokens)
-      remaining_tokens = parse_limit(remaining_tokens)
+      remaining_tokens = parse_limit(remaining_tokens)  # limit needs to be a delimited field limit: NNN to avoid confusion with IDs.
       remaining_tokens = parse_target(remaining_tokens)
       #remaining_tokens = parse_defined_query(remaining_tokens)
       remaining_tokens = parse_common_and_cultivar(remaining_tokens)
@@ -94,18 +103,21 @@ class Search::ParsedRequest
   end
 
   def parse_query_target(tokens)
-    if DEFINED_QUERIES.has_key?(@query_target)
-      @defined_query = DEFINED_QUERIES[@query_target]
+    query_target_downcase = @query_target.downcase
+    if DEFINED_QUERIES.has_key?(query_target_downcase)
+      debug("parse_query_target - #{query_target_downcase} is recognized as a defined query.")
+      @defined_query = DEFINED_QUERIES[query_target_downcase]
       #@defined_query_arg = tokens.join(' ')
-      @target_button_text = @params['query_target'].capitalize.pluralize
+      @target_button_text = @params['query_target'].capitalize.gsub(/\bid\b/,'ID').gsub('name','Name').gsub(/ref/,'Ref')
     else
+      debug("parse_query_target - '#{query_target_downcase}' is NOT recognized as a defined query.")
       @defined_query = false
     end
     tokens
   end
 
   def xparse_defined_query(tokens)
-    Rails.logger.debug("Search::ParsedQuery parse_defined_query start: tokens: #{tokens.join(',')}")
+    debug("parse_defined_query start: tokens: #{tokens.join(',')}")
     if DEFINED_QUERIES.has_key?("#{@target_table}-#{tokens.first}")
       @defined_query = DEFINED_QUERIES["#{@target_table}-#{tokens.first}"]
       @defined_query_arg = tokens.drop(1).join(' ')
@@ -143,7 +155,15 @@ class Search::ParsedRequest
     tokens
   end
 
+  # Need to refactor - to avoid limit being confused with an ID.
+  # Make limit a field limit: 999
   def parse_limit(tokens)
+    @limited = @list
+    @limit = DEFAULT_LIST_LIMIT
+    tokens
+  end
+
+  def xparse_limit(tokens)
     @limited = @list
     if tokens.blank?
       @limit = DEFAULT_LIST_LIMIT
@@ -173,20 +193,42 @@ class Search::ParsedRequest
         #@defined_query = false
     #tokens
   #end
-
+  #
   def parse_target(tokens)
+    debug(' parse_target')
     if @defined_query == false
+      debug(" parse_target not a defined query")
       if SIMPLE_QUERY_TARGETS.has_key?(@query_target)
         @target_table = SIMPLE_QUERY_TARGETS[@query_target]
+        debug(" parse_target has a simple query! @target_table: #{@target_table}")
+        if SIMPLE_QUERY_TARGETS.has_key?(tokens.first)
+          tokens = tokens.drop(1)
+        end
+      else
+        raise "Cannot query #{@query_target}"
+      end
+    end
+    tokens
+  end
+
+  def xparse_target(tokens)
+    debug(' parse_target')
+    if @defined_query == false
+      debug(" parse_target not a defined query")
+      if SIMPLE_QUERY_TARGETS.has_key?(@query_target)
+        @target_table = SIMPLE_QUERY_TARGETS[@query_target]
+        debug(" parse_target has a simple query! @target_table: #{@target_table}")
         if SIMPLE_QUERY_TARGETS.has_key?(tokens.first)
           tokens = tokens.drop(1)
         end
       elsif tokens.blank?
+        debug(" parse_target tokens blank")
         @target_table = DEFAULT_TARGET
       elsif SIMPLE_QUERY_TARGETS.has_key?(tokens.first)
         @target_table = SIMPLE_QUERY_TARGETS[tokens.first]
           tokens = tokens.drop(1)
       else
+        debug(" parse_target is resorting to the DEFAULT_TARGET")
         @target_table = DEFAULT_TARGET
       end
       @target_button_text = @target_table.capitalize.pluralize
@@ -207,6 +249,7 @@ class Search::ParsedRequest
   end
 
   def gather_where_arguments(tokens)
+    debug("gather_where_arguments for tokens: #{tokens}")
     @where_arguments = tokens.join(' ')
     tokens
   end

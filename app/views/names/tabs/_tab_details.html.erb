@@ -78,7 +78,7 @@
 <br>
 <% if @name.instances.size > 0 %>
   <%= link_to("#{pluralize(@name.instances.size,'instance')} #{icon('search')}".html_safe, 
-                        new_search_path(query_string: "instances-for-name-id: #{@name.id}"), 
+                        new_search_path(query_target: "instances-for-name-id", query_string: "#{@name.id}"), 
                         tabindex: increment_tab_index,
                         title: "Search for the #{pluralize(@name.instances.size,'instance')}",
                         class: 'give-me-focus') %>

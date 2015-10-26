@@ -63,6 +63,10 @@ class Search::OnName::WhereClauses
       elsif canonical_field.match(/\Acomments-by:\z/)
         @sql = @sql.where("exists (select null from comment where comment.name_id = name.id and (lower(comment.created_by) like ? or lower(comment.updated_by) like ?))",
                           canonical_value,canonical_value)
+      elsif WHERE_INTEGER_VALUE_HASH_THRICE.has_key?(canonical_field)
+        @sql = @sql.where(WHERE_INTEGER_VALUE_HASH_THRICE[canonical_field],canonical_value.to_i,canonical_value.to_i,canonical_value.to_i)
+      elsif WHERE_INTEGER_VALUE_HASH_TWICE.has_key?(canonical_field)
+        @sql = @sql.where(WHERE_INTEGER_VALUE_HASH_TWICE[canonical_field],canonical_value.to_i,canonical_value.to_i)
       elsif WHERE_INTEGER_VALUE_HASH.has_key?(canonical_field)
         @sql = @sql.where(WHERE_INTEGER_VALUE_HASH[canonical_field],canonical_value.to_i)
       elsif WHERE_ASSERTION_HASH.has_key?(canonical_field)
@@ -80,6 +84,10 @@ class Search::OnName::WhereClauses
 
   def canon_field(field)
     if WHERE_INTEGER_VALUE_HASH.has_key?(field)
+      field
+    elsif WHERE_INTEGER_VALUE_HASH_TWICE.has_key?(field)
+      field
+    elsif WHERE_INTEGER_VALUE_HASH_THRICE.has_key?(field)
       field
     elsif WHERE_ASSERTION_HASH.has_key?(field)
       field
@@ -122,13 +130,21 @@ class Search::OnName::WhereClauses
 
   WHERE_INTEGER_VALUE_HASH = { 
     'id:' => "id = ? ",
-    'parent-id:' => "parent_id = ? ",
-    'second-parent-id:' => "second_parent_id = ? ",
     'author-id:' => "author_id = ? ",
     'base-author-id:' => "base_author_id = ? ",
     'ex-base-author-id:' => "ex_base_author_id = ? ",
     'ex-author-id:' => "ex_author_id = ? ",
     'sanctioning-author-id:' => "sanctioning_author_id = ? "
+  }
+
+  WHERE_INTEGER_VALUE_HASH_TWICE = { 
+    'parent-or-second-parent-id:' => "parent_id = ? or second_parent_id = ? ",
+    'parent-id:' => "id = ? or parent_id = ?",
+    'second-parent-id:' => "id = ? or second_parent_id = ? "
+  }
+
+  WHERE_INTEGER_VALUE_HASH_THRICE = { 
+    'parent-or-second-parent-id:' => "id = ? or parent_id = ? or second_parent_id = ? "
   }
 
   WHERE_ASSERTION_HASH = { 

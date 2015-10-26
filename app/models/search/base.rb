@@ -18,31 +18,34 @@ class Search::Base
 
   attr_reader :empty, 
               :error, 
-              :parsed_request,
-              :common_and_cultivar_included,
-              :limited, 
-              :results, 
-              :more_allowed,
               :error_message,
-              :sql
+              :executed_query,
+              :more_allowed,
+              :parsed_request
 
   DEFAULT_PAGE_SIZE = 100
   PAGE_INCREMENT_SIZE = 500
   MAX_PAGE_SIZE = 10000
 
   def initialize(params)
-    Rails.logger.debug("Search::Base start")
+    debug("Search::Base start")
     @params = params
     @empty = false
     @error = false
     @error_message = ''
     parse_request
-    if @defined_query
-      Rails.logger.debug("Search::Base has a defined query: #{@defined_query}")
+    debug(@parsed_request.inspect)
+    if @parsed_request.defined_query
+      debug("has a defined query: #{@parsed_request.defined_query}")
       run_defined_query
     else
+      debug("has a plain query")
       run_query
     end
+  end
+
+  def debug(s)
+    Rails.logger.debug("Search::Base #{s}")
   end
 
   def parse_request
@@ -51,7 +54,11 @@ class Search::Base
   end
 
   def to_history
-    {"query_string"=> @query_string, "query_target" => @parsed_request.target_table, "result_size" => @count ? @results : @results.size, "time_stamp" => Time.now, "error" => false}
+    {"query_string"=> @query_string, 
+     "query_target" => @parsed_request.target_table, 
+     "result_size" => @executed_query.count, 
+     "time_stamp" => Time.now, 
+     "error" => false}
   end
 
   def page_increment_size
@@ -84,95 +91,59 @@ class Search::Base
   end
   
   def run_query
+    debug("run_query for @parsed_request.target_table: #{@parsed_request.target_table}")
     @count_allowed = true
-    @sql = ''
-    case @target_table
+    case @parsed_request.target_table
     when /any/
       raise "cannot run an 'any' search yet"
     when /author/
-      Rails.logger.debug("\nSearching authors\n")
-      run = Search::OnAuthor::Base.new(@parsed_request)
-      @results = run.results
-      @limited = run.limited
-      @info_for_display = run.info_for_display
-      @rejected_pairings = run.rejected_pairings
-      @common_and_cultivar_included = run.common_and_cultivar_included
+      debug("\nSearching authors\n")
+      @executed_query = Search::OnAuthor::Base.new(@parsed_request)
     when /instance/
-      Rails.logger.debug("\nSearching instances\n")
-      run = Search::OnInstance::Base.new(@parsed_request)
-      @results = run.results
-      @limited = run.limited
-      @info_for_display = run.info_for_display
-      @rejected_pairings = run.rejected_pairings
-      @common_and_cultivar_included = run.common_and_cultivar_included
+      debug("\nSearching instances\n")
+      @executed_query = Search::OnInstance::Base.new(@parsed_request)
     when /reference/
-      Rails.logger.debug("\nSearching references\n")
-      run = Search::OnReference::Base.new(@parsed_request)
-      @results = run.results
-      @limited = run.limited
-      @info_for_display = run.info_for_display
-      @rejected_pairings = run.rejected_pairings
-      @common_and_cultivar_included = run.common_and_cultivar_included
+      debug("\nSearching references\n")
+      @executed_query = Search::OnReference::Base.new(@parsed_request)
     else
-      Rails.logger.debug("\nSearching on names\n")
-      run = Search::OnName::Base.new(@parsed_request)
-      @results = run.results
-      @limited = run.limited
-      @info_for_display = run.info_for_display
-      @rejected_pairings = run.rejected_pairings
-      @common_and_cultivar_included = run.common_and_cultivar_included
+      debug("\n else, Searching on names\n")
+      @executed_query = Search::OnName::Base.new(@parsed_request)
     end
-    @sql = run.relation.to_sql
   end
  
   def run_defined_query
-    @sql = ''
     @count_allowed = false
-    case @defined_query
+    raise "Defined queries need an argument." if @parsed_request.defined_query_arg.blank? && @parsed_request.where_arguments.blank?
+    case @parsed_request.defined_query
     when /instances-for-name-id:/
-      Rails.logger.debug("\nrun_defined_query instances-for-name-id:\n")
-      @results = Instance::AsSearchEngine.name_usages(@defined_query_arg)
-      @limited = false 
-      @common_and_cultivar_included = true 
-      @target_table = 'instance'
+      debug("\nrun_defined_query instances-for-name-id:\n")
+      @executed_query = Name::DefinedQuery::NameIdWithInstances.new(@parsed_request)
     when /instances-for-name:/
-      Rails.logger.debug("\nrun_defined_query instances-for-name:\n")
-      #@results = Instance.name_instances(@defined_query_arg, @limit)
-      #@limited = @results.size == @limit
-      #@common_and_cultivar_included = true 
-      #@target_table = 'instance'
-      defined_query = Instance::DefinedQuery::NamesWithInstances.new(@parsed_request)
-      @results = defined_query.results
-      @limited = defined_query.limited
-      @common_and_cultivar_included = defined_query.limited
+      debug("\nrun_defined_query instances-for-name:\n")
+      @executed_query = Name::DefinedQuery::NamesWithInstances.new(@parsed_request)
     when /instances-for-ref-id:/
-      Rails.logger.debug("\nrun_defined_query instances-for-ref-id:\n")
-      @results = Instance::AsSearchEngine.for_ref_id(@defined_query_arg, @limit,'name')
-      @limited = @results.size == @limit
-      @common_and_cultivar_included = true 
-      @target_table = 'instance'
+      debug("\nrun_defined_query instances-for-ref-id:\n")
+      @executed_query = Reference::DefinedQuery::ReferenceIdWithInstances.new(@parsed_request)
+      #@results = Instance::AsSearchEngine.for_ref_id(@defined_query_arg, @limit,'name')
     when /instances-for-ref-id-sort-by-page:/
-      Rails.logger.debug("\nrun_defined_query instances-for-ref-id-sort-by-page:\n")
+      debug("\nrun_defined_query instances-for-ref-id-sort-by-page:\n")
       @results = Instance::AsSearchEngine.for_ref_id(@defined_query_arg, @limit,'page')
-      @limited = @results.size == @limit
-      @common_and_cultivar_included = true 
-      @target_table = 'instance'
     else
-      raise "Run Defined Query has no match for #{@defined_query}"
+      raise "Run Defined Query has no match for #{@parsed_request.defined_query}"
     end
   end
 
   ########################################################################################
   def search_from_string(params)
-    Rails.logger.debug("Search::Base -> search_from_string")
+    debug("Search::Base -> search_from_string")
     @specific_search = Search::FromString.new(params)
   end
 
   def search_from_fields(params)
-    Rails.logger.debug("Search::Base -> search_from_fields")
+    debug("Search::Base -> search_from_fields")
     case search_target(params['search_target'])
     when /name/
-      Rails.logger.debug("Search::Base -> Name::Search")
+      debug("Search::Base -> Name::Search")
       @specific_search = Name::Search.new(params)
     else
       raise 'not implemented yet'
@@ -180,7 +151,7 @@ class Search::Base
   end 
 
   def empty_search(params)
-    Rails.logger.debug("Search::Base -> empty_search")
+    debug("Search::Base -> empty_search")
     @specific_search = Search::Empty.new(params)
   end
 
