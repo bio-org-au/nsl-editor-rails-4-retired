@@ -30,6 +30,15 @@ class NewSearchController < ApplicationController
     #save_search(@search)
   end
 
+  def tree
+    @search = Search::Tree.new(params)
+    params[:query_field] = 'apc' if params[:query_field].blank?
+    params[:query] = Name.find_by(full_name: 'Plantae Haeckel').id if params[:query].blank?
+    @ng_template_path = tree_ng_path('dummy').gsub(/dummy/,'')
+    logger.debug("@ng_template_path: #{@ng_template_path}")
+    render 'trees/index'
+  end
+
   def search_name_with_instances
     @search = Search::Base.new({'query_string' => "instances-for-name-id: #{params[:name_id]}"}) 
     render 'search'

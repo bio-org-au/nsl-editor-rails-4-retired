@@ -14,28 +14,20 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #   
-class Search::Empty
+class Search::EmptyExecutedQuery
 
-  attr_reader :empty, 
-              :error, 
-              :error_message,
-              :executed_query,
-              :more_allowed,
-              :parsed_request
+  attr_reader :results, :limited, :common_and_cultivar_included, :has_relation, :relation, :count
 
- def initialize(params)
-    Rails.logger.debug("Search::Empty start")
+  def initialize(params)
+    Rails.logger.debug("Search::EmptyExecutedQuery start")
     Rails.logger.debug("#{'=' * 40}")
-    @parsed_request = Search::EmptyParsedRequest.new(params)
-    @common_and_cultivar_included= true
-    @count = false
-    @empty = true
-    @error = false
-    @tree = false
+    @params = params
     @limited = false
-    @query_string = params[:query]
-    @more_allowed = false
-    @executed_query = Search::EmptyExecutedQuery.new(params)
+    @results = []
+    @count = -1
+    @common_and_cultivar_included = true
+    @has_relation = false
+    @relation = nil
   end
 
   def to_history

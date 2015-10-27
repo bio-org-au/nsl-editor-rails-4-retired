@@ -14,7 +14,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #   
-class Search::ParsedQueryTest
+class Search::ParsedRequestTest
 
   def initialize
     puts 'test'
@@ -25,37 +25,49 @@ class Search::ParsedQueryTest
     @tests_run = 0
     @assertions_count = 0
     @errors_count = 0
-    simple_name_test
+    explicit_name_test
+    #implicit_name_test
     simple_ref_test
     simple_name_with_instances_test 
     author_search_by_query_target
     author_search_by_query_target_with_limit
+    author_search_by_query_target_with_limit_mixed_case
+    reference_with_instances_test 
     puts "tests: #{@tests_run}; assertions: #{@assertions_count}; errors: #{@errors_count}"
+  rescue => e
+    puts "Exception: #{e.to_s}"
   end
 
-  def simple_name_test
+  def explicit_name_test
     @tests_run += 1
-    pq = Search::ParsedQuery.new({"query_string"=>"Angophora Costata*", "query_target"=>"", "query_submit"=>"Search"})
+    pq = Search::ParsedRequest.new({"query_string"=>"Angophora Costata*", "query_target"=>"Names", "query_submit"=>"Search"})
     assert(pq.target_table == 'name','Target table should be "name".')
-    assert(pq.defined_query == false,'simple_name_test: should not be a defined query')
+    assert(pq.defined_query == false,'explicit_name_test: should not be a defined query')
+  end
+
+  def implicit_name_test
+    @tests_run += 1
+    pq = Search::ParsedRequest.new({"query_string"=>"Angophora Costata*", "query_target"=>"", "query_submit"=>"Search"})
+    assert(pq.target_table == 'name','Target table should be "name".')
+    assert(pq.defined_query == false,'implicit_name_test: should not be a defined query')
   end
 
   def simple_ref_test 
     @tests_run += 1
-    pq = Search::ParsedQuery.new({"query_string"=>"ref Angophora Costata*", "query_target"=>"", "query_submit"=>"Search"})
+    pq = Search::ParsedRequest.new({"query_string"=>"Angophora Costata*", "query_target"=>"References", "query_submit"=>"Search"})
     assert(pq.target_table == 'reference','Target table should be "reference".')
     assert(pq.defined_query == false,'simple_ref_test: should not be a defined query')
   end
 
   def simple_name_with_instances_test 
     @tests_run += 1
-    pq = Search::ParsedQuery.new({"query_string"=>"Angophora Costata*", "query_target"=>"Names with instances", "query_submit"=>"Search"})
+    pq = Search::ParsedRequest.new({"query_string"=>"Angophora Costata*", "query_target"=>"Names with instances", "query_submit"=>"Search"})
     assert(pq.defined_query == 'instances-for-name:','simple_name_with_instances_test: should be a defined query')
   end
 
   def author_search_by_query_target
     @tests_run += 1
-    pq = Search::ParsedQuery.new({"query_string"=>"bent*", "query_target"=>"Authors", "query_submit"=>"Search"})
+    pq = Search::ParsedRequest.new({"query_string"=>"bent*", "query_target"=>"Authors", "query_submit"=>"Search"})
     assert(pq.defined_query == false,'author_search_by_query_target: should not be a defined query')
     assert(pq.target_table == 'author','Target table should be "author".')
   end
@@ -63,10 +75,26 @@ class Search::ParsedQueryTest
   def author_search_by_query_target_with_limit
     @tests_run += 1
     the_limit = 2
-    pq = Search::ParsedQuery.new({"query_string"=>"#{the_limit} bent*", "query_target"=>"Authors", "query_submit"=>"Search"})
+    pq = Search::ParsedRequest.new({"query_string"=>"bent* limit:#{the_limit}", "query_target"=>"Authors", "query_submit"=>"Search"})
     assert(pq.defined_query == false,'author_search_by_query_target_with_limit: should not be a defined query')
     assert(pq.target_table == 'author','Target table should be "author".')
-    assert(pq.limit == the_limit,"Limit should be '#{the_limit}'.")
+    assert(pq.limit == the_limit,"Limit should be '#{the_limit}' not #{pq.limit}.")
+  end
+
+  def author_search_by_query_target_with_limit_mixed_case
+    @tests_run += 1
+    the_limit = 2
+    pq = Search::ParsedRequest.new({"query_string"=>"bent* lIMit:#{the_limit}", "query_target"=>"Authors", "query_submit"=>"Search"})
+    assert(pq.defined_query == false,'author_search_by_query_target_with_limit: should not be a defined query')
+    assert(pq.target_table == 'author','Target table should be "author".')
+    assert(pq.limit == the_limit,"Limit should be '#{the_limit}' not #{pq.limit}.")
+  end
+
+  def reference_with_instances_test 
+    @tests_run += 1
+    pq = Search::ParsedRequest.new({"query_string"=>"*", "query_target"=>"References with instances", "query_submit"=>"Search"})
+    assert(pq.defined_query == true,'References with instances: should be a defined query')
+    assert(pq.target_table == 'reference','Target table should be "reference".')
   end
 
   def assert(condition,error_message = 'No error message')

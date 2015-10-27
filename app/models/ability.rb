@@ -54,6 +54,7 @@ class Ability
     can 'new_search',         :all
     can 'services',           :all
     can 'sessions',           :all
+    can 'trees',              'ng'
     if user.edit?
       can 'authors',          :all
       can 'comments',         :all

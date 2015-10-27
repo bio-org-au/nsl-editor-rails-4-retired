@@ -7,7 +7,7 @@
     <table id="search-results-table" class="table table-condensed search-results" data-summary="Results of the latest search.">
       <% unless @search.parsed_request.count %>
         <% increment_tab_index(1000) %>
-        <%= render partial: 'results' unless @search.executed_query.results.blank? %>
+        <%= render partial: 'results' unless @search.executed_query.blank? || @search.executed_query.results.blank? %>
       <% end %>
     </table>
   </div>

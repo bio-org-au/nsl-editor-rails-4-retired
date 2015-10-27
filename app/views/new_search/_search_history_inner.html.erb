@@ -40,5 +40,5 @@
 </table>
 
 <br>
-<%= @search.executed_query.try('relation').try('to_sql') if @search.present? %>
+<%= @search.executed_query.try('relation').try('to_sql') if @search.present? && @search.executed_query.has_relation %>
 </div>

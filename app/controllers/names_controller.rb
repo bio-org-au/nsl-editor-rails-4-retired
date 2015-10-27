@@ -144,7 +144,8 @@ class NamesController < ApplicationController
   end
  
   def rules
-    @no_search_result_details = true
+    empty_search
+    hide_details
   end
 
   def copy

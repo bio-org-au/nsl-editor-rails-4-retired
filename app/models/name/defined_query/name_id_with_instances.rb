@@ -16,7 +16,7 @@
 #   
 class Name::DefinedQuery::NameIdWithInstances 
 
-  attr_reader :results, :limited, :common_and_cultivar_included, :relation, :count
+  attr_reader :results, :limited, :common_and_cultivar_included, :has_relation, :relation, :count
 
   def initialize(parsed_request)
     run_query(parsed_request)
@@ -58,11 +58,10 @@ class Name::DefinedQuery::NameIdWithInstances
       @limited = false; #name_query.limited
       @common_and_cultivar_included = true
       @count = @results.size
-      @relation = Name.full_name_like('not possible') # TODO: work out how to provide the relation and sql
+      @has_relation = false
+      @relation = nil
     end
   end
-
-
 
 end
 

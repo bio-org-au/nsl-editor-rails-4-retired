@@ -16,7 +16,7 @@
 #   
 class Name::DefinedQuery::NamesWithInstances 
 
-  attr_reader :results, :limited, :common_and_cultivar_included, :relation, :count
+  attr_reader :results, :limited, :common_and_cultivar_included, :has_relation, :relation, :count
 
   def initialize(parsed_request)
     run_query(parsed_request)
@@ -36,41 +36,46 @@ class Name::DefinedQuery::NamesWithInstances
     debug("parsed_request.limit: #{parsed_request.limit}")
     if parsed_request.count
       debug("run_query counting")
-      name_query = Search::OnName::ListQuery.new(parsed_request)
-      @relation = name_query.sql  # TODO: work out how to provide the relation and sql
+      query = Search::OnName::ListQuery.new(parsed_request)
+      @relation = query.sql  # TODO: work out how to provide the relation and sql
       results = relation.all
-      limited = name_query.limited
+      limited = query.limited
 
       debug(results.size)
       tally = results.size
       results.each  do | name |
-        debug(name.id)
+        tally += 1
+        debug("tallying for #{name.id}")
         tally += name.instances.size
+        debug("tally: #{tally}")
       end
       debug("tally: #{tally}")
 
       @limited = limited
-      @common_and_cultivar_included = name_query.common_and_cultivar_included
+      @common_and_cultivar_included = query.common_and_cultivar_included
       @count = tally
     else
       debug("run_query listing")
-      name_query = Search::OnName::Base.new(parsed_request)
-      debug(name_query.results.size)
+      query = Search::OnName::Base.new(parsed_request)
+      debug(query.results.size)
       results = []
-      name_query.results.each  do | name |
-        debug(name.id)
+      @limited = false
+      query.results.each  do | name |
         results.concat(Instance::AsSearchEngine.name_usages(name.id))
+        if results.size >= parsed_request.limit
+          @limited = true
+          break
+        end
       end
       debug("results.size: #{results.size}")
-      @limited = name_query.limited
-      @common_and_cultivar_included = name_query.common_and_cultivar_included
+      @limited = query.limited
+      @common_and_cultivar_included = query.common_and_cultivar_included
       @results = results
       @count = results.size
-      @relation = Name.full_name_like('not possible') # TODO: work out how to provide the relation and sql
+      @has_relation = false
+      @relation = nil
     end
   end
-
-
 
 end
 

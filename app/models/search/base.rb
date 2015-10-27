@@ -127,7 +127,17 @@ class Search::Base
       #@results = Instance::AsSearchEngine.for_ref_id(@defined_query_arg, @limit,'name')
     when /instances-for-ref-id-sort-by-page:/
       debug("\nrun_defined_query instances-for-ref-id-sort-by-page:\n")
-      @results = Instance::AsSearchEngine.for_ref_id(@defined_query_arg, @limit,'page')
+      @executed_query = Reference::DefinedQuery::ReferenceIdWithInstancesSortedByPage.new(@parsed_request)
+      #@results = Instance::AsSearchEngine.for_ref_id(@defined_query_arg, @limit,'page')
+    when /instances-for-reference/
+      debug("\nrun_defined_query instances-for-names\n")
+      @executed_query = Reference::DefinedQuery::ReferencesWithInstances.new(@parsed_request)
+    when /\Ainstance-is-cited\z/
+      debug("\nrun_defined_query instance-id-is-cited\n")
+      @executed_query = Instance::DefinedQuery::IsCited.new(@parsed_request)
+    when /\Ainstance-is-cited-by\z/
+      debug("\nrun_defined_query instance-id-is-cited-by\n")
+      @executed_query = Instance::DefinedQuery::IsCitedBy.new(@parsed_request)
     else
       raise "Run Defined Query has no match for #{@parsed_request.defined_query}"
     end

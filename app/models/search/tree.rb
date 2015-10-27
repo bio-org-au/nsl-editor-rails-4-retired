@@ -14,7 +14,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #   
-class Search::Empty
+class Search::Tree
 
   attr_reader :empty, 
               :error, 
@@ -23,19 +23,19 @@ class Search::Empty
               :more_allowed,
               :parsed_request
 
- def initialize(params)
-    Rails.logger.debug("Search::Empty start")
+  def initialize(params)
+    Rails.logger.debug("Search::Tree start")
     Rails.logger.debug("#{'=' * 40}")
-    @parsed_request = Search::EmptyParsedRequest.new(params)
+    @parsed_request = Search::TreeParsedRequest.new(params)
     @common_and_cultivar_included= true
     @count = false
-    @empty = true
+    @empty = false
     @error = false
-    @tree = false
+    @tree = true
     @limited = false
     @query_string = params[:query]
     @more_allowed = false
-    @executed_query = Search::EmptyExecutedQuery.new(params)
+    @executed_query = Search::TreeExecutedQuery.new(params)
   end
 
   def to_history

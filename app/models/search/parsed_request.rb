@@ -42,13 +42,19 @@ class Search::ParsedRequest
     'instances-for-name-id' => 'instances-for-name-id:',
     'instances for name id' => 'instances-for-name-id:',
     'names with instances' => 'instances-for-name:',
+    'names + instances' => 'instances-for-name:',
     'instance-name:' => 'instances-for-name:',
     'instances-for-name:' => 'instances-for-name:',
     'instance-ref-id:' => 'instances-for-ref-id:',
     'instances-for-ref-id:' => 'instances-for-ref-id:',
     'instances for ref id' => 'instances-for-ref-id:',
     'instance-ref-id-sort-by-page:' => 'instances-for-ref-id-sort-by-page:',
-    'instances-for-ref-id-sort-by-page:' => 'instances-for-ref-id-sort-by-page:'
+    'instances-for-ref-id-sort-by-page:' => 'instances-for-ref-id-sort-by-page:',
+    'instances for ref id sort by page' => 'instances-for-ref-id-sort-by-page:',
+    'references with instances' => 'instances-for-references',
+    'references + instances' => 'instances-for-references',
+    'instance is cited' => 'instance-is-cited',
+    'instance is cited by' => 'instance-is-cited-by'
   }
 
   SIMPLE_QUERY_TARGETS = {
@@ -107,7 +113,6 @@ class Search::ParsedRequest
     if DEFINED_QUERIES.has_key?(query_target_downcase)
       debug("parse_query_target - #{query_target_downcase} is recognized as a defined query.")
       @defined_query = DEFINED_QUERIES[query_target_downcase]
-      #@defined_query_arg = tokens.join(' ')
       @target_button_text = @params['query_target'].capitalize.gsub(/\bid\b/,'ID').gsub('name','Name').gsub(/ref/,'Ref')
     else
       debug("parse_query_target - '#{query_target_downcase}' is NOT recognized as a defined query.")
@@ -158,8 +163,26 @@ class Search::ParsedRequest
   # Need to refactor - to avoid limit being confused with an ID.
   # Make limit a field limit: 999
   def parse_limit(tokens)
+    debug "parse_limit for tokens: #{tokens.join(' ')}"
     @limited = @list
-    @limit = DEFAULT_LIST_LIMIT
+    joined_tokens = tokens.join(' ')
+    if @list
+      if joined_tokens.match(/limit: \d{1,}/i)
+        @limit = joined_tokens.match(/limit: (\d{1,})/i)[1].to_i
+        joined_tokens = joined_tokens.gsub(/limit: *\d{1,}/i,'')
+      else
+        @limit = DEFAULT_LIST_LIMIT
+      end
+    else # count
+      # remove any limit:
+      joined_tokens = joined_tokens.gsub(/limit: *\d{1,}/i,'')
+      @limit = 0
+    end
+    if joined_tokens.match(/limit: *[^\s\\]{1,}/i).present?
+      bad_limit = joined_tokens.match(/limit: *([^\s\\]{1,})/i)[1]
+      raise "Invalid limit: #{bad_limit}"
+    end
+    tokens = joined_tokens.split(' ')
     tokens
   end
 
@@ -200,12 +223,13 @@ class Search::ParsedRequest
       debug(" parse_target not a defined query")
       if SIMPLE_QUERY_TARGETS.has_key?(@query_target)
         @target_table = SIMPLE_QUERY_TARGETS[@query_target]
+        @target_button_text = @target_table.capitalize.pluralize
         debug(" parse_target has a simple query! @target_table: #{@target_table}")
         if SIMPLE_QUERY_TARGETS.has_key?(tokens.first)
           tokens = tokens.drop(1)
         end
       else
-        raise "Cannot query #{@query_target}"
+        raise "Cannot parse target: #{@query_target}"
       end
     end
     tokens

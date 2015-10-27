@@ -1,6 +1,5 @@
 
-<%= link_to("#{@instance.name.full_name} #{search_icon_on_tab}".html_safe,
-            search_name_with_instances_path(@instance.name_id), title: 'Search for the name.') %>
+<%= link_to("#{@instance.name.try('full_name')} #{search_icon_on_tab}".html_safe,new_search_path(query_target: 'instances-for-name-id', query_string: @instance.name_id.to_s), title: 'Search for the name with its instances') %>
     <% if @instance.name.apc? %>
       <%= render(partial: 'instances/apc/widgets', locals: {instance: @instance}) %>
     <% end %>
@@ -16,14 +15,14 @@
   <% if @instance.cites_id %>
     in
     <%= link_to("#{@instance.this_cites.try('reference').try('citation')}:#{ @instance.this_cites.page} #{search_icon_on_tab}".html_safe,
-                search_path(query: %Q(ref id:#{@instance.this_cites.try('reference_id')})),
+                new_search_path(query_string: @instance.this_cites.try('reference_id').to_s,query_target: 'reference'),
                             title: 'Search for the instance this cites.') %>
     <br>
   <% end %>
   is cited under
   <br>
   <%= link_to("#{@instance.this_is_cited_by.name.full_name} #{@instance.this_is_cited_by.name.name_status.bracketed_non_legitimate_status} #{search_icon_on_tab}".html_safe,
-              search_name_with_instances_path(@instance.this_is_cited_by.name_id),
+              new_search_path(query_string: @instance.this_is_cited_by.name_id.to_s, query_target: 'instances-for-name-id'),
               title:'Search for the instance this is cited under.') %>
   <% if @instance.this_is_cited_by.name.apc? %>
     <%= render(partial: 'instances/apc/widgets', locals: {instance: @instance.this_is_cited_by}) %>
@@ -32,7 +31,7 @@
   by
   <br>
   <%= link_to("#{@instance.reference.citation}#{":" if @instance.page.present?}#{@instance.page} #{search_icon_on_tab}".html_safe,
-              search_path(query: %Q(ref id:#{@instance.reference_id})),title: 'Search for the reference this is cited by.') %>
+                                              new_search_path(query_string: "id: #{@instance.reference_id}",query_target: 'reference'),title: 'Search for the reference this is cited by.') %>
   <br>
 
   as

@@ -1,13 +1,13 @@
 <% increment_tab_index %>
 
 <%= @reference.ref_type.name %> by 
-<%= link_to("#{@reference.author.name} (#{@reference.ref_author_role.name}) #{search_icon_on_tab}".html_safe, new_search_path(query_string: "author id:#{@reference.author_id}"),title: 'Search for the author(s)/editor(s)...') %> 
+<%= link_to("#{@reference.author.name} (#{@reference.ref_author_role.name}) #{search_icon_on_tab}".html_safe, new_search_path(query_string: "id:#{@reference.author_id}",query_target: 'author'),title: 'Search for the author(s)/editor(s)...') %> 
 <br>
 <%= @reference.title %>
 <br>
 <% if @reference.parent %>
   <%= link_to("#{@reference.parent.title} #{search_icon_on_tab}".html_safe, 
-                          new_search_path(query_string: "ref parent-id:#{@reference.parent_id}"),
+                          new_search_path(query_string: "parent-id:#{@reference.parent_id}",query_target: "reference"),
                           title: 'Search for the containing reference',
                           tabindex: increment_tab_index ) %>
 <% end %>
@@ -61,12 +61,12 @@
     <%= "#{instances_size} Instances" %>
     <br>
     <%= link_to("&mdash; sorted by name #{search_icon_on_tab}".html_safe,
-                          new_search_path(query_string: "instances-for-ref-id: #{@reference.id}"),
+                          new_search_path(query_string: @reference.id.to_s,query_target: 'instances for ref id'),
                           tabindex: increment_tab_index, 
                           title: 'Search for the instances, sorted by name.') %>
     <br>
     <%= link_to("&mdash; sorted by page #{search_icon_on_tab}".html_safe,
-                          new_search_path(query_string: "instances-for-ref-id-sort-by-page: #{@reference.id}"),
+                          new_search_path(query_string: @reference.id.to_s, query_target: "instances for ref id sort by page"),
                           tabindex: increment_tab_index, 
                           title: 'Search for the instances, sorted by page.') %>
    <% end %>

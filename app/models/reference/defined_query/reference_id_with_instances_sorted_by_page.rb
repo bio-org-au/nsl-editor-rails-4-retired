@@ -14,7 +14,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #   
-class Reference::DefinedQuery::ReferencesWithInstances 
+class Reference::DefinedQuery::ReferenceIdWithInstancesSortedByPage 
 
   attr_reader :results, :limited, :common_and_cultivar_included, :has_relation, :relation, :count
 
@@ -23,7 +23,7 @@ class Reference::DefinedQuery::ReferencesWithInstances
   end
 
   def debug(s)
-    tag = "Reference::DefinedQuery::ReferencesWithInstances"
+    tag = "Reference::DefinedQuery::ReferenceIdWithInstancesSortedByPage"
     #puts("#{tag}: #{s}")
     Rails.logger.debug("#{tag}: #{s}")
   end
@@ -40,6 +40,7 @@ class Reference::DefinedQuery::ReferencesWithInstances
       @relation = query.sql  # TODO: work out how to provide the relation and sql
       results = relation.all
       limited = query.limited
+
       debug(results.size)
       tally = results.size
       results.each  do | ref |
@@ -52,29 +53,20 @@ class Reference::DefinedQuery::ReferencesWithInstances
       @common_and_cultivar_included = query.common_and_cultivar_included
       @count = tally
     else
-      debug("run_query listing with limit: #{parsed_request.limit}")
-      query = Search::OnReference::Base.new(parsed_request)
-      debug(query.results.size)
-      results = []
-      @limited = false
-      query.results.each  do | ref |
-        results.concat(Instance::AsSearchEngine.ref_usages(ref.id))
-        if results.size >= parsed_request.limit
-          @limited = true
-          break
-        end
-      end
-      debug("results.size: #{results.size}")
-      @common_and_cultivar_included = query.common_and_cultivar_included
-      @results = results
-      @count = results.size
+      debug("run_query listing")
+      #@results = Instance::AsSearchEngine.name_usages(parsed_request.where_arguments)
+      @results = Instance::AsSearchEngine.for_ref_id(parsed_request.where_arguments,parsed_request.limit.to_i-1,'page')
+      @limited = false; #name_query.limited
+      @common_and_cultivar_included = true
+      @count = @results.size
       @has_relation = false
       @relation = nil
     end
   end
-
-
 end
+
+
+
 
 
 

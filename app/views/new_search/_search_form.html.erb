@@ -22,16 +22,18 @@
         <button id="search-target-button" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <span id="search-target-button-text">
 
-            <%= @search.parsed_request.target_button_text %>
+            <%= @search.parsed_request.target_button_text || 'no target button text' %>
 
           </span>
 
           &nbsp;<span class="caret"></span></button>
         <ul id="search-target-list" class="dropdown-menu">
-          <li class="blue"><a id="search-target-item-name-with-instances" href="#">Names with instances</a></li>
+          <li class="blue">
+            <a id="search-target-item-name-with-instances" href="#" title="Query on names, also retrieve instances">Names + instances</a>
+          </li>
           <li><a id="search-target-item-names" href="#">Names</a></li>
           <li role="separator" class="divider"></li>
-          <li><a id="search-target-item-instances-for-reference" href="#">References with instances</a></li>
+          <li><a id="search-target-item-instances-for-reference" href="#">References + instances</a></li>
           <li><a id="search-target-item-references" href="#">References</a></li>
           <li role="separator" class="divider"></li>
           <li><a id="search-target-item-authors" href="#">Authors</a></li>
