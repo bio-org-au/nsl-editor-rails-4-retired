@@ -66,7 +66,7 @@ class Search::OnReference::WhereClauses
       elsif WHERE_ASSERTION_HASH.has_key?(canonical_field)
         @sql = @sql.where(WHERE_ASSERTION_HASH[canonical_field])
       else
-        raise 'No way to handle field.' unless WHERE_VALUE_HASH.has_key?(canonical_field)
+        raise "No way to handle field: '#{canonical_field}' in a reference search." unless WHERE_VALUE_HASH.has_key?(canonical_field)
         @sql = @sql.where(WHERE_VALUE_HASH[canonical_field],canonical_value)
       end
     end
@@ -116,6 +116,7 @@ class Search::OnReference::WhereClauses
   }
 
   WHERE_VALUE_HASH = { 
+    'author:' => "author_id in (select id from author where lower(name) like ?)",
     'citation:' => "lower(citation) like ?",
     'comments:' => " exists (select null from comment where comment.reference_id = reference.id and comment.text like ?) ",
     'comments-by:' => " exists (select null from comment where comment.reference_id = reference.id and comment.created_by like ?) ",

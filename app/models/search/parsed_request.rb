@@ -55,7 +55,8 @@ class Search::ParsedRequest
     'references with instances' => 'instances-for-references',
     'references + instances' => 'instances-for-references',
     'instance is cited' => 'instance-is-cited',
-    'instance is cited by' => 'instance-is-cited-by'
+    'instance is cited by' => 'instance-is-cited-by',
+    'audit' => 'audit'
   }
 
   SIMPLE_QUERY_TARGETS = {

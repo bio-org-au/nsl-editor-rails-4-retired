@@ -60,7 +60,7 @@ class Search::OnAuthor::WhereClauses
       elsif WHERE_INTEGER_VALUE_HASH.has_key?(canonical_field)
         @sql = @sql.where(WHERE_INTEGER_VALUE_HASH[canonical_field],canonical_value.to_i)
       else
-        raise 'No way to handle field.' unless WHERE_VALUE_HASH.has_key?(canonical_field)
+        raise "No way to handle field: '#{canonical_field}' in an author search." unless WHERE_VALUE_HASH.has_key?(canonical_field)
         @sql = @sql.where(WHERE_VALUE_HASH[canonical_field],canonical_value)
       end
     end

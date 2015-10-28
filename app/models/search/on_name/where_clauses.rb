@@ -72,7 +72,7 @@ class Search::OnName::WhereClauses
       elsif WHERE_ASSERTION_HASH.has_key?(canonical_field)
         @sql = @sql.where(WHERE_ASSERTION_HASH[canonical_field])
       else
-        raise 'No way to handle field.' unless WHERE_VALUE_HASH.has_key?(canonical_field)
+        raise "No way to handle field: '#{canonical_field}' in a name search." unless WHERE_VALUE_HASH.has_key?(canonical_field)
         @sql = @sql.where(WHERE_VALUE_HASH[canonical_field],canonical_value)
       end
     end

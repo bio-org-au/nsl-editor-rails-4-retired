@@ -32,7 +32,7 @@ class NewSearchController < ApplicationController
   rescue => e
     logger.error("NewSearchController::search exception: #{e.to_s}")
     params[:error_message] = e.to_s
-    @search = Search::Error.new(params) 
+    @search = Search::Error.new(params) unless @search.present?
     save_search(@search)
   end
 

@@ -44,6 +44,8 @@
           <li><a id="search-target-item-instances-for-name-id" href="#">Instances for Name ID</a></li>
           <li><a id="search-target-item-instances-for-ref-id" href="#">Instances for Ref ID</a></li>
           <li><a id="search-target-item-instances-sorted-by-page-for-ref-id" href="#">Instances sorted by page for Ref ID</a></li>
+          <!--<li role="separator" class="divider"></li>
+           <li><a id="search-target-audit" href="#">Audit</a></li> -->
         </ul>
       </div><!-- /btn-group -->
       <input id="query-string-field" 
@@ -59,10 +61,11 @@
              required
              >
     </div><!-- /input-group -->
-    <input id="query-submit"name="query_submit" value="Search" type="submit" class="btn xform-control">
+    <input id="query-submit"name="query_submit" value="Search" type="submit" class="btn">
   </div><!-- /.col-lg-9 -->
 </div><!-- /row -->
 
   <input id="query-target" name="query_target" value="<%= @search.parsed_request.target_button_text %>" type="hidden" >
 
 <% end %>
+

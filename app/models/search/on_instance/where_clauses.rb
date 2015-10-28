@@ -70,7 +70,7 @@ class Search::OnInstance::WhereClauses
         @sql = @sql.where(WHERE_ASSERTION_HASH[canonical_field])
       else
         Rails.logger.error("Search::OnInstance::WhereClause add_clause - out of options")
-        raise 'No way to handle field.' unless WHERE_VALUE_HASH.has_key?(canonical_field)
+        raise "No way to handle field: '#{canonical_field}' in an instance search." unless WHERE_VALUE_HASH.has_key?(canonical_field)
         @sql = @sql.where(WHERE_VALUE_HASH[canonical_field],canonical_value)
       end
     end
