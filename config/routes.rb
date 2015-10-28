@@ -43,7 +43,7 @@ Rails.application.routes.draw do
          #to: 'new_search#search_name_with_instances',
          #via: :get
 
-  match '/search', as: "search", to: "search#index", via: :get
+  match '/search', as: "search", to: "new_search#search", via: :get
   match '/new_search', as: "new_search", to: "new_search#search", via: :get
   match '/new_search/tree', as: "tree", to: "new_search#tree", via: :get
   match '/new_search/preview', as: "new_search_preview", to: "new_search#preview", via: :get
