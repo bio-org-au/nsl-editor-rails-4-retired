@@ -1,13 +1,6 @@
 <% if @name.apc_tree_path.present? %>
   <%= divider %>
   <%= link_to("APC tree #{icon('search')}".html_safe,
-            search_path(query: "@name.id",
-                        query_on: 'tree'),
-                        tabindex: increment_tab_index,
-                        title: "Load the APC tree for this instance.",
-                        class: '') %>
-  <%= divider %>
-  <%= link_to("APC tree #{icon('search')}".html_safe,
             tree_path(query: @name.id.to_s,
                       query_on: 'tree'),
                       tabindex: increment_tab_index,

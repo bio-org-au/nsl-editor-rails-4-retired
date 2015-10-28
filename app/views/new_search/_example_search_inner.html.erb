@@ -1,25 +1,34 @@
 <div id="example-search-inner" class="">
 
 
-<br>
+<ul id="example-search-tabset" class="nav nav-tabs low">
+  <li role="presentation" class="active"><a id="example-search-tab-link-name" href="#" data-show-id="example-search-name">Name</a></li>
+  <li role="presentation" class=""><a id="example-search-tab-link-reference" href="#" data-show-id="example-search-reference">Reference</a></li>
+  <li role="presentation" class=""><a id="example-search-tab-link-instance" href="#" data-show-id="example-search-instance">Instance</a></li>
+  <li role="presentation" class=""><a id="example-search-tab-link-author" href="#" data-show-id="example-search-author">Author</a></li>
+  <li role="presentation" class=""><a id="example-search-tab-link-other" href="#" data-show-id="example-search-other">Other</a></li>
+</ul>
+
+  <div id="example-search-inner-container" class="scrollable-container">
+    <div id="example-search-name" class="example-search-tab">
 <% excc = %Q(<span class="purple" title="Excluding common and cultivar names by default.">EXCC</span>) %>
 <% incc = %Q(<span class="purple" title="Including common and cultivar names.">INCC</span>) %>
 <h4 class="">List names</h4>
 <table class="example-searches table table-striped">
-  <% [{search_string: "acacia*",explanation: %Q(List names starting with "acacia".  Bare search is on names. 100 records is the default.)},
-      {search_string: "acacia* type:*", 
+  <% [{search_target: 'Names', search_string: "acacia*",explanation: %Q(List names starting with "acacia".  Bare search is on names. 100 records is the default.)},
+      {search_target: 'Names', search_string: "acacia* type:*", 
        explanation: %Q(Also include common and cultivar names which are normally excluded (i.e. #{excc.sub(/\./,'')}).)},
-      {search_string: "acacia", explanation: %Q(Find no names exactly matching "acacia".  A case for using wildcards. #{excc})},
-      {search_string: "acacia type:*", explanation: %Q(Find names exactly matching "acacia", including common and cultivar (i.e. #{incc.sub(/\./,'')}).)},
-      {search_string: "acacia type:common,cultivar", explanation: %Q(Find just common or cultivar names exactly matching "acacia". #{incc})},
-      {search_string: "acacia* rank: genus", explanation: %Q(List any name starting with "acacia" that is a genus. #{excc})},
-      {search_string: "acacia* rank: genus is-not-a-duplicate:", explanation: %Q(List any name starting with "acacia" that is a genus and is not a duplicate. #{excc})}
+      {search_target: 'Names', search_string: "acacia", explanation: %Q(Find no names exactly matching "acacia".  A case for using wildcards. #{excc})},
+      {search_target: 'Names', search_string: "acacia type:*", explanation: %Q(Find names exactly matching "acacia", including common and cultivar (i.e. #{incc.sub(/\./,'')}).)},
+      {search_target: 'Names', search_string: "acacia type:common,cultivar", explanation: %Q(Find just common or cultivar names exactly matching "acacia". #{incc})},
+      {search_target: 'Names', search_string: "acacia* rank: genus", explanation: %Q(List any name starting with "acacia" that is a genus. #{excc})},
+      {search_target: 'Names', search_string: "acacia* rank: genus is-not-a-duplicate:", explanation: %Q(List any name starting with "acacia" that is a genus and is not a duplicate. #{excc})}
       ].each do |val| %>
   <tr>
     <td class="width-30-percent"><a href="javascript:void(0)" 
            class="example-search width-100-percent" 
            title="Link to search">
-        <span class="blue"><%= val[:search_string] %></span></a>
+        <span class="blue"><%= link_to(val[:search_string], new_search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %></span></a>
     </td>
     <td><%= val[:explanation].html_safe %></td>
   </tr>
@@ -28,18 +37,18 @@
 <br>
 <h4 class="inline-block">Count names</h4><span> - turn a list into a count</span>
 <table class="example-searches table table-striped">
-  <% [{search_string: "count acacia*",explanation: %Q(Count names starting with "acacia". #{excc})},
-      {search_string: "count rank: genus is-not-a-duplicate:", explanation: %Q(Count non-duplicate genera. #{excc})},
-      {search_string: "count acacia* type:*", explanation: %Q(Count names starting with "acacia". #{incc})},
-      {search_string: "count acacia* type:common,cultivar", explanation: %Q(Count common or cultivar names starting with "acacia". #{incc})},
-      {search_string: "count is-a-duplicate:", explanation: %Q(Count duplicate names. #{excc})},
-      {search_string: "count comments:*", explanation: %Q(Count commented names turning a text field into an assertion. #{excc})}
+  <% [{search_target: 'Names', search_string: "count acacia*",explanation: %Q(Count names starting with "acacia". #{excc})},
+      {search_target: 'Names', search_string: "count rank: genus is-not-a-duplicate:", explanation: %Q(Count non-duplicate genera. #{excc})},
+      {search_target: 'Names', search_string: "count acacia* type:*", explanation: %Q(Count names starting with "acacia". #{incc})},
+      {search_target: 'Names', search_string: "count acacia* type:common,cultivar", explanation: %Q(Count common or cultivar names starting with "acacia". #{incc})},
+      {search_target: 'Names', search_string: "count is-a-duplicate:", explanation: %Q(Count duplicate names. #{excc})},
+      {search_target: 'Names', search_string: "count comments:*", explanation: %Q(Count commented names turning a text field into an assertion. #{excc})}
       ].each do |val| %>
   <tr>
     <td class="width-30-percent"><a href="javascript:void(0)" 
            class="example-search width-100-percent" 
            title="Link to search">
-        <span class="blue"><%= val[:search_string] %></span></a>
+        <span class="blue"><%= link_to(val[:search_string], new_search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %></span></a>
     </td>
     <td><%= val[:explanation].html_safe %></td>
   </tr>
@@ -49,16 +58,17 @@
 
 <h4 class="inline-block">Limit list size</h4><span> - set the number of records</span>
 <table class="example-searches table table-striped">
-  <% [{search_string: "5 acacia*",explanation: %Q(List 5 names starting with "acacia". #{excc})},
-      {search_string: "50 acacia*", explanation: %Q(List 50 names starting with "acacia". #{excc})},
-      {search_string: "1000 acacia*", explanation: %Q(List 1000 names starting with "acacia". #{excc}. <span class="red">1000 is the maximum.</span>)},
-      {search_string: "all acacia*", explanation: %Q(List 1000 names starting with "acacia". #{excc}. <span class="red">1000 is the maximum.</span>)}
+  <% [{search_target: 'Names', search_string: "acacia* limit:5",explanation: %Q(List 5 names starting with "acacia". #{excc})},
+      {search_target: 'Names', search_string: "acacia* limit:50", explanation: %Q(List 50 names starting with "acacia". #{excc})},
+      {search_target: 'Names', search_string: "acacia* limit:1000", explanation: %Q(List 1000 names starting with "acacia". #{excc}.)},
+      {search_target: 'Names', search_string: "acacia* limit:10000", explanation: %Q(List 10000 names starting with "acacia". #{excc}. <span class="red">10000 is the current maximum.</span>)},
+      {search_target: 'Names', search_string: "count acacia* limit:10 nt:*", explanation: %Q(Count over-rides limit. #{incc}.)}
       ].each do |val| %>
   <tr>
     <td class="width-30-percent"><a href="javascript:void(0)" 
            class="example-search width-100-percent" 
            title="Link to search">
-        <span class="blue"><%= val[:search_string] %></span></a>
+        <span class="blue"><%= link_to(val[:search_string], new_search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %></span></a>
     </td>
     <td><%= val[:explanation].html_safe %></td>
   </tr>
@@ -66,22 +76,24 @@
 </table>
 <br>
 
+    </div>
+    <div id="example-search-reference" class="example-search-tab hidden">
 <h4 class="">List references</h4>
 <table class="example-searches table table-striped">
-  <% [{search_string: "ref",explanation: %Q(Start with "ref" for references. 100 listed by default.)},
-      {search_string: "10 ref",explanation: %Q(Control the number of references listed.)},
-      {search_string: "ref nuytsia*", explanation: %Q(Reference searches match on citation by default.  Trailing wildcards are important but not always enough.)},
-      {search_string: "ref *nuytsia*", explanation: %Q(Leading wildcards may be slower but necessary.)},
-      {search_string: "ref title:nuytsia", explanation: %Q(Search on title.)},
-      {search_string: "ref citation:*nuytsia*", explanation: %Q(Refer explicitly to the citation field.)},
-      {search_string: "ref *nuytsia* type:journal", explanation: %Q(Restrict by type.)},
-      {search_string: "ref *nuytsia* ty:journal ti:nuytsia", explanation: %Q(Use field abbreviations.)}
+  <% [{search_target: 'References', search_string: "*",explanation: %Q(Start with "ref" for references. 100 listed by default.)},
+      {search_target: 'References', search_string: "limit:10",explanation: %Q(Control the number of references listed.)},
+      {search_target: 'References', search_string: "nuytsia*", explanation: %Q(Reference searches match on citation by default.  Trailing wildcards are important but not always enough.)},
+      {search_target: 'References', search_string: "*nuytsia*", explanation: %Q(Leading wildcards may be slower but necessary.)},
+      {search_target: 'References', search_string: "title:nuytsia", explanation: %Q(Search on title.)},
+      {search_target: 'References', search_string: "citation:*nuytsia*", explanation: %Q(Refer explicitly to the citation field.)},
+      {search_target: 'References', search_string: "*nuytsia* type:journal", explanation: %Q(Restrict by type.)},
+      {search_target: 'References', search_string: "*nuytsia* ty:journal ti:nuytsia", explanation: %Q(Use field abbreviations.)}
       ].each do |val| %>
   <tr>
     <td class="width-30-percent"><a href="javascript:void(0)" 
            class="example-search width-100-percent" 
            title="Link to search">
-           <span class="blue"><%= val[:search_string] %></span>
+           <span class="blue"><%= link_to(val[:search_string], new_search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %></span></a>
       </a>
     </td>
     <td><%= val[:explanation].html_safe %></td>
@@ -92,18 +104,18 @@
 
 <h4 class="">Count references</h4>
 <table class="example-searches table table-striped">
-  <% [{search_string: "count ref",explanation: %Q(Start with "count ref" to count references.)},
-      {search_string: "count ref *nuytsia*", explanation: %Q(Counting without listing should be faster than listing for large sets.)},
-      {search_string: "count ref type:journal", explanation: %Q(Because it's faster, counting may suit different types of searches.)},
-      {search_string: "count ref type:journal is-not-a-parent:", explanation: %Q(Use an assertion.)},
-      {search_string: "count ref type:paper has-no-parent:", explanation: %Q(Use a different assertion)},
-      {search_string: "count ref type:journal is-not-a-parent: is-a-duplicate:", explanation: %Q(Combine assertions.)}
+  <% [{search_target: 'References', search_string: "count",explanation: %Q(Start with "count ref" to count references.)},
+      {search_target: 'References', search_string: "count *nuytsia*", explanation: %Q(Counting without listing should be faster than listing for large sets.)},
+      {search_target: 'References', search_string: "count type:journal", explanation: %Q(Because it's faster, counting may suit different types of searches.)},
+      {search_target: 'References', search_string: "count type:journal is-not-a-parent:", explanation: %Q(Use an assertion.)},
+      {search_target: 'References', search_string: "count type:paper has-no-parent:", explanation: %Q(Use a different assertion)},
+      {search_target: 'References', search_string: "count type:journal is-not-a-parent: is-a-duplicate:", explanation: %Q(Combine assertions.)}
       ].each do |val| %>
   <tr>
     <td class="width-30-percent"><a href="javascript:void(0)" 
            class="example-search width-100-percent" 
            title="Link to search">
-           <span class="blue"><%= val[:search_string] %></span>
+           <span class="blue"><%= link_to(val[:search_string], new_search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %></span></a>
       </a>
     </td>
     <td><%= val[:explanation].html_safe %></td>
@@ -112,29 +124,31 @@
 </table>
 <br>
 
+    </div>
+    <div id="example-search-instance" class="example-search-tab hidden">
 <h4 class="">Count instances</h4>
 <table class="example-searches table table-striped">
-  <% [{search_string: "count instance",explanation: %Q(Start with "count instance" to count instances.)},
-      {search_string: "count instance acacia*", explanation: %Q(Counting without listing should be faster than listing for large sets.)},
-      {search_string: "count instance type:basionym", explanation: %Q(Count by type e.g. basionyms.)},
-      {search_string: "count instance type:comb. nov.", explanation: %Q(Count comb. novs.)},
-      {search_string: "count instance acacia* type:basionym", explanation: %Q(Count by name and type e.g. basionyms.)},
-      {search_string: "count instance acacia* type:comb. nov.", explanation: %Q(Count by name and type e.g. comb. nov.)},
-      {search_string: "count instance adnot:*", explanation: %Q(Count instances with an Adnot (comment).)},
-      {search_string: "count instance adnot-by:*", explanation: %Q(Count instances with an Adnot (comment) by someone.)},
-      {search_string: "count instance page:140", explanation: %Q(Count instances with page 140.)},
-      {search_string: "count instance page:14*", explanation: %Q(Count instances with page 14*.)},
-      {search_string: "count instance page:*fig*", explanation: %Q(Count instances with figure information.)},
-      {search_string: "count instance page-qualifier:*", explanation: %Q(Count instances with extra page information.)},
-      {search_string: "count instance note-key:apc dist.", explanation: %Q(Count instances with note key 'apc dist.'.)},
-      {search_string: "count instance note:*intermediate*", explanation: %Q(Count instances where 'intermediate' is noted.)},
-      {search_string: "count instance cites-an-instance:", explanation: %Q(Count instances that cite another instance.)}
+  <% [{search_target: 'Instances', search_string: "count",explanation: %Q(Start with "count instance" to count instances.)},
+      {search_target: 'Instances', search_string: "count acacia*", explanation: %Q(Counting without listing should be faster than listing for large sets.)},
+      {search_target: 'Instances', search_string: "count type:basionym", explanation: %Q(Count by type e.g. basionyms.)},
+      {search_target: 'Instances', search_string: "count type:comb. nov.", explanation: %Q(Count comb. novs.)},
+      {search_target: 'Instances', search_string: "count acacia* type:basionym", explanation: %Q(Count by name and type e.g. basionyms.)},
+      {search_target: 'Instances', search_string: "count acacia* type:comb. nov.", explanation: %Q(Count by name and type e.g. comb. nov.)},
+      {search_target: 'Instances', search_string: "count adnot:*", explanation: %Q(Count instances with an Adnot (comment).)},
+      {search_target: 'Instances', search_string: "count adnot-by:*", explanation: %Q(Count instances with an Adnot (comment) by someone.)},
+      {search_target: 'Instances', search_string: "count page:140", explanation: %Q(Count instances with page 140.)},
+      {search_target: 'Instances', search_string: "count page:14*", explanation: %Q(Count instances with page 14*.)},
+      {search_target: 'Instances', search_string: "count page:*fig*", explanation: %Q(Count instances with figure information.)},
+      {search_target: 'Instances', search_string: "count page-qualifier:*", explanation: %Q(Count instances with extra page information.)},
+      {search_target: 'Instances', search_string: "count note-key:apc dist.", explanation: %Q(Count instances with note key 'apc dist.'.)},
+      {search_target: 'Instances', search_string: "count note:*intermediate*", explanation: %Q(Count instances where 'intermediate' is noted.)},
+      {search_target: 'Instances', search_string: "count cites-an-instance:", explanation: %Q(Count instances that cite another instance.)}
       ].each do |val| %>
   <tr>
     <td class="width-30-percent"><a href="javascript:void(0)" 
            class="example-search width-100-percent" 
            title="Link to search">
-           <span class="blue"><%= val[:search_string] %></span>
+           <span class="blue"><%= link_to(val[:search_string], new_search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %></span></a>
       </a>
     </td>
     <td><%= val[:explanation].html_safe %></td>
@@ -143,22 +157,24 @@
 </table>
 <br>
 
+    </div>
+    <div id="example-search-author" class="example-search-tab hidden">
 <h4 class="">List authors</h4>
 <table class="example-searches table table-striped">
-  <% [{search_string: "author",explanation: %Q(Start with "author" to search authors. Lists will be ordered by name.)},
-      {search_string: "author bentham*", explanation: %Q(Authors starting with "bentham".)},
-      {search_string: "author *bentham*", explanation: %Q(Authors including "bentham".)},
-      {search_string: "author *bentham* name: *hooker*", explanation: %Q(Authors including "bentham" and "hooker".)},
-      {search_string: "author name: *bentham* name: *hooker*", explanation: %Q(Authors including "bentham" and "hooker".)},
-      {search_string: "author full-name:*", explanation: %Q(Authors with full or extra name text.)},
-      {search_string: "author comments:*", explanation: %Q(Count commented authors by turning a text field into an assertion.)},
-      {search_string: "author comments-by:*", explanation: %Q(Count authors with a comment by someone.)},
+  <% [{search_target: 'Authors', search_string: "*",explanation: %Q(Start with "author" to search authors. Lists will be ordered by name.)},
+      {search_target: 'Authors', search_string: "bentham*", explanation: %Q(Authors starting with "bentham".)},
+      {search_target: 'Authors', search_string: "*bentham*", explanation: %Q(Authors including "bentham".)},
+      {search_target: 'Authors', search_string: "*bentham* name: *hooker*", explanation: %Q(Authors including "bentham" and "hooker".)},
+      {search_target: 'Authors', search_string: "name: *bentham* name: *hooker*", explanation: %Q(Authors including "bentham" and "hooker".)},
+      {search_target: 'Authors', search_string: "full-name:*", explanation: %Q(Authors with full or extra name text.)},
+      {search_target: 'Authors', search_string: "comments:*", explanation: %Q(Count commented authors by turning a text field into an assertion.)},
+      {search_target: 'Authors', search_string: "comments-by:*", explanation: %Q(Count authors with a comment by someone.)},
       ].each do |val| %>
   <tr>
     <td class="width-30-percent"><a href="javascript:void(0)" 
            class="example-search width-100-percent" 
            title="Link to search">
-           <span class="blue"><%= val[:search_string] %></span>
+           <span class="blue"><%= link_to(val[:search_string], new_search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %></span></a>
       </a>
     </td>
     <td><%= val[:explanation].html_safe %></td>
@@ -169,18 +185,18 @@
 
 <h4 class="">Count authors</h4>
 <table class="example-searches table table-striped">
-  <% [{search_string: "count author",explanation: %Q(Start with "count author" to count authors.)},
-      {search_string: "count author bentham*", explanation: %Q(Counting sets.)},
-      {search_string: "count comments:*", explanation: %Q(Count commented authors by turning a text field into an assertion.)},
-      {search_string: "count author comments-by:*", explanation: %Q(Count authors with a comment by someone.)},
-      {search_string: "count author notes:*", explanation: %Q(Count authors with notes by turning a text field into an assertion.)},
-      {search_string: "count author is-a-duplicate:", explanation: %Q(Count duplicate authors.)},
+  <% [{search_target: 'Authors', search_string: "count",explanation: %Q(Start with "count author" to count authors.)},
+      {search_target: 'Authors', search_string: "count bentham*", explanation: %Q(Counting sets.)},
+      {search_target: 'Authors', search_string: "count comments:*", explanation: %Q(Count commented authors by turning a text field into an assertion.)},
+      {search_target: 'Authors', search_string: "count comments-by:*", explanation: %Q(Count authors with a comment by someone.)},
+      {search_target: 'Authors', search_string: "count notes:*", explanation: %Q(Count authors with notes by turning a text field into an assertion.)},
+      {search_target: 'Authors', search_string: "count is-a-duplicate:", explanation: %Q(Count duplicate authors.)},
       ].each do |val| %>
   <tr>
     <td class="width-30-percent"><a href="javascript:void(0)" 
            class="example-search width-100-percent" 
            title="Link to search">
-           <span class="blue"><%= val[:search_string] %></span>
+           <span class="blue"><%= link_to(val[:search_string], new_search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %></span></a>
       </a>
     </td>
     <td><%= val[:explanation].html_safe %></td>
@@ -189,18 +205,20 @@
 </table>
 <br>
 
+    </div>
+    <div id="example-search-other" class="example-search-tab hidden">
 <h4 class="">Defined searches</h4>
 <table class="example-searches table table-striped">
   <% [
-      {search_string: "instances-for-ref-id: 53841",explanation: %Q(Instances for a reference ID.)},
-      {search_string: "1000 instances-for-ref-id: 53841",explanation: %Q(Instances for a reference ID, with limit 1000.)},
-      {search_string: "instances-for-name-id: 242009",explanation: %Q(Instances for a name ID.)},
+      {search_target: 'Instances for ref id', search_string: "53841",explanation: %Q(Instances for a reference ID.)},
+      {search_target: 'Instances for ref id', search_string: "53841 limit:30",explanation: %Q(Instances for a reference ID, with limit 30.)},
+      {search_target: 'Instances for name id', search_string: "242009",explanation: %Q(Instances for a name ID.)},
       ].each do |val| %>
   <tr>
     <td class="width-30-percent"><a href="javascript:void(0)" 
            class="example-search width-100-percent" 
            title="Link to search">
-           <span class="blue"><%= val[:search_string] %></span>
+           <span class="blue"><%= link_to(val[:search_string], new_search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %></span></a>
       </a>
     </td>
     <td><%= val[:explanation].html_safe %></td>
@@ -208,5 +226,7 @@
   <% end %>
 </table>
 <br>
+    </div>
 
+  </div>
 </div>

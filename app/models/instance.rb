@@ -344,10 +344,11 @@ class Instance < ActiveRecord::Base
     reference = Reference.find_by(id: reference_id)
     unless reference.blank?
       reference.display_as_part_of_concept
-      count = 0 
+      count = 1 
       query = reference.instances.joins(:name).includes({name: :name_status}).includes(:instance_type).includes(this_is_cited_by: [:name, :instance_type])
       query = order_by == 'page' ? query.ordered_by_page : query.ordered_by_name
       query.each do |instance|
+        logger.debug('Query loop.....')
         if count < limit
           if instance.cited_by_id.blank?
             count += 1
@@ -355,13 +356,29 @@ class Instance < ActiveRecord::Base
               instance.display_within_reference
               results.push(instance)
               instance.is_cited_by.each do |cited_by| 
+                count += 1
                 cited_by.expanded_instance_type = cited_by.instance_type.name
                 results.push(cited_by)
+                if count > limit
+                  limited = true
+                  break
+                end
               end 
-              results.push(instance.cites_this) unless instance.cites_this.nil?
+              unless instance.cites_this.nil?
+                results.push(instance.cites_this) 
+                count += 1
+                if count > limit
+                  limited = true
+                  break
+                end
+              end
             end
           end
         end  
+        if count > limit
+          limited = true
+          break
+        end
       end
       results.unshift(reference)
     end

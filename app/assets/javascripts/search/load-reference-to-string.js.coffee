@@ -5,6 +5,7 @@ window.loadReferenceToString = (fields) ->
   fields =  _.reduce(fieldMap,appendOneField,'')
   assertions = getAssertions()
   $('#query-string-field').val("#{settings}#{fields}#{assertions}")
+  $('#query-target').val("References")
 
 fieldMap =
   'ref-advanced-search-citation' : ''
@@ -19,9 +20,9 @@ fieldMap =
 getSettings = ->
   listOrCount = $('#ref-advanced-search-list-or-count').val()
   if listOrCount.match(/count/)
-    'count ref'
+    'count '
   else
-    "#{$('#ref-advanced-search-set-size').val()} ref"
+    "limit:#{$('#ref-advanced-search-set-size').val()} "
 
 getAssertions = ->
   str = ''

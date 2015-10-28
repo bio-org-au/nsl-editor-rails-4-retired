@@ -19,24 +19,34 @@ class NewSearchController < ApplicationController
 
   def search
     if params[:query_string].present? || params[:query_target].present? 
-      @search = Search::Base.new(params) 
-      save_search(@search)
+      if params[:query_target].present? && params[:query_target].match(/\Atrees*/i)
+        params[:query] = params[:query_string]
+        tree_search
+      else
+        @search = Search::Base.new(params) 
+        save_search(@search)
+      end
     else
       @search = Search::Empty.new(params) 
     end
-  #rescue => e
-    #params[:error_message] = e.to_s
-    #@search = Search::Error.new(params) 
-    #save_search(@search)
+  rescue => e
+    logger.error("NewSearchController::search exception: #{e.to_s}")
+    params[:error_message] = e.to_s
+    @search = Search::Error.new(params) 
+    save_search(@search)
   end
 
   def tree
-    @search = Search::Tree.new(params)
     params[:query_field] = 'apc' if params[:query_field].blank?
     params[:query] = Name.find_by(full_name: 'Plantae Haeckel').id if params[:query].blank?
+    @search = Search::Tree.new(params)
     @ng_template_path = tree_ng_path('dummy').gsub(/dummy/,'')
     logger.debug("@ng_template_path: #{@ng_template_path}")
     render 'trees/index'
+  rescue => e
+    logger.error("NewSearchController::tree exception: #{e.to_s}")
+    params[:error_message] = e.to_s
+    @search = Search::Error.new(params) 
   end
 
   def search_name_with_instances
@@ -52,6 +62,19 @@ class NewSearchController < ApplicationController
     if session[:searches].size > 5
       session[:searches].shift
     end
+  end
+
+  def tree_search
+    params[:query_field] = 'apc' if params[:query_field].blank?
+    params[:query] = Name.find_by(full_name: 'Plantae Haeckel').id if params[:query].blank?
+    @search = Search::Tree.new(params)
+    @ng_template_path = tree_ng_path('dummy').gsub(/dummy/,'')
+    logger.debug("@ng_template_path: #{@ng_template_path}")
+    render 'trees/index'
+  rescue => e
+    logger.error("NewSearchController::tree exception: #{e.to_s}")
+    params[:error_message] = e.to_s
+    @search = Search::Error.new(params) 
   end
 
 end

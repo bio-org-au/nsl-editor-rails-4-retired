@@ -51,6 +51,7 @@ class Search::ParsedRequest
     'instance-ref-id-sort-by-page:' => 'instances-for-ref-id-sort-by-page:',
     'instances-for-ref-id-sort-by-page:' => 'instances-for-ref-id-sort-by-page:',
     'instances for ref id sort by page' => 'instances-for-ref-id-sort-by-page:',
+    'instances sorted by page for ref id' => 'instances-for-ref-id-sort-by-page:',
     'references with instances' => 'instances-for-references',
     'references + instances' => 'instances-for-references',
     'instance is cited' => 'instance-is-cited',

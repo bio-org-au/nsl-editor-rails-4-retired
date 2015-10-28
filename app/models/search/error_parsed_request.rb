@@ -14,7 +14,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #   
-class Search::EmptyParsedRequest
+class Search::ErrorParsedRequest
 
   attr_reader :empty,
               :canonical_query_string, 
@@ -35,11 +35,11 @@ class Search::EmptyParsedRequest
               :target_button_text
 
   def initialize(params)
-    Rails.logger.debug("Search::EmptyParsedQuery start: params: #{params}")
+    Rails.logger.debug("Search::ErrorParsedQuery start: params: #{params}")
     @params = params
     @empty = true
     @defined_query = false
-    @target_button_text = 'Names'
+    @target_button_text = ''
     @count = false
     @list = false
     @limited = false

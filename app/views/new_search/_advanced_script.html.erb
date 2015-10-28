@@ -84,6 +84,14 @@ $('input[type=search]')
       $(this).parent('li').addClass('active');
     });
 
+    $('ul#example-search-tabset li a').on('click',function(e) {
+      $('.example-search-tab').addClass('hidden');
+      $('ul#example-search-tabset li').removeClass('active');
+      $('#'+$(this).attr('data-show-id')).removeClass('hidden');
+      $(this).parent('li').addClass('active');
+    });
+
+
     $('#search-results-tab-container-link').on('click',function(e) {
       $('div#search-result-details').removeClass('hidden');
     });
@@ -162,7 +170,13 @@ $( "select#name-advanced-search-list-or-count" )
       //$('#query-string-field').val($(this).html().replace(/.*\|/,'').replace(/<[^>]*>/g,''));
       //$('#query-string-field').val($(this).html().replace(/\|.*$/,'').replace(/<[^>]*>/g,'').trim());
       $('#query-string-field').val($(this).html().replace(/<[^>]*>/g,'').trim());
-      $('#query-target').val('');
+      console.log($(this).html());
+      console.log($(this).html());
+      console.log($(this).html());
+      console.log($(this).html());
+      console.log($(this).html());
+      throw('stop');
+      $('#query-target').val('name');
       $('form#search-form').submit();
     });
 
@@ -174,14 +188,8 @@ $( "select#name-advanced-search-list-or-count" )
 
     function loadNameToString() {
       var str = '';
-      if ($('#name-advanced-search-list-or-count').val().trim().length > 0) {
+      if ($('#name-advanced-search-list-or-count').val().trim() == 'count' ) {
         str += $('#name-advanced-search-list-or-count').val().trim();
-      }
-      if ($('#name-advanced-search-set-size').val().trim().length > 0) {
-        if ($('#name-advanced-search-list-or-count').val().match(/list/)) {
-          str += ' ';
-          str += $('#name-advanced-search-set-size').val().trim();
-        }
       }
       if ($('#name-advanced-search-name').val().trim().length > 0) {
         str += ' ';
@@ -242,6 +250,12 @@ $( "select#name-advanced-search-list-or-count" )
       $('.name-search-assertion:checked').map(function() {
         str += ' ' + this.value + ' ';
       });
+      if ($('#name-advanced-search-set-size').val().trim().length > 0) {
+        if ($('#name-advanced-search-list-or-count').val().match(/list/)) {
+          str += ' limit:';
+          str += $('#name-advanced-search-set-size').val().trim();
+        }
+      }
       $('#query-string-field').val(str);
     };
 

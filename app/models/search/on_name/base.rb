@@ -26,6 +26,7 @@ class Search::OnName::Base
     Rails.logger.debug('Search::OnName::Base#run_query')
     if parsed_request.count
       count_query = Search::OnName::CountQuery.new(parsed_request)
+      @has_relation = true
       @relation = count_query.sql
       @count = relation.count
       @limited = false

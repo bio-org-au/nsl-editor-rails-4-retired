@@ -53,7 +53,13 @@ class Reference::DefinedQuery::ReferenceIdWithInstances
       @common_and_cultivar_included = query.common_and_cultivar_included
       @count = tally
     else
-      debug("run_query listing")
+      debug("run_query listing with limit: #{parsed_request.limit}")
+      debug("run_query listing with limit: #{parsed_request.limit}")
+      debug("run_query listing with limit: #{parsed_request.limit}")
+      debug("run_query listing with limit: #{parsed_request.limit}")
+      debug("run_query listing with limit: #{parsed_request.limit}")
+      debug("run_query listing with limit: #{parsed_request.limit}")
+      debug("run_query listing with limit: #{parsed_request.limit}")
       #@results = Instance::AsSearchEngine.name_usages(parsed_request.where_arguments)
       @results = Instance::AsSearchEngine.for_ref_id(parsed_request.where_arguments,parsed_request.limit.to_i-1,'name')
       @limited = false; #name_query.limited

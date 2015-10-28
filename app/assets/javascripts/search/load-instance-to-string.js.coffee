@@ -5,6 +5,7 @@ window.loadInstanceToString = (fields) ->
   fields =  _.reduce(fieldMap,appendOneField,'')
   assertions = getAssertions()
   $('#query-string-field').val("#{listCount}#{fields}#{assertions}")
+  $('#query-target').val("Instances")
 
 fieldMap =
   'instance-advanced-search-name' : ''
@@ -19,9 +20,9 @@ fieldMap =
 getListCount = ->
   listOrCount = $('#instance-advanced-search-list-or-count').val()
   if listOrCount.match(/count/)
-    'count instance'
+    'count '
   else
-    "#{$('#instance-advanced-search-set-size').val()} instance"
+    "limit:#{$('#instance-advanced-search-set-size').val()} "
 
 getAssertions = ->
   str = ''

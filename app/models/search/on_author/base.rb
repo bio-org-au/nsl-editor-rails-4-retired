@@ -16,7 +16,7 @@
 #   
 class Search::OnAuthor::Base
 
-  attr_reader :results, :limited, :info_for_display, :rejected_pairings, :common_and_cultivar_included, :relation, :id, :count
+  attr_reader :results, :limited, :info_for_display, :rejected_pairings, :common_and_cultivar_included, :has_relation, :relation, :id, :count
 
   def initialize(parsed_request)
     run_query(parsed_request)
@@ -27,6 +27,7 @@ class Search::OnAuthor::Base
     if parsed_request.count
       Rails.logger.debug('Search::OnAuthor::Base#run_query counting')
       count_query = Search::OnAuthor::CountQuery.new(parsed_request)
+      @has_relation = true
       @relation = count_query.sql
       @count = relation.count
       Rails.logger.debug("Search::OnAuthor::Base#run_query results: #{@results}")

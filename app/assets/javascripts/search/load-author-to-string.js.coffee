@@ -5,6 +5,7 @@ window.loadAuthorToString = (fields) ->
   fields = _.reduce(fieldMap,appendOneField,'')
   assertions = getAssertions()
   $('#query-string-field').val("#{listCount}#{fields}#{assertions}")
+  $('#query-target').val("Authors")
 
 fieldMap =
   'author-advanced-search-name' : ''
@@ -17,9 +18,9 @@ fieldMap =
 getListCount = ->
   listOrCount = $('#author-advanced-search-list-or-count').val()
   if listOrCount.match(/count/)
-    'count author'
+    'count '
   else
-    "#{$('#author-advanced-search-set-size').val()} author"
+    "limit:#{$('#author-advanced-search-set-size').val()} "
 
 getAssertions = ->
   str = ''

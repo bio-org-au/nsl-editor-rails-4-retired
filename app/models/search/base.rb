@@ -55,7 +55,7 @@ class Search::Base
 
   def to_history
     {"query_string"=> @query_string, 
-     "query_target" => @parsed_request.target_table, 
+     "query_target" => @parsed_request.query_target, 
      "result_size" => @executed_query.count, 
      "time_stamp" => Time.now, 
      "error" => false}

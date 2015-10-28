@@ -18,7 +18,7 @@
       within
     <% end %>
     <%= link_to(@name.parent.try('full_name_html').try('html_safe'), 
-                                        new_search_path(query_string: "id: #{@name.parent_id}"),
+                                        new_search_path(query_target: 'names', query_string: "id: #{@name.parent_id}"),
                 class: 'rebeccapurple',
                 tabindex: increment_tab_index, 
                 title: "Query the parent") %>
@@ -27,7 +27,7 @@
 <% if @name.has_second_parent? %>
     and
     <%= link_to(@name.second_parent.try('full_name_html').try('html_safe'), 
-                new_search_path(query_string: "id:#{@name.second_parent_id}"),
+                new_search_path(query_target: "names", query_string: "id:#{@name.second_parent_id}"),
                 class: 'rebeccapurple',
                 tabindex: increment_tab_index, 
                 title: 'second parent') %>

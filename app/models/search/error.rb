@@ -14,66 +14,38 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #   
+
+
 class Search::Error
 
-  attr_reader :canonical_query_string, 
-              :common_and_cultivar, 
-              :common_and_cultivar_included,
-              :count, 
-              :empty, 
+  attr_reader :empty, 
               :error, 
-              :info_for_display, 
-              :limit, 
-              :limited, 
-              :order, 
-              :params, 
-              :query_string, 
-              :query_string_for_more, 
-              :rejected_pairings, 
-              :results, 
-              :target_table, 
-              :where_arguments,
-              :more_allowed,
-              :defined_query,
               :error_message,
-              :count,
-              :sql,
-              :target_button_text,
+              :executed_query,
+              :more_allowed,
               :parsed_request
 
-  def initialize(params)
+ def initialize(params)
     Rails.logger.debug("Search::Error start with query string: #{params[:query_string]}")
     Rails.logger.debug("#{'=' * 40}")
-    params = params
-    @parsed_request = Search::EmptyParsedRequest.new(params)
-    @canonical_query_string = ''
-    @common_and_cultivar = ''
-    @common_and_cultivar_included= false
+    @parsed_request = Search::ErrorParsedRequest.new(params)
+    @common_and_cultivar_included= true
     @count = false
     @empty = false
     @error = true
-    @info_for_display = ''
-    @limit = 0
+    @tree = false
     @limited = false
-    @order = ''
     @query_string = params[:query_string]
-    @rejected_pairings = []
-    @results = []
-    @target_table = ''
-    @where_arguments = ''
-    @query_string_for_more = ''
+    @query_target = params[:query_target]
     @more_allowed = false
-    @defined_query = false
+    @executed_query = Search::EmptyExecutedQuery.new(params)
     @error_message = params[:error_message]
-    @count_allowed = false
-    @target_button_text = 'Error...'
   end
 
   def to_history
-    {"query_string" => @query_string, "result_size" => 0, "time_stamp" => Time.now, "error" => true, "error_message" => @error_message}
+    {"query_string" => @query_string, "query_target" => @query_target, "result_size" => 0, "time_stamp" => Time.now, "error" => true, "error_message" => @error_message}
   end
 
 end
-
 
 

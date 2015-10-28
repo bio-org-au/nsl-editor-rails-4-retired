@@ -27,6 +27,7 @@ class Search::OnReference::Base
     if parsed_request.count
       Rails.logger.debug('Search::OnReference::Base#run_query counting')
       count_query = Search::OnReference::CountQuery.new(parsed_request)
+      @has_relation = true
       @relation = count_query.sql
       @count = relation.count
       Rails.logger.debug("Search::OnReference::Base#run_query results: #{@results}")
