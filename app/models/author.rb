@@ -50,6 +50,14 @@ class Author < ActiveRecord::Base
   validates_exclusion_of :duplicate_of_id, in: lambda{ |author| [author.id] }, allow_blank: true, message: 'and master cannot be the same record'
 
   scope :lower_abbrev_equals, ->(string) { where("lower(abbrev) = lower(?) ",string)}
+
+  scope :created_n_days_ago, ->(n) { where("current_date - created_at::date = ?",n)}
+  scope :updated_n_days_ago, ->(n) { where("current_date - updated_at::date = ?",n)}
+  scope :created_or_updated_n_days_ago, ->(n) { where("current_date - created_at::date = ? or current_date - updated_at::date = ?",n,n)}
+
+  scope :created_in_the_last_n_days, ->(n) { where("current_date - created_at::date < ?",n)}
+  scope :updated_in_the_last_n_days, ->(n) { where("current_date - updated_at::date < ?",n)}
+  scope :created_or_updated_in_the_last_n_days, ->(n) { where("current_date - created_at::date < ? or current_date - updated_at::date < ?",n,n)}
   
   SEARCH_LIMIT = 50
   DEFAULT_DESCRIPTOR = 'n' # for name

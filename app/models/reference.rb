@@ -32,6 +32,14 @@ class Reference < ActiveRecord::Base
   scope :lower_citation_like, ->(string) { where("lower(citation) like ? ",string.gsub(/\*/,'%').downcase) }
   scope :not_duplicate, -> { where("duplicate_of_id is null") }
 
+  scope :created_n_days_ago, ->(n) { where("current_date - created_at::date = ?",n)}
+  scope :updated_n_days_ago, ->(n) { where("current_date - updated_at::date = ?",n)}
+  scope :created_or_updated_n_days_ago, ->(n) { where("current_date - created_at::date = ? or current_date - updated_at::date = ?",n,n)}
+
+  scope :created_in_the_last_n_days, ->(n) { where("current_date - created_at::date < ?",n)}
+  scope :updated_in_the_last_n_days, ->(n) { where("current_date - updated_at::date < ?",n)}
+  scope :created_or_updated_in_the_last_n_days, ->(n) { where("current_date - created_at::date < ? or current_date - updated_at::date < ?",n,n)}
+
   belongs_to :ref_type, foreign_key: 'ref_type_id'
   belongs_to :ref_author_role, foreign_key: 'ref_author_role_id'
   belongs_to :author, foreign_key: 'author_id'

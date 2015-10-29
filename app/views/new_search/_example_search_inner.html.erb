@@ -126,6 +126,23 @@
 
     </div>
     <div id="example-search-instance" class="example-search-tab hidden">
+
+<h4 class="">List instances</h4>
+<table class="example-searches table table-striped">
+  <% [{search_target: 'Instances', search_string: "notes: *autonym* note-key: comment notes: *valid*",explanation: %Q(Find instances with note comments and two specific words in any order.)},
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent"><a href="javascript:void(0)" 
+           class="example-search width-100-percent" 
+           title="Link to search">
+           <span class="blue"><%= link_to(val[:search_string], new_search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %></span></a>
+      </a>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+<br>
 <h4 class="">Count instances</h4>
 <table class="example-searches table table-striped">
   <% [{search_target: 'Instances', search_string: "count",explanation: %Q(Start with "count instance" to count instances.)},

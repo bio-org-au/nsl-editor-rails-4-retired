@@ -157,8 +157,14 @@ $( "select#name-advanced-search-list-or-count" )
 
     document.getElementById("search-target-list").addEventListener("click",function(e) {
         if(e.target && e.target.nodeName == "A") {
+            //console.log('setting search-target-button');
             document.getElementById('search-target-button-text').innerHTML = e.target.innerHTML;
             document.getElementById('query-target').value = e.target.innerHTML;
+            //console.log($('#query-string-field').attr('list'));
+            //console.log(e.target.dataset.list);
+            //console.log(e.target);
+            //document.getElementById('query-string-field').setAttribute('data-list',e.target.dataset.list);
+            //console.log(e.target.dataset.list);
         }
     });
 

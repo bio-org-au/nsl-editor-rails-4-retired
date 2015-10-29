@@ -56,6 +56,14 @@ class Name < ActiveRecord::Base
   scope :all_children,->(parent_id) { where("name.parent_id = ? or name.second_parent_id = ?", parent_id, parent_id) }
   scope :for_id,->(id) { where("name.id = ?", id) }
 
+  scope :created_n_days_ago, ->(n) { where("current_date - created_at::date = ?",n)}
+  scope :updated_n_days_ago, ->(n) { where("current_date - updated_at::date = ?",n)}
+  scope :created_or_updated_n_days_ago, ->(n) { where("current_date - created_at::date = ? or current_date - updated_at::date = ?",n,n)}
+
+  scope :created_in_the_last_n_days, ->(n) { where("current_date - created_at::date < ?",n)}
+  scope :updated_in_the_last_n_days, ->(n) { where("current_date - updated_at::date < ?",n)}
+  scope :created_or_updated_in_the_last_n_days, ->(n) { where("current_date - created_at::date < ? or current_date - updated_at::date < ?",n,n)}
+
   belongs_to :name_rank
   belongs_to :name_type
   belongs_to :name_status

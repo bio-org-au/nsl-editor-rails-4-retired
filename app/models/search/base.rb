@@ -140,7 +140,7 @@ class Search::Base
       @executed_query = Instance::DefinedQuery::IsCitedBy.new(@parsed_request)
     when /\Aaudit\z/
       debug("\nrun_defined_query audit\n")
-      @executed_query = Audit::Query.new(@parsed_request)
+      @executed_query = Audit::DefinedQuery::Base.new(@parsed_request)
     else
       raise "Run Defined Query has no match for #{@parsed_request.defined_query}"
     end
