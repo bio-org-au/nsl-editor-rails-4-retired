@@ -58,11 +58,11 @@ class Name < ActiveRecord::Base
 
   scope :created_n_days_ago, ->(n) { where("current_date - created_at::date = ?",n)}
   scope :updated_n_days_ago, ->(n) { where("current_date - updated_at::date = ?",n)}
-  scope :created_or_updated_n_days_ago, ->(n) { where("current_date - created_at::date = ? or current_date - updated_at::date = ?",n,n)}
+  scope :changed_n_days_ago, ->(n) { where("current_date - created_at::date = ? or current_date - updated_at::date = ?",n,n)}
 
   scope :created_in_the_last_n_days, ->(n) { where("current_date - created_at::date < ?",n)}
   scope :updated_in_the_last_n_days, ->(n) { where("current_date - updated_at::date < ?",n)}
-  scope :created_or_updated_in_the_last_n_days, ->(n) { where("current_date - created_at::date < ? or current_date - updated_at::date < ?",n,n)}
+  scope :changed_in_the_last_n_days, ->(n) { where("current_date - created_at::date < ? or current_date - updated_at::date < ?",n,n)}
 
   belongs_to :name_rank
   belongs_to :name_type

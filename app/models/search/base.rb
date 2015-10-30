@@ -28,7 +28,7 @@ class Search::Base
   MAX_PAGE_SIZE = 10000
 
   def initialize(params)
-    debug("Search::Base start")
+    debug("Search::Base start for user #{params[:current_user].username}")
     @params = params
     @empty = false
     @error = false

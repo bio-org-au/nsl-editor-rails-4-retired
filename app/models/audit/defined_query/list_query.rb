@@ -28,19 +28,19 @@ class Audit::DefinedQuery::ListQuery
 
   def run_query
     Rails.logger.debug("Audit::DefinedQuery::ListQuery#run_query")
-    start_author_query = Author.where('1=1')
+    start_author_query = Author.limit(@parsed_request.limit)
     author_where_clauses = Audit::DefinedQuery::WhereClause::ForAuthor.new(@parsed_request,start_author_query)
     author_query = author_where_clauses.sql
 
-    start_name_query = Name.where('1=1')
+    start_name_query = Name.limit(@parsed_request.limit)
     name_where_clauses = Audit::DefinedQuery::WhereClause::ForName.new(@parsed_request,start_name_query)
     name_query = name_where_clauses.sql
 
-    start_reference_query = Reference.where('1=1')
+    start_reference_query = Reference.limit(@parsed_request.limit)
     reference_where_clauses = Audit::DefinedQuery::WhereClause::ForReference.new(@parsed_request,start_reference_query)
     reference_query = reference_where_clauses.sql
 
-    start_instance_query = Instance.where('1=1')
+    start_instance_query = Instance.limit(@parsed_request.limit)
     instance_where_clauses = Audit::DefinedQuery::WhereClause::ForInstance.new(@parsed_request,start_instance_query)
     instance_query = instance_where_clauses.sql
 
@@ -48,15 +48,15 @@ class Audit::DefinedQuery::ListQuery
     #prepared_query = prepared_query.order('name')
     #@sql = prepared_query
   
-    n = 18 
-    authors = Author.created_in_the_last_n_days(n)
+    #n = 18 
+    #authors = Author.created_in_the_last_n_days(n)
     #names = Name.created_in_the_last_n_days(n)
     #references = Reference.created_in_the_last_n_days(n)
     #instances = Instance.created_in_the_last_n_days(n)
     #@results = authors + names + references  + instances
     #@results = authors + names + references  #+ instances
     ##@results = authors.to_a
-    @results = author_query.to_a + name_query.to_a + reference_query.to_a
+    @results = author_query.to_a + name_query.to_a + reference_query.to_a + instance_query.to_a
     @results.sort!{|x,y| bigger(y.created_at,y.updated_at) <=> bigger(x.created_at,x.updated_at)}
 
     #prepared_query = Author.where('1=1')

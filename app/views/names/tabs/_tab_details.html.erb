@@ -103,10 +103,8 @@ No instances
 
 simple name: <%= @name.simple_name %>
 <br>
-<% created =  "#{@name.created_by.downcase} #{formatted_timestamp(@name.created_at)}" %>
-<% updated =  "#{@name.updated_by.downcase} #{formatted_timestamp(@name.updated_at)}" %>
-<%= render partial: 'detail_line', locals: {label: 'Created', info: created} %>
-<%= render partial: 'detail_line', locals: {label: 'Last updated', info: updated} %>
+<%= created_by_whom_and_when(@name).html_safe %>
+<br>
+<%= updated_by_whom_and_when(@name).html_safe %>
 <%= render partial: 'detail_line', locals: {label: 'System', info: "#{@name.namespace.name}#{%Q(.#{@name.source_system.downcase}.#{@name.source_id}) if @name.source_system}"} %>
-
 

@@ -32,7 +32,8 @@ class Search::ParsedRequest
               :where_arguments,
               :query_target,
               :target_button_text,
-              :count_allowed
+              :count_allowed,
+              :user
 
   DEFAULT_LIST_LIMIT = 100
   MAX_LIST_LIMIT = 1000
@@ -56,7 +57,8 @@ class Search::ParsedRequest
     'references + instances' => 'instances-for-references',
     'instance is cited' => 'instance-is-cited',
     'instance is cited by' => 'instance-is-cited-by',
-    'audit' => 'audit'
+    'audit' => 'audit',
+    'review' => 'audit'
   }
 
   SIMPLE_QUERY_TARGETS = {
@@ -96,18 +98,16 @@ class Search::ParsedRequest
     debug("parse_request @query_string: #{@query_string}")
     @query_target = (@params['query_target']||'').strip.downcase
     debug("parse_request @query_target: #{@query_target}")
+    @user = @params[:current_user]
     # Before splitting on spaces, make sure every colon has at least one space after it.
     remaining_tokens = @query_string.strip.gsub(/:/,': ').gsub(/:  /,': ').split(/ /)
     remaining_tokens = parse_query_target(remaining_tokens)
-    #unless @defined_query
-      remaining_tokens = parse_count_or_list(remaining_tokens)
-      remaining_tokens = parse_limit(remaining_tokens)  # limit needs to be a delimited field limit: NNN to avoid confusion with IDs.
-      remaining_tokens = parse_target(remaining_tokens)
-      #remaining_tokens = parse_defined_query(remaining_tokens)
-      remaining_tokens = parse_common_and_cultivar(remaining_tokens)
-      remaining_tokens = parse_order(remaining_tokens)
-      remaining_tokens = gather_where_arguments(remaining_tokens)
-    #end
+    remaining_tokens = parse_count_or_list(remaining_tokens)
+    remaining_tokens = parse_limit(remaining_tokens)  # limit needs to be a delimited field limit: NNN to avoid confusion with IDs.
+    remaining_tokens = parse_target(remaining_tokens)
+    remaining_tokens = parse_common_and_cultivar(remaining_tokens)
+    remaining_tokens = parse_order(remaining_tokens)
+    remaining_tokens = gather_where_arguments(remaining_tokens)
   end
 
   def parse_query_target(tokens)
@@ -173,7 +173,11 @@ class Search::ParsedRequest
         @limit = joined_tokens.match(/limit: (\d{1,})/i)[1].to_i
         joined_tokens = joined_tokens.gsub(/limit: *\d{1,}/i,'')
       else
-        @limit = DEFAULT_LIST_LIMIT
+        if @query_target.match(/review/i)
+          @limit = DEFAULT_LIST_LIMIT/4
+        else
+          @limit = DEFAULT_LIST_LIMIT
+        end
       end
     else # count
       # remove any limit:
@@ -188,37 +192,6 @@ class Search::ParsedRequest
     tokens
   end
 
-  def xparse_limit(tokens)
-    @limited = @list
-    if tokens.blank?
-      @limit = DEFAULT_LIST_LIMIT
-    elsif tokens.first.match(/^\d+$/)
-      # Safeguard
-      @limit = tokens.first.to_i > MAX_LIST_LIMIT ? MAX_LIST_LIMIT : tokens.first.to_i
-      tokens = tokens.drop(1)
-    elsif tokens.first.match(/\Aall\z/i)
-      #@limit = NO_LIST_LIMIT
-      #@limited = false
-      @limit = MAX_LIST_LIMIT 
-      tokens = tokens.drop(1)
-    else 
-      @limit = DEFAULT_LIST_LIMIT
-    end
-    tokens
-  end
-
-  #def parse_target(tokens)
-    #if query_target_valid?
-      #target = SIMPLE_QUERY_TARGETS[@query_target]
-      #if target == 'defined query'
-        #@defined_query = DEFINED_QUERIES[@query_target]
-        #@defined_query_arg = tokens.join(' ')
-        #tokens = []
-      #else
-        #@defined_query = false
-    #tokens
-  #end
-  #
   def parse_target(tokens)
     debug(' parse_target')
     if @defined_query == false
@@ -233,33 +206,6 @@ class Search::ParsedRequest
       else
         raise "Cannot parse target: #{@query_target}"
       end
-    end
-    tokens
-  end
-
-  def xparse_target(tokens)
-    debug(' parse_target')
-    if @defined_query == false
-      debug(" parse_target not a defined query")
-      if SIMPLE_QUERY_TARGETS.has_key?(@query_target)
-        @target_table = SIMPLE_QUERY_TARGETS[@query_target]
-        debug(" parse_target has a simple query! @target_table: #{@target_table}")
-        if SIMPLE_QUERY_TARGETS.has_key?(tokens.first)
-          tokens = tokens.drop(1)
-        end
-      elsif tokens.blank?
-        debug(" parse_target tokens blank")
-        @target_table = DEFAULT_TARGET
-      elsif SIMPLE_QUERY_TARGETS.has_key?(tokens.first)
-        @target_table = SIMPLE_QUERY_TARGETS[tokens.first]
-          tokens = tokens.drop(1)
-      else
-        debug(" parse_target is resorting to the DEFAULT_TARGET")
-        @target_table = DEFAULT_TARGET
-      end
-      @target_button_text = @target_table.capitalize.pluralize
-    else
-      @target_table = 'for defined query'
     end
     tokens
   end

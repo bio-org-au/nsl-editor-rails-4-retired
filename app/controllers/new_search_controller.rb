@@ -23,6 +23,7 @@ class NewSearchController < ApplicationController
         params[:query] = params[:query_string]
         tree_search
       else
+        params[:current_user] = current_user
         @search = Search::Base.new(params) 
         save_search(@search)
       end

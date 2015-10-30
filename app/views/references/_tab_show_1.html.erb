@@ -110,11 +110,11 @@
 
 
 <h5>Reference #<%= @reference.id %></h5>
-
-<% created =  "#{@reference.created_by.downcase} #{formatted_timestamp(@reference.created_at)}" %>
-<% updated =  "#{@reference.updated_by.downcase} #{formatted_timestamp(@reference.updated_at)}" %>
-<%= render partial: 'detail_line', locals: {label: 'Created', info: created} %>
-<%= render partial: 'detail_line', locals: {label: 'Last updated', info: updated} %>
+<br>
+<br>
+<%= created_by_whom_and_when(@reference).html_safe %>
+<br>
+<%= updated_by_whom_and_when(@reference).html_safe %>
 <%= render partial: 'detail_line', locals: {label: 'System', info: "#{@reference.namespace.name}#{%Q(.#{@reference.source_system.downcase}.#{@reference.source_id}) if @reference.source_system}"} %>
 
 

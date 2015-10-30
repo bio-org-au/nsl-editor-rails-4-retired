@@ -19,6 +19,7 @@ class Audit::DefinedQuery::WhereClause::ForInstance
   attr_reader  :sql
 
   def initialize(parsed_request, incoming_sql)
+    debug("initialize")
     @parsed_request = parsed_request
     @sql = incoming_sql
     build_sql
@@ -29,12 +30,13 @@ class Audit::DefinedQuery::WhereClause::ForInstance
     remaining_string = @parsed_request.where_arguments.downcase 
     @common_and_cultivar_included = @parsed_request.common_and_cultivar
     @sql = @sql.for_id(@parsed_request.id) if @parsed_request.id
+    @sql = Audit::DefinedQuery::WhereClause::Authorise.new(sql,@parsed_request.user).sql
     x = 0 
     until remaining_string.blank?
       debug("loop for remaining_string: #{remaining_string}")
       field,value,remaining_string = Search::NextCriterion.new(remaining_string).get 
       debug("field: #{field}; value: #{value}")
-      add_clause(field,value)
+      @sql = Audit::DefinedQuery::WhereClause::Predicate.new(sql,field,value,'instance').sql
       x += 1
       raise "endless loop #{x}" if x > 50
     end
@@ -44,72 +46,6 @@ class Audit::DefinedQuery::WhereClause::ForInstance
     Rails.logger.debug("Audit::DefinedQuery::WhereClause::ForInstance #{s}")
   end
 
-  def add_clause(field,value)
-    debug("#add_clause field: #{field}, value: #{value}")
-    if field.blank? && value.blank?
-      @sql
-    elsif field.blank? 
-      @sql = @sql.created_or_updated_n_days_ago(value.to_i)
-    else 
-      # we have a field
-      canonical_field = canon_field(field)
-      canonical_value = value.blank? ? '' : canon_value(value)
-      if ALLOWS_MULTIPLE_VALUES.has_key?(canonical_field) && canonical_value.split(/,/).size > 1
-        case canonical_field
-        when /\Aname-rank:\z/
-          @sql = @sql.where("name_rank_id in (select id from name_rank where lower(name) in (?))",canonical_value.split(',').collect {|v| v.strip})
-        else
-          raise "The field '#{field}' currently cannot handle multiple values separated by commas." 
-        end
-      elsif WHERE_ASSERTION_HASH.has_key?(canonical_field)
-        @sql = @sql.where(WHERE_ASSERTION_HASH[canonical_field])
-      elsif WHERE_INTEGER_VALUE_HASH.has_key?(canonical_field)
-        @sql = @sql.where(WHERE_INTEGER_VALUE_HASH[canonical_field],canonical_value.to_i)
-      else
-        raise "No way to handle field: '#{canonical_field}' in an name audit search." unless WHERE_VALUE_HASH.has_key?(canonical_field)
-        @sql = @sql.where(WHERE_VALUE_HASH[canonical_field],canonical_value)
-      end
-    end
-  end
-
-  def canon_value(value)
-    value.gsub(/\*/,'%')
-  end
-
-  def canon_field(field)
-    if WHERE_INTEGER_VALUE_HASH.has_key?(field)
-      field
-    elsif WHERE_ASSERTION_HASH.has_key?(field)
-      field
-    elsif WHERE_VALUE_HASH.has_key?(field)
-      field
-    elsif CANONICAL_FIELD_NAMES.has_value?(field)
-      field
-    elsif CANONICAL_FIELD_NAMES.has_key?(field)
-      CANONICAL_FIELD_NAMES[field]
-    else
-      raise "Cannot audit names for: #{field}" unless CANONICAL_FIELD_NAMES.has_key?(field)
-    end
-  end
-
-  WHERE_INTEGER_VALUE_HASH = { 
-  }
-
-  WHERE_ASSERTION_HASH = { 
-  }
-
-  WHERE_VALUE_HASH = { 
-    'create-user:' => "created_by like ?",
-  }
-
-  CANONICAL_FIELD_NAMES = {
-  }
-
-  ALLOWS_MULTIPLE_VALUES = {
-  }
-
-
 end
-
 
 
