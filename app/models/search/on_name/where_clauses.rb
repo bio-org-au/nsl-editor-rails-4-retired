@@ -43,7 +43,7 @@ class Search::OnName::WhereClauses
     if field.blank? && value.blank?
       @sql
     elsif field.blank? || field.match(/\Aname:\z/)
-      @sql = @sql.lower_full_name_like(value.downcase)
+      @sql = @sql.lower_full_name_like("#{value.downcase}*")
     else 
       # we have a field
       canonical_field = canon_field(field)
@@ -102,28 +102,6 @@ class Search::OnName::WhereClauses
     end
   end
 
-  def xadd_clause(field,value)
-    case
-      when field.blank? && value.blank?
-        @sql
-      when field.blank?
-        @sql = @sql.lower_full_name_like(value.downcase)
-      when value.split(/,/).size > 1
-        case field
-        when /\Arank:\z/
-          @sql = @sql.where("name_rank_id in (select id from name_rank where lower(name) in (?))",value.split(',').collect {|v| v.strip})
-        end
-      when field.match(/\Acomments-by:\z/)
-        @sql = @sql.where("exists (select null from comment where comment.name_id = name.id and (lower(comment.created_by) like ? or lower(comment.updated_by) like ?))",
-                          value,value) when WHERE_INTEGER_VALUE_HASH.has_key?(field)
-        @sql = @sql.where(WHERE_INTEGER_VALUE_HASH[field],value.to_i)
-      when WHERE_VALUE_HASH.has_key?(field)
-        @sql = @sql.where(WHERE_VALUE_HASH[field],value)
-      else
-        raise 'No such field.' unless WHERE_VALUE_HASH.has_key?(field)
-    end
-  end
-
   def common_and_cultivar_included?
     @common_and_cultivar_included
   end
@@ -162,6 +140,7 @@ class Search::OnName::WhereClauses
   }
 
   WHERE_VALUE_HASH = { 
+    'name-exact:' => "lower(f_unaccent(full_name)) like f_unaccent(?) ",
     'rank:' => "name_rank_id in (select id from name_rank where lower(name) like ?)",
     'type:' => "name_type_id in (select id from name_type where lower(name) like ?)",
     'status:' => "name_status_id in (select id from name_status where lower(name) like ?)",

@@ -45,6 +45,7 @@ $('input[type=search]')
       $('#search-result-container').addClass('hidden');
       $('#example-search-container').addClass('hidden');
       $('#search-history-container').addClass('hidden');
+      $('#search-help-container').addClass('hidden');
       captureSearch(e,this);
     });
 
@@ -55,6 +56,7 @@ $('input[type=search]')
       $('#advanced-search-container').addClass('hidden');
       $('#example-search-container').addClass('hidden');
       $('#search-history-container').addClass('hidden');
+      $('#search-help-container').addClass('hidden');
     });
 
     $('ul#search-results-tabset li a#example-search-tab-container-link').on('click',function(e) {
@@ -65,6 +67,7 @@ $('input[type=search]')
       $('#advanced-search-container').addClass('hidden');
       $('#example-search-container').removeClass('hidden');
       $('#search-history-container').addClass('hidden');
+      $('#search-help-container').addClass('hidden');
     });
 
     $('ul#search-results-tabset li a#search-history-tab-container-link').on('click',function(e) {
@@ -75,6 +78,18 @@ $('input[type=search]')
       $('#advanced-search-container').addClass('hidden');
       $('#example-search-container').addClass('hidden');
       $('#search-history-container').removeClass('hidden');
+      $('#search-help-container').addClass('hidden');
+    });
+
+    $('ul#search-results-tabset li a#search-help-tab-container-link').on('click',function(e) {
+      $('ul#search-results-tabset li').removeClass('active');
+      $(this).parent('li').addClass('active');
+      $('#search-result-container').addClass('hidden');
+      $('#search-result-details').addClass('hidden');
+      $('#advanced-search-container').addClass('hidden');
+      $('#example-search-container').addClass('hidden');
+      $('#search-history-container').addClass('hidden');
+      $('#search-help-container').removeClass('hidden');
     });
 
     $('ul#advanced-search-tabset li a').on('click',function(e) {
@@ -157,33 +172,26 @@ $( "select#name-advanced-search-list-or-count" )
 
     document.getElementById("search-target-list").addEventListener("click",function(e) {
         if(e.target && e.target.nodeName == "A") {
-            //console.log('setting search-target-button');
+            console.log('setting search-target-button');
             document.getElementById('search-target-button-text').innerHTML = e.target.innerHTML;
             document.getElementById('query-target').value = e.target.innerHTML;
             //console.log($('#query-string-field').attr('list'));
             //console.log(e.target.dataset.list);
             //console.log(e.target);
             //document.getElementById('query-string-field').setAttribute('data-list',e.target.dataset.list);
-            //console.log(e.target.dataset.list);
+            console.log(e.target.dataset.help);
+            showHelp(e.target.dataset.help);
         }
     });
 
 
+    setActiveHelpOnLoad();
 });
 
 
-    $('a.example-search').on('click',function(e) {
-      //$('#query-string-field').val($(this).html().replace(/.*\|/,'').replace(/<[^>]*>/g,''));
-      //$('#query-string-field').val($(this).html().replace(/\|.*$/,'').replace(/<[^>]*>/g,'').trim());
-      $('#query-string-field').val($(this).html().replace(/<[^>]*>/g,'').trim());
-      console.log($(this).html());
-      console.log($(this).html());
-      console.log($(this).html());
-      console.log($(this).html());
-      console.log($(this).html());
-      throw('stop');
-      $('#query-target').val('name');
-      $('form#search-form').submit();
+    $('a.searchable-field').on('click',function(e) {
+      $('#query-string-field').val($('#query-string-field').val() + ' ' + $(this).html().replace(/<[^>]*>/g,'').trim());
+      $('#query-string-field').focus();
     });
 
 -->
@@ -191,6 +199,18 @@ $( "select#name-advanced-search-list-or-count" )
 
     <script>
 <!--
+
+    function showHelp(helpElement) {
+      $('.search-help').addClass('hidden');
+      $('#'+helpElement).removeClass('hidden');
+    }
+
+    function setActiveHelpOnLoad() {
+      $('.search-help').addClass('hidden');
+      var helpId = $('ul#search-target-list li a:contains(' +  $('#search-target-button-text').text().trim()  + ')').first().attr('data-help');
+      showHelp(helpId);
+    }
+
 
     function loadNameToString() {
       var str = '';

@@ -1,0 +1,62 @@
+  <h4>Searchable Instance fields</h4>
+  <h5>Name and Abbreviation</h5>
+<table class="table table-striped">
+  <tr><th>Field</th><th>Description</th></tr>
+  <% [
+      {field_name: '', description: "default instance search is on name, with leading and trailing wildcards automatically added to your search term"},
+      {field_name: 'name:', description: "name, with leading and trailing wildcards added automatically"},
+      {field_name: 'name-exact:', description: "full name, supply your own wildcards"}
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+      <a href="javascript:void(0)" class="searchable-field width-100-percent" >
+        <span class="blue"><%= val[:field_name] %></span>
+      </a>
+    </td>
+    <td><%= val[:description].html_safe %></td>
+    <% if val[:partial].present? %>
+      <td><%= render partial: val[:partial] %></td>
+    <% else %>
+      <td></td>
+    <% end %>
+  </tr>
+  <% end %>
+</table>
+  <h5>Coded fields</h5>
+<table class="table table-striped">
+  <tr><th>Field</th><th>Description</th></tr>
+  <% [
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+      <a href="javascript:void(0)" class="searchable-field width-100-percent" >
+        <span class="blue"><%= val[:field_name] %></span>
+      </a>
+    </td>
+    <td><%= val[:description].html_safe %></td>
+    <% if val[:partial].present? %>
+      <td><%= render partial: val[:partial] %></td>
+    <% else %>
+      <td></td>
+    <% end %>
+  </tr>
+  <% end %>
+</table>
+
+  <h5>Comments</h5>
+<table class="table table-striped">
+  <% [{field_name: 'comments:', description: "comment text, with leading and trailing wildcards added automatically"},
+      {field_name: 'comments-exact:', description: "comment text"},
+      {field_name: 'comments-by:', description: "user who commented"}
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent"><a href="javascript:void(0)" 
+                                    class="xexample-search width-100-percent" >
+        <span class="blue"><%= val[:field_name] %></span></a>
+    </td>
+    <td><%= val[:description].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+<br>
+

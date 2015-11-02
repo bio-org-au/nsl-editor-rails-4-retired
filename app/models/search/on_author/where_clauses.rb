@@ -43,7 +43,7 @@ class Search::OnAuthor::WhereClauses
     if field.blank? && value.blank?
       @sql
     elsif field.blank? 
-      @sql = @sql.lower_name_like(value.downcase)
+      @sql = @sql.lower_name_like("*#{value.downcase}*")
     else 
       # we have a field
       canonical_field = canon_field(field)
@@ -57,6 +57,8 @@ class Search::OnAuthor::WhereClauses
         end
       elsif WHERE_ASSERTION_HASH.has_key?(canonical_field)
         @sql = @sql.where(WHERE_ASSERTION_HASH[canonical_field])
+      elsif FIELD_NEEDS_WILDCARDS.has_key?(canonical_field)
+        @sql = @sql.where(FIELD_NEEDS_WILDCARDS[canonical_field],"%#{canonical_value}%")
       elsif WHERE_INTEGER_VALUE_HASH.has_key?(canonical_field)
         @sql = @sql.where(WHERE_INTEGER_VALUE_HASH[canonical_field],canonical_value.to_i)
       else
@@ -74,6 +76,8 @@ class Search::OnAuthor::WhereClauses
     if WHERE_INTEGER_VALUE_HASH.has_key?(field)
       field
     elsif WHERE_ASSERTION_HASH.has_key?(field)
+      field
+    elsif FIELD_NEEDS_WILDCARDS.has_key?(field)
       field
     elsif WHERE_VALUE_HASH.has_key?(field)
       field
@@ -96,10 +100,15 @@ class Search::OnAuthor::WhereClauses
     'is-not-a-duplicate:' => " duplicate_of_id is null"
   }
 
-  WHERE_VALUE_HASH = { 
+  FIELD_NEEDS_WILDCARDS = { 
     'name:' => "lower(name) like ?",
+    'abbrev:' => "lower(abbrev) like ?"
+  }
+
+  WHERE_VALUE_HASH = { 
+    'name-exact:' => "lower(name) like ?",
     'full-name:' => "lower(full_name) like ?",
-    'abbrev:' => "lower(abbrev) like ?",
+    'abbrev-exact:' => "lower(abbrev) like ?",
     'comments:' => " exists (select null from comment where comment.author_id = author.id and comment.text like ?) ",
     'comments-by:' => " exists (select null from comment where comment.author_id = author.id and comment.created_by like ?) ",
     'notes:' => " lower(notes) like ? ",
