@@ -9,7 +9,7 @@
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">
-      <a href="javascript:void(0)" class="searchable-field width-100-percent" >
+      <a href="javascript:void(0)" class="searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
         <span class="blue"><%= val[:field_name] %></span>
       </a>
     </td>
@@ -24,7 +24,7 @@
 </table>
   <h5>Coded fields</h5>
 <table class="table table-striped">
-  <tr><th>Field</th><th>Description</th></tr>
+  <tr><th>Field</th><th>Description</th><th>Values</th></tr>
   <% [
       {field_name: 'rank:', description: "name rank, allows comma-separated multiple values",partial: "name_ranks/list_for_search_help"},
       {field_name: 'status:', description: "name status, allows comma-separated multiple values",partial: "name_statuses/list_for_search_help"},
@@ -32,7 +32,7 @@
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">
-      <a href="javascript:void(0)" class="searchable-field width-100-percent" >
+      <a href="javascript:void(0)" class="searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
         <span class="blue"><%= val[:field_name] %></span>
       </a>
     </td>
@@ -46,7 +46,7 @@
   <% end %>
 </table>
 
-  <h5>Authorities<h5>
+  <h5>Authorities</h5>
 <table class="table table-striped">
   <tr><th>Field</th><th>Description</th></tr>
   <% [
@@ -58,7 +58,7 @@
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">
-        <a href="javascript:void(0)" class="searchable-field width-100-percent" >
+        <a href="javascript:void(0)" class="searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
           <span class="blue"><%= val[:field_name] %></span>
         </a>
     </td>
@@ -67,21 +67,5 @@
   <% end %>
 </table>
 <br>
-  
-  <h5>Comments</h5>
-<table class="table table-striped">
-  <% [{field_name: 'comments:', description: "comment text, with leading and trailing wildcards added automatically"},
-      {field_name: 'comments-exact:', description: "comment text"},
-      {field_name: 'comments-by:', description: "user who commented"}
-      ].each do |val| %>
-  <tr>
-    <td class="width-20-percent"><a href="javascript:void(0)" 
-                                    class="xexample-search width-100-percent" >
-        <span class="blue"><%= val[:field_name] %></span></a>
-    </td>
-    <td><%= val[:description].html_safe %></td>
-  </tr>
-  <% end %>
-</table>
-<br>
-
+<%= render partial: 'comments/advanced_search/help' %>
+<%= render partial: 'help/case_and_wildcards_search' %>

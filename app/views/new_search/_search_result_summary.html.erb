@@ -7,26 +7,60 @@
 <% elsif @search.empty %>
 <% else %>
     <% if @search.parsed_request.count %> 
-      <%= "#{pluralize(@search.executed_query.count,@search.parsed_request.target_table||'record')} | " %>
+      <%= "#{pluralize(@search.executed_query.count,@search.parsed_request.target_table||'record')}" %>
     <% else %>
       <% if @search.executed_query.count == 0 %>
+        <% records_found = false %>
         No records found. 
       <% else %>
+        <% records_found = true %>
         <% if @search.parsed_request.defined_query %>
-          <%= "#{pluralize(@search.executed_query.count,"record")} | " %>
+          <%= "#{pluralize(@search.executed_query.count,"record")}" %>
         <% else %>
           <% if @search.executed_query.results.size == @search.parsed_request.limit %>
             <% total = @search.executed_query.results.except(:offset,:limit,:order).count %>
-            <%= "#{pluralize(@search.executed_query.results.size,"of #{total} record")} | " %>
+            <%= "#{pluralize(@search.executed_query.results.size,"of #{total} record")}" %>
           <% else %>
             <% total = @search.executed_query.results.size %>
-            <%= "#{pluralize(@search.executed_query.results.size,"record")} | " %>
+            <%= "#{pluralize(@search.executed_query.results.size,"record")}" %>
           <% end %>
         <% end %>
       <% end %>
     <% end %>
 
+
+          &nbsp; | &nbsp;
+    <%= link_to(%Q(#{@search.parsed_request.query_target.capitalize} "#{@search.parsed_request.query_string}" ).html_safe, new_search_path(query_string: "#{@search.parsed_request.query_string}",query_target: "#{params[:query_target]}"), title: 'Rerun the query.') %>
+
+
+    <% if !@search.parsed_request.count && total.present? && total > @search.parsed_request.limit %>
+      <span id="search-results-limited-notice">
+        <% next_limit_max = (@search.executed_query.results.size + @search.page_increment_size) %>
+        <% if total <= next_limit_max %>
+          &nbsp; | &nbsp;
+          <%= link_to("All", new_search_path(query_string: "#{@search.parsed_request.query_string.sub(/limit: *\d+/i,'').sub(/$/,%Q(limit: #{total} ))}",query_target: "#{params[:query_target]}"), title: "List all.") %>
+        <% else %>
+          &nbsp; | &nbsp;
+          <%= link_to("List #{next_limit_max}", new_search_path(query_string: "#{@search.parsed_request.query_string.sub(/limit: *\d{1,}/,'').sub(/$/,%Q(limit: #{next_limit_max} ))}",query_target: "#{params[:query_target]}"), title: "List #{@search.page_increment_size} more.") %>
+        <% end %>
+        <% if @search.more_allowed %>
+          &nbsp; | &nbsp;
+          <%= link_to('List more', new_search_path(query_string: "#{@search.parsed_request.query_string_for_more}",query_target: "#{params[:query_target]}"), title: 'List more.') %>
+        <% end %>
+        <% if @search.parsed_request.count_allowed %>
+          &nbsp; | &nbsp;
+          <%= link_to('Count', new_search_path(query_string: "count #{@search.parsed_request.query_string.sub(/list */i,'')}",query_target: "#{params[:query_target]}")) %>
+        <% end %>
+      </span>
+    <% end %>
+    <% if @search.parsed_request.count && @search.executed_query.count > 0 %> 
+       &nbsp; | &nbsp;
+      <%= link_to('List', new_search_path(query_string: "#{@search.parsed_request.query_string.sub(/count */i,'')}",query_target: "#{params[:query_target]}")) %>
+    <% end %>
+
+
     <% if @search.parsed_request.query_target.match(/\Anames{1}\z/i) %>
+    &nbsp; | &nbsp;
       <% if @search.executed_query.common_and_cultivar_included %>
         <span id="includes-common-cultivar-notice"></span>
       <% else %>
@@ -34,28 +68,6 @@
       <% end %>
     <% end %>
 
-    <% if !@search.parsed_request.count && total.present? && total > @search.parsed_request.limit %>
-      <span id="search-results-limited-notice">
-        <% next_limit_max = (@search.executed_query.results.size + @search.page_increment_size) %>
-        <% if total <= next_limit_max %>
-          <%= link_to("All", new_search_path(query_string: "#{@search.parsed_request.query_string.sub(/limit: *\d+/i,'').sub(/$/,%Q(limit: #{total} ))}",query_target: "#{params[:query_target]}"), title: "List all.") %>
-        <% else %>
-          <%= link_to("List #{next_limit_max}", new_search_path(query_string: "#{@search.parsed_request.query_string.sub(/limit: *\d{1,}/,'').sub(/$/,%Q(limit: #{next_limit_max} ))}",query_target: "#{params[:query_target]}"), title: "List #{@search.page_increment_size} more.") %>
-        <% end %>
-        <% if @search.more_allowed %>
-          <%= link_to('List more', new_search_path(query_string: "#{@search.parsed_request.query_string_for_more}",query_target: "#{params[:query_target]}"), title: 'List more.') %>
-        <% end %>
-        <% if @search.parsed_request.count_allowed %>
-          <%= link_to('Count', new_search_path(query_string: "count #{@search.parsed_request.query_string.sub(/list */i,'')}",query_target: "#{params[:query_target]}")) %>
-        <% end %>
-      </span>
-    <% end %>
-    <% if @search.parsed_request.count && @search.executed_query.count > 0 %> 
-      <%= link_to('List', new_search_path(query_string: "#{@search.parsed_request.query_string.sub(/count */i,'')}",query_target: "#{params[:query_target]}")) %>
-    <% end %>
-    <%= link_to(%Q(#{@search.parsed_request.query_target} "#{@search.parsed_request.query_string}" ).html_safe, new_search_path(query_string: "#{@search.parsed_request.query_string}",query_target: "#{params[:query_target]}"), title: 'Rerun the query.') %>
-<% end %>
-
-<% if @search.parsed_request.defined_query %>
-  &nbsp;| [Defined query.]
-<% end %>
+<%# if @search.parsed_request.defined_query %>
+<%# end %>
+ <% end %>

@@ -102,16 +102,19 @@ class Search::OnAuthor::WhereClauses
 
   FIELD_NEEDS_WILDCARDS = { 
     'name:' => "lower(name) like ?",
-    'abbrev:' => "lower(abbrev) like ?"
+    'abbrev:' => "lower(abbrev) like ?",
+    'notes:' => " lower(notes) like ? ",
+    'comments:' => " exists (select null from comment where comment.author_id = author.id and comment.text like ?) ",
+    'full-name:' => "lower(full_name) like ?"
   }
 
   WHERE_VALUE_HASH = { 
     'name-exact:' => "lower(name) like ?",
-    'full-name:' => "lower(full_name) like ?",
     'abbrev-exact:' => "lower(abbrev) like ?",
-    'comments:' => " exists (select null from comment where comment.author_id = author.id and comment.text like ?) ",
+    'full-name-exact:' => "lower(full_name) like ?",
+    'comments-exact:' => " exists (select null from comment where comment.author_id = author.id and comment.text like ?) ",
     'comments-by:' => " exists (select null from comment where comment.author_id = author.id and comment.created_by like ?) ",
-    'notes:' => " lower(notes) like ? ",
+    'notes-exact:' => " lower(notes) like ? ",
     'ipni-id:' => "lower(ipni_id) like ?",
   }
 

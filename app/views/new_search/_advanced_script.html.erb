@@ -167,10 +167,7 @@ $( "select#name-advanced-search-list-or-count" )
 
   });
 
-
-    //document.getElementById('query-target').value = document.getElementById('search-target-button-text').innerHTML;
-
-    document.getElementById("search-target-list").addEventListener("click",function(e) {
+    $("#search-target-list").on("click",function(e) {
         if(e.target && e.target.nodeName == "A") {
             console.log('setting search-target-button');
             document.getElementById('search-target-button-text').innerHTML = e.target.innerHTML;

@@ -62,9 +62,13 @@ class Search::OnReference::WhereClauses
       elsif WHERE_INTEGER_VALUE_HASH_TWICE.has_key?(canonical_field)
         @sql = @sql.where(WHERE_INTEGER_VALUE_HASH_TWICE[canonical_field],canonical_value.to_i,canonical_value.to_i)
       elsif WHERE_INTEGER_VALUE_HASH.has_key?(canonical_field)
-        @sql = @sql.where(WHERE_INTEGER_VALUE_HASH[canonical_field],canonical_value.to_i)
+        @sql = @sql.where(WHERE_INTEGER_VALUE_HASH[canonical_field],canonical_value.to_i||0)
       elsif WHERE_ASSERTION_HASH.has_key?(canonical_field)
         @sql = @sql.where(WHERE_ASSERTION_HASH[canonical_field])
+      elsif FIELD_NEEDS_TRAILING_WILDCARD.has_key?(canonical_field)
+        @sql = @sql.where(FIELD_NEEDS_TRAILING_WILDCARD[canonical_field],"#{canonical_value}%")
+      elsif FIELD_NEEDS_WILDCARDS.has_key?(canonical_field)
+        @sql = @sql.where(FIELD_NEEDS_WILDCARDS[canonical_field],"%#{canonical_value}%")
       else
         raise "No way to handle field: '#{canonical_field}' in a reference search." unless WHERE_VALUE_HASH.has_key?(canonical_field)
         @sql = @sql.where(WHERE_VALUE_HASH[canonical_field],canonical_value)
@@ -85,6 +89,10 @@ class Search::OnReference::WhereClauses
       field
     elsif WHERE_VALUE_HASH.has_key?(field)
       field
+    elsif FIELD_NEEDS_TRAILING_WILDCARD.has_key?(field)
+      field
+    elsif FIELD_NEEDS_WILDCARDS.has_key?(field)
+      field
     elsif CANONICAL_FIELD_NAMES.has_value?(field)
       field
     elsif CANONICAL_FIELD_NAMES.has_key?(field)
@@ -96,11 +104,24 @@ class Search::OnReference::WhereClauses
 
   WHERE_INTEGER_VALUE_HASH = { 
     'id:' => "id = ? ",
-    'author-id:' => "author_id = ? "
+    'author-id:' => "author_id = ? ",
+    'year:' => "year = ? ",
+    'year>:' => "year > ? ",
+    'year<:' => "year < ? ",
   }
 
   WHERE_INTEGER_VALUE_HASH_TWICE = { 
     'parent-id:' => "id = ? or parent_id = ?"
+  }
+  
+  FIELD_NEEDS_TRAILING_WILDCARD = { 
+    'citation:' => " lower(citation) like ? ",
+    'title:' => " lower(title) like ? ",
+  }
+
+  FIELD_NEEDS_WILDCARDS = { 
+    'notes:' => " lower(notes) like ? ",
+    'comments:' => " exists (select null from comment where comment.author_id = author.id and comment.text like ?) ",
   }
 
   WHERE_ASSERTION_HASH = { 
@@ -113,15 +134,29 @@ class Search::OnReference::WhereClauses
     'has-no-parent:' => " parent_id is null",
     'is-a-child:' => " parent_id is not null",
     'is-not-a-child:' => " parent_id is null",
+    'is-published:' => " published",
+    'is-not-published:' => " not published",
   }
 
   WHERE_VALUE_HASH = { 
     'author:' => "author_id in (select id from author where lower(name) like ?)",
-    'citation:' => "lower(citation) like ?",
+    'citation-exact:' => "lower(citation) like ?",
     'comments:' => " exists (select null from comment where comment.reference_id = reference.id and comment.text like ?) ",
     'comments-by:' => " exists (select null from comment where comment.reference_id = reference.id and comment.created_by like ?) ",
+    'edition:' => "lower(edition) like ?",
+    'notes-exact:' => "lower(notes) like ?",
+    'publication_date:' => "lower(publication_date) like ?",
     'type:' => "ref_type_id in (select id from ref_type where lower(name) like ?)",
-    'title:' => "lower(title) like ?"
+    'author_role:' => "ref_author_role_id in (select id from ref_author_role where lower(name) like ?)",
+    'title-exact:' => "lower(title) like ?",
+    'isbn:' => "lower(isbn) like ?",
+    'issn:' => "lower(issn) like ?",
+    'published_location:' => "lower(published_location) like ?",
+    'publisher:' => "lower(publisher) like ?",
+    'volume:' => "lower(volume) like ?",
+    'bhl:' => "lower(bhl_url) like ?",
+    'doi:' => "lower(doi) like ?",
+    'tl2:' => "lower(tl2) like ?",
   }
 
   CANONICAL_FIELD_NAMES = {

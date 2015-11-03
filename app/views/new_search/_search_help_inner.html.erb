@@ -11,8 +11,14 @@
   <div id="instance-search-help" class="search-help hidden">
     <%= render partial: 'instances/advanced_search/help' %>
   </div>
+  <div id="instances-for-name-id-search-help" class="search-help hidden">
+    <%= render partial: 'instances/advanced_search/for_name_id_help' %>
+  </div>
+  <div id="instances-for-ref-id-search-help" class="search-help hidden">
+    <%= render partial: 'instances/advanced_search/for_ref_id_help' %>
+  </div>
   <div id="tree-search-help" class="search-help hidden">
-    Tree search mainly supports links from name details, however it does allow for name id to be supplied as an argument.
+    <%= render partial: 'trees/advanced_search/help' %>
   </div>
   <div id="review-search-help" class="search-help hidden">
     <%= render partial: 'audits/advanced_search/help' %>
