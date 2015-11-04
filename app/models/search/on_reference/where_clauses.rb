@@ -44,7 +44,7 @@ class Search::OnReference::WhereClauses
     if field.blank? && value.blank?
       @sql
     elsif field.blank?
-      @sql = @sql.lower_citation_like("*#{value.downcase}*")
+      @sql = @sql.lower_citation_like("*#{value.downcase.gsub(/ /,'*')}*")
     else 
       # we have a field
       canonical_field = canon_field(field)
@@ -68,7 +68,7 @@ class Search::OnReference::WhereClauses
       elsif FIELD_NEEDS_TRAILING_WILDCARD.has_key?(canonical_field)
         @sql = @sql.where(FIELD_NEEDS_TRAILING_WILDCARD[canonical_field],"#{canonical_value}%")
       elsif FIELD_NEEDS_WILDCARDS.has_key?(canonical_field)
-        @sql = @sql.where(FIELD_NEEDS_WILDCARDS[canonical_field],"%#{canonical_value}%")
+        @sql = @sql.where(FIELD_NEEDS_WILDCARDS[canonical_field],"#{canonical_value.gsub(/ /,'%')}%")
       else
         raise "No way to handle field: '#{canonical_field}' in a reference search." unless WHERE_VALUE_HASH.has_key?(canonical_field)
         @sql = @sql.where(WHERE_VALUE_HASH[canonical_field],canonical_value)
