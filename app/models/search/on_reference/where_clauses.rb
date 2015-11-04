@@ -44,7 +44,7 @@ class Search::OnReference::WhereClauses
     if field.blank? && value.blank?
       @sql
     elsif field.blank?
-      @sql = @sql.lower_citation_like(value.downcase)
+      @sql = @sql.lower_citation_like("*#{value.downcase}*")
     else 
       # we have a field
       canonical_field = canon_field(field)
@@ -115,12 +115,12 @@ class Search::OnReference::WhereClauses
   }
   
   FIELD_NEEDS_TRAILING_WILDCARD = { 
-    'citation:' => " lower(citation) like ? ",
     'title:' => " lower(title) like ? ",
   }
 
   FIELD_NEEDS_WILDCARDS = { 
     'author:' => "author_id in (select id from author where lower(name) like ?)",
+    'citation:' => " lower(citation) like ? ",
     'notes:' => " lower(notes) like ? ",
     'comments:' => " exists (select null from comment where comment.author_id = author.id and comment.text like ?) ",
   }
