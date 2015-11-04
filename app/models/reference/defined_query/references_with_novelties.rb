@@ -14,7 +14,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #   
-class Reference::DefinedQuery::ReferencesAcceptedNames 
+class Reference::DefinedQuery::ReferencesWithNovelties 
 
   attr_reader :results, :limited, :common_and_cultivar_included, :has_relation, :relation, :count
 
@@ -23,7 +23,7 @@ class Reference::DefinedQuery::ReferencesAcceptedNames
   end
 
   def debug(s)
-    tag = "Reference::DefinedQuery::ReferencesAcceptedNames"
+    tag = "Reference::DefinedQuery::ReferencesWithNovelties"
     Rails.logger.debug("#{tag}: #{s}")
   end
  
@@ -39,7 +39,7 @@ class Reference::DefinedQuery::ReferencesAcceptedNames
       query = Search::OnReference::Base.new(parsed_request.as_a_list_request)
       results = []
       query.results.each  do | ref |
-        results.concat(list_accepted_names(ref,100000))
+        results.concat(list_novelties(ref,100000))
       end
       @count = results.size
       @limited = false
@@ -51,7 +51,7 @@ class Reference::DefinedQuery::ReferencesAcceptedNames
       results = []
       @limited = false
       query.results.each  do | ref |
-        results.concat(list_accepted_names(ref,parsed_request.limit))
+        results.concat(list_novelties(ref,parsed_request.limit))
         if results.size >= parsed_request.limit
           @limited = true
           break
@@ -66,14 +66,16 @@ class Reference::DefinedQuery::ReferencesAcceptedNames
     end
   end
 
-  def list_accepted_names(reference, limit = 100, order_by = 'name')
-    debug("list_accepted_names: reference.id: #{reference.id}; limit: #{limit}; order by: #{order_by}")
+  def list_novelties(reference, limit = 100, order_by = 'name')
+    debug("list_novelties: reference.id: #{reference.id}; limit: #{limit}; order by: #{order_by}")
     results = []
     reference.display_as_part_of_concept
     count = 1 
     query = reference.instances.joins(:name).includes({name: :name_status}).joins(:instance_type).where(instance_type: {primary_instance: true}) 
     query = order_by == 'page' ? query.ordered_by_page : query.ordered_by_name
+    novelties_count = 0
     query.each do |instance|
+      novelties_count += 1
       instance.display_within_reference
       count += 1
       if count > limit
@@ -81,9 +83,9 @@ class Reference::DefinedQuery::ReferencesAcceptedNames
         break
       end
       results.push(instance)
-
     end
-    results.unshift(reference)
+    results.unshift(reference) if novelties_count > 0
+    results
   end
 
 end

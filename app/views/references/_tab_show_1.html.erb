@@ -71,6 +71,11 @@
                           title: 'Search for the instances, sorted by page.') %>
    <% end %>
 <% end %>
+  <br>
+  <%#= link_to("Taxa described/primary instances #{search_icon_on_tab}".html_safe,
+                        new_search_path(query_target: "References, accepted Names for ID", query_string: "#{@reference.id}"), 
+                        tabindex: increment_tab_index, 
+                        title: 'Search for the instance.') %>
 
 <% unless @reference.doi.blank? %>
   <%= link_to('DOI',@reference.doi) %>
