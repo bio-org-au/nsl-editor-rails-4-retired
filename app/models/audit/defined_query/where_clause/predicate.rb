@@ -116,15 +116,19 @@ class Audit::DefinedQuery::WhereClause::Predicate
     'updated-since:' => "updated_at::date >= ?",
     'created-after:' => "created_at::date >= ?",
     'updated-after:' => "updated_at::date >= ?",
+    'created-before:' => "created_at::date < ?",
+    'updated-before:' => "updated_at::date < ?",
   }
 
   WHERE_VALUE_HASH_2_VALUES = { 
     'created-or-updated-by:' => "(lower(created_by) like ? or lower(updated_by) like ?)",
-    'created-or-updated-at:' => "(created_at::date = ? or updated_at = ?)"
+    'created-or-updated-at:' => "(created_at::date = ? or updated_at = ?)",
+    'not-created-or-updated-by:' => "(lower(created_by) not like ? and lower(updated_by) not like ?)",
   }
 
   CANONICAL_FIELD_NAMES = {
-    'by:' => 'created-or-updated-by:'
+    'by:' => 'created-or-updated-by:',
+    'not-by:' => 'not-created-or-updated-by:',
   }
 
   ALLOWS_MULTIPLE_VALUES = {

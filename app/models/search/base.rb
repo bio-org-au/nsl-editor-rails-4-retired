@@ -141,6 +141,9 @@ class Search::Base
     when /\Aaudit\z/
       debug("\nrun_defined_query audit\n")
       @executed_query = Audit::DefinedQuery::Base.new(@parsed_request)
+    when /references-accepted-names/
+      debug("\nrun_defined_query references-accepted-names\n")
+      @executed_query = Reference::DefinedQuery::ReferencesAcceptedNames.new(@parsed_request)
     else
       raise "Run Defined Query has no match for #{@parsed_request.defined_query}"
     end

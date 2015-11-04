@@ -16,6 +16,7 @@
 #   
 class InstanceNoteKey < ActiveRecord::Base
   self.table_name = 'instance_note_key'
+  self.primary_key = 'id'
   has_many :instance_notes
   
   def self.options

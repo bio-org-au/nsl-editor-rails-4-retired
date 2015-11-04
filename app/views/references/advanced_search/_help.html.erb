@@ -48,7 +48,8 @@
 <h5>Authors</h5>
 <table class="table table-striped">
   <% [
-      {field_name: 'author:', description: "author name(s)"},
+      {field_name: 'author:', description: "author name(s), leading and trailing wildcards added automatically"},
+      {field_name: 'author-exact:', description: "author name(s)"},
       {field_name: 'author_role:', description: "author role",partial: "ref_author_roles/list_for_search_help"}
       ].each do |val| %>
   <tr>
@@ -73,14 +74,14 @@
     {field_name: 'isbn:', description: "ISBN"},
     {field_name: 'issn:', description: "ISSN"},
     {field_name: 'publication_date:', description: "publication date"},
-    {field_name: 'is-published:', description: "published"},
-    {field_name: 'is-not-published:', description: "not published"},
+    {field_name: 'is-published:', description: "published (also listed as an assertion)"},
+    {field_name: 'is-not-published:', description: "not published (also listed as an assertion)"},
     {field_name: 'published_location:', description: "published location"},
     {field_name: 'publisher:', description: "publisher"},
     {field_name: 'volume:', description: "volume"},
     {field_name: 'year:', description: "year - 4 digit integer field, do not use wildcards"},
-    {field_name: 'year>:', description: "year greater than or after an integer"},
-    {field_name: 'year<:', description: "year less than or before an integer"},
+    {field_name: 'after-year:', description: "year greater than or after an integer"},
+    {field_name: 'before-year:', description: "year less than or before an integer"},
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">

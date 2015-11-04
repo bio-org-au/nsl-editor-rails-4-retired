@@ -54,6 +54,8 @@ class Search::ParsedRequest
     'instances for ref id sort by page' => 'instances-for-ref-id-sort-by-page:',
     'instances sorted by page for ref id' => 'instances-for-ref-id-sort-by-page:',
     'references with instances' => 'instances-for-references',
+    'references, names, full synonymy' => 'instances-for-references',
+    'references, accepted names' => 'references-accepted-names',
     'references + instances' => 'instances-for-references',
     'instance is cited' => 'instance-is-cited',
     'instance is cited by' => 'instance-is-cited-by',
@@ -88,7 +90,13 @@ class Search::ParsedRequest
   end
 
   def inspect
-    "Parsed Query: defined_query: #{@defined_query}; where_arguments: #{@where_arguments}, defined_query_args: #{@defined_query_args}"
+    "Parsed Request: count: #{@count}; list: #{@list}; defined_query: #{@defined_query}; where_arguments: #{@where_arguments}, defined_query_args: #{@defined_query_args}"
+  end
+
+  def as_a_list_request
+    @count = false
+    @list = true
+    self
   end
 
   def parse_request
@@ -119,26 +127,6 @@ class Search::ParsedRequest
     else
       debug("parse_query_target - '#{query_target_downcase}' is NOT recognized as a defined query.")
       @defined_query = false
-    end
-    tokens
-  end
-
-  def xparse_defined_query(tokens)
-    debug("parse_defined_query start: tokens: #{tokens.join(',')}")
-    if DEFINED_QUERIES.has_key?("#{@target_table}-#{tokens.first}")
-      @defined_query = DEFINED_QUERIES["#{@target_table}-#{tokens.first}"]
-      @defined_query_arg = tokens.drop(1).join(' ')
-      tokens = []
-    elsif DEFINED_QUERIES.has_key?("#{@target_table}-#{@params[:defined_query]}")
-      @defined_query = DEFINED_QUERIES["#{@target_table}-#{@params[:defined_query]}"]
-      @defined_query_arg = tokens.join(' ')
-      tokens = []
-    elsif DEFINED_QUERIES.has_key?(tokens.first)
-      @defined_query = DEFINED_QUERIES[tokens.first]
-      @defined_query_arg = tokens.drop(1).join(' ')
-      tokens = []
-    else
-      @defined_query = false  
     end
     tokens
   end

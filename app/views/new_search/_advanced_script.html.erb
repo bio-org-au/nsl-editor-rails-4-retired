@@ -205,6 +205,8 @@ $( "select#name-advanced-search-list-or-count" )
     function setActiveHelpOnLoad() {
       $('.search-help').addClass('hidden');
       var helpId = $('ul#search-target-list li a:contains(' +  $('#search-target-button-text').text().trim()  + ')').first().attr('data-help');
+      console.log("search-target-button-text: " + $('#search-target-button-text').text().trim());
+      console.log("setActiveHelpOnLoad helpId: " + helpId);
       showHelp(helpId);
     }
 

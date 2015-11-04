@@ -106,8 +106,8 @@ class Search::OnReference::WhereClauses
     'id:' => "id = ? ",
     'author-id:' => "author_id = ? ",
     'year:' => "year = ? ",
-    'year>:' => "year > ? ",
-    'year<:' => "year < ? ",
+    'after-year:' => "year > ? ",
+    'before-year:' => "year < ? ",
   }
 
   WHERE_INTEGER_VALUE_HASH_TWICE = { 
@@ -120,6 +120,7 @@ class Search::OnReference::WhereClauses
   }
 
   FIELD_NEEDS_WILDCARDS = { 
+    'author:' => "author_id in (select id from author where lower(name) like ?)",
     'notes:' => " lower(notes) like ? ",
     'comments:' => " exists (select null from comment where comment.author_id = author.id and comment.text like ?) ",
   }
@@ -139,7 +140,7 @@ class Search::OnReference::WhereClauses
   }
 
   WHERE_VALUE_HASH = { 
-    'author:' => "author_id in (select id from author where lower(name) like ?)",
+    'author-exact:' => "author_id in (select id from author where lower(name) like ?)",
     'citation-exact:' => "lower(citation) like ?",
     'comments:' => " exists (select null from comment where comment.reference_id = reference.id and comment.text like ?) ",
     'comments-by:' => " exists (select null from comment where comment.reference_id = reference.id and comment.created_by like ?) ",
@@ -166,7 +167,11 @@ class Search::OnReference::WhereClauses
     'ty:' => 'type:',
     'ref-type:' => 'type:',
     'rt:' => 'type:',
-    'a:' => 'author:'
+    'a:' => 'author:',
+    'y:' => 'year:',
+    'ay:' => 'after-year:',
+    'by:' => 'before-year:',
+    'pd:' => 'publication_date:',
   }
 
   ALLOWS_MULTIPLE_VALUES = {
