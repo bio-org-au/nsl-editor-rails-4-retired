@@ -178,6 +178,7 @@ $( "select#name-advanced-search-list-or-count" )
             //document.getElementById('query-string-field').setAttribute('data-list',e.target.dataset.list);
             console.log(e.target.dataset.help);
             showHelp(e.target.dataset.help);
+            showExamples(e.target.dataset.examples);
         }
     });
 
@@ -210,6 +211,11 @@ $( "select#name-advanced-search-list-or-count" )
       showHelp(helpId);
     }
 
+    function showExamples(examplesElement) {
+      console.log('showExamples for ' + examplesElement);
+      $('.search-examples').addClass('hidden');
+      $('#'+examplesElement).removeClass('hidden');
+    }
 
     function loadNameToString() {
       var str = '';

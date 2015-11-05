@@ -65,6 +65,7 @@ class Reference < ActiveRecord::Base
 
   has_many :instances, foreign_key: 'reference_id'
   has_many :name_instances, -> { where 'cited_by_id is not null' }, class_name: 'Instance', foreign_key: 'reference_id'
+  has_many :novelties, -> { where 'instance.instance_type_id in (select id from instance_type where primary_instance)' }, class_name: 'Instance', foreign_key: 'reference_id'
   has_many :comments
 
   validates :published, inclusion: { in: [true, false] }

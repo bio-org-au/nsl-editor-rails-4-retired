@@ -6,6 +6,7 @@ window.loadAuthorToString = (fields) ->
   assertions = getAssertions()
   $('#query-string-field').val("#{listCount}#{fields}#{assertions}")
   $('#query-target').val("Authors")
+  $('#search-target-button-text').text("Authors")
 
 fieldMap =
   'author-advanced-search-name' : ''

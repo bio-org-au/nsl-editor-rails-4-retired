@@ -25,31 +25,81 @@
             <%= @search.parsed_request.target_button_text || 'no target button text' %>
 
           </span>
+          &nbsp;
+        <span class="caret"></span></button>
 
-          &nbsp;<span class="caret"></span></button>
         <ul id="search-target-list" class="dropdown-menu">
-          <li><a id="search-target-item-names" href="#" data-help="name-search-help" data-list="namedatalist">Names</a></li>
+          <li><a id="search-target-item-names" 
+                 href="#" 
+                 title="Search names" 
+                 data-help="name-search-help" 
+                 data-examples="name-search-examples"
+              >Names</a></li>
           <li><a id="search-target-item-name-with-instances" 
                  href="#" 
-                 title="Query on names, also retrieve instances" 
-                 data-help="name-search-help" 
-                 data-list="namedatalist">Names + instances</a>
+                 title="Search names, also retrieve instances" 
+                 data-help="name-plus-instances-search-help" 
+                 data-examples="name-plus-instances-search-examples"
+              >Names plus instances</a>
           </li>
+
           <li role="separator" class="divider"></li>
-          <li><a id="search-target-item-references" href="#" data-help="reference-search-help">References</a></li>
-          <li><a id="search-target-item-reference-accepted-names" href="#" data-help="references-accepted-names-search-help">References with novelties</a></li>
-          <li><a id="search-target-item-instances-for-reference" href="#" data-help="reference-search-help">References, names, full synonymy</a></li>
+
+          <li><a id="search-target-item-references" 
+                 href="#" 
+                 data-help="reference-search-help"
+                 data-examples="reference-search-examples"
+                 >References</a></li>
+
+          <li><a id="search-target-item-reference-accepted-names" 
+                 href="#" 
+                 data-help="references-accepted-names-search-help"
+                 data-examples="references-accepted-names-search-examples"
+              >References with novelties</a></li>
+          <li><a id="search-target-item-instances-for-reference" 
+                 href="#" 
+                 data-help="references-names-full-synonymy-search-help"
+                 data-examples="references-names-full-synonymy-search-examples"
+              >References, names, full synonymy</a></li>
           <li role="separator" class="divider"></li>
-          <li><a id="search-target-item-authors" href="#" data-help="author-search-help" data-list="authordatalist">Authors</a></li>
-          <li><a id="search-target-item-instances" href="#" data-help="instance-search-help">Instances</a></li>
+          <li><a id="search-target-item-authors" 
+                     href="#" 
+                     data-help="author-search-help" 
+                     data-examples="author-search-examples" 
+                  >Authors</a></li>
+          <li><a id="search-target-item-instances" 
+                     href="#" 
+                     data-help="instance-search-help"
+                     data-examples="instance-search-examples"
+                  >Instances</a></li>
           <li role="separator" class="divider"></li>
-          <li><a id="search-target-item-tree" href="#" data-help="tree-search-help">Tree</a></li>
+          <li><a id="search-target-item-tree" 
+                     href="#" 
+                     data-help="tree-search-help"
+                     data-examples="tree-search-examples"
+                  >Tree</a></li>
           <li role="separator" class="divider"></li>
-          <li><a id="search-target-item-instances-for-name-id" href="#" data-help="instances-for-name-id-search-help">Instances for Name ID</a></li>
-          <li><a id="search-target-item-instances-for-ref-id" href="#" data-help="instances-for-ref-id-search-help">Instances for Ref ID</a></li>
-          <li><a id="search-target-item-instances-sorted-by-page-for-ref-id" href="#" data-help="instances-for-ref-id-search-help">Instances sorted by page for Ref ID</a></li>
+          <li><a id="search-target-item-instances-for-name-id" 
+                     href="#" 
+                     data-help="instances-for-name-id-search-help"
+                     data-examples="instances-for-name-id-search-examples"
+                  >Instances for Name ID</a></li>
+          <li><a id="search-target-item-instances-for-ref-id" 
+                     href="#" 
+                     data-help="instances-for-ref-id-search-help"
+                     data-examples="instances-for-ref-id-search-examples"
+                  >Instances for Ref ID</a></li>
+          <li><a id="search-target-item-instances-sorted-by-page-for-ref-id" 
+                     href="#" 
+                     data-help="instances-for-ref-id-search-help"
+                     data-help="instances-for-ref-id-search-examples"
+                  >Instances sorted by page for Ref ID</a></li>
           <li role="separator" class="divider"></li>
-          <li><a id="search-target-audit" href="#" data-help="review-search-help">Review</a></li> 
+          <li><a id="search-target-audit" 
+                     href="#" 
+                     data-help="review-search-help"
+                     data-examples="review-search-examples"
+                  >Review</a></li> 
         </ul>
       </div><!-- /btn-group -->
       <input id="query-string-field" 

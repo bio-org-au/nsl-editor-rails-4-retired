@@ -47,19 +47,17 @@ class Search::OnInstance::WhereClauses
     elsif field.blank? || field.match(/\Aname:\z/)
       # default field
       canonical_value = value.blank? ? '' : canon_value(value)
-      @sql = @sql.where([' exists (select null from name where name.id = instance.name_id and lower(full_name) like ?)',canonical_value])
+      @sql = @sql.where([' exists (select null from name where name.id = instance.name_id and lower(full_name) like ?)',"%#{canonical_value.gsub(/ /,'%')}%"])
     else 
       # we have a field
       canonical_field = canon_field(field)
       canonical_value = value.blank? ? '' : canon_value(value)
       if ALLOWS_MULTIPLE_VALUES.has_key?(canonical_field) && canonical_value.split(/,/).size > 1
         case canonical_field
-        when /\Aname-rank:\z/
-          @sql = @sql.where("name_rank_id in (select id from name_rank where lower(name) in (?))",canonical_value.split(',').collect {|v| v.strip})
-        when /\Aname-type:\z/
-          @sql = @sql.where("name_type_id in (select id from name_type where lower(name) in (?))",canonical_value.split(',').collect {|v| v.strip})
-        when /\Aname-status:\z/
-          @sql = @sql.where("name_status_id in (select id from name_status where lower(name) in (?))",canonical_value.split(',').collect {|v| v.strip})
+        when /\Aid:\z/
+          @sql = @sql.where("id in (?)",canonical_value.split(',').collect {|v| v.strip})
+        when /\Aids:\z/
+          @sql = @sql.where("id in (?)",canonical_value.split(',').collect {|v| v.strip})
         else
           raise "The field '#{field}' currently cannot handle multiple values separated by commas." 
         end
@@ -85,6 +83,8 @@ class Search::OnInstance::WhereClauses
       field
     elsif WHERE_ASSERTION_HASH.has_key?(field)
       field
+    elsif ALLOWS_MULTIPLE_VALUES.has_key?(field)
+      field
     elsif WHERE_VALUE_HASH.has_key?(field)
       field
     elsif CANONICAL_FIELD_NAMES.has_value?(field)
@@ -101,8 +101,7 @@ class Search::OnInstance::WhereClauses
   }
 
   WHERE_VALUE_HASH = { 
-    'name:' => "lower(name) like ?)",
-    'abbrev:' => "lower(abbrev) like ?)",
+    'name:' => "lower(name) like ?",
     'type:' => " exists (select null from instance_type where instance_type_id = instance_type.id and instance_type.name like ?) ",
     'comments:' => " exists (select null from comment where comment.instance_id = instance.id and comment.text like ?) ",
     'comments-by:' => " exists (select null from comment where comment.instance_id = instance.id and comment.created_by like ?) ",
@@ -110,7 +109,12 @@ class Search::OnInstance::WhereClauses
     'page-qualifier:' => " lower(page_qualifier) like ?",
     'note-key:' => " exists (select null from instance_note where instance_id = instance.id and exists (select null from instance_note_key where instance_note_key_id = instance_note_key.id and lower(instance_note_key.name) like ?)) ",
     'notes:' => " exists (select null from instance_note where instance_id = instance.id and lower(instance_note.value) like ?) ",
+    'verbatim-name:' => "lower(verbatim_name_string) like ?",
   }
+
+  #FIELD_NEEDS_WILDCARDS = { 
+  #  'name:' => "author_id in (select id from author where lower(name) like ?)",
+  #}
 
   CANONICAL_FIELD_NAMES = {
     'n:' => 'name:',
@@ -125,7 +129,8 @@ class Search::OnInstance::WhereClauses
   }
 
   ALLOWS_MULTIPLE_VALUES = {
-    'ids:' => true
+    'ids:' => " id in (?)",
+    'id:' => " id in (?)",
   }
 
   WHERE_ASSERTION_HASH = { 

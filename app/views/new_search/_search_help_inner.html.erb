@@ -5,6 +5,9 @@
   <div id="name-search-help" class="search-help">
     <%= render partial: 'names/advanced_search/help' %>
   </div>
+  <div id="name-plus-instances-search-help" class="search-help">
+    <%= render partial: 'names/advanced_search/plus_instances_help' %>
+  </div>
   <div id="author-search-help" class="search-help hidden">
     <%= render partial: 'authors/advanced_search/help' %>
   </div>
@@ -24,7 +27,10 @@
     <%= render partial: 'audits/advanced_search/help' %>
   </div>
   <div id="references-accepted-names-search-help" class="search-help hidden">
-    <%= render partial: 'references/advanced_search/accepted_names_help' %>
+    <%= render partial: 'references/advanced_search/with_novelties_help' %>
+  </div>
+  <div id="references-names-full-synonymy-search-help" class="search-help hidden">
+    <%= render partial: 'references/advanced_search/names_full_synonymy_help' %>
   </div>
 
 </div>

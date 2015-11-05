@@ -20,7 +20,7 @@
 <% session[:searches].reverse.try('each') do |search| %>
   <tr>
     <td>
-      <%= link_to("#{search['query_target']} #{search['query_string']}", new_search_path(query_string: search["query_string"],query_target: search["query_target"]), class: 'blue', title: 'Recent query') %>
+      <%= link_to("#{search['query_target']}: #{search['query_string']}", new_search_path(query_string: search["query_string"],query_target: search["query_target"]), class: 'blue', title: 'Recent query') %>
     </td>
     <td>
       <% if search["error"] == true %>

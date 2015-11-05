@@ -24,8 +24,12 @@ class Search::OnAuthor::WhereClauses
     build_sql
   end
 
+  def debug(s)
+    Rails.logger.debug("Search::OnAuthor::WhereClause - #{s}")
+  end
+
   def build_sql
-    Rails.logger.debug("Search::OnAuthor::WhereClause.sql")
+    debug("Search::OnAuthor::WhereClause.sql")
     remaining_string = @parsed_request.where_arguments.downcase 
     @common_and_cultivar_included = @parsed_request.common_and_cultivar
     @sql = @sql.for_id(@parsed_request.id) if @parsed_request.id
@@ -43,7 +47,8 @@ class Search::OnAuthor::WhereClauses
     if field.blank? && value.blank?
       @sql
     elsif field.blank? 
-      @sql = @sql.lower_name_like("*#{value.downcase}*")
+      #@sql = @sql.lower_name_like("*#{value.downcase}*")
+      @sql = tokenize_2(@sql,'name-or-abbrev:',value)
     else 
       # we have a field
       canonical_field = canon_field(field)
@@ -59,6 +64,10 @@ class Search::OnAuthor::WhereClauses
         @sql = @sql.where(WHERE_ASSERTION_HASH[canonical_field])
       elsif FIELD_NEEDS_WILDCARDS.has_key?(canonical_field)
         @sql = @sql.where(FIELD_NEEDS_WILDCARDS[canonical_field],"%#{canonical_value}%")
+      elsif TOKENIZE.has_key?(canonical_field)
+        @sql = tokenize(@sql,canonical_field,canonical_value)
+      elsif TOKENIZE_2.has_key?(canonical_field)
+        @sql = tokenize_2(@sql,canonical_field,canonical_value)
       elsif WHERE_INTEGER_VALUE_HASH.has_key?(canonical_field)
         @sql = @sql.where(WHERE_INTEGER_VALUE_HASH[canonical_field],canonical_value.to_i)
       else
@@ -66,6 +75,26 @@ class Search::OnAuthor::WhereClauses
         @sql = @sql.where(WHERE_VALUE_HASH[canonical_field],canonical_value)
       end
     end
+  end
+
+  def tokenize(sql,field,search_string)
+    debug("tokenizing: field: #{field}")
+    clause = TOKENIZE[field]
+    debug("tokenizing: clause: #{clause}")
+    search_string.gsub(/\*/,'%').gsub(/%+/,' ').split.each do |term|
+      sql = sql.where(clause,"%#{term}%")
+    end
+    sql
+  end
+
+  def tokenize_2(sql,field,search_string)
+    debug("tokenizing: field: #{field}")
+    clause = TOKENIZE_2[field]
+    debug("tokenizing: clause: #{clause}")
+    search_string.gsub(/\*/,'%').gsub(/%+/,' ').split.each do |term|
+      sql = sql.where(clause,"%#{term}%","%#{term}%")
+    end
+    sql
   end
 
   def canon_value(value)
@@ -78,6 +107,10 @@ class Search::OnAuthor::WhereClauses
     elsif WHERE_ASSERTION_HASH.has_key?(field)
       field
     elsif FIELD_NEEDS_WILDCARDS.has_key?(field)
+      field
+    elsif TOKENIZE.has_key?(field)
+      field
+    elsif TOKENIZE_2.has_key?(field)
       field
     elsif WHERE_VALUE_HASH.has_key?(field)
       field
@@ -101,11 +134,18 @@ class Search::OnAuthor::WhereClauses
   }
 
   FIELD_NEEDS_WILDCARDS = { 
-    'name:' => "lower(name) like ?",
-    'abbrev:' => "lower(abbrev) like ?",
     'notes:' => " lower(notes) like ? ",
     'comments:' => " exists (select null from comment where comment.author_id = author.id and comment.text like ?) ",
     'full-name:' => "lower(full_name) like ?"
+  }
+
+  TOKENIZE = { 
+    'name:' => "lower(name) like ?",
+    'abbrev:' => "lower(abbrev) like ?",
+  }
+
+  TOKENIZE_2 = { 
+    'name-or-abbrev:' => "(lower(name) like ? or lower(abbrev) like ?)",
   }
 
   WHERE_VALUE_HASH = { 

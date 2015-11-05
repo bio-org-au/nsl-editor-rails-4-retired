@@ -43,7 +43,7 @@ class Search::OnName::WhereClauses
     if field.blank? && value.blank?
       @sql
     elsif field.blank? || field.match(/\Aname:\z/)
-      @sql = @sql.lower_full_name_like("#{value.downcase}*")
+      @sql = @sql.lower_full_name_like("#{value.downcase.gsub(/ /,'*')}*")
     else 
       # we have a field
       canonical_field = canon_field(field)
@@ -51,6 +51,10 @@ class Search::OnName::WhereClauses
       @common_and_cultivar_included = @common_and_cultivar_included || AUTO_INCLUDE_COMMON_AND_CULTIVAR_FIELDS.has_key?(canonical_field)
       if ALLOWS_MULTIPLE_VALUES.has_key?(canonical_field) && canonical_value.split(/,/).size > 1
         case canonical_field
+        when /\Aid:\z/
+          @sql = @sql.where("id in (?)",canonical_value.split(',').collect {|v| v.strip})
+        when /\Aids:\z/
+          @sql = @sql.where("id in (?)",canonical_value.split(',').collect {|v| v.strip})
         when /\Arank:\z/
           @sql = @sql.where("name_rank_id in (select id from name_rank where lower(name) in (?))",canonical_value.split(',').collect {|v| v.strip})
         when /\Atype:\z/
@@ -107,22 +111,23 @@ class Search::OnName::WhereClauses
   end
 
   WHERE_INTEGER_VALUE_HASH = { 
-    'id:' => "id = ? ",
+    'id:' => " id = ?",
+    'ids:' => " id = ?",
     'author-id:' => "author_id = ? ",
     'base-author-id:' => "base_author_id = ? ",
     'ex-base-author-id:' => "ex_base_author_id = ? ",
     'ex-author-id:' => "ex_author_id = ? ",
-    'sanctioning-author-id:' => "sanctioning_author_id = ? "
+    'sanctioning-author-id:' => "sanctioning_author_id = ? ",
   }
 
   WHERE_INTEGER_VALUE_HASH_TWICE = { 
     'parent-or-second-parent-id:' => "parent_id = ? or second_parent_id = ? ",
     'parent-id:' => "id = ? or parent_id = ?",
-    'second-parent-id:' => "id = ? or second_parent_id = ? "
+    'second-parent-id:' => "id = ? or second_parent_id = ? ",
   }
 
   WHERE_INTEGER_VALUE_HASH_THRICE = { 
-    'parent-or-second-parent-id:' => "id = ? or parent_id = ? or second_parent_id = ? "
+    'parent-or-second-parent-id:' => "id = ? or parent_id = ? or second_parent_id = ? ",
   }
 
   WHERE_ASSERTION_HASH = { 
@@ -136,7 +141,7 @@ class Search::OnName::WhereClauses
     'has-a-second-parent:' => " second_parent_id is not null",
     'has-no-second-parent:' => " second_parent_id is null",
     'is-a-second-parent:' => " exists (select null from name child where child.second_parent_id = name.id) ",
-    'is-not-a-second-parent:' => " not exists (select null from name child where child.second_parent_id = name.id) "
+    'is-not-a-second-parent:' => " not exists (select null from name child where child.second_parent_id = name.id) ",
   }
 
   WHERE_VALUE_HASH = { 
@@ -154,7 +159,7 @@ class Search::OnName::WhereClauses
     'comments:' => " exists (select null from comment where comment.name_id = name.id and comment.text like ?) ",
     'comments-by:' => " exists (select null from comment where comment.name_id = name.id and comment.text like ?) ",
     'comments-but-no-instances:' => 
-      "exists (select null from comment where comment.name_id = name.id and comment.text like ?) and not exists (select null from instance where name_id = name.id)"
+      "exists (select null from comment where comment.name_id = name.id and comment.text like ?) and not exists (select null from instance where name_id = name.id)",
   }
 
   CANONICAL_FIELD_NAMES = {
@@ -163,19 +168,22 @@ class Search::OnName::WhereClauses
     'name-rank:' => 'rank:',
     't:' => 'type:',
     'nt:' => 'type:',
-    'name-type:' => 'type:'
+    'name-type:' => 'type:',
   }
 
   AUTO_INCLUDE_COMMON_AND_CULTIVAR_FIELDS = {
     'type:' => true,
     'id:' => true,
-    'parent-id:' => true 
+    'ids:' => true,
+    'parent-id:' => true,
   }
 
   ALLOWS_MULTIPLE_VALUES = {
+    'id:' => true,
+    'ids:' => true,
     'rank:' => true,
     'name-status:' => true,
-    'type:' => true
+    'type:' => true,
   }
 
 

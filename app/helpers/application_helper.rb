@@ -302,7 +302,7 @@ module ApplicationHelper
   def updated_by_whom_and_when(record)
     # Only show updated_at if a meaningful time after created_at.
     if (record.created_at.to_f/10).to_i == (record.updated_at.to_f/10).to_i
-      ''
+      'Not updated since it was created.'
     else
       %Q(Last updated <span class="purple">#{time_ago_in_words(record.updated_at)}&nbsp;ago</span> by #{record.updated_by.downcase} #{formatted_timestamp(record.updated_at)}) 
     end

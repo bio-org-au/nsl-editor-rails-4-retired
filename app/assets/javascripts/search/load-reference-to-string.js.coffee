@@ -6,6 +6,7 @@ window.loadReferenceToString = (fields) ->
   assertions = getAssertions()
   $('#query-string-field').val("#{settings}#{fields}#{assertions}")
   $('#query-target').val("References")
+  $('#search-target-button-text').text("References")
 
 fieldMap =
   'ref-advanced-search-citation' : ''

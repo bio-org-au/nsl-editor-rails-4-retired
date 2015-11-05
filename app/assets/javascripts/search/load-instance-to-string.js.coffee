@@ -6,6 +6,7 @@ window.loadInstanceToString = (fields) ->
   assertions = getAssertions()
   $('#query-string-field').val("#{listCount}#{fields}#{assertions}")
   $('#query-target').val("Instances")
+  $('#search-target-button-text').text("Instances")
 
 fieldMap =
   'instance-advanced-search-name' : ''

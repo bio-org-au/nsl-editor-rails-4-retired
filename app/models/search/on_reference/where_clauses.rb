@@ -24,15 +24,19 @@ class Search::OnReference::WhereClauses
     build_sql
   end
 
+  def debug(s)
+    Rails.logger.debug("Search::OnReference::WhereClause - #{s}")
+  end
+
   def build_sql
-    Rails.logger.debug("Search::OnReference::WhereClause.sql")
+    debug("Search::OnReference::WhereClause.sql")
     remaining_string = @parsed_request.where_arguments.downcase 
     @common_and_cultivar_included = @parsed_request.common_and_cultivar
     @sql = @sql.for_id(@parsed_request.id) if @parsed_request.id
     x = 0 
     until remaining_string.blank?
       field,value,remaining_string = Search::NextCriterion.new(remaining_string).get 
-      Rails.logger.debug("Search::OnReference::WhereClause.sql#build_sql; field: #{field}; value: #{value}")
+      debug("Search::OnReference::WhereClause.sql#build_sql; field: #{field}; value: #{value}")
       add_clause(field,value)
       x += 1
       raise "endless loop #{x}" if x > 50
@@ -40,17 +44,21 @@ class Search::OnReference::WhereClauses
   end
 
   def add_clause(field,value)
-    Rails.logger.debug("Search::OnReference::WhereClause.sql#add_clause; field: #{field}; value: #{value}")
+    debug("Search::OnReference::WhereClause.sql#add_clause; field: #{field}; value: #{value}")
     if field.blank? && value.blank?
       @sql
     elsif field.blank?
-      @sql = @sql.lower_citation_like("*#{value.downcase.gsub(/ /,'*')}*")
+      @sql = tokenize(@sql,'citation:',value)
     else 
       # we have a field
       canonical_field = canon_field(field)
       canonical_value = value.blank? ? '' : canon_value(value)
       if ALLOWS_MULTIPLE_VALUES.has_key?(canonical_field) && canonical_value.split(/,/).size > 1
         case canonical_field
+        when /\Aid:\z/
+          @sql = @sql.where("id in (?)",canonical_value.split(',').collect {|v| v.strip})
+        when /\Aids:\z/
+          @sql = @sql.where("id in (?)",canonical_value.split(',').collect {|v| v.strip})
         when /\Atype:\z/
           @sql = @sql.where("ref_type_id in (select id from ref_type where lower(name) in (?))",canonical_value.split(',').collect {|v| v.strip})
         else
@@ -69,12 +77,51 @@ class Search::OnReference::WhereClauses
         @sql = @sql.where(FIELD_NEEDS_TRAILING_WILDCARD[canonical_field],"#{canonical_value}%")
       elsif FIELD_NEEDS_WILDCARDS.has_key?(canonical_field)
         @sql = @sql.where(FIELD_NEEDS_WILDCARDS[canonical_field],"#{canonical_value.gsub(/ /,'%')}%")
+      elsif TOKENIZE.has_key?(canonical_field)
+        @sql = tokenize(@sql,canonical_field,canonical_value)
       else
         raise "No way to handle field: '#{canonical_field}' in a reference search." unless WHERE_VALUE_HASH.has_key?(canonical_field)
         @sql = @sql.where(WHERE_VALUE_HASH[canonical_field],canonical_value)
       end
     end
   end
+  
+  def tokenize(sql,field,search_string)
+    debug("tokenizing: field: #{field}")
+    clause = TOKENIZE[field]
+    debug("tokenizing: clause: #{clause}")
+    search_string.gsub(/\*/,'%').gsub(/%+/,' ').split.each do |term|
+      sql = sql.where(clause,"%#{term}%")
+    end
+    sql
+  end
+
+  # Order of search terms does not matter.
+  def self.simple_search(search_limit, search_string, apply_limit)
+    rejected_pairings = []
+    where = ""
+    binds = []
+    info = [%Q(Reference search: "#{search_string}";)]
+    search_string.gsub(/%+/,' ').split.each do |term|
+      where += " lower(citation) like lower(?) and "
+      binds.push "%#{term.downcase}%"
+    end
+    where += " 1=1 "
+    results = Reference.where(binds.unshift(where)).order(DEFAULT_ORDER_BY).limit(search_limit)
+    if apply_limit
+      results = results.limit(search_limit) 
+      if search_limit == 1
+        info.push(" for up to 1 record") 
+      else
+        info.push(" for up to #{search_limit} records") 
+      end
+    else
+      info.push(" for all records")
+    end
+    focus_anchor_id = results.size > 0 ? results.first.anchor_id : nil
+    return results, rejected_pairings,results.size == search_limit,focus_anchor_id, info
+  end
+
 
   def canon_value(value)
     value.gsub(/\*/,'%')
@@ -93,6 +140,8 @@ class Search::OnReference::WhereClauses
       field
     elsif FIELD_NEEDS_WILDCARDS.has_key?(field)
       field
+    elsif TOKENIZE.has_key?(field)
+      field
     elsif CANONICAL_FIELD_NAMES.has_value?(field)
       field
     elsif CANONICAL_FIELD_NAMES.has_key?(field)
@@ -104,6 +153,7 @@ class Search::OnReference::WhereClauses
 
   WHERE_INTEGER_VALUE_HASH = { 
     'id:' => "id = ? ",
+    'ids:' => "id = ? ",
     'author-id:' => "author_id = ? ",
     'year:' => "year = ? ",
     'after-year:' => "year > ? ",
@@ -118,9 +168,12 @@ class Search::OnReference::WhereClauses
     'title:' => " lower(title) like ? ",
   }
 
+  TOKENIZE = { 
+    'citation:' => " lower(citation) like ? ",
+  }
+
   FIELD_NEEDS_WILDCARDS = { 
     'author:' => "author_id in (select id from author where lower(name) like ?)",
-    'citation:' => " lower(citation) like ? ",
     'notes:' => " lower(notes) like ? ",
     'comments:' => " exists (select null from comment where comment.author_id = author.id and comment.text like ?) ",
   }
@@ -175,9 +228,10 @@ class Search::OnReference::WhereClauses
   }
 
   ALLOWS_MULTIPLE_VALUES = {
-    'type:' => true
+    'id:' => true,
+    'ids:' => true,
+    'type:' => true,
   }
-
 
 end
 

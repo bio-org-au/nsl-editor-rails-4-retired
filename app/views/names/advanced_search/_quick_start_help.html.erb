@@ -1,0 +1,8 @@
+<h4>Quick start for Name search</h4>
+<p>Type the first character or word in the name, follow that term with another fragment of the name and press Enter or click Search.  The Editor will try to find something useful.
+<p> E.g.  <%= link_to('grev queen', new_search_path(query_string: 'grev queen', query_target: 'name'),class:'blue') %>,
+<%= link_to('bank spin', new_search_path(query_string: 'bank spin', query_target: 'name'),class:'blue') %>
+or  <%= link_to('e costata', new_search_path(query_string: 'e costata', query_target: 'name'),class:'blue') %>
+<p>Order of terms is important.
+<p>If you do not know how the name starts, lead with a wildcard ("*").  E.g.  <%= link_to('*queensland form', new_search_path(query_string: '*queensland form', query_target: 'name'),class:'blue') %>
+<p>But note how this search is faster <%= link_to('g*queensland form', new_search_path(query_string: 'g*queensland form', query_target: 'name'),class:'blue') %>.
