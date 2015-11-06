@@ -44,6 +44,7 @@ class Search::ParsedRequest
     'instances for name id' => 'instances-for-name-id:',
     'names with instances' => 'instances-for-name:',
     'names + instances' => 'instances-for-name:',
+    'names plus instances' => 'instances-for-name:',
     'instance-name:' => 'instances-for-name:',
     'instances-for-name:' => 'instances-for-name:',
     'instance-ref-id:' => 'instances-for-ref-id:',

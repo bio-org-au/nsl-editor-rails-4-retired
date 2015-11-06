@@ -1,2 +1,26 @@
-<h4>Names plus instances examples</h4>
+<div id="example-search-name" class="example-search-tab">
+<h3>Names plus instances examples</h3>
+<br>
+<br>
+<% excc = %Q(<span class="purple" title="Excluding common and cultivar names by default.">EXCC</span>) %>
+<% incc = %Q(<span class="purple" title="Including common and cultivar names.">INCC</span>) %>
+<h4 class="">List names</h4>
+<table class="example-searches table table-striped">
+  <% [{search_target: 'Names plus instances', search_string: "acacia cos",explanation: %Q(List names starting with "acacia cos".  Bare search is on names. 100 records is the default.)},
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent"><a href="javascript:void(0)" 
+           class="example-search width-100-percent" 
+           title="Link to search">
+        <span class="blue"><%= link_to(val[:search_string], new_search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %></span></a>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+<br>
+
+
+    </div>
+
 

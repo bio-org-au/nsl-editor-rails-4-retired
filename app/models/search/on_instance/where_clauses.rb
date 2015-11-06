@@ -58,14 +58,17 @@ class Search::OnInstance::WhereClauses
           @sql = @sql.where("id in (?)",canonical_value.split(',').collect {|v| v.strip})
         when /\Aids:\z/
           @sql = @sql.where("id in (?)",canonical_value.split(',').collect {|v| v.strip})
+        when /\Atype:\z/
+          @sql = @sql.where("exists (select null from instance_type where instance_type_id = instance_type.id and instance_type.name in (?))",canonical_value.split(',').collect {|v| v.strip})
         else
           raise "The field '#{field}' currently cannot handle multiple values separated by commas." 
         end
       elsif WHERE_INTEGER_VALUE_HASH.has_key?(canonical_field)
         @sql = @sql.where(WHERE_INTEGER_VALUE_HASH[canonical_field],canonical_value.to_i)
       elsif WHERE_ASSERTION_HASH.has_key?(canonical_field)
-        Rails.logger.debug('assertion!')
         @sql = @sql.where(WHERE_ASSERTION_HASH[canonical_field])
+      elsif FIELD_NEEDS_WILDCARDS.has_key?(canonical_field)
+        @sql = @sql.where(FIELD_NEEDS_WILDCARDS[canonical_field],"%#{canonical_value.gsub(/ /,'%')}%")
       else
         Rails.logger.error("Search::OnInstance::WhereClause add_clause - out of options")
         raise "No way to handle field: '#{canonical_field}' in an instance search." unless WHERE_VALUE_HASH.has_key?(canonical_field)
@@ -82,6 +85,8 @@ class Search::OnInstance::WhereClauses
     if WHERE_INTEGER_VALUE_HASH.has_key?(field)
       field
     elsif WHERE_ASSERTION_HASH.has_key?(field)
+      field
+    elsif FIELD_NEEDS_WILDCARDS.has_key?(field)
       field
     elsif ALLOWS_MULTIPLE_VALUES.has_key?(field)
       field
@@ -109,6 +114,8 @@ class Search::OnInstance::WhereClauses
     'page-qualifier:' => " lower(page_qualifier) like ?",
     'note-key:' => " exists (select null from instance_note where instance_id = instance.id and exists (select null from instance_note_key where instance_note_key_id = instance_note_key.id and lower(instance_note_key.name) like ?)) ",
     'notes:' => " exists (select null from instance_note where instance_id = instance.id and lower(instance_note.value) like ?) ",
+  }
+  FIELD_NEEDS_WILDCARDS = { 
     'verbatim-name:' => "lower(verbatim_name_string) like ?",
   }
 
@@ -131,6 +138,7 @@ class Search::OnInstance::WhereClauses
   ALLOWS_MULTIPLE_VALUES = {
     'ids:' => " id in (?)",
     'id:' => " id in (?)",
+    'type:' => " exists (select null from instance_type where instance_type_id = instance_type.id and instance_type.name in (?))",
   }
 
   WHERE_ASSERTION_HASH = { 

@@ -184,6 +184,7 @@ $( "select#name-advanced-search-list-or-count" )
 
 
     setActiveHelpOnLoad();
+    setActiveExamplesOnLoad();
 });
 
 
@@ -204,7 +205,7 @@ $( "select#name-advanced-search-list-or-count" )
     }
 
     function setActiveHelpOnLoad() {
-      $('.search-help').addClass('hidden');
+      //$('.search-help').addClass('hidden');
       var helpId = $('ul#search-target-list li a:contains(' +  $('#search-target-button-text').text().trim()  + ')').first().attr('data-help');
       console.log("search-target-button-text: " + $('#search-target-button-text').text().trim());
       console.log("setActiveHelpOnLoad helpId: " + helpId);
@@ -215,6 +216,13 @@ $( "select#name-advanced-search-list-or-count" )
       console.log('showExamples for ' + examplesElement);
       $('.search-examples').addClass('hidden');
       $('#'+examplesElement).removeClass('hidden');
+    }
+
+    function setActiveExamplesOnLoad() {
+      var id = $('ul#search-target-list li a:contains(' +  $('#search-target-button-text').text().trim()  + ')').first().attr('data-examples');
+      console.log("search-target-button-text: " + $('#search-target-button-text').text().trim());
+      console.log("setActiveExamplesOnLoad id: " + id);
+      showExamples(id);
     }
 
     function loadNameToString() {

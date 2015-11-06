@@ -55,6 +55,10 @@ class Search::OnAuthor::WhereClauses
       canonical_value = value.blank? ? '' : canon_value(value)
       if ALLOWS_MULTIPLE_VALUES.has_key?(canonical_field) && canonical_value.split(/,/).size > 1
         case canonical_field
+        when /\Aid:\z/
+          @sql = @sql.where("id in (?)",canonical_value.split(',').collect {|v| v.strip})
+        when /\Aids:\z/
+          @sql = @sql.where("id in (?)",canonical_value.split(',').collect {|v| v.strip})
         when /\Aname-rank:\z/
           @sql = @sql.where("name_rank_id in (select id from name_rank where lower(name) in (?))",canonical_value.split(',').collect {|v| v.strip})
         else
@@ -125,18 +129,19 @@ class Search::OnAuthor::WhereClauses
 
   WHERE_INTEGER_VALUE_HASH = { 
     'id:' => "id = ? ",
-    'duplicate-of-id:' => "duplicate_of_id = ? "
+    'ids:' => " id = ?",
+    'duplicate-of-id:' => "duplicate_of_id = ? ",
   }
 
   WHERE_ASSERTION_HASH = { 
     'is-a-duplicate:' => " duplicate_of_id is not null",
-    'is-not-a-duplicate:' => " duplicate_of_id is null"
+    'is-not-a-duplicate:' => " duplicate_of_id is null",
   }
 
   FIELD_NEEDS_WILDCARDS = { 
     'notes:' => " lower(notes) like ? ",
     'comments:' => " exists (select null from comment where comment.author_id = author.id and comment.text like ?) ",
-    'full-name:' => "lower(full_name) like ?"
+    'full-name:' => "lower(full_name) like ?",
   }
 
   TOKENIZE = { 
@@ -161,11 +166,12 @@ class Search::OnAuthor::WhereClauses
   CANONICAL_FIELD_NAMES = {
     'n:' => 'name:',
     'a:' => 'abbrev:',
-    'extra-name-text:' => 'full_name:'
+    'extra-name-text:' => 'full_name:',
   }
 
   ALLOWS_MULTIPLE_VALUES = {
-    'ids:' => true
+    'id:' => true,
+    'ids:' => true,
   }
 
 
