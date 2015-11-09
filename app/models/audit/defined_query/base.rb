@@ -36,22 +36,35 @@ class Audit::DefinedQuery::Base
     debug("parsed_request.limit: #{parsed_request.limit}")
     if parsed_request.count
       debug("run_query counting")
-      query = Search::OnReference::ListQuery.new(parsed_request)
-      @relation = query.sql  # TODO: work out how to provide the relation and sql
-      results = relation.all
-      limited = query.limited
-
-      debug(results.size)
-      tally = results.size
-      results.each  do | ref |
-        debug(ref.id)
-        tally += ref.instances.size
-      end
-      debug("tally: #{tally}")
-
-      @limited = limited
-      @common_and_cultivar_included = query.common_and_cultivar_included
-      @count = tally
+      debug("run_query counting")
+      debug("run_query counting")
+      debug("run_query counting")
+      debug("run_query counting")
+      debug("run_query counting")
+      debug("run_query counting")
+      debug("run_query counting")
+      debug("run_query counting")
+      debug("run_query counting")
+      debug("run_query counting")
+      debug("run_query counting")
+      list_query = Audit::DefinedQuery::ListQuery.new(parsed_request.as_a_list_request)
+      @has_relation = false
+      @relation = nil
+      @results = list_query.results
+      @limited = list_query.limited
+      @common_and_cultivar_included = list_query.common_and_cultivar_included
+      @count = @results.size
+      debug("@count: #{@count}")
+      debug("@count: #{@count}")
+      debug("@count: #{@count}")
+      debug("@count: #{@count}")
+      debug("@count: #{@count}")
+      debug("@count: #{@count}")
+      debug("@count: #{@count}")
+      debug("@count: #{@count}")
+      debug("@count: #{@count}")
+      debug("@count: #{@count}")
+      @results = []
     else
       debug("query listing")
       list_query = Audit::DefinedQuery::ListQuery.new(parsed_request)
@@ -61,15 +74,6 @@ class Audit::DefinedQuery::Base
       @limited = list_query.limited
       @common_and_cultivar_included = list_query.common_and_cultivar_included
       @count = @results.size
-
-      #authors = Author.created_in_the_last_n_days(80)
-      #names = Name.created_in_the_last_n_days(80)
-      #@results = authors + names
-      #@limited = false; #name_query.limited
-      #@common_and_cultivar_included = true
-      #@count = @results.size
-      #@has_relation = false
-      #@relation = nil
     end
   end
 end

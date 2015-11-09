@@ -113,10 +113,12 @@ class Search::OnInstance::WhereClauses
     'page:' => " lower(page) like ?",
     'page-qualifier:' => " lower(page_qualifier) like ?",
     'note-key:' => " exists (select null from instance_note where instance_id = instance.id and exists (select null from instance_note_key where instance_note_key_id = instance_note_key.id and lower(instance_note_key.name) like ?)) ",
-    'notes:' => " exists (select null from instance_note where instance_id = instance.id and lower(instance_note.value) like ?) ",
+    'notes-exact:' => " exists (select null from instance_note where instance_id = instance.id and lower(instance_note.value) like ?) ",
+    'verbatim-name-exact:' => "lower(verbatim_name_string) like ?",
   }
   FIELD_NEEDS_WILDCARDS = { 
     'verbatim-name:' => "lower(verbatim_name_string) like ?",
+    'notes:' => " exists (select null from instance_note where instance_id = instance.id and lower(instance_note.value) like ?) ",
   }
 
   #FIELD_NEEDS_WILDCARDS = { 
@@ -132,7 +134,8 @@ class Search::OnInstance::WhereClauses
     't:' => 'instance-type:',
     'p:' => 'page:',
     'pq:' => 'page-qualifier:',
-    'note:' => 'notes:'
+    'note:' => 'notes:',
+    'note-exact:' => 'notes-exact:',
   }
 
   ALLOWS_MULTIPLE_VALUES = {
@@ -146,6 +149,8 @@ class Search::OnInstance::WhereClauses
     'is-cited-by-an-instance:' => " cited_by_id is not null",
     'does-not-cite-an-instance:' => " cites_id is null",
     'is-not-cited-by-an-instance:' => " cited_by_id is null",
+    'verbatim-name-matches-full-name:' => " lower(verbatim_name_string) = (select lower(full_name) from name where name.id = instance.name_id) ",
+    'verbatim-name-does-not-match-full-name:' => " lower(verbatim_name_string) != (select lower(full_name) from name where name.id = instance.name_id) ",
   }
 
 end

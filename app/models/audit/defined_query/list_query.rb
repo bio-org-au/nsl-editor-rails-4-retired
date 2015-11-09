@@ -44,27 +44,9 @@ class Audit::DefinedQuery::ListQuery
     instance_where_clauses = Audit::DefinedQuery::WhereClause::ForInstance.new(@parsed_request,start_instance_query)
     instance_query = instance_where_clauses.sql
 
-    #prepared_query = prepared_query.limit(@parsed_request.limit) if @parsed_request.limited
-    #prepared_query = prepared_query.order('name')
-    #@sql = prepared_query
-  
-    #n = 18 
-    #authors = Author.created_in_the_last_n_days(n)
-    #names = Name.created_in_the_last_n_days(n)
-    #references = Reference.created_in_the_last_n_days(n)
-    #instances = Instance.created_in_the_last_n_days(n)
-    #@results = authors + names + references  + instances
-    #@results = authors + names + references  #+ instances
-    ##@results = authors.to_a
     @results = author_query.to_a + name_query.to_a + reference_query.to_a + instance_query.to_a
     @results.sort!{|x,y| bigger(y.created_at,y.updated_at) <=> bigger(x.created_at,x.updated_at)}
 
-    #prepared_query = Author.where('1=1')
-    #where_clauses = Audit::DefinedQuery::WhereClauses.new(@parsed_request,prepared_query)
-    #prepared_query = where_clauses.sql
-    #prepared_query = prepared_query.limit(@parsed_request.limit) if @parsed_request.limited
-    #prepared_query = prepared_query.order('name')
-    #@sql = prepared_query
   end
 
   def bigger(first,second)

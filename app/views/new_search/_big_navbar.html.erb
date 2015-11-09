@@ -14,7 +14,7 @@
             <%= render 'new_search/search_form' unless @no_searchbar %>
           </div>
         </div>
-        <% if @system_broadcast.present? %> 
+        <% if @system_broadcast.present? && !@system_broadcast.match(/This is the test instance./) %> 
           <div id="broadcast" class="col-xs-12 col-sm-11 col-md-10 col-lg-8">
             <%= @system_broadcast.html_safe %>
           </div>

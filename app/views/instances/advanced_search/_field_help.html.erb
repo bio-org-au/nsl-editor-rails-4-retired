@@ -8,8 +8,10 @@
       {field_name: 'name-exact:', description: "full name, supply your own wildcards"},
       {field_name: 'page:', description: "page"},
       {field_name: 'page-qualifier:', description: "page-qualifier"},
-      {field_name: 'note:', description: "note"},
-      {field_name: 'verbatim-name:', description: "Verbatim name string"},
+      {field_name: 'note:', description: "note, leading and trailing wildcards added automatically"},
+      {field_name: 'note-exact:', description: "note"},
+      {field_name: 'verbatim-name:', description: "Verbatim name string, leading and trailing wildcards added automatically"},
+      {field_name: 'verbatim-name-exact:', description: "Verbatim name string"},
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">
@@ -57,6 +59,8 @@
       {field_name: 'is-cited-by-an-instance:', description: ""},
       {field_name: 'does-not-cite-an-instance:', description: ""},
       {field_name: 'is-not-cited-by-an-instance:', description: ""},
+      {field_name: 'verbatim-name-matches-full-name:', description: "Verbatim name string is the same as the instance name full name."},
+      {field_name: 'verbatim-name-does-not-match-full-name:', description: "Verbatim name string is the same as the instance name full name."},
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">

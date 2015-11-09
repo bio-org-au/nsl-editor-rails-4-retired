@@ -1,70 +1,39 @@
-<h4>Fields for review searches</h4>
+<h4>Review search</h4>
+List records created or updated recently.
+
 <br>
-<h5>Restrict time period</h5>
-<table class="table table-striped">
-  <tr><th>Field</th><th>Description</th></tr>
-  <% [
-      {field_name: '', description: "default review searches are on records created or updated in the last N days, e.g. '1' means show records 1 or less days old"},
-      ].each do |val| %>
-  <tr>
-    <td class="width-20-percent">
-      <a href="javascript:void(0)" class="searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
-        <span class="blue"><%= val[:field_name] %></span>
-      </a>
-    </td>
-    <td><%= val[:description].html_safe %>
-    <% if val[:partial].present? %>
-      <%= render partial: val[:partial] %>
-    <% end %>
-    </td>
-  </tr>
-  <% end %>
-</table>
+<br>
+<% if @current_user.qa? %>
+  QA users can review all records.
+  <br>
+  <br>
+  <br>
+  <%= render partial: 'audits/advanced_search/quick_start_help_qa' %>
+<% else %>
+  This search is automatically restricted to records you have created or updated.
+  <br>
+  <br>
+  <br>
+  <%= render partial: 'audits/advanced_search/quick_start_help_editor' %>
+<% end %>
 
-<h5>Assertions to restrict record types</h5>
-<table class="table table-striped">
-  <% [
-    {field_name: 'authors-only:', description: "Just authors"},
-    {field_name: 'instances-only:', description: "Just instances"},
-    {field_name: 'names-only:', description: "Just names"},
-    {field_name: 'references-only:', description: "Just references"},
-      ].each do |val| %>
-  <tr>
-    <td class="width-20-percent">
-      <a href="javascript:void(0)" class="searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
-        <span class="blue"><%= val[:field_name] %></span>
-      </a>
-    </td>
-    <td><%= val[:description].html_safe %>
-    <% if val[:partial].present? %>
-        <%= render partial: val[:partial] %>
-    <% end %>
-    </td>
-  </tr>
-  <% end %>
-</table>
+<%= render partial: 'audits/advanced_search/quick_start_help' %>
 
-<h5>Restrict user</h5>
-<table class="table table-striped">
-  <% [
-      {field_name: 'by:', description: "created or updated by username"},
-      {field_name: 'not-by:', description: "not created or updated by username"},
-      ].each do |val| %>
-  <tr>
-    <td class="width-20-percent">
-        <a href="javascript:void(0)" class="searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
-          <span class="blue"><%= val[:field_name] %></span>
-        </a>
-    </td>
-    <td><%= val[:description].html_safe %>
-    <% if val[:partial].present? %>
-        <%= render partial: val[:partial] %>
-    <% end %>
-    </td>
-  </tr>
-  <% end %>
-</table>
+<% if @current_user.qa? %>
+  QA users can review all records.
+  <br>
+  <br>
+  <br>
+  <br>
+  <%= render partial: 'audits/advanced_search/help_editor' %>
+  <%= render partial: 'audits/advanced_search/help_qa' %>
+<% else %>
+  <%= render partial: 'audits/advanced_search/help_editor' %>
+<% end %>
 
+<br>
+<br>
+<br>
 <%= render partial: 'help/case_and_wildcards_search' %>
 
 

@@ -1,5 +1,5 @@
 
-<%= link_to("#{@instance.name.try('full_name')} #{search_icon_on_tab}".html_safe,new_search_path(query_target: 'instances-for-name-id', query_string: @instance.name_id.to_s), title: 'Search for the name with its instances') %>
+<%= link_to("#{@instance.name.try('full_name')} #{search_icon_on_tab}".html_safe,new_search_path(query_target: 'instances-for-name-id', query_string: @instance.name_id.to_s), title: 'Search for the name with its instances',class: 'name') %>
     <% if @instance.name.apc? %>
       <%= render(partial: 'instances/apc/widgets', locals: {instance: @instance}) %>
     <% end %>
@@ -15,7 +15,7 @@
   <% if @instance.cites_id %>
     in
     <%= link_to("#{@instance.this_cites.try('reference').try('citation')}:#{ @instance.this_cites.page} #{search_icon_on_tab}".html_safe,
-                new_search_path(query_string: @instance.this_cites.try('reference_id').to_s,query_target: 'reference'),
+                new_search_path(query_string: @instance.this_cites.try('reference_id').to_s,query_target: 'reference',class: 'ref'),
                             title: 'Search for the instance this cites.') %>
     <br>
   <% end %>

@@ -1,7 +1,7 @@
 <% increment_tab_index %>
 
 <%= @reference.ref_type.name %> by 
-<%= link_to("#{@reference.author.name} (#{@reference.ref_author_role.name}) #{search_icon_on_tab}".html_safe, new_search_path(query_string: "id:#{@reference.author_id}",query_target: 'author'),title: 'Search for the author(s)/editor(s)...') %> 
+<%= link_to("#{@reference.author.name} (#{@reference.ref_author_role.name}) #{search_icon_on_tab}".html_safe, new_search_path(query_string: "id:#{@reference.author_id}",query_target: 'author'),title: 'Search for the author(s)/editor(s)...',class: 'author') %> 
 <br>
 <%= @reference.title %>
 <br>
@@ -9,7 +9,8 @@
   <%= link_to("#{@reference.parent.title} #{search_icon_on_tab}".html_safe, 
                           new_search_path(query_string: "parent-id:#{@reference.parent_id}",query_target: "reference"),
                           title: 'Search for the containing reference',
-                          tabindex: increment_tab_index ) %>
+                          tabindex: increment_tab_index,
+                          class: 'ref') %>
 <% end %>
 <% if @reference.published %>
   <%= @reference.volume %>
@@ -63,12 +64,14 @@
     <%= link_to("&mdash; sorted by name #{search_icon_on_tab}".html_safe,
                           new_search_path(query_string: @reference.id.to_s,query_target: 'instances for ref id'),
                           tabindex: increment_tab_index, 
-                          title: 'Search for the instances, sorted by name.') %>
+                          title: 'Search for the instances, sorted by name.',
+                          class: 'instance') %>
     <br>
     <%= link_to("&mdash; sorted by page #{search_icon_on_tab}".html_safe,
                           new_search_path(query_string: @reference.id.to_s, query_target: "instances for ref id sort by page"),
                           tabindex: increment_tab_index, 
-                          title: 'Search for the instances, sorted by page.') %>
+                          title: 'Search for the instances, sorted by page.',
+                          class: 'instance') %>
    <% end %>
 <% end %>
   <br>
@@ -77,7 +80,8 @@
   <%= link_to("#{pluralize(novelties.size,"Novelty")} #{search_icon_on_tab}".html_safe,
                         new_search_path(query_target: "References with novelties", query_string: "id:#{@reference.id}"), 
                         tabindex: increment_tab_index, 
-                        title: 'Taxon novelties in this reference.') %>
+                        title: 'Taxon novelties in this reference.',
+                        class: 'instance') %>
 <% end %>
 
 
