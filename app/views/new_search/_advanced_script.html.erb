@@ -71,6 +71,8 @@ $('input[type=search]')
     });
 
     $('ul#search-results-tabset li a#search-history-tab-container-link').on('click',function(e) {
+      debug('showing search history');
+      debug($('#search-history-container').length);
       $('ul#search-results-tabset li').removeClass('active');
       $(this).parent('li').addClass('active');
       $('#search-result-container').addClass('hidden');

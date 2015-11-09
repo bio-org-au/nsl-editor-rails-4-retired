@@ -141,6 +141,12 @@ class Search::Base
     when /\Aaudit\z/
       debug("\nrun_defined_query audit\n")
       @executed_query = Audit::DefinedQuery::Base.new(@parsed_request)
+      debug("after run_defined_query audit; @executed_query.limited: #{ @executed_query.limited }")
+      debug("after run_defined_query audit; @executed_query.limited: #{ @executed_query.limited }")
+      debug("after run_defined_query audit; @executed_query.limited: #{ @executed_query.limited }")
+      debug("after run_defined_query audit; @executed_query.limited: #{ @executed_query.limited }")
+      debug("after run_defined_query audit; @executed_query.limited: #{ @executed_query.limited }")
+      debug("after run_defined_query audit; @executed_query.limited: #{ @executed_query.limited }")
     when /\Areferences-with-novelties\z/
       debug("\nrun_defined_query references-with-novelties\n")
       @executed_query = Reference::DefinedQuery::ReferencesWithNovelties.new(@parsed_request)

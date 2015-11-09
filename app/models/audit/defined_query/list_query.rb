@@ -21,9 +21,12 @@ class Audit::DefinedQuery::ListQuery
   def initialize(parsed_request)
     @parsed_request = parsed_request
     run_query
-    @limited = true
     @common_and_cultivar_included = true
     @info_for_display = ''
+  end
+
+  def debug(s)
+    Rails.logger.debug("Audit::DefinedQuery::ListQuery - #{s}")
   end
 
   def run_query
@@ -44,8 +47,25 @@ class Audit::DefinedQuery::ListQuery
     instance_where_clauses = Audit::DefinedQuery::WhereClause::ForInstance.new(@parsed_request,start_instance_query)
     instance_query = instance_where_clauses.sql
 
-    @results = author_query.to_a + name_query.to_a + reference_query.to_a + instance_query.to_a
-    @results.sort!{|x,y| bigger(y.created_at,y.updated_at) <=> bigger(x.created_at,x.updated_at)}
+    results = author_query.to_a + name_query.to_a + reference_query.to_a + instance_query.to_a
+    results.sort!{|x,y| bigger(y.created_at,y.updated_at) <=> bigger(x.created_at,x.updated_at)}
+    
+    @results = results[0..@parsed_request.limit-1]
+    debug("results.size: #{results.size}")
+    debug("@results.size: #{@results.size}")
+    if results.size < @results.size
+      @limited = false
+    else 
+      @limited = true
+    end
+    debug("@limited: #{@limited}")
+    debug("@limited: #{@limited}")
+    debug("@limited: #{@limited}")
+    debug("@limited: #{@limited}")
+    debug("@limited: #{@limited}")
+    debug("@limited: #{@limited}")
+    debug("@limited: #{@limited}")
+    debug("@limited: #{@limited}")
 
   end
 

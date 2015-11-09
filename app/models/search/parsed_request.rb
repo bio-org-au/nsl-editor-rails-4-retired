@@ -163,11 +163,7 @@ class Search::ParsedRequest
         @limit = joined_tokens.match(/limit: (\d{1,})/i)[1].to_i
         joined_tokens = joined_tokens.gsub(/limit: *\d{1,}/i,'')
       else
-        if @query_target.match(/review/i)
-          @limit = DEFAULT_LIST_LIMIT/4
-        else
-          @limit = DEFAULT_LIST_LIMIT
-        end
+        @limit = DEFAULT_LIST_LIMIT
       end
     else # count
       # remove any limit:

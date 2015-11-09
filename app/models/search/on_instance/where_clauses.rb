@@ -102,7 +102,8 @@ class Search::OnInstance::WhereClauses
   end
 
   WHERE_INTEGER_VALUE_HASH = { 
-    'id:' => "id = ? "
+    'id:' => "id = ? ",
+    'year:' => " exists (select null from reference ref where instance.reference_id = ref.id and ref.year = ?)",
   }
 
   WHERE_VALUE_HASH = { 
@@ -136,6 +137,7 @@ class Search::OnInstance::WhereClauses
     'pq:' => 'page-qualifier:',
     'note:' => 'notes:',
     'note-exact:' => 'notes-exact:',
+    'y:' => 'year:'
   }
 
   ALLOWS_MULTIPLE_VALUES = {
@@ -151,6 +153,7 @@ class Search::OnInstance::WhereClauses
     'is-not-cited-by-an-instance:' => " cited_by_id is null",
     'verbatim-name-matches-full-name:' => " lower(verbatim_name_string) = (select lower(full_name) from name where name.id = instance.name_id) ",
     'verbatim-name-does-not-match-full-name:' => " lower(verbatim_name_string) != (select lower(full_name) from name where name.id = instance.name_id) ",
+    'is-novelty:' => " exists (select null from instance_type where instance_type_id = instance_type.id and instance_type.primary_instance) ",
   }
 
 end

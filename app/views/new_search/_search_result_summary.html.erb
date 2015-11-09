@@ -38,7 +38,7 @@
         <% next_limit_max = (@search.executed_query.results.size + @search.page_increment_size) %>
         <% if total <= next_limit_max %>
           &nbsp; | &nbsp;
-          <%= link_to("All", new_search_path(query_string: "#{@search.parsed_request.query_string.sub(/limit: *\d+/i,'').sub(/$/,%Q(limit: #{total} ))}",query_target: "#{params[:query_target]}"), title: "List all.") %>
+          <%= link_to("All", new_search_path(query_string: "#{@search.parsed_request.query_string.sub(/limit: *\d+/i,'').sub(/$/,%Q( limit: #{total} ))}",query_target: "#{params[:query_target]}"), title: "List all.") %>
         <% else %>
           &nbsp; | &nbsp;
           <%= link_to("List #{next_limit_max}", new_search_path(query_string: "#{@search.parsed_request.query_string.sub(/limit: *\d{1,}/,'').sub(/$/,%Q(limit: #{next_limit_max} ))}",query_target: "#{params[:query_target]}"), title: "List #{@search.page_increment_size} more.") %>
@@ -68,6 +68,10 @@
       <% end %>
     <% end %>
 
-<%# if @search.parsed_request.defined_query %>
-<%# end %>
+    <% if @search.parsed_request.defined_query %>
+      <% if @search.executed_query.limited %>
+        &nbsp;| <span title="Limited.  To see more records add 'limit: 999' to the search.">Limited</span>
+      <% end %>
+    <% end %>
  <% end %>
+<%#= @search.parsed_request.inspect %>
