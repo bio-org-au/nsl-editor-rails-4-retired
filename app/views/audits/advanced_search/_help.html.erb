@@ -3,7 +3,7 @@ List records created or updated recently.
 
 <br>
 <br>
-<% if @current_user.qa? %>
+<% if @current_user && @current_user.qa? %>
   QA users can review all records.
   <br>
   <br>
@@ -19,7 +19,7 @@ List records created or updated recently.
 
 <%= render partial: 'audits/advanced_search/quick_start_help' %>
 
-<% if @current_user.qa? %>
+<% if @current_user && @current_user.qa? %>
   QA users can review all records.
   <br>
   <br>

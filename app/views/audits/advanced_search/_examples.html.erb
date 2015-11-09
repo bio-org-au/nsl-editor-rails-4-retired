@@ -41,7 +41,7 @@
 
 -->
 
-<% if @current_user.qa? %>
+<% if @current_user && @current_user.qa? %>
   <%#= render partial: 'audits/advanced_search/examples_qa' %>
 <% end %>
 
