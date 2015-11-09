@@ -14,7 +14,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #   
-class Name::DefinedQuery::NamesWithInstances 
+class Name::DefinedQuery::NamesPlusInstances 
 
   attr_reader :results, :limited, :common_and_cultivar_included, :has_relation, :relation, :count
 
@@ -23,7 +23,7 @@ class Name::DefinedQuery::NamesWithInstances
   end
 
   def debug(s)
-    tag = "Name::DefinedQuery::NamesWithInstances"
+    tag = "Name::DefinedQuery::NamesPlusInstances"
     #puts("#{tag}: #{s}")
     Rails.logger.debug("#{tag}: #{s}")
   end
@@ -38,15 +38,15 @@ class Name::DefinedQuery::NamesWithInstances
       debug("run_query counting")
       query = Search::OnName::ListQuery.new(parsed_request)
       @relation = query.sql  # TODO: work out how to provide the relation and sql
-      results = relation.all
-      limited = query.limited
+      results = @relation.all
+      debug("results.size: #{results.size}")
+      limited = false
 
       debug(results.size)
-      tally = results.size
+      tally = 0 #results.size
       results.each  do | name |
-        tally += 1
         debug("tallying for #{name.id}")
-        tally += name.instances.size
+        tally += Instance::AsSearchEngine.name_usages(name.id).size
         debug("tally: #{tally}")
       end
       debug("tally: #{tally}")

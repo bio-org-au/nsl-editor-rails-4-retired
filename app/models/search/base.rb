@@ -118,9 +118,9 @@ class Search::Base
     when /instances-for-name-id:/
       debug("\nrun_defined_query instances-for-name-id:\n")
       @executed_query = Name::DefinedQuery::NameIdWithInstances.new(@parsed_request)
-    when /instances-for-name:/
+    when /names-plus-instances:/
       debug("\nrun_defined_query instances-for-name:\n")
-      @executed_query = Name::DefinedQuery::NamesWithInstances.new(@parsed_request)
+      @executed_query = Name::DefinedQuery::NamesPlusInstances.new(@parsed_request)
     when /instances-for-ref-id:/
       debug("\nrun_defined_query instances-for-ref-id:\n")
       @executed_query = Reference::DefinedQuery::ReferenceIdWithInstances.new(@parsed_request)

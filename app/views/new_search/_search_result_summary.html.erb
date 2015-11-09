@@ -16,7 +16,12 @@
         <% records_found = true %>
         <% if @search.parsed_request.defined_query %>
           <%= "#{pluralize(@search.executed_query.count,"record")}" %>
+          <% if @search.executed_query.results.size >= @search.parsed_request.limit %>
+            of an unknown total
+            <strong title="Limited.  To see more records add larger limit to the search e.g. ' limit: 999'." >(limited)</strong>
+          <% end %>
         <% else %>
+          <%# if @search.executed_query.results.size == @search.parsed_request.limit %>
           <% if @search.executed_query.results.size == @search.parsed_request.limit %>
             <% total = @search.executed_query.results.except(:offset,:limit,:order).count %>
             <%= "#{pluralize(@search.executed_query.results.size,"of #{total} record")}" %>
@@ -68,10 +73,5 @@
       <% end %>
     <% end %>
 
-    <% if @search.parsed_request.defined_query %>
-      <% if @search.executed_query.limited %>
-        &nbsp;| <span title="Limited.  To see more records add 'limit: 999' to the search.">Limited</span>
-      <% end %>
-    <% end %>
  <% end %>
 <%#= @search.parsed_request.inspect %>
