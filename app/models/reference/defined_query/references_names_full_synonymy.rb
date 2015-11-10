@@ -14,7 +14,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #   
-class Reference::DefinedQuery::ReferencesWithInstances 
+class Reference::DefinedQuery::ReferencesNamesFullSynonymy 
 
   attr_reader :results, :limited, :common_and_cultivar_included, :has_relation, :relation, :count
 
@@ -23,8 +23,14 @@ class Reference::DefinedQuery::ReferencesWithInstances
   end
 
   def debug(s)
-    tag = "Reference::DefinedQuery::ReferencesWithInstances"
-    #puts("#{tag}: #{s}")
+    tag = "Reference::DefinedQuery::ReferencesNamesFullSynonymy"
+    Rails.logger.debug("#{tag}: #{s}")
+    Rails.logger.debug("#{tag}: #{s}")
+    Rails.logger.debug("#{tag}: #{s}")
+    Rails.logger.debug("#{tag}: #{s}")
+    Rails.logger.debug("#{tag}: #{s}")
+    Rails.logger.debug("#{tag}: #{s}")
+    Rails.logger.debug("#{tag}: #{s}")
     Rails.logger.debug("#{tag}: #{s}")
   end
  
@@ -38,17 +44,16 @@ class Reference::DefinedQuery::ReferencesWithInstances
       debug("run_query counting")
       query = Search::OnReference::ListQuery.new(parsed_request)
       @relation = query.sql  # TODO: work out how to provide the relation and sql
-      results = relation.all
-      limited = query.limited
-      debug(results.size)
-      tally = results.size
-      results.each  do | ref |
+      references = relation.all
+      debug(references.size)
+      tally = 0
+      references.each  do | ref |
         debug(ref.id)
-        tally += ref.instances.size
+        #tally += ref.instances.size
+        tally += Instance::AsSearchEngine.ref_usages(ref.id).size
       end
       debug("tally: #{tally}")
-
-      @limited = limited
+      @limited = false
       @common_and_cultivar_included = query.common_and_cultivar_included
       @count = tally
     else

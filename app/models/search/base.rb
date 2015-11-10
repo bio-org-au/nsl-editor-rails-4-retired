@@ -129,9 +129,9 @@ class Search::Base
       debug("\nrun_defined_query instances-for-ref-id-sort-by-page:\n")
       @executed_query = Reference::DefinedQuery::ReferenceIdWithInstancesSortedByPage.new(@parsed_request)
       #@results = Instance::AsSearchEngine.for_ref_id(@defined_query_arg, @limit,'page')
-    when /instances-for-reference/
-      debug("\nrun_defined_query instances-for-names\n")
-      @executed_query = Reference::DefinedQuery::ReferencesWithInstances.new(@parsed_request)
+    when /references-name-full-synonymy/
+      debug("\nrun_defined_query references-name-full-synonymy\n")
+      @executed_query = Reference::DefinedQuery::ReferencesNamesFullSynonymy.new(@parsed_request)
     when /\Ainstance-is-cited\z/
       debug("\nrun_defined_query instance-id-is-cited\n")
       @executed_query = Instance::DefinedQuery::IsCited.new(@parsed_request)

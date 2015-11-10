@@ -54,15 +54,15 @@ class Search::ParsedRequest
     'instances-for-ref-id-sort-by-page:' => 'instances-for-ref-id-sort-by-page:',
     'instances for ref id sort by page' => 'instances-for-ref-id-sort-by-page:',
     'instances sorted by page for ref id' => 'instances-for-ref-id-sort-by-page:',
-    'references with instances' => 'instances-for-references',
-    'references, names, full synonymy' => 'instances-for-references',
+    'references with instances' => 'references-name-full-synonymy',
+    'references, names, full synonymy' => 'references-name-full-synonymy',
+    'references + instances' => 'references-name-full-synonymy',
     'references with novelties' => 'references-with-novelties',
     'references, accepted names for id' => 'references-accepted-names-for-id',
-    'references + instances' => 'instances-for-references',
     'instance is cited' => 'instance-is-cited',
     'instance is cited by' => 'instance-is-cited-by',
     'audit' => 'audit',
-    'review' => 'audit'
+    'review' => 'audit',
   }
 
   SIMPLE_QUERY_TARGETS = {
@@ -125,7 +125,7 @@ class Search::ParsedRequest
     if DEFINED_QUERIES.has_key?(query_target_downcase)
       debug("parse_query_target - #{query_target_downcase} is recognized as a defined query.")
       @defined_query = DEFINED_QUERIES[query_target_downcase]
-      @target_button_text = @params['query_target'].capitalize.gsub(/\bid\b/,'ID').gsub('name','Name').gsub(/ref/,'Ref')
+      @target_button_text = @params['query_target'].capitalize.gsub(/\bid\b/,'ID').gsub('name','Name').gsub(/Names,/,'names,').gsub(/ref/,'Ref')
     else
       debug("parse_query_target - '#{query_target_downcase}' is NOT recognized as a defined query.")
       @defined_query = false
