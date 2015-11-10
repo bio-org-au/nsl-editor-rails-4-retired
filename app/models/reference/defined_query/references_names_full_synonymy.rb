@@ -25,13 +25,6 @@ class Reference::DefinedQuery::ReferencesNamesFullSynonymy
   def debug(s)
     tag = "Reference::DefinedQuery::ReferencesNamesFullSynonymy"
     Rails.logger.debug("#{tag}: #{s}")
-    Rails.logger.debug("#{tag}: #{s}")
-    Rails.logger.debug("#{tag}: #{s}")
-    Rails.logger.debug("#{tag}: #{s}")
-    Rails.logger.debug("#{tag}: #{s}")
-    Rails.logger.debug("#{tag}: #{s}")
-    Rails.logger.debug("#{tag}: #{s}")
-    Rails.logger.debug("#{tag}: #{s}")
   end
  
   def run_query(parsed_request)

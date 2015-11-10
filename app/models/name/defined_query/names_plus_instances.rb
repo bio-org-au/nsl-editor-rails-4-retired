@@ -24,7 +24,6 @@ class Name::DefinedQuery::NamesPlusInstances
 
   def debug(s)
     tag = "Name::DefinedQuery::NamesPlusInstances"
-    #puts("#{tag}: #{s}")
     Rails.logger.debug("#{tag}: #{s}")
   end
  
