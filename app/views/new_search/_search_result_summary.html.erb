@@ -16,7 +16,7 @@
         <% records_found = true %>
         <% if @search.parsed_request.defined_query %>
           <%= "#{pluralize(@search.executed_query.count,"record")}" %>
-          <% if @search.executed_query.results.size >= @search.parsed_request.limit %>
+          <% if @search.executed_query.results.present? && @search.executed_query.results.size >= @search.parsed_request.limit %>
             of an unknown total
             <strong title="Limited.  To see more records add larger limit to the search e.g. ' limit: 999'." >(limited)</strong>
           <% end %>
