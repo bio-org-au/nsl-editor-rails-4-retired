@@ -24,6 +24,7 @@ class NewSearchController < ApplicationController
         tree_search
       else
         params[:current_user] = current_user
+        params[:include_common_and_cultivar_session] = session[:include_common_and_cultivar] 
         @search = Search::Base.new(params) 
         save_search(@search)
       end
@@ -55,6 +56,11 @@ class NewSearchController < ApplicationController
     render 'search'
   end
  
+  def set_include_common_and_cultivar
+    logger.debug('set_include_common_and_cultivar')
+    session[:include_common_and_cultivar] = !session[:include_common_and_cultivar]
+  end
+
   private
 
   def save_search(search)

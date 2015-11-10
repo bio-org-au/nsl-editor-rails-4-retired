@@ -30,7 +30,7 @@ class Search::OnName::ListQuery
     prepared_query = Name.includes(:name_status).includes(:name_tags) 
     where_clauses = Search::OnName::WhereClauses.new(@parsed_request,prepared_query)
     prepared_query = where_clauses.sql
-    if @parsed_request.common_and_cultivar || where_clauses.common_and_cultivar_included?
+    if @parsed_request.common_and_cultivar || where_clauses.common_and_cultivar_included? || @parsed_request.include_common_and_cultivar_session
       Rails.logger.debug("Search::OnName::ListQuery#prepare_query yes, we need common, cultivars")
       @common_and_cultivar_included = true
     else

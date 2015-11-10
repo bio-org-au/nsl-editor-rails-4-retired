@@ -144,6 +144,8 @@ Rails.application.routes.draw do
   match 'help/typeaheads', to: "help#typeaheads", as: 'typeaheads', via: :get
   resources :instance_types, only: [:index]
 
+  match '/set_include_common_and_cultivar', to: "new_search#set_include_common_and_cultivar", as: 'set_include_common_and_cultivar', via: :post
+
   root to: "new_search#search"
   match '/*random', to: "new_search#search", via: [:get,:post,:delete,:patch]
   

@@ -18,6 +18,7 @@ class Search::ParsedRequest
 
   attr_reader :canonical_query_string, 
               :common_and_cultivar, 
+              :include_common_and_cultivar_session, 
               :count, 
               :defined_query, 
               :defined_query_arg,
@@ -198,6 +199,7 @@ class Search::ParsedRequest
 
   def parse_common_and_cultivar(tokens)
     @common_and_cultivar = false
+    @include_common_and_cultivar_session = @params['include_common_and_cultivar_session']
     tokens
   end
   

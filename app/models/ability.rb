@@ -40,6 +40,7 @@ class Ability
     # A separate authentication check controls which pages are visible to non-authenticated users.
     # Some users can login but have no groups allocated.  By default they can "read" - search and view data.
     # We could theoretically relax authentication and have these authorization checks prevent non-editors changing data.
+    can 'application',        'set_include_common_cultivars'
     can 'authors',            'tab_show_1'
     can 'help',               :all
     can 'instance_types',     'index'

@@ -33,6 +33,7 @@ class SessionsController < ApplicationController
       session[:username] = sign_in_params[:username]
       session[:groups] = @sign_in.groups
       session[:user_full_name] = @sign_in.user_full_name
+      session[:include_common_and_cultivar] = false
       if session[:url_after_sign_in].present?
         url_after_sign_in = session[:url_after_sign_in]
         session[:url_after_sign_in] = ''

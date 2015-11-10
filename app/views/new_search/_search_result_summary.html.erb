@@ -1,7 +1,12 @@
   <%#= "#{pluralize(@search.executed_query.count,"record")}." %>
   <%#= link_to(%Q("#{@search.parsed_request.query_string}" #{icon('refresh')}).html_safe, new_search_path(query_string: "#{@search.parsed_request.query_string}",query_target: "#{params[:query_target]}"), title: 'Rerun the query.') %>
 
-
+ <span id="set-include-common-and-cultivar">
+   <%= render partial: 'set_include_common_and_cultivar' %>
+ </span>
+<% unless @search.empty == true %>
+ &nbsp;|&nbsp;
+<% end %>
 <% if @search.error %>
   <%= @search.error_message %>
 <% elsif @search.empty %>
@@ -63,15 +68,6 @@
       <%= link_to('List', new_search_path(query_string: "#{@search.parsed_request.query_string.sub(/count */i,'')}",query_target: "#{params[:query_target]}")) %>
     <% end %>
 
-
-    <% if @search.parsed_request.query_target.match(/\Anames{1}\z/i) %>
-    &nbsp; | &nbsp;
-      <% if @search.executed_query.common_and_cultivar_included %>
-        <span id="includes-common-cultivar-notice"></span>
-      <% else %>
-        <%= link_to('Include common,cultivar names.', new_search_path(query_string: "#{@search.parsed_request.query_string.strip} nt:*",query_target: "#{params[:query_target]}"), title: 'Query including cultivar and common.') %>
-      <% end %>
-    <% end %>
-
  <% end %>
+
 <%#= @search.parsed_request.inspect %>
