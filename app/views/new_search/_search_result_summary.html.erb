@@ -59,13 +59,13 @@
         <% end %>
         <% if @search.parsed_request.count_allowed %>
           &nbsp; | &nbsp;
-          <%= link_to('Count', new_search_path(query_string: "count #{@search.parsed_request.query_string.sub(/list */i,'')}",query_target: "#{params[:query_target]}")) %>
+          <%= link_to('Count', new_search_path(query_string: "count #{@search.parsed_request.query_string.sub(/^ *list */i,'')}",query_target: "#{params[:query_target]}")) %>
         <% end %>
       </span>
     <% end %>
     <% if @search.parsed_request.count && @search.executed_query.count > 0 %> 
        &nbsp; | &nbsp;
-      <%= link_to('List', new_search_path(query_string: "#{@search.parsed_request.query_string.sub(/count */i,'')}",query_target: "#{params[:query_target]}")) %>
+      <%= link_to('List', new_search_path(query_string: "#{@search.parsed_request.query_string.sub(/^ *count */i,'')}",query_target: "#{params[:query_target]}")) %>
     <% end %>
 
  <% end %>
