@@ -138,7 +138,7 @@ class Search::ParsedRequest
     if tokens.blank?
       @list = true
       @count = !@list
-    elsif tokens.first.match(/count/i)
+    elsif tokens.first.match(/\Acount\z/i)
       tokens = tokens.drop(1)
       @count = true
       @list = !@count
