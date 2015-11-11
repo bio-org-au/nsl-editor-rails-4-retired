@@ -40,17 +40,14 @@
   <% end %>
   <% if @instance.reverse_of_this_cites.size > 0 %>
     <%= link_to("Instance is cited: #{@instance.reverse_of_this_cites.size} &nbsp; #{gray_search_icon}".html_safe,
-                 search_path(query: %Q(#{@instance.id}),
-                             query_on: 'instance', 
-                               query_field: 'reverse-of-cites-id-query'),
+                 new_search_path(query_string: @instance.id.to_s,
+                                 query_target: 'instance is cited'), 
                title: "Query the instances") %>
     <br>
   <% end %>
   <% if @instance.reverse_of_this_is_cited_by.size > 0 %>
     <%= link_to("Instance cited by #{citation_summary(@instance)} &nbsp; #{gray_search_icon}".html_safe,
-                 search_path(query: %Q(#{@instance.id}),
-                             query_on: 'instance', 
-                               query_field: 'reverse-of-cited-by-id-query'),
+                 new_search_path(query_string: @instance.id.to_s, query_target: 'instance is cited by'),
                  title: "Query the instances this is cited by.") %>
     <br>
   <% end %>

@@ -34,6 +34,7 @@ class Name < ActiveRecord::Base
   scope :full_name_like, ->(string) { where("lower(f_unaccent(full_name)) like f_unaccent(?) ",string.gsub(/\*/,'%').downcase+'%') }
   scope :lower_full_name_equals, ->(string) { where("lower(f_unaccent(full_name)) = f_unaccent(?) ",string.downcase) }
   scope :lower_full_name_like, ->(string) { where("lower(f_unaccent(full_name)) like f_unaccent(?) ",string.gsub(/\*/,'%').downcase) }
+  scope :lower_rank_like, ->(string) { where("name_rank_id in (select id from name_rank where lower(name) like ?)",string.gsub(/\*/,'%').downcase) }
   scope :order_by_full_name, ->{ order('lower(full_name)')}
   scope :select_fields_for_typeahead, ->{select(" name.id, name.full_name, name_rank.name name_rank_name, name_status.name name_status_name")}
   scope :select_fields_for_parent_typeahead, ->{select(" name.id, name.full_name, name_rank.name name_rank_name, name_status.name name_status_name, count(instance.id) instance_count")}
@@ -53,6 +54,15 @@ class Name < ActiveRecord::Base
   scope :name_rank_genus_and_below,->{ where("name_rank.sort_order >= (select sort_order from name_rank genus where genus.name = 'Genus')") }
   scope :avoids_id,->(avoid_id) { where("name.id != ?", avoid_id) }
   scope :all_children,->(parent_id) { where("name.parent_id = ? or name.second_parent_id = ?", parent_id, parent_id) }
+  scope :for_id,->(id) { where("name.id = ?", id) }
+
+  scope :created_n_days_ago, ->(n) { where("current_date - created_at::date = ?",n)}
+  scope :updated_n_days_ago, ->(n) { where("current_date - updated_at::date = ?",n)}
+  scope :changed_n_days_ago, ->(n) { where("current_date - created_at::date = ? or current_date - updated_at::date = ?",n,n)}
+
+  scope :created_in_the_last_n_days, ->(n) { where("current_date - created_at::date < ?",n)}
+  scope :updated_in_the_last_n_days, ->(n) { where("current_date - updated_at::date < ?",n)}
+  scope :changed_in_the_last_n_days, ->(n) { where("current_date - created_at::date < ? or current_date - updated_at::date < ?",n,n)}
 
   belongs_to :name_rank
   belongs_to :name_type

@@ -1,17 +1,16 @@
 <% increment_tab_index %>
 
 <%= @reference.ref_type.name %> by 
-<%= link_to("#{@reference.author.name} (#{@reference.ref_author_role.name}) #{search_icon_on_tab}".html_safe, search_path(query_on: 'author', query: %Q(id:#{@reference.author_id})),title: 'Search for the author(s)/editor(s)...') %> 
+<%= link_to("#{@reference.author.name} (#{@reference.ref_author_role.name}) #{search_icon_on_tab}".html_safe, new_search_path(query_string: "id:#{@reference.author_id}",query_target: 'author'),title: 'Search for the author(s)/editor(s)...',class: 'author') %> 
 <br>
 <%= @reference.title %>
 <br>
 <% if @reference.parent %>
   <%= link_to("#{@reference.parent.title} #{search_icon_on_tab}".html_safe, 
-              search_path(query: @reference.parent_id,
-                          query_on: 'reference',
-                          query_field: 'rp'),
+                          new_search_path(query_string: "parent-id:#{@reference.parent_id}",query_target: "reference"),
                           title: 'Search for the containing reference',
-                          tabindex: increment_tab_index ) %>
+                          tabindex: increment_tab_index,
+                          class: 'ref') %>
 <% end %>
 <% if @reference.published %>
   <%= @reference.volume %>
@@ -38,7 +37,7 @@
   <br>
   <% label_string = pluralize(@reference.children.size,'child') %>
   <%= link_to("#{label_string} #{search_icon_on_tab}".html_safe, 
-              search_path(query: @reference.id, query_on: 'reference', query_field: 'p'),
+              new_search_path(query_target: "reference", query_string: "parent-id:#{@reference.id}"),
               title: "Search for the #{label_string}", 
               tabindex: increment_tab_index) %>
 <% end %>
@@ -46,8 +45,7 @@
 <% if @reference.duplicate_of.present? %>
   Duplicate of 
   <%= link_to("#{@reference.duplicate_of.citation} #{search_icon_on_tab}".html_safe,
-              search_path(query: "id:#{@reference.duplicate_of_id}",
-              query_on: 'reference'),
+              new_search_path(query_target: "reference", query_string: "id:#{@reference.duplicate_of_id}"),
               title: 'Search for the duplicate reference.') %>
 <% end %>
 
@@ -57,35 +55,35 @@
 <% if instances_size > 0 %>
   <% if instances_size == 1 %>
     <%= link_to("1 Instance #{search_icon_on_tab}".html_safe,
-                          search_path(query_on: 'instance', 
-                                      query_field: 'ref-usages', 
-                                      query:  "#{@reference.id}"),
+                          new_search_path(query_target: "instances for ref id", query_string: "#{@reference.id}"), 
                           tabindex: increment_tab_index, 
                           title: 'Search for the instance.') %>
   <% else %>
     <%= "#{instances_size} Instances" %>
     <br>
     <%= link_to("&mdash; sorted by name #{search_icon_on_tab}".html_safe,
-                          search_path(query_on: 'instance', 
-                                      query_field: 'ref-usages', 
-                                      query_limit: '100', 
-                                      query_sort: 'name', 
-                                      query:  "#{@reference.id}"),
+                          new_search_path(query_string: @reference.id.to_s,query_target: 'instances for ref id'),
                           tabindex: increment_tab_index, 
-                          title: 'Search for the instances, sorted by name.') %>
-  <br>
-  <%= link_to("&mdash; sorted by page #{search_icon_on_tab}".html_safe,
-                          search_path(query_on: 'instance', 
-                                      query_field: 'ref-usages', 
-                                      query_limit: '100', 
-                                      query_sort: 'page', 
-                                      query:  "#{@reference.id}"),
+                          title: 'Search for the instances, sorted by name.',
+                          class: 'instance') %>
+    <br>
+    <%= link_to("&mdash; sorted by page #{search_icon_on_tab}".html_safe,
+                          new_search_path(query_string: @reference.id.to_s, query_target: "instances for ref id sort by page"),
                           tabindex: increment_tab_index, 
-                          title: 'Search for the instances, sorted by page.') %>
-          <% end %>
-<% else %>
-  No instances
+                          title: 'Search for the instances, sorted by page.',
+                          class: 'instance') %>
+   <% end %>
 <% end %>
+  <br>
+<% novelties = @reference.novelties %>
+<% if novelties.size > 0 %>
+  <%= link_to("#{pluralize(novelties.size,"Novelty")} #{search_icon_on_tab}".html_safe,
+                        new_search_path(query_target: "References with novelties", query_string: "id:#{@reference.id}"), 
+                        tabindex: increment_tab_index, 
+                        title: 'Taxon novelties in this reference.',
+                        class: 'instance') %>
+<% end %>
+
 
 <% unless @reference.doi.blank? %>
   <%= link_to('DOI',@reference.doi) %>
@@ -125,11 +123,11 @@
 
 
 <h5>Reference #<%= @reference.id %></h5>
-
-<% created =  "#{@reference.created_by.downcase} #{formatted_timestamp(@reference.created_at)}" %>
-<% updated =  "#{@reference.updated_by.downcase} #{formatted_timestamp(@reference.updated_at)}" %>
-<%= render partial: 'detail_line', locals: {label: 'Created', info: created} %>
-<%= render partial: 'detail_line', locals: {label: 'Last updated', info: updated} %>
+<br>
+<br>
+<%= created_by_whom_and_when(@reference).html_safe %>
+<br>
+<%= updated_by_whom_and_when(@reference).html_safe %>
 <%= render partial: 'detail_line', locals: {label: 'System', info: "#{@reference.namespace.name}#{%Q(.#{@reference.source_system.downcase}.#{@reference.source_id}) if @reference.source_system}"} %>
 
 

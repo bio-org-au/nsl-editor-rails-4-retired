@@ -1,0 +1,8 @@
+      <%= select_tag('name_search_name_status_id', 
+                     options_for_select(NameStatus.query_form_options),
+                     title: 'Select one status', 
+                     include_blank: true,
+                     autocomplete: "off", 
+                     class: "form-control give-me-focus") 
+                   %>
+

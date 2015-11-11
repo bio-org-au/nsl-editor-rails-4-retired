@@ -38,14 +38,15 @@ Rails.application.routes.draw do
   match 'sign_out', as: "sign_out_get_for_firefox_bug", to: "sessions#destroy", via: :get
   match 'throw_invalid_authenticity_token', to: "sessions#throw_invalid_authenticity_token", via: :get
 
-  match 'search/name/with/instances/:query',
-         as: 'search_name_with_instances',
-         to: 'search#index',
-         via: :get,
-         defaults: { query_on: 'instance',
-                     query_field: 'name-id' }
+  #match 'search/name/with/instances/:name_id',
+         #as: 'search_name_with_instances',
+         #to: 'new_search#search_name_with_instances',
+         #via: :get
 
-  match '/search', as: "search", to: "search#index", via: :get
+  match '/search', as: "search", to: "new_search#search", via: :get
+  match '/new_search', as: "new_search", to: "new_search#search", via: :get
+  match '/new_search/tree', as: "tree", to: "new_search#tree", via: :get
+  match '/new_search/preview', as: "new_search_preview", to: "new_search#preview", via: :get
 
   resources :instance_notes, only: [:show, :new, :edit, :create, :update, :destroy]
 
@@ -143,7 +144,9 @@ Rails.application.routes.draw do
   match 'help/typeaheads', to: "help#typeaheads", as: 'typeaheads', via: :get
   resources :instance_types, only: [:index]
 
-  root to: "search#index"
-  match '/*random', to: "search#index", via: [:get,:post,:delete,:patch]
+  match '/set_include_common_and_cultivar', to: "new_search#set_include_common_and_cultivar", as: 'set_include_common_and_cultivar', via: :post
+
+  root to: "new_search#search"
+  match '/*random', to: "new_search#search", via: [:get,:post,:delete,:patch]
   
 end

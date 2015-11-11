@@ -1,6 +1,8 @@
 
 *.blue           { color: blue; }
 *.brown          { color: brown; }
+*.gray           { color: gray; }
+*.lightgray      { color: lightgray; }
 *.darkgray       { color: darkgray; }
 *.darkred        { color: darkred; }
 *.darkslateblue  { color: darkslateblue; }
@@ -14,5 +16,29 @@
 *.yellow         { color: yellow; }
 
 
+*.bgblue           { background-color: blue; }
+*.bgbrown          { background-color: brown; }
+*.bggray           { background-color: gray; }
+*.bglightgray      { background-color: lightgray; }
+*.bgdarkgray       { background-color: darkgray; }
+*.bgdarkred        { background-color: darkred; }
+*.bgdarkslateblue  { background-color: darkslateblue; }
+*.bggreen          { background-color: green; }
+*.bgorange         { background-color: orange }
+*.bgpurple         { background-color: purple; }
+*.bgrebeccapurple  { background-color: #663399; }
+*.bgred            { background-color: red; }
+*.bgsienna         { background-color: sienna; }
+*.bgwhite          { background-color: white; }
+*.bgyellow           { background-color: yellow; }
+
+
 *.hover-white:hover    {color: white}
 a:hover.blue           { color: blue; }
+
+/*
+*.name,name-hover {color: darkgreen;}
+*.ref,ref-hover  {color: brown;}
+* .instance,.instance-hover {color: darkslateblue;}
+*.author,author-hover {color: darkblue;}
+*/

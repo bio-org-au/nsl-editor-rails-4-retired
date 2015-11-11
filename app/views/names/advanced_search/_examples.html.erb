@@ -1,0 +1,70 @@
+<div id="example-search-name" class="example-search-tab">
+<h3>Name search examples</h3>
+<br>
+<br>
+<% excc = %Q(<span class="purple" title="Excluding common and cultivar names by default.">EXCC</span>) %>
+<% incc = %Q(<span class="purple" title="Including common and cultivar names.">INCC</span>) %>
+<h4 class="">List names</h4>
+<table class="example-searches table table-striped">
+  <% [{search_target: 'Names', search_string: "acacia",explanation: %Q(List names starting with "acacia".  Bare search is on names. 100 records is the default.)},
+      {search_target: 'Names', search_string: "acacia type:*", 
+       explanation: %Q(Also include common and cultivar names which are normally excluded (i.e. #{excc.sub(/\./,'')}).)},
+      {search_target: 'Names', search_string: "cacia", explanation: %Q(Find no names matching "cacia", even with the automatically added trailing wildcard. A leading wildcard is required. #{excc})},
+      {search_target: 'Names', search_string: "acacia type:common,cultivar", explanation: %Q(Find just common or cultivar names exactly matching "acacia". #{incc})},
+      {search_target: 'Names', search_string: "acacia rank: genus", explanation: %Q(List any name starting with "acacia" that is a genus. #{excc})},
+      {search_target: 'Names', search_string: "acacia rank: genus is-not-a-duplicate:", explanation: %Q(List any name starting with "acacia" that is a genus and is not a duplicate. #{excc})}
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent"><a href="javascript:void(0)" 
+           class="example-search width-100-percent" 
+           title="Link to search">
+        <span class="blue"><%= link_to(val[:search_string], new_search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %></span></a>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+<br>
+<h4 class="inline-block">Count names</h4><span> - turn a list into a count</span>
+<table class="example-searches table table-striped">
+  <% [{search_target: 'Names', search_string: "count acacia",explanation: %Q(Count names starting with "acacia". #{excc})},
+      {search_target: 'Names', search_string: "count rank: genus is-not-a-duplicate:", explanation: %Q(Count non-duplicate genera. #{excc})},
+      {search_target: 'Names', search_string: "count acacia type:*", explanation: %Q(Count names starting with "acacia". #{incc})},
+      {search_target: 'Names', search_string: "count acacia type:common,cultivar", explanation: %Q(Count common or cultivar names starting with "acacia". #{incc})},
+      {search_target: 'Names', search_string: "count is-a-duplicate:", explanation: %Q(Count duplicate names. #{excc})},
+      {search_target: 'Names', search_string: "count comments:*", explanation: %Q(Count commented names turning a text field into an assertion. #{excc})}
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent"><a href="javascript:void(0)" 
+           class="example-search width-100-percent" 
+           title="Link to search">
+        <span class="blue"><%= link_to(val[:search_string], new_search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %></span></a>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+<br>
+
+<h4 class="inline-block">Limit list size</h4><span> - set the number of records</span>
+<table class="example-searches table table-striped">
+  <% [{search_target: 'Names', search_string: "acacia limit:5",explanation: %Q(List 5 names starting with "acacia". #{excc})},
+      {search_target: 'Names', search_string: "acacia limit:50", explanation: %Q(List 50 names starting with "acacia". #{excc})},
+      {search_target: 'Names', search_string: "acacia limit:1000", explanation: %Q(List 1000 names starting with "acacia". #{excc}.)},
+      {search_target: 'Names', search_string: "acacia limit:10000", explanation: %Q(List 10000 names starting with "acacia". #{excc}. <span class="red">10000 is the current maximum.</span>)},
+      {search_target: 'Names', search_string: "count acacia limit:10 nt:*", explanation: %Q(Count over-rides limit. #{incc}.)}
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent"><a href="javascript:void(0)" 
+           class="example-search width-100-percent" 
+           title="Link to search">
+        <span class="blue"><%= link_to(val[:search_string], new_search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %></span></a>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+<br>
+
+    </div>
+

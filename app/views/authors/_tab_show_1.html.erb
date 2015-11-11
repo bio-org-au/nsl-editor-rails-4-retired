@@ -3,95 +3,87 @@
 <%= render partial: 'detail_line', locals: {info: @author.name, label: 'name'} %>
 <%= render partial: 'detail_line', locals: {info: @author.abbrev, label: 'abbrev'} %>
 <%= render partial: 'detail_line', locals: {info: @author.full_name, label: 'extra name info'} %>
+<% if @author.notes.present? && @author.notes.length > 0 %>
+  <%= divider %>
+  Notes
+  <br>
+  <%= @author.notes %>
+<% end %>
+<%= divider %>
+
 <% search_count = @author.master_of.try('count') || 0 %>
 <% if search_count > 0 %>
   <% @author.master_of.each do |duplicate| %>
-    <% search_path = search_path(query_on: 'author', query: "id:#{duplicate.id}") %>
     <%= render partial: 'detail_line', 
                locals: {info: link_to(duplicate.name_and_or_abbrev,
-                                      search_path,
+                                      new_search_path(query_target: "author", query_string: "id:#{duplicate.id}"),
                                       title: 'See duplicate of'), 
                         label: 'duplicate'} %>
+    <%= divider %>
   <% end %>
-<% else %>
-  No duplicates
 <% end %>
 
 <% if @author.duplicate_of_id.present? %>
     <%= render partial: 'detail_line', 
                locals: {info: link_to(@author.duplicate_of.name_and_or_abbrev,
-                                      search_path(query_on: 'author', query_field: 'id', query: @author.duplicate_of_id),
-                                      title: 'See duplicate'), 
+                        new_search_path(query_target: "author", query_string: "id:#{@author.duplicate_of_id}"),
+                        title: 'See duplicate'), 
                         label: 'duplicate of'} %>
+    <%= divider %>
 <% end %>
-<br>
 
-
-<%= divider %>
-
-<% search_path = search_path(query: "author-id:#{@author.id}", query_on: 'reference') %>
 <% search_count = @author.references.count %>
 <% if search_count > 0 %>
 <%= render partial: 'detail_line', 
            locals: {info: link_to("#{pluralize(search_count,'authored reference')} ",
-                                  search_path,
+                                  new_search_path(query_target: "reference", query_string: "author-id:#{@author.id}"),
                                   title: 'See references'), 
-                    label: 'references'} %>
+                    label: ''} %>
 <% else %>
   No authored references.
 <% end %>
-
 <%= divider %>
 
-<% search_path = search_path(query: "a-id:#{@author.id}", query_on: 'name', query_limit: 100 ) %>
+<% need_name_divider = false %>
 <% search_count = @author.names.count %>
 <% if search_count > 0 %>
-   <%= link_to("#{pluralize(search_count,'authored name')} ",
-                                  search_path,
-                                  title: 'See names') %>
-<% else %>
-  No authored names.
+  <% need_name_divider = true %>
+  <%= link_to("#{pluralize(search_count,'authored name')} ", new_search_path(query_target: "name", query_string: "author-id:#{@author.id} nt:*", title: 'See names')) %>
+  <br>
 <% end %>
-<br>
 
-<% search_path = search_path(query: "ea-id:#{@author.id}", query_on: 'name', query_limit: 100 ) %>
 <% search_count = @author.ex_names.count %>
 <% if search_count > 0 %>
-  <%= link_to("#{pluralize(search_count,'ex-authored name')} ",search_path,title: 'See ex names') %>
-<% else %>
-  No ex-authored names.
+  <% need_name_divider = true %>
+  <%= link_to("#{pluralize(search_count,'ex-authored name')} ",new_search_path(query_target: "name", query_string: "ex-author-id:#{@author.id} nt:*",title: 'See ex names') )%>
+  <br>
 <% end %>
-<br>
 
-
-<% search_path = search_path(query: "ba-id:#{@author.id}", query_on: 'name', query_limit: 100 ) %>
 <% search_count = @author.base_names.count %>
 <% if search_count > 0 %>
-  <%= link_to("#{pluralize(search_count,'base authored name')} ",search_path,title: 'See base names') %>
-<% else %>
-  No base authored names.
+  <% need_name_divider = true %>
+  <%= link_to("#{pluralize(search_count,'base authored name')} ",new_search_path(query_target: "name", query_string: "base-author-id:#{@author.id} nt:*",title: 'See base names') )%>
+  <br>
 <% end %>
-<br>
 
-<% search_path = search_path(query: "eba-id:#{@author.id}", query_on: 'name', query_limit: 100 ) %>
 <% search_count = @author.ex_base_names.count %>
 <% if search_count > 0 %>
-<%= link_to("#{pluralize(search_count,'ex-base authored name')} ",search_path,title: 'See ex-base names') %>
-<% else %>
-  No ex-base authored names.
+  <% need_name_divider = true %>
+  <%= link_to("#{pluralize(search_count,'ex-base authored name')} ",new_search_path(query_target: "name", query_string: "ex-base-author-id:#{@author.id} nt:*",title: 'See ex-base names') )%>
+  <br>
 <% end %>
-<br>
 
 
-<% search_path = search_path(query: "sa-id:#{@author.id}", query_on: 'name', query_limit: 100 ) %>
 <% search_count = @author.sanctioned_names.count %>
 <% if search_count > 0 %>
-<%= link_to("#{pluralize(search_count,'sanctioned name')} ",search_path, title: 'See sanctioned names') %>
-<% else %>
-  No sanctioned names.
+  <% need_name_divider = true %>
+  <%= link_to("#{pluralize(search_count,'sanctioned name')} ",new_search_path(query_target: "name", query_string: "sanctioning-author-id:#{@author.id} nt:*",title: 'See sanctioned names') ) %>
+  <br>
 <% end %>
-<br>
 
+<% if need_name_divider %>
+  <%= divider %>
+<% end %>
 
 <% if @author.comments.size > 0  %>
   <h5><%= pluralize(@author.comments.size,'Comment') %></h5>
@@ -101,18 +93,16 @@
   <% end %>
 <% end %>
 
-
-
-<%= divider %>
 <h5>Author #<%= @author.id %></h5>
 <% if @author.duplicate_of_id.present? %>
 <h5>Duplicate of author #<%= @author.duplicate_of_id %></h5>
 <% end %>
 
-<% created =  "#{@author.created_by.downcase} #{formatted_timestamp(@author.created_at)}" %>
-<% updated =  "#{@author.updated_by.downcase} #{formatted_timestamp(@author.updated_at)}" %>
-<%= render partial: 'detail_line', locals: {label: 'Created', info: created} %>
-<%= render partial: 'detail_line', locals: {label: 'Last updated', info: updated} %>
+<%= created_by_whom_and_when(@author).html_safe %>
+<br>
+<%= updated_by_whom_and_when(@author).html_safe %>
+
 <%= render partial: 'detail_line', locals: {label: 'System', info: "#{@author.namespace.try('name')}#{%Q(.#{@author.source_system.try('downcase')}.#{@author.source_id}) if @author.source_system}"} %>
+
 
 

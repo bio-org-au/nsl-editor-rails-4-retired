@@ -56,7 +56,7 @@ $input-color-placeholder: rgba(156,57,255,0.3);
 }
 
 #search-results-summary-container {
-  padding-left: 16px;
+  padding-left: 0px;
 }
 
 // Bootstrap table-hover was interfering with showing-details color. 
@@ -86,6 +86,10 @@ input.typeahead.form-control {
 
 label.align-right {
   text-align: right;
+}
+
+label.plain {
+  font-weight: normal;
 }
 
 .align-right {
@@ -167,9 +171,6 @@ div.dropdown {
 
 
 .dropdown-submenu>a:after{display:block;content:" ";float:right;width:0;height:0;border-color:transparent;border-style:solid;border-width:5px 0 5px 5px;border-left-color:#cccccc;margin-top:5px;margin-right:-10px;}
-.dropdown-submenu:hover>a:after{border-left-color:#ffffff;}
-.dropdown-submenu.pull-left{float:none;}.dropdown-submenu.pull-left>.dropdown-menu{left:-100%;margin-left:10px;-webkit-border-radius:6px 0 6px 6px;-moz-border-radius:6px 0 6px 6px;border-radius:6px 0 6px 6px;}
-
 li.dropdown-submenu ul.dropdown-menu {
   max-height: 30em;
   overflow-y: scroll;
@@ -268,14 +269,17 @@ div#query-form-container {
 }
 
 /* Line up the dropdown button with the search field in firefox. */
+/*
 .btn.btn-default.dropdown-toggle {
   height: 23px;
   margin-top: 1px;
 }
 
+
 #searchbar .btn {
   height: 26px;
 }
+*/
 
 #search-model-selector-container {
   margin-right: 2em;
@@ -486,10 +490,10 @@ ul.tree {
 
 // nsl-478 //
 
-div#broadcast {
+div#xbroadcast {
   position: fixed;
-  top: 85px;
-  left: 16px;
+  top: 70px;
+  left: 7px;
   background: orange;
   color: white;
   height: 1.5em;
@@ -515,10 +519,6 @@ div#search-results-summary-container {
   padding-top: 0;
 }
 
-div#search-summary-row {
-  max-height: 40px;
-}
-
 div#big-navbar {
   margin-bottom: 0;
   padding-bottom: 0;
@@ -527,20 +527,14 @@ div#big-navbar {
   min-height: 140px;
   max-height: 140px;
 }
+
 div#navbar-header a.navbar-brand {
   max-height: 26px;
   padding: 5px 0 0 10px;
   margin: 0;
 }
 
-div#search-summary {
-  height: 25px;
-  max-height: 25px;
-  padding: 0 0 0 0;
-  margin: 0;
-}
- 
-div#flash{
+div#xflash{
   position: fixed;
   top: 85px;
   left: 16px;

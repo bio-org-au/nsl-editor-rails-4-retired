@@ -7,7 +7,7 @@
   <div class="inner">
     <h3 class="hide-overflow">
       <%= link_to("#{@reference.citation}#{display_pages(@reference.pages)}" || '[No citation found.]', 
-                  search_path(query: %Q(id:#{@reference.id}),query_on: 'reference'), id: 'tab-heading', tabindex: increment_tab_index )%>
+                  new_search_path(query_string: %Q(id:#{@reference.id}), query_target: 'reference'), id: 'tab-heading', tabindex: increment_tab_index )%>
     </h3>
       <%= render partial: 'tabs' %>
       <%= render @tab %>

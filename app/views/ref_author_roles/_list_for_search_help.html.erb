@@ -1,0 +1,8 @@
+      <%= select_tag('reference_search_ref_author_role_id', 
+                     options_for_select(RefAuthorRole.query_form_options),
+                     title: 'Select one role', 
+                     include_blank: true,
+                     autocomplete: "off", 
+                     class: "xform-control give-me-focus") 
+                   %>
+

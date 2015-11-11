@@ -1,0 +1,91 @@
+<div id="advanced-search-audit-form-container" class="">
+  <form class="form-inline">
+<table class="table advanced-form-table" class="table table-bordered" >
+  <tr><td class="width-5-percent">List/count</td> 
+    <td class="align-right width-15-percent"><label class="plain" for="query-on">Options</label></td>
+    <td>
+      <select id="audit-advanced-search-list-or-count" name="list_or_count" class="form-control">
+        <option value='count'>count records</option>
+        <option value='list' selected='selected'>list results</option>
+    </select>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+    <td class="align-right width-15-percent">
+      <label class="plain" for="query-on">Size</label>
+    </td>
+    <td>
+      <input id="audit-advanced-search-set-size" value="100" type="number" class="form-control min-width-10em" placeholder="Number of records for a list search" min="1" max="1000"/>
+    </td>
+  </tr>
+  <tr> <td class="width-5-percent">User Id</td>
+    <td class="align-right width-15-percent">
+    </td>
+    <td>
+      <input id="audit-advanced-search-user-id" type="text" class="form-control min-width-20em" placeholder=""/>
+    </td>
+  </tr>
+  <tr> <td class="width-5-percent">Start date</td>
+    <td class="align-right width-15-percent">
+    </td>
+    <td>
+      <input id="audit-advanced-search-start-date" name="audit_search_start_date" type="text" class="form-control min-width-20em" placeholder=""/>
+    </td>
+  </tr>
+  <tr> <td class="width-5-percent">End date</td>
+    <td class="align-right width-15-percent">
+    </td>
+    <td>
+      <input id="audit-advanced-search-end-date" name="audit_search_end_date" type="text" class="form-control min-width-20em" placeholder=""/>
+    </td>
+  </tr>
+  <tr> <td class="width-5-percent">Records</td>
+    <td class="align-right width-15-percent">
+    </td>
+    <td> <label class="plain"><input type="checkbox" class="audit-search-assertion" name="authors" value="authors:"> authors</label> </td>
+  </tr>
+  <tr> <td class="width-5-percent"></td>
+    <td class="align-right width-15-percent">
+    </td>
+    <td> <label class="plain"><input type="checkbox" class="audit-search-assertion" name="comments" value="comments:"> comments</label> </td>
+  </tr>
+  <tr> <td class="width-5-percent"></td>
+    <td class="align-right width-15-percent">
+    </td>
+    <td> <label class="plain"><input type="checkbox" class="audit-search-assertion" name="instances" value="instances:"> instances</label> </td>
+  </tr>
+  <tr> <td class="width-5-percent"></td>
+    <td class="align-right width-15-percent">
+    </td>
+    <td> <label class="plain"><input type="checkbox" class="audit-search-assertion" name="instance-notes" value="instance-notes:"> instance notes</label> </td>
+  </tr>
+  <tr> <td class="width-5-percent"></td>
+    <td class="align-right width-15-percent">
+    </td>
+    <td> <label class="plain"><input type="checkbox" class="audit-search-assertion" name="names" value="names:"> names</label> </td>
+  </tr>
+  <tr> <td class="width-5-percent"></td>
+    <td class="align-right width-15-percent">
+    </td>
+    <td> <label class="plain"><input type="checkbox" class="audit-search-assertion" name="references" value="references:"> references</label> </td>
+  </tr>
+  <tr> <td class="width-5-percent">Operations</td>
+    <td class="align-right width-15-percent">
+    </td>
+    <td> <label class="plain"><input type="checkbox" class="audit-search-assertion" name="create" value="create:"> create</label> </td>
+  </tr>
+  <tr> <td class="width-5-percent"></td>
+    <td class="align-right width-15-percent">
+    </td>
+    <td> <label class="plain"><input type="checkbox" class="audit-search-assertion" name="edit" value="edit:"> edit</label> </td>
+  </tr>
+  <tr> <td class="width-5-percent"></td>
+    <td class="align-right width-15-percent">
+    </td>
+    <td> <label class="plain"><input type="checkbox" class="audit-search-assertion" name="delete" value="delete:"> delete</label> </td>
+  </tr>
+  </table>
+</form>
+</div>
+

@@ -1,0 +1,52 @@
+<div id="example-search-reference" class="example-search-tab">
+<h3>Reference search examples</h3>
+<h4 class="">List references</h4>
+<table class="example-searches table table-striped">
+  <% [{search_target: 'References', search_string: "*",explanation: %Q(Start with "ref" for references. 100 listed by default.)},
+      {search_target: 'References', search_string: "limit:10",explanation: %Q(Control the number of references listed.)},
+      {search_target: 'References', search_string: "nuytsia", explanation: %Q(Reference searches match on citation by default.  Leading and trailing wildcards are added automatically.)},
+      {search_target: 'References', search_string: "title:nuytsia", explanation: %Q(Search on title.  A trailing wildcard is added automatically.)},
+      {search_target: 'References', search_string: "citation: nuytsia", explanation: %Q(Refer explicitly to the citation field.)},
+      {search_target: 'References', search_string: "citation: 1985 maslin", explanation: %Q(More than one search fragment for a citation search - order does not matter.)},
+      {search_target: 'References', search_string: "citation: maslin 1985", explanation: %Q(More than one search fragment for a citation search - order does not matter.)},
+      {search_target: 'References', search_string: "nuytsia type:journal", explanation: %Q(Restrict by type.)},
+      {search_target: 'References', search_string: "nuytsia ty:journal ti:nuytsia", explanation: %Q(Use field abbreviations.)}
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent"><a href="javascript:void(0)" 
+           class="example-search width-100-percent" 
+           title="Link to search">
+           <span class="blue"><%= link_to(val[:search_string], new_search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %></span></a>
+      </a>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+<br>
+
+<h4 class="">Count references</h4>
+<table class="example-searches table table-striped">
+  <% [{search_target: 'References', search_string: "count",explanation: %Q(Start with "count ref" to count references.)},
+      {search_target: 'References', search_string: "count nuytsia", explanation: %Q(Counting without listing should be faster than listing for large sets.)},
+      {search_target: 'References', search_string: "count type:journal", explanation: %Q(Because it's faster, counting may suit different types of searches.)},
+      {search_target: 'References', search_string: "count type:journal is-not-a-parent:", explanation: %Q(Use an assertion.)},
+      {search_target: 'References', search_string: "count type:paper has-no-parent:", explanation: %Q(Use a different assertion)},
+      {search_target: 'References', search_string: "count type:journal is-a-parent: is-a-duplicate:", explanation: %Q(Combine assertions.)}
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent"><a href="javascript:void(0)" 
+           class="example-search width-100-percent" 
+           title="Link to search">
+           <span class="blue"><%= link_to(val[:search_string], new_search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %></span></a>
+      </a>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+<br>
+
+    </div>
+
+

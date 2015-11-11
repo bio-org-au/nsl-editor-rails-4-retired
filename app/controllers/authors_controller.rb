@@ -33,7 +33,7 @@ class AuthorsController < ApplicationController
   def new_row
     @random_id = (Random.new.rand * 10000000000).to_i
     respond_to do |format|
-      format.html {redirect_to search_path}
+      format.html {redirect_to new_search_path}
       format.js {}
     end
   end

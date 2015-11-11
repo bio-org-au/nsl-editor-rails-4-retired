@@ -18,6 +18,15 @@
 
 class Instance::AsSearchEngine < Instance
 
+
+  def self.for_name_id(name_id)
+    Instance::AsSearchEngine.name_usages(name_id)
+  end
+
+  def self.for_ref_id(ref_id,limit,sort_by)
+    Instance.ref_usages(ref_id,limit,sort_by)
+  end
+
   # Instances of a name algorithm: work on a single name starts here.
   def self.name_usages(name_id)
     logger.debug("======================================")

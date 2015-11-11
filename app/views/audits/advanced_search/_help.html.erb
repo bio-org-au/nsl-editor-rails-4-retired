@@ -1,0 +1,40 @@
+<h4>Review search</h4>
+List records created or updated recently.
+
+<br>
+<br>
+<% if @current_user && @current_user.qa? %>
+  QA users can review all records.
+  <br>
+  <br>
+  <br>
+  <%= render partial: 'audits/advanced_search/quick_start_help_qa' %>
+<% else %>
+  This search is automatically restricted to records you have created or updated.
+  <br>
+  <br>
+  <br>
+  <%= render partial: 'audits/advanced_search/quick_start_help_editor' %>
+<% end %>
+
+<%= render partial: 'audits/advanced_search/quick_start_help' %>
+
+<% if @current_user && @current_user.qa? %>
+  QA users can review all records.
+  <br>
+  <br>
+  <br>
+  <br>
+  <%= render partial: 'audits/advanced_search/help_editor' %>
+  <%= render partial: 'audits/advanced_search/help_qa' %>
+<% else %>
+  <%= render partial: 'audits/advanced_search/help_editor' %>
+<% end %>
+
+<br>
+<br>
+<br>
+<%= render partial: 'help/case_and_wildcards_search' %>
+
+
+

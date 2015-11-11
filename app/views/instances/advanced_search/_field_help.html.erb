@@ -1,0 +1,119 @@
+  <h4>Searchable Instance fields</h4>
+  <h5>Name and Abbreviation</h5>
+<table class="table table-striped">
+  <tr><th>Field</th><th>Description</th></tr>
+  <% [
+    {field_name: '', description: "default instance search is on name, see the next line for details"},
+      {field_name: 'name:', description: "name, with leading and trailing wildcards added automatically and all embedded spaces treated as wildcards"},
+      {field_name: 'name-exact:', description: "full name, supply your own wildcards"},
+      {field_name: 'page:', description: "page"},
+      {field_name: 'page-qualifier:', description: "page-qualifier"},
+      {field_name: 'note:', description: "note, leading and trailing wildcards added automatically"},
+      {field_name: 'note-exact:', description: "note"},
+      {field_name: 'verbatim-name:', description: "Verbatim name string, leading and trailing wildcards added automatically"},
+      {field_name: 'verbatim-name-exact:', description: "Verbatim name string"},
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+      <a href="javascript:void(0)" class="searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
+        <span class="blue"><%= val[:field_name] %></span>
+      </a>
+    </td>
+    <td><%= val[:description].html_safe %></td>
+    <% if val[:partial].present? %>
+      <td><%= render partial: val[:partial] %></td>
+    <% else %>
+      <td></td>
+    <% end %>
+  </tr>
+  <% end %>
+</table>
+  <h5>Coded fields</h5>
+<table class="table table-striped">
+  <tr><th>Field</th><th>Description</th></tr>
+  <% [
+      {field_name: 'type:', description: "instance type"},
+      {field_name: 'note-key:', description: "note key"},
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+      <a href="javascript:void(0)" class="searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
+        <span class="blue"><%= val[:field_name] %></span>
+      </a>
+    </td>
+    <td><%= val[:description].html_safe %></td>
+    <% if val[:partial].present? %>
+      <td><%= render partial: val[:partial] %></td>
+    <% else %>
+      <td></td>
+    <% end %>
+  </tr>
+  <% end %>
+</table>
+
+  <h5>Assertions</h5>
+<table class="table table-striped">
+  <tr><th>Field</th><th>Description</th></tr>
+  <% [
+      {field_name: 'cites-an-instance:', description: ""},
+      {field_name: 'is-cited-by-an-instance:', description: ""},
+      {field_name: 'does-not-cite-an-instance:', description: ""},
+      {field_name: 'is-not-cited-by-an-instance:', description: ""},
+      {field_name: 'verbatim-name-matches-full-name:', description: "Verbatim name string is the same as the instance name full name."},
+      {field_name: 'verbatim-name-does-not-match-full-name:', description: "Verbatim name string is the same as the instance name full name."},
+      {field_name: 'verbatim-name-does-not-match-full-name:', description: "Verbatim name string is the same as the instance name full name."},
+      {field_name: 'is-novelty:', description: "Primary instance type e.g. tax. nov.."},
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+      <a href="javascript:void(0)" class="searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
+        <span class="blue"><%= val[:field_name] %></span>
+      </a>
+    </td>
+    <td><%= val[:description].html_safe %></td>
+    <% if val[:partial].present? %>
+      <td><%= render partial: val[:partial] %></td>
+    <% else %>
+      <td></td>
+    <% end %>
+  </tr>
+  <% end %>
+</table>
+
+  <h5>Reference fields</h5>
+<table class="table table-striped">
+  <tr><th>Field</th><th>Description</th></tr>
+  <% [
+      {field_name: 'year:', description: "Publication year (an integer e.g. 2015) for the instance reference."},
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+      <a href="javascript:void(0)" class="searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
+        <span class="blue"><%= val[:field_name] %></span>
+      </a>
+    </td>
+    <td><%= val[:description].html_safe %></td>
+    <% if val[:partial].present? %>
+      <td><%= render partial: val[:partial] %></td>
+    <% else %>
+      <td></td>
+    <% end %>
+  </tr>
+  <% end %>
+</table>
+
+<%= render partial: 'comments/advanced_search/help' %>
+<%= render partial: 'help/id_search_help' %>
+<%= render partial: 'help/case_and_wildcards_search' %>
+
+<pre>
+
+
+  WHERE_ASSERTION_HASH = { 
+    'cites-an-instance:' => " cites_id is not null",
+    'is-cited-by-an-instance:' => " cited_by_id is not null",
+    'does-not-cite-an-instance:' => " cites_id is null",
+    'is-not-cited-by-an-instance:' => " cited_by_id is null",
+  }
+</pre>
+

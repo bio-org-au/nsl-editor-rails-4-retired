@@ -95,7 +95,7 @@ class NamesController < ApplicationController
     @category = params[:type].gsub(/-/,' ')
     logger.debug("@category: #{@category}")
     respond_to do |format|
-      format.html {redirect_to search_path}
+      format.html {redirect_to new_search_path}
       format.js {}
     end
   end
@@ -144,7 +144,8 @@ class NamesController < ApplicationController
   end
  
   def rules
-    @no_search_result_details = true
+    empty_search
+    hide_details
   end
 
   def copy

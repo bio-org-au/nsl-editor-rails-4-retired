@@ -1,0 +1,57 @@
+<div id="example-search-author" class="example-search-tab">
+<h3>Author search examples</h3>
+<h4 class="">List authors</h4>
+<table class="example-searches table table-striped">
+  <% [{search_target: 'Authors', search_string: "*",explanation: %Q(First 100 authors, order by name.)},
+      {search_target: 'Authors', search_string: "bent", explanation: %Q(Authors with name or abbreviation containing "bent".)},
+      {search_target: 'Authors', search_string: "hook", explanation: %Q(Authors with name or abbreviation containing "hook".)},
+      {search_target: 'Authors', search_string: "bent hook", explanation: %Q(Authors with name or abbreviation containing "bent" and "hook" in any order.)},
+      {search_target: 'Authors', search_string: "hook bent", explanation: %Q(Authors with name or abbreviation containing "hook" and "bent" in any order.)},
+      {search_target: 'Authors', search_string: "name: bent hook", explanation: %Q(Authors with name text that includes 'bent' and 'hook' in any order.)},
+      {search_target: 'Authors', search_string: "name: hook bent", explanation: %Q(Authors with name text that includes 'hook' and 'bent' in any order.)},
+      {search_target: 'Authors', search_string: "abbrev: bent hook", explanation: %Q(Authors with abbrev text that includes 'bent' and 'hook' in any order.)},
+      {search_target: 'Authors', search_string: "abbrev: hook bent", explanation: %Q(Authors with abbrev text that includes 'hook' and 'bent' in any order.)},
+      {search_target: 'Authors', search_string: "full-name:*", explanation: %Q(Authors with full or extra name text.)},
+      {search_target: 'Authors', search_string: "full-name: bald*greg", explanation: %Q(Authors with full or extra name text that include "bald" and "greg" in that order.)},
+      {search_target: 'Authors', search_string: "comments:*", explanation: %Q(Count commented authors by turning a text field into an assertion.)},
+      {search_target: 'Authors', search_string: "comments-by:*", explanation: %Q(Count authors with a comment by someone.)},
+      {search_target: 'Authors', search_string: "", explanation: %Q(Currently no authors with comments, so difficult to give more examples.)},
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent"><a href="javascript:void(0)" 
+           class="example-search width-100-percent" 
+           title="Link to search">
+           <span class="blue"><%= link_to(val[:search_string], new_search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %></span></a>
+      </a>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+<br>
+
+<h4 class="">Count authors</h4>
+<table class="example-searches table table-striped">
+  <% [{search_target: 'Authors', search_string: "count",explanation: %Q(Start with "count author" to count authors.)},
+      {search_target: 'Authors', search_string: "count bentham", explanation: %Q(Counting sets.)},
+      {search_target: 'Authors', search_string: "count comments:*", explanation: %Q(Count commented authors by turning a text field into an assertion.)},
+      {search_target: 'Authors', search_string: "count comments-by:*", explanation: %Q(Count authors with a comment by someone.)},
+      {search_target: 'Authors', search_string: "count notes:*", explanation: %Q(Count authors with notes by turning a text field into an assertion.)},
+      {search_target: 'Authors', search_string: "count is-a-duplicate:", explanation: %Q(Count duplicate authors.)},
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent"><a href="javascript:void(0)" 
+           class="example-search width-100-percent" 
+           title="Link to search">
+           <span class="blue"><%= link_to(val[:search_string], new_search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %></span></a>
+      </a>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+<br>
+
+</div>
+
+

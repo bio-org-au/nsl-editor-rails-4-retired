@@ -1,6 +1,6 @@
 <%= form_for(@instance, remote: true) do |f| %>
 
-    <%= show_field_as_linked_lookup('',@instance.name,'full_name', search_path(query: %Q(id:#{@instance.name_id}),query_on: 'name'),'name') %>
+    <%= show_field_as_linked_lookup('',@instance.name,'full_name', new_search_path(query_string: %Q(id:#{@instance.name_id}),query_target: 'name'),'name') %>
     appears in reference*
 
     <div class="typeahead-container">
