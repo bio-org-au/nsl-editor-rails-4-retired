@@ -142,7 +142,7 @@ class Search::ParsedRequest
       tokens = tokens.drop(1)
       @count = true
       @list = !@count
-    elsif tokens.first.match(/list/i)
+    elsif tokens.first.match(/\Alist\z/i)
       tokens = tokens.drop(1)
       @list = true
       @count = !@list
