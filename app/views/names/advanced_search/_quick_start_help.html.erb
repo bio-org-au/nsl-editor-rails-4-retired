@@ -1,9 +1,10 @@
 <h4>Quick start for Name search</h4>
 <p>Type the first character or word in the name.
-<p>Start the search by pressing Enter or clicking the "Search" button.
-<p>Or leave a space then enter another fragment of the name.
+<p>Start the search by pressing Enter or clicking the "Search" button....
+<p>or leave a space then enter another fragment of the name.
 <p>Start the search.
-<p>The Editor will try to find something useful.
+<p>The Editor searches very broadly - it adds a trailing wildcard and also treats spaces as wildcards.
+<p>It does not add a leading wildcard to name search terms - to keep searches as fast as possible.
 <p> E.g.  <%= link_to('grev queen', new_search_path(query_string: 'grev queen', query_target: 'name'),class:'blue',title: 'example search') %>,
 <%= link_to('bank spin', new_search_path(query_string: 'bank spin', query_target: 'name'),class:'blue',title: 'example search') %>
 or  <%= link_to('e costata', new_search_path(query_string: 'e costata', query_target: 'name'),class:'blue',title: 'example search') %>
