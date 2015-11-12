@@ -18,6 +18,8 @@ class NewSearchController < ApplicationController
   before_filter :hide_details
 
   def search
+    params[:query_target] = params[:query_on] if params[:query_on].present?
+    params[:query_string] = "#{params[:query_field]}: #{params[:query_field]}" if params[:query].present? && params[:query].present?
     if params[:query_string].present? || params[:query_target].present? 
       if params[:query_target].present? && params[:query_target].match(/\Atrees*/i)
         params[:query] = params[:query_string]

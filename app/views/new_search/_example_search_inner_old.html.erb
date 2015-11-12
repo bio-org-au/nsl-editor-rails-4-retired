@@ -89,10 +89,11 @@
       {search_target: 'References', search_string: "*nuytsia* ty:journal ti:nuytsia", explanation: %Q(Use field abbreviations.)}
       ].each do |val| %>
   <tr>
-    <td class="width-30-percent"><a href="javascript:void(0)" 
-           class="example-search width-100-percent" 
-           title="Link to search">
-           <span class="blue"><%= link_to(val[:search_string], new_search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %></span></a>
+    <td class="width-30-percent">
+      <a href="javascript:void(0)" 
+         class="example-search width-100-percent" 
+         title="Link to search">
+         <span class="blue"><%= link_to(val[:search_string], new_search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %></span>
       </a>
     </td>
     <td><%= val[:explanation].html_safe %></td>
@@ -111,10 +112,11 @@
       {search_target: 'References', search_string: "count type:journal is-not-a-parent: is-a-duplicate:", explanation: %Q(Combine assertions.)}
       ].each do |val| %>
   <tr>
-    <td class="width-30-percent"><a href="javascript:void(0)" 
-           class="example-search width-100-percent" 
-           title="Link to search">
-           <span class="blue"><%= link_to(val[:search_string], new_search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %></span></a>
+    <td class="width-30-percent">
+      <a href="javascript:void(0)" 
+         class="example-search width-100-percent" 
+         title="Link to search">
+         <span class="blue"><%= link_to(val[:search_string], new_search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %></span>
       </a>
     </td>
     <td><%= val[:explanation].html_safe %></td>
@@ -131,10 +133,11 @@
   <% [{search_target: 'Instances', search_string: "notes: *autonym* note-key: comment notes: *valid*",explanation: %Q(Find instances with note comments and two specific words in any order.)},
       ].each do |val| %>
   <tr>
-    <td class="width-30-percent"><a href="javascript:void(0)" 
-           class="example-search width-100-percent" 
-           title="Link to search">
-           <span class="blue"><%= link_to(val[:search_string], new_search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %></span></a>
+    <td class="width-30-percent">
+      <a href="javascript:void(0)" 
+         class="example-search width-100-percent" 
+         title="Link to search">
+         <span class="blue"><%= link_to(val[:search_string], new_search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %></span>
       </a>
     </td>
     <td><%= val[:explanation].html_safe %></td>
@@ -161,10 +164,11 @@
       {search_target: 'Instances', search_string: "count cites-an-instance:", explanation: %Q(Count instances that cite another instance.)}
       ].each do |val| %>
   <tr>
-    <td class="width-30-percent"><a href="javascript:void(0)" 
-           class="example-search width-100-percent" 
-           title="Link to search">
-           <span class="blue"><%= link_to(val[:search_string], new_search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %></span></a>
+    <td class="width-30-percent">
+      <a href="javascript:void(0)" 
+         class="example-search width-100-percent" 
+         title="Link to search">
+         <span class="blue"><%= link_to(val[:search_string], new_search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %></span>
       </a>
     </td>
     <td><%= val[:explanation].html_safe %></td>
@@ -187,10 +191,11 @@
       {search_target: 'Authors', search_string: "comments-by:*", explanation: %Q(Count authors with a comment by someone.)},
       ].each do |val| %>
   <tr>
-    <td class="width-30-percent"><a href="javascript:void(0)" 
-           class="example-search width-100-percent" 
-           title="Link to search">
-           <span class="blue"><%= link_to(val[:search_string], new_search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %></span></a>
+    <td class="width-30-percent">
+      <a href="javascript:void(0)" 
+         class="example-search width-100-percent" 
+         title="Link to search">
+         <span class="blue"><%= link_to(val[:search_string], new_search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %></span>
       </a>
     </td>
     <td><%= val[:explanation].html_safe %></td>
@@ -209,10 +214,11 @@
       {search_target: 'Authors', search_string: "count is-a-duplicate:", explanation: %Q(Count duplicate authors.)},
       ].each do |val| %>
   <tr>
-    <td class="width-30-percent"><a href="javascript:void(0)" 
-           class="example-search width-100-percent" 
-           title="Link to search">
-           <span class="blue"><%= link_to(val[:search_string], new_search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %></span></a>
+    <td class="width-30-percent">
+      <a href="javascript:void(0)" 
+         class="example-search width-100-percent" 
+         title="Link to search">
+         <span class="blue"><%= link_to(val[:search_string], new_search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %></span>
       </a>
     </td>
     <td><%= val[:explanation].html_safe %></td>
@@ -231,10 +237,11 @@
       {search_target: 'Instances for name id', search_string: "242009",explanation: %Q(Instances for a name ID.)},
       ].each do |val| %>
   <tr>
-    <td class="width-30-percent"><a href="javascript:void(0)" 
-           class="example-search width-100-percent" 
-           title="Link to search">
-           <span class="blue"><%= link_to(val[:search_string], new_search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %></span></a>
+    <td class="width-30-percent">
+      <a href="javascript:void(0)" 
+         class="example-search width-100-percent" 
+         title="Link to search">
+         <span class="blue"><%= link_to(val[:search_string], new_search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %></span>
       </a>
     </td>
     <td><%= val[:explanation].html_safe %></td>
@@ -246,3 +253,4 @@
 
   </div>
 </div>
+

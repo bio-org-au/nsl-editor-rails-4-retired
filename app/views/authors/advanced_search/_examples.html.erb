@@ -18,11 +18,8 @@
       {search_target: 'Authors', search_string: "", explanation: %Q(Currently no authors with comments, so difficult to give more examples.)},
       ].each do |val| %>
   <tr>
-    <td class="width-30-percent"><a href="javascript:void(0)" 
-           class="example-search width-100-percent" 
-           title="Link to search">
-           <span class="blue"><%= link_to(val[:search_string], new_search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %></span></a>
-      </a>
+    <td class="width-30-percent">
+      <%= link_to(val[:search_string], new_search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %>
     </td>
     <td><%= val[:explanation].html_safe %></td>
   </tr>
@@ -40,11 +37,8 @@
       {search_target: 'Authors', search_string: "count is-a-duplicate:", explanation: %Q(Count duplicate authors.)},
       ].each do |val| %>
   <tr>
-    <td class="width-30-percent"><a href="javascript:void(0)" 
-           class="example-search width-100-percent" 
-           title="Link to search">
-           <span class="blue"><%= link_to(val[:search_string], new_search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %></span></a>
-      </a>
+    <td class="width-30-percent">
+      <%= link_to(val[:search_string], new_search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %>
     </td>
     <td><%= val[:explanation].html_safe %></td>
   </tr>

@@ -12,10 +12,8 @@
     {search_target: '', search_string: "",explanation: %Q(Note that even some counts can take a long time, depending on the number of names returned in the initial search.)},
       ].each do |val| %>
   <tr>
-    <td class="width-30-percent"><a href="javascript:void(0)" 
-           class="example-search width-100-percent" 
-           title="Link to search">
-        <span class="blue"><%= link_to(val[:search_string], new_search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %></span></a>
+    <td class="width-30-percent">
+      <%= link_to(val[:search_string], new_search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %>
     </td>
     <td><%= val[:explanation].html_safe %></td>
   </tr>
@@ -24,6 +22,6 @@
 <br>
 
 
-    </div>
+</div>
 
 
