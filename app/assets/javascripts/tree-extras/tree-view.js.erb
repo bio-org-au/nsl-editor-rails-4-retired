@@ -12,9 +12,6 @@ var MainTreeController = function($scope, $http, $element) {
     $scope.loading = true;
     $scope.error = null;
 
-    $scope.nodeByNslNameId = []
-    $scope.nodeByNslInstanceId = []
-
     $scope.forceOpen = function() {
         // do nothing. This kills the recursive function.
     }
@@ -45,40 +42,8 @@ var MainTreeController = function($scope, $http, $element) {
         return $scope.selectedNode == null ? null : $scope.selectedNode.instance;
     }
 
-    $element[0].navigateToNslName = function(nameId) {
-        if(!nameId) return;
-
-        var alreadyLoaded = $scope.nodeByNslNameId[nameId];
-
-        if(alreadyLoaded) {
-            $scope.$apply(function() { $scope.navigateToNode(alreadyLoaded); } );
-        }
-        else {
-            $scope.fetchAndNavigateToName(nameId);
-        }
-    }
-
-    $element[0].navigateToNslInstance = function(instanceId) {
-        if(!instanceId) return;
-
-        var alreadyLoaded = $scope.nodeByNslInstanceId[instanceId];
-
-        if(alreadyLoaded) {
-            $scope.$apply(function() { $scope.navigateToNode(alreadyLoaded); } );
-        }
-        else {
-            alert("TODO! ask the server for the branch and then merge it.");
-        }
-    }
-
-    $scope.navigateToNode = function(node) {
-        node.forceOpen();
-        $scope.setSelected(node);
-        $scope.$$postDigest(function(){node.nameElement.scrollintoview()});
-    }
-
-    $scope.fetchAndNavigateToName = function(nameId) {
-        var getUri = NSL_API_URL + 'tree/path/'+$scope.treeLabel + '/' + nameId ;
+    $scope.fetchName = function(nameId) {
+        var getUri = NSL_API_URL + 'tree/path/'+$scope.treeLabel + ( nameId ? '/' + nameId : '');
 
       $scope.loading = true;
 
@@ -97,8 +62,15 @@ var MainTreeController = function($scope, $http, $element) {
             .success(function(data) {
               $scope.loaded = true;
               $scope.loading = false;
-              $scope.nodes = [ data.tree ];
-              $scope.topnode = data.tree;
+              $scope.path = data.path;
+
+              if(data.tree.link.type.qname == "boatree-voc:classification-root-link") {
+                $scope.nodes = data.tree.subnode;
+              }
+              else {
+                $scope.nodes = [data.tree];
+              }
+
               if(!$scope.nodes) $scope.nodes = [];
               $scope.open = true;
             })
@@ -118,45 +90,7 @@ var MainTreeController = function($scope, $http, $element) {
             });
     }
 
-    $scope.navigateToPath = function(data) {
-        navigateSubnodesToPath($scope, data);
-    }
-
-
-    var getUri = NSL_API_URL + 'tree/path/'+$scope.treeLabel + ($scope.nameId ? '/' + $scope.nameId : '');
-
-    $http.get(getUri,
-        {
-            transformResponse: function(data, headersGetter) {
-                try {
-                    return JSON.parse(data);
-                }
-                catch(e) {
-                    return data;
-                }
-            }
-        }
-    )
-        .success(function(data) {
-            $scope.loaded = true;
-            $scope.loading = false;
-            $scope.nodes = [ data.tree ];
-            $scope.topnode = data.tree;
-            $scope.path = data.path;
-            if(!$scope.nodes) $scope.nodes = [];
-            $scope.open = true;
-        })
-        .error(function(data, status, headers, config) {
-            console.log("we got an error {"
-            + "\ndata: " + data
-            + ",\nstatus: " + status
-            + ",\nheaders: " + headers
-            + ",\nconfig: " + config
-            + "\n}");
-            $scope.loaded = false;
-            $scope.loading = false;
-            $scope.error = data;
-        });
+    $scope.fetchName($scope.nameId);
 };
 
 MainTreeController.$inject = [ '$scope', '$http', '$element' ];
@@ -198,14 +132,6 @@ var TreeRowController = function($scope, $http, $timeout, $element) {
     $scope.nameElement = $element
 
     $scope.setNodeAndDataFields = function(node) {
-        if(this.name && this.treeScope.nodeByNslNameId[this.name.id] == this) {
-            this.treeScope.nodeByNslNameId[this.name.id] = null;
-        }
-
-        if(this.instance && this.treeScope.nodeByNslInstanceId[this.instance.id] == this) {
-            this.treeScope.nodeByNslInstanceId[this.instance.id] = this;
-        }
-
         node.scope = $scope;
 
         this.node = node;
@@ -222,29 +148,11 @@ var TreeRowController = function($scope, $http, $timeout, $element) {
             instance: node.instance
         };
 
-        if(this.name) {
-            this.treeScope.nodeByNslNameId[this.name.id] = this;
-        }
-
-        if(this.instance) {
-            this.treeScope.nodeByNslInstanceId[this.instance.id] = this;
-        }
     }
 
     $scope.setNodeAndDataFields($scope.$parent.nodes[$scope.nodeIndex]);
 
     $scope.open = $scope.node.fetched
-
-    $scope.$on('$destroy', function() {
-        if($scope.name && $scope.treeScope.nodeByNslNameId[$scope.name.id] == $scope) {
-            $scope.treeScope.nodeByNslNameId[$scope.name.id] = null;
-        }
-
-        if($scope.instance && $scope.treeScope.nodeByNslInstanceId[$scope.instance.id] == $scope) {
-            $scope.treeScope.nodeByNslInstanceId[$scope.instance.id] = null;
-        }
-    });
-
 
     if($scope.node.fetched) {
         $scope.loading = true
@@ -344,71 +252,3 @@ function TreeRowDirective(RecursionHelper) {
 
 TreeRowDirective.$inject = ['RecursionHelper'];
 app.directive('treeRow', TreeRowDirective);
-
-function navigateSubnodesToPath($scope, data) {
-    var newnodes = [];
-    var oldnodes = [];
-
-    for(var i in $scope.nodes) {
-        var oldnode = $scope.nodes[i];
-        oldnodes[oldnode.node.id] = oldnode;
-    }
-
-    var thisIsTheLastFetched = true;
-
-    for(var i in data.subnode) {
-        var datanode = data.subnode[i];
-
-        if(datanode.fetched) {
-            thisIsTheLastFetched = false;
-        }
-
-        if(oldnodes[datanode.node.id]) {
-            var oldnode = oldnodes[datanode.node.id];
-            newnodes.push(oldnode);
-
-            oldnode.scope.setNodeAndDataFields(datanode);
-
-            if(datanode.fetched) {
-                oldnode.scope.open = true; // force open
-
-                // oldnode.scope gets set in the TreeRow constructor
-                navigateSubnodesToPath(oldnode.scope, datanode);
-            }
-        }
-        else {
-            // the TreeRow constructor will take care of everything else.
-            newnodes.push(datanode);
-        }
-    }
-
-    $scope.nodes = newnodes;
-
-    if(thisIsTheLastFetched && scope.treeElement) {
-        $scope.$$postDigest(function(){$scope.nameElement.scrollintoview()});
-        $scope.treeScope.setSelected($scope);
-    }
-
-}
-
-function navigateNodeToPath($scope, data) {
-    for(;;) {
-        var nodes = $scope.nodes;
-
-        /*
-         * Ok. For each data.subnode.
-         *
-         * Find if the node id is in data.subnodes.
-         *
-         *
-         *
-         *
-         *
-         */
-
-
-        break;
-    }
-
-}
-

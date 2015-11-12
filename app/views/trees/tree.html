@@ -2,12 +2,15 @@
 <div ng-if="error"><i class="fa fa-warning fa-fw"/>&nbsp;Unable to load {{treeLabel}}: {{error}}.</div>
 <div ng-if="loaded">
     <div style="font-size: smaller;">
+        <span ng-click="fetchName()"
+              class='name'
+              style="cursor: pointer;">{{treeLabel}}</span>
 		<span
                 ng-repeat='node in path'
         >
     		&gt; <span
                 ng-bind-html="node.name.simpleNameHtml"
-                ng-click="fetchAndNavigateToName(node.name.id)"
+                ng-click="fetchName(node.name.id)"
                 class='name'
                 style="cursor: pointer;"/>
         </span>
