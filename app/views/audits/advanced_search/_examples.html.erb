@@ -8,7 +8,7 @@
       ].each do |val| %>
   <tr>
     <td class="width-30-percent">
-      <%= link_to(val[:search_string], new_search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %>
+      <%= link_to(val[:search_string], search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %>
     </td>
     <td><%= val[:explanation].html_safe %></td>
   </tr>

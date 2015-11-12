@@ -43,11 +43,11 @@ Rails.application.routes.draw do
          #to: 'new_search#search_name_with_instances',
          #via: :get
 
-  match '/search', as: "search", to: "new_search#search", via: :get
-  match '/search/index', as: "search_index", to: "new_search#search", via: :get
-  match '/new_search', as: "new_search", to: "new_search#search", via: :get
-  match '/new_search/tree', as: "tree", to: "new_search#tree", via: :get
-  match '/new_search/preview', as: "new_search_preview", to: "new_search#preview", via: :get
+  match '/search', as: "search", to: "search#search", via: :get
+  match '/search/index', as: "search_index", to: "search#search", via: :get
+  #match '/search', as: "search", to: "search#search", via: :get
+  match '/search/tree', as: "tree", to: "search#tree", via: :get
+  match '/search/preview', as: "search_preview", to: "search#preview", via: :get
 
   resources :instance_notes, only: [:show, :new, :edit, :create, :update, :destroy]
 
@@ -145,9 +145,9 @@ Rails.application.routes.draw do
   match 'help/typeaheads', to: "help#typeaheads", as: 'typeaheads', via: :get
   resources :instance_types, only: [:index]
 
-  match '/set_include_common_and_cultivar', to: "new_search#set_include_common_and_cultivar", as: 'set_include_common_and_cultivar', via: :post
+  match '/set_include_common_and_cultivar', to: "search#set_include_common_and_cultivar", as: 'set_include_common_and_cultivar', via: :post
 
-  root to: "new_search#search"
-  match '/*random', to: "new_search#search", via: [:get,:post,:delete,:patch]
+  root to: "search#search"
+  match '/*random', to: "search#search", via: [:get,:post,:delete,:patch]
   
 end

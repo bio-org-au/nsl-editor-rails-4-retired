@@ -36,7 +36,7 @@
         div#search-summary { background: #663399; }
       </style>
     <% end %>
-    <%= render partial: 'new_search/advanced_style' %>
+    <%= render partial: 'search/advanced_style' %>
   </head>
  
   <body
@@ -46,7 +46,7 @@
       data-active-instance-tab="tab_show_1">
 
     <div id="screen-too-small-msg">Sorry.... your window is too small to show the editor.  It needs to be wider.</div>
-    <%= render partial: 'new_search/big_navbar' %>
+    <%= render partial: 'search/big_navbar' %>
 
     <div id="main-content" class="container-fluid">
     <% if @no_search_result_details %>
@@ -62,23 +62,23 @@
           <div id="advanced-search-container" 
           style="height: 100%; min-height: 800px; overflow-y: scroll; height: 900px; min-height: 900px; padding-bottom: 4em; margin-bottom: 8em;" 
           class="no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 sidebar hidden">
-            <%= render partial: 'new_search/advanced_search_inner' %>
+            <%= render partial: 'search/advanced_search_inner' %>
           </div>
         <% end %>
         <div id="search-help-container" 
              style="height: 100%; min-height: 800px; overflow-y: scroll; height: 900px; min-height: 900px; padding-bottom: 4em; margin-bottom: 8em;" 
              class="no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 sidebar hidden">
-            <%= render partial: 'new_search/search_help_inner' %>
+            <%= render partial: 'search/search_help_inner' %>
         </div>
         <div id="example-search-container" 
              style="height: 100%; min-height: 800px; overflow-y: scroll; height: 900px; min-height: 900px; padding-bottom: 4em; margin-bottom: 8em;" 
              class="no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 sidebar hidden">
-            <%= render partial: 'new_search/example_search_inner' %>
+            <%= render partial: 'search/example_search_inner' %>
         </div>
         <div id="search-history-container" 
              style="height: 100%; min-height: 800px; overflow-y: scroll; height: 900px; min-height: 900px; padding-bottom: 4em; margin-bottom: 8em;" 
              class="no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 sidebar hidden">
-            <%= render partial: 'new_search/search_history_inner' %>
+            <%= render partial: 'search/search_history_inner' %>
         </div>
       </div>
     </div>
@@ -91,7 +91,7 @@
     <%= render partial: 'new_instance_form' %>
     <div id="message-container" class="popup hidden"></div>
     <script type="text/javascript" src="https://www.anbg.gov.au/25jira/s/d41d8cd98f00b204e9800998ecf8427e/en-p174ip-1988229788/6265/3/1.4.7/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?collectorId=ff55c94b"></script>
-    <%= render partial: 'new_search/advanced_script' %>
+    <%= render partial: 'search/advanced_script' %>
  </body>
 </html>
  

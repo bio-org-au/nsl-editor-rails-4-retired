@@ -15,6 +15,7 @@
 #   limitations under the License.
 #   
 require 'test_helper'
+load 'models/search/users.rb'
 
 class NameUsagesOrderByReferenceYear < ActiveSupport::TestCase
 
@@ -23,14 +24,17 @@ class NameUsagesOrderByReferenceYear < ActiveSupport::TestCase
     first_ref = references(:australasian_chemist_and_druggist)
     second_ref = references(:mueller_1882_section)
     third_ref = references(:bailey_catalogue_qld_plants)
-    search = Search.new("#{name.id}",'Instance','100','f','','name-usages')
-    assert_equal search.results.class, Array, "Results should be an Array."
-    assert_equal 4, search.results.size, "One record expected."
-    assert_equal name.id, search.results[1].name_id, 'Name not first'
+    params =  ActiveSupport::HashWithIndifferentAccess.new(query_string: "#{name.id}",
+                                                           query_target: 'Instances-for-name-id',
+                                                           current_user: build_edit_user)
+    search = Search::Base.new(params)
+    assert_equal search.executed_query.results.class, Array, "Results should be an Array"
+    assert_equal 4, search.executed_query.results.size, "One record expected."
+    assert_equal name.id, search.executed_query.results[1].name_id, 'Name not first'
     #search.results.each {|result| puts "#{result.try('reference').try('year')}"}
-    assert_equal first_ref.id, search.results[1].reference_id, "First reference wrong: #{search.results[2].reference.year}"
-    assert_equal second_ref.id, search.results[2].reference_id, "Second reference wrong"
-    assert_equal third_ref.id, search.results[3].reference_id, "Third reference wrong"
+    assert_equal first_ref.id, search.executed_query.results[1].reference_id, "First reference wrong: #{search.executed_query.results[2].reference.year}"
+    assert_equal second_ref.id, search.executed_query.results[2].reference_id, "Second reference wrong"
+    assert_equal third_ref.id, search.executed_query.results[3].reference_id, "Third reference wrong"
   end
 
 end

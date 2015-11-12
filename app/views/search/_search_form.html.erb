@@ -1,0 +1,131 @@
+
+
+<%= form_tag(search_path, method: :get, id: "search-form", class: 'form-inline')  do -%>
+
+<div class="row">
+  <div class="col-xs-11 col-sm-12 col-md-10 col-lg-9">
+    <div class="input-group width-80-percent">
+      <div id="search-target-btn" class="input-group-btn">
+        <button id="search-target-button" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span id="search-target-button-text">
+
+            <%= @search.parsed_request.target_button_text || 'no target button text' %>
+
+          </span>
+          &nbsp;
+        <span class="caret"></span></button>
+
+        <ul id="search-target-list" class="dropdown-menu">
+          <li><a id="search-target-item-names" 
+                 href="#" 
+                 title="Search names" 
+                 data-help="name-search-help" 
+                 data-examples="name-search-examples"
+              >Names</a></li>
+          <li><a id="search-target-item-name-with-instances" 
+                 href="#" 
+                 title="Search names, also retrieve instances" 
+                 data-help="name-plus-instances-search-help" 
+                 data-examples="name-plus-instances-search-examples"
+              >Names plus instances</a>
+          </li>
+
+          <li role="separator" class="divider"></li>
+
+          <li><a id="search-target-item-references" 
+                 href="#" 
+                 data-help="reference-search-help"
+                 data-examples="reference-search-examples"
+                 >References</a></li>
+
+          <li><a id="search-target-item-reference-accepted-names" 
+                 href="#" 
+                 data-help="references-accepted-names-search-help"
+                 data-examples="references-accepted-names-search-examples"
+              >References with novelties</a></li>
+          <li><a id="search-target-item-instances-for-reference" 
+                 href="#" 
+                 data-help="references-names-full-synonymy-search-help"
+                 data-examples="references-names-full-synonymy-search-examples"
+              >References, names, full synonymy</a></li>
+          <li role="separator" class="divider"></li>
+          <li><a id="search-target-item-authors" 
+                     href="#" 
+                     data-help="author-search-help" 
+                     data-examples="author-search-examples" 
+                  >Authors</a></li>
+          <li><a id="search-target-item-instances" 
+                     href="#" 
+                     data-help="instance-search-help"
+                     data-examples="instance-search-examples"
+                  >Instances</a></li>
+          <li role="separator" class="divider"></li>
+          <li><a id="search-target-item-tree" 
+                     href="#" 
+                     data-help="tree-search-help"
+                     data-examples="tree-search-examples"
+                  >Tree</a></li>
+          <li role="separator" class="divider"></li>
+          <li><a id="search-target-item-instances-for-name-id" 
+                     href="#" 
+                     data-help="instances-for-name-id-search-help"
+                     data-examples="instances-for-name-id-search-examples"
+                  >Instances for Name ID</a></li>
+          <li><a id="search-target-item-instances-for-ref-id" 
+                     href="#" 
+                     data-help="instances-for-ref-id-search-help"
+                     data-examples="instances-for-ref-id-search-examples"
+                  >Instances for Ref ID</a></li>
+          <li><a id="search-target-item-instances-sorted-by-page-for-ref-id" 
+                     href="#" 
+                     data-help="instances-sorted-by-page-for-ref-id-search-help"
+                     data-examples="instances-sorted-by-page-for-ref-id-search-examples"
+                  >Instances sorted by page for Ref ID</a></li>
+          <li role="separator" class="divider"></li>
+          <li><a id="search-target-audit" 
+                     href="#" 
+                     data-help="review-search-help"
+                     data-examples="review-search-examples"
+                  >Review</a></li> 
+        </ul>
+      </div><!-- /btn-group -->
+      <input id="query-string-field" 
+             name="query_string" 
+             type="search" 
+             class="form-control width-100-percent" 
+             aria-label="search field"
+             tabindex = "8"
+             placeholder = "Search terms"
+             autofocus = "<%= @autofocus_search %>"
+             title = "Specify your search"
+             value = "<%= @search.parsed_request.query_string if @search.present? %>"
+             required
+             list="search-options"
+             >
+    </div><!-- /input-group -->
+    <input id="query-submit"name="query_submit" value="Search" type="submit" class="btn">
+  </div><!-- /.col-lg-9 -->
+</div><!-- /row -->
+
+  <input id="query-target" name="query_target" value="<%= @search.parsed_request.target_button_text %>" type="hidden" >
+
+<% end %>
+
+<datalist id="search-options" >
+  <option value="Abbrev:" label= "? Author Abbrev"/>
+  <option value="name:" label="? Author Name:"/>
+  <option value="abbrev:" label="? Author Abbrev:"/>
+  <option value="full-name:" label="? Author Full-name:"/>
+  <option value="name:" label="? Name Name: "/>
+  <option value="type:" label="? Name Type: "/>
+  <option value="rank:" label="? Name Rank: "/>
+  <option value="rank: genus" label="? Name Rank: genus "/>
+  <option value="rank: species" label="? Name Rank: species "/>
+  <option value="status:" label="? Name Status: "/>
+  <option value="author:" label="? Name Author: "/>
+  <option value="ex-author:" label="? Name Ex-Author: "/>
+  <option value="base-author:" label="? Name Base Author: "/>
+  <option value="ex-base-author:" label="? Name Ex-Base Author: "/>
+  <option value="sanctioning-author:" label="? Name Sanctioning Author: "/>
+</datalist>
+

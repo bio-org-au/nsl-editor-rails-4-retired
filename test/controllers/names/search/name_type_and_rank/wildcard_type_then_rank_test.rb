@@ -17,14 +17,14 @@
 require 'test_helper'
 
 class NameSearchForNameTypeAndRankWildcardTypeThenRankTest < ActionController::TestCase
-  tests NewSearchController
+  tests SearchController
   
   test "editor search for name type and rank wildcard type then rank test" do
-    get(:search,{"search_from"=>"string", "query_string"=>"nt:* nr:*", "controller"=>"new_search", "action"=>"search"},
+    get(:search,{query_target: 'name', "query_string"=>"nt:* nr:*", "controller"=>"new_search", "action"=>"search"},
         {username: 'fred', user_full_name: 'Fred Jones', groups: ['edit']})
     assert_response :success
-    assert_select "span#includes-common-cultivar-notice", true, "Should include common and cultivar"
-    assert_select "div#search-summary-row", /100 names shown/, "Should find records"
+    assert_select "span#search-results-summary", true, "Should have summary "
+    assert_select "span#search-results-summary", /100 of [0-9]+ records/, "Summary should say records found"
   end
 
 end

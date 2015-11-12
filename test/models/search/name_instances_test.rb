@@ -15,16 +15,17 @@
 #   limitations under the License.
 #   
 require 'test_helper'
+load 'models/search/users.rb'
 
 class SearchNameInstancesTest < ActiveSupport::TestCase
 
   #Search model run_search for Instance for : "id: 86355" in "name-instances", up to 1000000000 record(s)
   test "search" do
     name = names(:the_regnum)
-    search = Search.new("id: #{name.id}","instance",nil,'f',nil,'name-instances')
-    assert_equal search.class, Search, "Results should be a Search."
-    assert_equal search.results.class, Array, "Results should be an Array."
-    assert_equal 2, search.results.size, "Expected 2 search results for name-instances search on the Plantae Haeckel."
+    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_string: "#{name.id}",query_target: "instances-for-name-id",current_user: build_edit_user))
+    assert_equal search.class, Search::Base, "Results should be a Search."
+    assert_equal search.executed_query.results.class, Array, "Results should be an Array."
+    assert_equal 2, search.executed_query.results.size, "Expected 2 search results for name-instances search on the Plantae Haeckel."
   end
 
 end

@@ -15,13 +15,15 @@
 #   limitations under the License.
 #   
 require 'test_helper'
+load 'models/search/users.rb'
 
 class OnReferenceIdTest < ActiveSupport::TestCase
 
   test "instance search on Reference ID" do
-    search = Search.new("reference-id: #{references(:paper_by_britten_on_angophora).id}",'Instance','100','f','','')
-    assert_equal search.results.class, Instance::ActiveRecord_Relation, "Results should be an Instance::ActiveRecord_Relation."
-    assert search.results.size >= 4, "At least four results expected."
+    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_string: "#{references(:paper_by_britten_on_angophora).id}",
+                               query_target: 'Instances-for-ref-id:',current_user: build_edit_user))
+    assert_equal search.executed_query.results.class, Array, "Results should be an Array"
+    assert search.executed_query.results.size >= 4, "At least four results expected."
   end
 
 end

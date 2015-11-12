@@ -19,7 +19,7 @@ require 'test_helper'
 class ReferencesRouteEditTest < ActionController::TestCase
   tests ReferencesController
   test "references edit should route to the catch-all" do
-    assert_routing '/references/edit/1', { controller: "new_search", action: "search", random: "references/edit/1"}
+    assert_routing '/references/edit/1', { controller: "search", action: "search", random: "references/edit/1"}
   end
 
 end

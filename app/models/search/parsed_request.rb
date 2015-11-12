@@ -93,7 +93,9 @@ class Search::ParsedRequest
   end
 
   def inspect
-    "Parsed Request: count: #{@count}; list: #{@list}; defined_query: #{@defined_query}; where_arguments: #{@where_arguments}, defined_query_args: #{@defined_query_args}"
+    "Parsed Request: count: #{@count}; list: #{@list}; defined_query: #{@defined_query};" +
+    "where_arguments: #{@where_arguments}, defined_query_args: #{@defined_query_args}; " +
+    "common_and_cultivar: #{@common_and_cultivar}; include_common_and_cultivar_session: #{@include_common_and_cultivar_session};"
   end
 
   def as_a_list_request

@@ -19,8 +19,8 @@ require 'test_helper'
 class SearchControllerForAdminPageTest < ActionController::TestCase
   tests SearchController
   
-  test "admin should get index with correct elements" do
-    get(:index,{},{username: 'fred', user_full_name: 'Fred Jones', groups: ['admin']})
+  test "admin should get search with correct elements" do
+    get(:search,{},{username: 'fred', user_full_name: 'Fred Jones', groups: ['admin']})
     assert_response :success
     assert_select 'a#new-dropdown-menu-link.dropdown-toggle', false, "Should not show New menu link."
     assert_select 'a#help-dropdown-menu-link.dropdown-toggle', /Help/, "Should show Help menu link."

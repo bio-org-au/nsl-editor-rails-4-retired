@@ -15,66 +15,76 @@
 #   limitations under the License.
 #   
 class SearchController < ApplicationController
-
-  def xindex
-    logger.debug("SearchController#index.")
-    logger.debug(params.class)
-    @no_search_result_details = true
-    if params[:count] 
-      render text: 'count'
-      #run_count
-    elsif params[:advanced] 
-      redirect_to advanced_search_string_url(query: params[:query])
-    else # assume anything else is a search
-      @search_results = []
-      search
-    end
-  end
-
-  def index
-    if params[:query].blank?
-      @search = Search::Empty.new(params) 
-    else
-      params[:query_string] = "#{params[:query_on]} #{params[:query]}"
-      @search = Search::Base.new(params)
-    end
-  end
+  before_filter :hide_details
 
   def search
-    logger.debug("SearchController#search.")
-    @debug = false
-    if params[:query].blank? && params[:query_on].blank?
-      params[:query] = ''
-      params[:query_on] = 'Name'
-      params[:query_common_and_cultivar] = 'f'
-      params[:query_field] = ''
-    elsif params[:query_on] == 'tree'
-      params[:query_field] = 'apc' if params[:query_field].blank?
-      params[:query] = Name.find_by(full_name: 'Plantae Haeckel').id if params[:query].blank?
-      @ng_template_path = tree_ng_path('dummy').gsub(/dummy/,'')
-      logger.debug("@ng_template_path: #{@ng_template_path}")
-      render 'trees/index'
+    params[:query_target] = params[:query_on] if params[:query_on].present?
+    params[:query_string] = "#{params[:query_field]}: #{params[:query_field]}" if params[:query].present? && params[:query].present?
+    if params[:query_string].present? || params[:query_target].present? 
+      if params[:query_target].present? && params[:query_target].match(/\Atrees*/i)
+        params[:query] = params[:query_string]
+        tree_search
+      else
+        params[:current_user] = current_user
+        params[:include_common_and_cultivar_session] = session[:include_common_and_cultivar] 
+        @search = Search::Base.new(params) 
+        save_search(@search)
+      end
     else
-      params[:query_on] ||= 'Name'
-      params[:query_common_and_cultivar] ||= 'f'
-      # Name searches on ID should include common and cultivar
-      params[:query_common_and_cultivar] = 't' if params[:query_on].match(/\Aname\z/i) && params[:query].match(/id:/i)
-      params[:query_common_and_cultivar] = 't' if params[:query_on].match(/\Aname\z/i) && params[:query].match(/nt:/i)
-      params[:query_common_and_cultivar] = 't' if params[:query_on].match(/\Aname\z/i) && (params[:query_field]||'').match(/\Ant\z/i)
-      @search = Search.new(params[:query],params[:query_on],params[:query_limit],params[:query_common_and_cultivar]||'f',params[:query_sort],params[:query_field])
-      add_query_to_session
-      @no_search_result_details = @search.results.size == 0
+      @search = Search::Empty.new(params) 
     end
-    @autofocus_search = true
+  rescue => e
+    logger.error("SearchController::search exception: #{e.to_s}")
+    params[:error_message] = e.to_s
+    @search = Search::Error.new(params) unless @search.present?
+    save_search(@search)
+  end
+
+  def tree
+    params[:query_field] = 'apc' if params[:query_field].blank?
+    params[:query] = Name.find_by(full_name: 'Plantae Haeckel').id if params[:query].blank?
+    @search = Search::Tree.new(params)
+    @ng_template_path = tree_ng_path('dummy').gsub(/dummy/,'')
+    logger.debug("@ng_template_path: #{@ng_template_path}")
+    render 'trees/index'
+  rescue => e
+    logger.error("SearchController::tree exception: #{e.to_s}")
+    params[:error_message] = e.to_s
+    @search = Search::Error.new(params) 
+  end
+
+  def search_name_with_instances
+    @search = Search::Base.new({'query_string' => "instances-for-name-id: #{params[:name_id]}"}) 
+    render 'search'
+  end
+ 
+  def set_include_common_and_cultivar
+    logger.debug('set_include_common_and_cultivar')
+    session[:include_common_and_cultivar] = !session[:include_common_and_cultivar]
   end
 
   private
 
-  def add_query_to_session(max = 10)
-    session[:queries] ||= []
-    session[:queries].delete_if {|q| q == params[:query]}
-    session[:queries].push(params[:query])
-    session[:queries].shift if session[:queries].size > max
+  def save_search(search)
+    session[:searches] ||= []
+    session[:searches].push(@search.to_history)
+    if session[:searches].size > 5
+      session[:searches].shift
+    end
+  end
+
+  def tree_search
+    params[:query_field] = 'apc' if params[:query_field].blank?
+    params[:query] = Name.find_by(full_name: 'Plantae Haeckel').id if params[:query].blank?
+    @search = Search::Tree.new(params)
+    @ng_template_path = tree_ng_path('dummy').gsub(/dummy/,'')
+    logger.debug("@ng_template_path: #{@ng_template_path}")
+    render 'trees/index'
+  rescue => e
+    logger.error("SearchController::tree exception: #{e.to_s}")
+    params[:error_message] = e.to_s
+    @search = Search::Error.new(params) 
   end
 
 end
+  

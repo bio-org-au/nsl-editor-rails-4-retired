@@ -1,7 +1,7 @@
 <%= divider %>
 Change the reference for this instance and its 
 <%= link_to("#{pluralize(@instance.reverse_of_this_is_cited_by.size,'synonym')}. #{search_icon_on_tab}".html_safe,
-            new_search_path(query_string: @instance.id.to_s, query_target: 'instance is cited by'),
+            search_path(query_string: @instance.id.to_s, query_target: 'instance is cited by'),
             tabindex: increment_tab_index,
             title: "Search for the #{pluralize(@instance.reverse_of_this_is_cited_by.size,'synonym')}"
            )%>

@@ -15,15 +15,15 @@
 #   limitations under the License.
 #   
 require 'test_helper'
+load 'models/search/users.rb'
 
 class InstanceSearchCreatedAfterFromDropdownSimplePluralTest < ActiveSupport::TestCase
 
   #New search for "42993" on instance up to 100 with field: cr-b
   test "instance search on created after from dropdown field simple plural" do
-    search = Search.new("2",'Instance','100','f','','cr-a')
-    assert_equal search.results.class, Instance::ActiveRecord_Relation, "Results should be an Instance::ActiveRecord_Relation"
-    assert search.results.size > 20, "Plenty of records expected."
-    assert_match /Search for instances created less than 2 days ago./, search.info.join
+    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_string: "2 instances-only:",query_target: 'Review',current_user: build_edit_user))
+    assert_equal search.executed_query.results.class, Array, "Results should be an Array"
+    assert search.executed_query.results.size > 20, "Plenty of records expected."
   end
 
 end

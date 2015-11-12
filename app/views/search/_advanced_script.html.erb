@@ -1,0 +1,306 @@
+    <script>
+<!--
+    $( document ).ready(function() {
+console.log('document ready');
+/*
+$('input[type=search]')
+    .wrap('<span>')
+    .after('<span class="clear">&hellip;</span>')
+    .parent()
+    .on('mouseenter mouseleave', function(e){
+        $(this).toggleClass('focused');
+    })
+    .find('span.clear')
+    .on('click', function(e){
+        $('#advanced-search.hidden').removeClass('hidden');
+        if (!!$('#new-search-field').val().match(/^auth/i))  {
+          $('#query-on').val('Authors');
+        }
+        if (!!$('#new-search-field').val().match(/^ref/i))  {
+          $('#query-on').val('References');
+        }
+    });
+    */
+
+    $('#advanced-search-closer').on('click',function(e) {
+      console.log('closer');
+      $('#advanced-search').addClass('hidden');
+    });
+
+    $('#advanced-search-cancel').on('click',function(e) {
+      console.log('cancel');
+      $('#advanced-search').addClass('hidden');
+    });
+
+    $('#advanced-search-button').on('click',function(e) {
+      console.log('search');
+      $('#new-search-field').val($('#query-on').val());
+      $('#advanced-search').addClass('hidden');
+    });
+
+    $('ul#search-results-tabset li a#advanced-search-tab-container-link').on('click',function(e) {
+      $('ul#search-results-tabset li').removeClass('active');
+      $(this).parent('li').addClass('active');
+      $('#advanced-search-container').removeClass('hidden');
+      $('#search-result-container').addClass('hidden');
+      $('#example-search-container').addClass('hidden');
+      $('#search-history-container').addClass('hidden');
+      $('#search-help-container').addClass('hidden');
+      captureSearch(e,this);
+    });
+
+    $('ul#search-results-tabset li a#search-results-tab-container-link').on('click',function(e) {
+      $('ul#search-results-tabset li').removeClass('active');
+      $(this).parent('li').addClass('active');
+      $('#search-result-container').removeClass('hidden');
+      $('#advanced-search-container').addClass('hidden');
+      $('#example-search-container').addClass('hidden');
+      $('#search-history-container').addClass('hidden');
+      $('#search-help-container').addClass('hidden');
+    });
+
+    $('ul#search-results-tabset li a#example-search-tab-container-link').on('click',function(e) {
+      $('ul#search-results-tabset li').removeClass('active');
+      $(this).parent('li').addClass('active');
+      $('#search-result-container').addClass('hidden');
+      $('#search-result-details').addClass('hidden');
+      $('#advanced-search-container').addClass('hidden');
+      $('#example-search-container').removeClass('hidden');
+      $('#search-history-container').addClass('hidden');
+      $('#search-help-container').addClass('hidden');
+    });
+
+    $('ul#search-results-tabset li a#search-history-tab-container-link').on('click',function(e) {
+      debug('showing search history');
+      debug($('#search-history-container').length);
+      $('ul#search-results-tabset li').removeClass('active');
+      $(this).parent('li').addClass('active');
+      $('#search-result-container').addClass('hidden');
+      $('#search-result-details').addClass('hidden');
+      $('#advanced-search-container').addClass('hidden');
+      $('#example-search-container').addClass('hidden');
+      $('#search-history-container').removeClass('hidden');
+      $('#search-help-container').addClass('hidden');
+    });
+
+    $('ul#search-results-tabset li a#search-help-tab-container-link').on('click',function(e) {
+      $('ul#search-results-tabset li').removeClass('active');
+      $(this).parent('li').addClass('active');
+      $('#search-result-container').addClass('hidden');
+      $('#search-result-details').addClass('hidden');
+      $('#advanced-search-container').addClass('hidden');
+      $('#example-search-container').addClass('hidden');
+      $('#search-history-container').addClass('hidden');
+      $('#search-help-container').removeClass('hidden');
+    });
+
+    $('ul#advanced-search-tabset li a').on('click',function(e) {
+      $('.advanced-search-tab').addClass('hidden');
+      $('ul#advanced-search-tabset li').removeClass('active');
+      $('#'+$(this).attr('data-show-id')).removeClass('hidden');
+      $(this).parent('li').addClass('active');
+    });
+
+    $('ul#example-search-tabset li a').on('click',function(e) {
+      $('.example-search-tab').addClass('hidden');
+      $('ul#example-search-tabset li').removeClass('active');
+      $('#'+$(this).attr('data-show-id')).removeClass('hidden');
+      $(this).parent('li').addClass('active');
+    });
+
+
+    $('#search-results-tab-container-link').on('click',function(e) {
+      $('div#search-result-details').removeClass('hidden');
+    });
+
+    $('#advanced-search-tab-container-link').on('click',function(e) {
+      $('div#search-result-details').addClass('hidden');
+    });
+/*
+    $('#name-advanced-search-name-type-options').on('change',function(e) {
+      console.log('changed');
+      $('#name-advanced-search-name-type-list').val($('#name-advanced-search-name-type-list').val()+'x, ');
+    });
+    */
+
+    $('#advanced-search-run').on('click',function(e) {
+      console.log('#advanced-search-run');
+      var currentTab = $('#advanced-search-tabset li.active > a').attr('data-show-id');
+      console.log("current tab: " + currentTab);
+      if(currentTab == 'advanced-search-name') {
+        loadNameToString();
+      } else if (currentTab == 'advanced-search-reference') {
+        loadReferenceToString();
+      } else if (currentTab == 'advanced-search-instance') {
+        loadInstanceToString();
+      } else if (currentTab == 'advanced-search-author') {
+        loadAuthorToString();
+      } else {
+        throw("#advanced-search-run was clicked but we don't know which search to load");
+      }
+      $('form#search-form').submit();
+    });
+
+$( "select#name-advanced-search-name-type-options" )
+  .change(function () {
+    console.log('changed');
+    var str = "";
+    $( "select#name-advanced-search-name-type-options option:selected" ).each(function() {
+      if (str.trim().length == 0) {
+        str = $( this ).val();
+      }else{
+        str += ", " + $( this ).val() 
+      }
+    });
+    $( "input#name-advanced-search-name-type-list" ).val( str );
+  })
+  .change();
+
+$( "select#name-advanced-search-list-or-count" )
+  .change(function () {
+    var val = $(this).val();
+    if ( val == 'count' ) {
+      /*$("input[id^=name_limited]:radio").attr('disabled',true); */
+      $("input#name-advanced-search-set-size").attr('disabled',true);
+    } else {
+      /* $("input[id^=name_limited]:radio").attr('disabled',false); */
+      $("input#name-advanced-search-set-size").attr('disabled',false);
+    }
+
+  });
+
+    $("#search-target-list").on("click",function(e) {
+        if(e.target && e.target.nodeName == "A") {
+            console.log('setting search-target-button');
+            document.getElementById('search-target-button-text').innerHTML = e.target.innerHTML;
+            document.getElementById('query-target').value = e.target.innerHTML;
+            //console.log($('#query-string-field').attr('list'));
+            //console.log(e.target.dataset.list);
+            //console.log(e.target);
+            //document.getElementById('query-string-field').setAttribute('data-list',e.target.dataset.list);
+            console.log(e.target.dataset.help);
+            showHelp(e.target.dataset.help);
+            showExamples(e.target.dataset.examples);
+        }
+    });
+
+
+    setActiveHelpOnLoad();
+    setActiveExamplesOnLoad();
+});
+
+
+    $('a.searchable-field').on('click',function(e) {
+      $('#query-string-field').val($('#query-string-field').val() + ' ' + $(this).html().replace(/<[^>]*>/g,'').trim());
+      $('#query-string-field').focus();
+    });
+
+-->
+    </script>
+
+    <script>
+<!--
+
+    function showHelp(helpElement) {
+      console.log('showHelp: ' + helpElement);
+      $('.search-help').addClass('hidden');
+      $('#'+helpElement).removeClass('hidden');
+    }
+
+    function setActiveHelpOnLoad() {
+      //$('.search-help').addClass('hidden');
+      var helpId = $('ul#search-target-list li a:contains(' +  $('#search-target-button-text').text().trim()  + ')').first().attr('data-help');
+      console.log("search-target-button-text: " + $('#search-target-button-text').text().trim());
+      console.log("setActiveHelpOnLoad helpId: " + helpId);
+      showHelp(helpId);
+    }
+
+    function showExamples(examplesElement) {
+      console.log('showExamples for ' + examplesElement);
+      $('.search-examples').addClass('hidden');
+      $('#'+examplesElement).removeClass('hidden');
+    }
+
+    function setActiveExamplesOnLoad() {
+      var id = $('ul#search-target-list li a:contains(' +  $('#search-target-button-text').text().trim()  + ')').first().attr('data-examples');
+      console.log("search-target-button-text: " + $('#search-target-button-text').text().trim());
+      console.log("setActiveExamplesOnLoad id: " + id);
+      showExamples(id);
+    }
+
+    function loadNameToString() {
+      var str = '';
+      if ($('#name-advanced-search-list-or-count').val().trim() == 'count' ) {
+        str += $('#name-advanced-search-list-or-count').val().trim();
+      }
+      if ($('#name-advanced-search-name').val().trim().length > 0) {
+        str += ' ';
+        str += $('#name-advanced-search-name').val().trim();
+      }
+      if ($('#name-advanced-search-name-type-list').val().trim().length > 0) {
+        str += ' type: ';
+        str += $('#name-advanced-search-name-type-list').val().trim();
+      }
+      if ($('#name_search_name_rank_id').val().trim().length > 0) {
+        str += ' ';
+        str += $('#name_search_name_rank_id').val().trim();
+      }
+      if ($('#name-advanced-search-name-rank-list').val().trim().length > 0) {
+        str += ' rank: ';
+        str += $('#name-advanced-search-name-rank-list').val().trim();
+      }
+      if ($('#name_search_name_ranked_below').val().trim().length > 0) {
+        str += ' ';
+        str += $('#name_search_name_ranked_below').val().trim();
+      }
+      if ($('#name_search_name_ranked_above').val().trim().length > 0) {
+        str += ' ';
+        str += $('#name_search_name_ranked_above').val().trim();
+      }
+      if ($('#name_search_name_status_id').val().trim().length > 0) {
+        str += ' ';
+        str += $('#name_search_name_status_id').val().trim();
+      }
+      if ($('#name-advanced-search-author-abbrev').val().trim().length > 0) {
+        str += ' author: ';
+        str += $('#name-advanced-search-author-abbrev').val().trim();
+      }
+      if ($('#name-advanced-search-ex-author-abbrev').val().trim().length > 0) {
+        str += ' ex-author: ';
+        str += $('#name-advanced-search-ex-author-abbrev').val().trim();
+      }
+      if ($('#name-advanced-search-base-author-abbrev').val().trim().length > 0) {
+        str += ' base-author: ';
+        str += $('#name-advanced-search-base-author-abbrev').val().trim();
+      }
+      if ($('#name-advanced-search-ex-base-author-abbrev').val().trim().length > 0) {
+        str += ' ex-base-author: ';
+        str += $('#name-advanced-search-ex-base-author-abbrev').val().trim();
+      }
+      if ($('#name-advanced-search-sanctioning-author-abbrev').val().trim().length > 0) {
+        str += ' sanctioning-author: ';
+        str += $('#name-advanced-search-sanctioning-author-abbrev').val().trim();
+      }
+      if ($('#name-advanced-search-comments').val().trim().length > 0) {
+        str += ' comments: ';
+        str += $('#name-advanced-search-comments').val().trim();
+      }
+      if ($('#name-advanced-search-comments-by').val().trim().length > 0) {
+        str += ' comments-by: ';
+        str += $('#name-advanced-search-comments-by').val().trim();
+      }
+      $('.name-search-assertion:checked').map(function() {
+        str += ' ' + this.value + ' ';
+      });
+      if ($('#name-advanced-search-set-size').val().trim().length > 0) {
+        if ($('#name-advanced-search-list-or-count').val().match(/list/)) {
+          str += ' limit:';
+          str += $('#name-advanced-search-set-size').val().trim();
+        }
+      }
+      $('#query-string-field').val(str);
+    };
+
+-->
+
+    </script>

@@ -17,7 +17,7 @@
 require 'test_helper'
 
 class NameSearchForNameTypeWithWildCardsSimpleTest < ActionController::TestCase
-  tests NewSearchController
+  tests SearchController
   
   test "editor search for name type with wildcards simple" do
     skip # Expect this to be no longer needed under revised search.

@@ -17,7 +17,7 @@
 require 'test_helper'
 
 class NameSearchForNameTypeCultivarSetsCommonAndCultivarFlagToTrueTest < ActionController::TestCase
-  tests NewSearchController
+  tests SearchController
   
   test "editor search for name type cultivar should set cultivar flag true" do
     skip # Expect this to be no longer needed under revised search.

@@ -19,8 +19,8 @@ require 'test_helper'
 class SearchParsedRequestList20Test < ActiveSupport::TestCase
 
   test "search parse query list 20" do
-    query_string = 'list 20'
-    params = {'query_string'=> query_string}
+    query_string = 'limit:20'
+    params = ActiveSupport::HashWithIndifferentAccess.new(query_target: 'name',query_string: query_string)
     parsed_request = Search::ParsedRequest.new(params)
     assert parsed_request.list, "This should be parsed as a list query."
     assert !parsed_request.count, "This should not be parsed as a count query."

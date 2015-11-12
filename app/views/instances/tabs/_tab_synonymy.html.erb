@@ -7,7 +7,7 @@
 <br>
 <div class="hidden instance-form-success-message">
   <%= link_to("Query instances for #{@instance.name.full_name}",
-              new_search_path(query_target: 'instances for name id', query_string: @instance.name_id), 
+              search_path(query_target: 'instances for name id', query_string: @instance.name_id), 
               class: 'btn btn-primary',
               title: "Query instances for #{@instance.name.full_name}") %>
 </div>

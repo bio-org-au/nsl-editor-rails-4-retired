@@ -15,12 +15,13 @@
 #   limitations under the License.
 #   
 require 'test_helper'
+load 'models/search/users.rb'
 
 class DefaultSearchAbbrevTest < ActiveSupport::TestCase
 
   test "has abbrev only" do
-    search = Search.new("hasabbrevonly",'Author','100','f','','')
-    assert_equal 1, search.results.size, "Default author search should find author with abbrev only."
+    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_string: "hasabbrevonly",query_target: 'Author',current_user: build_edit_user))
+    assert_equal 1, search.executed_query.results.size, "Default author search should find author with abbrev only."
   end
 
 end

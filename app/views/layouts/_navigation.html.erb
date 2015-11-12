@@ -10,7 +10,7 @@
       <% badge = 'NSL Editor' %>
       <% badge = 'Test Editor' if Rails.configuration.try('display_as_test') == true %>
       <%= link_to nav_link(badge,'The National Species List Editor'),
-                  new_search_path,
+                  search_path,
                   class: "navbar-brand #{'active' if params[:controller].match(/search/)}",
                   title: "NSL Editor",
                   tabindex: "1",
