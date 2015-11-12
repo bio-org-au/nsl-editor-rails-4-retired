@@ -105,44 +105,6 @@ module ApplicationHelper
     end 
   end
   
-#  def toolbar_heading(which_one = '')
-#    case which_one
-#      when :new_reference
-#        content_for :toolbar_heading do
-#          'New Reference'
-#        end
-#      else
-#        content_for :toolbar_heading do
-#          'NSL Entity'
-#        end
-#      end
-#  end
-#
-#  def create_button
-#    return ''
-#  end
-#
-#  def sidebar_changed_link
-#    ''
-#  end
-#
-#  def markdown(text)
-#    @markdown.render(text).html_safe
-#  end
-#
-#  def show_path(controller)
-#    case controller
-#    when 'authors'
-#      author_path(1)
-#    when 'references'
-#      reference_path(1)
-#    when 'help_topics'
-#      help_topic_path(1)
-#    else
-#      ''     
-#    end 
-#  end
-#
   def index_path(controller)
     case controller
     when 'authors'
@@ -156,20 +118,6 @@ module ApplicationHelper
     end 
   end
 
-#
-#  def help_about
-#    help_topic_marked_up_text("About the NSL Editor")
-#  end
-#
-#  def help_topic_marked_up_text(name)
-#    help_topic = HelpTopic.where(["lower(name) like ?",name.downcase]).first
-#    help_topic ? BlueFeather.parse(help_topic.marked_up_text).html_safe : "No help found. Expected: #{name}"
-#  end
-#
-#  def show_timestamp(label,date,user,label_is = :description)
-#    content_tag(:section,content_tag(:article,%Q(#{date.strftime("%d-%b-%Y")} #{user}) ,class:'field-data inline') + content_tag(:label,treated_label(label,label_is),class:'field-label inline pull-right'),class:'field-data') 
-#  end
-#
   def show_ref_parent_link(label,reference,contents_method,url,title)
     if reference.parent 
         content_tag(:section,content_tag(:article,
@@ -345,6 +293,19 @@ module ApplicationHelper
 
   def citation_summary(instance)
     instance.citations.collect{|c| c.instance_type.name}.collect.each_with_object(Hash.new(0)) {|o,h| h[o] += 1}.collect { |k,v| pluralize(v,k) }.join(' and ')
+  end
+
+  def created_by_whom_and_when(record)
+    %Q(Created <span class="purple">#{time_ago_in_words(record.created_at)}&nbsp;ago</span> by #{record.created_by.downcase} #{formatted_timestamp(record.created_at)}) 
+  end
+
+  def updated_by_whom_and_when(record)
+    # Only show updated_at if a meaningful time after created_at.
+    if (record.created_at.to_f/10).to_i == (record.updated_at.to_f/10).to_i
+      'Not updated since it was created.'
+    else
+      %Q(Last updated <span class="purple">#{time_ago_in_words(record.updated_at)}&nbsp;ago</span> by #{record.updated_by.downcase} #{formatted_timestamp(record.updated_at)}) 
+    end
   end
 
 end

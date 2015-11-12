@@ -19,7 +19,7 @@ require 'test_helper'
 class NameIndexRouteTest < ActionController::TestCase
   tests NamesController
   test "names index should route to the catch-all" do
-    assert_routing '/names', { controller: "search", action: "index", random: "names"}
+    assert_routing '/names', { controller: "new_search", action: "search", random: "names"}
   end  
 end
 

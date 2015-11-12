@@ -21,14 +21,6 @@ class ReferencesControllerTest < ActionController::TestCase
     @reference = references(:cavanilles_icones)
   end
 
-  test "references index should route to the catch-all" do
-    assert_routing '/references', { controller: "search", action: "index", random: "references"}
-  end
-
-  test "referencs new should route to a new referenc" do
-    assert_routing '/references/new', { controller: "references", action: "new"}
-  end
-
   test "should route to reference typeahead suggestions by citation" do
     assert_routing '/references/typeahead/on_citation', { controller: "references", action: "typeahead_on_citation"}
   end
@@ -43,40 +35,6 @@ class ReferencesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "references edit should route to the catch-all" do
-    assert_routing '/references/edit/1', { controller: "search", action: "index", random: "references/edit/1"}
-  end
-
-  #test "should route to name parent suggestions" do
-    #assert_routing '/names/name_parent_suggestions', { controller: "names", action: "name_parent_suggestions" }
-  #end
-#
-  #test "should get name parent suggestions" do
-    #@request.headers["Accept"] = "application/javascript"
-    #get(:name_parent_suggestions,{rank_id:name_ranks(:unranked).id,term:'search for this'},{username: 'fred', user_full_name: 'Fred Jones', groups: ['edit']})
-    #assert_response :success
-  #end
-#
-  #test "should route to typeahead on full name" do
-    #assert_routing '/names/typeahead_on_full_name', { controller: "names", action: "typeahead_on_full_name" }
-  #end
-#
-  #test "should get typeahead_on_full_name" do
-    #@request.headers["Accept"] = "application/javascript"
-    #get(:typeahead_on_full_name,{term:'search for this'},{username: 'fred', user_full_name: 'Fred Jones', groups: ['edit']})
-    #assert_response :success
-  #end
-#
-  #test "should route to name hybrid parent suggestions" do
-    #assert_routing '/names/hybrid_parent_suggestions', { controller: "names", action: "hybrid_parent_suggestions" }
-  #end
-#
-  #test "should get name hybrid parent suggestions" do
-    #@request.headers["Accept"] = "application/javascript"
-    #get(:hybrid_parent_suggestions,{rank_id:name_ranks(:unranked).id,term:'search for this'},{username: 'fred', user_full_name: 'Fred Jones', groups: ['edit']})
-    #assert_response :success
-  #end
-#
 end
 
 

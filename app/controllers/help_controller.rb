@@ -15,7 +15,7 @@
 #   limitations under the License.
 #   
 class HelpController < ApplicationController
-  before_filter :hide_details
+  before_filter :hide_details, :empty_search
 
   def index
     @no_search_result_details = true

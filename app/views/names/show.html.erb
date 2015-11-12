@@ -4,7 +4,7 @@
 
   <br>
 
-  <%= link_to(@name.full_name, search_path(query_on: 'name', query: %Q(id:#{@name.id})),id: 'tab-heading') %>
+  <%= link_to(@name.full_name, search_path(query: "name id:#{@name.id}"),id: 'tab-heading') %>
 
   <div>&nbsp;</div>
 

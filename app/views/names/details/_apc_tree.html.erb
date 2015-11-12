@@ -1,19 +1,16 @@
 <% if @name.apc_tree_path.present? %>
   <%= divider %>
   <%= link_to("APC tree #{icon('search')}".html_safe,
-            search_path(query: @name.id,
-                        query_on: 'tree',
-                        query_field: 'apc'),
-                        tabindex: increment_tab_index,
-                        title: "Load the APC tree for this instance.",
-                        class: '') %>
+            tree_path(query: @name.id.to_s,
+                      query_on: 'tree'),
+                      tabindex: increment_tab_index,
+                      title: "Load the APC tree for this instance.",
+                      class: '') %>
 <ul class="tree">
 <% @name.apc_tree_path.tree_ordered_names.each do |step| %>
   <li>
     <%= link_to(%Q(#{step.full_name}<span class="pull-right">#{step.name_rank.name}</span>).html_safe,
-                search_path(query: step.id,
-                          query_on: 'name',
-                          query_field: 'id'),
+                          new_search_path(query_string: "id: #{step.id}",query_target: 'names'),
                           tabindex: increment_tab_index,
                           title: "Search for #{step.full_name}",
                           class: '') %>

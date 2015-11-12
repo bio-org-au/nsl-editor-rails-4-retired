@@ -1,0 +1,17 @@
+<h4>References, names, full synonymy examples</h4>
+<table class="example-searches table table-striped">
+  <% [
+      {search_target: 'References, names, full synonymy', search_string: "1985 maslin", explanation: %Q(Searches for references, drills into all instances.)},
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent"><a href="javascript:void(0)" 
+           class="example-search width-100-percent" 
+           title="Link to search">
+           <span class="blue"><%= link_to(val[:search_string], new_search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %></span></a>
+      </a>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+

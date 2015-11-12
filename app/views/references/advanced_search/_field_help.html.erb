@@ -1,0 +1,192 @@
+<h4>Searchable Reference fields</h4>
+<% link_to_maslin_1985 =  link_to('maslin 1985', new_search_path(query_string: 'maslin 1985', query_target: 'reference'),class:'blue',title: 'example search') %>
+<% link_to_1985_maslin =  link_to('1985 maslin', new_search_path(query_string: '1985 maslin', query_target: 'reference'),class:'blue',title: 'example search') %>
+<h5>Citation, title fields</h5>
+<table class="table table-striped">
+  <tr><th>Field</th><th>Description</th></tr>
+  <% [
+    {field_name: '[no field]', description: %Q(default reference searches are on <span class="purple">citation</span>, same rules as citation searches - see next line )},
+      {field_name: 'citation:', description: "citation combines author, title and publication details - the Editor lists references by showing the citation;"},
+      {field_name: '', description: "citation is useful for searching because it has so much information;"},
+      {field_name: '', description: %Q(enter citation search terms in any order e.g. "#{link_to_maslin_1985}" gives the same results as "#{link_to_1985_maslin}";)},
+      {field_name: '', description: %Q(this works for citation because the editor "tokenizes" citation search terms, making the strict format of the citation less important)},
+      {field_name: '', description: %Q(tokenizing search terms makes for slightly slower searches - but is worth it for citation searches.)},
+      {field_name: 'citation-exact:', description: "search citation with no tokenization, and no wildcards unless you supply them"},
+      {field_name: 'title:', description: "title, with trailing wildcard added automatically"},
+      {field_name: 'title-exact:', description: "title"},
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+      <a href="javascript:void(0)" class="searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
+        <span class="blue"><%= val[:field_name] %></span>
+      </a>
+    </td>
+    <td><%= val[:description].html_safe %>
+    <% if val[:partial].present? %>
+      <%= render partial: val[:partial] %>
+    <% end %>
+    </td>
+  </tr>
+  <% end %>
+</table>
+<h5>Type code field</h5>
+<table class="table table-striped">
+  <% [
+      {field_name: 'type:', description: "reference type, allows comma-separated multiple values",partial: "ref_types/list_for_search_help"}
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+      <a href="javascript:void(0)" class="searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
+        <span class="blue"><%= val[:field_name] %></span>
+      </a>
+    </td>
+    <td><%= val[:description].html_safe %>
+    <% if val[:partial].present? %>
+        <%= render partial: val[:partial] %>
+    <% end %>
+    </td>
+  </tr>
+  <% end %>
+</table>
+
+<h5>Authors</h5>
+<table class="table table-striped">
+  <% [
+      {field_name: 'author:', description: "author name(s), leading and trailing wildcards added automatically"},
+      {field_name: 'author-exact:', description: "author name(s)"},
+      {field_name: 'author_role:', description: "author role",partial: "ref_author_roles/list_for_search_help"}
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+        <a href="javascript:void(0)" class="searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
+          <span class="blue"><%= val[:field_name] %></span>
+        </a>
+    </td>
+    <td><%= val[:description].html_safe %>
+    <% if val[:partial].present? %>
+        <%= render partial: val[:partial] %>
+    <% end %>
+    </td>
+  </tr>
+  <% end %>
+</table>
+
+<h5>Publication details</h5>
+<table class="table table-striped">
+  <% [
+    {field_name: 'edition:', description: "edition"},
+    {field_name: 'isbn:', description: "ISBN"},
+    {field_name: 'issn:', description: "ISSN"},
+    {field_name: 'publication_date:', description: "publication date"},
+    {field_name: 'is-published:', description: "published (also listed as an assertion)"},
+    {field_name: 'is-not-published:', description: "not published (also listed as an assertion)"},
+    {field_name: 'published_location:', description: "published location"},
+    {field_name: 'publisher:', description: "publisher"},
+    {field_name: 'volume:', description: "volume"},
+    {field_name: 'year:', description: "year - 4 digit integer field, do not use wildcards"},
+    {field_name: 'after-year:', description: "year greater than or after an integer"},
+    {field_name: 'before-year:', description: "year less than or before an integer"},
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+        <a href="javascript:void(0)" class="searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
+          <span class="blue"><%= val[:field_name] %></span>
+        </a>
+    </td>
+    <td><%= val[:description].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+<br>
+
+<h5>Notes</h5>
+<table class="table table-striped">
+  <tr><th>Field</th><th>Description</th></tr>
+  <% [
+      {field_name: 'notes:', description: "note text, with leading and trailing wildcards added automatically"},
+      {field_name: 'notes-exact:', description: "note text"},
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+      <a href="javascript:void(0)" class="searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
+        <span class="blue"><%= val[:field_name] %></span>
+      </a>
+    </td>
+    <td><%= val[:description].html_safe %></td>
+    <% if val[:partial].present? %>
+      <td><%= render partial: val[:partial] %></td>
+    <% else %>
+      <td></td>
+    <% end %>
+  </tr>
+  <% end %>
+</table>
+
+<h5>Links</h5>
+<table class="table table-striped">
+  <% [
+      {field_name: 'bhl:', description: "BHL"},
+      {field_name: 'doi:', description: "DOI"},
+      {field_name: 'tl2:', description: "TL2"},
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+        <a href="javascript:void(0)" class="searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
+          <span class="blue"><%= val[:field_name] %></span>
+        </a>
+    </td>
+    <td><%= val[:description].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+<br>
+
+<h5>Assertions</h5>
+<table class="table table-striped">
+  <% [
+      {field_name: 'is-a-duplicate:', description: "marked as a duplicate"},
+      {field_name: 'is-not-a-duplicate:', description: "not marked as a duplicate"},
+      {field_name: 'is-a-parent:', description: "records exist with this marked as their parent"},
+      {field_name: 'is-not-a-parent:', description: "no records exist with this marked as their parent"},
+      {field_name: 'has-no-children:', description: "no records exist with this marked as their parent"},
+      {field_name: 'is-a-child:', description: "Has a parent"},
+      {field_name: 'is-not-a-child:', description: "Has no parent"},
+      {field_name: 'is-published:', description: "Published flag is set true"},
+      {field_name: 'is-not-published:', description: "Published flag is not set true"},
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+        <a href="javascript:void(0)" class="searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
+          <span class="blue"><%= val[:field_name] %></span>
+        </a>
+    </td>
+    <td><%= val[:description].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+<br>
+
+<%= render partial: 'help/id_search_help' %>
+
+<h5>Related record IDs</h5>
+<table class="table table-striped">
+  <% [
+      {field_name: 'duplicate_of_id:', description: "ID of the master record if marked as a duplicate"},
+      {field_name: 'parent_id:', description: "ID of the 'parent' reference, if it is identified, e.g. book for chapter, journal for paper"},
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+        <a href="javascript:void(0)" class="searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
+          <span class="blue"><%= val[:field_name] %></span>
+        </a>
+    </td>
+    <td><%= val[:description].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+<br>
+
+
+<%= render partial: 'comments/advanced_search/help' %>
+<%= render partial: 'help/case_and_wildcards_search' %>
+

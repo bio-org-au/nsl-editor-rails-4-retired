@@ -139,7 +139,7 @@ class Search
   def false_for(arg)
     false
   end
-
+  
   def run_search
     Rails.logger.debug(%Q(Search model run_search for #{@model} for : "#{@search_string}" in "#{@field}", up to #{@limit} record(s)))
     Rails.logger.debug("Apply limit: #{@apply_limit}")

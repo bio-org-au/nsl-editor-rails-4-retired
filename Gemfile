@@ -92,4 +92,4 @@ gem 'cancancan', '~> 1.10'
 
 gem 'sucker_punch', '~> 1.0'
 gem 'activejob_backport'
-
+gem 'underscore-rails'

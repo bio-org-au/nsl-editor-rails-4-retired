@@ -17,14 +17,15 @@
 require 'test_helper'
 
 class NameSearchForNameTypeCultivarHybridFormulaSetsCommonAndCultivarFlagAutomaticallyTest < ActionController::TestCase
-  tests SearchController
+  tests NewSearchController
   
   test "editor search for name type cultivar hybrid formula should set cultivar flag true" do
+    skip # Expect this to be no longer needed under revised search.
     cultivar_hybrid_formula = names(:a_cultivar_hybrid_formula)
     # Set the common-and-cultivar flag to false.
-    get(:index,{'query_on'=>'name','query'=>'nt:cultivar hybrid formula','query_common_and_cultivar'=>'f','query_limit'=>'100'},{username: 'fred', user_full_name: 'Fred Jones', groups: ['edit']})
+    get(:search,{'query_string'=>'name nt:cultivar hybrid formula'},{username: 'fred', user_full_name: 'Fred Jones', groups: ['edit']})
     assert_response :success
-    assert_select "input.checkbox[type=checkbox][id=query_common_and_cultivar][value=t]", true, "The query-common-and-cultivar checkbox should be true"
+    #assert_select "input.checkbox[type=checkbox][id=query_common_and_cultivar][value=t]", true, "The query-common-and-cultivar checkbox should be true"
     assert_select "tr[id=search-result-#{cultivar_hybrid_formula.id}]", true, "Should find one cultivar hybrid formula at least"
   end
 

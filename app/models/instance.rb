@@ -64,6 +64,14 @@ class Instance < ActiveRecord::Base
                          "          when true then 2 " +
                          "          else 1 end ")}
 
+  scope :created_n_days_ago, ->(n) { where("current_date - created_at::date = ?",n)}
+  scope :updated_n_days_ago, ->(n) { where("current_date - updated_at::date = ?",n)}
+  scope :changed_n_days_ago, ->(n) { where("current_date - created_at::date = ? or current_date - updated_at::date = ?",n,n)}
+
+  scope :created_in_the_last_n_days, ->(n) { where("current_date - created_at::date < ?",n)}
+  scope :updated_in_the_last_n_days, ->(n) { where("current_date - updated_at::date < ?",n)}
+  scope :changed_in_the_last_n_days, ->(n) { where("current_date - created_at::date < ? or current_date - updated_at::date < ?",n,n)}
+
   attr_accessor :expanded_instance_type, :display_as, :relationship_flag, 
                 :give_me_focus, :legal_to_order_by, 
                 :show_primary_instance_type, :data_fix_in_process,
@@ -344,10 +352,11 @@ class Instance < ActiveRecord::Base
     reference = Reference.find_by(id: reference_id)
     unless reference.blank?
       reference.display_as_part_of_concept
-      count = 0 
+      count = 1 
       query = reference.instances.joins(:name).includes({name: :name_status}).includes(:instance_type).includes(this_is_cited_by: [:name, :instance_type])
       query = order_by == 'page' ? query.ordered_by_page : query.ordered_by_name
       query.each do |instance|
+        logger.debug('Query loop.....')
         if count < limit
           if instance.cited_by_id.blank?
             count += 1
@@ -355,13 +364,29 @@ class Instance < ActiveRecord::Base
               instance.display_within_reference
               results.push(instance)
               instance.is_cited_by.each do |cited_by| 
+                count += 1
                 cited_by.expanded_instance_type = cited_by.instance_type.name
                 results.push(cited_by)
+                if count > limit
+                  limited = true
+                  break
+                end
               end 
-              results.push(instance.cites_this) unless instance.cites_this.nil?
+              unless instance.cites_this.nil?
+                results.push(instance.cites_this) 
+                count += 1
+                if count > limit
+                  limited = true
+                  break
+                end
+              end
             end
           end
         end  
+        if count > limit
+          limited = true
+          break
+        end
       end
       results.unshift(reference)
     end

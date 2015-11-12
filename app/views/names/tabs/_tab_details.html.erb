@@ -18,8 +18,8 @@
       within
     <% end %>
     <%= link_to(@name.parent.try('full_name_html').try('html_safe'), 
-                search_path(query_on: 'name', query_field: 'id', query: @name.parent_id),
-                class: 'rebeccapurple',
+                                        new_search_path(query_target: 'names', query_string: "id: #{@name.parent_id}"),
+                class: 'name',
                 tabindex: increment_tab_index, 
                 title: "Query the parent") %>
 <% end %>
@@ -27,47 +27,44 @@
 <% if @name.has_second_parent? %>
     and
     <%= link_to(@name.second_parent.try('full_name_html').try('html_safe'), 
-                search_path(query_on: 'name', query_field: 'id', query: @name.second_parent_id),
+                new_search_path(query_target: "names", query_string: "id:#{@name.second_parent_id}"),
                 class: 'rebeccapurple',
                 tabindex: increment_tab_index, 
                 title: 'second parent') %>
 <% end %>
 
-<%#= render 'names/details/apni_family' %>
-
 <% if @name.duplicate_of_id.present? %>
   <br>
-  <% link = link_to(@name.duplicate_of.full_name, search_path(query_on: 'name', query_field: 'id', query: @name.duplicate_of_id),title: 'Retrieve duplicate of', tabindex: increment_tab_index) %>
+  <% link = link_to(@name.duplicate_of.full_name, new_search_path(query_target: 'name', query_string: "id: #{@name.duplicate_of_id}"),title: 'Retrieve duplicate of', tabindex: increment_tab_index) %>
   <%= "Duplicate of #{link}".html_safe %>
-  <br>
 <% end %>
 
 <% unless @name.ex_base_author.blank? %>
   <br>
-  <% auth_link = link_to(@name.ex_base_author.abbrev_if_possible, search_path(query_on: 'author', query_field: 'id', query:  @name.ex_base_author_id), title: "Retrieve ex base author", tabindex: increment_tab_index) %>
+  <% auth_link = link_to(@name.ex_base_author.abbrev_if_possible, new_search_path(query_target: 'author', query_string: "id: #{@name.ex_base_author_id}"), title: "Retrieve ex base author", tabindex: increment_tab_index,class:'author') %>
   <%= "Ex Base Name Authored by #{auth_link}".html_safe  %>
 <% end %>
 
 <% unless @name.base_author.blank? %>
     <br>
-    <% auth_link = link_to(@name.base_author.abbrev_if_possible, search_path(query_on: 'author', query_field: 'id', query: @name.base_author_id), title: "Retrieve ex base author", tabindex: increment_tab_index) %>
+    <% auth_link = link_to(@name.base_author.abbrev_if_possible, new_search_path(query_target: 'author', query_string: "id: #{@name.base_author_id}"), title: "Retrieve ex base author", tabindex: increment_tab_index, class: 'author') %>
     <%= "Base Name Authored by #{auth_link}".html_safe  %>
 <% end %>
 
 <% unless @name.ex_author.blank? %>
     <br>
-    <% auth_link = link_to(@name.ex_author.abbrev_if_possible, search_path(query_on: 'author', query_field: 'id', query: @name.ex_author_id), title: "Retrieve ex base author", tabindex: increment_tab_index) %>
+    <% auth_link = link_to(@name.ex_author.abbrev_if_possible, new_search_path(query_target: 'author', query_string: "id: #{@name.ex_author_id}"), title: "Retrieve ex base author", tabindex: increment_tab_index, class: 'author') %>
     <%= "Ex Authored by #{auth_link}".html_safe  %>
 <% end %>
 
 <% unless @name.author.blank? %>
     <br>
-    <% auth_link = link_to(@name.author.abbrev_if_possible, search_path(query_on: 'author', query_field: 'id', query: @name.author_id), title: "Retrieve ex base author", tabindex: increment_tab_index) %>
+    <% auth_link = link_to(@name.author.abbrev_if_possible, new_search_path(query_target: 'author', query_string: "id: #{@name.author_id}"), title: "Retrieve ex base author", tabindex: increment_tab_index, class: 'author') %>
     <%= "Authored by #{auth_link}".html_safe  %>
 <% end %>
 <% unless @name.sanctioning_author.blank? %>
     <br>
-    <% auth_link = link_to(@name.sanctioning_author.abbrev_if_possible, search_path(query_on: 'author', query_field: 'id', query: @name.sanctioning_author_id), title: "Retrieve ex base author", tabindex: increment_tab_index) %>
+    <% auth_link = link_to(@name.sanctioning_author.abbrev_if_possible, new_search_path(query_target: 'author', query_string: "author id: #{@name.sanctioning_author_id}"), title: "Retrieve ex base author", tabindex: increment_tab_index,class: 'author') %>
     <%= "Sanctioned by #{auth_link}".html_safe  %>
 <% end %>
 
@@ -81,13 +78,10 @@
 <br>
 <% if @name.instances.size > 0 %>
   <%= link_to("#{pluralize(@name.instances.size,'instance')} #{icon('search')}".html_safe, 
-                        search_path(query: "id: #{@name.id}", 
-                        query_on: 'instance',
-                        query_field: 'name-instances'),
+                        new_search_path(query_target: "instances-for-name-id", query_string: "#{@name.id}"), 
                         tabindex: increment_tab_index,
                         title: "Search for the #{pluralize(@name.instances.size,'instance')}",
                         class: 'give-me-focus') %>
-  <%#= render 'names/details/parents' %>
 <% else %>
   No instances.
 <% end %>
@@ -108,10 +102,9 @@
 
 simple name: <%= @name.simple_name %>
 <br>
-<% created =  "#{@name.created_by.downcase} #{formatted_timestamp(@name.created_at)}" %>
-<% updated =  "#{@name.updated_by.downcase} #{formatted_timestamp(@name.updated_at)}" %>
-<%= render partial: 'detail_line', locals: {label: 'Created', info: created} %>
-<%= render partial: 'detail_line', locals: {label: 'Last updated', info: updated} %>
+<br>
+<%= created_by_whom_and_when(@name).html_safe %>
+<br>
+<%= updated_by_whom_and_when(@name).html_safe %>
 <%= render partial: 'detail_line', locals: {label: 'System', info: "#{@name.namespace.name}#{%Q(.#{@name.source_system.downcase}.#{@name.source_id}) if @name.source_system}"} %>
-
 

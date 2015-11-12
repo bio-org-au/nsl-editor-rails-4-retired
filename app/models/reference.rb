@@ -32,6 +32,14 @@ class Reference < ActiveRecord::Base
   scope :lower_citation_like, ->(string) { where("lower(citation) like ? ",string.gsub(/\*/,'%').downcase) }
   scope :not_duplicate, -> { where("duplicate_of_id is null") }
 
+  scope :created_n_days_ago, ->(n) { where("current_date - created_at::date = ?",n)}
+  scope :updated_n_days_ago, ->(n) { where("current_date - updated_at::date = ?",n)}
+  scope :changed_n_days_ago, ->(n) { where("current_date - created_at::date = ? or current_date - updated_at::date = ?",n,n)}
+
+  scope :created_in_the_last_n_days, ->(n) { where("current_date - created_at::date < ?",n)}
+  scope :updated_in_the_last_n_days, ->(n) { where("current_date - updated_at::date < ?",n)}
+  scope :changed_in_the_last_n_days, ->(n) { where("current_date - created_at::date < ? or current_date - updated_at::date < ?",n,n)}
+
   belongs_to :ref_type, foreign_key: 'ref_type_id'
   belongs_to :ref_author_role, foreign_key: 'ref_author_role_id'
   belongs_to :author, foreign_key: 'author_id'
@@ -57,6 +65,7 @@ class Reference < ActiveRecord::Base
 
   has_many :instances, foreign_key: 'reference_id'
   has_many :name_instances, -> { where 'cited_by_id is not null' }, class_name: 'Instance', foreign_key: 'reference_id'
+  has_many :novelties, -> { where 'instance.instance_type_id in (select id from instance_type where primary_instance)' }, class_name: 'Instance', foreign_key: 'reference_id'
   has_many :comments
 
   validates :published, inclusion: { in: [true, false] }

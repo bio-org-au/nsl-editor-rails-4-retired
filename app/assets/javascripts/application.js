@@ -54,6 +54,15 @@
 //= require typeahead/for_reference/duplicate.js
 //= require typeahead/for_reference/parent.js
 //= require tree-extras/apc-placement.js
+//= require underscore
+//= require new-search
+//= require search/capture-name-fields
+//= require search/capture-reference-fields
+//= require search/capture-instance-fields
+//= require search/capture-author-fields
+//= require search/load-reference-to-string
+//= require search/load-instance-to-string
+//= require search/load-author-to-string
 
 // possibly this should not be here, instead the tree search results page should declare it as a dependency
 //= require tree-extras/tree-view.js

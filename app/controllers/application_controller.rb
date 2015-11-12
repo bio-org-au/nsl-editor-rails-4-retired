@@ -122,4 +122,9 @@ class ApplicationController < ActionController::Base
     @no_search_result_details = true
   end
 
+  def empty_search
+    @search = Search::Empty.new(params) 
+  end
+
 end
+

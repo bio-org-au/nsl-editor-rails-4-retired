@@ -16,17 +16,11 @@
 #   
 class InstanceTypesController < ApplicationController
   include ActionView::Helpers::TextHelper
-  before_filter :hide_details
+  before_filter :hide_details, :empty_search
 
   # GET /instance_types
   def index 
     @instance_types = InstanceType.all.order("sort_order,name")
-  end
-
-  private
-
-  def hide_details
-    @no_search_result_details = true
   end
 
 end

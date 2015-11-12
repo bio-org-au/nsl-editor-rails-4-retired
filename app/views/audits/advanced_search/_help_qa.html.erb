@@ -1,0 +1,25 @@
+
+<h5>Restrict user</h5>
+<table class="table table-striped">
+  <% [
+      {field_name: 'by:', description: "created or updated by username"},
+      {field_name: 'not-by:', description: "not created or updated by username"},
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+        <a href="javascript:void(0)" class="searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
+          <span class="blue"><%= val[:field_name] %></span>
+        </a>
+    </td>
+    <td><%= val[:description].html_safe %>
+    <% if val[:partial].present? %>
+        <%= render partial: val[:partial] %>
+    <% end %>
+    </td>
+  </tr>
+  <% end %>
+</table>
+
+
+
+

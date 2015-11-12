@@ -22,7 +22,7 @@ class InstanceNotesControllerTest < ActionController::TestCase
   end
 
   test "instance notes index should route to the catch-all" do
-    assert_routing '/instance_notes', { controller: "search", action: "index", random: "instance_notes"}
+    assert_routing '/instance_notes', { controller: "new_search", action: "search", random: "instance_notes"}
   end  
 
   test "instance notes new should route to a new instance note" do

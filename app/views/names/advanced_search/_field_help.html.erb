@@ -1,0 +1,103 @@
+  <h4>Searchable Name fields</h4>
+  <% link_example = link_to('*costata', new_search_path(query_string: '*costata', query_target: 'name'),class:'blue') %>
+  <h5>Name</h5>
+<table class="table table-striped">
+  <tr><th>Field</th><th>Description</th></tr>
+  <% [
+    {field_name: '', description: "default search is on <span class='purple'>name</span>, see more about name search on the next line"},
+      {field_name: 'name:', description: "full name, with trailing wildcard added automatically and all embedded spaces treated as wildcards;"},
+      {field_name: '', description: "note that for search terms not at the start of the name, you need to supply your own leading wildcard (e.g. #{link_example})"},
+      {field_name: 'name-exact:', description: "full name"}
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+      <a href="javascript:void(0)" class="searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
+        <span class="blue"><%= val[:field_name] %></span>
+      </a>
+    </td>
+    <td><%= val[:description].html_safe %></td>
+    <% if val[:partial].present? %>
+      <td><%= render partial: val[:partial] %></td>
+    <% else %>
+      <td></td>
+    <% end %>
+  </tr>
+  <% end %>
+</table>
+  <h5>Coded fields</h5>
+<table class="table table-striped">
+  <tr><th>Field</th><th>Description</th><th>Values</th></tr>
+  <% [
+      {field_name: 'rank:', description: "name rank, allows comma-separated multiple values",partial: "name_ranks/list_for_search_help"},
+      {field_name: 'status:', description: "name status, allows comma-separated multiple values",partial: "name_statuses/list_for_search_help"},
+      {field_name: 'type:', description: "name type, allows comma-separated multiple values",partial: "name_types/list_for_search_help"}
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+      <a href="javascript:void(0)" class="searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
+        <span class="blue"><%= val[:field_name] %></span>
+      </a>
+    </td>
+    <td><%= val[:description].html_safe %></td>
+    <% if val[:partial].present? %>
+      <td><%= render partial: val[:partial] %></td>
+    <% else %>
+      <td></td>
+    <% end %>
+  </tr>
+  <% end %>
+</table>
+
+  <h5>Authorities</h5>
+<table class="table table-striped">
+  <tr><th>Field</th><th>Description</th></tr>
+  <% [
+      {field_name: 'author:', description: "author abbreviation"},
+      {field_name: 'ex-author:', description: "ex-author abbreviation"},
+      {field_name: 'base-author:', description: "base author abbreviation"},
+      {field_name: 'ex-base-author:', description: "ex-base author abbreviation"},
+      {field_name: 'sanctioning-author:', description: "sanctioning author abbreviation"}
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+        <a href="javascript:void(0)" class="searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
+          <span class="blue"><%= val[:field_name] %></span>
+        </a>
+    </td>
+    <td><%= val[:description].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+<br>
+
+
+<h5>Assertions</h5>
+<table class="table table-striped">
+  <% [
+      {field_name: 'is-a-duplicate:', description: "marked as a duplicate"},
+      {field_name: 'is-not-a-duplicate:', description: "not marked as a duplicate"},
+      {field_name: 'is-a-parent:', description: "records exist with this marked as their parent"},
+      {field_name: 'is-not-a-parent:', description: "no records exist with this marked as their parent"},
+      {field_name: 'has-no-parent:', description: "has no parent"},
+      {field_name: 'is-a-child:', description: "has a parent"},
+      {field_name: 'is-not-a-child:', description: "has no parent"},
+      {field_name: 'has-second-parent:', description: "has second parent"},
+      {field_name: 'has-no-second-parent:', description: "has no second parent"},
+      {field_name: 'is-a-second-parent:', description: "a record exists with this as its second parent"},
+      {field_name: 'is-not-a-second-parent:', description: "no record exists with this as its second parent"},
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+        <a href="javascript:void(0)" class="searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
+          <span class="blue"><%= val[:field_name] %></span>
+        </a>
+    </td>
+    <td><%= val[:description].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+<br>
+
+<%= render partial: 'comments/advanced_search/help' %>
+<%= render partial: 'help/id_search_help' %>
+<%= render partial: 'help/case_and_wildcards_search' %>

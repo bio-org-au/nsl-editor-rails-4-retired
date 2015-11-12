@@ -19,6 +19,8 @@ class NameType < ActiveRecord::Base
   self.primary_key = 'id'
   self.sequence_name = 'nsl_global_seq'
 
+  scope :not_deprecated, -> { where(deprecated: false) }
+
   has_many :names
   belongs_to :name_group
   belongs_to :name_category
@@ -31,12 +33,30 @@ class NameType < ActiveRecord::Base
     end
   end
 
+  def capitalised_name
+    case name
+    when /\bacra\b/
+      name.gsub(/\bacra\b/,'ACRA')
+    when /\bpbr\b/
+      name.gsub(/\bpbr\b/,'PBR')
+    when /\btrade\b/
+      name.gsub(/\btrade\b/,'Trade')
+    else
+      name
+    end
+  end
+
   def self.default
     NameType.where(name: 'scientific').push( NameType.order('name').limit(1).first).first
   end
 
+  def self.query_form_options
+    self.not_deprecated.sort{|x,y| x.name <=> y.name}.collect{|n| [n.capitalised_name, "#{n.name}", class: '']}.
+      unshift(['Include common, cultivars','type:*']).unshift(['Exclude common, cultivars',''])
+  end
+
   def self.options
-    self.all.sort{|x,y| x.name <=> y.name}.collect{|n| [n.name, n.id, class: 'fred']}
+    self.all.sort{|x,y| x.name <=> y.name}.collect{|n| [n.capitalised_name, n.id, class: '']}
   end
 
   def self.option_ids_for_category(name_category_string)
