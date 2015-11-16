@@ -60,6 +60,8 @@ class Search::OnInstance::WhereClauses
           @sql = @sql.where("id in (?)",canonical_value.split(',').collect {|v| v.strip})
         when /\Atype:\z/
           @sql = @sql.where("exists (select null from instance_type where instance_type_id = instance_type.id and instance_type.name in (?))",canonical_value.split(',').collect {|v| v.strip})
+        when /\Aref-type:\z/
+          @sql = @sql.where(ALLOWS_MULTIPLE_VALUES[canonical_field],canonical_value.split(',').collect {|v| v.strip.downcase})
         else
           raise "The field '#{field}' currently cannot handle multiple values separated by commas." 
         end
@@ -116,6 +118,7 @@ class Search::OnInstance::WhereClauses
     'note-key:' => " exists (select null from instance_note where instance_id = instance.id and exists (select null from instance_note_key where instance_note_key_id = instance_note_key.id and lower(instance_note_key.name) like ?)) ",
     'notes-exact:' => " exists (select null from instance_note where instance_id = instance.id and lower(instance_note.value) like ?) ",
     'verbatim-name-exact:' => "lower(verbatim_name_string) like ?",
+    'ref-type:' => " exists (select null from reference ref where ref.id = instance.reference_id and exists (select null from ref_type where ref_type.id = ref.ref_type_id and lower(ref_type.name) like lower(?)))"
   }
   FIELD_NEEDS_WILDCARDS = { 
     'verbatim-name:' => "lower(verbatim_name_string) like ?",
@@ -144,6 +147,7 @@ class Search::OnInstance::WhereClauses
     'ids:' => " id in (?)",
     'id:' => " id in (?)",
     'type:' => " exists (select null from instance_type where instance_type_id = instance_type.id and instance_type.name in (?))",
+    'ref-type:' => " exists (select null from reference ref where ref.id = instance.reference_id and exists (select null from ref_type where ref_type.id = ref.ref_type_id and lower(ref_type.name) in (?)))"
   }
 
   WHERE_ASSERTION_HASH = { 

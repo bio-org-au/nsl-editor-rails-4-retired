@@ -88,11 +88,35 @@
 <br>
 
 
-<h4 class="">Queries that use the reference year</h4>
+<h4 class="">Reference year queries</h4>
 <table class="example-searches table table-striped">
   <% [
     {search_target: 'Instances', search_string: "is-novelty: y:2015",explanation: %Q(Find instances with a "primary instance" type attached to a refererence published in the year 2015.)},
     {search_target: 'Instances', search_string: "desmocladus is-novelty: y:2014",explanation: %Q(Find instances for any names containing "desmocladus", with a "primary instance" type that are in a refererence published in the year 2015.)},
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent">
+      <a href="javascript:void(0)" 
+         class="example-search width-100-percent" 
+         title="Link to search">
+         <span class="blue"><%= link_to(val[:search_string], search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %></span>
+      </a>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+<br>
+
+
+<h4 class="">Reference type queries</h4>
+<table class="example-searches table table-striped">
+  <% [
+    {search_target: 'Instances', search_string: "ref-type: herbarium annotation",explanation: %Q(Find instances based on a Herbarium annotation.)},
+    {search_target: 'Instances', search_string: "ref-type: herb*",explanation: %Q(Find instances based on a Herbarium annotation.)},
+    {search_target: 'Instances', search_string: "ref-type: herb* year: 2007",explanation: %Q(Find instances based on a Herbarium annotation from 2007.)},
+    {search_target: 'Instances', search_string: "ref-type: herbarium annotation, personal communication year: 2010",explanation: %Q(Find instances based on Herbarium annotations or Personal communications from 2010.)},
+    {search_target: 'Instances', search_string: "maslin ref-type: herbarium annotation, personal communication",explanation: %Q(Find instances based on Herbarium annotations or Personal communications that have 'maslin' in the taxon name.)},
       ].each do |val| %>
   <tr>
     <td class="width-30-percent">
