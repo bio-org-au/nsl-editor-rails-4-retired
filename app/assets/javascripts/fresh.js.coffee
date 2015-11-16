@@ -353,10 +353,9 @@ window.loadTreeDetails = (event,inFocus,tabWasClicked = false) ->
         $('li.active a.tab').focus()
   event.preventDefault()
 
-changeNameCategoryOnEditTab = (event,inFocus,tabWasClicked) ->
-  debug('change')
-  debug(inFocus.attr('data-edit-url'))
-  loadDetails(event,inFocus,tabWasClicked)
+changeNameCategoryOnEditTab = (event,$this,tabWasClicked) ->
+  debug('changeNameCategoryOnEditTab')
+  $('#search-result-details').load($this.attr('data-edit-url'))
 
 window.loadDetails = (event,inFocus,tabWasClicked = false) ->
   debug('window.loadDetails')
