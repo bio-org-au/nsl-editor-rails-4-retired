@@ -37,8 +37,6 @@ class Search::ParsedRequest
               :user
 
   DEFAULT_LIST_LIMIT = 100
-  MAX_LIST_LIMIT = 1000
-  NO_LIST_LIMIT = -1
   DEFINED_QUERIES = {
     'instance-name-id:' => 'instances-for-name-id:',
     'instances-for-name-id' => 'instances-for-name-id:',
@@ -95,6 +93,7 @@ class Search::ParsedRequest
   def inspect
     "Parsed Request: count: #{@count}; list: #{@list}; defined_query: #{@defined_query};" +
     "where_arguments: #{@where_arguments}, defined_query_args: #{@defined_query_args}; " +
+    "query_target: #{@query_target}; " +
     "common_and_cultivar: #{@common_and_cultivar}; include_common_and_cultivar_session: #{@include_common_and_cultivar_session};"
   end
 

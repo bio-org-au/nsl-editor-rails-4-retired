@@ -59,12 +59,6 @@ class Search::ParsedRequestTest
     assert(pq.defined_query == false,'simple_ref_test: should not be a defined query')
   end
 
-  def simple_name_with_instances_test 
-    @tests_run += 1
-    pq = Search::ParsedRequest.new({"query_string"=>"Angophora Costata*", "query_target"=>"Names with instances", "query_submit"=>"Search"})
-    assert(pq.defined_query == 'instances-for-name:','simple_name_with_instances_test: should be a defined query')
-  end
-
   def author_search_by_query_target
     @tests_run += 1
     pq = Search::ParsedRequest.new({"query_string"=>"bent*", "query_target"=>"Authors", "query_submit"=>"Search"})

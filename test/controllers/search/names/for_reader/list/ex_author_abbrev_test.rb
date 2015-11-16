@@ -20,8 +20,10 @@ class ReaderSearchControllerNamesExAuthorAbbrevListTest < ActionController::Test
   tests SearchController
   
   test "reader can search for a name by ex-author abbrev" do
-    get(:search,{query_string: 'ex-author-abbrev: species'},{username: 'fred', user_full_name: 'Fred Jones', groups: []})
+    get(:search,{query_target: 'name', query_string: 'ex-author: cronquist*'},{username: 'fred', user_full_name: 'Fred Jones', groups: []})
     assert_response :success
+    assert_select '#search-results-summary', /1 record\b/, "Should find one record" 
   end
 
 end
+

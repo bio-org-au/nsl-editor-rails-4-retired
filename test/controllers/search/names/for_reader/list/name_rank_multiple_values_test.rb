@@ -25,11 +25,8 @@ class ReaderSearchControllerNamesNameRankMultipleValuesListTest < ActionControll
     forma = names(:a_forma)
     get(:search,{query_target: 'name', query_string: 'rank: tribus,subgenus,forma'},{username: 'fred', user_full_name: 'Fred Jones', groups: []})
     assert_response :success
-    assert_select "a#name-#{tribus.id}", true, "Should see tribus."
     assert_select "a#name-#{tribus.id}", /a_tribus/, "Should see tribus."
-    assert_select "a#name-#{subgenus.id}", true, "Should see subgenus."
     assert_select "a#name-#{subgenus.id}", /a_subgenus/, "Should see subgenus."
-    assert_select "a#name-#{forma.id}", true, "Should see forma."
     assert_select "a#name-#{forma.id}", /a_forma/, "Should see forma."
   end
 

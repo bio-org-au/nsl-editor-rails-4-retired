@@ -20,8 +20,10 @@ class ReaderSearchControllerNamesAuthorIdListTest < ActionController::TestCase
   tests SearchController
   
   test "reader can search for a name by author id" do
-    get(:search,{query_string: 'author-id: species'},{username: 'fred', user_full_name: 'Fred Jones', groups: []})
+    author = authors(:bentham)
+    get(:search,{query_target: 'name', query_string: "author-id: #{author.id}"},{username: 'fred', user_full_name: 'Fred Jones', groups: []})
     assert_response :success
+    assert_select '#search-results-summary', /\b1[0-9] records\b/, "Should find several records for author ID using #{author.abbrev}" 
   end
 
 end

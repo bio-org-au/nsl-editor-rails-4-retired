@@ -15,13 +15,17 @@
 #   limitations under the License.
 #   
 require 'test_helper'
+load 'test/models/search/users.rb'
 
 class OnIdTest < ActiveSupport::TestCase
 
   test "on ID" do
-    results, rejected_pairings,is_limited,focus_anchor_id,info = Name::AsSearchEngine.search("id: #{names(:the_regnum).id}")
-    assert_equal results.class, Name::ActiveRecord_Relation, "Results should be a Name::ActiveRecord_Relation."
-    assert_equal results.size, 1, "Only 1 result is expected."
+    name = names(:the_regnum)
+    query_string = "id: #{name.id}"
+    params =  ActiveSupport::HashWithIndifferentAccess.new(query_target: 'name', query_string: query_string, current_user: build_edit_user)
+    search = Search::Base.new(params)
+    assert_equal search.executed_query.results.class, Name::ActiveRecord_Relation, "Results should be a Name::ActiveRecord_Relation."
+    assert_equal search.executed_query.results.size, 1, "Only 1 result is expected."
   end
 
 end

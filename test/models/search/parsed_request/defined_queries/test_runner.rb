@@ -14,16 +14,16 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #   
-require 'test_helper'
 
-class OnParentIdTest < ActiveSupport::TestCase
+    def run_test(input_query_target,expected_defined_query)
+      params =  ActiveSupport::HashWithIndifferentAccess.new
+      params[:query_target] = input_query_target
+      params[:query_string] = ''
+      parsed_request = Search::ParsedRequest.new(params)
+      assert parsed_request.defined_query, "The query target #{input_query_target} should be parsed as a defined query."
+      assert parsed_request.defined_query.match(/\A#{expected_defined_query}\z/), 
+        "The query target '#{input_query_target}' should be parsed as defined query '#{expected_defined_query}' not as '#{parsed_request.defined_query}'"
+    end
 
-  test "on parent ID" do
-    results, rejected_pairings,is_limited,focus_anchor_id,info = Name::AsSearchEngine.search("parent-id: #{names(:a_genus).id}")
-    assert_equal results.class, Name::ActiveRecord_Relation, "Results should be a Name::ActiveRecord_Relation."
-    assert_equal 7, results.size, "Expected 7 names."
-  end
-
-end
 
 

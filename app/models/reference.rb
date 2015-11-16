@@ -303,7 +303,7 @@ class Reference < ActiveRecord::Base
   end
 
   # Order of search terms does not matter.
-  def self.simple_search(search_limit, search_string, apply_limit)
+  def self.deprec_simple_search(search_limit, search_string, apply_limit)
     rejected_pairings = []
     where = ""
     binds = []
@@ -329,7 +329,7 @@ class Reference < ActiveRecord::Base
   end
 
   # Order of search terms does not matter.
-  def self.simple_count(search_string)
+  def self.deprec_simple_count(search_string)
     where = ""
     binds = []
     search_string.split.each do |term|
@@ -341,7 +341,7 @@ class Reference < ActiveRecord::Base
     return count
   end
 
-  def self.advanced_search(search_limit,search_string,apply_limit)
+  def self.deprec_advanced_search(search_limit,search_string,apply_limit)
     info = [%Q(Reference search: "#{search_string}";)]
     where,
       binds,
@@ -372,7 +372,7 @@ class Reference < ActiveRecord::Base
     return results, rejected_pairings,results.size == search_limit,focus_anchor_id, info
   end
 
-  def self.advanced_count(search_string)
+  def self.deprec_advanced_count(search_string)
     where,
       binds,
       rejected_pairings = Reference.generic_bindings_to_where(self,
@@ -387,7 +387,7 @@ class Reference < ActiveRecord::Base
     count
   end
 
-  def self.search(raw, limit = 100, just_count_them = false, exclude_common_and_cultivar = true, apply_limit = true)
+  def self.deprec_search(raw, limit = 100, just_count_them = false, exclude_common_and_cultivar = true, apply_limit = true)
     logger.debug(%Q(Reference search: "#{raw}" up to #{limit} records; exclude_common_and_cultivar: #{exclude_common_and_cultivar}; apply_limit: #{apply_limit}.))
     search_limit = limit
     search_string = raw
@@ -414,7 +414,7 @@ class Reference < ActiveRecord::Base
   # This turns field descriptors into parts of a where clause.
   # It is for "specific" field descriptors.  
   # The "generic" field descriptors should have been consumed beforehand.
-  def self.bindings_to_where(search_terms_array,where,binds)
+  def self.deprec_bindings_to_where(search_terms_array,where,binds)
     logger.debug("bindings_to_where: search terms array: #{search_terms_array.join(',')}; where: #{where}; binds: {binds}")
     rejected_pairings = []
     default_order_by = 'citation'
@@ -564,17 +564,17 @@ class Reference < ActiveRecord::Base
     return where,binds,rejected_pairings
   end
 
-  def self.order_this_record_first(*args)
+  def self.deprec_order_this_record_first(*args)
     logger.debug("Order this record first: #{args.first}")
   end
         
-  def self.legal_to_order_by?(raw)
+  def self.deprec_legal_to_order_by?(raw)
     LEGAL_TO_ORDER_BY.include?(raw)
   end
   
   # Postgresql sorts the null ids to the end, unlike oracle, mysql
   # So treat nulls as zero and bring them to the top of the list.
-  def self.processed_order_by_element(raw)
+  def self.deprec_processed_order_by_element(raw)
     if raw.downcase =~ /^parent_id\W/
       "coalesce(parent_id,0)"
     else
@@ -582,7 +582,7 @@ class Reference < ActiveRecord::Base
     end
   end
   
-  def self.safe_order_by_elements(raw)
+  def self.deprec_safe_order_by_elements(raw)
     safe = []
     raw.split(',').each do | component |
       field_descriptor = component.split.first

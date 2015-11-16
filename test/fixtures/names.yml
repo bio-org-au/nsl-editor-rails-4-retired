@@ -24,7 +24,7 @@ the_regnum:
 
 a_division:
   author: reveal
-  ex_author: cronquist
+  ex_author: cronquist_et_al
   full_name: "Magnoliophyta Cronquist, Takht. & W.Zimm. ex Reveal a_division"
   full_name_html: "<scientific><name id='217746'><element>Magnoliophyta</element> <authors><ex id='5508' title='Cronquist, A.J., Takhtajan, A.L. &amp; Zimmermann, Walter M.'>Cronquist, Takht. & W.Zimm.</ex> ex <author id='2549' title='Reveal, J.L.'>Reveal</author></authors></name></scientific>"
   name_element: "Magnoliophyta"
@@ -592,7 +592,7 @@ is_base_authored_by_the_name_authority_of_every_type:
     
 is_ex_base_authored_by_the_name_authority_of_every_type: 
   author: bentham
-  base_author: cronquist
+  base_author: cronquist_et_al
   ex_base_author: is_a_name_authority_of_every_type
   simple_name: Is Ex Base Authored by the name authority of every type
   full_name: Is Ex Base Authored by the name authority of every type
@@ -946,8 +946,6 @@ metrosideros_costata_gaertn:
   base_author_id: 
   created_at: 2006-11-16 23:05:07.000000000 Z
   created_by: KIRSTENC
-  ex_author_id: 
-  ex_base_author_id: 
   full_name: Metrosideros costata Gaertn.
   full_name_html: "<scientific><name id='110181'><scientific><name id='109596'><element><i>Metrosideros</i></element></name></scientific> <element><i>costata</i></element> <authors><author id='7066' title='Gaertner, J.'>Gaertn.</author></authors></name></scientific>"
   name_element: costata
