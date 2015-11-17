@@ -33,6 +33,10 @@ class NameStatus < ActiveRecord::Base
     name =~ /\Alegitimate\z/
   end
 
+  def manuscript?
+    name =~ /\Amanuscript\z/
+  end
+
   def na?
     name =~ /\A\[n\/a\]\z/
   end
