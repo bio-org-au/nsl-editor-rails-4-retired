@@ -142,6 +142,8 @@ class Search::OnName::WhereClauses
     'has-no-second-parent:' => " second_parent_id is null",
     'is-a-second-parent:' => " exists (select null from name child where child.second_parent_id = name.id) ",
     'is-not-a-second-parent:' => " not exists (select null from name child where child.second_parent_id = name.id) ",
+    'has-no-instances:' => " not exists (select null from instance i where i.name_id = name.id)",
+    'has-instances:' => " exists (select null from instance i where i.name_id = name.id)",
   }
 
   WHERE_VALUE_HASH = { 

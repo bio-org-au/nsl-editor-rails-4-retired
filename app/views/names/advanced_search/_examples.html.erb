@@ -4,6 +4,7 @@
 <br>
 <% excc = %Q(<span class="purple" title="Excluding common and cultivar names by default.">EXCC</span>) %>
 <% incc = %Q(<span class="purple" title="Including common and cultivar names.">INCC</span>) %>
+
 <h4 class="">List names</h4>
 <table class="example-searches table table-striped">
   <% [{search_target: 'Names', search_string: "acacia",explanation: %Q(List names starting with "acacia".  Bare search is on names. 100 records is the default.)},
@@ -22,6 +23,24 @@
   </tr>
   <% end %>
 </table>
+
+
+
+<h4 class="">Assertion queries</h4>
+<table class="example-searches table table-striped">
+  <% [
+      {search_target: 'Names', search_string: "is-a-parent: has-no-instances:",explanation: %Q(List names that have children but no instances.)},
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent">
+      <%= link_to(val[:search_string], search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+
+
 <br>
 <h4 class="inline-block">Count names</h4><span> - turn a list into a count</span>
 <table class="example-searches table table-striped">
