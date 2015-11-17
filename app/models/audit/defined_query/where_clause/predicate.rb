@@ -118,6 +118,7 @@ class Audit::DefinedQuery::WhereClause::Predicate
     'updated-after:' => "updated_at::date >= ?",
     'created-before:' => "created_at::date < ?",
     'updated-before:' => "updated_at::date < ?",
+    'day-created:' => "date_trunc('day',created_at) = ?",
   }
 
   WHERE_VALUE_HASH_2_VALUES = { 
