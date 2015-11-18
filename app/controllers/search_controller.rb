@@ -18,8 +18,14 @@ class SearchController < ApplicationController
   before_filter :hide_details
 
   def search
-    params[:query_target] = params[:query_on] if params[:query_on].present?
-    params[:query_string] = "#{params[:query_field]}: #{params[:query_field]}" if params[:query].present? && params[:query].present?
+    if params[:query].present?
+      # translate services/search/link
+      if params[:query_field] = 'name-instances'
+        params[:query_target] = 'instances-for-name-id'
+        params[:query_string] = params[:query].sub(/id:/,'')
+      end
+      # params[:query_target] = params[:query_on] if params[:query_on].present?
+    end
     if params[:query_string].present? || params[:query_target].present? 
       if params[:query_target].present? && params[:query_target].match(/\Atrees*/i)
         params[:query] = params[:query_string]
