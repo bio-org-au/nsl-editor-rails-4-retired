@@ -1,0 +1,26 @@
+<%= render partial: 'audits/advanced_search/editor/examples' %>
+<h5>QA</h5>
+<table class="example-searches table table-striped">
+  <% [
+      {search_target: 'Review', search_string: "5 by:amonro",explanation: %Q(Records created or updated in the last 5 days.)},
+      {search_target: 'Review', search_string: "5 names-only: by:kcowley",explanation: %Q(Names created or updated in the last 5 days.)},
+      {search_target: 'Review', search_string: "date-created: 2015-09-07 by:kcowley",explanation: %Q(Records created on 7 Sept 2015.)},
+      {search_target: 'Review', search_string: "date-last-updated: 2015-09-07 by:amonro",explanation: %Q(Records last updated on 7 Sept 2015.)},
+      {search_target: 'Review', search_string: "date-created-or-last-updated: 2015-09-07 by:amonro",explanation: %Q(Records created or last updated on 7 Sept 2015.)},
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent">
+      <%= link_to(val[:search_string], search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+<br>
+
+<% if @current_user && @current_user.qa? %>
+  <%#= render partial: 'audits/advanced_search/examples_qa' %>
+<% end %>
+
+</div>
+

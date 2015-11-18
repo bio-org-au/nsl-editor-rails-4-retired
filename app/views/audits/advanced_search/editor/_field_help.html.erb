@@ -4,7 +4,7 @@
 <table class="table table-striped">
   <tr><th>Field</th><th>Description</th></tr>
   <% [
-      {field_name: '', description: "default review searches are on records created or updated in the last N days, e.g. '1' means show records 1 or less days old"},
+      {field_name: '5', description: "default review searches are on records created or updated in the last N days, e.g. '1' means show records 1 or less days old"},
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">
@@ -20,6 +20,30 @@
   </tr>
   <% end %>
 </table>
+
+<h5>Restrict date</h5>
+<table class="table table-striped">
+  <tr><th>Field</th><th>Description</th></tr>
+  <% [
+    {field_name: 'date-created: yyyy-mm-dd', description: "search for records created on a specific day e.g. 2015-09-07. (More date formats to come soon.)"},
+    {field_name: 'date-last-updated: yyyy-mm-dd', description: "search for records last updated on a specific day e.g. 2015-09-07. (More date formats to come soon.)"},
+    {field_name: 'date-created-or-last-updated: yyyy-mm-dd', description: "search for records created or last updated on a specific day e.g. 2015-09-07. (More date formats to come soon.)"},
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+      <a href="javascript:void(0)" class="searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
+        <span class="blue"><%= val[:field_name] %></span>
+      </a>
+    </td>
+    <td><%= val[:description].html_safe %>
+    <% if val[:partial].present? %>
+      <%= render partial: val[:partial] %>
+    <% end %>
+    </td>
+  </tr>
+  <% end %>
+</table>
+
 
 <h5>Assertions to restrict record types</h5>
 <table class="table table-striped">
@@ -43,4 +67,5 @@
   </tr>
   <% end %>
 </table>
+
 

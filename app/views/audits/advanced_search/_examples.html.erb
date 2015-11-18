@@ -1,24 +1,6 @@
-<div id="example-search-author" class="example-search-tab">
-<h3>Review search examples</h3>
-<h4>List records</h4>
-<table class="example-searches table table-striped">
-  <% [
-      {search_target: 'Review', search_string: "5",explanation: %Q(Records created or updated in the last 5 days.)},
-      {search_target: 'Review', search_string: "5 names-only:",explanation: %Q(Names created or updated in the last 5 days.)},
-      ].each do |val| %>
-  <tr>
-    <td class="width-30-percent">
-      <%= link_to(val[:search_string], search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %>
-    </td>
-    <td><%= val[:explanation].html_safe %></td>
-  </tr>
-  <% end %>
-</table>
-<br>
-
 <% if @current_user && @current_user.qa? %>
-  <%#= render partial: 'audits/advanced_search/examples_qa' %>
+  <%= render partial: 'audits/advanced_search/qa/examples' %>
+<% else %>
+  <%= render partial: 'audits/advanced_search/editor/examples' %>
 <% end %>
-
-</div>
 
