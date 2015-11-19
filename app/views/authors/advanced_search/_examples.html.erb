@@ -1,6 +1,7 @@
 <div id="example-search-author" class="example-search-tab">
-<h3>Author search examples</h3>
-<h4 class="">List authors</h4>
+<h4>Author search examples</h4>
+<br>
+<h5 class="">List authors</h5>
 <table class="example-searches table table-striped">
   <% [
       {search_target: 'Authors', search_string: "*",explanation: %Q(First 100 authors, order by name.)},
@@ -26,7 +27,7 @@
   </tr>
   <% end %>
 </table>
-<h4 class="">Search for diacritics</h4>
+<h5 class="">Search for diacritics</h5>
 <table class="example-searches table table-striped">
   <% [
       {search_target: 'Authors', search_string: "müLl",explanation: %Q(Authors with name or abbreviation containing 'müLl' or 'mull'.)},
@@ -44,7 +45,7 @@
   </tr>
   <% end %>
 </table>
-<h4 class="">Query assertions</h4>
+<h5 class="">Query assertions</h5>
 <table class="example-searches table table-striped">
   <% [
       {search_target: 'Authors', search_string: "is-a-duplicate:", explanation: %Q(Authors marked as duplicates.)},
@@ -69,7 +70,7 @@
 <br>
 
 
-<h4 class="">Count authors</h4>
+<h5 class="">Count authors</h5>
 <table class="example-searches table table-striped">
   <% [{search_target: 'Authors', search_string: "count",explanation: %Q(Start with "count author" to count authors.)},
       {search_target: 'Authors', search_string: "count bentham", explanation: %Q(Counting sets.)},

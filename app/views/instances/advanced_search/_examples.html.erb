@@ -1,7 +1,7 @@
 <div id="example-search-instance" class="example-search-tab">
-<h3>Instance search examples</h3>
+<h4>Instance search examples</h4>
 
-<h4 class="">Name queries</h4>
+<h5 class="">Name queries</h5>
 <table class="example-searches table table-striped">
   <% [
     {search_target: 'Instances', search_string: "Tristania",explanation: %Q(Find instances for names containing the term 'Tristania'. List the first 100.)},
@@ -22,7 +22,7 @@
 </table>
 <br>
 
-<h4 class="">Page queries</h4>
+<h5 class="">Page queries</h5>
 <table class="example-searches table table-striped">
   <% [
     {search_target: 'Instances', search_string: "page:140", explanation: %Q(instances with page 140.)},
@@ -44,7 +44,7 @@
 </table>
 <br>
 
-<h4 class="">Note queries</h4>
+<h5 class="">Note queries</h5>
 <table class="example-searches table table-striped">
   <% [
     {search_target: 'Instances', search_string: "note-key:apc dist.", explanation: %Q(instances with note key 'apc dist.'.)},
@@ -65,7 +65,7 @@
 </table>
 <br>
 
-<h4 class="">Verbatim name queries</h4>
+<h5 class="">Verbatim name queries</h5>
 <table class="example-searches table table-striped">
   <% [
     {search_target: 'Instances', search_string: "verbatim-name: platypus blakely",explanation: %Q(Find instances for a name that contains 'platypus' and 'blakely' in that order.)},
@@ -88,7 +88,7 @@
 <br>
 
 
-<h4 class="">Reference year queries</h4>
+<h5 class="">Reference year queries</h5>
 <table class="example-searches table table-striped">
   <% [
     {search_target: 'Instances', search_string: "is-novelty: y:2015",explanation: %Q(Find instances with a "primary instance" type attached to a refererence published in the year 2015.)},
@@ -109,7 +109,7 @@
 <br>
 
 
-<h4 class="">Reference type queries</h4>
+<h5 class="">Reference type queries</h5>
 <table class="example-searches table table-striped">
   <% [
     {search_target: 'Instances', search_string: "ref-type: herbarium annotation",explanation: %Q(Find instances based on a Herbarium annotation.)},
@@ -134,7 +134,7 @@
 
 
 
-<h4 class="">Count instances</h4>
+<h5 class="">Count instances</h5>
 <table class="example-searches table table-striped">
   <% [{search_target: 'Instances', search_string: "count",explanation: %Q(Start with "count instance" to count instances.)},
       {search_target: 'Instances', search_string: "count acacia", explanation: %Q(Counting without listing should be faster than listing for large sets.)},

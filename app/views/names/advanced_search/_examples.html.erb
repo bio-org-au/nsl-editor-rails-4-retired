@@ -1,11 +1,11 @@
 <div id="example-search-name" class="example-search-tab">
-<h3>Name search examples</h3>
+<h4>Name search examples</h4>
 <br>
 <br>
 <% excc = %Q(<span class="purple" title="Excluding common and cultivar names by default.">EXCC</span>) %>
 <% incc = %Q(<span class="purple" title="Including common and cultivar names.">INCC</span>) %>
 
-<h4 class="">List names</h4>
+<h5 class="">List names</h5>
 <table class="example-searches table table-striped">
   <% [{search_target: 'Names', search_string: "acacia",explanation: %Q(List names starting with "acacia".  Bare search is on names. 100 records is the default.)},
       {search_target: 'Names', search_string: "acacia type:*", 
@@ -26,7 +26,7 @@
 
 
 
-<h4 class="">Assertion queries</h4>
+<h5 class="">Assertion queries</h5>
 <table class="example-searches table table-striped">
   <% [
       {search_target: 'Names', search_string: "is-a-parent: has-no-instances:",explanation: %Q(List names that have children but no instances.)},
@@ -42,7 +42,7 @@
 
 
 <br>
-<h4 class="inline-block">Count names</h4><span> - turn a list into a count</span>
+<h5 class="inline-block">Count names</h5><span> - turn a list into a count</span>
 <table class="example-searches table table-striped">
   <% [{search_target: 'Names', search_string: "count acacia",explanation: %Q(Count names starting with "acacia". #{excc})},
       {search_target: 'Names', search_string: "count rank: genus is-not-a-duplicate:", explanation: %Q(Count non-duplicate genera. #{excc})},
@@ -61,7 +61,7 @@
 </table>
 <br>
 
-<h4 class="inline-block">Limit list size</h4><span> - set the number of records</span>
+<h5 class="inline-block">Limit list size</h5><span> - set the number of records</span>
 <table class="example-searches table table-striped">
   <% [{search_target: 'Names', search_string: "acacia limit:5",explanation: %Q(List 5 names starting with "acacia". #{excc})},
       {search_target: 'Names', search_string: "acacia limit:50", explanation: %Q(List 50 names starting with "acacia". #{excc})},
