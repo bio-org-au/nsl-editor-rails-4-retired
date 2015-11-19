@@ -17,6 +17,8 @@
 
 class Author::AsTypeahead < Author
 
+  SEARCH_LIMIT = 50
+
   def self.on_abbrev(term)
     if term.blank?
       results = []

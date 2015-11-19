@@ -19,13 +19,6 @@
     <%= csrf_meta_tags %>
     <%= favicon_link_tag 'favicon.png?v=1', :rel => 'shortcut icon' %>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-    <script>
-      var authorQueryOptions = <%= Author::AsQuery.options.to_json.html_safe %>;
-      var instanceQueryOptions = <%= Instance::AsQuery.options.to_json.html_safe %>;
-      var nameQueryOptions = <%= Name::AsQuery.options.to_json.html_safe %>;
-      var referenceQueryOptions = <%= Reference::AsQuery.options.to_json.html_safe %>;
-      var treeQueryOptions = <%= Tree.query_options.to_json.html_safe %>;
-    </script>
     <% if Rails.configuration.try('display_as_test') == true %>
       <style>
         div#big-navbar { background: #663399; }

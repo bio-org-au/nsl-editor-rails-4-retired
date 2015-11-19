@@ -136,6 +136,10 @@ class Search::OnAuthor::WhereClauses
   WHERE_ASSERTION_HASH = { 
     'is-a-duplicate:' => " duplicate_of_id is not null",
     'is-not-a-duplicate:' => " duplicate_of_id is null",
+    'has-abbrev:' => " abbrev is not null",
+    'has-no-abbrev:' => " abbrev is null",
+    'has-name:' => " name is not null",
+    'has-no-name:' => " name is null",
   }
 
   FIELD_NEEDS_WILDCARDS = { 

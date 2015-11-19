@@ -14,12 +14,8 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #   
-require 'advanced_search'
-require 'search_tools'
 
 class Author < ActiveRecord::Base
-  extend AdvancedSearch
-  extend SearchTools
   strip_attributes
   
   self.table_name = 'author'
@@ -63,10 +59,8 @@ class Author < ActiveRecord::Base
   scope :updated_in_the_last_n_days, ->(n) { where("updated_at::date > current_date - ?",n)}
   scope :changed_in_the_last_n_days, ->(n) { where("created_at::date > current_date - ? or updated_at::date > current_date - ?",n,n)}
   
-  SEARCH_LIMIT = 50
   DEFAULT_DESCRIPTOR = 'n' # for name
   DEFAULT_ORDER_BY = 'name asc '
-  LEGAL_TO_ORDER_BY = {'n' => 'name'}
 
   before_create :set_defaults
 

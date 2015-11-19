@@ -34,21 +34,5 @@ class AuthorTest < ActiveSupport::TestCase
 
   end
 
-  test "author exact abbrev with a unique abbreviation" do
-    assert(Author::AsQuery.exact_abbrev?("#{authors(:unique_abbrev).abbrev}"), 'Author abbreviation should match just one author.')
-  end
- 
-  test "author with exact abbrev with a unique abbreviation is correct" do
-    assert(Author::AsQuery.with_exact_abbrev("#{authors(:unique_abbrev).abbrev}").id == authors(:unique_abbrev).id , 'Author ids should match.')
-  end
-
-  test "author exact abbrev with a non-unique abbreviation" do
-    assert_not(Author::AsQuery.exact_abbrev?("#{authors(:duplicate_abbrev_1).abbrev}"), 'Author abbreviation should not match just one author.')
-  end
- 
-  test "author with exact abbrev with a non-unique abbreviation is correct" do
-    assert_not(Author::AsQuery.with_exact_abbrev("#{authors(:duplicate_abbrev_1).abbrev}").id == authors(:unique_abbrev).id , 'Author ids should not match.')
-  end
- 
 end
 

@@ -2,7 +2,8 @@
 <h3>Author search examples</h3>
 <h4 class="">List authors</h4>
 <table class="example-searches table table-striped">
-  <% [{search_target: 'Authors', search_string: "*",explanation: %Q(First 100 authors, order by name.)},
+  <% [
+      {search_target: 'Authors', search_string: "*",explanation: %Q(First 100 authors, order by name.)},
       {search_target: 'Authors', search_string: "bent", explanation: %Q(Authors with name or abbreviation containing "bent".)},
       {search_target: 'Authors', search_string: "hook", explanation: %Q(Authors with name or abbreviation containing "hook".)},
       {search_target: 'Authors', search_string: "bent hook", explanation: %Q(Authors with name or abbreviation containing "bent" and "hook" in any order.)},
@@ -25,7 +26,48 @@
   </tr>
   <% end %>
 </table>
+<h4 class="">Search for diacritics</h4>
+<table class="example-searches table table-striped">
+  <% [
+      {search_target: 'Authors', search_string: "müLl",explanation: %Q(Authors with name or abbreviation containing 'müLl' or 'mull'.)},
+      {search_target: 'Authors', search_string: "muLl",explanation: %Q(Authors with name or abbreviation containing 'müLl' or 'mull'.)},
+      {search_target: 'Authors', search_string: "abbrev: müLl",explanation: %Q(Authors with abbreviation containing 'müLl' or 'mull'.)},
+      {search_target: 'Authors', search_string: "abbrev: muLl",explanation: %Q(Authors with abbreviation containing 'müLl' or 'mull'.)},
+      {search_target: 'Authors', search_string: "name: müLl",explanation: %Q(Authors with name containing 'müLl' or 'mull'.)},
+      {search_target: 'Authors', search_string: "name: muLl",explanation: %Q(Authors with name containing 'müLl' or 'mull'.)},
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent">
+      <%= link_to(val[:search_string], search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+<h4 class="">Query assertions</h4>
+<table class="example-searches table table-striped">
+  <% [
+      {search_target: 'Authors', search_string: "is-a-duplicate:", explanation: %Q(Authors marked as duplicates.)},
+      {search_target: 'Authors', search_string: "is-not-a-duplicate:", explanation: %Q(Authors not marked as duplicates.)},
+      {search_target: 'Authors', search_string: "has-abbrev:", explanation: %Q(First 100 authors with an abbreviation.)},
+      {search_target: 'Authors', search_string: "has-name:", explanation: %Q(First 100 authors with a name.)},
+      {search_target: 'Authors', search_string: "has-no-abbrev:", explanation: %Q(First 100 authors with no abbreviation.)},
+      {search_target: 'Authors', search_string: "has-no-name:", explanation: %Q(First 100 authors with no name.)},
+      {search_target: 'Authors', search_string: "count has-abbrev: has-no-name:", explanation: %Q(Count authors with an abbreviation but no name.)},
+      {search_target: 'Authors', search_string: "count has-name: has-no-abbrev:", explanation: %Q(Count authors with a name but no abbreviation.)},
+      {search_target: 'Authors', search_string: "count has-no-name: has-no-abbrev:", explanation: %Q(Count authors with neither name nor abbreviation. (Hopefully none.))},
+      {search_target: 'Authors', search_string: "count has-name: has-abbrev:", explanation: %Q(Count authors with name and abbreviation.)},
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent">
+      <%= link_to(val[:search_string], search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue') %>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
 <br>
+
 
 <h4 class="">Count authors</h4>
 <table class="example-searches table table-striped">
