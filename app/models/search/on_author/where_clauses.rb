@@ -145,12 +145,12 @@ class Search::OnAuthor::WhereClauses
   }
 
   TOKENIZE = { 
-    'name:' => "lower(name) like ?",
-    'abbrev:' => "lower(abbrev) like ?",
+    'name:' => " lower(f_unaccent(name)) like f_unaccent(?) ",
+    'abbrev:' => " lower(f_unaccent(abbrev)) like f_unaccent(?) ",
   }
 
   TOKENIZE_2 = { 
-    'name-or-abbrev:' => "(lower(name) like ? or lower(abbrev) like ?)",
+    'name-or-abbrev:' => "lower(f_unaccent(name)) like f_unaccent(?) or lower(f_unaccent(abbrev)) like f_unaccent(?) ",
   }
 
   WHERE_VALUE_HASH = { 
