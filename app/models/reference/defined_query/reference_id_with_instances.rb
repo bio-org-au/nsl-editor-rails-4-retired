@@ -35,33 +35,17 @@ class Reference::DefinedQuery::ReferenceIdWithInstances
     debug("parsed_request.count: #{parsed_request.count}")
     debug("parsed_request.limit: #{parsed_request.limit}")
     if parsed_request.count
-      debug("run_query counting")
-      query = Search::OnReference::ListQuery.new(parsed_request)
-      @relation = query.sql  # TODO: work out how to provide the relation and sql
-      results = relation.all
-      limited = query.limited
-
-      debug(results.size)
-      tally = results.size
-      results.each  do | ref |
-        debug(ref.id)
-        tally += ref.instances.size
-      end
-      debug("tally: #{tally}")
-
-      @limited = limited
-      @common_and_cultivar_included = query.common_and_cultivar_included
-      @count = tally
+      debug("counting")
+      ref = Reference.find(parsed_request.where_arguments)
+      @count = ref.instances.size + 1
+      @results = []
+      @limited = false 
+      @common_and_cultivar_included = true
+      @has_relation = false
+      @relation = nil
     else
-      debug("run_query listing with limit: #{parsed_request.limit}")
-      debug("run_query listing with limit: #{parsed_request.limit}")
-      debug("run_query listing with limit: #{parsed_request.limit}")
-      debug("run_query listing with limit: #{parsed_request.limit}")
-      debug("run_query listing with limit: #{parsed_request.limit}")
-      debug("run_query listing with limit: #{parsed_request.limit}")
-      debug("run_query listing with limit: #{parsed_request.limit}")
-      #@results = Instance::AsSearchEngine.name_usages(parsed_request.where_arguments)
-      @results = Instance::AsSearchEngine.for_ref_id(parsed_request.where_arguments,parsed_request.limit.to_i-1,'name')
+      debug("listing with limit: #{parsed_request.limit}")
+      @results = Instance::AsSearchEngine.for_ref_id(parsed_request.where_arguments,parsed_request.limit.to_i,'name')
       @limited = false; #name_query.limited
       @common_and_cultivar_included = true
       @count = @results.size
