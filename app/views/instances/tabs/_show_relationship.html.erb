@@ -15,11 +15,15 @@
   <br>
   <% if @instance.cites_id %>
     in
+
     <%= link_to("#{@instance.this_cites.try('reference').try('citation')}:#{ @instance.this_cites.page} #{search_icon_on_tab}".html_safe,
-                search_path(query_string: @instance.this_cites.try('reference_id').to_s,query_target: 'reference',class: 'ref'),
+                            search_path(query_string: "id: #{@instance.this_cites.reference_id}",query_target: 'reference',class: 'ref'),
+                            title: 'Search for the reference.') %>
+    <%= link_to("[cited instance #{search_icon_on_tab}]".html_safe,
+                            search_path(query_string: "id: #{@instance.this_cites.id.to_s}",query_target: 'instance',class: 'ref'),
                             title: 'Search for the instance this cites.') %>
-    <br>
   <% end %>
+    <br>
   is cited under
   <br>
   <%= link_to("#{@instance.this_is_cited_by.name.full_name} #{@instance.this_is_cited_by.name.name_status.bracketed_non_legitimate_status} #{search_icon_on_tab}".html_safe,
