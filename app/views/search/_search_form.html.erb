@@ -6,7 +6,13 @@
   <div class="col-xs-11 col-sm-12 col-md-10 col-lg-9">
     <div class="input-group width-80-percent">
       <div id="search-target-btn" class="input-group-btn">
-        <button id="search-target-button" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button id="search-target-button" 
+                type="button" 
+                class="btn btn-default dropdown-toggle" 
+                tabindex='7'
+                data-toggle="dropdown" 
+                aria-haspopup="true" 
+                aria-expanded="false">
           <span id="search-target-button-text">
 
             <%= @search.parsed_request.target_button_text || 'no target button text' %>
@@ -100,10 +106,9 @@
              title = "Specify your search"
              value = "<%= @search.parsed_request.query_string if @search.present? %>"
              required
-             list="search-options"
              >
     </div><!-- /input-group -->
-    <input id="query-submit"name="query_submit" value="Search" type="submit" class="btn">
+    <input id="query-submit"name="query_submit" value="Search" type="submit" class="btn search-btn" tabindex="9">
   </div><!-- /.col-lg-9 -->
 </div><!-- /row -->
 
