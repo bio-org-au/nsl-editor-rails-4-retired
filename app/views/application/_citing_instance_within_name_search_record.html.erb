@@ -1,5 +1,5 @@
 <tr id="search-result-<%= search_result.id %>" 
-  class="search-result instance-as-part-of-concept <%= 'fresh' if search_result.fresh? %>"
+  class="search-result instance-as-part-of-concept-within-name <%= 'fresh' if search_result.fresh? %>"
   data-get-url="<%= instance_path(search_result.id) %>"
   data-edit-url="<%= instance_path(search_result.id) %>"
   data-base-url="<%= instance_path(search_result.id) %>"
@@ -15,6 +15,7 @@
     <a 
       class="show-details-link indent-level-1"
       tabindex="<%= increment_tab_index %>" 
+      title="Instance as part of a name concept.  Select to show details."
       id="<%= %Q(#{search_result.class}-#{search_result.id}) %>">
     <%= "#{search_result.reference.citation}" if search_result.reference %> 
     <%= ": #{search_result.page}" if search_result.page.present? %>

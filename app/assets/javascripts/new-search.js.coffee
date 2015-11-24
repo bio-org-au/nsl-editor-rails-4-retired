@@ -16,12 +16,12 @@ window.parseSearchString = (searchString, verbose = false) ->
   searchTokens = searchString.trim().replace(/:/g,': ').replace(/:  /g,': ').split(" ")
   [action,searchTokens] = parseAction(searchTokens)
   [setSize,limited, searchTokens] = parseSetSize(searchTokens)
-  [target,searchTokens] = parseSearchTarget(searchTokens)
+  #[target,searchTokens] = parseSearchTarget(searchTokens)
   [term,searchTokens] = parseDefaultSearchTerm(searchTokens)
   [wherePairs,searchTokens] = parseWherePairs(searchTokens)
-  fields = {action: action, limited: limited, setSize: setSize, target: target, conditions: "", format: "", term: term, wherePairs: wherePairs}
+  fields = {action: action, limited: limited, setSize: setSize, conditions: "", format: "", term: term, wherePairs: wherePairs}
   console.log("Action: #{fields.action}")
-  console.log("Target: #{fields.target}")
+  #console.log("Target: #{fields.target}")
   console.log("Limited: #{fields.limited}")
   console.log("SetSize: #{fields.setSize}")
   console.log("term: #{fields.term}")
@@ -46,7 +46,7 @@ parseSetSize = (tokens) ->
     else                                limited = true; setSize = defaultSetSize
   [setSize, limited, tokens]
 
-parseSearchTarget = (tokens) ->
+xparseSearchTarget = (tokens) ->
   defaultTarget = 'names'
   tokens = [defaultTarget] unless tokens[0]
   switch 
@@ -108,13 +108,15 @@ parseOneValue = (tokens) ->
   [value.trim(), tokens]
 
 captureFields = (fields) ->
+  target = $('#query-target').val()
+  console.log("target: #{target}")
   switch 
-    when fields.target.match(/^authors$/i)    then window.captureAuthorFields(fields)
-    when fields.target.match(/^names$/i)      then window.captureNameFields(fields)
-    when fields.target.match(/^references$/i) then window.captureReferenceFields(fields)
-    when fields.target.match(/^instances$/i)  then window.captureInstanceFields(fields)
-    when fields.target.match(/^tree$/i)      then window.captureTreeFields(fields)
-    else                                     window.captureNameFields(fields)
+    when target.match(/^authors$/i)    then window.captureAuthorFields(fields)
+    when target.match(/^names$/i)      then window.captureNameFields(fields)
+    when target.match(/^references$/i) then window.captureReferenceFields(fields)
+    when target.match(/^instances$/i)  then window.captureInstanceFields(fields)
+    when target.match(/^tree$/i)       then window.captureTreeFields(fields)
+    else                               throw("unknown target: #{target}") #     window.captureNameFields(fields)
 
 captureTreeFields = (fields) ->
   $('a#advanced-search-tab-link-tree').click()

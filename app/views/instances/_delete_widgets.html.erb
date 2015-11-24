@@ -2,6 +2,7 @@
                          '#',
                          id: "instance-delete-link",
                          class: "btn btn-warning unconfirmed-delete-link pull-right",
+                         title: "Delete the instance.",
                          tabindex: increment_tab_index,
                          data: {show_this_id: "confirm-or-cancel-link-container"})
 -%>
@@ -11,6 +12,7 @@
                                  instance_path(@instance.id),
                                  class: "btn btn-danger",
                                  tabindex: increment_tab_index,
+                                 title: "Confirm the delete.",
                                  remote: true,
                                  method: :delete)
 -%>
@@ -19,6 +21,7 @@
                                 '#',
                                 id: "cancel-delete-link",
                                 class: "btn btn-default cancel-link",
+                                title: "Cancel the delete.",
                                 tabindex: increment_tab_index,
                                 data: {enable_this_id: 'instance-delete-link',
                                        hide_this_id: 'confirm-or-cancel-link-container'})

@@ -13,6 +13,7 @@
     <a
       class="show-details-link"
       tabindex="<%= increment_tab_index %>" 
+      title="Author record. Select to show details."
       id="<%= %Q(#{search_result.class}-#{search_result.id}) %>">
       <%= render partial: 'author_name_link_text', locals: {search_result: search_result} %>
   </td>

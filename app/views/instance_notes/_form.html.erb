@@ -24,6 +24,7 @@
                                            instance_note_id: @instance_note.id}, 
                         id: "instance-note-key-id-select-#{@instance_note.id}",
                         class:'instance-note-key-id-select form-control give-me-focus', 
+                        title: "Select the type of note.",
                         tabindex:"#{increment_tab_index}"},
                        '') %>
     </td>
@@ -34,18 +35,24 @@
                       class: 'width-100-percent instance-note-value-text-area',
                       tabindex: increment_tab_index,
                       data: {instance_note_id: @instance_note.id}, 
+                      title: "Enter the note here.",
                       id: "instance-note-value-text-area-#{@instance_note.id}",
                       ) %>
     </td>
     </tr>
     <tr>
       <td>
-        <%= f.submit id: "instance-note-save-btn-#{@instance_note.id}", class: 'btn btn-primary width-6em', value: 'Save Note', tabindex: increment_tab_index %>
+        <%= f.submit id: "instance-note-save-btn-#{@instance_note.id}", 
+          class: 'btn btn-primary width-6em', 
+          value: 'Save Note', 
+          title: "Select to save the note.",
+          tabindex: increment_tab_index %>
       </td>
 
 <% delete_link = link_to("Delete Note...",
                          '#', 
                          id: "instance-note-delete-link-#{@instance_note.id}",
+                         title: "Select to delete the note.  A confirmation dialog follows.",
                          class: "btn btn-warning instance-note-delete-link pull-right xhidden", 
                          tabindex: increment_tab_index,
                            data: {instance_note_id: @instance_note.id,
@@ -56,6 +63,7 @@
                                  instance_note_path(@instance_note.id), 
                                  class: "btn btn-danger", 
                                  tabindex: increment_tab_index,
+                                 title: "Select to confirm the delete.",
                                  remote: true, 
                                  method: :delete) 
 %>
@@ -65,6 +73,7 @@
                                 id: "instance-note-cancel-delete-link-#{@instance_note.id}",
                                 class: "btn btn-default instance-note-cancel-delete-link",
                                 tabindex: increment_tab_index,
+                                title: "Select to cancel the delete.",
                                 data: {instance_note_id: @instance_note.id}) 
 %>
   

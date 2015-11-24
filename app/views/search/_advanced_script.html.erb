@@ -2,25 +2,6 @@
 <!--
     $( document ).ready(function() {
 console.log('document ready');
-/*
-$('input[type=search]')
-    .wrap('<span>')
-    .after('<span class="clear">&hellip;</span>')
-    .parent()
-    .on('mouseenter mouseleave', function(e){
-        $(this).toggleClass('focused');
-    })
-    .find('span.clear')
-    .on('click', function(e){
-        $('#advanced-search.hidden').removeClass('hidden');
-        if (!!$('#new-search-field').val().match(/^auth/i))  {
-          $('#query-on').val('Authors');
-        }
-        if (!!$('#new-search-field').val().match(/^ref/i))  {
-          $('#query-on').val('References');
-        }
-    });
-    */
 
     $('#advanced-search-closer').on('click',function(e) {
       console.log('closer');
@@ -32,8 +13,8 @@ $('input[type=search]')
       $('#advanced-search').addClass('hidden');
     });
 
-    $('#advanced-search-button').on('click',function(e) {
-      console.log('search');
+    $('.advanced-search-button').on('click',function(e) {
+      console.log('.advanced-search-button click');
       $('#new-search-field').val($('#query-on').val());
       $('#advanced-search').addClass('hidden');
     });
@@ -116,30 +97,7 @@ $('input[type=search]')
     $('#advanced-search-tab-container-link').on('click',function(e) {
       $('div#search-result-details').addClass('hidden');
     });
-/*
-    $('#name-advanced-search-name-type-options').on('change',function(e) {
-      console.log('changed');
-      $('#name-advanced-search-name-type-list').val($('#name-advanced-search-name-type-list').val()+'x, ');
-    });
-    */
 
-    $('#advanced-search-run').on('click',function(e) {
-      console.log('#advanced-search-run');
-      var currentTab = $('#advanced-search-tabset li.active > a').attr('data-show-id');
-      console.log("current tab: " + currentTab);
-      if(currentTab == 'advanced-search-name') {
-        loadNameToString();
-      } else if (currentTab == 'advanced-search-reference') {
-        loadReferenceToString();
-      } else if (currentTab == 'advanced-search-instance') {
-        loadInstanceToString();
-      } else if (currentTab == 'advanced-search-author') {
-        loadAuthorToString();
-      } else {
-        throw("#advanced-search-run was clicked but we don't know which search to load");
-      }
-      $('form#search-form').submit();
-    });
 
 $( "select#name-advanced-search-name-type-options" )
   .change(function () {
@@ -181,12 +139,14 @@ $( "select#name-advanced-search-list-or-count" )
             console.log(e.target.dataset.help);
             showHelp(e.target.dataset.help);
             showExamples(e.target.dataset.examples);
+            showAdvanced(e.target.dataset.advanced);
         }
     });
 
 
     setActiveHelpOnLoad();
     setActiveExamplesOnLoad();
+    setActiveAdvancedOnLoad();
 });
 
 
@@ -208,7 +168,6 @@ $( "select#name-advanced-search-list-or-count" )
     }
 
     function setActiveHelpOnLoad() {
-      //$('.search-help').addClass('hidden');
       var helpId = $('ul#search-target-list li a:contains(' +  $('#search-target-button-text').text().trim()  + ')').first().attr('data-help');
       console.log("search-target-button-text: " + $('#search-target-button-text').text().trim());
       console.log("setActiveHelpOnLoad helpId: " + helpId);
@@ -226,6 +185,19 @@ $( "select#name-advanced-search-list-or-count" )
       console.log("search-target-button-text: " + $('#search-target-button-text').text().trim());
       console.log("setActiveExamplesOnLoad id: " + id);
       showExamples(id);
+    }
+
+    function showAdvanced(advancedElement) {
+      console.log('showAdvanced: ' + advancedElement);
+      $('.search-advanced').addClass('hidden');
+      $('#'+advancedElement).removeClass('hidden');
+    }
+
+    function setActiveAdvancedOnLoad() {
+      var id = $('ul#search-target-list li a:contains(' +  $('#search-target-button-text').text().trim()  + ')').first().attr('data-advanced');
+      console.log("search-target-button-text: " + $('#search-target-button-text').text().trim());
+      console.log("setActiveAdvancedOnLoad id: " + id);
+      showAdvanced(id);
     }
 
     function loadNameToString() {

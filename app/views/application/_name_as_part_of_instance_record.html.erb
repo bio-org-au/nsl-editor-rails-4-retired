@@ -13,6 +13,7 @@
     <a 
       id="<%= search_result.anchor_id %>"
       class="show-details-link"
+      title="Name record. Select to show details."
       tabindex="<%= increment_tab_index %>"> 
       <%= search_result.full_name %>
       <%= "[#{search_result.name_status.name_without_brackets}]" unless search_result.name_status.legitimate? %>

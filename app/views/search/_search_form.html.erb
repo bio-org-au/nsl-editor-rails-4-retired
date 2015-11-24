@@ -9,7 +9,8 @@
         <button id="search-target-button" 
                 type="button" 
                 class="btn btn-default dropdown-toggle" 
-                tabindex='7'
+                tabindex="7"
+                title="Target of the search"
                 data-toggle="dropdown" 
                 aria-haspopup="true" 
                 aria-expanded="false">
@@ -24,15 +25,17 @@
         <ul id="search-target-list" class="dropdown-menu">
           <li><a id="search-target-item-names" 
                  href="#" 
-                 title="Search names" 
+                 title="Set the search to target names" 
                  data-help="name-search-help" 
                  data-examples="name-search-examples"
+                 data-advanced="name-search-advanced" 
               >Names</a></li>
           <li><a id="search-target-item-name-with-instances" 
                  href="#" 
-                 title="Search names, also retrieve instances" 
+                 title="Set the search to target names and also retrieve instances" 
                  data-help="name-plus-instances-search-help" 
                  data-examples="name-plus-instances-search-examples"
+                 data-advanced="name-plus-instances-search-advanced" 
               >Names plus instances</a>
           </li>
 
@@ -40,58 +43,78 @@
 
           <li><a id="search-target-item-references" 
                  href="#" 
+                 title="Set the search to target references" 
                  data-help="reference-search-help"
                  data-examples="reference-search-examples"
+                 data-advanced="reference-search-advanced"
                  >References</a></li>
 
           <li><a id="search-target-item-reference-accepted-names" 
                  href="#" 
+                 title="Set the search to target references with novelties." 
                  data-help="references-accepted-names-search-help"
                  data-examples="references-accepted-names-search-examples"
+                 data-advanced="references-with-novelties-search-advanced"
               >References with novelties</a></li>
           <li><a id="search-target-item-instances-for-reference" 
                  href="#" 
+                 title="Set the search to target references and return full synonymy" 
                  data-help="references-names-full-synonymy-search-help"
                  data-examples="references-names-full-synonymy-search-examples"
+                 data-advanced="references-names-full-synonymy-search-advanced"
               >References, names, full synonymy</a></li>
           <li role="separator" class="divider"></li>
           <li><a id="search-target-item-authors" 
                      href="#" 
+                 title="Set the search to target authors" 
                      data-help="author-search-help" 
                      data-examples="author-search-examples" 
+                     data-advanced="author-search-advanced" 
                   >Authors</a></li>
           <li><a id="search-target-item-instances" 
                      href="#" 
+                 title="Set the search to target instances" 
                      data-help="instance-search-help"
                      data-examples="instance-search-examples"
+                     data-advanced="instance-search-advanced"
                   >Instances</a></li>
           <li role="separator" class="divider"></li>
           <li><a id="search-target-item-tree" 
                      href="#" 
+                 title="Set the search to target the tree" 
                      data-help="tree-search-help"
                      data-examples="tree-search-examples"
+                     data-advanced="tree-search-advanced"
                   >Tree</a></li>
           <li role="separator" class="divider"></li>
           <li><a id="search-target-item-instances-for-name-id" 
                      href="#" 
+                 title="Set the search to target instances for a given name ID" 
                      data-help="instances-for-name-id-search-help"
                      data-examples="instances-for-name-id-search-examples"
+                     data-advanced="instances-for-name-id-search-advanced"
                   >Instances for Name ID</a></li>
           <li><a id="search-target-item-instances-for-ref-id" 
                      href="#" 
+                 title="Set the search to target instances for a given reference ID" 
                      data-help="instances-for-ref-id-search-help"
                      data-examples="instances-for-ref-id-search-examples"
+                     data-advanced="instances-for-ref-id-search-advanced"
                   >Instances for Ref ID</a></li>
           <li><a id="search-target-item-instances-sorted-by-page-for-ref-id" 
                      href="#" 
+                 title="Set the search to target instances, sorted by page, for a given reference" 
                      data-help="instances-sorted-by-page-for-ref-id-search-help"
                      data-examples="instances-sorted-by-page-for-ref-id-search-examples"
+                     data-advanced="instances-sorted-by-page-for-ref-id-search-advanced"
                   >Instances sorted by page for Ref ID</a></li>
           <li role="separator" class="divider"></li>
           <li><a id="search-target-audit" 
                      href="#" 
+                 title="Set the search to target review" 
                      data-help="review-search-help"
                      data-examples="review-search-examples"
+                     data-advanced="review-search-advanced"
                   >Review</a></li> 
         </ul>
       </div><!-- /btn-group -->
@@ -108,7 +131,7 @@
              required
              >
     </div><!-- /input-group -->
-    <input id="query-submit"name="query_submit" value="Search" type="submit" class="btn search-btn" tabindex="9">
+    <input id="query-submit"name="query_submit" value="Search" type="submit" class="btn search-btn" tabindex="9" title="Run the query">
   </div><!-- /.col-lg-9 -->
 </div><!-- /row -->
 

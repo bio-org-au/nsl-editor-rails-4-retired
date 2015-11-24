@@ -1,5 +1,3 @@
-<div id="advanced-search-name-form-container" class="">
-  <form class="form-inline">
   <input name="search_target" value="names" type="hidden" />
   <input name="search_from" value="fields" type="hidden" />
 <table class="table advanced-form-table" class="table table-bordered" >
@@ -8,7 +6,10 @@
       <label class="plain" for="list-or-count">Options</label>
     </td>
     <td>
-      <select id="name-advanced-search-list-or-count" name="list_or_count" class="form-control">
+      <select id="name-advanced-search-list-or-count" 
+              name="list_or_count" 
+              class="form-control" 
+              title="List or count the search results">
         <option value='count'>count records</option>
         <option value='list' selected='selected'>list results</option>
     </select>
@@ -33,7 +34,14 @@
       <label class="plain" for="query-on">Size</label>
     </td>
     <td>
-      <input id="name-advanced-search-set-size" name="name_search_name" value="100" type="number" class="form-control min-width-10em" placeholder="Number of records for a list search" min="1" max="1000"/>
+      <input id="name-advanced-search-set-size" 
+             name="name_search_name" 
+             value="100" 
+             type="number" 
+             class="form-control min-width-10em" 
+             title="Number of records for a list search" 
+             min="1" 
+             max="1000" />
     </td>
   </tr>
 </table>
@@ -42,12 +50,17 @@
 
 
 <form class="form-inline">
-  <table class="table advanced-form-table" class="table table-bordered" >
+  <table class="table advanced-form-table table-bordered" >
   <tr> <td class="width-12-percent">Name</td>
     <td class="align-right width-15-percent">
     </td>
     <td>
-      <input id="name-advanced-search-name" name="name_search_name" value="" type="text" class="form-control min-width-20em" placeholder="Name string, with optional wildcard (*)"/>
+      <input id="name-advanced-search-name" 
+             name="name_search_name" 
+             value="" 
+             type="text" 
+             class="form-control min-width-20em" 
+             title="Name string, with optional wildcard (*)"/>
     </td>
   </tr>
   </table>
@@ -100,9 +113,10 @@
       <label class="plain" for="query-on"></label>
     </td>
     <td>
-      <input id="name-advanced-search-name-type-list" name="name_search_author_abbrev" 
+      <input id="name-advanced-search-name-type-list" 
+             name="name_search_author_abbrev" 
              value="" type="text" style="width: 100%" class="form-control min-width-20em width-100-percent" 
-             placeholder="Comma-separated list of types">
+             title="Comma-separated list of types">
     </td>
   </tr>
 </table>
@@ -129,9 +143,10 @@
       <label class="plain" for="query-on">List of ranks</label>
     </td>
     <td>
-      <input id="name-advanced-search-name-rank-list" name="name_search_author_abbrev" 
+      <input id="name-advanced-search-name-rank-list" 
+             name="name_search_author_abbrev" 
              value="" type="text" class="form-control min-width-20em" 
-             placeholder="Comma-separated list of name ranks">
+             title="Comma-separated list of name ranks">
     </td>
   </tr>
   <tr>
@@ -190,9 +205,10 @@
     <td class="align-right">
     </td>
     <td>
-      <input id="name-advanced-search-name-status-list" name="name_search_author_abbrev" 
+      <input id="name-advanced-search-name-status-list" 
+             name="name_search_author_abbrev" 
              value="" type="text" class="form-control min-width-20em" 
-             placeholder="Comma-separated list of statuses">
+             title="Comma-separated list of statuses">
     </td>
   </tr>
 </table>
@@ -204,7 +220,10 @@
       <label class="plain" for="query-on">Author</label>
     </td>
     <td>
-      <input id="name-advanced-search-author-abbrev" name="name_search_author_abbrev" value="<%= @search.try('name_search_author_abbrev') %>" type="text" class="form-control min-width-20em" placeholder="Use standard abbreviations"/>
+      <input id="name-advanced-search-author-abbrev" 
+             name="name_search_author_abbrev" 
+                                                     value="<%= @search.try('name_search_author_abbrev') %>" type="text" 
+             class="form-control min-width-20em" title="Use standard abbreviations"/>
     </td>
   </tr>
   <tr>
@@ -213,7 +232,10 @@
       <label class="plain" for="query-on">Ex Author</label>
     </td>
     <td>
-      <input id="name-advanced-search-ex-author-abbrev" name="name_search_ex_author_abbrev" value="<%= @search.try('name_search_ex_author_abbrev') %>" type="text" class="form-control min-width-20em" placeholder="Use standard abbreviations"/>
+      <input id="name-advanced-search-ex-author-abbrev" 
+             name="name_search_ex_author_abbrev" 
+                                                        value="<%= @search.try('name_search_ex_author_abbrev') %>" type="text" 
+             class="form-control min-width-20em" title="Use standard abbreviations"/>
     </td>
   </tr>
   <tr>
@@ -222,7 +244,10 @@
       <label class="plain" for="query-on">Base Author</label>
     </td>
     <td>
-      <input id="name-advanced-search-base-author-abbrev" name="name_search_base_author_abbrev" value="<%= @search.try('name_search_base_author_abbrev') %>" type="text" class="form-control min-width-20em" placeholder="Use standard abbreviations"/>
+      <input id="name-advanced-search-base-author-abbrev" 
+             name="name_search_base_author_abbrev" 
+                                                          value="<%= @search.try('name_search_base_author_abbrev') %>" type="text" 
+             class="form-control min-width-20em" title="Use standard abbreviations"/>
     </td>
   </tr>
   <tr>
@@ -231,7 +256,10 @@
       <label class="plain" for="query-on">Ex-Base Author</label>
     </td>
     <td>
-      <input id="name-advanced-search-ex-base-author-abbrev" name="name_search_ex_base_author_abbrev" value="<%= @search.try('name_search_ex_base_author_abbrev') %>" type="text" class="form-control min-width-20em" placeholder="Use standard abbreviations"/>
+      <input id="name-advanced-search-ex-base-author-abbrev" 
+             name="name_search_ex_base_author_abbrev" 
+                                                             value="<%= @search.try('name_search_ex_base_author_abbrev') %>" type="text" 
+             class="form-control min-width-20em" title="Use standard abbreviations"/>
     </td>
   </tr>
   <tr>
@@ -240,7 +268,10 @@
       <label class="plain" for="query-on">Sanctioning Author</label>
     </td>
     <td>
-      <input id="name-advanced-search-sanctioning-author-abbrev" name="name_search_sanctioning_author_abbrev" value="<%= @search.try('name_search_sanctioning_author_abbrev') %>" type="text" class="form-control min-width-20em" placeholder="Use standard abbreviations"/>
+      <input id="name-advanced-search-sanctioning-author-abbrev" 
+             name="name_search_sanctioning_author_abbrev" 
+                                                                 value="<%= @search.try('name_search_sanctioning_author_abbrev') %>" type="text" 
+             class="form-control min-width-20em" title="Use standard abbreviations"/>
     </td>
   </tr>
   </table>
@@ -252,7 +283,10 @@
       <label class="plain" for="query-on">Comments</label>
     </td>
     <td>
-      <input id="name-advanced-search-comments" name="name_search_comments" value="<%= @search.try('name_search_comments') %>" type="text" class="form-control min-width-20em" placeholder=""/>
+      <input id="name-advanced-search-comments" 
+             name="name_search_comments" 
+                                                value="<%= @search.try('name_search_comments') %>" type="text" 
+             class="form-control min-width-20em" title="Comment text to search for."/>
     </td>
   </tr>
   <tr>
@@ -261,7 +295,10 @@
       <label class="plain" for="query-on">Comments By</label>
     </td>
     <td>
-      <input id="name-advanced-search-comments-by" name="name_search_comments_by" value="<%= @search.try('name_search_comments_by') %>" type="text" class="form-control min-width-20em" placeholder=""/>
+      <input id="name-advanced-search-comments-by" 
+             name="name_search_comments_by" 
+                                                   value="<%= @search.try('name_search_comments_by') %>" type="text" 
+             class="form-control min-width-20em" title="User who made comments."/>
     </td>
   </tr>
   </table>
@@ -272,65 +309,115 @@
     <td class="align-right width-15-percent">
       <label class="plain" for="query-on">Duplication</label>
     </td>
-    <td> <label class="plain"><input type="checkbox" class="name-search-assertion" id="name-is-a-duplicate" value="is-a-duplicate:"> Is a duplicate</label> </td>
+    <td><label class="plain">
+          <input type="checkbox" 
+             class="name-search-assertion" 
+             title="Restrict search to names that are marked as duplicates."
+             id="name-is-a-duplicate" 
+             value="is-a-duplicate:"> Is a duplicate</label> </td>
   </tr>
   <tr>
     <td></td>
     <td class="align-right width-15-percent">
     </td>
-    <td> <label class="plain"><input type="checkbox" class="name-search-assertion" id="name-is-not-a-duplicate" value="is-not-a-duplicate:"> Is not a duplicate </label></td>
+    <td> <label class="plain">
+            <input type="checkbox" 
+                   class="name-search-assertion" 
+                   title="Restrict search to names that are not marked as duplicates."
+                   id="name-is-not-a-duplicate" 
+                   value="is-not-a-duplicate:"> Is not a duplicate </label></td>
   </tr>
   <tr>
     <td></td>
     <td class="align-right width-15-percent">
       <label class="plain" for="query-on">Parent</label>
     </td>
-    <td> <label class="plain"><input type="checkbox" class="name-search-assertion" id="name-is-a-parent" value="is-a-parent:"> Is a parent </label></td>
+    <td> <label class="plain">
+            <input type="checkbox" 
+                   class="name-search-assertion" 
+                   title="Restrict search to names that have children."
+                   id="name-is-a-parent" 
+                   value="is-a-parent:"> Is a parent </label></td>
   </tr>
   <tr>
     <td></td>
     <td class="align-right width-15-percent">
     </td>
-    <td> <label class="plain"><input type="checkbox" class="name-search-assertion" id="name-is-not-a-parent" value="is-not-a-parent:"> Is not a parent </label></td>
+    <td> <label class="plain">
+            <input type="checkbox" 
+                   class="name-search-assertion" 
+                   title="Restrict search to names that have no children."
+                   id="name-is-not-a-parent" 
+                   value="is-not-a-parent:"> Is not a parent </label></td>
   </tr>
   <tr>
     <td></td>
     <td class="align-right width-15-percent">
       <label class="plain" for="query-on">Child</label>
     </td>
-    <td> <label class="plain"><input type="checkbox" class="name-search-assertion" id="name-is-a-child" value="is-a-child:"> Is a child </label></td>
+    <td> <label class="plain">
+            <input type="checkbox" 
+                   class="name-search-assertion" 
+                   title="Restrict search to names that have a parent."
+                   id="name-is-a-child" 
+                   value="is-a-child:"> Is a child </label></td>
   </tr>
   <tr>
     <td></td>
     <td class="align-right width-15-percent">
     </td>
-    <td> <label class="plain"><input type="checkbox" class="name-search-assertion" id="name-is-not-a-child" value="is-not-a-child:"> Is not a child  (Has no parent)</label></td>
+    <td> <label class="plain">
+            <input type="checkbox" 
+                   class="name-search-assertion" 
+                   title="Restrict search to names that have no parent."
+                   id="name-is-not-a-child" 
+                   value="is-not-a-child:"> Is not a child  (Has no parent)</label></td>
   </tr>
   <tr>
     <td></td>
     <td class="align-right width-15-percent">
       <label class="plain" for="query-on">Second Parent</label>
     </td>
-    <td> <label class="plain"><input type="checkbox" class="name-search-assertion" id="name-is-a-second-parent" value="is-a-second-parent:"> Is a second parent </label></td>
+    <td><label class="plain">
+          <input type="checkbox" 
+                 class="name-search-assertion" 
+                 title="Restrict search to names that are second parents."
+                 id="name-is-a-second-parent" 
+                 value="is-a-second-parent:"> Is a second parent </label></td>
   </tr>
   <tr>
     <td></td>
     <td class="align-right width-15-percent">
     </td>
-    <td> <label class="plain"><input type="checkbox" class="name-search-assertion" id="name-is-not-a-second-parent" value="is-not-a-second-parent:"> Is not a second parent </label></td>
+    <td> <label class="plain">
+          <input type="checkbox" 
+                 class="name-search-assertion" 
+                 title="Restrict search to names that are not second parents."
+                 id="name-is-not-a-second-parent" 
+                 value="is-not-a-second-parent:"> Is not a second parent </label></td>
   </tr>
   <tr>
     <td></td>
     <td class="align-right width-15-percent">
       <label class="plain" for="query-on">Child</label>
     </td>
-    <td> <label class="plain"><input type="checkbox" class="name-search-assertion" id="name-has-a-second-parent" value="has-a-second-parent:"> Has a second parent </label></td>
+    <td> <label class="plain">
+          <input type="checkbox" 
+                 class="name-search-assertion" 
+                 title="Restrict search to names that have a second parent"
+                 id="name-has-a-second-parent" 
+                 value="has-a-second-parent:"> Has a second parent </label></td>
   </tr>
   <tr>
     <td></td>
     <td class="align-right width-15-percent"> </td>
-    <td> <label class="plain"><input type="checkbox" class="name-search-assertion" id="name-has-no-second-parent" value="has-no-second-parent:"> Has no second parent </label></td>
+    <td> <label class="plain">
+          <input type="checkbox" 
+                 class="name-search-assertion" 
+                 title="Restrict search to names that have no second parent"
+                 id="name-has-no-second-parent" 
+                 value="has-no-second-parent:"> Has no second parent </label></td>
   </tr>
   </table>
-</form>
-</div>
+
+

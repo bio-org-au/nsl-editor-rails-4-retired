@@ -1,4 +1,5 @@
 <div id="search-examples-inner" class="">
+<% cache do %> 
   <div id="reference-search-examples" class="search-examples hidden">
     <%= render partial: 'references/advanced_search/examples' %>
   </div>
@@ -6,7 +7,7 @@
     <%= render partial: 'names/advanced_search/examples' %>
   </div>
   <div id="name-plus-instances-search-examples" class="search-examples hidden">
-    <%= render partial: 'names/advanced_search/plus_instances_examples' %>
+    <%= render partial: 'names/advanced_search/plus_instances/examples' %>
   </div>
   <div id="author-search-examples" class="search-examples hidden">
     <%= render partial: 'authors/advanced_search/examples' %>
@@ -15,13 +16,13 @@
     <%= render partial: 'instances/advanced_search/examples' %>
   </div>
   <div id="instances-for-name-id-search-examples" class="search-examples hidden">
-    <%= render partial: 'instances/advanced_search/for_name_id_examples' %>
+    <%= render partial: 'instances/advanced_search/for_name_id/examples' %>
   </div>
   <div id="instances-for-ref-id-search-examples" class="search-examples hidden">
-    <%= render partial: 'instances/advanced_search/for_ref_id_examples' %>
+    <%= render partial: 'instances/advanced_search/for_ref_id/examples' %>
   </div>
   <div id="instances-sorted-by-page-for-ref-id-search-examples" class="search-examples hidden">
-    <%= render partial: 'instances/advanced_search/sorted_by_page_for_ref_id_examples' %>
+    <%= render partial: 'instances/advanced_search/sorted_by_page_for_ref_id/examples' %>
   </div>
   <div id="tree-search-examples" class="search-examples hidden">
     <%= render partial: 'trees/advanced_search/examples' %>
@@ -30,11 +31,13 @@
     <%= render partial: 'audits/advanced_search/examples' %>
   </div>
   <div id="references-accepted-names-search-examples" class="search-examples hidden">
-    <%= render partial: 'references/advanced_search/with_novelties_examples' %>
+    <%= render partial: 'references/advanced_search/with_novelties/examples' %>
   </div>
   <div id="references-names-full-synonymy-search-examples" class="search-examples hidden">
-    <%= render partial: 'references/advanced_search/names_full_synonymy_examples' %>
+    <%= render partial: 'references/advanced_search/names_full_synonymy/examples' %>
   </div>
+
+<% end %>
 
 </div>
 

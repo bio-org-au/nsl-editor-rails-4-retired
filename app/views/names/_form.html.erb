@@ -15,9 +15,10 @@
   <% if @name.needs_top_buttons? %>
     <span class="inline-block pull-right align-right">
       <% if @name.id.blank? %>
-        <%= link_to 'Cancel','/cancel-new-form', class: "btn btn-primary cancel-new-record-link", data: {element_id: "new-name-#{params[:random_id]}"}  %>
+        <%= link_to 'Cancel','/cancel-new-form', class: "btn btn-primary cancel-new-record-link", title: "Cancel new name.",
+          data: {element_id: "new-name-#{params[:random_id]}"}  %>
       <% end %>
-      <%= f.submit "Save", id: 'save-name-at-top', class: 'btn btn-primary width-5em pull-right', disabled: false %>
+      <%= f.submit "Save", id: 'save-name-at-top', class: 'btn btn-primary width-5em pull-right', title: "Save changes.", disabled: false %>
     </span>
   <% end %>
   <span id="search-result-details-info-message-container" class="message-container"></span>
@@ -214,7 +215,7 @@
   <br>
   <div class="form-group align-right">
   <% if @name.id.blank? %>
-    <%= link_to 'Cancel','/cancel-new-form', tabindex: increment_tab_index, title: 'Cancel the new Name', class: "btn btn-primary cancel-new-record-link", data: {element_id: "new-name-#{params[:random_id]}"}  %>
+    <%= link_to 'Cancel','/cancel-new-form', tabindex: increment_tab_index, title: 'Cancel new Name', class: "btn btn-primary cancel-new-record-link", data: {element_id: "new-name-#{params[:random_id]}"}  %>
   <% end %>
   <%= f.submit "Save", id: 'save-name', tabindex: increment_tab_index, title: 'Save changes', class: 'btn btn-primary width-5em', disabled: false %>
   </div>

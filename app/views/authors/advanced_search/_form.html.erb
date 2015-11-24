@@ -1,10 +1,10 @@
-<div id="advanced-search-author-form-container" class="">
-  <form class="form-inline">
 <table class="table advanced-form-table" class="table table-bordered" >
   <tr><td class="width-5-percent">List/count</td> 
     <td class="align-right width-15-percent"><label class="plain" for="query-on">Options</label></td>
     <td>
-      <select id="author-advanced-search-list-or-count" class="form-control">
+      <select id="author-advanced-search-list-or-count" 
+              class="form-control"
+              title="Choose to list or count the search results.">
         <option value='count'>count records</option>
         <option value='list' selected='selected'>list results</option>
     </select>
@@ -16,35 +16,52 @@
       <label class="plain" for="query-on">Size</label>
     </td>
     <td>
-      <input id="author-advanced-search-set-size" value="100" type="number" class="form-control min-width-10em" placeholder="Number of records for a list search" min="1" max="1000"/>
+      <input id="author-advanced-search-set-size" 
+             value="100" 
+             type="number" 
+             class="form-control min-width-10em" 
+             title="Number of records for a list search" 
+             min="1" 
+             max="1000"/>
     </td>
-  </tr>
-  <tr> <td class="width-5-percent">Name</td>
+  </tr> <tr> <td class="width-5-percent">Name</td>
     <td class="align-right width-15-percent">
     </td>
     <td>
-      <input id="author-advanced-search-name" type="text" class="form-control min-width-20em" placeholder=""/>
+      <input id="author-advanced-search-name" 
+             type="text" 
+             class="form-control min-width-20em" 
+             title="Restrict search by author name or part string"/>
     </td>
   </tr>
   <tr> <td class="width-5-percent">Abbreviation</td>
     <td class="align-right width-15-percent">
     </td>
     <td>
-      <input id="author-advanced-search-abbrev" type="text" class="form-control min-width-20em" placeholder=""/>
+      <input id="author-advanced-search-abbrev" 
+             type="text" 
+             class="form-control min-width-20em" 
+             title="Restrict search by author abbreviation or part string"/>
     </td>
   </tr>
   <tr> <td class="width-5-percent">Full&nbsp;name or&nbsp;identifying&nbsp;text</td>
     <td class="align-right width-15-percent">
     </td>
     <td>
-      <input id="author-advanced-search-full-name" type="text" class="form-control min-width-20em" placeholder="Full name or identifying text"/>
+      <input id="author-advanced-search-full-name" 
+             type="text" 
+             class="form-control min-width-20em" 
+             title="Restrict search by author full name or identifying text or part string."/>
     </td>
   </tr>
   <tr> <td class="width-5-percent">IPNI ID</td>
     <td class="align-right width-15-percent">
     </td>
     <td>
-      <input id="author-advanced-search-ipni-id" type="text" class="form-control min-width-20em" placeholder=""/>
+      <input id="author-advanced-search-ipni-id" 
+             type="text" 
+             class="form-control min-width-20em" 
+             title="Restrict search by IPNI ID"/>
     </td>
   </tr>
   <tr>
@@ -53,7 +70,10 @@
       <label class="plain" for="query-on">Text</label>
     </td>
     <td>
-      <input id="author-advanced-search-comments" type="text" class="form-control min-width-20em" placeholder=""/>
+      <input id="author-advanced-search-comments" 
+             type="text" 
+             class="form-control min-width-20em" 
+             title="Restrict search by comment text or part string."/>
     </td>
   </tr>
   <tr>
@@ -62,20 +82,31 @@
       <label class="plain" for="query-on">By</label>
     </td>
     <td>
-      <input id="author-advanced-search-comments-by" type="text" class="form-control min-width-20em" placeholder=""/>
+      <input id="author-advanced-search-comments-by" 
+             type="text" 
+             class="form-control min-width-20em" 
+             title="Restrict search by ID of user who added comment, or part string."/>
     </td>
   </tr>
   <tr> <td class="width-5-percent">Assertions</td>
     <td class="align-right width-15-percent">
     </td>
-    <td> <label class="plain"><input type="checkbox" class="author-search-assertion" id="author-is-a-duplicate" value="is-a-duplicate:"> is a duplicate</label> </td>
+    <td> <label class="plain"><input 
+               type="checkbox" 
+               class="author-search-assertion" 
+               id="author-is-a-duplicate" 
+               title="Restrict search to authors marked as duplicates."
+               value="is-a-duplicate:"> is a duplicate</label> </td>
   </tr>
   <tr>
     <td></td>
     <td class="align-right width-15-percent">
     </td>
-    <td> <label class="plain"><input type="checkbox" class="author-search-assertion" id="author-is-not-a-duplicate" value="is-not-a-duplicate:"> is not a duplicate</label> </td>
+    <td> <label class="plain"><input 
+               type="checkbox" 
+               class="author-search-assertion" 
+               id="author-is-not-a-duplicate" 
+               title="Restrict search to authors not marked as duplicates."
+               value="is-not-a-duplicate:"> is not a duplicate</label> </td>
   </tr>
   </table>
-</form>
-</div>

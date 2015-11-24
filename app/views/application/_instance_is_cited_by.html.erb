@@ -15,6 +15,7 @@
     <a
       id="<%= %Q(#{search_result.class}-#{search_result.id}) %>"
       class="show-details-link indent-level-2"
+      title="Instance is cited by record.  Select to show details."
       tabindex="<%= increment_tab_index %>" >
     <%= "#{search_result.expanded_instance_type || search_result.instance_type.name}: <b>#{search_result.name.full_name}</b>".html_safe %>
     <%= "#{search_result.page}" %>

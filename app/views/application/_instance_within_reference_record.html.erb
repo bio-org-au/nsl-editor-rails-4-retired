@@ -15,6 +15,7 @@
     <a 
       class="show-details-link indent-level-1"
       tabindex="<%= increment_tab_index %>" 
+      title="Instance within a reference record.  Select to show details."
       id="<%= %Q(#{search_result.class}-#{search_result.id}) %>">
     <%= "#{search_result.name.full_name}" if search_result.name %>  
     : <%= "#{search_result.page}" %>
