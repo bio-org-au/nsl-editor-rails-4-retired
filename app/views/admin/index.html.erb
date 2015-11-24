@@ -43,12 +43,15 @@
     <tr><td>Database</td><td> <%= Rails.configuration.database_configuration[Rails.env]["database"] %> </td></tr>
 
     <tr><td>Schema version</td><td> <%= DbVersion.current %> </td></tr>
-    <tr><td>Time zone</td><td> <%= Time.zone %> </td></tr>
-
     <tr><td>Path to broadcast file</td><td> <%= Rails.configuration.path_to_broadcast_file = "#{ENV['HOME']}/.nsl/broadcast.txt" %> </td></tr>
+    </table>
 
+    <h4>Rails timezone</h4>
+    <table class="table table-condensed search-results width-100-percent">
+    <tr><td class="width-40-percent min-width-10em">Time zone</td><td> <%= Time.zone %> </td></tr>
+    <tr><td>Time.now</td><td> <%= Time.now %> </td></tr>
+    <tr><td>Rails.configuration.active_record.default_timezone</td><td> <%= Rails.configuration.active_record.default_timezone %> </td></tr>
     <tr><td colspan="2">&nbsp;</td></tr>
-
     </table>
 
     <h4>Rails configuration</h4>
