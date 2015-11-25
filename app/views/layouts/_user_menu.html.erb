@@ -1,12 +1,20 @@
 <% if @current_user.present? %>                  
 
 <li class="dropdown">
-  <a href="#" id="user-dropdown-menu-link" tabindex="4" class="dropdown-toggle <%= 'active' if params[:controller].match(/session/) %>" data-toggle="dropdown">
+  <a href="#" 
+     id="user-dropdown-menu-link" 
+     tabindex="4" 
+     class="dropdown-toggle <%= 'active' if params[:controller].match(/session/) %>" 
+     title="Select this to see your account options."
+     data-toggle="dropdown">
     <%= icon('user') %>&nbsp;<%= @current_user.full_name %> <span class="caret"></span></a>
   <ul id="help-dropdown-menu" class="dropdown-menu" role="menu"> 
     <% if @current_user.groups.size > 0 %>
       <li class="dropdown-submenu">
-        <a tabindex="-1" href="#"><%= pluralize(@current_user.groups.size,'Group') %></a>
+        <a tabindex="-1" 
+           href="#"
+           title="Hover over this to see your security groups, if any">
+          <%= pluralize(@current_user.groups.size,'Group') %></a>
           <ul class="dropdown-menu">
           <% @current_user.groups.each do |group| %>
             <% case group 
@@ -15,13 +23,13 @@
                else icon_name = 'circle-o' 
                end 
              %>
-              <li role="presentation"><a><%= "#{icon(icon_name)} #{group == group.upcase ? group : group.capitalize}".html_safe %></a></li>
+              <li role="presentation"><a title="A security group you belong to"><%= "#{icon(icon_name)} #{group == group.upcase ? group : group.capitalize}".html_safe %></a></li>
           <% end %>
           </ul>
       </li>
     <% end %>
     <li class="" role="presentation">
-      <%= link_to "#{icon('sign-out')} Sign out".html_safe, sign_out_path, method: :delete %>
+      <%= link_to "#{icon('sign-out')} Sign out".html_safe, sign_out_path, method: :delete, title: 'Select this to sign out from the NSL Editor'%>
     </li>
   </ul>
 </li>
