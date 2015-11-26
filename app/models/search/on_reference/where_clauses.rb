@@ -158,10 +158,12 @@ class Search::OnReference::WhereClauses
     'year:' => "year = ? ",
     'after-year:' => "year > ? ",
     'before-year:' => "year < ? ",
+    'duplicate-of-id:' => "duplicate_of_id = ?",
   }
 
   WHERE_INTEGER_VALUE_HASH_TWICE = { 
-    'parent-id:' => "id = ? or parent_id = ?"
+    'parent-id:' => "id = ? or parent_id = ?",
+    'master-id:' => "id = ? or duplicate_of_id = ?",
   }
   
   FIELD_NEEDS_TRAILING_WILDCARD = { 

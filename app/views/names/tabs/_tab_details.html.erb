@@ -39,6 +39,15 @@
   <%= "Duplicate of #{link}".html_safe %>
 <% end %>
 
+<% duplicates = @name.duplicates %>
+<% if duplicates.size > 0 %>
+  <br>
+  <%= link_to(pluralize(duplicates.size,"Duplicate"),
+                          search_path(query_target: "name", 
+                                      query_string: "master-id:#{@name.id}"),
+                          title: "Retrieve this name with its #{pluralize(duplicates.size,'duplicate')}") %>
+<% end %>
+
 <% unless @name.ex_base_author.blank? %>
   <br>
   <% auth_link = link_to(@name.ex_base_author.abbrev_if_possible, search_path(query_target: 'author', query_string: "id: #{@name.ex_base_author_id}"), title: "Retrieve ex base author", tabindex: increment_tab_index,class:'author') %>

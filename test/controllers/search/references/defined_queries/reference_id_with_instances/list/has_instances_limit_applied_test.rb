@@ -28,7 +28,6 @@ class SearchReferencesDefinedQueriesReferenceIdWithInstancesListHasInstancesLimi
     assert_select '#search-results-summary', /\b10 records\b/, "Should say 10 records" 
     assert_select '#search-results-summary', /of an unknown total\b/, "Should say of an unknown total" 
     assert_select '#search-results-summary', /10 records.*of an unknown total/m, "Should say 10 records of an unknown total" 
-    #assert_select '#search-results-summary', /10 records.*of an unknown total/, "Should say 10 records of an unknown total" 
   end
 
 end

@@ -30,7 +30,6 @@
 <% else %>
   Unpublished.
 <% end %>
-  <br>
 
 <%= @reference.notes %>
 <% if @reference.children && @reference.children.size != 0 %>
@@ -49,10 +48,18 @@
               title: 'Search for the duplicate reference.') %>
 <% end %>
 
-<br>
-<br>
+<% duplicates = @reference.duplicates %>
+<% if duplicates.size > 0 %>
+  <br>
+  <%= link_to(pluralize(duplicates.size,"Duplicate"),
+                          search_path(query_target: "reference", 
+                                      query_string: "master-id:#{@reference.id}"),
+                          title: "Retrieve this reference with its #{pluralize(duplicates.size,'duplicate')}") %>
+<% end %>
+
 <% instances_size = @reference.instances.count %>
 <% if instances_size > 0 %>
+  <br>
   <% if instances_size == 1 %>
     <%= link_to("1 Instance #{search_icon_on_tab}".html_safe,
                           search_path(query_target: "instances for ref id", query_string: "#{@reference.id}"), 

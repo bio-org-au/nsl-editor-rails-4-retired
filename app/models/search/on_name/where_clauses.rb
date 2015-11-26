@@ -118,12 +118,14 @@ class Search::OnName::WhereClauses
     'ex-base-author-id:' => "ex_base_author_id = ? ",
     'ex-author-id:' => "ex_author_id = ? ",
     'sanctioning-author-id:' => "sanctioning_author_id = ? ",
+    'duplicate-of-id:' => "duplicate_of_id = ?",
   }
 
   WHERE_INTEGER_VALUE_HASH_TWICE = { 
     'parent-or-second-parent-id:' => "parent_id = ? or second_parent_id = ? ",
     'parent-id:' => "id = ? or parent_id = ?",
     'second-parent-id:' => "id = ? or second_parent_id = ? ",
+    'master-id:' => "id = ? or duplicate_of_id = ?",
   }
 
   WHERE_INTEGER_VALUE_HASH_THRICE = { 
