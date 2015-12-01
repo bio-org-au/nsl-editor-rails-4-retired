@@ -16,15 +16,39 @@
 #   
 
 class Reference < ActiveRecord::Base
+  include PgSearch
   self.table_name = 'reference'  
   self.primary_key = 'id'
   self.sequence_name = 'nsl_global_seq'
   strip_attributes
 
   attr_accessor :display_as, :message
+
+  # https://github.com/Casecommons/pg_search
+  pg_search_scope :search_citation_text_for, 
+    against: :citation,
+    using: {
+      tsearch: {
+        dictionary: "english",
+        prefix: "true",
+      }
+    }
+
+  # https://robots.thoughtbot.com/optimizing-full-text-search-with-postgres-tsvector-columns-and-triggers
+  pg_search_scope :search_citation_tsv_for, 
+    against: :citation,
+    using: {
+      tsearch: {
+        tsvector_column: "tsv",
+        dictionary: "english",
+        prefix: "true",
+      }
+    }
+
   scope :lower_citation_equals, ->(string) { where("lower(citation) = ? ",string.downcase) }
   scope :lower_citation_like, ->(string) { where("lower(citation) like ? ",string.gsub(/\*/,'%').downcase) }
   scope :not_duplicate, -> { where("duplicate_of_id is null") }
+  scope :is_duplicate, -> { where("duplicate_of_id is not null") }
 
   scope :created_n_days_ago, ->(n) { where("current_date - created_at::date = ?",n)}
   scope :updated_n_days_ago, ->(n) { where("current_date - updated_at::date = ?",n)}

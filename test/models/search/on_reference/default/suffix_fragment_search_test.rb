@@ -17,20 +17,18 @@
 require 'test_helper'
 load 'test/models/search/users.rb'
 
-class IsADuplicateAndCitationIsSearchTest < ActiveSupport::TestCase
+class SearchOnReferenceDefaultSuffixFragmentSearchTest < ActiveSupport::TestCase
 
-  test "is a duplicate and citation is search" do
+  test "search on reference default for suffix fragment" do
     params =  ActiveSupport::HashWithIndifferentAccess.new(query_target: 'reference',
-                                                           query_string: "is-duplicate: citation: uplica",
+                                                           query_string: "uplicate",
                                                            include_common_and_cultivar_session: true,
                                                            current_user: build_edit_user)
     search = Search::Base.new(params)
     assert_equal search.executed_query.results.class, Reference::ActiveRecord_Relation, "Results should be a Reference::ActiveRecord_Relation."
-    assert_equal 0, search.executed_query.results.size, "No results are expected.  Citation text search does not support pure text fragments."
+    assert_equal 0, search.executed_query.results.size, "No results are expected.  Citation text search does not support suffix text fragments."
   end
 
 end
-
-
 
 

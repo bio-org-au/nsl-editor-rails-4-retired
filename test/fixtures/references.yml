@@ -671,6 +671,8 @@ nuytsia:
   ref_author_role: unknown
   ref_type: journal
   publication_date: 1970-
+  isbn: an_isbn_number
+  issn: an_issn_number
   created_by: tester
   updated_by: tester
 
@@ -979,7 +981,7 @@ stanley_and_ross_1986_flora_of_se_qld:
   created_at: 1996-05-22 14:00:00.000000000 Z
   created_by: ApniDump
   display_title: Flora of South-eastern Queensland
-  doi: 
+  doi: some_doi 
   edition: 
   language: undetermined
   namespace: apni
@@ -993,7 +995,7 @@ stanley_and_ross_1986_flora_of_se_qld:
   source_id_string: '131964'
   source_system: PUBLICATION
   title: Flora of South-eastern Queensland
-  tl2: 
+  tl2: some_tl2
   updated_at: 2012-01-05 13:00:00.000000000 Z
   updated_by: CUL07D
   valid_record: false
@@ -1308,6 +1310,7 @@ ref_type_is_book:
   namespace: apni
   ref_author_role: dash
   ref_type: book
+  bhl_url: a_bhl_url 
   created_by: tester
   updated_by: tester
 
@@ -1842,3 +1845,18 @@ dummy_reference_1:
   created_by: tester
   updated_by: tester
 
+hookers_icones_plantarum:
+  title: Hooker's Icones Plantarum 
+  display_title: Hooker's Icones Plantarum 
+  citation:  	(1867-), Hooker's Icones Plantarum 
+  citation_html:  	(1867-), Hooker's Icones Plantarum 
+  author: dash
+  ref_author_role: editor
+  namespace: apni
+  ref_type: journal
+  publication_date: 1867-
+  language: undetermined
+  created_at: 2015-01-12 11:02:57
+  created_by: tester
+  updated_by: tester
+  
