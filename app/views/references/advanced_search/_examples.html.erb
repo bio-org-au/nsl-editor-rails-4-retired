@@ -2,7 +2,7 @@
 <h4>Reference search examples</h4>
 <h5 class="">List references</h5>
 <table class="example-searches table table-striped">
-  <% [{search_target: 'References', search_string: "*",explanation: %Q(Start with "ref" for references. 100 listed by default.)},
+  <% [{search_target: 'References', search_string: "cw:*",explanation: %Q(Start with "ref" for references. 100 listed by default.)},
       {search_target: 'References', search_string: "limit:10",explanation: %Q(Control the number of references listed.)},
       {search_target: 'References', search_string: "nuytsia", explanation: %Q(Reference searches match on citation by default.  Leading and trailing wildcards are added automatically.)},
       {search_target: 'References', search_string: "title:nuytsia", explanation: %Q(Search on title.  A trailing wildcard is added automatically.)},

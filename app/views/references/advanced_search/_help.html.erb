@@ -1,11 +1,49 @@
 <h4>Reference search</h4>
-<p/>Reference citations listed in alphabetical order.
-<br>
-<br>
+<p/>References include books, papers, journals etc.
 <br>
 <br>
 <%= render partial: 'references/advanced_search/quick_start_help' %>
 <br>
+<br>
+<h5>Default Reference search</h5>
+<p/>The default search occurs when you do <strong>not</strong> enter a field name into the search.
+<p/>The default Reference search is on citations.  It is the same as if you had entered "citation:" as the field in front of the search terms. 
+<p/> It is also the same as if you had entered the field abbreviation "c:" in front of the search terms.
+<p/>The default Reference search is a "text search" that "understands" the English language and, in particular, words and word prefixes.
+<br>
+<br>
+<h5>Text search on Reference citations</h5>
+<p/>Each reference has a citation - a text string that identifies it.  
+<p/>Each reference citation is constructed in a standard way based on the type of reference.  
+<p/>For example, a citation for a <%= link_to('paper',search_path(query_string: 'id: 44128', query_target: 'reference'),title:"Query the paper by its ID",class:'blue') %>: 
+<pre>
+Short, P.S. (1986), Notes on Trachymene humilis (J.D.Hook.) Benth. (Umbelliferae). Muelleria 6(3)
+</pre>
+<p/>Searches that would retrieve this paper include:
+<ul>
+  <li/><%= link_to('short trach',search_path(query_string: 'short trach', query_target: 'reference'),title:"Sample query",class:'blue') %>: 
+  <li/><%= link_to('trach short',search_path(query_string: 'short trach', query_target: 'reference'),title:"Sample query",class:'blue') %>: 
+  <li/><%= link_to('short 1986',search_path(query_string: 'short trach', query_target: 'reference'),title:"Sample query",class:'blue') %>: 
+  <li/><%= link_to('trach 1986',search_path(query_string: 'short trach', query_target: 'reference'),title:"Sample query",class:'blue') %>: 
+  <li/><%= link_to('muell 1986 humil',search_path(query_string: 'muell 1986 humil', query_target: 'reference'),title:"Sample query",class:'blue') %>: 
+</ul>
+
+<br>
+<p/>Another example is this search for <%= link_to('"hookers icon pl"',search_path(query_string: 'hookers icon pl', query_target: 'reference'),title:"Run the query.",class:'blue') %> which works because the search engine understands that "hookers" should match "Hooker's" and so will match citations such as:
+<pre>
+ Bentham, G. (1876), Plagiocarpus axillaris Benth. Hooker's Icones Plantarum 12 
+</pre>
+<br>
+<h5>Alternatives to text search</h5>
+<p/>The text search engine is very powerful, but it has some limitations.  
+<p/>For example, it is word-oriented and prefix-oriented, so a search for <%= link_to('"hookers icon ant"',search_path(query_string: 'hookers icon ant', query_target: 'reference'),title:"Run the query.",class:'blue') %> returns no records because "ant", although part of the word "Plantarum", is not a prefix.  That is, it is not preceded by a space nor is it at the start of the citation.
+
+<p/>For pure wildcarded fragments use the "citation-wildcard:" field, or "cw:" for short.  
+<p/>For example, a search for <%= link_to('"cw:hook icon ant"',search_path(query_string: 'cw:hook icon ant', query_target: 'reference'),title:"Run the query.",class:'blue') %> does return records.  But note "hook" instead of "hookers" in the search.
+<br>
+<br>
+<h5>Other Reference searches</h5>
+<p/>While most searches will be default searches, you can specify other fields for the search.  These are listed below.
 <br>
 <br>
 <%= render partial: 'references/advanced_search/field_help' %>

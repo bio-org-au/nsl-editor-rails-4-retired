@@ -57,7 +57,12 @@ class Search::OnReference::WhereClauses
     if rule.tokenize
       apply_predicate_to_tokens(rule)
     elsif rule.has_scope
+      #@sql = @sql.send(rule.scope_,rule.value).select("*")
       @sql = @sql.send(rule.scope_,rule.value)
+      # https://github.com/rails/rails/issues/15138
+      # Invalid SQL generated when using count with select values
+      # @sql = @sql.send(rule.scope_,rule.value).select("ref_type_id,created_at,'thing' as citation_html")
+      #.select("*,ts_headline('english'::regconfig,coalesce((citation)::text,''::text), plainto_tsquery('english', ''' ' || unaccent('hookers')|| ' ''' || ':*')) ")
     else
       apply_predicate(rule)
     end

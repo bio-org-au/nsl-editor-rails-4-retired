@@ -94,7 +94,7 @@ class Search::OnReference::PredicateFieldRule
 
   ABBREVS = {
     'c:' => 'citation:',
-    'cw:' => 'citation-wildcards:',
+    'cw:' => 'citation-wildcard:',
     't:' => 'title:',
     'ti:' => 'title:',
     'ty:' => 'type:',

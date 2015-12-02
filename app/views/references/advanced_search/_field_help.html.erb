@@ -5,13 +5,13 @@
 <table class="table table-striped">
   <tr><th>Field</th><th>Description</th></tr>
   <% [
-    {field_name: '[no field]', description: %Q(default reference searches are on <span class="purple">citation</span>, same rules as citation searches - see next line )},
-      {field_name: 'citation:', description: "citation combines author, title and publication details - the Editor lists references by showing the citation;"},
-      {field_name: '', description: "citation is useful for searching because it has so much information;"},
+      {field_name: 'citation:', description: "citation word and word-prefix text search;"},
       {field_name: '', description: %Q(enter citation search terms in any order e.g. "#{link_to_maslin_1985}" gives the same results as "#{link_to_1985_maslin}";)},
       {field_name: '', description: %Q(this works for citation because the editor "tokenizes" citation search terms, making the strict format of the citation less important)},
       {field_name: '', description: %Q(tokenizing search terms makes for slightly slower searches - but is worth it for citation searches.)},
       {field_name: 'citation-exact:', description: "search citation with no tokenization, and no wildcards unless you supply them"},
+      {field_name: 'citation-wildcard:', description: "search citation for text fragments; wildcards are added automatically; order does not matter"},
+      {field_name: 'cw:', description: "abbreviation for citation-wildcard:"},
       {field_name: 'title:', description: "title, with trailing wildcard added automatically"},
       {field_name: 'title-exact:', description: "title"},
       ].each do |val| %>
