@@ -34,6 +34,15 @@ Short, P.S. (1986), Notes on Trachymene humilis (J.D.Hook.) Benth. (Umbelliferae
  Bentham, G. (1876), Plagiocarpus axillaris Benth. Hooker's Icones Plantarum 12 
 </pre>
 <br>
+
+<br>
+<p/>A search for <%= link_to('"münchh"',search_path(query_string: 'münchh', query_target: 'reference'),title:"Run the query.",class:'blue') %> retrieves the same records as a search 
+for <%= link_to('"munchh"',search_path(query_string: 'munchh', query_target: 'reference'),title:"Run the query.",class:'blue') %> showing that the default reference search ignores accents.
+Here is the citation of one of the records retrieved:
+<pre>
+Münchhausen, Otto, Freiherr von (1765-1773), Der Hausvater 
+</pre>
+<br>
 <h5>Alternatives to text search</h5>
 <p/>The text search engine is very powerful, but it has some limitations.  
 <p/>For example, it is word-oriented and prefix-oriented, so a search for <%= link_to('"hookers icon ant"',search_path(query_string: 'hookers icon ant', query_target: 'reference'),title:"Run the query.",class:'blue') %> returns no records because "ant", although part of the word "Plantarum", is not a prefix.  That is, it is not preceded by a space nor is it at the start of the citation.

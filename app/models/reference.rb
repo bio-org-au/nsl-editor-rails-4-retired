@@ -27,6 +27,7 @@ class Reference < ActiveRecord::Base
   # https://github.com/Casecommons/pg_search
   pg_search_scope :search_citation_text_for, 
     against: :citation,
+    ignoring: :accents,
     using: {
       tsearch: {
         dictionary: "english",
