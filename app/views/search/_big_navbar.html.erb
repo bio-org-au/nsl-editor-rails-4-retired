@@ -36,10 +36,34 @@
           <li role="presentation" class="<%= 'active' unless @search.blank? || @search.parsed_request.count || @search.empty || @search.error %>">
             <a id="search-results-tab-container-link" title="Search Results" href="#">Results</a>
           </li>
-          <li role="presentation" class=""><a id="search-help-tab-container-link" title="Helpful information about searching" href="#">Help</a></li>
-          <li role="presentation" class=""><a id="example-search-tab-container-link" title="Example Searches" href="#">Examples</a></li>
-          <li role="presentation" class=""><a id="advanced-search-tab-container-link" title="Advanced Search" href="#">Advanced</a></li>
-          <li role="presentation" class=""><a id="search-history-tab-container-link" title="Search History" href="#">History</a></li>
+          <li role="presentation" class="">
+            <a id="help-search-tab-container-link" 
+               class="search-non-default-tab-link" 
+               title="Helpful information about searching" 
+               href="#"
+               data-load-context=""
+               >Help</a></li>
+          <li role="presentation" class="">
+            <a id="example-search-tab-container-link" 
+               class="search-non-default-tab-link" 
+               title="Example Searches" 
+               href="#"
+               data-load-context=""
+               >Examples</a></li>
+          <li role="presentation" class="">
+            <a id="advanced-search-tab-container-link" 
+               class="search-non-default-tab-link" 
+               title="Advanced Search" 
+               href="#"
+               data-load-context=""
+               >Advanced</a></li>
+          <li role="presentation" class="">
+            <a id="search-history-tab-container-link" 
+               class="search-non-default-tab-link" 
+               title="Search History" 
+               href="#"
+               data-load-context=""
+               >History</a></li>
         </ul>
       <% end %>
     </div>

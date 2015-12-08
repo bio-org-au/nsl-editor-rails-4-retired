@@ -7,19 +7,34 @@
     <h3>Configuration</h3>
     <h4>Services</h4>
     <table class="table table-condensed search-results width-100-percent">
-    <tr><td class="text">Rails.configuration.services_clientside_root_url</td><td> <%= Rails.configuration.services_clientside_root_url %> </td></tr>
-    <tr><td class="width-40-percent min-width-10em" >Rails.configuration.services</td><td> <%= Rails.configuration.services %> </td></tr>
-    <tr><td class="width-40-percent min-width-10em" >Rails.configuration.name_services</td><td> <%= Rails.configuration.name_services %> </td></tr>
-    <tr><td class="width-40-percent min-width-10em" >Rails.configuration.reference_services</td><td> <%= Rails.configuration.reference_services %> </td></tr>
+      <tr>
+        <td class="text">Rails.configuration.services_clientside_root_url</td>
+        <td> <%= Rails.configuration.services_clientside_root_url %> </td>
+      </tr>
+      <tr>
+        <td class="width-40-percent min-width-10em" >
+          Rails.configuration.services
+        </td>
+        <td> 
+            <%= Rails.configuration.services %> 
+        </td>
+      </tr>
+      <tr><td class="width-40-percent min-width-10em" >Rails.configuration.name_services</td>
+          <td> <%= Rails.configuration.name_services %> </td></tr>
+    <tr><td class="width-40-percent min-width-10em" >Rails.configuration.reference_services</td>
+        <td> <%= Rails.configuration.reference_services %> </td></tr>
 
-    <tr><td>Rails.configuration.nsl_links</td><td> <%= Rails.configuration.nsl_links %> </td></tr>
+    <tr><td>Rails.configuration.nsl_links</td>
+        <td> <%= Rails.configuration.nsl_links %> </td></tr>
 
-    <tr><td>Rails.configuration.ldap_admin_username</td><td> <%= Rails.configuration.ldap_admin_username %> </td></tr>
+    <tr><td>Rails.configuration.ldap_admin_username</td>
+        <td> <%= Rails.configuration.ldap_admin_username %> </td></tr>
     </table>
 
     <h4>LDAP</h4>
     <table class="table table-condensed search-results width-100-percent">
-    <tr><td class="width-40-percent min-width-10em" >Rails.configuration.ldap_base</td><td> <%= Rails.configuration.ldap_base %> </td></tr>
+    <tr><td class="width-40-percent min-width-10em" >Rails.configuration.ldap_base</td>
+        <td> <%= Rails.configuration.ldap_base %> </td></tr>
 
     <tr><td class="width-40-percent min-width-10em" >Rails.configuration.ldap_host</td><td> <%= Rails.configuration.ldap_host %> </td></tr>
 
@@ -100,7 +115,12 @@
 
     <tr><td>Test exception logging.</td><td><%= link_to icon('bomb','',class: 'black fa-2x'), throw_path, title:"Throw an exception" %></td></tr>
 
-    </td><td class="width-5-percent">&nbsp;</td></tr></table>
+    <tr><td class="width-5-percent">&nbsp;</td></tr>
+    
+    </table>
+
+    </td></tr>
+    </table>
 
   </div>
 </div>

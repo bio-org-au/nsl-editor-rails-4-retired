@@ -20,27 +20,29 @@ console.log('document ready');
     });
 
     $('ul#search-results-tabset li a#advanced-search-tab-container-link').on('click',function(e) {
+      debug('advanced-search-tab-container-link clicked; non-advanced containers will be HIDDEN.')
       $('ul#search-results-tabset li').removeClass('active');
       $(this).parent('li').addClass('active');
       $('#advanced-search-container').removeClass('hidden');
       $('#search-result-container').addClass('hidden');
       $('#example-search-container').addClass('hidden');
       $('#search-history-container').addClass('hidden');
-      $('#search-help-container').addClass('hidden');
-      captureSearch(e,this);
+      $('#help-search-container').addClass('hidden');
     });
 
     $('ul#search-results-tabset li a#search-results-tab-container-link').on('click',function(e) {
+      debug('search-results-tab-container-link clicked; non-search-result containers will be HIDDEN.')
       $('ul#search-results-tabset li').removeClass('active');
       $(this).parent('li').addClass('active');
       $('#search-result-container').removeClass('hidden');
       $('#advanced-search-container').addClass('hidden');
       $('#example-search-container').addClass('hidden');
       $('#search-history-container').addClass('hidden');
-      $('#search-help-container').addClass('hidden');
+      $('#help-search-container').addClass('hidden');
     });
 
     $('ul#search-results-tabset li a#example-search-tab-container-link').on('click',function(e) {
+      debug('example-search-tab-container-link clicked; non-example containers will be HIDDEN.')
       $('ul#search-results-tabset li').removeClass('active');
       $(this).parent('li').addClass('active');
       $('#search-result-container').addClass('hidden');
@@ -48,12 +50,11 @@ console.log('document ready');
       $('#advanced-search-container').addClass('hidden');
       $('#example-search-container').removeClass('hidden');
       $('#search-history-container').addClass('hidden');
-      $('#search-help-container').addClass('hidden');
+      $('#help-search-container').addClass('hidden');
     });
 
     $('ul#search-results-tabset li a#search-history-tab-container-link').on('click',function(e) {
-      debug('showing search history');
-      debug($('#search-history-container').length);
+      debug('search-history-tab-container-link clicked; non-history containers will be HIDDEN.')
       $('ul#search-results-tabset li').removeClass('active');
       $(this).parent('li').addClass('active');
       $('#search-result-container').addClass('hidden');
@@ -61,10 +62,11 @@ console.log('document ready');
       $('#advanced-search-container').addClass('hidden');
       $('#example-search-container').addClass('hidden');
       $('#search-history-container').removeClass('hidden');
-      $('#search-help-container').addClass('hidden');
+      $('#help-search-container').addClass('hidden');
     });
 
-    $('ul#search-results-tabset li a#search-help-tab-container-link').on('click',function(e) {
+    $('ul#search-results-tabset li a#help-search-tab-container-link').on('click',function(e) {
+      debug('help-search-tab-container-link clicked; non-help containers will be HIDDEN.')
       $('ul#search-results-tabset li').removeClass('active');
       $(this).parent('li').addClass('active');
       $('#search-result-container').addClass('hidden');
@@ -72,10 +74,11 @@ console.log('document ready');
       $('#advanced-search-container').addClass('hidden');
       $('#example-search-container').addClass('hidden');
       $('#search-history-container').addClass('hidden');
-      $('#search-help-container').removeClass('hidden');
+      $('#help-search-container').removeClass('hidden');
     });
 
     $('ul#advanced-search-tabset li a').on('click',function(e) {
+      debug('ul#advanced-search-tabset li a clicked; .advanced-search-tab s will be HIDDEN.')
       $('.advanced-search-tab').addClass('hidden');
       $('ul#advanced-search-tabset li').removeClass('active');
       $('#'+$(this).attr('data-show-id')).removeClass('hidden');
@@ -83,6 +86,7 @@ console.log('document ready');
     });
 
     $('ul#example-search-tabset li a').on('click',function(e) {
+      debug('ul#example-search-tabset li a clicked; .example-search-tab s will be HIDDEN.')
       $('.example-search-tab').addClass('hidden');
       $('ul#example-search-tabset li').removeClass('active');
       $('#'+$(this).attr('data-show-id')).removeClass('hidden');
@@ -95,13 +99,13 @@ console.log('document ready');
     });
 
     $('#advanced-search-tab-container-link').on('click',function(e) {
+      debug('#advanced-search-container-link clicked; search-result-details will be HIDDEN.')
       $('div#search-result-details').addClass('hidden');
     });
 
 
 $( "select#name-advanced-search-name-type-options" )
   .change(function () {
-    console.log('changed');
     var str = "";
     $( "select#name-advanced-search-name-type-options option:selected" ).each(function() {
       if (str.trim().length == 0) {
@@ -129,75 +133,119 @@ $( "select#name-advanced-search-list-or-count" )
 
     $("#search-target-list").on("click",function(e) {
         if(e.target && e.target.nodeName == "A") {
-            console.log('setting search-target-button');
+            debug('setting search-target');
             document.getElementById('search-target-button-text').innerHTML = e.target.innerHTML;
             document.getElementById('query-target').value = e.target.innerHTML;
-            //console.log($('#query-string-field').attr('list'));
-            //console.log(e.target.dataset.list);
-            //console.log(e.target);
-            //document.getElementById('query-string-field').setAttribute('data-list',e.target.dataset.list);
-            console.log(e.target.dataset.help);
-            showHelp(e.target.dataset.help);
-            showExamples(e.target.dataset.examples);
-            showAdvanced(e.target.dataset.advanced);
+            debug(e.target.dataset.help);
+            showHelpForSearchTarget(e.target.dataset.help);
+            showExamplesForSearchTarget(e.target.dataset.examples);
+            showAdvancedForSearchTarget(e.target.dataset.advanced);
         }
     });
 
+  $('a.xyz').on('click',function(e) {
+    debug('------------ xyz clicked');
+  });
 
-    setActiveHelpOnLoad();
-    setActiveExamplesOnLoad();
-    setActiveAdvancedOnLoad();
+
+    debug('setting up sf click handler');
+  $('a.searchable-field').on('click',function(e) {
+    debug('searchable-field clicked');
+    $('#query-string-field').val($('#query-string-field').val() + ' +++ ' + $(this).html().replace(/<[^>]*>/g,'').trim());
+    $('#query-string-field').focus();
+  });
+
+  $('a.search-non-default-tab-link').on('click', function(e) {
+    debug('a.search-non-default-tab-link clicked, calling getContentOnDemand for ' + this);
+    getContentOnDemand(this);
+  });
+
+  setActiveHelpOnLoad();
+  setActiveExamplesOnLoad();
+  setActiveAdvancedOnLoad();
+    
 });
-
-
-    $('a.searchable-field').on('click',function(e) {
-      $('#query-string-field').val($('#query-string-field').val() + ' ' + $(this).html().replace(/<[^>]*>/g,'').trim());
-      $('#query-string-field').focus();
-    });
 
 -->
     </script>
 
     <script>
 <!--
+  function getContentOnDemand(theThis) {
+    debug("getContentOnDemand for id: " +$(theThis).attr('id') + " and context: " + $(theThis).attr('data-load-context'));
+    var extrasId = $(theThis).attr('data-load-context');
+    debug('#'+extrasId);
+    var $targetElement = $('#'+extrasId);
+    debug("data loaded: " + $targetElement.attr('data-loaded'));
+    if ($targetElement.attr('data-loaded') == 'false') {
+      debug("Not loaded, so need to load extras: " + extrasId);
+      $targetElement.html('Loading...');
+      $.get(window.relative_url_root + "/search/extras/"+extrasId, function( data ) {
+        debug("get: " + extrasId + " has finished");
+        $targetElement.html( data );
+        $targetElement.attr('data-loaded','true');
+      },'html');
+    }
 
-    function showHelp(helpElement) {
-      console.log('showHelp: ' + helpElement);
+  };
+
+    function showHelpForSearchTarget(helpElement) {
+      debug('showHelpForSearchTarget: ' + helpElement);
+      $('#help-search-tab-container-link').attr('data-load-context',helpElement);
+      debug('HIDING all help');
       $('.search-help').addClass('hidden');
+      debug('UNHIDING ' + '#' + helpElement);
       $('#'+helpElement).removeClass('hidden');
+      if ($('#help-search-tab-container-link').closest('li').hasClass('active')) {
+        $('#help-search-tab-container-link').click();
+      };
     }
 
     function setActiveHelpOnLoad() {
       var helpId = $('ul#search-target-list li a:contains(' +  $('#search-target-button-text').text().trim()  + ')').first().attr('data-help');
-      console.log("search-target-button-text: " + $('#search-target-button-text').text().trim());
-      console.log("setActiveHelpOnLoad helpId: " + helpId);
-      showHelp(helpId);
+      debug("search-target-button-text: " + $('#search-target-button-text').text().trim());
+      debug("setActiveHelpOnLoad helpId: " + helpId);
+      showHelpForSearchTarget(helpId);
     }
 
-    function showExamples(examplesElement) {
-      console.log('showExamples for ' + examplesElement);
+    function showExamplesForSearchTarget(examplesElement) {
+      debug('-----   showExamplesForSearchTarget for ' + examplesElement);
+      $('#example-search-tab-container-link').attr('data-load-context',examplesElement);
+      debug('HIDING all examples');
       $('.search-examples').addClass('hidden');
+      debug('UNHIDING ' + '#' + examplesElement);
       $('#'+examplesElement).removeClass('hidden');
+      if ($('#example-search-tab-container-link').closest('li').hasClass('active')) {
+        debug('about to click tab');
+        $('#example-search-tab-container-link').click();
+      };
     }
 
     function setActiveExamplesOnLoad() {
       var id = $('ul#search-target-list li a:contains(' +  $('#search-target-button-text').text().trim()  + ')').first().attr('data-examples');
-      console.log("search-target-button-text: " + $('#search-target-button-text').text().trim());
-      console.log("setActiveExamplesOnLoad id: " + id);
-      showExamples(id);
+      debug("search-target-button-text: " + $('#search-target-button-text').text().trim());
+      debug("setActiveExamplesOnLoad id: " + id);
+      showExamplesForSearchTarget(id);
     }
 
-    function showAdvanced(advancedElement) {
-      console.log('showAdvanced: ' + advancedElement);
+    function showAdvancedForSearchTarget(advancedElement) {
+      debug('-----   showAdvancedForSearchTarget: ' + advancedElement);
+      $('#advanced-search-tab-container-link').attr('data-load-context',advancedElement);
+      debug('HIDING all advanced');
       $('.search-advanced').addClass('hidden');
+      debug('UNHIDING ' + '#' + advancedElement);
       $('#'+advancedElement).removeClass('hidden');
+      if ($('#advanced-search-tab-container-link').closest('li').hasClass('active')) {
+        debug('about to click tab');
+        $('#advanced-search-tab-container-link').click();
+      };
     }
 
     function setActiveAdvancedOnLoad() {
       var id = $('ul#search-target-list li a:contains(' +  $('#search-target-button-text').text().trim()  + ')').first().attr('data-advanced');
-      console.log("search-target-button-text: " + $('#search-target-button-text').text().trim());
-      console.log("setActiveAdvancedOnLoad id: " + id);
-      showAdvanced(id);
+      debug("search-target-button-text: " + $('#search-target-button-text').text().trim());
+      debug("setActiveAdvancedOnLoad id: " + id);
+      showAdvancedForSearchTarget(id);
     }
 
     function loadNameToString() {

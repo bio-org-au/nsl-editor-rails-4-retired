@@ -1,49 +1,33 @@
 
-
 <div id="search-advanced-inner" 
      style="overflow: auto; min-height: 300px; height: 80%; margin-bottom: 1em; padding-bottom: 1em;"
      class="width-95-percent">
 
-<% cache do %>
-
-    <div id="name-search-advanced" class="search-advanced">
-      <%= render partial: 'names/advanced_search/advanced' %>
+    <div id="name-search-advanced" class="search-advanced" data-loaded="false">
     </div>
-    <div id="name-plus-instances-search-advanced" class="search-advanced">
-      <%= render partial: 'names/advanced_search/plus_instances/advanced' %>
+    <div id="name-plus-instances-search-advanced" class="search-advanced" data-loaded="false">
     </div>
-    <div id="reference-search-advanced" class="search-advanced hidden">
-      <%= render partial: 'references/advanced_search/advanced' %>
+    <div id="reference-search-advanced" class="search-advanced hidden" data-loaded="false">
     </div>
-    <div id="references-with-novelties-search-advanced" class="search-advanced hidden">
-      <%= render partial: 'references/advanced_search/with_novelties/advanced' %>
+    <div id="references-with-novelties-search-advanced" class="search-advanced hidden" data-loaded="false">
     </div>
-    <div id="references-names-full-synonymy-search-advanced" class="search-advanced hidden">
-      <%= render partial: 'references/advanced_search/names_full_synonymy/advanced' %>
+    <div id="references-names-full-synonymy-search-advanced" class="search-advanced hidden" data-loaded="false">
     </div>
-    <div id="author-search-advanced" class="search-advanced hidden">
-      <%= render partial: 'authors/advanced_search/advanced' %>
+    <div id="author-search-advanced" class="search-advanced hidden" data-loaded="false">
     </div>
-    <div id="instance-search-advanced" class="search-advanced hidden">
-      <%= render partial: 'instances/advanced_search/advanced' %>
+    <div id="instance-search-advanced" class="search-advanced hidden" data-loaded="false">
     </div>
-    <div id="instances-for-name-id-search-advanced" class="search-advanced hidden">
-      <%= render partial: 'instances/advanced_search/for_name_id/advanced' %>
+    <div id="instances-for-name-id-search-advanced" class="search-advanced hidden" data-loaded="false">
     </div>
-    <div id="instances-for-ref-id-search-advanced" class="search-advanced hidden">
-      <%= render partial: 'instances/advanced_search/for_ref_id/advanced' %>
+    <div id="instances-for-ref-id-search-advanced" class="search-advanced hidden" data-loaded="false">
     </div>
-    <div id="instances-sorted-by-page-for-ref-id-search-advanced" class="search-advanced hidden">
-      <%= render partial: 'instances/advanced_search/sorted_by_page_for_ref_id/advanced' %>
+    <div id="instances-sorted-by-page-for-ref-id-search-advanced" class="search-advanced hidden" data-loaded="false">
     </div>
-    <div id="tree-search-advanced" class="search-advanced hidden">
-      <%= render partial: 'trees/advanced_search/advanced' %>
+    <div id="tree-search-advanced" class="search-advanced hidden" data-loaded="false">
     </div>
-    <div id="review-search-advanced" class="search-advanced hidden">
-      <%= render partial: 'audits/advanced_search/advanced' %>
+    <div id="review-search-advanced" class="search-advanced hidden" data-loaded="false">
     </div>
 
-<% end %>
 
 </div>
 

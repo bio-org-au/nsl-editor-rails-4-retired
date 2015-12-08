@@ -3,7 +3,7 @@
 # [list|count] [set-size] [names|references|authors|instances|tree] [default field string]  [field:criterion].... 
 #
 
-window.captureSearch = (event,$capture_button) ->
+window.captureSearch = () ->
   console.log('captureSearch')
   str = $('#query-string-field').val();
   console.log(str)
@@ -115,16 +115,21 @@ captureFields = (fields) ->
     when target.match(/^names$/i)      then window.captureNameFields(fields)
     when target.match(/^references$/i) then window.captureReferenceFields(fields)
     when target.match(/^instances$/i)  then window.captureInstanceFields(fields)
-    when target.match(/^tree$/i)       then window.captureTreeFields(fields)
+    when target.match(/^tree$/i)       then ''
     else                               throw("unknown target: #{target}") #     window.captureNameFields(fields)
 
 captureTreeFields = (fields) ->
   $('a#advanced-search-tab-link-tree').click()
 
+searchableFieldClick = (event,$element) ->
+  debug('searchableFieldClick')
+  $('#query-string-field').val($('#query-string-field').val() + ' ' + $element.html().replace(/<[^>]*>/g,'').trim())
+  $('#query-string-field').focus();
 
   ####
 
 jQuery -> 
-  console.log('new search')
-  $('body').on('click','#name-advanced-search-capture', (event) ->         captureSearch(event,$(this)))
+  window.debug('new search')
+  $('body').on('click','a.searchable-field', (event) -> searchableFieldClick(event,$(this)))
+  #$('body').on('click','#name-advanced-search-capture', (event) ->         captureSearch(event,$(this)))
 

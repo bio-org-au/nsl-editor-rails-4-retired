@@ -15,22 +15,18 @@
 #   limitations under the License.
 #   
 class HelpController < ApplicationController
-  before_filter :hide_details, :empty_search
+  before_filter :hide_details , :empty_search
 
   def index
-    @no_search_result_details = true
   end
 
   def history
-    @no_search_result_details = true
   end
 
   def instance_models
-    @no_search_result_details = true
   end
 
   def ref_type_rules
-    @no_search_result_details = true
   end
 
   def typeaheads

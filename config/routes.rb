@@ -48,6 +48,7 @@ Rails.application.routes.draw do
   #match '/search', as: "search", to: "search#search", via: :get
   match '/search/tree', as: "tree", to: "search#tree", via: :get
   match '/search/preview', as: "search_preview", to: "search#preview", via: :get
+  match '/search/extras/:extras_id', as: "search_extras", to: "search#extras", via: :get
 
   resources :instance_notes, only: [:show, :new, :edit, :create, :update, :destroy]
 

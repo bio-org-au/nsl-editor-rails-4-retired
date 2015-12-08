@@ -69,6 +69,12 @@ class SearchController < ApplicationController
     session[:include_common_and_cultivar] = !session[:include_common_and_cultivar]
   end
 
+  def extras
+    #render text: "Extras for #{params[:extras_id]}"
+    mapper = Search::Mapper::Extras.new(params)
+    render partial: mapper.partial
+  end
+
   private
 
   def save_search(search)

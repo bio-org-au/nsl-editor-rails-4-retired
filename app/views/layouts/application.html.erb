@@ -13,6 +13,11 @@
       window.relative_url_root = "<%= Rails.application.config.relative_url_root %>"
       window.NG_TEMPLATE_URL="<%= @ng_template_path %>";
     </script>
+    <% if Rails.env == "development" || params[:debug] == 'true' %>
+      <script> debugSwitch = true; </script>
+    <% else %>
+      <script> debugSwitch = false; </script>
+    <% end %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => false %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => false %>
@@ -57,34 +62,33 @@ input[type="checkbox"]:not([title]) {
     <%= render partial: 'search/big_navbar' %>
 
     <div id="main-content" class="container-fluid">
-    <% if @no_search_result_details %>
-      <div id="search-result-details" class="hidden" > </div>
-    <% else %>
-      <div id="search-result-details" > </div>
-    <% end %>
+
+      <% if @no_search_result_details %>
+        <div id="search-result-details" class="hidden" > </div>
+      <% else %>
+        <div id="search-result-details" > </div>
+      <% end %>
+
+
       <div class="row">
         <div id="search-result-container" class="no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 sidebar" >
           <%= yield %>
         </div>
+        <div id="help-search-container" 
+             class="search-tab no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 sidebar hidden">
+            <%= render partial: 'search/help_search_inner' %>
+        </div>
+        <div id="example-search-container" 
+             class="search-tab no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 sidebar hidden">
+            <%= render partial: 'search/example_search_inner' %>
+        </div>
         <% unless @no_advanced_search %>
           <div id="advanced-search-container" 
-          style="height: 100%; min-height: 800px; overflow-y: scroll; height: 900px; min-height: 900px; padding-bottom: 4em; margin-bottom: 8em;" 
-          class="no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 sidebar hidden">
+          class="search-tab no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 sidebar hidden">
             <%= render partial: 'search/advanced_search_inner' %>
           </div>
         <% end %>
-        <div id="search-help-container" 
-             style="height: 100%; min-height: 800px; overflow-y: scroll; height: 900px; min-height: 900px; padding-bottom: 4em; margin-bottom: 8em;" 
-             class="no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 sidebar hidden">
-            <%= render partial: 'search/search_help_inner' %>
-        </div>
-        <div id="example-search-container" 
-             style="height: 100%; min-height: 800px; overflow-y: scroll; height: 900px; min-height: 900px; padding-bottom: 4em; margin-bottom: 8em;" 
-             class="no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 sidebar hidden">
-            <%= render partial: 'search/example_search_inner' %>
-        </div>
         <div id="search-history-container" 
-             style="height: 100%; min-height: 800px; overflow-y: scroll; height: 900px; min-height: 900px; padding-bottom: 4em; margin-bottom: 8em;" 
              class="no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 sidebar hidden">
             <%= render partial: 'search/search_history_inner' %>
         </div>

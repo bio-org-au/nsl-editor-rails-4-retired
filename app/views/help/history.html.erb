@@ -1,12 +1,16 @@
 <% content_for :search_result_summary do %>
 <% end %>
 <div id="search-results" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 nothing-selected stylish-scrollbar">
-  <div id="search-results-inner" class="no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 search-results-inner">
+  <div id="search-results-inner-for-history" class="no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 search-results-inner">
     <table  id="search-results-table" class="table table-condensed search-results" data-summary="Results of the latest search.">
       <tr><td class="width-100-percent">
         <h3>History of changes</h3>
 				<p>This covers changes that are visible to users in a broad sense, not the full set of technical changes.</p>
         <ul class="list-group">
+          <li class="list-group-item">
+            08-Dec-2015 &mdash; NSL-1564: Load search help, examples and advanced content only when the tabs are selected.
+            <span class="badge"><%= link_to "(NSL-1564) #{icon('external-link fa-lg')}".html_safe, 'https://www.anbg.gov.au/25jira/browse/NSL-1564', class:"white hover-white", title: "View this issue in JIRA. Opens in a new tab or window." %></span>
+          </li>
           <li class="list-group-item">
             02-Dec-2015 &mdash; NSL-1250: Word-based text search is now the default for reference citations.
             <span class="badge"><%= link_to "(NSL-1250) #{icon('external-link fa-lg')}".html_safe, 'https://www.anbg.gov.au/25jira/browse/NSL-1250', class:"white hover-white", title: "View this issue in JIRA. Opens in a new tab or window." %></span>

@@ -1,6 +1,6 @@
 window.debug = (s) ->
   try
-    console.log('debug: ' + s)
+    console.log('debug: ' + s) if debugSwitch == true
   catch error
 
 window.notice = (s) ->
@@ -16,8 +16,8 @@ window.debugObject = (obj) ->
  
 
 jQuery -> 
-  notice('Start of fresh.js document ready')
-  notice('jQuery version: ' + $().jquery)
+  debug('Start of fresh.js document ready')
+  debug('jQuery version: ' + $().jquery)
   $('body').on('click','.edit-details-tab', (event) ->                 loadDetails(event,$(this),true))
   $('body').on('click','.change-name-category-on-edit-tab', (event) -> changeNameCategoryOnEditTab(event,$(this),true))
   $('body').on('click','#master-checkbox.stylish-checkbox', (event) -> masterCheckboxClicked(event,$(this)))
@@ -63,7 +63,7 @@ jQuery ->
   $('table.search-results tr td.takes-focus a.show-details-link[tabindex]').first().focus() 
   $('.firefox-notice').removeClass('hidden') if window.navigator.userAgent.indexOf("Firefox") < 0
 
-  notice('End of fresh.js document ready.')
+  debug('End of fresh.js document ready.')
 
 window.showInstanceWasCreated = (recordId,fromRecordType,fromRecordId) ->
   debug("showInstanceWasCreated: recordId: #{recordId}; fromRecordType: #{fromRecordType}; fromRecordId: #{fromRecordId}")

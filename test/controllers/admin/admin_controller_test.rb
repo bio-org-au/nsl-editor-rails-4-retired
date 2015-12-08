@@ -28,6 +28,7 @@ class AdminControllerTest < ActionController::TestCase
   test "admin user should get index" do
     get(:index,{},{username: 'fred', user_full_name: 'Fred Jones', groups: ['admin']})
     assert_response :success
+    assert_select 'h2', 'Admin', "Should have 'Admin' heading."
   end
  
 end
