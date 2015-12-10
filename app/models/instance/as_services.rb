@@ -31,7 +31,6 @@ class Instance::AsServices < Instance
     api_key = Rails.configuration.api_key
     url = "#{Rails.configuration.services}instance/apni/#{id}/api/delete?apiKey=#{api_key}&reason=Edit"
     s_response = RestClient.delete(url,{accept: :json})
-    api_key = Rails.configuration.api_key
     json = JSON.load(s_response)
     raise "Delete Service said: #{json["errors"].try('join')} [#{s_response.code}]" unless s_response.code == 200 and json["ok"] == true
   rescue => e
