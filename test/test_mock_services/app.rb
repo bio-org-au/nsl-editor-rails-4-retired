@@ -78,15 +78,15 @@ get '/nsl/services/name/apni/:id/api/apc.json' do |id|
 end
 
 
-
+# http://localhost:9090/nsl/services/instance/apni/666/api/delete?apiKey=test-api-key&reason=Edit
 # http://localhost:8080/nsl/services/instance/apni/514039/api/delete?apiKey=d0d1e81d-181c-4ac6-ad75-ddd172594793&reason=Ixxxx
 delete '/nsl/services/instance/apni/:id/api/delete' do |id|
   api_key = params['apiKey']
   reason = params['reason']
   if id == '404'
-    [404, {"action":"delete","errors":["The Instance was not found."]}.to_json]
+    [404, {"action"=>"delete","errors"=>["The Instance was not found."]}.to_json]
   elsif id == '666'
-    [200, {"instance":{"class":"au.org.biodiversity.nsl.Instance","_links":{"permalink":{"link":"http://localhost:8080/nsl/mapper/boa/instance/apni/514039","preferred":true,"resources":1}},"instanceType":"comb. nov.","protologue":true,"citation":"Britten, J. (1916), Journal of Botany, British and Foreign 54","citationHtml":"Britten, J. (1916), <i>Journal of Botany, British and Foreign<\u002fi> 54"},"action":"delete","ok":false,"errors":["There are 1 instances that cite this.","There are 1 instances that say this cites it."]}.to_json]
+    [200, {"instance" => {"class" => "au.org.biodiversity.nsl.Instance","_links" => {"permalink" => {"link" => "http://localhost:8080/nsl/mapper/boa/instance/apni/514039","preferred" => true,"resources" => 1}},"instanceType" => "comb. nov.","protologue" => true,"citation" => "Britten, J. (1916), Journal of Botany, British and Foreign 54","citationHtml" => "Britten, J. (1916), <i>Journal of Botany, British and Foreign<\u002fi> 54"},"action" => "delete","ok" => false,"errors" => ["There are 1 instances that cite this.","There are 1 instances that say this cites it."]}.to_json]
   elsif id == '5'
     [500]
   else
@@ -100,19 +100,19 @@ delete '/nsl/services/name/apni/:id/api/delete' do
   reason = params['reason']
   case reason
   when /200/
-    [200, {"ok":true}.to_json]
+    [200, {"ok" => true}.to_json]
   when /666/
-    [200, {"ok":false, "errors":["some silly error"]}.to_json]
+    [200, {"ok" => false, "errors" => ["some silly error"]}.to_json]
   when /404/
-    [404, {"action":"delete","errors":["Object not found."]}.to_json]
+    [404, {"action" => "delete","errors" => ["Object not found."]}.to_json]
   when /5/
     [500]
   else
-    [200, {"ok":true}.to_json]
+    [200, {"ok" => true}.to_json]
   end
 end
 
-    #[200, {"name":{"class":"au.org.biodiversity.nsl.Name","_links":{"permalink":{"link":"http://localhost:8080/nsl/mapper/boa/name/apni/4463989","preferred":true,"resources":1}},"nameElement":"asdfasdfa"},"action":"delete","ok":true}.to_json]
+    #[200, {"name" => {"class" => "au.org.biodiversity.nsl.Name","_links" => {"permalink" => {"link" => "http://localhost:8080/nsl/mapper/boa/name/apni/4463989","preferred" => true,"resources" => 1}},"nameElement" => "asdfasdfa"},"action" => "delete","ok" => true}.to_json]
 class Struct
   def to_map
     map = Hash.new
