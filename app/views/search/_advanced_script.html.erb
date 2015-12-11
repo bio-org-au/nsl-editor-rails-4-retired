@@ -143,15 +143,9 @@ $( "select#name-advanced-search-list-or-count" )
         }
     });
 
-  $('a.xyz').on('click',function(e) {
-    debug('------------ xyz clicked');
-  });
-
-
-    debug('setting up sf click handler');
   $('a.searchable-field').on('click',function(e) {
     debug('searchable-field clicked');
-    $('#query-string-field').val($('#query-string-field').val() + ' +++ ' + $(this).html().replace(/<[^>]*>/g,'').trim());
+    $('#query-string-field').val($('#query-string-field').val() + ' ' + $(this).html().replace(/<[^>]*>/g,'').trim());
     $('#query-string-field').focus();
   });
 
@@ -202,9 +196,8 @@ $( "select#name-advanced-search-list-or-count" )
     }
 
     function setActiveHelpOnLoad() {
+      debug("setActiveHelpOnLoad search-target-button-text: " + $('#search-target-button-text').text().trim());
       var helpId = $('ul#search-target-list li a:contains(' +  $('#search-target-button-text').text().trim()  + ')').first().attr('data-help');
-      debug("search-target-button-text: " + $('#search-target-button-text').text().trim());
-      debug("setActiveHelpOnLoad helpId: " + helpId);
       showHelpForSearchTarget(helpId);
     }
 

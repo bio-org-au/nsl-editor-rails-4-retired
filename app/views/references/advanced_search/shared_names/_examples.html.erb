@@ -1,0 +1,15 @@
+<h4>References shared Names examples</h4>
+<table class="example-searches table table-striped">
+  <% [
+      {search_target: 'References shared Names', search_string: "22010,25943", explanation: %Q(Searches for instances attached to these references for the same Name.)},
+      {search_target: 'References shared Names', search_string: "25943,22010", explanation: %Q(Searches for instances attached to these references for the same Name.)},
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent">
+      <%= link_to(val[:search_string], search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue', title: "Run the described search.") %>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+

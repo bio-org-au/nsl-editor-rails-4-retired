@@ -72,6 +72,13 @@ class Instance < ActiveRecord::Base
   scope :updated_in_the_last_n_days, ->(n) { where("current_date - updated_at::date < ?",n)}
   scope :changed_in_the_last_n_days, ->(n) { where("current_date - created_at::date < ? or current_date - updated_at::date < ?",n,n)}
 
+  scope :for_ref, ->(ref_id) { where(reference_id: ref_id)}
+  scope :for_ref_and_correlated_on_name_id, ->(ref_id) \
+    { where(['exists (select null from instance i2 where i2.reference_id = ? and instance.name_id = i2.name_id)',ref_id])}
+  #scope :order_by_name_full_name, -> { joins(:name).order(name: [:full_name])}
+  scope :order_by_name_full_name, -> { joins(:name).order(' name.full_name ')}
+
+
   attr_accessor :expanded_instance_type, :display_as, :relationship_flag, 
                 :give_me_focus, :legal_to_order_by, 
                 :show_primary_instance_type, :data_fix_in_process,
