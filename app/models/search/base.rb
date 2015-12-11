@@ -147,6 +147,9 @@ class Search::Base
     when /\Areferences-accepted-names-for-id\z/i
       debug("\nrun_defined_query references-accepted-names-for-id\n")
       @executed_query = Reference::DefinedQuery::ReferencesAcceptedNamesForId.new(@parsed_request)
+    when /\Areferences-shared-names\z/i
+      debug("\nrun_defined_query references-shared-names\n")
+      @executed_query = Reference::DefinedQuery::ReferencesSharedNames.new(@parsed_request)
     else
       raise "Run Defined Query has no match for #{@parsed_request.defined_query}"
     end

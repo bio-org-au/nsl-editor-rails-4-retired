@@ -65,6 +65,9 @@ class Search::Mapper::Extras
     "instances-sorted-by-page-for-ref-id-search-advanced" => "instances/advanced_search/sorted_by_page_for_ref_id/advanced",
     "tree-search-advanced" => "trees/advanced_search/advanced",
     "review-search-advanced" => "audits/advanced_search/advanced",
+    "references-shared-names-search-help" => "references/advanced_search/shared_names/help",
+    "references-shared-names-search-examples" => "references/advanced_search/shared_names/examples",
+    "references-shared-names-search-advanced" => "references/advanced_search/shared_names/advanced",
    }
 
 end

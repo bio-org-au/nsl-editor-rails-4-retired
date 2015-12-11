@@ -58,6 +58,7 @@ class Search::ParsedRequest
     'references + instances' => 'references-name-full-synonymy',
     'references with novelties' => 'references-with-novelties',
     'references, accepted names for id' => 'references-accepted-names-for-id',
+    'references shared names' => 'references-shared-names',
     'instance is cited' => 'instance-is-cited',
     'instance is cited by' => 'instance-is-cited-by',
     'audit' => 'audit',
@@ -127,7 +128,7 @@ class Search::ParsedRequest
     if DEFINED_QUERIES.has_key?(query_target_downcase)
       debug("parse_query_target - #{query_target_downcase} is recognized as a defined query.")
       @defined_query = DEFINED_QUERIES[query_target_downcase]
-      @target_button_text = @params['query_target'].capitalize.gsub(/\bid\b/,'ID').gsub('name','Name').gsub(/Names,/,'names,').gsub(/ref/,'Ref')
+      @target_button_text = @params['query_target'].capitalize 
     else
       debug("parse_query_target - '#{query_target_downcase}' is NOT recognized as a defined query.")
       @defined_query = false

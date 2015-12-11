@@ -37,7 +37,7 @@ class SearchController < ApplicationController
         save_search(@search)
       end
     else
-      @search = Search::Empty.new(params) 
+      @search = Search::Empty.new(params)
     end
   rescue => e
     logger.error("SearchController::search exception: #{e.to_s}")
@@ -70,7 +70,6 @@ class SearchController < ApplicationController
   end
 
   def extras
-    #render text: "Extras for #{params[:extras_id]}"
     mapper = Search::Mapper::Extras.new(params)
     render partial: mapper.partial
   end

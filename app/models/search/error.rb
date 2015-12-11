@@ -28,7 +28,7 @@ class Search::Error
  def initialize(params)
     Rails.logger.debug("Search::Error start with query string: #{params[:query_string]}")
     Rails.logger.debug("#{'=' * 40}")
-    @parsed_request = Search::ErrorParsedRequest.new(params)
+    @parsed_request = Search::ParsedRequest.new(params)
     @common_and_cultivar_included= true
     @count = false
     @empty = false
@@ -47,5 +47,6 @@ class Search::Error
   end
 
 end
+
 
 

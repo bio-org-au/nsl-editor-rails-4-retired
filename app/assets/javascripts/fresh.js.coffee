@@ -57,6 +57,7 @@ jQuery ->
   $('body').on('click','.tree-row div.head', (event) ->                    treeRowClicked(event,$(this)))
   $('body').on('click','#confirm-delete-name-button', (event) ->           confirmDeleteNameButtonClick(event,$(this)))
   $('body').on('click','#confirm-name-refresh-children-button', (event) -> confirmNameRefreshChildrenButtonClick(event,$(this)))
+  debug("on load - search-target-button-text: " + $('#search-target-button-text').text().trim())
 
   # When tabbing to search-result record, need to click to trigger retrieval of details.
   $('a.show-details-link[tabindex]').focus (event) ->                      clickOnFocus(event,$(this))
