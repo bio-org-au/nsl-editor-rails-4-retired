@@ -13,7 +13,7 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 class ServicesController < ApplicationController
   skip_before_filter :authenticate
 
@@ -24,7 +24,4 @@ class ServicesController < ApplicationController
   def ping
     render json: 'Editor here.'.to_json, status: :ok
   end
-
 end
-
-
