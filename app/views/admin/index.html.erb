@@ -90,30 +90,30 @@
     <tr><td class="width-40-percent min-width-10em" colspan="2"><strong>Services used in the editor</strong></td></tr>
 
     <% service_url = "#{Rails.configuration.services_clientside_root_url}docs/main.html" %>
-    <tr><td class="width-40-percent min-width-10em" >API Doc </td><td> <%= link_to(service_url, service_url) %> </td></tr>
+    <tr><td class="width-40-percent min-width-10em" >API Doc </td><td> <%= link_to(service_url, service_url, title: 'API Documentation') %> </td></tr>
 
     <tr><td colspan="2"><strong>Services that do not change data</strong></td></tr>
     <% service_url = "#{Rails.configuration.services_clientside_root_url}api/tree/name/APC/91759" %>
-    <tr><td class="width-40-percent min-width-10em" >A client side service </td><td> <%= link_to(service_url, service_url) %> </td></tr>
+    <tr><td class="width-40-percent min-width-10em" >A client side service </td><td> <%= link_to(service_url, service_url, title: 'Link to the APC tree client side service.') %> </td></tr>
 		
     <% service_url = "#{Rails.configuration.services_clientside_root_url}name/apni/91759/api/apc.json" %>
-    <tr><td class="width-40-percent min-width-10em" >In APC?</td><td> <%= link_to(service_url, service_url) %> </td></tr>
+    <tr><td class="width-40-percent min-width-10em" >In APC?</td><td> <%= link_to(service_url, service_url, title: 'Link to the "in APC?" client side service.') %> </td></tr>
 		
     <% service_url = "#{Rails.configuration.services_clientside_root_url}name/apni/91759/api/apni.json" %>
-    <tr><td class="width-40-percent min-width-10em" >In APNI? </td><td> <%= link_to(service_url, service_url) %> </td></tr>
+    <tr><td class="width-40-percent min-width-10em" >In APNI? </td><td> <%= link_to(service_url, service_url, title: 'Link to the "in APNI?" client side service.') %> </td></tr>
 		
     <% service_url = "#{Rails.configuration.services_clientside_root_url}name/apni/91759/api/family.json" %>
-    <tr><td>APNI Name Information</td><td> <%= link_to(service_url, service_url) %> </td></tr>
+    <tr><td>APNI Name Information</td><td> <%= link_to(service_url, service_url, title: 'Link to an APNI name information service.') %> </td></tr>
 
     <% service_url = "#{Rails.configuration.services_clientside_root_url}name/apni/91759/api/name-strings.json" %>
-    <tr><td>Name strings</td><td> <%= link_to(service_url, service_url) %> </td></tr>
+    <tr><td>Name strings</td><td> <%= link_to(service_url, service_url, title: 'Link to the name strings client side service.') %> </td></tr>
 		
     <% service_url = "#{Rails.configuration.services_clientside_root_url}reference/apni/17525/api/citation-strings.json" %>
-    <tr><td>Reference strings</td><td> <%= link_to(service_url, service_url) %> </td></tr>
+    <tr><td>Reference strings</td><td> <%= link_to(service_url, service_url, title: 'Link to the reference strings client side service.') %> </td></tr>
 
    <tr><td colspan="2">&nbsp;</td></tr>
 
-    <tr><td>Test exception logging.</td><td><%= link_to icon('bomb','',class: 'black fa-2x'), throw_path, title:"Throw an exception" %></td></tr>
+    <tr><td>Test exception logging.</td><td><%= link_to icon('bomb','',class: 'black fa-2x'), throw_path, title:"Throw a harmless exception" %></td></tr>
 
     <tr><td class="width-5-percent">&nbsp;</td></tr>
     

@@ -13,7 +13,8 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
+# Administrator Actions
 class AdminController < ApplicationController
   before_filter :hide_details, :empty_search
 
@@ -24,8 +25,6 @@ class AdminController < ApplicationController
   end
 
   def throw
-    raise 'Exception!!!'
+    fail 'Exception!!!'
   end
-
 end
-
