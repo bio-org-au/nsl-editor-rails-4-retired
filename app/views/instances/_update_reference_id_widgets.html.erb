@@ -25,6 +25,7 @@ Change the reference for this instance and its
                required="required"
                placeholder="Reference"
                tabindex="<%= increment_tab_index %>"
+               title="Reference typeahead.  Enter text to see matching references."
                type="text"
                value="<%= @instance.reference.try('citation') %>"/>
         <%= f.hidden_field :reference_id %>
@@ -36,7 +37,7 @@ Change the reference for this instance and its
                 '#',
                 id: "update-reference-id-link",
                 class: "btn btn-warning unconfirmed-delete-link pull-right",
-                tile: "You will be asked to confirm the change to this instance and any synonyms.",
+                title: "Change the reference. You will be asked to confirm the change to this instance and any synonyms.",
                 tabindex: increment_tab_index,
                 data: {show_this_id: "confirm-or-cancel-change-reference-id-container"}) %>
 
