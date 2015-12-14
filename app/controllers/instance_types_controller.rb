@@ -13,15 +13,13 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 class InstanceTypesController < ApplicationController
   include ActionView::Helpers::TextHelper
   before_filter :hide_details, :empty_search
 
   # GET /instance_types
-  def index 
-    @instance_types = InstanceType.all.order("sort_order,name")
+  def index
+    @instance_types = InstanceType.all.order('sort_order,name')
   end
-
 end
-
