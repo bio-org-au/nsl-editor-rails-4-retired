@@ -1,7 +1,7 @@
 
 <% delete_link = link_to("Delete Comment",
                          '#',
-                         id: "comment-delete-link",
+                         id: "comment-delete-link-#{comment.id}",
                          class: "btn btn-warning unconfirmed-delete-link pull-right",
                          title: "Delete the comment with a confirmation dialog.",
                          tabindex: increment_tab_index,
@@ -23,7 +23,7 @@
                                 class: "btn btn-default cancel-link",
                                 tabindex: increment_tab_index,
                                 title: "Do not delete the comment.  Cancel the dialog.",
-                                data: {enable_this_id: 'comment-delete-link',
+                                data: {enable_this_id: "comment-delete-link-#{comment.id}",
                                        hide_this_id: "confirm-or-cancel-link-container-#{comment.id}"})
 %>
 
