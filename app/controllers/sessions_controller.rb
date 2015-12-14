@@ -13,7 +13,7 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 class SessionsController < ApplicationController
   skip_before_filter :authenticate
 
@@ -30,22 +30,13 @@ class SessionsController < ApplicationController
   def create
     build_sign_in
     if @sign_in.save
-      session[:username] = sign_in_params[:username]
-      session[:groups] = @sign_in.groups
-      session[:user_full_name] = @sign_in.user_full_name
-      session[:include_common_and_cultivar] = false
-      if session[:url_after_sign_in].present?
-        url_after_sign_in = session[:url_after_sign_in]
-        session[:url_after_sign_in] = ''
-        redirect_to url_after_sign_in
-      else
-        redirect_to :root
-      end
+      set_up_session
+      deep_link || (redirect_to :root)
     else
       render 'new'
     end
   rescue => e
-    logger.error("Exception signing in: #{e.to_s}")
+    logger.error("Exception signing in: #{e}")
     redirect_to :retry_start_sign_in
   end
 
@@ -53,10 +44,10 @@ class SessionsController < ApplicationController
     reset_session
     redirect_to :start_sign_in
   end
-  
+
   # For testing.
-  def throw_invalid_authenticity_token 
-    raise ActionController::InvalidAuthenticityToken
+  def throw_invalid_authenticity_token
+    fail ActionController::InvalidAuthenticityToken
   end
 
   private
@@ -69,9 +60,25 @@ class SessionsController < ApplicationController
     @no_navigation = true
   end
 
+  def set_up_session
+    session[:username] = sign_in_params[:username]
+    session[:groups] = @sign_in.groups
+    session[:user_full_name] = @sign_in.user_full_name
+    session[:include_common_and_cultivar] = false
+  end
+
+  def deep_link
+    if session[:url_after_sign_in].present?
+      url_after_sign_in = session[:url_after_sign_in]
+      session[:url_after_sign_in] = ''
+      redirect_to url_after_sign_in
+    else
+      false
+    end
+  end
+
   def sign_in_params
     sign_in_params = params[:sign_in]
     sign_in_params.permit(:username, :password) if sign_in_params
   end
-
 end
