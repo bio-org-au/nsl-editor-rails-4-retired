@@ -3,6 +3,7 @@
                          '#',
                          id: "comment-delete-link",
                          class: "btn btn-warning unconfirmed-delete-link pull-right",
+                         title: "Delete the comment with a confirmation dialog.",
                          tabindex: increment_tab_index,
                          data: {show_this_id: "confirm-or-cancel-link-container-#{comment.id}"})
 %>
@@ -11,6 +12,7 @@
                                  comment_path(comment.id),
                                  class: "btn btn-danger",
                                  tabindex: increment_tab_index,
+                                 title: "Confirm you want to delete the comment.",
                                  remote: true,
                                  method: :delete)
 %>
@@ -20,6 +22,7 @@
                                 id: "cancel-delete-link",
                                 class: "btn btn-default cancel-link",
                                 tabindex: increment_tab_index,
+                                title: "Do not delete the comment.  Cancel the dialog.",
                                 data: {enable_this_id: 'comment-delete-link',
                                        hide_this_id: "confirm-or-cancel-link-container-#{comment.id}"})
 %>
