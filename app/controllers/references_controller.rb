@@ -153,18 +153,6 @@ class ReferencesController < ApplicationController
                                       :parent_id, :parent_typeahead)
   end
 
-  def set_tab
-    if params[:tab].present? && params[:tab] != 'undefined'
-      @tab = params[:tab]
-    else
-      @tab = 'tab_show_1'
-    end
-  end
-
-  def set_tab_index
-    @tab_index = (params[:tabIndex] || '1').to_i
-  end
-
   def update_reference
     @reference = Reference::AsEdited.find(params[:id])
     @message = @reference.update_if_changed(reference_params,

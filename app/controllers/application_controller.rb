@@ -13,8 +13,7 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
-
+#
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -38,9 +37,9 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    @current_user 
+    @current_user
   end
-  
+
   def username
     @current_user.username
   end
@@ -76,7 +75,7 @@ class ApplicationController < ActionController::Base
         format.html {redirect_to start_sign_in_url, notice: 'Please sign in.'}
         format.json {render partial: 'layouts/no_session.js'}
         format.js   {render partial: 'layouts/no_session.js'}
-      end 
+      end
     else
       @current_user = User.new(username: session[:username],
                                full_name: session[:user_full_name],
@@ -97,14 +96,14 @@ class ApplicationController < ActionController::Base
   def set_debug
     @debug = false
   end
-  
+
   def start_timer
     @start_time = Time.now
   end
 
   def check_system_broadcast
     @system_broadcast = ''
-    file_path = Rails.configuration.path_to_broadcast_file 
+    file_path = Rails.configuration.path_to_broadcast_file
     if File.exist?(file_path)
       logger.debug("System broadcast file exists at #{file_path}")
       file = File.open(file_path,'r')
@@ -127,8 +126,18 @@ class ApplicationController < ActionController::Base
   end
 
   def empty_search
-    @search = Search::Empty.new(params) 
+    @search = Search::Empty.new(params)
   end
 
-end
+  def set_tab(default_tab = 'tab_show_1')
+    if params[:tab].present? && params[:tab] != 'undefined'
+      @tab = params[:tab]
+    else
+      @tab = default_tab
+    end
+  end
 
+  def set_tab_index
+    @tab_index = (params[:tabIndex] || '1').to_i
+  end
+end
