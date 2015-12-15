@@ -18,27 +18,27 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-  before_action :start_timer, :set_debug, :set_layout, :check_system_broadcast, :authenticate, :show_request_info, :check_authorization
+  before_action :start_timer, :set_debug, :set_layout, :check_system_broadcast,
+                :authenticate, :show_request_info, :check_authorization
 
   rescue_from ActionController::InvalidAuthenticityToken, with: :show_login_page
-  rescue_from CanCan::AccessDenied do |exception|
+  rescue_from CanCan::AccessDenied do |_exception|
     logger.error('Access Denied')
     head :forbidden
   end
 
   def show_login_page
-    logger.info("Show login page - invalid authenticity token.")
+    logger.info('Show login page - invalid authenticity token.')
     show_request_info
     if request.format == 'text/javascript'
-      logger.info('Javascript request has invalide authenticity token - possibly an expired session.')
+      logger.info('JavaScript request with invalid authenticity token\
+                  - expired session?')
     else
-      redirect_to start_sign_in_path, notice: "Please try again."
+      redirect_to start_sign_in_path, notice: 'Please try again.'
     end
   end
 
-  def current_user
-    @current_user
-  end
+  attr_reader :current_user
 
   def username
     @current_user.username
@@ -47,8 +47,6 @@ class ApplicationController < ActionController::Base
   protected
 
   def check_authorization
-    logger.info("check_authorization: #{params[:controller]}; #{params[:tab]||params[:action]}")
-    logger.info("check_authorization: action: #{params[:action]}; tab: #{params[:tab]}")
     if params[:tab].present?
       pseudo_action = params[:tab]
     else
@@ -59,38 +57,44 @@ class ApplicationController < ActionController::Base
   end
 
   def show_request_info
-    logger.debug("#{'='*40}")
+    logger.debug("#{'=' * 40}")
     logger.debug("request.format: #{request.format}")
     logger.debug("request.content_type: #{request.content_type}")
-    logger.debug("#{'='*40}")
+    logger.debug("#{'=' * 40}")
   end
 
   def authenticate
-    logger.debug("Authenticating.")
+    logger.debug('Authenticating.')
     if session[:username].blank?
-      logger.debug("User is not known.")
-      logger.debug('Unauthenticated session.')
-      session[:url_after_sign_in] = request.url
-      respond_to do |format|
-        format.html {redirect_to start_sign_in_url, notice: 'Please sign in.'}
-        format.json {render partial: 'layouts/no_session.js'}
-        format.js   {render partial: 'layouts/no_session.js'}
-      end
+      ask_user_to_sign_in
     else
-      @current_user = User.new(username: session[:username],
-                               full_name: session[:user_full_name],
-                               groups: session[:groups])
-      logger.debug("User is known: #{current_user.username}")
+      continue_user_session
     end
   end
 
-
   private #####################################################################
 
+  def ask_user_to_sign_in
+    logger.debug('Unauthenticated session.')
+    session[:url_after_sign_in] = request.url
+    respond_to do |format|
+      format.html { redirect_to start_sign_in_url, notice: 'Please sign in.' }
+      format.json { render partial: 'layouts/no_session.js' }
+      format.js   { render partial: 'layouts/no_session.js' }
+    end
+  end
+
+  def continue_user_session
+    @current_user = User.new(username: session[:username],
+                             full_name: session[:user_full_name],
+                             groups: session[:groups])
+    logger.debug("User is known: #{current_user.username}")
+  end
+
   def set_layout
-    @sidebar_width = "col-md-1 col-lg-1"
-    @main_content_width = "col-md-11 col-lg-10"
-    @search_result_details_width = "col-md-5 col-lg-5"
+    @sidebar_width = 'col-md-1 col-lg-1'
+    @main_content_width = 'col-md-11 col-lg-10'
+    @search_result_details_width = 'col-md-5 col-lg-5'
   end
 
   def set_debug
@@ -106,18 +110,20 @@ class ApplicationController < ActionController::Base
     file_path = Rails.configuration.path_to_broadcast_file
     if File.exist?(file_path)
       logger.debug("System broadcast file exists at #{file_path}")
-      file = File.open(file_path,'r')
+      file = File.open(file_path, 'r')
       @system_broadcast = file.readline unless file.eof?
     end
   rescue => e
-    logger.error("Problem with system broadcast.")
+    logger.error('Problem with system broadcast.')
     logger.error(e.to_s)
   end
 
+  # Could not get this to work with a guard clause.
   def javascript_only
     unless request.format == 'text/javascript'
-      logger.error("Rejecting a non-javascript request and re-directing to the search page. Is Firebug console on?")
-      render text: 'javascript only', status: :service_unavailable
+      logger.error('Rejecting a non-JavaScript request and re-directing \
+                   to the search page. Is Firebug console on?')
+      render text: 'JavaScript only', status: :service_unavailable
     end
   end
 
@@ -129,7 +135,7 @@ class ApplicationController < ActionController::Base
     @search = Search::Empty.new(params)
   end
 
-  def set_tab(default_tab = 'tab_show_1')
+  def pick_a_tab(default_tab = 'tab_show_1')
     if params[:tab].present? && params[:tab] != 'undefined'
       @tab = params[:tab]
     else
@@ -137,7 +143,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def set_tab_index
+  def pick_a_tab_index
     @tab_index = (params[:tabIndex] || '1').to_i
   end
 end

@@ -30,8 +30,8 @@ class NamesController < ApplicationController
   # Sets up RHS details panel on the search results page.
   # Displays a specified or default tab.
   def show
-    set_tab('tab_details')
-    set_tab_index
+    pick_a_tab('tab_details')
+    pick_a_tab_index
     if params[:change_category_to].present?
       @name.change_category_to = 'scientific'
     end

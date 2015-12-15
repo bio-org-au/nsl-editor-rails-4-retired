@@ -21,8 +21,8 @@ class ReferencesController < ApplicationController
   # Sets up RHS details panel on the search results page.
   # Displays a specified or default tab.
   def show
-    set_tab
-    set_tab_index
+    pick_a_tab
+    pick_a_tab_index
     render 'show', layout: false
   end
 
