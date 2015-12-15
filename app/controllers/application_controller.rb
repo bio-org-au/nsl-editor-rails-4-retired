@@ -40,6 +40,10 @@ class ApplicationController < ActionController::Base
   def current_user
     @current_user 
   end
+  
+  def username
+    @current_user.username
+  end
 
   protected
 
