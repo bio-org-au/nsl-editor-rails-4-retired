@@ -13,7 +13,7 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class ReferenceDestroyForbiddenForReaderTest < ActionController::TestCase
@@ -22,13 +22,11 @@ class ReferenceDestroyForbiddenForReaderTest < ActionController::TestCase
     @reference = references(:simple)
   end
 
-  test "reader should not be able to destroy a reference" do
-    @request.headers["Accept"] = "application/javascript"
-    assert_no_difference('Reference.count',"No references should be harmed in this test") do
-      post(:destroy,{id: @reference.id},{username: 'fred', user_full_name: 'Fred Jones', groups: []})
+  test 'reader should not be able to destroy a reference' do
+    @request.headers['Accept'] = 'application/javascript'
+    assert_no_difference('Reference.count', 'No references should be harmed in this test') do
+      post(:destroy, { id: @reference.id }, username: 'fred', user_full_name: 'Fred Jones', groups: [])
     end
-    assert_response :forbidden,"Reader should not be able to destroy reference"
+    assert_response :forbidden, 'Reader should not be able to destroy reference'
   end
-
 end
-

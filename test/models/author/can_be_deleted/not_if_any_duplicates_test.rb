@@ -13,20 +13,15 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class AuthorCannotBeDeletedIfHasDuplicateTest < ActiveSupport::TestCase
-
-  test "author cannot be deleted if has duplicate" do
+  test 'author cannot be deleted if has duplicate' do
     author = authors(:has_no_dependents)
     moe = authors(:moe)
     moe.duplicate_of = author
     moe.save!
-    assert_not author.can_be_deleted?, "Should not be able to delete author with duplicates"
+    assert_not author.can_be_deleted?, 'Should not be able to delete author with duplicates'
   end
-
 end
-
-
-

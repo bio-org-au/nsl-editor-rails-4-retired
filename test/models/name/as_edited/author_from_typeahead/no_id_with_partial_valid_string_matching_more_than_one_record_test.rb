@@ -13,16 +13,14 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class NameAsEditedNoAuthorIdWithPartialValidStringMatchingMoreThanOneRecord < ActiveSupport::TestCase
-
-  test "no id with partial valid string matching more than one record" do
+  test 'no id with partial valid string matching more than one record' do
     author = authors(:dummy_author_1)
     assert_raise(RuntimeError, 'Should raise exception because multiple matches.') do
-      result = Name::AsEdited.author_from_typeahead('',author.abbrev.chop,'SOME FIELD')
+      result = Name::AsEdited.author_from_typeahead('', author.abbrev.chop, 'SOME FIELD')
     end
   end
-
 end

@@ -15,7 +15,7 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
@@ -23,7 +23,7 @@ class AbbrevSearchTest < ActionDispatch::IntegrationTest
   # Make the Capybara DSL available in all integration tests
   include Capybara::DSL
 
-  test "it" do
+  test 'it' do
     Capybara.default_driver = :selenium
     visit_home_page
     standard_page_assertions
@@ -34,9 +34,4 @@ class AbbrevSearchTest < ActionDispatch::IntegrationTest
     big_sleep
     search_result_must_include_content('Haeckel')
   end
-
- 
 end
-
-
-

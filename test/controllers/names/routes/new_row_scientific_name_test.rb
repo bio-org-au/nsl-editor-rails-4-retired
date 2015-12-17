@@ -13,14 +13,12 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class NameNewRowRouteTest < ActionController::TestCase
   tests NamesController
-  test "should route to names new row for a scientific type" do
-    assert_routing '/names/new_row/scientific', { controller: "names", action: "new_row", type: 'scientific' }
+  test 'should route to names new row for a scientific type' do
+    assert_routing '/names/new_row/scientific', controller: 'names', action: 'new_row', type: 'scientific'
   end
-
 end
-

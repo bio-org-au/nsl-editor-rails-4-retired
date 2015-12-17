@@ -13,12 +13,11 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
- 
-class SaveNewRecordWithUsername < ActiveSupport::TestCase
 
-  test "check" do
+class SaveNewRecordWithUsername < ActiveSupport::TestCase
+  test 'check' do
     acra = name_tags(:acra)
     a_species = names(:a_species)
     name_tag_name = NameTagName.new(name_id: a_species.id, tag_id: acra.id)
@@ -27,8 +26,4 @@ class SaveNewRecordWithUsername < ActiveSupport::TestCase
     assert_equal saved.created_by, 'fred', 'Should have been created by fred'
     assert_equal saved.updated_by, 'fred', 'Should have been updated by fred'
   end
- 
 end
-
-
-

@@ -13,15 +13,13 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class ReferenceAsEditedNoAuthorIdWithInvalidString < ActiveSupport::TestCase
-
-  test "no author id with invalid string" do
-    assert_raise(RuntimeError,"Should raise a RuntimeError for invalid reference string.") do
-      result = Reference::AsEdited.author_from_typeahead('','asdfasfdasd')
+  test 'no author id with invalid string' do
+    assert_raise(RuntimeError, 'Should raise a RuntimeError for invalid reference string.') do
+      result = Reference::AsEdited.author_from_typeahead('', 'asdfasfdasd')
     end
   end
-
 end

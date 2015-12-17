@@ -15,15 +15,14 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class CannotSaveWithoutEnteringDataTest < ActionDispatch::IntegrationTest
-
   include Capybara::DSL
 
-  test "hybrid formula name save without entering data" do
+  test 'hybrid formula name save without entering data' do
     names_count = Name.count
     visit_home_page
     load_new_hybrid_formula_unknown_2nd_parent_form
@@ -32,9 +31,4 @@ class CannotSaveWithoutEnteringDataTest < ActionDispatch::IntegrationTest
     # assert !page.has_link?('Summary'), 'Record created without data!'
     Name.count.must_equal names_count
   end
-
-end 
-
-
-
-
+end

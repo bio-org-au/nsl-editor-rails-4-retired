@@ -15,19 +15,18 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class AvailableFieldsTest < ActionDispatch::IntegrationTest
-
   include Capybara::DSL
 
-  test "create standalone instance available fields" do
+  test 'create standalone instance available fields' do
     visit_home_page
     standard_page_assertions
     select 'Names', from: 'query-on'
-    fill_in 'search-field', with: "*"
+    fill_in 'search-field', with: '*'
     select 'just: 1', from: 'query-limit'
     click_on 'Search'
     all('.takes-focus').first.click
@@ -40,7 +39,4 @@ class AvailableFieldsTest < ActionDispatch::IntegrationTest
     assert page.has_field?('instance_verbatim_name_string'), 'Instance verbatim name string field should be there'
     assert page.has_field?('instance_bhl_url'), 'Instance BHL URL string field should be there'
   end
-
 end
-
-

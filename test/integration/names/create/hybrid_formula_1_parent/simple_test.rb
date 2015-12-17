@@ -15,15 +15,14 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class SimpleTest < ActionDispatch::IntegrationTest
-
   include Capybara::DSL
 
-  test "save simple hybrid formula unknown 2nd parent name" do
+  test 'save simple hybrid formula unknown 2nd parent name' do
     names_count = Name.count
     visit_home_page
     fill_in 'search-field', with: 'test: hybrid 1 parent try to save without data'
@@ -34,5 +33,4 @@ class SimpleTest < ActionDispatch::IntegrationTest
     assert_successful_create_for(['name not constructed [n/a]'])
     Name.count.must_equal (names_count + 1), 'Record not created'
   end
-  
 end

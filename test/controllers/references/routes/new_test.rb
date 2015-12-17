@@ -13,14 +13,12 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class ReferencesRouteNewTest < ActionController::TestCase
   tests ReferencesController
-  test "references new should route to a new reference" do
-    assert_routing '/references/new', { controller: "references", action: "new"}
+  test 'references new should route to a new reference' do
+    assert_routing '/references/new', controller: 'references', action: 'new'
   end
 end
-
-

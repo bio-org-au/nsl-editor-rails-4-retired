@@ -15,15 +15,14 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class AvailableFieldsForReadOnlyUserTest < ActionDispatch::IntegrationTest
-
   include Capybara::DSL
 
-  test "it" do
+  test 'it' do
     visit_home_page_as_read_only_user
     standard_page_assertions
     select 'Instances', from: 'query-on'
@@ -36,6 +35,4 @@ class AvailableFieldsForReadOnlyUserTest < ActionDispatch::IntegrationTest
     search_result_details_must_include_link('Details', 'Read only user should see Details tab.')
     search_result_details_must_not_include_link('Edit', 'Read only user should not see Edit tab.')
   end
-
 end
-

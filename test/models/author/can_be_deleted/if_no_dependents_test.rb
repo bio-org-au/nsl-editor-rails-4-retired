@@ -13,15 +13,12 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class AuthorCanBeDeletedIfNoDependentsTest < ActiveSupport::TestCase
-
-  test "author can be deleted if no dependents" do
+  test 'author can be deleted if no dependents' do
     author = authors(:has_no_dependents)
-    assert author.can_be_deleted?, "Should be able to delete author with no dependents"
+    assert author.can_be_deleted?, 'Should be able to delete author with no dependents'
   end
-
 end
-

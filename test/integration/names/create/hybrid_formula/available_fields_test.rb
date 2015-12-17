@@ -15,18 +15,17 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class AvailableFieldsTest < ActionDispatch::IntegrationTest
-
   include Capybara::DSL
 
-  test "hybrid formula name available fields" do
+  test 'hybrid formula name available fields' do
     visit_home_page
     fill_in 'search-field', with: 'test: hybrid formula name available fields'
-    load_new_hybrid_formula_form 
+    load_new_hybrid_formula_form
     assert page.has_field?('name_name_type_id'), 'Name type should be here'
     assert page.has_field?('name_name_rank_id'), 'Name rank should be here'
     assert page.has_field?('name_name_status_id'), 'Name status should be here'
@@ -39,5 +38,4 @@ class AvailableFieldsTest < ActionDispatch::IntegrationTest
     assert page.has_no_field?('author-by-abbrev'), 'author-by-abbrev should not be here'
     assert page.has_no_field?('sanctioning-author-by-abbrev'), 'Sanctioning author field should not be here'
   end
-
 end

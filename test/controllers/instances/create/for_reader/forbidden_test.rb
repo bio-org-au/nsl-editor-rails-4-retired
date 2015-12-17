@@ -13,20 +13,17 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class InstancesCreateByReaderTest < ActionController::TestCase
   tests InstancesController
-  
-  test "reader should not be able to call create instance" do
-    @request.headers["Accept"] = "application/javascript"
+
+  test 'reader should not be able to call create instance' do
+    @request.headers['Accept'] = 'application/javascript'
     assert_no_difference('Instance.count') do
-      post(:create, {instance: {}}, {username: 'fred', user_full_name: 'Fred Jones', groups: []})
+      post(:create, { instance: {} }, username: 'fred', user_full_name: 'Fred Jones', groups: [])
     end
     assert_response :forbidden
   end
-  
 end
- 
-

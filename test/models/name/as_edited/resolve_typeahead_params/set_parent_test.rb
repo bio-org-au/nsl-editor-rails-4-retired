@@ -13,17 +13,15 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class NameAsEditedResolveTypeaheadParamsSetParentTest < ActiveSupport::TestCase
-
-  test "name as edited revolve typeahead params set parent" do
+  test 'name as edited revolve typeahead params set parent' do
     dummy = names(:a_genus)
     name = Name::AsEdited.find(names(:has_no_parent).id)
-    assert name.parent_id.blank?, "Name should be have no parent to start this test."
-    name.resolve_typeahead_params({"parent_id"=>dummy.id,"parent_typeahead"=>dummy.full_name})
-    assert_equal dummy.id, name.parent_id, "Should now have a parent id"
+    assert name.parent_id.blank?, 'Name should be have no parent to start this test.'
+    name.resolve_typeahead_params('parent_id' => dummy.id, 'parent_typeahead' => dummy.full_name)
+    assert_equal dummy.id, name.parent_id, 'Should now have a parent id'
   end
-
 end

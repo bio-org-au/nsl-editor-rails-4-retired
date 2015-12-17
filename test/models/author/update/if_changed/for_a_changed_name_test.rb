@@ -13,15 +13,12 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 require 'models/author/update/if_changed/test_helper'
 
 class ForAChangedNameTest < ActiveSupport::TestCase
-
-  test "changed name" do
+  test 'changed name' do
     test_author_text_field_change_is_detected('name')
   end
-
 end
-

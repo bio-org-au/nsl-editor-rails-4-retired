@@ -13,18 +13,15 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 load 'models/search/users.rb'
 
 class InstanceSearchCreatedBeforeFromDropdownSimpleSingularTest < ActiveSupport::TestCase
-
-  #New search for "42993" on instance up to 100 with field: cr-b
-  test "instance search on created before from dropdown field simple singular" do
-    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_string: "1 instances-only:",query_target: 'Review',current_user: build_edit_user))
-    assert_equal search.executed_query.results.class, Array, "Results should be an Array"
-    assert search.executed_query.results.size > 0, "At least 1 record expected."
+  # New search for "42993" on instance up to 100 with field: cr-b
+  test 'instance search on created before from dropdown field simple singular' do
+    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_string: '1 instances-only:', query_target: 'Review', current_user: build_edit_user))
+    assert_equal search.executed_query.results.class, Array, 'Results should be an Array'
+    assert search.executed_query.results.size > 0, 'At least 1 record expected.'
   end
-
 end
-

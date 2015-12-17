@@ -13,24 +13,20 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class ServicesControllerTest < ActionController::TestCase
   setup do
   end
-  
-  test "unauthenticated user should get index" do
-    get(:index,{},{})
+
+  test 'unauthenticated user should get index' do
+    get(:index, {}, {})
     assert_response :success
   end
-  
-  test "unauthenticated user should get ping" do
-    get(:ping,{},{})
+
+  test 'unauthenticated user should get ping' do
+    get(:ping, {}, {})
     assert_response :success
   end
-  
 end
-
-
-

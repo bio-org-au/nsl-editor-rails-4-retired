@@ -13,13 +13,12 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class InstanceRouteToSynTabTest < ActionController::TestCase
   tests InstancesController
-  test "should route to instance syn tab" do
-    assert_routing '/instances/1/tab/syn', { controller: "instances", action: "tab", id: "1", tab: 'syn'}
+  test 'should route to instance syn tab' do
+    assert_routing '/instances/1/tab/syn', controller: 'instances', action: 'tab', id: '1', tab: 'syn'
   end
 end
-

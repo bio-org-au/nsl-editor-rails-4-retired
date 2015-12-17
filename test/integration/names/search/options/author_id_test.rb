@@ -15,20 +15,17 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class AuthorIdTest < ActionDispatch::IntegrationTest
-
   include Capybara::DSL
 
-  test "name search option author id" do
+  test 'name search option author id' do
     visit_home_page
     select 'Name', from: 'query-on'
     select 'author id', from: 'query-field'
-    assert find("#query-field").value == 'a-id', "Author ID query key should be in use."
+    assert find('#query-field').value == 'a-id', 'Author ID query key should be in use.'
   end
-
 end
-

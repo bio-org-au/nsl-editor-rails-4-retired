@@ -13,19 +13,15 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class CanDeleteSynonymIfNoDependentsTest < ActiveSupport::TestCase
-
-  test "can delete synonym with no dependents" do
+  test 'can delete synonym with no dependents' do
     before = Instance.count
     instance = instances(:angophora_lanceolata_cav_in_stanley)
     dependents = Instance.where(cited_by_id: instance.id).count
     assert dependents == 0, "The test fixture should have no dependents but has #{dependents}."
-    assert instance.allow_delete?, "Should be allowed to delete synonym with no dependents."
+    assert instance.allow_delete?, 'Should be allowed to delete synonym with no dependents.'
   end
- 
 end
-
-

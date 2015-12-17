@@ -15,15 +15,14 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class DeleteButtonAppearsAndWorksIfNoDependencies < ActionDispatch::IntegrationTest
-
   include Capybara::DSL
- 
-  test "author delete button appears and works if no dependencies" do
+
+  test 'author delete button appears and works if no dependencies' do
     visit_home_page
     standard_page_assertions
     select 'Author', from: 'query-on'
@@ -38,7 +37,4 @@ class DeleteButtonAppearsAndWorksIfNoDependencies < ActionDispatch::IntegrationT
     click_link('Confirm delete')
     search_result_must_not_include('Author that can be deleted')
   end
-
- 
 end
-

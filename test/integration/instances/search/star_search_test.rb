@@ -15,15 +15,14 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class StarTest < ActionDispatch::IntegrationTest
-
   include Capybara::DSL
 
-  test "instance star search" do
+  test 'instance star search' do
     visit_home_page
     standard_page_assertions
     select 'Instance', from: 'query-on'
@@ -32,8 +31,4 @@ class StarTest < ActionDispatch::IntegrationTest
     sleep(inspection_time = 0.1)
     search_result_must_include_content('a')
   end
-
- 
 end
-
-

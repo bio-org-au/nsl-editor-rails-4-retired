@@ -13,22 +13,18 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 load 'test/models/search/users.rb'
 
 class SearchOnReferenceAbbrevTySimpleTest < ActiveSupport::TestCase
-
-  test "search on reference abbrev ty simple" do
+  test 'search on reference abbrev ty simple' do
     reference = references(:handbook_of_the_vascular_plants_of_sydney)
     params =  ActiveSupport::HashWithIndifferentAccess.new(query_target: 'reference',
-                                                           query_string: "ty: book",
+                                                           query_string: 'ty: book',
                                                            include_common_and_cultivar_session: true,
-                                                           current_user: build_edit_user,)
+                                                           current_user: build_edit_user)
     search = Search::Base.new(params)
-    assert search.executed_query.results.size > 0, "Results expected."
+    assert search.executed_query.results.size > 0, 'Results expected.'
   end
-
 end
-
-

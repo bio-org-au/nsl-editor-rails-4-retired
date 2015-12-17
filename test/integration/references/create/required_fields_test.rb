@@ -15,18 +15,17 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class RequiredFieldsTest < ActionDispatch::IntegrationTest
-
   include Capybara::DSL
 
-  test "reference required fields" do
+  test 'reference required fields' do
     visit_home_page
     fill_in 'search-field', with: 'reference check required fields for create'
-    select_from_menu(['New','Reference'])
+    select_from_menu(%w(New Reference))
     search_result_must_include_content('New reference')
     search_result_details_must_include_content('New Reference')
     assert(page.has_selector?('#reference_ref_type_id[required]'), 'Reference type should be a required field.')
@@ -41,6 +40,4 @@ class RequiredFieldsTest < ActionDispatch::IntegrationTest
     assert(page.has_no_selector?('#reference_publication_date[required]'), 'reference publication date should not be a required field.')
     assert(page.has_no_selector?('#reference_notes[required]'), 'reference notes should not be a required field.')
   end
-
-end 
-
+end

@@ -13,18 +13,13 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
- 
-class DatabaseRecordShouldHaveDatabaseParentTest < ActiveSupport::TestCase
 
-  test "database record ref type parent is database" do
+class DatabaseRecordShouldHaveDatabaseParentTest < ActiveSupport::TestCase
+  test 'database record ref type parent is database' do
     ref_type = ref_types(:database_record)
     # Must have a parent_id to even be in the race with this poor data structure.
-    assert ref_type.parent.name == ref_types(:database).name, "Database record should have database as parent."
+    assert ref_type.parent.name == ref_types(:database).name, 'Database record should have database as parent.'
   end
- 
 end
-
-
-

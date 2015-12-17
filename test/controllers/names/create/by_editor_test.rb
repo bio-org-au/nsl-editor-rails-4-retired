@@ -13,24 +13,21 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class NamesCreateByEditorTest < ActionController::TestCase
   tests NamesController
-  
-  test "editor should be able to create name" do
-    @request.headers["Accept"] = "application/javascript"
+
+  test 'editor should be able to create name' do
+    @request.headers['Accept'] = 'application/javascript'
     assert_difference('Name.count') do
-      post(:create, {name: {'name_status_id'=> name_statuses(:legitimate),
-                           'name_rank_id' => name_ranks(:species),
-                           'name_type_id' => name_types(:scientific),
-                           'parent_id' => names(:a_genus),
-                           'parent_typeahead' => names(:a_genus).full_name,
-                           'name_element' => 'fred'}},{username: 'fred', user_full_name: 'Fred Jones', groups: ['edit']})
+      post(:create, { name: { 'name_status_id' => name_statuses(:legitimate),
+                              'name_rank_id' => name_ranks(:species),
+                              'name_type_id' => name_types(:scientific),
+                              'parent_id' => names(:a_genus),
+                              'parent_typeahead' => names(:a_genus).full_name,
+                              'name_element' => 'fred' } }, username: 'fred', user_full_name: 'Fred Jones', groups: ['edit'])
     end
   end
-  
 end
- 
-

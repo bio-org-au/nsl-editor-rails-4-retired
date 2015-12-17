@@ -15,30 +15,25 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class MustHaveSecondParentTest < ActionDispatch::IntegrationTest
-
   include Capybara::DSL
 
-  test "must have second parent" do
+  test 'must have second parent' do
     names_count = Name.count
     visit_home_page
     fill_in 'search-field', with: 'test: must have second parent test'
     load_new_cultivar_hybrid_name_form
-    
+
     set_name_parent
     fill_in('name_name_element', with: 'Fred')
 
     save_new_record
     sleep(inspection_time = 1)
     # Do not know how to test for the HTML5 required field test.
-    Name.count.must_equal names_count 
+    Name.count.must_equal names_count
   end
- 
-end 
-
-
-
+end

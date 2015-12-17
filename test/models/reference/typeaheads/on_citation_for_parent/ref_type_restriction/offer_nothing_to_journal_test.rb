@@ -13,17 +13,13 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class TypeaheadsOnCitationForParentRefTypeRestrictionNothingForJournal < ActiveSupport::TestCase
-
-  test "reference typeahead on citation ref type restriction nothing for journal" do
+  test 'reference typeahead on citation ref type restriction nothing for journal' do
     current_reference = references(:simple)
-    results = Reference::AsTypeahead.on_citation_for_parent('%',current_reference.id,ref_types(:journal).id)
+    results = Reference::AsTypeahead.on_citation_for_parent('%', current_reference.id, ref_types(:journal).id)
     assert results.size == 0, 'Should be no results because journal takes no parent.'
   end
- 
 end
-
-

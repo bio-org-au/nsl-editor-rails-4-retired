@@ -15,22 +15,19 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class CultivarHybridNameParentTypeaheadSimpleTest < ActionDispatch::IntegrationTest
-
   include Capybara::DSL
 
-  test "parent typeahead simple" do
+  test 'parent typeahead simple' do
     visit_home_page
     fill_in 'search-field', with: 'test: parent typeahead simple'
-    select_from_menu(['New','Cultivar hybrid name'])
+    select_from_menu(['New', 'Cultivar hybrid name'])
     search_result_must_include_link('New cultivar hybrid name')
     search_result_details_must_include_content('New Cultivar Hybrid Name')
-    try_typeahead_single('name-parent-typeahead','aforma','Aforma | Forma | legitimate | 1 instance')
+    try_typeahead_single('name-parent-typeahead', 'aforma', 'Aforma | Forma | legitimate | 1 instance')
   end
-
 end
-

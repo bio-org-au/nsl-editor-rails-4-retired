@@ -13,15 +13,13 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class ReferenceAsEditedParentIdWithMatchingString < ActiveSupport::TestCase
-
-  test "id with matching string" do
+  test 'id with matching string' do
     reference = references(:origin_of_species)
-    result = Reference::AsEdited.parent_from_typeahead(reference.id.to_s,reference.citation)
-    assert_equal reference.id, result, "Should get a matching id for the parent citation"
+    result = Reference::AsEdited.parent_from_typeahead(reference.id.to_s, reference.citation)
+    assert_equal reference.id, result, 'Should get a matching id for the parent citation'
   end
-
 end

@@ -15,18 +15,17 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class AvailableFieldsTest < ActionDispatch::IntegrationTest
-
   include Capybara::DSL
 
-  test "name cultivar hybrid available fields" do
+  test 'name cultivar hybrid available fields' do
     visit_home_page
     fill_in 'search-field', with: 'test: cultivar hybrid name available fields'
-    select_from_menu(['New','Cultivar hybrid name'])
+    select_from_menu(['New', 'Cultivar hybrid name'])
     search_result_must_include_link('New cultivar hybrid name')
     search_result_details_must_include_content('New Cultivar Hybrid Name')
     assert page.has_field?('name_name_type_id'), 'Name type should be there'
@@ -41,7 +40,4 @@ class AvailableFieldsTest < ActionDispatch::IntegrationTest
     assert page.has_no_field?('author-by-abbrev'), 'author-by-abbrev should not be there'
     assert page.has_no_field?('sanctioning-author-by-abbrev'), 'Sanctioning author field should not be there'
   end
-
-end 
-
-
+end

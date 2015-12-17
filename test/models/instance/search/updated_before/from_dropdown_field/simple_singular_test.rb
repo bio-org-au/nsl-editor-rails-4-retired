@@ -13,19 +13,16 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class InstanceSearchUpdatedBeforeFromDropdownSimpleSingularTest < ActiveSupport::TestCase
-
-  #New search for "42993" on instance up to 100 with field: upd-b
-  test "instance search on updated before from dropdown field simple singular" do
+  # New search for "42993" on instance up to 100 with field: upd-b
+  test 'instance search on updated before from dropdown field simple singular' do
     skip # was an upd-b search, no current translation
-    #search = Search::Base.new({query_string: "updated-before: 1, instances-only:",query_target: 'Instance'})
-    #assert_equal search.results.class, Instance::ActiveRecord_Relation, "Results should be an Array"
-    #assert search.results.size > 0, "At least 1 record expected."
-    #assert_match /Search for instances updated more than 1 day ago./, search.info.join
+    # search = Search::Base.new({query_string: "updated-before: 1, instances-only:",query_target: 'Instance'})
+    # assert_equal search.results.class, Instance::ActiveRecord_Relation, "Results should be an Array"
+    # assert search.results.size > 0, "At least 1 record expected."
+    # assert_match /Search for instances updated more than 1 day ago./, search.info.join
   end
-
 end
-

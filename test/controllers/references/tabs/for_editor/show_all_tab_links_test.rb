@@ -13,7 +13,7 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class ReferenceEditorShowAllTabsTest < ActionController::TestCase
@@ -22,9 +22,9 @@ class ReferenceEditorShowAllTabsTest < ActionController::TestCase
     @reference = references(:a_book)
   end
 
-  test "should show all tab links if editor requests details tab" do
-    @request.headers["Accept"] = "application/javascript"
-    get(:show,{id: @reference.id,tab: 'tab_show_1'},{username: 'fred', user_full_name: 'Fred Jones', groups: ['edit']})
+  test 'should show all tab links if editor requests details tab' do
+    @request.headers['Accept'] = 'application/javascript'
+    get(:show, { id: @reference.id, tab: 'tab_show_1' }, username: 'fred', user_full_name: 'Fred Jones', groups: ['edit'])
     assert_response :success
     assert_select 'li.active a#reference-edit-show-1-tab', /Details/, "Does not show 'Details' tab link."
     assert_select 'a#reference-edit-1-tab', /Edit\./, "Does not show 'Edit.' tab link."
@@ -34,6 +34,4 @@ class ReferenceEditorShowAllTabsTest < ActionController::TestCase
     assert_select 'a#reference-new-instance-tab', /New instance/, "Should show 'New instance' tab link."
     assert_select 'a#tab-heading', /A Book/, "Should have tab heading showing 'A Book'."
   end
-
 end
-

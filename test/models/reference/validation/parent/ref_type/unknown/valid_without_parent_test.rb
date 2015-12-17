@@ -13,17 +13,13 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
- 
-class UnknownValidWithoutParentTest < ActiveSupport::TestCase
 
-  test "unknown valid without parent" do
+class UnknownValidWithoutParentTest < ActiveSupport::TestCase
+  test 'unknown valid without parent' do
     ref = references(:unknown_with_unknown_parent)
     ref.parent_id = nil
-    assert ref.valid? == true, "Unknown without parent should be valid."
+    assert ref.valid? == true, 'Unknown without parent should be valid.'
   end
- 
 end
-
-

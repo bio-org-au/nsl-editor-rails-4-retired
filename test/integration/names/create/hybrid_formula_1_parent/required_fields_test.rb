@@ -15,15 +15,14 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class RequiredFieldsTest < ActionDispatch::IntegrationTest
-
   include Capybara::DSL
 
-  test "hybrid 1 parent required fields" do
+  test 'hybrid 1 parent required fields' do
     visit_home_page
     fill_in 'search-field', with: 'test: hybrid 1 parent required fields'
     load_new_hybrid_formula_unknown_2nd_parent_form
@@ -31,7 +30,4 @@ class RequiredFieldsTest < ActionDispatch::IntegrationTest
     assert(page.has_selector?('#name_name_status_id[required]'), 'Name status should be a required field')
     assert(page.has_selector?('#name-parent-typeahead[required]'), 'Name parent should be a required field')
   end
-  
 end
-
-

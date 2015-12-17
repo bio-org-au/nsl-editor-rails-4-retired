@@ -13,17 +13,14 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
-    def run_test(input_query_target,expected_defined_query)
-      params =  ActiveSupport::HashWithIndifferentAccess.new
-      params[:query_target] = input_query_target
-      params[:query_string] = ''
-      parsed_request = Search::ParsedRequest.new(params)
-      assert parsed_request.defined_query, "The query target #{input_query_target} should be parsed as a defined query."
-      assert parsed_request.defined_query.match(/\A#{expected_defined_query}\z/), 
-        "The query target '#{input_query_target}' should be parsed as defined query '#{expected_defined_query}' not as '#{parsed_request.defined_query}'"
+def run_test(input_query_target, expected_defined_query)
+  params = ActiveSupport::HashWithIndifferentAccess.new
+  params[:query_target] = input_query_target
+  params[:query_string] = ''
+  parsed_request = Search::ParsedRequest.new(params)
+  assert parsed_request.defined_query, "The query target #{input_query_target} should be parsed as a defined query."
+  assert parsed_request.defined_query.match(/\A#{expected_defined_query}\z/),
+         "The query target '#{input_query_target}' should be parsed as defined query '#{expected_defined_query}' not as '#{parsed_request.defined_query}'"
     end
-
-
-

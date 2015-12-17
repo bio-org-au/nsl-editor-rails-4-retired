@@ -15,7 +15,7 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
@@ -23,10 +23,9 @@ class SearchPageTest < ActionDispatch::IntegrationTest
   # Make the Capybara DSL available in all integration tests
   include Capybara::DSL
 
-  test "search page load" do
+  test 'search page load' do
     visit_home_page
     standard_page_assertions
-    #assert page.has_content?('1 reference for simple'), 'Simple reference search failed.'
+    # assert page.has_content?('1 reference for simple'), 'Simple reference search failed.'
   end
-
 end

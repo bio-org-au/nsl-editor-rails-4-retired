@@ -15,26 +15,23 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class SelectedAbbrevTest < ActionDispatch::IntegrationTest
-
   include Capybara::DSL
 
-  test "it" do
+  test 'it' do
     names_count = Name.count
     visit_home_page
     fill_in 'search-field', with: 'create scientific name with author'
     load_new_scientific_name_form
     set_name_parent
     fill_in('name_name_element', with: 'Fred')
-    fill_in_author_typeahead('author-by-abbrev','name_author_id')
+    fill_in_author_typeahead('author-by-abbrev', 'name_author_id')
     save_new_record
-    assert_successful_create_for(['Authored by','Authored by Benth.'])
+    assert_successful_create_for(['Authored by', 'Authored by Benth.'])
     Name.count.must_equal names_count + 1
   end
-
 end
-

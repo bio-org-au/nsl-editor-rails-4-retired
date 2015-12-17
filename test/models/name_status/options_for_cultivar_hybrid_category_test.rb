@@ -13,28 +13,23 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
- 
+
 class OptionsForCultivarHybridCategoryTest < ActiveSupport::TestCase
-
-  test "should include [deleted]" do
-    assert NameStatus.options_for_category(Name::CULTIVAR_HYBRID_CATEGORY).collect{|e| e.first}.include?('[deleted]'), 'Cultivar hybrid category name status options should include "[deleted]"'
+  test 'should include [deleted]' do
+    assert NameStatus.options_for_category(Name::CULTIVAR_HYBRID_CATEGORY).collect(&:first).include?('[deleted]'), 'Cultivar hybrid category name status options should include "[deleted]"'
   end
 
-  test "should include [default]" do
-    assert NameStatus.options_for_category(Name::CULTIVAR_HYBRID_CATEGORY).collect{|e| e.first}.include?('[default]'), 'Cultivar hybrid category name status options should include "[default]"'
+  test 'should include [default]' do
+    assert NameStatus.options_for_category(Name::CULTIVAR_HYBRID_CATEGORY).collect(&:first).include?('[default]'), 'Cultivar hybrid category name status options should include "[default]"'
   end
 
-  test "should include  [n/a]" do
-    assert NameStatus.options_for_category(Name::CULTIVAR_HYBRID_CATEGORY).collect{|e| e.first}.include?('[n/a]'), 'Cultivar hybrid category name status options should include "[n/a]"'
+  test 'should include  [n/a]' do
+    assert NameStatus.options_for_category(Name::CULTIVAR_HYBRID_CATEGORY).collect(&:first).include?('[n/a]'), 'Cultivar hybrid category name status options should include "[n/a]"'
   end
 
-  test "should have only two entries" do
-    assert_equal(NameStatus.options_for_category(Name::CULTIVAR_HYBRID_CATEGORY).size,3, 'Wrong number of name status options for cultivar hybrid category')
+  test 'should have only two entries' do
+    assert_equal(NameStatus.options_for_category(Name::CULTIVAR_HYBRID_CATEGORY).size, 3, 'Wrong number of name status options for cultivar hybrid category')
   end
-
 end
-
-
-

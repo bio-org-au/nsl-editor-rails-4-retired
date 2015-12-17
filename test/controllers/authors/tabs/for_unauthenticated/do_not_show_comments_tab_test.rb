@@ -13,7 +13,7 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class AuthorUnauthenticatedDoNotShowCommentsTabTest < ActionController::TestCase
@@ -22,11 +22,9 @@ class AuthorUnauthenticatedDoNotShowCommentsTabTest < ActionController::TestCase
     @author = authors(:bentham)
   end
 
-  test "should not show unauthenticated author comments tab" do
-    @request.headers["Accept"] = "application/javascript"
-    get(:show,{id: @author.id,tab: 'tab_comments'},{})
+  test 'should not show unauthenticated author comments tab' do
+    @request.headers['Accept'] = 'application/javascript'
+    get(:show, { id: @author.id, tab: 'tab_comments' }, {})
     assert response.body.match(/window.location.assign.".sign_in"./)
   end
-
 end
-

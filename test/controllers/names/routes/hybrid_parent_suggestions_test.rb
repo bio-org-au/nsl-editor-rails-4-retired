@@ -13,14 +13,12 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class NameHybridParentSuggestionsRouteTest < ActionController::TestCase
   tests NamesController
-  test "should route to name hybrid parent suggestions" do
-    assert_routing '/suggestions/name/hybrid_parent', { controller: "names", action: "hybrid_parent_suggestions" }
+  test 'should route to name hybrid parent suggestions' do
+    assert_routing '/suggestions/name/hybrid_parent', controller: 'names', action: 'hybrid_parent_suggestions'
   end
-
 end
-

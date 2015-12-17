@@ -13,19 +13,15 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 load 'models/search/users.rb'
 
 class OnNameIdTest < ActiveSupport::TestCase
-
-  test "instance search on Name ID" do
+  test 'instance search on Name ID' do
     search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_string: "#{names(:angophora_costata).id}",
-                               query_target: 'Instances-for-name-id',current_user: build_edit_user))
-    assert_equal search.executed_query.results.class, Array, "Results should be an Array"
-    assert search.executed_query.results.size >= 2, "At least two instances expected."
+                                                                           query_target: 'Instances-for-name-id', current_user: build_edit_user))
+    assert_equal search.executed_query.results.class, Array, 'Results should be an Array'
+    assert search.executed_query.results.size >= 2, 'At least two instances expected.'
   end
-
 end
-
-

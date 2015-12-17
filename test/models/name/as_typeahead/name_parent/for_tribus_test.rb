@@ -13,17 +13,14 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 require 'models/name/as_typeahead/name_parent/name_parent_test_helper'
 
 class ForTribusTest < ActiveSupport::TestCase
-
-  test "name parent suggestion for tribus" do
+  test 'name parent suggestion for tribus' do
     avoid_id = 1
-    suggestions = Name::AsTypeahead.name_parent_suggestions('%',avoid_id,NameRank.find_by(name: 'Tribus').id)
-    suggestions_should_only_include(suggestions,'Tribus',%w(Familia Subfamilia))
+    suggestions = Name::AsTypeahead.name_parent_suggestions('%', avoid_id, NameRank.find_by(name: 'Tribus').id)
+    suggestions_should_only_include(suggestions, 'Tribus', %w(Familia Subfamilia))
   end
-
 end
-

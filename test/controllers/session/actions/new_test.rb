@@ -13,18 +13,14 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class SessionsNewTest < ActionController::TestCase
   tests SessionsController
-  
-  test "editor should be able to get new session form to signin" do
+
+  test 'editor should be able to get new session form to signin' do
     get(:new)
     assert_response :success
   end
-  
 end
- 
-
-

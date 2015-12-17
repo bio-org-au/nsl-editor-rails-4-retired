@@ -13,22 +13,19 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class InstancesUpdateForEditorPageTest < ActionController::TestCase
   tests InstancesController
-  
-  test "editor should be able to update instance page" do
+
+  test 'editor should be able to update instance page' do
     instance = instances(:triodia_in_brassard)
     new_page_value = 'xxxxxx'
     assert instance.page != new_page_value
-    @request.headers["Accept"] = "application/javascript"
-    put(:update, {id: instance.id, instance: {'page' => new_page_value}}, {username: 'fred', user_full_name: 'Fred Jones', groups: ['edit']})
+    @request.headers['Accept'] = 'application/javascript'
+    put(:update, { id: instance.id, instance: { 'page' => new_page_value } }, username: 'fred', user_full_name: 'Fred Jones', groups: ['edit'])
     assert_response :success
     assert Instance.find(instance.id).page == new_page_value
   end
-  
 end
- 
-

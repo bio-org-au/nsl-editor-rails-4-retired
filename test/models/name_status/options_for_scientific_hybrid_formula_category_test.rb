@@ -13,28 +13,22 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
- 
+
 class OptionsForScientificHybridFormulaCategoryTest < ActiveSupport::TestCase
-
-  test "should include [deleted]" do
-    assert NameStatus.options_for_category(Name::SCIENTIFIC_HYBRID_FORMULA_CATEGORY).collect{|e| e.first}.include?('[deleted]'), 
-      'Scientific hybrid formula name status options should include "[deleted]"'
-  end
- 
-  test "should include  [n/a]" do
-    assert NameStatus.options_for_category(Name::SCIENTIFIC_HYBRID_FORMULA_CATEGORY).collect{|e| e.first}.include?('[n/a]'), 
-      'Scientific hybrid formula name status options should include "[n/a]"'
+  test 'should include [deleted]' do
+    assert NameStatus.options_for_category(Name::SCIENTIFIC_HYBRID_FORMULA_CATEGORY).collect(&:first).include?('[deleted]'),
+           'Scientific hybrid formula name status options should include "[deleted]"'
   end
 
-  test "should have only two entries" do
-    assert_equal(NameStatus.options_for_category(Name::SCIENTIFIC_HYBRID_FORMULA_CATEGORY).size,2, 
-      'Wrong number of name status options for scientific hybrid formula category')
+  test 'should include  [n/a]' do
+    assert NameStatus.options_for_category(Name::SCIENTIFIC_HYBRID_FORMULA_CATEGORY).collect(&:first).include?('[n/a]'),
+           'Scientific hybrid formula name status options should include "[n/a]"'
   end
 
+  test 'should have only two entries' do
+    assert_equal(NameStatus.options_for_category(Name::SCIENTIFIC_HYBRID_FORMULA_CATEGORY).size, 2,
+                 'Wrong number of name status options for scientific hybrid formula category')
+  end
 end
-
-
-
-

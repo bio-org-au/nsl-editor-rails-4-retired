@@ -15,15 +15,14 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class ExactMatchUpperCaseAuthorAbbrevTest < ActionDispatch::IntegrationTest
-
   include Capybara::DSL
 
-  test "create scientific name with exact match upper case author abbrev" do
+  test 'create scientific name with exact match upper case author abbrev' do
     names_count = Name.count
     visit_home_page
     fill_in 'search-field', with: 'exact match upper case author abbrev'
@@ -31,12 +30,10 @@ class ExactMatchUpperCaseAuthorAbbrevTest < ActionDispatch::IntegrationTest
     set_name_parent
     fill_in('name_name_element', with: 'Fred')
     using_wait_time 2 do
-      fill_in('author-by-abbrev', with: 'BENTH.') 
+      fill_in('author-by-abbrev', with: 'BENTH.')
     end
     save_new_record
-    assert_successful_create_for(['Authored by','Authored by Benth.'])
+    assert_successful_create_for(['Authored by', 'Authored by Benth.'])
     Name.count.must_equal names_count + 1
   end
-
 end
-

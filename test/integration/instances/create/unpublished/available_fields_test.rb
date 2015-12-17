@@ -15,16 +15,15 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 # encoding: utf-8
 require 'test_helper'
 
 class AvailableFieldsTest < ActionDispatch::IntegrationTest
-
   include Capybara::DSL
 
-  test "create unpublished instance available fields" do
+  test 'create unpublished instance available fields' do
     visit_home_page
     standard_page_assertions
     select 'Instances', from: 'query-on'
@@ -39,7 +38,4 @@ class AvailableFieldsTest < ActionDispatch::IntegrationTest
     assert page.has_field?('instance_page'), 'Instance page field should be there'
     assert page.has_field?('instance_bhl_url'), 'Instance BHL URL string field should be there'
   end
-
 end
-
-

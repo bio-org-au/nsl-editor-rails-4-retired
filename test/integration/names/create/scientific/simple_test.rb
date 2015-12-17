@@ -15,15 +15,14 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class SimpleTest < ActionDispatch::IntegrationTest
-
   include Capybara::DSL
-  
-  test "create simple scientific name" do
+
+  test 'create simple scientific name' do
     names_count = Name.count
     visit_home_page
     fill_in 'search-field', with: 'test: create simplest scientific name'
@@ -32,7 +31,6 @@ class SimpleTest < ActionDispatch::IntegrationTest
     fill_in('name_name_element', with: 'Fred')
     save_new_record
     assert_successful_create_for(['Fred name not constructed'])
-    assert_equal(Name.count,names_count + 1,'Wrong name count')
+    assert_equal(Name.count, names_count + 1, 'Wrong name count')
   end
-
 end

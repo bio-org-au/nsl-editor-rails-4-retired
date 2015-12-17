@@ -13,15 +13,13 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class NameAsEditedNoParentIdWithPartialValidStringMatchingOneRecord < ActiveSupport::TestCase
-
-  test "no id with partial valid string matching one record" do
+  test 'no id with partial valid string matching one record' do
     name = names(:the_regnum)
-    result = Name::AsEdited.parent_from_typeahead('',name.full_name.chop)
-    assert_equal name.id, result, "Should get a matching id for the name"
+    result = Name::AsEdited.parent_from_typeahead('', name.full_name.chop)
+    assert_equal name.id, result, 'Should get a matching id for the name'
   end
-
 end

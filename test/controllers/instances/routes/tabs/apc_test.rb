@@ -13,13 +13,12 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class InstanceRouteToAPCTabTest < ActionController::TestCase
   tests InstancesController
-  test "should route to instance APC tab" do
-    assert_routing '/instances/1/tab/apc', { controller: "instances", action: "tab", id: "1", tab: 'apc'}
+  test 'should route to instance APC tab' do
+    assert_routing '/instances/1/tab/apc', controller: 'instances', action: 'tab', id: '1', tab: 'apc'
   end
 end
-

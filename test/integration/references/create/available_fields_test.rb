@@ -15,18 +15,17 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class AvailableFieldsTest < ActionDispatch::IntegrationTest
-
   include Capybara::DSL
 
-  test "reference available fields" do
+  test 'reference available fields' do
     visit_home_page
     fill_in 'search-field', with: 'reference check available fields for create'
-    select_from_menu(['New','Reference'])
+    select_from_menu(%w(New Reference))
     search_result_must_include_content('New reference')
     search_result_details_must_include_content('New Reference')
     assert page.has_field?('reference_ref_type_id'), '#reference_ref_type_id missing'
@@ -41,6 +40,4 @@ class AvailableFieldsTest < ActionDispatch::IntegrationTest
     assert page.has_field?('reference_publication_date'), '#reference_publication_date missing'
     assert page.has_field?('reference_notes'), '#reference_notes missing'
   end
-
-end 
-
+end

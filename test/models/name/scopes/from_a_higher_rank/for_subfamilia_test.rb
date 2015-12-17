@@ -13,13 +13,12 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class ForSubfamiliaTest < ActiveSupport::TestCase
-
-  test "from a higher rank for subfamilia" do
-    ranks = Name.from_a_higher_rank(name_ranks(:subfamilia).id).collect {|name| name.name_rank.name}.uniq
+  test 'from a higher rank for subfamilia' do
+    ranks = Name.from_a_higher_rank(name_ranks(:subfamilia).id).collect { |name| name.name_rank.name }.uniq
     assert ranks.include?('Regnum'), 'Should include Regnum'
     assert ranks.include?('Division'), 'Should include Division'
     assert ranks.include?('Classis'), 'Should include Classis'
@@ -30,7 +29,4 @@ class ForSubfamiliaTest < ActiveSupport::TestCase
     assert ranks.include?('Familia'), 'Should include Familia'
     assert_equal 8, ranks.size
   end
-
 end
-
-

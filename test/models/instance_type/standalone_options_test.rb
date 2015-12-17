@@ -13,16 +13,15 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
- 
-class InstanceTypeStandaloneOptionsTest < ActiveSupport::TestCase
 
-  test "instance type standalone options" do
+class InstanceTypeStandaloneOptionsTest < ActiveSupport::TestCase
+  test 'instance type standalone options' do
     options = InstanceType.standalone_options
     assert options.class == Array, 'Should be an array.'
     assert_equal 10, options.size, 'Should be 10 of them.'
-    names = options.collect {|e| e.first}
+    names = options.collect(&:first)
     assert names.include?('autonym'), 'Should include autonym'
     assert_not names.include?('comb. et nom. nov.'), 'Should not include comb. et stat. nov.'
     assert names.include?('comb. et stat. nov.'), 'Should include comb. et stat. nov.'
@@ -56,6 +55,4 @@ class InstanceTypeStandaloneOptionsTest < ActiveSupport::TestCase
     assert_not names.include?('trade name'), 'Should not include trade name'
     assert_not names.include?('vernacular name'), 'Should not include vernacular name'
   end
-
 end
-

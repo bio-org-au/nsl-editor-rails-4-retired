@@ -15,15 +15,14 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class ShowAllNamesTest < ActionDispatch::IntegrationTest
-
   include Capybara::DSL
- 
-  test "show all names" do
+
+  test 'show all names' do
     visit_home_page
     standard_page_assertions
     select 'Author', from: 'query-on'
@@ -39,8 +38,4 @@ class ShowAllNamesTest < ActionDispatch::IntegrationTest
     search_result_details_must_include_link('1 ex-base authored name')
     search_result_details_must_include_link('1 sanctioned name')
   end
- 
 end
-
-
-

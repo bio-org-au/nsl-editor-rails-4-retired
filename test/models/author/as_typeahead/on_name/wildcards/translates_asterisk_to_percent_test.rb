@@ -13,16 +13,12 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class AuthorTypeaheadsOnNameWildcardsTranslatesAsteriskToPercent < ActiveSupport::TestCase
-
-  test "author typeahead on name wildcards translates asterisk to percent" do
+  test 'author typeahead on name wildcards translates asterisk to percent' do
     results = Author::AsTypeahead.on_name('*')
     assert results.size > 0, 'Should be at least one result for asterisk wildcard'
   end
- 
 end
-
-

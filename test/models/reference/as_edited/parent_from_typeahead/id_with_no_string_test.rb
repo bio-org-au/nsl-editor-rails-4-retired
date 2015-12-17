@@ -13,14 +13,12 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class ReferenceAsEditedParentIdWithNoString < ActiveSupport::TestCase
-
-  test "id with no string" do
-    result = Reference::AsEdited.parent_from_typeahead('1','')
-    assert_equal '', result, "Delete is allowed"
+  test 'id with no string' do
+    result = Reference::AsEdited.parent_from_typeahead('1', '')
+    assert_equal '', result, 'Delete is allowed'
   end
-
 end

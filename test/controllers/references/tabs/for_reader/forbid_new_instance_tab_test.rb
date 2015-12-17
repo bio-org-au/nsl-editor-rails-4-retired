@@ -13,7 +13,7 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class ReferenceEditorNotShowNewInstanceTabTest < ActionController::TestCase
@@ -22,11 +22,9 @@ class ReferenceEditorNotShowNewInstanceTabTest < ActionController::TestCase
     @reference = references(:a_book)
   end
 
-  test "should not show reader reference new instance tab" do
-    @request.headers["Accept"] = "application/javascript"
-    get(:show,{id: @reference.id,tab: 'tab_new_instance'},{username: 'fred', user_full_name: 'Fred Jones', groups: []})
+  test 'should not show reader reference new instance tab' do
+    @request.headers['Accept'] = 'application/javascript'
+    get(:show, { id: @reference.id, tab: 'tab_new_instance' }, username: 'fred', user_full_name: 'Fred Jones', groups: [])
     assert_response :forbidden
   end
-
 end
-

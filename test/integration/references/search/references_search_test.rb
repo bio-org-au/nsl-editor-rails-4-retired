@@ -15,7 +15,7 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
@@ -23,23 +23,23 @@ class ReferencesSearchTest < ActionDispatch::IntegrationTest
   # Make the Capybara DSL available in all integration tests
   include Capybara::DSL
 
-  #test "reference query" do
-    #visit references_search_path
-    #fill_in('query', with: 'fred')
-    #click_on('search')
-    #standard_page_assertions
-    #expect(page).to have_content('brassard')
-  #end
+  # test "reference query" do
+  # visit references_search_path
+  # fill_in('query', with: 'fred')
+  # click_on('search')
+  # standard_page_assertions
+  # expect(page).to have_content('brassard')
+  # end
 
   # "simple"
-  test "reference simple search for simple" do
+  test 'reference simple search for simple' do
     sign_in
     visit '/search?query=simple&query_on=reference&query_limit=1'
     standard_page_assertions
     sleep(inspection_time = 0.1)
-    #page.should have_content('1 record')
+    # page.should have_content('1 record')
     assert page.has_content?('1 record'), 'Simple reference search failed.'
-    #assert page.has_content?('1 record (limited) for "simple"'), 'Simple reference search failed.'
+    # assert page.has_content?('1 record (limited) for "simple"'), 'Simple reference search failed.'
   end
 
   # # "query=* query_limit=10"
@@ -74,6 +74,4 @@ class ReferencesSearchTest < ActionDispatch::IntegrationTest
   #   assert page.has_content?('distens a:bentham cr-b:'), 'Search result for reference "distens a:bentham cr-b:" not found. Test for empty criterion'
   #   assert page.has_content?('(Ignored criteria: cr-b)'), 'Search result for reference "distens a:bentham cr-b:" not found. Test for empty criterion'
   # end
-
 end
-

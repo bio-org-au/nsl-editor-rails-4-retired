@@ -15,16 +15,15 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class AuthorsSearchTest < ActionDispatch::IntegrationTest
-
   include Capybara::DSL
 
   # "bentham"
-  test "author simple search for bentham" do
+  test 'author simple search for bentham' do
     sign_in
     select 'Authors', from: 'query-on'
     fill_in 'search-field', with: 'bentham'
@@ -34,7 +33,7 @@ class AuthorsSearchTest < ActionDispatch::IntegrationTest
   end
 
   # "bentham cr-b:4"
-  test "author advanced search with text and created before criterion" do
+  test 'author advanced search with text and created before criterion' do
     visit_home_page
     standard_page_assertions
     select 'Authors', from: 'query-on'
@@ -47,7 +46,7 @@ class AuthorsSearchTest < ActionDispatch::IntegrationTest
   end
 
   # "bentham cr-b:"
-  test "better author advanced search with text and empty created before criterion" do
+  test 'better author advanced search with text and empty created before criterion' do
     sign_in
     standard_page_assertions
     select 'Authors', from: 'query-on'
@@ -57,5 +56,4 @@ class AuthorsSearchTest < ActionDispatch::IntegrationTest
     search_result_summary_must_include_content('0 records', 'Incorrect summary for simple name search on "acacia" - missing: 0 records.')
     search_result_summary_must_include_content('0 records Author search: "bentham cr-b:"(Ignored criteria: cr-b)', 'Incorrect summary for author search with empty criterion.')
   end
-
 end

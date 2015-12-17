@@ -13,18 +13,15 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class AuthorAsTypeaheadOnNameExcludingOneSimpleTest < ActiveSupport::TestCase
-
-  test "haeckel not excluded" do
-    result = Author::AsTypeahead.on_name_duplicate_of('haeck',authors(:haeckel).id+1)
-    assert_equal 1,result.size, "Expecting 1 record for 'haeck'."
-    ids = result.collect {|author| author[:id]}
+  test 'haeckel not excluded' do
+    result = Author::AsTypeahead.on_name_duplicate_of('haeck', authors(:haeckel).id + 1)
+    assert_equal 1, result.size, "Expecting 1 record for 'haeck'."
+    ids = result.collect { |author| author[:id] }
     assert ids.include?(authors(:haeckel).id.to_s), "Expecting Haeckel's id."
   end
-
 end
-

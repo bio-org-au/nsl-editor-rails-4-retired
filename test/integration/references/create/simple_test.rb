@@ -15,32 +15,30 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class SimpleTest < ActionDispatch::IntegrationTest
-
   include Capybara::DSL
 
-  test "create simple reference" do
+  test 'create simple reference' do
     Capybara.default_driver = :selenium
     reference_count = Reference.count
     visit_home_page
     fill_in 'search-field', with: 'create simplest reference'
-    select_from_menu(['New','Reference'])
+    select_from_menu(%w(New Reference))
     search_result_must_include_content('New reference')
     search_result_details_must_include_content('New Reference')
-    select('Book',from: 'Type*')
+    select('Book', from: 'Type*')
     fill_in('reference_title', with: 'Some ref title')
     fill_in_typeahead('reference-author-typeahead',
                       'reference_author_id',
                       'Burbidge, N.T.',
-                       authors(:burbidge).id)
-    select('Author',from: 'Author role*')
+                      authors(:burbidge).id)
+    select('Author', from: 'Author role*')
     save_new_record
     assert_successful_create_for(['HTML citation for id 1064021178'])
-    assert_equal(Reference.count,reference_count + 1,'Wrong reference count after attempted create')
+    assert_equal(Reference.count, reference_count + 1, 'Wrong reference count after attempted create')
   end
-
 end

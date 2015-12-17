@@ -13,18 +13,13 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 load 'models/search/users.rb'
 
 class SearchOnAuthorAssertionHasNameTest < ActiveSupport::TestCase
-
-  test "has name" do
-    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_string: "has-name:",query_target: 'Author',current_user: build_edit_user))
-    assert 0 < search.executed_query.results.size, "Should find authors with name."
+  test 'has name' do
+    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_string: 'has-name:', query_target: 'Author', current_user: build_edit_user))
+    assert 0 < search.executed_query.results.size, 'Should find authors with name.'
   end
-
 end
-
-
-

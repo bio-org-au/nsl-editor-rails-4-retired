@@ -13,16 +13,13 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class NameUsagesSimpleTest < ActiveSupport::TestCase
-
-  test "name usages simple for casuarina inophloia" do
-    #name = names(:casuarina_inophloia) # triodia_basedowii: 
+  test 'name usages simple for casuarina inophloia' do
+    # name = names(:casuarina_inophloia) # triodia_basedowii:
     name = names(:triodia_basedowii)
     Instance::AsSearchEngine.name_usages(name.id)
   end
-
 end
- 

@@ -15,16 +15,15 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 require 'integration/names/test_helper'
 
 class WithNoNameTest < ActionDispatch::IntegrationTest
-
   include Capybara::DSL
 
-  test "create scientific name with no name" do
+  test 'create scientific name with no name' do
     names_count = Name.count
     visit_home_page
     fill_in 'search-field', with: 'test: create scientific name with no name'
@@ -32,10 +31,6 @@ class WithNoNameTest < ActionDispatch::IntegrationTest
     set_name_parent
     save_new_record
     # HTML5 required attribute should prevent, but not sure how to assert error message.
-    Name.count.must_equal names_count 
+    Name.count.must_equal names_count
   end
- 
 end
-
-
-

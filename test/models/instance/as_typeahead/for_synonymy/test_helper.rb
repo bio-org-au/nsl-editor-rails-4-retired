@@ -13,12 +13,9 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
-
-Angophora_Costata_De_Fruct_1788_string = "Angophora costata (Gaertn.) Britten in Gaertner, J, (1788) De Fructibus et Seminibus Plantarum. 1:1788 [invalid publication]"
-Angophora_Costata_De_Fruct_1788_error  = "Results should include the Angophora constata De Fructibus... instance."
-Angophora_Costata_Journal_1916_string  = "Angophora costata (Gaertn.) Britten in Britten, J., (1916) Journal of Botany, British and Foreign. 54:1916 [comb. nov.]"
-Angophora_Costata_Journal_1916_error   = "Results should include the Angophora constata Journal of Botany 1916 instance."
-
-
+Angophora_Costata_De_Fruct_1788_string = 'Angophora costata (Gaertn.) Britten in Gaertner, J, (1788) De Fructibus et Seminibus Plantarum. 1:1788 [invalid publication]'
+Angophora_Costata_De_Fruct_1788_error  = 'Results should include the Angophora constata De Fructibus... instance.'
+Angophora_Costata_Journal_1916_string  = 'Angophora costata (Gaertn.) Britten in Britten, J., (1916) Journal of Botany, British and Foreign. 54:1916 [comb. nov.]'
+Angophora_Costata_Journal_1916_error   = 'Results should include the Angophora constata Journal of Botany 1916 instance.'

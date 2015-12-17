@@ -13,17 +13,15 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class NameAsEditedResolveTypeaheadParamsSetDuplicateOfTest < ActiveSupport::TestCase
-
-  test "name as edited revolve typeahead params set duplicate of" do
+  test 'name as edited revolve typeahead params set duplicate of' do
     dummy = names(:a_genus)
     name = Name::AsEdited.find(names(:has_no_duplicate_of).id)
-    assert name.duplicate_of_id.blank?, "Name should be have no duplicate of to start this test."
-    name.resolve_typeahead_params({"duplicate_of_id"=>dummy.id,"duplicate_of_typeahead"=>dummy.full_name})
-    assert_equal dummy.id, name.duplicate_of_id, "Should now have a duplicate of id"
+    assert name.duplicate_of_id.blank?, 'Name should be have no duplicate of to start this test.'
+    name.resolve_typeahead_params('duplicate_of_id' => dummy.id, 'duplicate_of_typeahead' => dummy.full_name)
+    assert_equal dummy.id, name.duplicate_of_id, 'Should now have a duplicate of id'
   end
-
 end

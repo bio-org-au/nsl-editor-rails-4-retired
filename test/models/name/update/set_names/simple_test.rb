@@ -13,13 +13,12 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class NameUpdateSetNamesSimpleTest < ActiveSupport::TestCase
-
-  test "name update set names simple" do
-    name = names(:a_species) 
+  test 'name update set names simple' do
+    name = names(:a_species)
     name.name_element = 'xyz'
     name.save!
     name.set_names!
@@ -30,7 +29,4 @@ class NameUpdateSetNamesSimpleTest < ActiveSupport::TestCase
     assert_equal "simple name for id #{name.id}", updated_name.simple_name, 'Simple name not set'
     assert_equal "simple marked up name for id #{name.id}", updated_name.simple_name_html, 'Simple name html not set'
   end
-
 end
-
-

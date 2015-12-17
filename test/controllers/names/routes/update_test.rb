@@ -13,14 +13,12 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class NameUpdateRouteTest < ActionController::TestCase
   tests NamesController
-  test "should route to update a name" do
-    assert_routing({method: 'patch', path: '/names/1'}, { controller: "names", action: "update", id: "1"})
+  test 'should route to update a name' do
+    assert_routing({ method: 'patch', path: '/names/1' }, controller: 'names', action: 'update', id: '1')
   end
-
 end
-

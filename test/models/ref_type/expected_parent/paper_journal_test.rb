@@ -13,18 +13,13 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
- 
-class PaperShouldHaveJournalParentTest < ActiveSupport::TestCase
 
-  test "paper ref type parent is journal" do
+class PaperShouldHaveJournalParentTest < ActiveSupport::TestCase
+  test 'paper ref type parent is journal' do
     ref_type = ref_types(:paper)
     # Must have a parent_id to even be in the race with this poor data structure.
-    assert ref_type.parent.name == ref_types(:journal).name, "Paper should have journal as parent."
+    assert ref_type.parent.name == ref_types(:journal).name, 'Paper should have journal as parent.'
   end
- 
 end
-
-
-

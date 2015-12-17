@@ -13,7 +13,7 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class ReferenceEditorShowNewInstanceTabTest < ActionController::TestCase
@@ -22,12 +22,10 @@ class ReferenceEditorShowNewInstanceTabTest < ActionController::TestCase
     @reference = references(:a_book)
   end
 
-  test "should show editor reference new instance tab" do
-    @request.headers["Accept"] = "application/javascript"
-    get(:show,{id: @reference.id,tab: 'tab_new_instance'},{username: 'fred', user_full_name: 'Fred Jones', groups: ['edit']})
+  test 'should show editor reference new instance tab' do
+    @request.headers['Accept'] = 'application/javascript'
+    get(:show, { id: @reference.id, tab: 'tab_new_instance' }, username: 'fred', user_full_name: 'Fred Jones', groups: ['edit'])
     assert_select 'li.active a#reference-new-instance-tab', /New instance/, "Should show 'New instance' tab."
     assert_select 'form', true
   end
-
 end
-

@@ -15,15 +15,14 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class NameCreateCultivarRequiredFieldsTest < ActionDispatch::IntegrationTest
-
   include Capybara::DSL
 
-  test "cultivar name required fields" do
+  test 'cultivar name required fields' do
     visit_home_page
     load_new_cultivar_name_form
     assert(page.has_selector?('#name_name_type_id[required]'), 'Name type should be a required field.')
@@ -32,6 +31,4 @@ class NameCreateCultivarRequiredFieldsTest < ActionDispatch::IntegrationTest
     assert(page.has_selector?('#name_name_element[required]'), 'Name name element should be a required field.')
     assert(page.has_selector?('#name-parent-typeahead[required]'), 'Name parent typeahead should be a required field.')
   end
-
-end 
-
+end

@@ -15,17 +15,16 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class InstancesCreateTest < ActionDispatch::IntegrationTest
-
   # Make the Capybara DSL available in all integration tests
   include Capybara::DSL
 
-  test "create instance from scratch" do
-    skip("instance create being reworked")
+  test 'create instance from scratch' do
+    skip('instance create being reworked')
     # instances_count = Instance.count
     # references_count = Reference.count
     # names_count = Name.count
@@ -35,5 +34,4 @@ class InstancesCreateTest < ActionDispatch::IntegrationTest
     # Reference.count.must_equal references_count + 1 , 'Error: failed to add a reference.'
     # Name.count.must_equal names_count + 1 , 'Error: failed to add a name.'
   end
-
 end

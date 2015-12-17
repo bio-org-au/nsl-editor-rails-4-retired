@@ -13,17 +13,13 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class TypeaheadsOnCitationForDuplicateWildcardsTranslatesAsteriskToPercent < ActiveSupport::TestCase
-
-  test "reference typeahead on citation for duplicate wildcards translates asterisk to percent" do
+  test 'reference typeahead on citation for duplicate wildcards translates asterisk to percent' do
     current_reference = references(:ref_type_is_book)
-    results = Reference::AsTypeahead.on_citation_for_duplicate('*',current_reference.id)
+    results = Reference::AsTypeahead.on_citation_for_duplicate('*', current_reference.id)
     assert results.size > 0, 'Should be at least one result for asterisk wildcard'
   end
- 
 end
-
-

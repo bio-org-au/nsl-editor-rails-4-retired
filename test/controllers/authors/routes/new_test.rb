@@ -13,14 +13,12 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class AuthorsRouteNewTest < ActionController::TestCase
   tests AuthorsController
-  test "authors new should route to a new author" do
-    assert_routing '/authors/new', { controller: "authors", action: "new"}
+  test 'authors new should route to a new author' do
+    assert_routing '/authors/new', controller: 'authors', action: 'new'
   end
 end
-
-

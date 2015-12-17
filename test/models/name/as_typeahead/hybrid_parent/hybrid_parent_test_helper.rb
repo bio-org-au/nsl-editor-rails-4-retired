@@ -13,27 +13,26 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
-
-  def hybrid_parent_suggestions_should_include(suggestions,given_rank_name,expected_rank_name)
-    assert(suggestions.collect {|h| h[:value].match(/\s#{Regexp.quote(expected_rank_name)}/) ? 1 : 0 }.sum > 0, "suggestions for #{given_rank_name} should include #{expected_rank_name} [caller: #{caller[1]}]")
+def hybrid_parent_suggestions_should_include(suggestions, given_rank_name, expected_rank_name)
+  assert(suggestions.collect { |h| h[:value].match(/\s#{Regexp.quote(expected_rank_name)}/) ? 1 : 0 }.sum > 0, "suggestions for #{given_rank_name} should include #{expected_rank_name} [caller: #{caller[1]}]")
   end
 
-  def hybrid_parent_suggestions_should_not_include(suggestions,given_rank_name,unexpected_rank_name)
-    assert_not(suggestions.collect {|h| h[:value].match(/\s#{Regexp.quote(unexpected_rank_name)}/) ? 1 : 0 }.sum > 0, "suggestions for #{given_rank_name} should not include #{unexpected_rank_name}[caller: #{caller[1]}]")
-  end
+def hybrid_parent_suggestions_should_not_include(suggestions, given_rank_name, unexpected_rank_name)
+  assert_not(suggestions.collect { |h| h[:value].match(/\s#{Regexp.quote(unexpected_rank_name)}/) ? 1 : 0 }.sum > 0, "suggestions for #{given_rank_name} should not include #{unexpected_rank_name}[caller: #{caller[1]}]")
+end
 
-  def hybrid_parent_suggestions_should_only_include(suggestions,given_rank_name,expected_rank_names)
-    NameRank.all.sort{|a,b| a.sort_order <=> b.sort_order}.each do |rank|
-      if expected_rank_names.include?(rank.name)
-        hybrid_parent_suggestions_should_include(suggestions,given_rank_name,rank.name)
-      else
-        hybrid_parent_suggestions_should_not_include(suggestions,given_rank_name,rank.name)
-      end
+def hybrid_parent_suggestions_should_only_include(suggestions, given_rank_name, expected_rank_names)
+  NameRank.all.sort { |a, b| a.sort_order <=> b.sort_order }.each do |rank|
+    if expected_rank_names.include?(rank.name)
+      hybrid_parent_suggestions_should_include(suggestions, given_rank_name, rank.name)
+    else
+      hybrid_parent_suggestions_should_not_include(suggestions, given_rank_name, rank.name)
     end
   end
+end
 
-  def show(suggestions)
-    suggestions.each{|s| print("#{s[:value]}\n")}
-  end
+def show(suggestions)
+  suggestions.each { |s| print("#{s[:value]}\n") }
+end

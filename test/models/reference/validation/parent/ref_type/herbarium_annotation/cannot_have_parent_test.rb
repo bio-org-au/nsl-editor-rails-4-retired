@@ -13,19 +13,15 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
- 
+
 class HerbariumAnnotationCannotHaveParentTest < ActiveSupport::TestCase
-
-  test "herbarium annotation cannot have parent" do
+  test 'herbarium annotation cannot have parent' do
     ref = references(:herbarium_annotation_with_parent)
-    assert ref.parent_id.present?, "Expecting a parent."
-    assert_not ref.valid?, "Herbarium annotation with parent should be invalid."
+    assert ref.parent_id.present?, 'Expecting a parent.'
+    assert_not ref.valid?, 'Herbarium annotation with parent should be invalid.'
     ref.parent_id = nil
-    assert ref.valid?, "Herbarium annotation without parent should be invalid."
+    assert ref.valid?, 'Herbarium annotation without parent should be invalid.'
   end
- 
 end
-
-

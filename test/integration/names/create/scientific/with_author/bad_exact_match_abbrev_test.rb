@@ -15,15 +15,14 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class WithAuthorBadExactAbbrevTest < ActionDispatch::IntegrationTest
-
   include Capybara::DSL
 
-  test "create scientific name with bad exact author abbrev" do
+  test 'create scientific name with bad exact author abbrev' do
     names_count = Name.count
     visit_home_page
     fill_in 'search-field', with: 'create scientific name with exact match author abbrev'
@@ -31,16 +30,13 @@ class WithAuthorBadExactAbbrevTest < ActionDispatch::IntegrationTest
     set_name_parent
     fill_in('name_name_element', with: 'Fred')
     using_wait_time 2 do
-      fill_in('author-by-abbrev', with: 'BXnth.') 
+      fill_in('author-by-abbrev', with: 'BXnth.')
     end
     save_new_record
     sleep(inspection_time = 1)
     assert page.has_content?('error'), 'No error message.'
     assert page.has_content?('1 error prohibited this name from being saved'), 'Incorrect error message.'
     assert page.has_content?('Author not specified correctly'), 'Incorrect error message.'
-    Name.count.must_equal names_count 
+    Name.count.must_equal names_count
   end
-
 end
-
-

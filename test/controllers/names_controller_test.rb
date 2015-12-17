@@ -13,37 +13,35 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class NamesControllerTest < ActionController::TestCase
   setup do
     @a_species = names(:a_species)
   end
-  
+
   # Wat?
-  # ActionController::InvalidCrossOriginRequest: Security warning: an embedded <script> tag on another site requested protected JavaScript. 
+  # ActionController::InvalidCrossOriginRequest: Security warning: an embedded <script> tag on another site requested protected JavaScript.
   # If you know what you're doing, go ahead and disable forgery protection on this action to permit cross-origin JavaScript embedding.
   #  test/controllers/names_controller_test.rb:18:in `block in <class:NamesControllerTest>'
-  #test "should get new" do
-    #@request.headers["Accept"] = "application/javascript"
-    #get(:new,{},{username: 'fred', user_full_name: 'Fred Jones', groups: ['edit']})
-    #assert_response :success
-  #end
+  # test "should get new" do
+  # @request.headers["Accept"] = "application/javascript"
+  # get(:new,{},{username: 'fred', user_full_name: 'Fred Jones', groups: ['edit']})
+  # assert_response :success
+  # end
   #
 
-#   test "should update name" do
-#     patch :update, id: @a_species, name: {  }
-#     assert_redirected_to name_path(assigns(:name))
-#   end
-# 
-#   test "should destroy name" do
-#     assert_difference('Name.count', -1) do
-#       delete :destroy, id: @a_species
-#     end
-# 
-#     assert_redirected_to names_path
-#   end
-  
+  #   test "should update name" do
+  #     patch :update, id: @a_species, name: {  }
+  #     assert_redirected_to name_path(assigns(:name))
+  #   end
+  #
+  #   test "should destroy name" do
+  #     assert_difference('Name.count', -1) do
+  #       delete :destroy, id: @a_species
+  #     end
+  #
+  #     assert_redirected_to names_path
+  #   end
 end
- 

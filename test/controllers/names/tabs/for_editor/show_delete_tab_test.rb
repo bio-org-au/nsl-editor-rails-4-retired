@@ -13,7 +13,7 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class NameShowDeleteTabForReadOnlyTest < ActionController::TestCase
@@ -22,12 +22,10 @@ class NameShowDeleteTabForReadOnlyTest < ActionController::TestCase
     @name = names(:a_species)
   end
 
-  test "should show delete tab" do
-    @request.headers["Accept"] = "application/javascript"
-    get(:show,{id: @name.id,tab: 'tab_delete'},{username: 'fred', user_full_name: 'Fred Jones', groups: ['edit']})
+  test 'should show delete tab' do
+    @request.headers['Accept'] = 'application/javascript'
+    get(:show, { id: @name.id, tab: 'tab_delete' }, username: 'fred', user_full_name: 'Fred Jones', groups: ['edit'])
     assert_response :success
     assert_select 'li.active a#name-delete-tab', 'Delete', "Should show 'Delete' tab."
   end
-
 end
-

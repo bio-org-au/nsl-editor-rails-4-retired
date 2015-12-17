@@ -13,13 +13,12 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class ForSubvarietasTest < ActiveSupport::TestCase
-
-  test "from a higher rank for subvarietas" do
-    ranks = Name.from_a_higher_rank(name_ranks(:subvarietas).id).collect {|name| name.name_rank.name}.uniq
+  test 'from a higher rank for subvarietas' do
+    ranks = Name.from_a_higher_rank(name_ranks(:subvarietas).id).collect { |name| name.name_rank.name }.uniq
     assert ranks.include?('Regnum'), 'Should include Regnum'
     assert ranks.include?('Division'), 'Should include Division'
     assert ranks.include?('Classis'), 'Should include Classis'
@@ -44,7 +43,4 @@ class ForSubvarietasTest < ActiveSupport::TestCase
     assert ranks.include?('Varietas'), 'Should include Varietas'
     assert_equal 22, ranks.size
   end
-
 end
-
-

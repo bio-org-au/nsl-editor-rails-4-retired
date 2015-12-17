@@ -13,16 +13,14 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class InstanceDeleteService200WithErrorMessageTest < ActiveSupport::TestCase
-
-  test "instance delete service 200 with error message" do
-    assert_raise(RuntimeError,'Should raise runtime error for no delete') do
+  test 'instance delete service 200 with error message' do
+    assert_raise(RuntimeError, 'Should raise runtime error for no delete') do
       # The test mock service determines response based on the id
       Instance::AsServices.delete(666)
     end
   end
- 
 end

@@ -15,15 +15,14 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class RequiredFieldsTest < ActionDispatch::IntegrationTest
-
   include Capybara::DSL
 
-  test "create scientific name required fields" do
+  test 'create scientific name required fields' do
     visit_home_page
     fill_in 'search-field', with: 'for required fields'
     load_new_scientific_name_form
@@ -43,8 +42,4 @@ class RequiredFieldsTest < ActionDispatch::IntegrationTest
     assert(page.has_selector?('#sanctioning-author-by-abbrev'), 'Name sanctioning author should be a field.')
     assert(page.has_no_selector?('#sanctioning-author-by-abbrev[required]'), 'Name sanctioning0author should not be a required field.')
   end
-
 end
-
-
-

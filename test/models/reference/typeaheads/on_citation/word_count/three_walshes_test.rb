@@ -13,18 +13,13 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class TypeaheadsOnCitationWordCountThreeWalshesTest < ActiveSupport::TestCase
-
-  test "reference typeahead on citation word count three walshes" do
+  test 'reference typeahead on citation word count three walshes' do
     results = Reference::AsTypeahead.on_citation('walsh walsh walsh')
     assert_equal 0, results.size, 'Should be no records returned.'
   end
- 
 end
-
-
-

@@ -13,30 +13,27 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class InstancesCreateCitesAndCitedByByEditorTest < ActionController::TestCase
   tests InstancesController
-  
-  test "editor should be able to create cites and cited by instance" do
+
+  test 'editor should be able to create cites and cited by instance' do
     name = names(:a_species)
     reference = references(:a_book)
     instance_1 = instances(:triodia_in_brassard)
     instance_2 = instances(:britten_created_angophora_costata)
-    instance_type =  instance_types(:nomenclatural_synonym)
-    @request.headers["Accept"] = "application/javascript"
+    instance_type = instance_types(:nomenclatural_synonym)
+    @request.headers['Accept'] = 'application/javascript'
     assert_difference('Instance.count') do
-      post(:create, {instance: {'cites_id'=> instance_1.id,
-                                'cited_by_id' => instance_2.id,
-                                'name_id' => instance_1.name.id,
-                                'reference_id' => instance_2.reference.id,
-                                'instance_type_id' => instance_type.id}},
-                                {username: 'fred', user_full_name: 'Fred Jones', groups: ['edit']})
+      post(:create, { instance: { 'cites_id' => instance_1.id,
+                                  'cited_by_id' => instance_2.id,
+                                  'name_id' => instance_1.name.id,
+                                  'reference_id' => instance_2.reference.id,
+                                  'instance_type_id' => instance_type.id } },
+           username: 'fred', user_full_name: 'Fred Jones', groups: ['edit'])
     end
     assert_response :success
   end
-  
 end
- 
-

@@ -13,16 +13,13 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class AuthorAsTypeaheadOnNameDuplicateOfAuthorTest < ActiveSupport::TestCase
-
-  test "haeckel duplicate of" do
-    result = Author::AsTypeahead.on_name_duplicate_of('haeck',authors(:haeckel).id)
-    assert_equal 0,result.size, "Expecting no records because Haeckel should have been excluded."
+  test 'haeckel duplicate of' do
+    result = Author::AsTypeahead.on_name_duplicate_of('haeck', authors(:haeckel).id)
+    assert_equal 0, result.size, 'Expecting no records because Haeckel should have been excluded.'
   end
-
 end
-

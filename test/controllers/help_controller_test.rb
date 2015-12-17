@@ -13,47 +13,45 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class HelpControllerTest < ActionController::TestCase
-
-  test "should route to help index" do
-    assert_routing '/help/index', { controller: "help", action: "index" }
+  test 'should route to help index' do
+    assert_routing '/help/index', controller: 'help', action: 'index'
   end
 
-  test "should get redirected unauthenticated" do
+  test 'should get redirected unauthenticated' do
     get :index
     assert_response :redirect
   end
 
-  test "should get index for reader" do
-    get(:index,{},{username: 'fred', user_full_name: 'Fred Jones', groups: []})
+  test 'should get index for reader' do
+    get(:index, {}, username: 'fred', user_full_name: 'Fred Jones', groups: [])
     assert_response :success
   end
 
-  test "should get index for editor" do
-    get(:index,{},{username: 'fred', user_full_name: 'Fred Jones', groups: [:edit]})
+  test 'should get index for editor' do
+    get(:index, {}, username: 'fred', user_full_name: 'Fred Jones', groups: [:edit])
     assert_response :success
   end
 
-  test "should route to help history" do
-    assert_routing '/help/history', { controller: "help", action: "history" }
+  test 'should route to help history' do
+    assert_routing '/help/history', controller: 'help', action: 'history'
   end
 
-  test "history should get redirected unauthenticated" do
+  test 'history should get redirected unauthenticated' do
     get :history
     assert_response :redirect
   end
 
-  test "should get history for reader" do
-    get(:history,{},{username: 'fred', user_full_name: 'Fred Jones', groups: []})
+  test 'should get history for reader' do
+    get(:history, {}, username: 'fred', user_full_name: 'Fred Jones', groups: [])
     assert_response :success
   end
-#
-  #test "should get history for editor" do
-    #get(:index,{},{username: 'fred', user_full_name: 'Fred Jones', groups: [:edit]})
-    #assert_response :success
-  #end
-
+  #
+  # test "should get history for editor" do
+  # get(:index,{},{username: 'fred', user_full_name: 'Fred Jones', groups: [:edit]})
+  # assert_response :success
+  # end
 end

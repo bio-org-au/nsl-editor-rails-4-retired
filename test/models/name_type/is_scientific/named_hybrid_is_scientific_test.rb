@@ -13,17 +13,11 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
- 
-class NamedHybridIsScientificTest < ActiveSupport::TestCase
 
-  test "named hybrid is a scientific name type" do
+class NamedHybridIsScientificTest < ActiveSupport::TestCase
+  test 'named hybrid is a scientific name type' do
     assert NameType.find_by(name: 'named hybrid').scientific?, 'Named hybrid should be categorised as a "scientific" name type'
   end
-
 end
-
-
-
-

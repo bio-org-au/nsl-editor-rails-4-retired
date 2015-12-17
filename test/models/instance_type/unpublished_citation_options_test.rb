@@ -13,16 +13,15 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
- 
-class InstanceTypeUnpublishedCitationOptionsTest < ActiveSupport::TestCase
 
-  test "instance type unpublished citation options" do
+class InstanceTypeUnpublishedCitationOptionsTest < ActiveSupport::TestCase
+  test 'instance type unpublished citation options' do
     options = InstanceType.unpublished_citation_options
     assert options.class == Array, 'Should be an array.'
     assert_equal 3, options.size, 'Should be 3 of them.'
-    names = options.collect {|e| e.first}
+    names = options.collect(&:first)
     assert names.include?('common name'), 'Should include common name'
     assert names.include?('orthographic variant'), 'Should include orthographic variant'
     assert_not names.include?('synonym'), 'Should not include synonym'
@@ -69,6 +68,4 @@ class InstanceTypeUnpublishedCitationOptionsTest < ActiveSupport::TestCase
 
     assert_not names.include?('comb. et nom. nov.'), 'Should not include comb. et stat. nov.'
   end
-
 end
-

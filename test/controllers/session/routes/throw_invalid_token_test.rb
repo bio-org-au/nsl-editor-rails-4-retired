@@ -13,13 +13,12 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class SessionCreateRouteTest < ActionController::TestCase
   tests SessionsController
-  test "should route to throw invalid authenticity token" do
-    assert_routing({ method: 'get', path: '/throw_invalid_authenticity_token' }, { controller: "sessions", action: "throw_invalid_authenticity_token" })
+  test 'should route to throw invalid authenticity token' do
+    assert_routing({ method: 'get', path: '/throw_invalid_authenticity_token' }, controller: 'sessions', action: 'throw_invalid_authenticity_token')
   end
 end
-

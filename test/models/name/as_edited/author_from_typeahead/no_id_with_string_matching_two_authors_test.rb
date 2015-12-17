@@ -13,17 +13,15 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class NameAsEditedNoAuthorIdWithStringMatchingTwoNamesTest < ActiveSupport::TestCase
-
-  test "no author id with string matching 2 abbrevs" do
+  test 'no author id with string matching 2 abbrevs' do
     author_1 = authors(:has_matching_abbrev_1)
-    assert Author.where(abbrev: author_1.abbrev).size == 2, "Should be two Authors with the same abbrev."
-    assert_raise(RuntimeError,"Should raise a RuntimeError for invalid author string.") do
-      result = Name::AsEdited.author_from_typeahead('',author_1.abbrev,'Some Author Name')
+    assert Author.where(abbrev: author_1.abbrev).size == 2, 'Should be two Authors with the same abbrev.'
+    assert_raise(RuntimeError, 'Should raise a RuntimeError for invalid author string.') do
+      result = Name::AsEdited.author_from_typeahead('', author_1.abbrev, 'Some Author Name')
     end
   end
-
 end

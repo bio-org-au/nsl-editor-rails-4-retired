@@ -13,16 +13,14 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class AuthorAsEditedNoDuplicateOfIdWithValidStringWithTrailingWhitespace < ActiveSupport::TestCase
-
-  test "no id with valid string" do
+  test 'no id with valid string' do
     current_author_id = 1
     author = authors(:chaplin)
-    result = Author::AsEdited.duplicate_of_from_typeahead('',author.name+' ',current_author_id)
-    assert_equal author.id, result, "Should get a matching id for the author"
+    result = Author::AsEdited.duplicate_of_from_typeahead('', author.name + ' ', current_author_id)
+    assert_equal author.id, result, 'Should get a matching id for the author'
   end
-
 end

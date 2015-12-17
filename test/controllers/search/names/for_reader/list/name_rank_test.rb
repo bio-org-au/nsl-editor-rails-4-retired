@@ -13,17 +13,16 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class ReaderSearchControllerNamesNameRankListTest < ActionController::TestCase
   tests SearchController
-  
-  test "reader can search for a name by rank" do
-    tribus = names(:a_tribus)
-    get(:search,{query_target: 'name', query_string: 'name-rank: tribus'},{username: 'fred', user_full_name: 'Fred Jones', groups: []})
-    assert_response :success
-    assert_select "a#name-#{tribus.id}", /a_tribus/, "Should see tribus."
-  end
 
+  test 'reader can search for a name by rank' do
+    tribus = names(:a_tribus)
+    get(:search, { query_target: 'name', query_string: 'name-rank: tribus' }, username: 'fred', user_full_name: 'Fred Jones', groups: [])
+    assert_response :success
+    assert_select "a#name-#{tribus.id}", /a_tribus/, 'Should see tribus.'
+  end
 end

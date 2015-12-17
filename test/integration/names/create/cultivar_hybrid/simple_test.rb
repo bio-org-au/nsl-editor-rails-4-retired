@@ -15,20 +15,19 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class SimpleTest < ActionDispatch::IntegrationTest
-
   include Capybara::DSL
 
-  test "create simple cultivar hybrid name" do
+  test 'create simple cultivar hybrid name' do
     names_count = Name.count
     visit_home_page
     fill_in 'search-field', with: 'test: must have second parent test'
     load_new_cultivar_hybrid_name_form
-    
+
     set_name_parent_to_a_species
     set_name_second_parent_to_a_species
     fill_in('name_name_element', with: 'Fred')
@@ -39,8 +38,4 @@ class SimpleTest < ActionDispatch::IntegrationTest
     assert_successful_create_for(['Fred'])
     Name.count.must_equal names_count + 1
   end
- 
-end 
-
-
-
+end

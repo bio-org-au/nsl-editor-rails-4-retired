@@ -13,14 +13,12 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class SessionDestroyWithGetRouteTest < ActionController::TestCase
   tests SessionsController
-  test "should route to destroy a session with get" do
-    assert_routing({method: 'get', path: '/sign_out'}, { controller: "sessions", action: "destroy"})
+  test 'should route to destroy a session with get' do
+    assert_routing({ method: 'get', path: '/sign_out' }, controller: 'sessions', action: 'destroy')
   end
 end
-
-

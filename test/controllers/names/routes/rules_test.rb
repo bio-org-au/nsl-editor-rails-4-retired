@@ -13,13 +13,12 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class NameRulesRouteTest < ActionController::TestCase
   tests NamesController
-  test "should route to rules" do
-    assert_routing '/names/rules', { controller: "names", action: "rules" }
-  end  
+  test 'should route to rules' do
+    assert_routing '/names/rules', controller: 'names', action: 'rules'
+  end
 end
-

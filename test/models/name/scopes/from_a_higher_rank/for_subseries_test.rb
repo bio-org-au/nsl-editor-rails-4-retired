@@ -13,13 +13,12 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class ForSubseriesTest < ActiveSupport::TestCase
-
-  test "from a higher rank for subseries" do
-    ranks = Name.from_a_higher_rank(name_ranks(:subseries).id).collect {|name| name.name_rank.name}.uniq
+  test 'from a higher rank for subseries' do
+    ranks = Name.from_a_higher_rank(name_ranks(:subseries).id).collect { |name| name.name_rank.name }.uniq
     assert ranks.include?('Regnum'), 'Should include Regnum'
     assert ranks.include?('Division'), 'Should include Division'
     assert ranks.include?('Classis'), 'Should include Classis'
@@ -40,7 +39,4 @@ class ForSubseriesTest < ActiveSupport::TestCase
     assert ranks.include?('Series'), 'Should include Series'
     assert_equal 16, ranks.size
   end
-
 end
-
-

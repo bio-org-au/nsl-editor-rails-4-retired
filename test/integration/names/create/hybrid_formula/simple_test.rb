@@ -15,20 +15,19 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class SimpleTest < ActionDispatch::IntegrationTest
-
   include Capybara::DSL
 
-  test "create hybrid formula name simple" do
+  test 'create hybrid formula name simple' do
     names_count = Name.count
     visit_home_page
     fill_in 'search-field', with: 'test: create hybrid formula name simple'
-    load_new_hybrid_formula_form 
-    
+    load_new_hybrid_formula_form
+
     set_name_parent_to_a_species
     set_name_second_parent_to_a_species
 
@@ -37,6 +36,4 @@ class SimpleTest < ActionDispatch::IntegrationTest
     assert_successful_create_for(['name not constructed'])
     Name.count.must_equal names_count + 1
   end
-
 end
-

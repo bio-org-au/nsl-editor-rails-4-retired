@@ -15,48 +15,47 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class NamesCreateCultivarTest < ActionDispatch::IntegrationTest
-
   # Make the Capybara DSL available in all integration tests
   include Capybara::DSL
 
   #########
   # set ups
   #########
-  
+
   def load_the_form
     Timeout.timeout(Capybara.default_wait_time) do
       loop until page.evaluate_script('jQuery.active').zero?
     end
     click_link 'New'
     click_link 'Cultivar name'
-    find_link('New cultivar name').click()
+    find_link('New cultivar name').click
     assert page.has_content?('New Cultivar Name'), 'No new name.'
     assert page.has_content?('New cultivar name'), 'No new cultivar name.'
     assert page.has_field?('search-field'), 'No search field.'
   end
 
-  #def fill_autocomplete(field,option)
-    #page.execute_script %Q{ $('##{field}').trigger('focus') }
-    #page.execute_script %Q{ $('##{field}').trigger('keydown') }
-    #selector = %Q{ul.ui-autocomplete li.ui-menu-item a:contains("#{options[:select]}")}
+  # def fill_autocomplete(field,option)
+  # page.execute_script %Q{ $('##{field}').trigger('focus') }
+  # page.execute_script %Q{ $('##{field}').trigger('keydown') }
+  # selector = %Q{ul.ui-autocomplete li.ui-menu-item a:contains("#{options[:select]}")}
   #
-    #page.should have_selector('ul.ui-autocomplete li.ui-menu-item a')
-    #page.execute_script %Q{ $('#{selector}').trigger('mouseenter').click() }
-  #end
+  # page.should have_selector('ul.ui-autocomplete li.ui-menu-item a')
+  # page.execute_script %Q{ $('#{selector}').trigger('mouseenter').click() }
+  # end
 
-  def fill_in_autocomplete(selector,value)
-    script = %Q{ $('#{selector}').val('#{value}').focus().keypress() }
+  def fill_in_autocomplete(selector, value)
+    script = %{ $('#{selector}').val('#{value}').focus().keypress() }
     page.execute_script(script)
   end
 
   def choose_autocomplete(text)
-    #page.should have_selector(".tt-suggestion p", text: text, visible: false)
-    script = %Q{ $('author .tt-suggestion:contains("#{text}")').click() }
+    # page.should have_selector(".tt-suggestion p", text: text, visible: false)
+    script = %{ $('author .tt-suggestion:contains("#{text}")').click() }
     page.execute_script(script)
   end
 
@@ -65,7 +64,7 @@ class NamesCreateCultivarTest < ActionDispatch::IntegrationTest
                        abbrev = 'Benth.',
                        author = authors(:bentham))
     using_wait_time 20 do
-      fill_in(text_field, with: abbrev) 
+      fill_in(text_field, with: abbrev)
     end
     script = "document.getElementById('" + id_field + "').setAttribute('type','text')"
     execute_script(script)
@@ -78,8 +77,8 @@ class NamesCreateCultivarTest < ActionDispatch::IntegrationTest
     script = "document.getElementById('" + id + "').setAttribute('type','text')"
     execute_script(script)
   end
- 
-  def assert_successful_create_for(expected_contents,prohibited_contents = [])
+
+  def assert_successful_create_for(expected_contents, prohibited_contents = [])
     assert page.has_link?('Summary'), 'Record not created.'
     assert page.has_field?('search-field'), 'No search field.'
     expected_contents.each do |expected_content|
@@ -96,7 +95,7 @@ class NamesCreateCultivarTest < ActionDispatch::IntegrationTest
 
   #########
 
-  test "for fields" do
+  test 'for fields' do
     visit_home_page
     load_the_form
     assert page.has_field?('name_name_type_id'), 'Name type should be there'
@@ -104,7 +103,7 @@ class NamesCreateCultivarTest < ActionDispatch::IntegrationTest
     assert page.has_field?('name_name_status_id'), 'Name status should be there'
     assert page.has_field?('name-parent-typeahead'), 'Name parent typeahead field should be there'
     assert page.has_field?('name_name_element'), 'Name element should be there'
-    # The following negatives will wait the full time and slow things down, so 
+    # The following negatives will wait the full time and slow things down, so
     # first reset the wait time.
     default = Capybara.default_wait_time
     Capybara.default_wait_time = 0.1
@@ -118,7 +117,7 @@ class NamesCreateCultivarTest < ActionDispatch::IntegrationTest
     Capybara.default_wait_time = default
   end
 
-  test "try to save without entering date for hybrid formula unknown 2nd parent name" do
+  test 'try to save without entering date for hybrid formula unknown 2nd parent name' do
     names_count = Name.count
     visit_home_page
     load_the_form
@@ -127,6 +126,4 @@ class NamesCreateCultivarTest < ActionDispatch::IntegrationTest
     # assert !page.has_link?('Summary'), 'Record created without data!'
     Name.count.must_equal names_count
   end
-
 end
-

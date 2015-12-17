@@ -13,21 +13,20 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class ReaderSearchControllerNamesNameRankMultipleValuesListTest < ActionController::TestCase
   tests SearchController
-  
-  test "reader can search for a name by rank with multiple values" do
+
+  test 'reader can search for a name by rank with multiple values' do
     tribus = names(:a_tribus)
     subgenus = names(:a_subgenus)
     forma = names(:a_forma)
-    get(:search,{query_target: 'name', query_string: 'rank: tribus,subgenus,forma'},{username: 'fred', user_full_name: 'Fred Jones', groups: []})
+    get(:search, { query_target: 'name', query_string: 'rank: tribus,subgenus,forma' }, username: 'fred', user_full_name: 'Fred Jones', groups: [])
     assert_response :success
-    assert_select "a#name-#{tribus.id}", /a_tribus/, "Should see tribus."
-    assert_select "a#name-#{subgenus.id}", /a_subgenus/, "Should see subgenus."
-    assert_select "a#name-#{forma.id}", /a_forma/, "Should see forma."
+    assert_select "a#name-#{tribus.id}", /a_tribus/, 'Should see tribus.'
+    assert_select "a#name-#{subgenus.id}", /a_subgenus/, 'Should see subgenus.'
+    assert_select "a#name-#{forma.id}", /a_forma/, 'Should see forma.'
   end
-
 end

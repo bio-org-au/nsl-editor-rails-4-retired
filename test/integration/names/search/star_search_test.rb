@@ -15,7 +15,7 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
@@ -23,7 +23,7 @@ class Nuytsia2015Test < ActionDispatch::IntegrationTest
   # Make the Capybara DSL available in all integration tests
   include Capybara::DSL
 
-  test "name star search" do
+  test 'name star search' do
     visit_home_page
     standard_page_assertions
     select 'Name', from: 'query-on'
@@ -32,8 +32,4 @@ class Nuytsia2015Test < ActionDispatch::IntegrationTest
     sleep(inspection_time = 0.1)
     search_result_must_include_content('a')
   end
-
- 
 end
-
-

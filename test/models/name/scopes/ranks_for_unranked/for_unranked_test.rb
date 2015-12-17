@@ -13,13 +13,12 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class ForUnrankedTest < ActiveSupport::TestCase
-
-  test "for unranked" do
-    ranks = Name.ranks_for_unranked.collect {|name| name.name_rank.name}.uniq
+  test 'for unranked' do
+    ranks = Name.ranks_for_unranked.collect { |name| name.name_rank.name }.uniq
     assert ranks.include?('Regnum'), 'Should include Regnum'
     assert ranks.include?('Division'), 'Should include Division'
     assert ranks.include?('Classis'), 'Should include Classis'
@@ -48,6 +47,4 @@ class ForUnrankedTest < ActiveSupport::TestCase
     assert ranks.include?('[unranked]'), 'Should include [unranked]'
     assert_equal 26, ranks.size
   end
-
 end
-

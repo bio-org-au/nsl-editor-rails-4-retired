@@ -13,22 +13,19 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class InstancesChangeReferenceForEditorSimpleTest < ActionController::TestCase
   tests InstancesController
-  
-  test "editor should be able to change instance reference" do
+
+  test 'editor should be able to change instance reference' do
     instance = instances(:triodia_in_brassard)
     reference = references(:a_book)
     assert instance.reference_id != reference.id
-    @request.headers["Accept"] = "application/javascript"
-    put(:change_reference, {id: instance.id, instance: {'reference_id' => reference.id}}, {username: 'fred', user_full_name: 'Fred Jones', groups: ['edit']})
+    @request.headers['Accept'] = 'application/javascript'
+    put(:change_reference, { id: instance.id, instance: { 'reference_id' => reference.id } }, username: 'fred', user_full_name: 'Fred Jones', groups: ['edit'])
     assert_response :success
     assert Instance.find(instance.id).reference_id == reference.id
   end
-  
 end
- 
-

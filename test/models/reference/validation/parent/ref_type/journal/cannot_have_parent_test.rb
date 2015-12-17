@@ -13,20 +13,15 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
- 
+
 class JournalCannotHaveParentTest < ActiveSupport::TestCase
-
-  test "journal cannot have parent" do
+  test 'journal cannot have parent' do
     ref = references(:journal_with_parent)
-    assert ref.parent_id.present?, "Expecting a parent."
-    assert_not ref.valid?, "Journal with parent should be invalid."
+    assert ref.parent_id.present?, 'Expecting a parent.'
+    assert_not ref.valid?, 'Journal with parent should be invalid.'
     ref.parent_id = nil
-    assert ref.valid?, "Journal without parent should be invalid."
-
+    assert ref.valid?, 'Journal without parent should be invalid.'
   end
- 
 end
-
-

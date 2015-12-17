@@ -15,26 +15,22 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class ByReferenceIdAndInstanceTypeInvalidPublicationTest < ActionDispatch::IntegrationTest
-
   include Capybara::DSL
 
-  
-  test "find instances by reference id" do
+  test 'find instances by reference id' do
     visit_home_page
     select 'Instances', from: 'query-on'
     select 'for reference id', from: 'query-field'
-    fill_in 'search-field', with: references(:paper_by_brassard).id 
+    fill_in 'search-field', with: references(:paper_by_brassard).id
     click_on 'Search'
     sleep(inspection_time = 0.1)
     assert page.has_content?('2 records'), 'Instance search by reference id did not get just 2 record.'
     assert page.has_content?('paper by brassard'), 'Instance search by reference id did not get the expected reference.'
     assert page.has_content?('Triodia basedowii E.Pritz : xx 200,300 [primary reference]'), 'Instance search by reference id did not get the expected instance.'
   end
-
 end
-

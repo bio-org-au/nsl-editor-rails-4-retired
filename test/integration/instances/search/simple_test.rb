@@ -15,27 +15,20 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class SimpleTest < ActionDispatch::IntegrationTest
-
   include Capybara::DSL
 
-  test "instances simple search" do
+  test 'instances simple search' do
     visit_home_page
     standard_page_assertions
     select 'Instance', from: 'query-on'
     fill_in 'search-field', with: 'agenus'
     click_button 'Search'
-    search_result_summary_must_include_content('2 records','Search should have returned 2 records')
-    search_result_must_include_content('Agenus','Search should have returned "Agenus"')
+    search_result_summary_must_include_content('2 records', 'Search should have returned 2 records')
+    search_result_must_include_content('Agenus', 'Search should have returned "Agenus"')
   end
-
- 
 end
-
-
-
-

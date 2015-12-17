@@ -13,15 +13,12 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 require 'models/reference/update/if_changed/test_helper'
 
 class ForAChangedVolumeTest < ActiveSupport::TestCase
-
-  test "changed volume" do
+  test 'changed volume' do
     test_reference_text_field_change_is_detected('volume')
   end
-
 end
-

@@ -13,17 +13,13 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class TypeaheadsOnCitationForParentTwoWordsCorrectOrder < ActiveSupport::TestCase
-
-  test "two words in correct order" do
-    results = Reference::AsTypeahead.on_citation_for_parent('aaaa bbbb',references(:a_book).id,ref_types(:book).id)
+  test 'two words in correct order' do
+    results = Reference::AsTypeahead.on_citation_for_parent('aaaa bbbb', references(:a_book).id, ref_types(:book).id)
     assert_equal 1, results.size, 'Should be one and just one result'
   end
- 
 end
- 
-

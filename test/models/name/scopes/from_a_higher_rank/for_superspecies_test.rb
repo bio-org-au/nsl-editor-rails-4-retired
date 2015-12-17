@@ -13,13 +13,12 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class ForSuperspeciesTest < ActiveSupport::TestCase
-
-  test "from a higher rank for superspecies" do
-    ranks = Name.from_a_higher_rank(name_ranks(:superspecies).id).collect {|name| name.name_rank.name}.uniq
+  test 'from a higher rank for superspecies' do
+    ranks = Name.from_a_higher_rank(name_ranks(:superspecies).id).collect { |name| name.name_rank.name }.uniq
     assert ranks.include?('Regnum'), 'Should include Regnum'
     assert ranks.include?('Division'), 'Should include Division'
     assert ranks.include?('Classis'), 'Should include Classis'
@@ -41,7 +40,4 @@ class ForSuperspeciesTest < ActiveSupport::TestCase
     assert ranks.include?('Subseries'), 'Should include Subseries'
     assert_equal 17, ranks.size
   end
-
 end
-
-

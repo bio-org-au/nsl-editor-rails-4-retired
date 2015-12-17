@@ -13,20 +13,16 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
- 
-class NeedsUpdatedBy < ActiveSupport::TestCase
 
-  test "check" do
+class NeedsUpdatedBy < ActiveSupport::TestCase
+  test 'check' do
     acra = name_tags(:acra)
     a_species = names(:a_species)
     name_tag_name = NameTagName.new(name_id: a_species.id, tag_id: acra.id, created_by: 'tester')
-    assert_not name_tag_name.valid?, "Name Tag Name record should not be valid without updated_by."
+    assert_not name_tag_name.valid?, 'Name Tag Name record should not be valid without updated_by.'
     name_tag_name.updated_by = 'tester'
-    assert name_tag_name.valid?, "Name Tag Name record should now be valid with updated_by."
+    assert name_tag_name.valid?, 'Name Tag Name record should now be valid with updated_by.'
   end
- 
 end
-
-

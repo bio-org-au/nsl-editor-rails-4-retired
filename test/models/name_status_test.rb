@@ -13,29 +13,27 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class NameStatusTest < ActiveSupport::TestCase
-
-  test "select options for na and deleted with delete allowed" do
+  test 'select options for na and deleted with delete allowed' do
     delete_allowed = true
     options = NameStatus.na_and_deleted_options(delete_allowed)
-    assert options.class == Array, "Options should be an array."
+    assert options.class == Array, 'Options should be an array.'
     assert options.size == 2, "Options should have 2 entries, but it has #{options.size} entries."
     assert options.first.first == '[deleted]'
     assert options.second.first == '[n/a]'
-    assert options.first.third[:disabled] == false, "Option should not be disabled."
+    assert options.first.third[:disabled] == false, 'Option should not be disabled.'
   end
 
-  test "select options for na and deleted with delete not allowed" do
+  test 'select options for na and deleted with delete not allowed' do
     delete_allowed = false
     options = NameStatus.na_and_deleted_options(delete_allowed)
-    assert options.class == Array, "Options should be an array."
+    assert options.class == Array, 'Options should be an array.'
     assert options.size == 2, "Options should have 2 entries, but it has #{options.size} entries."
     assert options.first.first == '[deleted]'
     assert options.second.first == '[n/a]'
-    assert options.first.third[:disabled] == true, "Option should be disabled."
+    assert options.first.third[:disabled] == true, 'Option should be disabled.'
   end
-
 end

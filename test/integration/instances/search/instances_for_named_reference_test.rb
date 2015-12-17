@@ -15,15 +15,14 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class InstancesForNamedReference < ActionDispatch::IntegrationTest
-
   include Capybara::DSL
 
-  test "ref instances search for string" do
+  test 'ref instances search for string' do
     visit_home_page
     standard_page_assertions
     select 'Instance', from: 'query-on'
@@ -35,9 +34,4 @@ class InstancesForNamedReference < ActionDispatch::IntegrationTest
     search_result_must_include_content('Metrosideros costata')
     search_result_must_include_content('Rusty Gum')
   end
-
- 
 end
-
-
-

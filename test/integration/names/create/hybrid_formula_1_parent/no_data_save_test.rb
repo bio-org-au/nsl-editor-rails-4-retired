@@ -15,15 +15,14 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class NoDataSaveTest < ActionDispatch::IntegrationTest
-
   include Capybara::DSL
 
-  test "hybrid formula 1 parent name try to save without data" do
+  test 'hybrid formula 1 parent name try to save without data' do
     names_count = Name.count
     visit_home_page
     fill_in 'search-field', with: 'test: hybrid 1 parent try to save without data'
@@ -32,7 +31,4 @@ class NoDataSaveTest < ActionDispatch::IntegrationTest
     big_sleep
     Name.count.must_equal names_count, 'Record created unexpectedly.'
   end
-  
 end
-
-

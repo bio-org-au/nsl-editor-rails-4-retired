@@ -13,16 +13,11 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
- 
+
 class PersonalCommunicationParentNotAllowedTest < ActiveSupport::TestCase
-
-  test "personal communication ref type parent is not allowed" do
-    assert ref_types(:personal_communication).parent_id.blank? == true, "Personal communication ref type parent should not be allowed."
+  test 'personal communication ref type parent is not allowed' do
+    assert ref_types(:personal_communication).parent_id.blank? == true, 'Personal communication ref type parent should not be allowed.'
   end
- 
 end
-
-
-

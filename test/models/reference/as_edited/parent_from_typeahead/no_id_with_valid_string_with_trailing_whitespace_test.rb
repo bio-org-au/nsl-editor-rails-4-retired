@@ -13,15 +13,13 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class ReferenceAsEditedNoParentIdWithValidStringWithTrailingWhitespace < ActiveSupport::TestCase
-
-  test "no id with valid string" do
+  test 'no id with valid string' do
     reference = references(:origin_of_species)
-    result = Reference::AsEdited.parent_from_typeahead('',reference.citation+' ')
-    assert_equal reference.id, result, "Should get a matching id for the reference"
+    result = Reference::AsEdited.parent_from_typeahead('', reference.citation + ' ')
+    assert_equal reference.id, result, 'Should get a matching id for the reference'
   end
-
 end

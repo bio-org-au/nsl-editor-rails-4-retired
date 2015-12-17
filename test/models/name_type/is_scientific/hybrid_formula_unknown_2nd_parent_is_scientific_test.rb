@@ -13,17 +13,11 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
- 
-class HybridFormulaUnknown2ndParentIsScientificTest < ActiveSupport::TestCase
 
-  test "hybrid formula unknown 2nd parent is a scientific name type" do
+class HybridFormulaUnknown2ndParentIsScientificTest < ActiveSupport::TestCase
+  test 'hybrid formula unknown 2nd parent is a scientific name type' do
     assert NameType.find_by(name: 'hybrid formula unknown 2nd parent').scientific?, 'Hybrid formula unknown 2nd parent should be categorised as a "scientific" name type'
   end
-
 end
-
-
-
-

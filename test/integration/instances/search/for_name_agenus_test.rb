@@ -15,15 +15,14 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class SimpleTest < ActionDispatch::IntegrationTest
-
   include Capybara::DSL
 
-  test "instances for name agenus" do
+  test 'instances for name agenus' do
     visit_home_page
     standard_page_assertions
     select 'Instance', from: 'query-on'
@@ -33,10 +32,4 @@ class SimpleTest < ActionDispatch::IntegrationTest
     click_button 'Search'
     search_result_must_include_content('Agenus', 'Search failed')
   end
-
- 
 end
-
-
-
-

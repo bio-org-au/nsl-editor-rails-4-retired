@@ -13,15 +13,14 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class RankOptionTest < ActiveSupport::TestCase
-
-  test "scientific ranks" do
+  test 'scientific ranks' do
     options = NameRank.options_for_category(Name::SCIENTIFIC_CATEGORY)
     assert options.class == Array
-    ranks = options.collect{|option| option.first} 
+    ranks = options.collect(&:first)
     assert ranks.include?('Regnum'), "Ranks should include 'Regnum'"
     assert ranks.include?('Division'), "Ranks should include 'Division'"
     assert ranks.include?('Classis'), "Ranks should include 'Classis'"
@@ -53,7 +52,4 @@ class RankOptionTest < ActiveSupport::TestCase
     assert ranks.include?('[infraspecies]'), "Ranks should include '[infraspecies]'"
     assert ranks.include?('[n/a]'), "Ranks should include '[n/a]'"
   end
-
 end
-
-

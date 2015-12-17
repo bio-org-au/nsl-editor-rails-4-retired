@@ -13,14 +13,12 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class TypeaheadForSynonymySimpleTest < ActiveSupport::TestCase
-
-  test "instance typeahead for synonymy simple" do
+  test 'instance typeahead for synonymy simple' do
     results = Instance::AsTypeahead.for_synonymy('angophora')
     assert results.size >= 2, 'Should be at least 2 synonyms for angophora'
   end
-
 end

@@ -13,25 +13,22 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class NameSearchForNameTypeAndRankWildcardRankThenTypeTest < ActionController::TestCase
   tests SearchController
 
-  test "editor search for name type and rank wildcard rank then type test" do
+  test 'editor search for name type and rank wildcard rank then type test' do
     get(:search,
-        {"query_target"=>"Names",
-         "query_string"=>"nr:* nt:*", 
-         "controller"=>"new_search", 
-         "action"=>"search"},
-         {username: 'fred', 
-          user_full_name: 'Fred Jones', 
-          groups: ['edit']})
+        { 'query_target' => 'Names',
+          'query_string' => 'nr:* nt:*',
+          'controller' => 'new_search',
+          'action' => 'search' },
+        username: 'fred',
+        user_full_name: 'Fred Jones',
+        groups: ['edit'])
     assert_response :success
-    assert_select "span#search-results-summary", true, "Should find records"
+    assert_select 'span#search-results-summary', true, 'Should find records'
   end
-
 end
-
-

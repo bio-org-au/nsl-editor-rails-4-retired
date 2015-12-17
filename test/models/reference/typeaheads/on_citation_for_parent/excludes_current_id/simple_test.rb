@@ -13,20 +13,16 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class TypeaheadsOnCitationForParentExcludesCurrentIdTest < ActiveSupport::TestCase
-
-  test "reference typeahead on citation for parent excludes current id" do
+  test 'reference typeahead on citation for parent excludes current id' do
     current_reference = references(:simple)
-    results = Reference::AsTypeahead.on_citation_for_parent('simple',current_reference.id+1,ref_types(:unknown).id)
+    results = Reference::AsTypeahead.on_citation_for_parent('simple', current_reference.id + 1, ref_types(:unknown).id)
     assert results.size == 1, 'Should be at least one result for asterisk wildcard'
-    assert_equal results.first[:id].to_i, current_reference.id, "The current reference should be found because it is not excluded."
-    results_2 = Reference::AsTypeahead.on_citation_for_parent('simple',current_reference.id,ref_types(:unknown).id)
-    assert results_2.size == 0, "Should be no records found if current reference is excluded."
+    assert_equal results.first[:id].to_i, current_reference.id, 'The current reference should be found because it is not excluded.'
+    results_2 = Reference::AsTypeahead.on_citation_for_parent('simple', current_reference.id, ref_types(:unknown).id)
+    assert results_2.size == 0, 'Should be no records found if current reference is excluded.'
   end
- 
 end
-
-

@@ -15,15 +15,14 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class AuthorsEditCommentsTest < ActionDispatch::IntegrationTest
-
   include Capybara::DSL
 
-  test "create author comment" do
+  test 'create author comment' do
     visit_home_page
     standard_page_assertions
     select 'Authors', from: 'query-on'
@@ -32,7 +31,7 @@ class AuthorsEditCommentsTest < ActionDispatch::IntegrationTest
     click_on 'Search'
     all('.takes-focus').first.click
     click_on 'Comments'
-    fill_in 'comment_text', with: 'this is a test comment' 
+    fill_in 'comment_text', with: 'this is a test comment'
     assert_difference('Comment.count') do
       within('#search-result-details') do
         find('#comment-create-btn').click
@@ -42,8 +41,4 @@ class AuthorsEditCommentsTest < ActionDispatch::IntegrationTest
       assert page.has_button?('Save'), 'No new comment.'
     end
   end
-
 end
-
-
-

@@ -13,20 +13,17 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 load 'models/search/users.rb'
 
 class InstanceSearchUpdatedBeforeFromDropdownSimplePluralTest < ActiveSupport::TestCase
-
-  #New search for "42993" on instance up to 100 with field: upd-b
-  test "instance search on updated before from dropdown field simple plural" do
-    skip  # this was an upd-b search in the old version of search - no translation yet
-    #search = Search::Base.new({query_string:"more-than-2 instances-only",query_string:'review'})
-    #assert_equal search.results.class, Instance::ActiveRecord_Relation, "Results should be an Array"
-    #assert search.results.size > 0, "At least 1 record expected."
-    #assert_match /Search for instances updated more than 2 days ago./, search.info.join
+  # New search for "42993" on instance up to 100 with field: upd-b
+  test 'instance search on updated before from dropdown field simple plural' do
+    skip # this was an upd-b search in the old version of search - no translation yet
+    # search = Search::Base.new({query_string:"more-than-2 instances-only",query_string:'review'})
+    # assert_equal search.results.class, Instance::ActiveRecord_Relation, "Results should be an Array"
+    # assert search.results.size > 0, "At least 1 record expected."
+    # assert_match /Search for instances updated more than 2 days ago./, search.info.join
   end
-
 end
-

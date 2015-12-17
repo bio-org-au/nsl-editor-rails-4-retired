@@ -13,7 +13,7 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class AuthorEditorTabEditTest < ActionController::TestCase
@@ -23,9 +23,9 @@ class AuthorEditorTabEditTest < ActionController::TestCase
   end
 
   # Test for alias of show
-  test "tab should give editor author edit tab" do
-    @request.headers["Accept"] = "application/javascript"
-    get(:tab,{id: @author.id,tab: 'tab_edit'},{username: 'fred', user_full_name: 'Fred Jones', groups: ['edit']})
+  test 'tab should give editor author edit tab' do
+    @request.headers['Accept'] = 'application/javascript'
+    get(:tab, { id: @author.id, tab: 'tab_edit' }, username: 'fred', user_full_name: 'Fred Jones', groups: ['edit'])
     assert_select 'li.active a#author-edit-tab', 'Edit', "Should show 'Edit' tab."
     assert_select 'form', true
     assert_select 'input#author_name', true
@@ -34,6 +34,4 @@ class AuthorEditorTabEditTest < ActionController::TestCase
     assert_select 'textarea#author_notes', true
     assert_select 'input#author_duplicate_of_id', true
   end
-
 end
-

@@ -13,16 +13,11 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
- 
+
 class JournalParentNotAllowedTest < ActiveSupport::TestCase
-
-  test "journal ref type parent is not allowed" do
-    assert ref_types(:journal).parent_id.blank? == true, "Journal ref type parent should not be allowed."
+  test 'journal ref type parent is not allowed' do
+    assert ref_types(:journal).parent_id.blank? == true, 'Journal ref type parent should not be allowed.'
   end
- 
 end
-
-
-

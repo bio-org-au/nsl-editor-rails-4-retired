@@ -13,16 +13,15 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class SearchNamesForReaderListAssertionsHasInstancesTest < ActionController::TestCase
   tests SearchController
-  
-  test "reader can search for names that are parents" do
-    get(:search,{query_target: 'name', query_string: 'has-instances:'},{username: 'fred', user_full_name: 'Fred Jones', groups: []})
-    assert_response :success
-    assert_select '#search-results-summary', /[0-9][0-9] records\b/, "Should find some records" 
-  end
 
+  test 'reader can search for names that are parents' do
+    get(:search, { query_target: 'name', query_string: 'has-instances:' }, username: 'fred', user_full_name: 'Fred Jones', groups: [])
+    assert_response :success
+    assert_select '#search-results-summary', /[0-9][0-9] records\b/, 'Should find some records'
+  end
 end

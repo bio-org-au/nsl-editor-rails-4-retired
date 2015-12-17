@@ -13,13 +13,11 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class ForIdBlankAndStringPresent < ActiveSupport::TestCase
-
-  test "id blank string present" do
-    assert_match 'text_only', Reference::AsEdited.resolve_id_and_text('','xyz')
+  test 'id blank string present' do
+    assert_match 'text_only', Reference::AsEdited.resolve_id_and_text('', 'xyz')
   end
-
 end

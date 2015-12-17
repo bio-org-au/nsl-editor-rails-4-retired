@@ -13,15 +13,12 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class AllowUnrankedNameToHaveUnrankedParentTest < ActiveSupport::TestCase
-
-  test "unranked scientific name having unranked parent" do
+  test 'unranked scientific name having unranked parent' do
     name = names(:unranked_scientific_name_with_unranked_parent)
     assert name.valid?, "Name should be valid. Errors: #{name.errors.full_messages.join('; ')}"
   end
- 
 end
-

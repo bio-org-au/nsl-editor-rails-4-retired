@@ -15,7 +15,7 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
@@ -23,7 +23,7 @@ class StarSearchTest < ActionDispatch::IntegrationTest
   # Make the Capybara DSL available in all integration tests
   include Capybara::DSL
 
-  test "it" do
+  test 'it' do
     visit_home_page
     standard_page_assertions
     select 'Author', from: 'query-on'
@@ -32,8 +32,4 @@ class StarSearchTest < ActionDispatch::IntegrationTest
     big_sleep
     search_result_must_include_content('a')
   end
-
- 
 end
-
-

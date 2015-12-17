@@ -13,15 +13,12 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 require 'models/reference/update/if_changed/test_helper'
 
 class ForAnUnchangedRefEditionTest < ActiveSupport::TestCase
-
-  test "unchanged edition" do
+  test 'unchanged edition' do
     test_reference_text_field_lack_of_change_is_detected('edition')
   end
-
 end
-

@@ -13,7 +13,7 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class InstanceEditTabForEditorTest < ActionController::TestCase
@@ -21,11 +21,9 @@ class InstanceEditTabForEditorTest < ActionController::TestCase
   setup do
     @triodia_in_brassard = instances(:triodia_in_brassard)
   end
-  test "should show instance edit tab to editor" do
-    @request.headers["Accept"] = "application/javascript"
-    get(:show,{id: @triodia_in_brassard.id,tab: 'tab_edit'},{username: 'fred', user_full_name: 'Fred Jones', groups: ['edit']})
+  test 'should show instance edit tab to editor' do
+    @request.headers['Accept'] = 'application/javascript'
+    get(:show, { id: @triodia_in_brassard.id, tab: 'tab_edit' }, username: 'fred', user_full_name: 'Fred Jones', groups: ['edit'])
     assert_response :success
   end
-
 end
-

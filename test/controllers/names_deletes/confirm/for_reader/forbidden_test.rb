@@ -13,19 +13,16 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class NamesDeleteConfirmForReaderSimpleTest < ActionController::TestCase
   tests NamesDeletesController
 
-  test "reader should not be able to confirm name delete" do
+  test 'reader should not be able to confirm name delete' do
     name = names(:name_to_delete)
-    @request.headers["Accept"] = "application/javascript"
-    delete(:confirm,{names_delete: {name_id: name.id, reason: 'some reason', extra_info: ''}},{username: 'fred', user_full_name: 'Fred Jones', groups: []})
+    @request.headers['Accept'] = 'application/javascript'
+    delete(:confirm, { names_delete: { name_id: name.id, reason: 'some reason', extra_info: '' } }, username: 'fred', user_full_name: 'Fred Jones', groups: [])
     assert_response :forbidden, 'Reader should not be able to delete'
   end
-
 end
- 
-

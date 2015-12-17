@@ -13,17 +13,16 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class ReaderSearchControllerNamesExBaseAuthorIdListTest < ActionController::TestCase
   tests SearchController
-  
-  test "reader can search for a name by ex-base author id" do
-    author = authors(:is_a_name_authority_of_every_type)
-    get(:search,{query_target: 'name', query_string: "ex-base-author-id: #{author.id}"},{username: 'fred', user_full_name: 'Fred Jones', groups: []})
-    assert_response :success
-    assert_select '#search-results-summary', /\b1 record\b/, "Should find 1 record for ex base author ID using #{author.abbrev}" 
-  end
 
+  test 'reader can search for a name by ex-base author id' do
+    author = authors(:is_a_name_authority_of_every_type)
+    get(:search, { query_target: 'name', query_string: "ex-base-author-id: #{author.id}" }, username: 'fred', user_full_name: 'Fred Jones', groups: [])
+    assert_response :success
+    assert_select '#search-results-summary', /\b1 record\b/, "Should find 1 record for ex base author ID using #{author.abbrev}"
+  end
 end

@@ -13,19 +13,17 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class NameSearchForNameTypeScientificSetsCommonAndCultivarFlagToTrueTest < ActionController::TestCase
   tests SearchController
-  
-  test "editor search for name type scientific sets command and cultivar flag true" do
+
+  test 'editor search for name type scientific sets command and cultivar flag true' do
     skip # Expect this to be no longer needed under revised search.
     # Set the common-and-cultivar flag to false.
-    get(:index,{'query_on'=>'name','query'=>'nt:scientific','query_common_and_cultivar'=>'f','query_limit'=>'100'},{username: 'fred', user_full_name: 'Fred Jones', groups: ['edit']})
+    get(:index, { 'query_on' => 'name', 'query' => 'nt:scientific', 'query_common_and_cultivar' => 'f', 'query_limit' => '100' }, username: 'fred', user_full_name: 'Fred Jones', groups: ['edit'])
     assert_response :success
-    assert_select "input.checkbox[type=checkbox][id=query_common_and_cultivar][value=t]", true, "The query-common-and-cultivar checkbox should be true"
+    assert_select 'input.checkbox[type=checkbox][id=query_common_and_cultivar][value=t]', true, 'The query-common-and-cultivar checkbox should be true'
   end
-
 end
-

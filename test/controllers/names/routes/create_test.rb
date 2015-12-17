@@ -13,13 +13,12 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class NameCreateRouteTest < ActionController::TestCase
   tests NamesController
-  test "should route to create a name" do
-    assert_routing({method: 'post', path: '/names'}, { controller: "names", action: "create"})
+  test 'should route to create a name' do
+    assert_routing({ method: 'post', path: '/names' }, controller: 'names', action: 'create')
   end
 end
-

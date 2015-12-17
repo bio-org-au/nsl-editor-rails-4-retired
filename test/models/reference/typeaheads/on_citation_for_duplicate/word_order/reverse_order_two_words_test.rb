@@ -13,17 +13,13 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class TypeaheadsOnCitationForDuplicateTwoWordsReverseOrder < ActiveSupport::TestCase
-
-  test "two words in correct order" do
-    results = Reference::AsTypeahead.on_citation_for_duplicate('wattle maslin',references(:book_by_brassard).id)
+  test 'two words in correct order' do
+    results = Reference::AsTypeahead.on_citation_for_duplicate('wattle maslin', references(:book_by_brassard).id)
     assert_equal 1, results.size, 'Should be one and just one result'
   end
- 
 end
- 
-

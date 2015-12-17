@@ -13,7 +13,7 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class AuthorEditorShowAllTabsTest < ActionController::TestCase
@@ -22,15 +22,13 @@ class AuthorEditorShowAllTabsTest < ActionController::TestCase
     @author = authors(:bentham)
   end
 
-  test "should show all tab links if editor requests details tab" do
-    @request.headers["Accept"] = "application/javascript"
-    get(:show,{id: @author.id,tab: 'tab_edit'},{username: 'fred', user_full_name: 'Fred Jones', groups: ['edit']})
+  test 'should show all tab links if editor requests details tab' do
+    @request.headers['Accept'] = 'application/javascript'
+    get(:show, { id: @author.id, tab: 'tab_edit' }, username: 'fred', user_full_name: 'Fred Jones', groups: ['edit'])
     assert_response :success
     assert_select 'a#author-show-tab', 'Details', "Should show 'Detail' tab."
     assert_select 'a#author-edit-tab', 'Edit', "Should show 'Edit' tab."
     assert_select 'a#author-comments-tab', 'Comments', "Should show 'Comments' tab."
-    assert_select 'a#tab-heading', /Bentham/, "Should have tab heading showing Bentham."
+    assert_select 'a#tab-heading', /Bentham/, 'Should have tab heading showing Bentham.'
   end
-
 end
-

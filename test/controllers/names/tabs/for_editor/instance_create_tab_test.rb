@@ -13,7 +13,7 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class InstanceCreateTabTest < ActionController::TestCase
@@ -22,13 +22,13 @@ class InstanceCreateTabTest < ActionController::TestCase
     @name = names(:a_species)
   end
 
-  test "instance create for name" do
-    @request.headers["Accept"] = "application/javascript"
-    get(:show,{id: @name.id, tab: 'tab_instances'},{username: 'fred', user_full_name: 'Fred Jones', groups: ['edit']})
+  test 'instance create for name' do
+    @request.headers['Accept'] = 'application/javascript'
+    get(:show, { id: @name.id, tab: 'tab_instances' }, username: 'fred', user_full_name: 'Fred Jones', groups: ['edit'])
     assert_response :success
-    assert_template "names/tabs/_tab"
-    assert_template "names/tabs/_tab_instances"
-    assert_select ".focus-details" do
+    assert_template 'names/tabs/_tab'
+    assert_template 'names/tabs/_tab_instances'
+    assert_select '.focus-details' do
       assert_select 'span.message', count: 0
       assert_select 'form'
       assert_select 'input#instance-reference-typeahead'
@@ -37,8 +37,6 @@ class InstanceCreateTabTest < ActionController::TestCase
       assert_select 'input#instance_verbatim_name_string'
       assert_select 'input#instance_bhl_url'
     end
-    assert_template partial: "instances/_form_create_from_name"
-  end  
-
+    assert_template partial: 'instances/_form_create_from_name'
+  end
 end
-

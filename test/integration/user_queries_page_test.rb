@@ -15,7 +15,7 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
@@ -28,11 +28,10 @@ class UserQueriesPageTest < ActionDispatch::IntegrationTest
   #   standard_page_assertions
   # end
 
-  #describe "can access names page" do
-    #it "has content" do
-      #visit root_path
-      #page.must_have_content "Names"
-    #end
-  #end
-
+  # describe "can access names page" do
+  # it "has content" do
+  # visit root_path
+  # page.must_have_content "Names"
+  # end
+  # end
 end

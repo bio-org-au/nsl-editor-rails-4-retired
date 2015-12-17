@@ -13,15 +13,11 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
- 
-class PbrHybridIsDeprecatedTest < ActiveSupport::TestCase
 
-  test "pbr hybrid is a deprecated name type" do
+class PbrHybridIsDeprecatedTest < ActiveSupport::TestCase
+  test 'pbr hybrid is a deprecated name type' do
     assert_equal NameType.find_by(name: 'pbr hybrid').deprecated, true, 'PBR Hybrid should be a deprecated name type'
   end
-
 end
-  
-

@@ -15,17 +15,16 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class InstancesEditCommentsTest < ActionDispatch::IntegrationTest
-
   include Capybara::DSL
 
   # You create a comment after the instance is created,
   # so it is part of the editing process.
-  test "create instance comment" do
+  test 'create instance comment' do
     Capybara.default_driver = :selenium
     sign_in
     standard_page_assertions
@@ -51,8 +50,4 @@ class InstancesEditCommentsTest < ActionDispatch::IntegrationTest
     end
     Capybara.default_driver = :webkit
   end
-
 end
-
-
-

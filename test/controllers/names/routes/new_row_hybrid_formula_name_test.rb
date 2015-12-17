@@ -13,15 +13,12 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class NameNewRowRouteTest < ActionController::TestCase
   tests NamesController
-  test "should route to names new row for a hybrid-formula type" do
-    assert_routing '/names/new_row/hybrid-formula', { controller: "names", action: "new_row", type: 'hybrid-formula' }
+  test 'should route to names new row for a hybrid-formula type' do
+    assert_routing '/names/new_row/hybrid-formula', controller: 'names', action: 'new_row', type: 'hybrid-formula'
   end
-
-
 end
-

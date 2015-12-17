@@ -13,20 +13,15 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 require 'models/instance/as_typeahead/for_synonymy/test_helper.rb'
 
-
 class ForNameAndReferenceYearTest < ActiveSupport::TestCase
-
-  test "name and other year search" do
+  test 'name and other year search' do
     results = Instance::AsTypeahead.for_synonymy('angophora costata 1788')
-    assert results.class == Array, "Results should be an array."
-    assert results.size == 1, "Results should include just one record."
-    assert results.collect {|r| r[:value]}.include?(Angophora_Costata_De_Fruct_1788_string),Angophora_Costata_De_Fruct_1788_error
+    assert results.class == Array, 'Results should be an array.'
+    assert results.size == 1, 'Results should include just one record.'
+    assert results.collect { |r| r[:value] }.include?(Angophora_Costata_De_Fruct_1788_string), Angophora_Costata_De_Fruct_1788_error
   end
-
 end
-
-

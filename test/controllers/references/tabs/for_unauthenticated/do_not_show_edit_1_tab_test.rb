@@ -13,7 +13,7 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class ReferenceUnauthenticatedDoNotShowEdit1Test < ActionController::TestCase
@@ -22,11 +22,9 @@ class ReferenceUnauthenticatedDoNotShowEdit1Test < ActionController::TestCase
     @reference = references(:a_book)
   end
 
-  test "should not show unauthenticated user reference edit 1 tab" do
-    @request.headers["Accept"] = "application/javascript"
-    get(:show,{id: @reference.id,tab: 'tab_edit_2'},{})
+  test 'should not show unauthenticated user reference edit 1 tab' do
+    @request.headers['Accept'] = 'application/javascript'
+    get(:show, { id: @reference.id, tab: 'tab_edit_2' }, {})
     assert response.body.match(/window.location.assign.".sign_in"./)
   end
-
 end
-

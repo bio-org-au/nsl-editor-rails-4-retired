@@ -13,13 +13,12 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class NameDestroyRouteTest < ActionController::TestCase
   tests NamesController
-  test "should route to destroy a name" do
-    assert_routing({method: 'delete', path: '/names/1'}, { controller: "names", action: "destroy", id: "1"})
-  end  
+  test 'should route to destroy a name' do
+    assert_routing({ method: 'delete', path: '/names/1' }, controller: 'names', action: 'destroy', id: '1')
+  end
 end
-

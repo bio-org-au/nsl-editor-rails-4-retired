@@ -13,7 +13,7 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class AuthorEditorShowEditTest < ActionController::TestCase
@@ -22,9 +22,9 @@ class AuthorEditorShowEditTest < ActionController::TestCase
     @author = authors(:bentham)
   end
 
-  test "should show editor author edit tab" do
-    @request.headers["Accept"] = "application/javascript"
-    get(:show,{id: @author.id,tab: 'tab_edit'},{username: 'fred', user_full_name: 'Fred Jones', groups: ['edit']})
+  test 'should show editor author edit tab' do
+    @request.headers['Accept'] = 'application/javascript'
+    get(:show, { id: @author.id, tab: 'tab_edit' }, username: 'fred', user_full_name: 'Fred Jones', groups: ['edit'])
     assert_select 'li.active a#author-edit-tab', 'Edit', "Should show 'Edit' tab."
     assert_select 'form', true
     assert_select 'input#author_name', true
@@ -33,6 +33,4 @@ class AuthorEditorShowEditTest < ActionController::TestCase
     assert_select 'textarea#author_notes', true
     assert_select 'input#author_duplicate_of_id', true
   end
-
 end
-

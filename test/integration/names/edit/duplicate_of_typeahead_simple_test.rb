@@ -15,15 +15,14 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class DuplicateOfTypeaheadSimpleTest < ActionDispatch::IntegrationTest
-
   include Capybara::DSL
-  
-  test "duplicate of typeahead simple" do
+
+  test 'duplicate of typeahead simple' do
     Capybara.default_driver = :selenium
     visit_home_page
     fill_in 'search-field', with: 'test: duplicate of typeahead simple'
@@ -32,7 +31,6 @@ class DuplicateOfTypeaheadSimpleTest < ActionDispatch::IntegrationTest
     click_button 'Search'
     all('.takes-focus').first.click
     click_on 'Edit'
-    try_typeahead_multi('duplicate-of-id-typeahead','Fred','freddy - [n/a]','last')
+    try_typeahead_multi('duplicate-of-id-typeahead', 'Fred', 'freddy - [n/a]', 'last')
   end
-
 end

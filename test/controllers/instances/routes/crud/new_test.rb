@@ -13,13 +13,12 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class InstanceNewRouteTest < ActionController::TestCase
   tests InstancesController
-  test "should route to a new instance" do
-    assert_routing '/instances/new', { controller: "instances", action: "new"}
+  test 'should route to a new instance' do
+    assert_routing '/instances/new', controller: 'instances', action: 'new'
   end
 end
-

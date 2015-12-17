@@ -13,13 +13,12 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class NameTypeaheadOnFullNameRouteTest < ActionController::TestCase
   tests NamesController
-  test "should route to typeahead on full name" do
-    assert_routing '/names/typeahead_on_full_name', { controller: "names", action: "typeahead_on_full_name" }
-  end 
+  test 'should route to typeahead on full name' do
+    assert_routing '/names/typeahead_on_full_name', controller: 'names', action: 'typeahead_on_full_name'
+  end
 end
-

@@ -15,28 +15,25 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 load 'test/models/search/users.rb'
 
 class ForMullerWithUmlautTest < ActiveSupport::TestCase
-
-  test "simple search for muller with umlaut using umlaut" do
-    params =  ActiveSupport::HashWithIndifferentAccess.new(query_target: 'author', query_string: "fr.müLl", current_user: build_edit_user)
+  test 'simple search for muller with umlaut using umlaut' do
+    params = ActiveSupport::HashWithIndifferentAccess.new(query_target: 'author', query_string: 'fr.müLl', current_user: build_edit_user)
     search = Search::Base.new(params)
-    assert_equal search.executed_query.results.class, Author::ActiveRecord_Relation, "Results should be a Author::ActiveRecord_Relation."
-    assert_equal 1, search.executed_query.results.size, "Exactly 1 result is expected."
+    assert_equal search.executed_query.results.class, Author::ActiveRecord_Relation, 'Results should be a Author::ActiveRecord_Relation.'
+    assert_equal 1, search.executed_query.results.size, 'Exactly 1 result is expected.'
     assert_equal authors(:muller_f_with_umlaut).name, search.executed_query.results.first[:name]
   end
 
-  test "simple search for muller with umlaut using u" do
-    params =  ActiveSupport::HashWithIndifferentAccess.new(query_target: 'author', query_string: "fr.muLl", current_user: build_edit_user)
+  test 'simple search for muller with umlaut using u' do
+    params = ActiveSupport::HashWithIndifferentAccess.new(query_target: 'author', query_string: 'fr.muLl', current_user: build_edit_user)
     search = Search::Base.new(params)
-    assert_equal search.executed_query.results.class, Author::ActiveRecord_Relation, "Results should be a Author::ActiveRecord_Relation."
+    assert_equal search.executed_query.results.class, Author::ActiveRecord_Relation, 'Results should be a Author::ActiveRecord_Relation.'
     assert_equal 1, search.executed_query.results.size, "Exactly 1 result is expected - perhaps müll wasn't found"
     assert_equal authors(:muller_f_with_umlaut).name, search.executed_query.results.first[:name]
   end
-
 end
-

@@ -13,12 +13,11 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class NamesAreSetFromServiceTest < ActiveSupport::TestCase
-
-  test "names are set from service" do
+  test 'names are set from service' do
     name = names(:without_names_from_service)
     assert name.full_name.blank?, 'This test needs to start with a blank full_name.'
     assert name.full_name_html.blank?, 'This test needs to start with a blank full_name_html.'
@@ -30,10 +29,5 @@ class NamesAreSetFromServiceTest < ActiveSupport::TestCase
     assert name.full_name_html.present?, 'Full_name_html should now be populated.'
     assert name.simple_name.present?, 'Simple_name should now be populated.'
     assert name.simple_name_html.present?, 'Simple_name_html should now be populated.'
-
   end
-
 end
-
-
-

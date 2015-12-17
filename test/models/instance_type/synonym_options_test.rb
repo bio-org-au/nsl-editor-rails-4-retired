@@ -13,16 +13,15 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
- 
-class InstanceTypeSynonymOptionsTest < ActiveSupport::TestCase
 
-  test "instance type synonym options" do
+class InstanceTypeSynonymOptionsTest < ActiveSupport::TestCase
+  test 'instance type synonym options' do
     options = InstanceType.synonym_options
     assert options.class == Array, 'Should be an array.'
     assert_equal 16, options.size, 'Should be 16 of them.'
-    names = options.collect {|e| e.first}
+    names = options.collect(&:first)
     assert names.include?('basionym'), 'Should include basionym'
     assert names.include?('common name'), 'Should include common name'
     assert names.include?('doubtful misapplied'), 'Should include doubtful misapplied'
@@ -68,6 +67,4 @@ class InstanceTypeSynonymOptionsTest < ActiveSupport::TestCase
 
     assert_not names.include?('comb. et nom. nov.'), 'Should not include comb. et stat. nov.'
   end
-
 end
-

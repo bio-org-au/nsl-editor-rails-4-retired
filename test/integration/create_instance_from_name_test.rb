@@ -15,21 +15,19 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class InstancesCreateTest < ActionDispatch::IntegrationTest
-
   # Make the Capybara DSL available in all integration tests
   include Capybara::DSL
 
-  test "create instance from name" do
+  test 'create instance from name' do
     visit_home_page
     standard_page_assertions
     fill_in('query', with: 'triodia basedowii')
     click_on('search-button')
-    assert page.has_content?('Trio') ,'Search should return Triodia basedowii E.Pritz'
+    assert page.has_content?('Trio'), 'Search should return Triodia basedowii E.Pritz'
   end
-
 end

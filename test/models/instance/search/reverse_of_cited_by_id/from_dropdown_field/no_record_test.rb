@@ -13,19 +13,15 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class InstanceSearchReverseOfCitedByIdNoSuchInstanceTest < ActiveSupport::TestCase
-
-  #New search for "42993" on instance up to 100 with field: reverse-of-cited-by-id-query
-  test "instance search on reverse of cited by instance id" do
-    skip #on switch to new search not sure what the target should be
-    #search = Search::Base.new("1",'Instance','100','f','','reverse-of-cited-by-id-query')
-    #assert_equal search.results.class, Array, "Results should be an Array"
-    #assert search.results.size == 0, "Empty Array expected."
+  # New search for "42993" on instance up to 100 with field: reverse-of-cited-by-id-query
+  test 'instance search on reverse of cited by instance id' do
+    skip # on switch to new search not sure what the target should be
+    # search = Search::Base.new("1",'Instance','100','f','','reverse-of-cited-by-id-query')
+    # assert_equal search.results.class, Array, "Results should be an Array"
+    # assert search.results.size == 0, "Empty Array expected."
   end
-
 end
-
-

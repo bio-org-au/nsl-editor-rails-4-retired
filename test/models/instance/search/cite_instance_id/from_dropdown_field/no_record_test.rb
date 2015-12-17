@@ -13,19 +13,15 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class InstanceSearchCiteInstanceIdNoSuchInstanceTest < ActiveSupport::TestCase
-
-  #New search for "42993" on instance up to 100 with field: reverse-of-cites-id-query
-  test "instance search on cite instance id" do
+  # New search for "42993" on instance up to 100 with field: reverse-of-cites-id-query
+  test 'instance search on cite instance id' do
     skip # On switch to new_search, not sure if this is still required.  Can't tell what the query_target should be.
-    #search = Search::Base.new({query_string:"1",query_target:'Instance',wat:'reverse-of-cites-id-query'})
-    #assert_equal search.results.class, Array, "Results should be an Array"
-    #assert search.results.size == 0, "Empty Array expected."
+    # search = Search::Base.new({query_string:"1",query_target:'Instance',wat:'reverse-of-cites-id-query'})
+    # assert_equal search.results.class, Array, "Results should be an Array"
+    # assert search.results.size == 0, "Empty Array expected."
   end
-
 end
-
-

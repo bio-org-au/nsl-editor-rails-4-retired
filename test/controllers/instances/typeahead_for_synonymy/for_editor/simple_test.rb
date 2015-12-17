@@ -13,17 +13,15 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class InstancesTypeaheadForSynonymyForEditorTest < ActionController::TestCase
   tests InstancesController
-  
-  test "editor should be able to typehead for synonymy instance" do
-    @request.headers["Accept"] = "application/javascript"
-    get(:typeahead_for_synonymy, {term: 'ab'},{username: 'fred', user_full_name: 'Fred Jones', groups: ['edit']})
+
+  test 'editor should be able to typehead for synonymy instance' do
+    @request.headers['Accept'] = 'application/javascript'
+    get(:typeahead_for_synonymy, { term: 'ab' }, username: 'fred', user_full_name: 'Fred Jones', groups: ['edit'])
     assert_response :success
   end
-  
 end
- 

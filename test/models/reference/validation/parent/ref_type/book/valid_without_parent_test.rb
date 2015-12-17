@@ -13,15 +13,11 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
- 
+
 class BookValidWithoutParentTest < ActiveSupport::TestCase
-
-  test "book valid without parent" do
-    assert references(:book_without_parent).valid? == true, "Book without parent should be valid."
+  test 'book valid without parent' do
+    assert references(:book_without_parent).valid? == true, 'Book without parent should be valid.'
   end
- 
 end
-
-

@@ -15,16 +15,15 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 # encoding: utf-8
 require 'test_helper'
 
 class AvailableFieldsTest < ActionDispatch::IntegrationTest
-
   include Capybara::DSL
 
-  test "edit standalone instance available fields" do
+  test 'edit standalone instance available fields' do
     visit_home_page_as_editor
     standard_page_assertions
     select 'Instances', from: 'query-on'
@@ -39,8 +38,6 @@ class AvailableFieldsTest < ActionDispatch::IntegrationTest
     assert page.has_field?('instance_page'), 'Instance page field should be there'
     assert page.has_field?('instance_instance_type_id'), 'Instance type field should be there'
     assert page.has_field?('instance_verbatim_name_string'), 'Instance verbatim name string field should be there'
-    search_result_details_must_include_field('instance_bhl_url','Instance BHL URL string field should be there')
+    search_result_details_must_include_field('instance_bhl_url', 'Instance BHL URL string field should be there')
   end
-
 end
-

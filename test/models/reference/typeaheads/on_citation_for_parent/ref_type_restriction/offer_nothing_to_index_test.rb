@@ -13,17 +13,13 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class TypeaheadsOnCitationForParentRefTypeRestrictionNothingForIndex < ActiveSupport::TestCase
-
-  test "reference typeahead on citation ref type restriction nothing for index" do
+  test 'reference typeahead on citation ref type restriction nothing for index' do
     current_reference = references(:simple)
-    results = Reference::AsTypeahead.on_citation_for_parent('%',current_reference.id,ref_types(:index).id)
+    results = Reference::AsTypeahead.on_citation_for_parent('%', current_reference.id, ref_types(:index).id)
     assert results.size == 0, 'Should be no results because index takes no parent.'
   end
- 
 end
-
-

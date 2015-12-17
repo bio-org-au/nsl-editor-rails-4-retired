@@ -13,18 +13,14 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class AdminControllerQAUserCannotSeeDBConnectionsTest < ActionController::TestCase
   tests AdminController
-  
-  test "qa user should not get db connections" do
-    get(:db_connections,{},{username: 'fred', user_full_name: 'Fred Jones', groups: ['QA']})
-    assert_response :forbidden, "QA user should not see db connections"
+
+  test 'qa user should not get db connections' do
+    get(:db_connections, {}, username: 'fred', user_full_name: 'Fred Jones', groups: ['QA'])
+    assert_response :forbidden, 'QA user should not see db connections'
   end
- 
 end
-
-
-

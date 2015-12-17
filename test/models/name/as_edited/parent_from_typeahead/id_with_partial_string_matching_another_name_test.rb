@@ -13,16 +13,14 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class NameAsEditedParentIdWithPartialStringMatchingAnotherNameTest < ActiveSupport::TestCase
-
-  test "parent id with partial string for anther name" do
+  test 'parent id with partial string for anther name' do
     name_1 = names(:the_regnum)
     name_2 = names(:a_division)
-    result = Name::AsEdited.parent_from_typeahead(name_1.id.to_s,name_2.full_name.chop)
-    assert_equal name_2.id, result, "Should get a matching id for the name partial string despite mismatched ID"
+    result = Name::AsEdited.parent_from_typeahead(name_1.id.to_s, name_2.full_name.chop)
+    assert_equal name_2.id, result, 'Should get a matching id for the name partial string despite mismatched ID'
   end
-
 end

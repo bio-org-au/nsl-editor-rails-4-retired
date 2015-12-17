@@ -13,17 +13,13 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class TypeaheadsOnCitationForDuplicateWordCountTwoWalshesTest < ActiveSupport::TestCase
-
-  test "reference typeahead on citation word count two walshes" do
-    results = Reference::AsTypeahead.on_citation_for_duplicate('walsh walsh',references(:paper_by_brassard).id)
+  test 'reference typeahead on citation word count two walshes' do
+    results = Reference::AsTypeahead.on_citation_for_duplicate('walsh walsh', references(:paper_by_brassard).id)
     assert_equal 1, results.size, 'Should be one and only one result'
   end
- 
 end
-
-

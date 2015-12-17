@@ -13,13 +13,12 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class NameEditAsCategoryRouteTest < ActionController::TestCase
   tests NamesController
-  test "should route to name edit as category" do
-    assert_routing '/names/1/tab/edit/as/scientific', { controller: "names", action: "edit_as_category", id: "1", tab: 'edit', new_category: 'scientific'}
+  test 'should route to name edit as category' do
+    assert_routing '/names/1/tab/edit/as/scientific', controller: 'names', action: 'edit_as_category', id: '1', tab: 'edit', new_category: 'scientific'
   end
 end
-

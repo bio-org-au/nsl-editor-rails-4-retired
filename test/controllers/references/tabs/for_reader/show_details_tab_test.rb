@@ -13,7 +13,7 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class ReferenceShowReaderDetailsTabTest < ActionController::TestCase
@@ -22,11 +22,9 @@ class ReferenceShowReaderDetailsTabTest < ActionController::TestCase
     @reference = references(:a_book)
   end
 
-  test "should show reader reference details tab" do
-    @request.headers["Accept"] = "application/javascript"
-    get(:show,{id: @reference.id,tab: 'tab_show_1'},{username: 'fred', user_full_name: 'Fred Jones', groups: []})
+  test 'should show reader reference details tab' do
+    @request.headers['Accept'] = 'application/javascript'
+    get(:show, { id: @reference.id, tab: 'tab_show_1' }, username: 'fred', user_full_name: 'Fred Jones', groups: [])
     assert_response :success
   end
-
 end
-

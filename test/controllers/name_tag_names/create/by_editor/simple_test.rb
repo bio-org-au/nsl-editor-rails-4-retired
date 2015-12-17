@@ -13,24 +13,21 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class NameTagNamesCreateByEditorSimpleTest < ActionController::TestCase
   tests NameTagNamesController
-  
-  test "editor should be able to create name tag name" do
+
+  test 'editor should be able to create name tag name' do
     name = names(:a_species)
     name_tag = name_tags(:acra)
-    @request.headers["Accept"] = "application/javascript"
+    @request.headers['Accept'] = 'application/javascript'
     assert_difference('NameTagName.count') do
-      post(:create, 
-           {name_tag_name: {'name_id'=> name.id,'tag_id'=> name_tag.id}},
-           {username: 'fred', user_full_name: 'Fred Jones', groups: ['edit']})
+      post(:create,
+           { name_tag_name: { 'name_id' => name.id, 'tag_id' => name_tag.id } },
+           username: 'fred', user_full_name: 'Fred Jones', groups: ['edit'])
     end
     assert_response :success
   end
-  
 end
- 
-

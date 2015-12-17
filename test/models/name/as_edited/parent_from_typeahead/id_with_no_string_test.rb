@@ -13,15 +13,13 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class NameAsEditedParentIdWithNoString < ActiveSupport::TestCase
-
-  test "id with no string" do
-    assert_raise(RuntimeError,"Should raise a RuntimeError for no parent.") do
-      result = Name::AsEdited.parent_from_typeahead('1','')
+  test 'id with no string' do
+    assert_raise(RuntimeError, 'Should raise a RuntimeError for no parent.') do
+      result = Name::AsEdited.parent_from_typeahead('1', '')
     end
   end
-
 end

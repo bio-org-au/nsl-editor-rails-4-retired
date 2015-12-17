@@ -13,20 +13,15 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 load 'models/search/users.rb'
 
 class SearchOnReferenceAssertionDuplicateIsNotTest < ActiveSupport::TestCase
-
-  test "reference asertion is not a duplicate" do
-    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_target: "reference",
+  test 'reference asertion is not a duplicate' do
+    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_target: 'reference',
                                                                            query_string: 'is-not-a-duplicate:',
                                                                            current_user: build_edit_user))
-    assert search.executed_query.results.size > 0, "Should find non-duplicate reference."
+    assert search.executed_query.results.size > 0, 'Should find non-duplicate reference.'
   end
-
 end
-
-
-

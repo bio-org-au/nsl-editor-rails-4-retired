@@ -13,23 +13,19 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 load 'test/models/search/users.rb'
 
 class SearchOnReferenceIdsSimpleTest < ActiveSupport::TestCase
-
-  test "search on ids simple" do
+  test 'search on ids simple' do
     reference = references(:simple)
     params =  ActiveSupport::HashWithIndifferentAccess.new(query_target: 'reference',
                                                            query_string: "ids: #{reference.id}",
                                                            include_common_and_cultivar_session: true,
-                                                           current_user: build_edit_user,)
+                                                           current_user: build_edit_user)
     search = Search::Base.new(params)
-    assert_equal search.executed_query.results.class, Reference::ActiveRecord_Relation, "Results should be a Reference::ActiveRecord_Relation."
-    assert_equal 1, search.executed_query.results.size, "Exactly 1 result is expected."
+    assert_equal search.executed_query.results.class, Reference::ActiveRecord_Relation, 'Results should be a Reference::ActiveRecord_Relation.'
+    assert_equal 1, search.executed_query.results.size, 'Exactly 1 result is expected.'
   end
-
 end
-
-

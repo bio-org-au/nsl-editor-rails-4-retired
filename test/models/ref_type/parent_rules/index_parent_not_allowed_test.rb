@@ -13,16 +13,11 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
- 
+
 class IndexParentNotAllowedTest < ActiveSupport::TestCase
-
-  test "index ref type parent is not allowed" do
-    assert ref_types(:index).parent_id.blank? == true, "Index ref type parent should not be allowed."
+  test 'index ref type parent is not allowed' do
+    assert ref_types(:index).parent_id.blank? == true, 'Index ref type parent should not be allowed.'
   end
- 
 end
-
-
-

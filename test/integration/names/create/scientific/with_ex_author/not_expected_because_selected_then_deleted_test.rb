@@ -15,30 +15,26 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class ExAuthorNotExpectedBecauseSelectedThenDeletedTest < ActionDispatch::IntegrationTest
-
   include Capybara::DSL
 
-  test "create scientific name ex author not expected because selected then deleted" do
+  test 'create scientific name ex author not expected because selected then deleted' do
     names_count = Name.count
     visit_home_page
     fill_in 'search-field', with: 'create scientific name ex author not expected because selected then deleted'
     load_new_scientific_name_form
     set_name_parent
     fill_in('name_name_element', with: 'Fred')
-    fill_in_author_typeahead('author-by-abbrev','name_author_id')
-    fill_in_author_typeahead('ex-author-by-abbrev','name_ex_author_id',authors(:hooker))
+    fill_in_author_typeahead('author-by-abbrev', 'name_author_id')
+    fill_in_author_typeahead('ex-author-by-abbrev', 'name_ex_author_id', authors(:hooker))
     blank_string = ' '
     fill_in('ex-author-by-abbrev', with: blank_string)
     save_new_record
-    assert_successful_create_for([],['Ex Authored by'])
+    assert_successful_create_for([], ['Ex Authored by'])
     Name.count.must_equal names_count + 1
   end
-  
 end
-
-

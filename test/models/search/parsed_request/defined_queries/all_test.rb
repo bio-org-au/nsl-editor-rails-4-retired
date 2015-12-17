@@ -13,13 +13,12 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 load 'test/models/search/parsed_request/defined_queries/test_runner.rb'
 
 class SearchParsedRequestDefinedQueriesAllTest < ActiveSupport::TestCase
-
-    DEFINED_QUERIES = {
+  DEFINED_QUERIES = {
     'instance-name-id:' => 'instances-for-name-id:',
     'instances-for-name-id' => 'instances-for-name-id:',
     'instances for name id' => 'instances-for-name-id:',
@@ -43,15 +42,12 @@ class SearchParsedRequestDefinedQueriesAllTest < ActiveSupport::TestCase
     'instance is cited' => 'instance-is-cited',
     'instance is cited by' => 'instance-is-cited-by',
     'audit' => 'audit',
-    'review' => 'audit',
+    'review' => 'audit'
   }
 
-  test "search parsed request defined query all" do
-    DEFINED_QUERIES.each do |key,value|
-      run_test(key,value)
+  test 'search parsed request defined query all' do
+    DEFINED_QUERIES.each do |key, value|
+      run_test(key, value)
     end
   end
-
 end
-
-

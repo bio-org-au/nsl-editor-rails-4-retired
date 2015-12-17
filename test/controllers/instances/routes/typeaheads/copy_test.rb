@@ -13,16 +13,13 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class InstanceTypeaheadForSynonymyRouteTest < ActionController::TestCase
   tests InstancesController
-  
-  test "should route to instances typeahead for synonymy" do
-    assert_routing "/instances/for_synonymy", { controller: "instances", action: "typeahead_for_synonymy" }
+
+  test 'should route to instances typeahead for synonymy' do
+    assert_routing '/instances/for_synonymy', controller: 'instances', action: 'typeahead_for_synonymy'
   end
-
-
 end
-

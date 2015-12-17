@@ -15,7 +15,7 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
@@ -24,7 +24,7 @@ class InstancesSearchTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
 
   # "audit"
-  test "find instances updated in the last 3 days" do
+  test 'find instances updated in the last 3 days' do
     visit_home_page
     select 'Instances', from: 'query-on'
     fill_in 'search-field', with: 'upd-a:3'
@@ -33,4 +33,3 @@ class InstancesSearchTest < ActionDispatch::IntegrationTest
     assert page.has_content?(/\d+ records/), 'Instance updated in the last day not found or result is summarised incorrectly.'
   end
 end
-

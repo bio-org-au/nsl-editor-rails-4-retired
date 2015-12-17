@@ -13,14 +13,12 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class ReferenceAsEditedNoParentIdWithNoString < ActiveSupport::TestCase
-
-  test "no id with no string" do
-    result = Reference::AsEdited.parent_from_typeahead('','')
-    assert result.blank?, "Should be no result for blank inputs."
+  test 'no id with no string' do
+    result = Reference::AsEdited.parent_from_typeahead('', '')
+    assert result.blank?, 'Should be no result for blank inputs.'
   end
-
 end

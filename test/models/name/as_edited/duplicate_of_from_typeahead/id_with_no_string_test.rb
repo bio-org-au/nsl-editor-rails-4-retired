@@ -13,15 +13,13 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class NameAsEditedDuplicateOfIdWithNoString < ActiveSupport::TestCase
-
-  test "id with no string" do
+  test 'id with no string' do
     name = names(:the_regnum)
-    result = Name::AsEdited.duplicate_of_from_typeahead(name.id.to_s,'')
-    assert_match '', result, "Should get nothing - treating as delete."
+    result = Name::AsEdited.duplicate_of_from_typeahead(name.id.to_s, '')
+    assert_match '', result, 'Should get nothing - treating as delete.'
   end
-
 end

@@ -13,22 +13,22 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 # from: https://github.com/wojtekmach/minitest-capybara-example/blob/master/test/integration/home_test.rb
-require "test_helper"
-require "capybara/rails"
+require 'test_helper'
+require 'capybara/rails'
 
 class AcceptanceSpec < Minitest::Spec
   include Capybara::DSL
-  #include Capybara::Assertions
+  # include Capybara::Assertions
 end
 
 # class HomeTest < AcceptanceSpec
 #   it "home test" do
 #     visit "/"
 
-    #assert_content "Names"
-    #page.must_have_content "Names"
+# assert_content "Names"
+# page.must_have_content "Names"
 
 #   end
 # end

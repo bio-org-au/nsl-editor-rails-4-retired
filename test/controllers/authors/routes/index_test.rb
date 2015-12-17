@@ -13,14 +13,12 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class AuthorsRouteIndexTest < ActionController::TestCase
   tests AuthorsController
-  test "authors index should route to the catch all" do
-    assert_routing '/authors', { controller: "search", action: "search", random: "authors"}
+  test 'authors index should route to the catch all' do
+    assert_routing '/authors', controller: 'search', action: 'search', random: 'authors'
   end
 end
-
-

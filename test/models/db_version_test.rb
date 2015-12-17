@@ -13,14 +13,12 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
- 
+
 class DbVersionTest < ActiveSupport::TestCase
-
-  test "simple" do
-    assert_equal 1, DbVersion.count, "Should be just 1 record in db_version."
-    assert_equal 99, DbVersion.current, "Current version should be 99"
+  test 'simple' do
+    assert_equal 1, DbVersion.count, 'Should be just 1 record in db_version.'
+    assert_equal 99, DbVersion.current, 'Current version should be 99'
   end
-
 end

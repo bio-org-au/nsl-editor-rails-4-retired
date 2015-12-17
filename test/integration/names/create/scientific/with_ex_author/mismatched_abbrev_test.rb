@@ -15,31 +15,28 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class WithMismatchedExAuthorTest < ActionDispatch::IntegrationTest
-
   include Capybara::DSL
 
-  test "create scientific name with mismatched ex author" do
+  test 'create scientific name with mismatched ex author' do
     names_count = Name.count
     visit_home_page
     fill_in 'search-field', with: 'create simplest scientific name'
     load_new_scientific_name_form
     set_name_parent
     fill_in('name_name_element', with: 'Fred')
-    fill_in_author_typeahead('author-by-abbrev','name_author_id')
-    fill_in_author_typeahead('ex-author-by-abbrev','name_ex_author_id',authors(:hooker))
-    fill_in('ex-author-by-abbrev', with: 'MISMATCHED TEXT') 
+    fill_in_author_typeahead('author-by-abbrev', 'name_author_id')
+    fill_in_author_typeahead('ex-author-by-abbrev', 'name_ex_author_id', authors(:hooker))
+    fill_in('ex-author-by-abbrev', with: 'MISMATCHED TEXT')
     save_new_record
     sleep(inspection_time = 1)
     assert page.has_content?('error'), 'No error message. Mismatch of ex-author not detected'
     assert page.has_content?('1 error prohibited this name from being saved'), 'Mismatch of ex-author: incorrect error message.'
     assert page.has_content?('Ex Author not specified correctly'), 'Mismatch of ex-author: incorrect typeahead error message.'
-    Name.count.must_equal names_count 
- end
-
+    Name.count.must_equal names_count
+  end
 end
-

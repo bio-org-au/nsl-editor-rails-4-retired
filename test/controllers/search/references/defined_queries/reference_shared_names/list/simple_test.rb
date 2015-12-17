@@ -13,19 +13,17 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class SearchReferencesDefinedQueriesReferenceSharedNamesListHasSimpleTest < ActionController::TestCase
   tests SearchController
-  
-  test "reference shared names simple" do
+
+  test 'reference shared names simple' do
     ref_1 = references(:de_fructibus_et_seminibus_plantarum)
     ref_2 = references(:paper_by_britten_on_angophora)
-    get(:search,{query_target: 'references shared names', query_string: "#{ref_1.id},#{ref_2.id}"},{username: 'fred', user_full_name: 'Fred Jones', groups: []})
+    get(:search, { query_target: 'references shared names', query_string: "#{ref_1.id},#{ref_2.id}" }, username: 'fred', user_full_name: 'Fred Jones', groups: [])
     assert_response :success
-    assert_select '#search-results-summary', /3 records\b/, "Should find some records" 
+    assert_select '#search-results-summary', /3 records\b/, 'Should find some records'
   end
-
 end
-

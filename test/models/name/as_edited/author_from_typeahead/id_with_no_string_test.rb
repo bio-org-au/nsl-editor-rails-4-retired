@@ -13,14 +13,12 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class NameeAsEditedAuthorIdWithNoString < ActiveSupport::TestCase
-
-  test "id with no string" do
-    result = Name::AsEdited.author_from_typeahead('1','','some field')
-    assert_match '', result, "Should get nothing - delete"
+  test 'id with no string' do
+    result = Name::AsEdited.author_from_typeahead('1', '', 'some field')
+    assert_match '', result, 'Should get nothing - delete'
   end
-
 end

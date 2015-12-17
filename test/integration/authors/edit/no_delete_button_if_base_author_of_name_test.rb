@@ -15,15 +15,14 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class NoDeleteButtonIfBaseAuthorOfName < ActionDispatch::IntegrationTest
-
   include Capybara::DSL
- 
-  test "author has no delete button if base author of name" do
+
+  test 'author has no delete button if base author of name' do
     visit_home_page
     standard_page_assertions
     select 'Author', from: 'query-on'
@@ -36,7 +35,4 @@ class NoDeleteButtonIfBaseAuthorOfName < ActionDispatch::IntegrationTest
     search_result_details_must_include_button('Save')
     search_result_details_must_not_include_link('Delete...')
   end
- 
 end
-
-

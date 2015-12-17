@@ -6,4 +6,3 @@ def build_edit_user
   edit_user.groups = [:edit]
   edit_user
 end
-

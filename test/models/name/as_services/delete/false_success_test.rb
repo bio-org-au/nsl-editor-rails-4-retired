@@ -13,17 +13,15 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class NameAsServicesDeleteFalseSuccessTest < ActiveSupport::TestCase
-
-  test "url" do
+  test 'url' do
     name_id = names(:name_to_delete).id
     name = Name::AsServices.find(name_id)
-    assert_raise(RuntimeError,'Should raise exception.') do
+    assert_raise(RuntimeError, 'Should raise exception.') do
       name.delete_with_reason('666 this is the reason.....')
     end
   end
-
 end

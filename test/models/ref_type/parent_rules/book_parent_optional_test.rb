@@ -13,18 +13,13 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
- 
-class BookParentOptionalTest < ActiveSupport::TestCase
 
-  test "book ref type parent is optional" do
+class BookParentOptionalTest < ActiveSupport::TestCase
+  test 'book ref type parent is optional' do
     ref_type = ref_types(:book)
     # Must have a parent_id to even be in the race with this poor data structure.
-    assert ref_type.parent_id.present? == true && ref_type.parent_optional == true, "Book ref type parent should be optional."
+    assert ref_type.parent_id.present? == true && ref_type.parent_optional == true, 'Book ref type parent should be optional.'
   end
- 
 end
-
-
-

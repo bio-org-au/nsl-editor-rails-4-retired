@@ -13,16 +13,14 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class InstanceDeleteServiceTrueSuccess200Test < ActiveSupport::TestCase
-
-  test "instance delete service true success 200" do
+  test 'instance delete service true success 200' do
     assert_nothing_raised('Should not raise exception if everything is ok') do
       # The test mock service determines response based on the id
       Instance::AsServices.delete(200)
     end
   end
- 
 end

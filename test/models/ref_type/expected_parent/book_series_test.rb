@@ -13,17 +13,12 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
- 
+
 class BookShouldHaveSeriesParentTest < ActiveSupport::TestCase
-
-  test "book ref type parent is series" do
+  test 'book ref type parent is series' do
     ref_type = ref_types(:book)
-    assert ref_type.parent.name == ref_types(:series).name, "Book should have series as parent."
+    assert ref_type.parent.name == ref_types(:series).name, 'Book should have series as parent.'
   end
- 
 end
-
-
-

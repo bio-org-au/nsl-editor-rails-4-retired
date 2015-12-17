@@ -15,15 +15,14 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class DoNotShowAPNIFormatLinkIfNoInstances < ActionDispatch::IntegrationTest
-
   include Capybara::DSL
 
-  test "it" do
+  test 'it' do
     visit_home_page
     select 'Name', from: 'query-on'
     fill_in 'search-field', with: 'has no instances'
@@ -31,6 +30,4 @@ class DoNotShowAPNIFormatLinkIfNoInstances < ActionDispatch::IntegrationTest
     big_sleep
     search_result_details_must_not_include_link('APNI format', 'APNI format link should not appear if no instances.')
   end
-
 end
-

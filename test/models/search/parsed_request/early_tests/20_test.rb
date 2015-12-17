@@ -13,26 +13,22 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class SearchParsedRequest20Test < ActiveSupport::TestCase
-
-  test "search parse query 20" do
+  test 'search parse query 20' do
     query_string = 'limit:20'
-    params =  ActiveSupport::HashWithIndifferentAccess.new
+    params = ActiveSupport::HashWithIndifferentAccess.new
     params[:query_target] = 'name'
     params[:query_string] = query_string
     params[:include_common_and_cultivar_session] = true
     parsed_request = Search::ParsedRequest.new(params)
-    assert parsed_request.list, "This should be parsed as a list query."
-    assert !parsed_request.count, "This should not be parsed as a count query."
-    assert_match /\Aname\z/, parsed_request.target_table,"This should be parsed as a query on the name table."
-    assert_equal 20, parsed_request.limit, "This should be parsed as a query with a limit of 20."
-    assert parsed_request.include_common_and_cultivar_session, "The parser should notice the session switch to include common and cultivars."
-    assert parsed_request.where_arguments.blank?, "This should be parsed as a query with no where arguments."
+    assert parsed_request.list, 'This should be parsed as a list query.'
+    assert !parsed_request.count, 'This should not be parsed as a count query.'
+    assert_match /\Aname\z/, parsed_request.target_table, 'This should be parsed as a query on the name table.'
+    assert_equal 20, parsed_request.limit, 'This should be parsed as a query with a limit of 20.'
+    assert parsed_request.include_common_and_cultivar_session, 'The parser should notice the session switch to include common and cultivars.'
+    assert parsed_request.where_arguments.blank?, 'This should be parsed as a query with no where arguments.'
   end
-
 end
-
-

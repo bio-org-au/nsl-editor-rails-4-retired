@@ -13,13 +13,12 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class ForSubordoTest < ActiveSupport::TestCase
-
-  test "from a higher rank for subordo" do
-    ranks = Name.from_a_higher_rank(name_ranks(:subordo).id).collect {|name| name.name_rank.name}.uniq
+  test 'from a higher rank for subordo' do
+    ranks = Name.from_a_higher_rank(name_ranks(:subordo).id).collect { |name| name.name_rank.name }.uniq
     assert ranks.include?('Regnum'), 'Should include Regnum'
     assert ranks.include?('Division'), 'Should include Division'
     assert ranks.include?('Classis'), 'Should include Classis'
@@ -28,7 +27,4 @@ class ForSubordoTest < ActiveSupport::TestCase
     assert ranks.include?('Ordo'), 'Should include Ordo'
     assert_equal 6, ranks.size
   end
-
 end
-
-

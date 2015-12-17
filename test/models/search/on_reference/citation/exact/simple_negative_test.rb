@@ -13,22 +13,18 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 load 'test/models/search/users.rb'
 
 class SearchOnReferenceCitationExactSimpleNegativeTest < ActiveSupport::TestCase
-
-  test "search on reference citation exact simple negative" do
+  test 'search on reference citation exact simple negative' do
     reference = references(:journal_with_papers)
     params =  ActiveSupport::HashWithIndifferentAccess.new(query_target: 'reference',
-                                                           query_string: %Q(citation-exact: #{reference.citation.chop}),
+                                                           query_string: %(citation-exact: #{reference.citation.chop}),
                                                            include_common_and_cultivar_session: true,
-                                                           current_user: build_edit_user,)
+                                                           current_user: build_edit_user)
     search = Search::Base.new(params)
-    assert search.executed_query.results.size == 0, "No results expected."
+    assert search.executed_query.results.size == 0, 'No results expected.'
   end
-
 end
-
-

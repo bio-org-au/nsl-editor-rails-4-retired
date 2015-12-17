@@ -13,19 +13,18 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class SearchControllerForAdminPageTest < ActionController::TestCase
   tests SearchController
-  
-  test "admin should get search with correct elements" do
-    get(:search,{},{username: 'fred', user_full_name: 'Fred Jones', groups: ['admin']})
-    assert_response :success
-    assert_select 'a#new-dropdown-menu-link.dropdown-toggle', false, "Should not show New menu link."
-    assert_select 'a#help-dropdown-menu-link.dropdown-toggle', /Help/, "Should show Help menu link."
-    assert_select 'a#user-dropdown-menu-link.dropdown-toggle', true, "Should show User menu link."
-    assert_select 'a#admin-dropdown-menu-link.dropdown-toggle', /Admin/, "Should show Admin menu link."
-  end
 
+  test 'admin should get search with correct elements' do
+    get(:search, {}, username: 'fred', user_full_name: 'Fred Jones', groups: ['admin'])
+    assert_response :success
+    assert_select 'a#new-dropdown-menu-link.dropdown-toggle', false, 'Should not show New menu link.'
+    assert_select 'a#help-dropdown-menu-link.dropdown-toggle', /Help/, 'Should show Help menu link.'
+    assert_select 'a#user-dropdown-menu-link.dropdown-toggle', true, 'Should show User menu link.'
+    assert_select 'a#admin-dropdown-menu-link.dropdown-toggle', /Admin/, 'Should show Admin menu link.'
+  end
 end

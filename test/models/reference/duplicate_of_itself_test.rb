@@ -13,17 +13,13 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class DuplicateOfItselfTest < ActiveSupport::TestCase
-
-  test "cannot make duplicate of itself" do
+  test 'cannot make duplicate of itself' do
     reference = Reference.first
     reference.duplicate_of_id = reference.id
-    assert_raises(ActiveRecord::RecordInvalid) { reference.save!}
+    assert_raises(ActiveRecord::RecordInvalid) { reference.save! }
   end
- 
 end
-
-

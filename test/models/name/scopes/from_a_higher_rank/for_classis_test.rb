@@ -13,18 +13,14 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class ForClassisTest < ActiveSupport::TestCase
-
-  test "from a higher rank for classis" do
-    ranks = Name.from_a_higher_rank(name_ranks(:classis).id).collect {|name| name.name_rank.name}.uniq
+  test 'from a higher rank for classis' do
+    ranks = Name.from_a_higher_rank(name_ranks(:classis).id).collect { |name| name.name_rank.name }.uniq
     assert ranks.include?('Regnum'), 'Should include Regnum'
     assert ranks.include?('Division'), 'Should include Division'
     assert_equal 2, ranks.size
   end
-
 end
-
-

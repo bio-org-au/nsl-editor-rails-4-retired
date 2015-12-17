@@ -13,15 +13,13 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 require 'models/name/as_typeahead/cultivar_parent/cultivar_parent_test_helper'
 
 class CultivarParentForFormaRankTest < ActiveSupport::TestCase
-
-  test "cultivar parent suggestion" do
-    suggestions = Name::AsTypeahead.cultivar_parent_suggestions('%',-1)
-    cultivar_parent_suggestions_should_only_include(suggestions,'Forma',%w(Genus Subgenus Sectio Subsectio Series Subseries Superspecies Species Subspecies Varietas Nothovarietas Subvarietas Forma Subforma ))
+  test 'cultivar parent suggestion' do
+    suggestions = Name::AsTypeahead.cultivar_parent_suggestions('%', -1)
+    cultivar_parent_suggestions_should_only_include(suggestions, 'Forma', %w(Genus Subgenus Sectio Subsectio Series Subseries Superspecies Species Subspecies Varietas Nothovarietas Subvarietas Forma Subforma ))
   end
-
 end

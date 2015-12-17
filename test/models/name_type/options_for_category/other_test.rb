@@ -13,24 +13,18 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
- 
-class OtherTest < ActiveSupport::TestCase
 
-  test "other name type options" do
+class OtherTest < ActiveSupport::TestCase
+  test 'other name type options' do
     current_category = Name::OTHER_CATEGORY
     assert_equal 5, NameType.options_for_category(current_category).size, "Should be just 5 #{current_category} name types."
-    assert NameType.options_for_category(current_category).collect {|e| e.first}.include?('common'), "Common should be an #{current_category} name type."
-    assert NameType.options_for_category(current_category).collect {|e| e.first}.include?('informal'), "Informal should be an #{current_category} name type."
-    assert NameType.options_for_category(current_category).collect {|e| e.first}.include?('[n/a]'), "[n/a] should be an #{current_category} name type."
-    assert NameType.options_for_category(current_category).collect {|e| e.first}.include?('[default]'), "[default] should be an #{current_category} name type."
-    assert NameType.options_for_category(current_category).collect {|e| e.first}.include?('[unknown]'), "[unknown] should be an #{current_category} name type."
+    assert NameType.options_for_category(current_category).collect(&:first).include?('common'), "Common should be an #{current_category} name type."
+    assert NameType.options_for_category(current_category).collect(&:first).include?('informal'), "Informal should be an #{current_category} name type."
+    assert NameType.options_for_category(current_category).collect(&:first).include?('[n/a]'), "[n/a] should be an #{current_category} name type."
+    assert NameType.options_for_category(current_category).collect(&:first).include?('[default]'), "[default] should be an #{current_category} name type."
+    assert NameType.options_for_category(current_category).collect(&:first).include?('[unknown]'), "[unknown] should be an #{current_category} name type."
   end
-
 end
-
-
-
-

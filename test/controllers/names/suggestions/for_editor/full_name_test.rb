@@ -13,7 +13,7 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class NameFullNameSuggestionsForEditorTest < ActionController::TestCase
@@ -22,10 +22,9 @@ class NameFullNameSuggestionsForEditorTest < ActionController::TestCase
     @name = names(:a_species)
   end
 
-  test "name full name suggestions for editor" do
-    @request.headers["Accept"] = "application/javascript"
-    get(:typeahead_on_full_name,{rank_id:name_ranks(:unranked).id,term:'search for this'},{username: 'fred', user_full_name: 'Fred Jones', groups: ['edit']})
+  test 'name full name suggestions for editor' do
+    @request.headers['Accept'] = 'application/javascript'
+    get(:typeahead_on_full_name, { rank_id: name_ranks(:unranked).id, term: 'search for this' }, username: 'fred', user_full_name: 'Fred Jones', groups: ['edit'])
     assert_response :success
   end
-
 end

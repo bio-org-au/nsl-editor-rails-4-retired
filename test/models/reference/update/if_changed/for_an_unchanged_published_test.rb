@@ -13,21 +13,18 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 require 'models/reference/update/if_changed/test_helper'
 
 class ForAnUnchangedRefPublishedTest < ActiveSupport::TestCase
-
-  test "unchanged published" do
+  test 'unchanged published' do
     reference = Reference::AsEdited.find(references(:for_whole_record_change_detection).id)
     field_name = 'published'
     unchanged_field_value = reference.send(field_name) ? 1 : 0
-    assert reference.update_if_changed({field_name => unchanged_field_value},{},'a user')
+    assert reference.update_if_changed({ field_name => unchanged_field_value }, {}, 'a user')
     changed_reference = Reference.find_by(id: reference.id)
-    assert_equal reference.send(field_name)||'isnil', changed_reference.send(field_name)||'isnil', "#{field_name} should not have changed"
-    assert_equal reference.created_at, changed_reference.updated_at, "Reference should not have been updated."
+    assert_equal reference.send(field_name) || 'isnil', changed_reference.send(field_name) || 'isnil', "#{field_name} should not have changed"
+    assert_equal reference.created_at, changed_reference.updated_at, 'Reference should not have been updated.'
   end
-
 end
-

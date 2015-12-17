@@ -13,17 +13,14 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class NameDuplicateSuggestionsMustAvoidIdTest < ActiveSupport::TestCase
-
-  test "name duplicate suggestions must avoid id test" do
+  test 'name duplicate suggestions must avoid id test' do
     name = names(:angophora_costata)
-    suggestions = Name::AsTypeahead.duplicate_suggestions('angophora costata',name.id)
+    suggestions = Name::AsTypeahead.duplicate_suggestions('angophora costata', name.id)
     assert(suggestions.is_a?(Array), 'suggestions should be an array')
     assert(suggestions.size == 0, 'suggestions for "angophora costata" should have no elements')
   end
-
 end
-

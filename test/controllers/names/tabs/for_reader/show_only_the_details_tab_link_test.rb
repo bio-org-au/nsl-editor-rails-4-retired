@@ -13,7 +13,7 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class NameReaderOnlyDetailsTab < ActionController::TestCase
@@ -22,9 +22,9 @@ class NameReaderOnlyDetailsTab < ActionController::TestCase
     @name = names(:a_species)
   end
 
-  test "should not show reader the edit tab" do
-    @request.headers["Accept"] = "application/javascript"
-    get(:show,{id: @name.id,tab: 'tab_edit'},{username: 'fred', user_full_name: 'Fred Jones', groups: []})
+  test 'should not show reader the edit tab' do
+    @request.headers['Accept'] = 'application/javascript'
+    get(:show, { id: @name.id, tab: 'tab_edit' }, username: 'fred', user_full_name: 'Fred Jones', groups: [])
     assert_response :forbidden
   end
 
@@ -32,9 +32,9 @@ class NameReaderOnlyDetailsTab < ActionController::TestCase
     @name = names(:a_species)
   end
 
-  test "reader should see only details tab link" do
-    @request.headers["Accept"] = "application/javascript"
-    get(:show,{id: @name.id,tab: 'tab_details'},{username: 'fred', user_full_name: 'Fred Jones', groups: []})
+  test 'reader should see only details tab link' do
+    @request.headers['Accept'] = 'application/javascript'
+    get(:show, { id: @name.id, tab: 'tab_details' }, username: 'fred', user_full_name: 'Fred Jones', groups: [])
     assert_response :success
     assert_select 'a#name-details-tab', true, "Should show 'Detail' tab."
     assert_select 'a#name-edit-tab', false, "Should not show 'Edit' tab."
@@ -42,6 +42,4 @@ class NameReaderOnlyDetailsTab < ActionController::TestCase
     assert_select 'a#name-more-tab', false, "Should not show 'More' tab."
     assert_select 'a#tab-heading', 'a_species', "Should show 'a_species'."
   end
-
 end
-

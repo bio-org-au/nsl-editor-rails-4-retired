@@ -13,7 +13,7 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class ReferencesControllerTest < ActionController::TestCase
@@ -21,20 +21,17 @@ class ReferencesControllerTest < ActionController::TestCase
     @reference = references(:cavanilles_icones)
   end
 
-  test "should route to reference typeahead suggestions by citation" do
-    assert_routing '/references/typeahead/on_citation', { controller: "references", action: "typeahead_on_citation"}
+  test 'should route to reference typeahead suggestions by citation' do
+    assert_routing '/references/typeahead/on_citation', controller: 'references', action: 'typeahead_on_citation'
   end
 
-  #test "should route to show a reference" do
-    #assert_routing '/references/1', { controller: "references", action: "show", id: "1", tab: "tab_show_1"}
-  #end
+  # test "should route to show a reference" do
+  # assert_routing '/references/1', { controller: "references", action: "show", id: "1", tab: "tab_show_1"}
+  # end
 
-  test "should show reference" do
-    @request.headers["Accept"] = "application/javascript"
-    get(:show,{id: @reference,tab: 'tab_show_1'},{username: 'fred', user_full_name: 'Fred Jones', groups: [:edit]})
+  test 'should show reference' do
+    @request.headers['Accept'] = 'application/javascript'
+    get(:show, { id: @reference, tab: 'tab_show_1' }, username: 'fred', user_full_name: 'Fred Jones', groups: [:edit])
     assert_response :success
   end
-
 end
-
-

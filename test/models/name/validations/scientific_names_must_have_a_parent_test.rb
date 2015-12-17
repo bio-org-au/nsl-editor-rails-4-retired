@@ -13,19 +13,15 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class ScientificNamesMustHaveAParentTest < ActiveSupport::TestCase
-
-  test "scientific name without parent is invalid" do
+  test 'scientific name without parent is invalid' do
     name = names(:scientific_name)
     assert name.parent.present?, 'Should have a parent'
     assert name.valid?, 'scientific name with parent should be valid'
     name.parent = nil
     assert_not name.valid?, 'scientific name without a parent should be invalid'
   end
- 
 end
-
-

@@ -13,7 +13,7 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class NameEditorShowAllTabsTest < ActionController::TestCase
@@ -22,9 +22,9 @@ class NameEditorShowAllTabsTest < ActionController::TestCase
     @name = names(:a_species)
   end
 
-  test "should show all tabs if editor requests details tab" do
-    @request.headers["Accept"] = "application/javascript"
-    get(:show,{id: @name.id,tab: 'tab_edit'},{username: 'fred', user_full_name: 'Fred Jones', groups: ['edit']})
+  test 'should show all tabs if editor requests details tab' do
+    @request.headers['Accept'] = 'application/javascript'
+    get(:show, { id: @name.id, tab: 'tab_edit' }, username: 'fred', user_full_name: 'Fred Jones', groups: ['edit'])
     assert_response :success
     assert_select 'a#name-details-tab', true, "Should show 'Detail' tab."
     assert_select 'a#name-edit-tab', true, "Should show 'Edit' tab."
@@ -32,6 +32,4 @@ class NameEditorShowAllTabsTest < ActionController::TestCase
     assert_select 'a#name-more-tab', true, "Should show 'More' tab."
     assert_select 'a#tab-heading', 'a_species', "Should show 'a_species'."
   end
-
 end
-

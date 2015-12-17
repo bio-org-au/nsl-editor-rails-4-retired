@@ -13,7 +13,7 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class InstanceEditorShowDetailAPCTabsTest < ActionController::TestCase
@@ -22,10 +22,9 @@ class InstanceEditorShowDetailAPCTabsTest < ActionController::TestCase
     @instance = instances(:britten_created_angophora_costata)
   end
 
-              
-  test "should show detail and APC tab links if editor requests details tab" do
-    @request.headers["Accept"] = "application/javascript"
-    get(:show,{id: @instance.id,tab: 'tab_show_1','row-type'=>'instance_as_part_of_concept_record'},{username: 'fred', user_full_name: 'Fred Jones', groups: ['APC']})
+  test 'should show detail and APC tab links if editor requests details tab' do
+    @request.headers['Accept'] = 'application/javascript'
+    get(:show, { id: @instance.id, tab: 'tab_show_1', 'row-type' => 'instance_as_part_of_concept_record' }, username: 'fred', user_full_name: 'Fred Jones', groups: ['APC'])
     assert_response :success
     assert_select 'li.active a#instance-show-tab', /Details/, "Does not show 'Details' tab link."
     assert_select 'a#instance-edit-tab', false, "Should not show 'Edit' tab link."
@@ -36,6 +35,4 @@ class InstanceEditorShowDetailAPCTabsTest < ActionController::TestCase
     assert_select 'a#instance-comments-tab', false, "Should not show 'Adnot' tab link."
     assert_select 'a#instance-copy-to-new-reference-tab', false, "Should not show 'Copy' tab link."
   end
-
 end
-

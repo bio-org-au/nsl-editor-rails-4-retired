@@ -13,15 +13,13 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class AuthorAsEditedDuplicateOfIdWithNoString < ActiveSupport::TestCase
-
-  test "id with no string" do
+  test 'id with no string' do
     current_author_id = 1
-    result = Author::AsEdited.duplicate_of_from_typeahead('1','',current_author_id)
-    assert_match '', result, "Should get nothing - treating as delete."
+    result = Author::AsEdited.duplicate_of_from_typeahead('1', '', current_author_id)
+    assert_match '', result, 'Should get nothing - treating as delete.'
   end
-
 end

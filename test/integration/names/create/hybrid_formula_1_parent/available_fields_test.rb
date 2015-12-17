@@ -15,15 +15,14 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class AvailableFieldsTest < ActionDispatch::IntegrationTest
-
   include Capybara::DSL
 
-  test "hybrid 1 parent available fields" do
+  test 'hybrid 1 parent available fields' do
     visit_home_page
     fill_in 'search-field', with: 'test: hybrid 1 parent available fields'
     load_new_hybrid_formula_unknown_2nd_parent_form
@@ -39,7 +38,4 @@ class AvailableFieldsTest < ActionDispatch::IntegrationTest
     assert page.has_no_field?('author-by-abbrev'), 'author-by-abbrev should not be here'
     assert page.has_no_field?('sanctioning-author-by-abbrev'), 'Sanctioning author field should not be here'
   end
-  
 end
-
-

@@ -13,13 +13,12 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class ForTribusTest < ActiveSupport::TestCase
-
-  test "from a higher rank for tribus" do
-    ranks = Name.from_a_higher_rank(name_ranks(:tribus).id).collect {|name| name.name_rank.name}.uniq
+  test 'from a higher rank for tribus' do
+    ranks = Name.from_a_higher_rank(name_ranks(:tribus).id).collect { |name| name.name_rank.name }.uniq
     assert ranks.include?('Regnum'), 'Should include Regnum'
     assert ranks.include?('Division'), 'Should include Division'
     assert ranks.include?('Classis'), 'Should include Classis'
@@ -31,7 +30,4 @@ class ForTribusTest < ActiveSupport::TestCase
     assert ranks.include?('Subfamilia'), 'Should include Subfamilia'
     assert_equal 9, ranks.size
   end
-
 end
-
-

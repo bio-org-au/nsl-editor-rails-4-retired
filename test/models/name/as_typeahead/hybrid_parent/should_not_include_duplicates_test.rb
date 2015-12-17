@@ -13,16 +13,13 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class HybridParentSuggestionsShouldNotIncludeDuplicatesTest < ActiveSupport::TestCase
-
-  test "name parent suggestions should not include duplicates" do
-    suggestions = Name::AsTypeahead.hybrid_parent_suggestions('a duplicate species',-1)
+  test 'name parent suggestions should not include duplicates' do
+    suggestions = Name::AsTypeahead.hybrid_parent_suggestions('a duplicate species', -1)
     assert(suggestions.is_a?(Array), 'suggestions should be an array')
     assert(suggestions.size == 0, 'suggestions for "a duplicate species" should be empty')
   end
-
 end
-

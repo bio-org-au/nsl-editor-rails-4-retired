@@ -15,15 +15,14 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class RequiredFieldsTest < ActionDispatch::IntegrationTest
-
   include Capybara::DSL
 
-  test "cultivar hybrid name required fields" do
+  test 'cultivar hybrid name required fields' do
     visit_home_page
     fill_in 'search-field', with: 'test: cultivar hybrid name required fields'
     load_new_cultivar_hybrid_name_form
@@ -34,6 +33,4 @@ class RequiredFieldsTest < ActionDispatch::IntegrationTest
     assert_not_nil(page.find('#name-second-parent-typeahead')[:required], 'Name second parent should be a required field.')
     assert_not_nil(page.find('#name_name_element')[:required], 'Name should be a required field.')
   end
-
-end 
-
+end

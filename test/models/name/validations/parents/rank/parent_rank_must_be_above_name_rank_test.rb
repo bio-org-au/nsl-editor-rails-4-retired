@@ -13,12 +13,11 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class ParentRankMustBeAboveNameRank < ActiveSupport::TestCase
-
-  test "scientific name with parent of lower rank is invalid" do
+  test 'scientific name with parent of lower rank is invalid' do
     name = names(:scientific_name)
     assert name.valid?, 'Scientific name should start out valid.'
     name.name_rank = name_ranks(:genus)
@@ -26,13 +25,11 @@ class ParentRankMustBeAboveNameRank < ActiveSupport::TestCase
     assert_not name.valid?, "Parent name rank should not be lower than name's rank."
   end
 
-  test "scientific name with parent of same rank is invalid" do
+  test 'scientific name with parent of same rank is invalid' do
     name = names(:scientific_name)
     assert name.valid?, 'Scientific name should start out valid.'
     name.name_rank = name_ranks(:species)
     name.parent.name_rank = name_ranks(:species)
     assert_not name.valid?, "Parent name rank should not be the same as name's rank."
   end
- 
 end
-

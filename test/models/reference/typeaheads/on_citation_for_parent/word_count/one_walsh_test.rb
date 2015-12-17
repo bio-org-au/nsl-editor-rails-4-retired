@@ -13,15 +13,12 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class TypeaheadsOnCitationForParentWordCountOneWalshTest < ActiveSupport::TestCase
-
-  test "reference typeahead on citation for parent word count one walsh" do
-    results = Reference::AsTypeahead.on_citation_for_parent('journal_one_word',references(:simple).id,ref_types(:paper).id)
+  test 'reference typeahead on citation for parent word count one walsh' do
+    results = Reference::AsTypeahead.on_citation_for_parent('journal_one_word', references(:simple).id, ref_types(:paper).id)
     assert_equal 2, results.size, 'Should be exactly two results'
   end
- 
 end
-

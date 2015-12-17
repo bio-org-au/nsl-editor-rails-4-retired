@@ -15,15 +15,14 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 require 'test_helper'
 
 class AvailableFieldsTest < ActionDispatch::IntegrationTest
-
   include Capybara::DSL
 
-  test "create scientific name available fields" do
+  test 'create scientific name available fields' do
     visit_home_page
     fill_in 'search-field', with: 'test: scientific name available fields'
     load_new_scientific_name_form
@@ -40,8 +39,4 @@ class AvailableFieldsTest < ActionDispatch::IntegrationTest
     assert page.has_field?('sanctioning-author-by-abbrev'), 'Sanctioning author field missing'
     assert page.has_field?('name_verbatim_rank'), 'Name verbatim rank field missing'
   end
-
-  
 end
-
-

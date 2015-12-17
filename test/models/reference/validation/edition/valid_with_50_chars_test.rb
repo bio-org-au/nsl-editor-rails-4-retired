@@ -13,20 +13,16 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
- 
+
 class EditionValidWith50CharsTest < ActiveSupport::TestCase
-
-  test "edition valid with 50 chars" do
+  test 'edition valid with 50 chars' do
     reference = references(:simple)
-    assert reference.valid?, "Should start out valid"
-    reference.edition = 'x'*50
-    assert reference.valid?, "Should be valid with 50 chars"
-    reference.edition = 'y'*51
-    assert_not reference.valid?, "Should not be valid with 51 chars"
+    assert reference.valid?, 'Should start out valid'
+    reference.edition = 'x' * 50
+    assert reference.valid?, 'Should be valid with 50 chars'
+    reference.edition = 'y' * 51
+    assert_not reference.valid?, 'Should not be valid with 51 chars'
   end
- 
 end
-
-

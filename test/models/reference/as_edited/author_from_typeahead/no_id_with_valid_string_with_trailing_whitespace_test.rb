@@ -13,15 +13,13 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
 
 class ReferenceAsEditedNoAuthorIdWithValidStringWithTrailingWhitespace < ActiveSupport::TestCase
-
-  test "no id with valid string" do
+  test 'no id with valid string' do
     author = authors(:chaplin)
-    result = Reference::AsEdited.author_from_typeahead('',author.name+' ')
-    assert_equal author.id, result, "Should get a matching id for the author"
+    result = Reference::AsEdited.author_from_typeahead('', author.name + ' ')
+    assert_equal author.id, result, 'Should get a matching id for the author'
   end
-
 end

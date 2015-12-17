@@ -13,17 +13,13 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'test_helper'
- 
-class PaperValidWithoutParentTest < ActiveSupport::TestCase
 
-  test "paper valid without parent" do
+class PaperValidWithoutParentTest < ActiveSupport::TestCase
+  test 'paper valid without parent' do
     ref = references(:paper_with_journal_parent)
     ref.parent_id = nil
-    assert ref.valid? == true, "Paper without parent should be valid."
+    assert ref.valid? == true, 'Paper without parent should be valid.'
   end
- 
 end
-
-
