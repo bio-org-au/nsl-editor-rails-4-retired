@@ -7,9 +7,24 @@
 <br>
 <h5>Default Reference search</h5>
 <p/>The default search occurs when you do <strong>not</strong> enter a field name into the search.
-<p/>The default Reference search is on citations.  It is the same as if you had entered "citation:" as the field in front of the search terms. 
-<p/> It is also the same as if you had entered the field abbreviation "c:" in front of the search terms.
-<p/>The default Reference search is a "text search" that "understands" the English language and, in particular, words and word prefixes.
+<p/>This is an example of a default Reference search:
+<p/> <%= image_tag('reference-default-search-example.png') %> 
+<p/>This is an example of a non-default Reference search:
+<p/> <%= image_tag('reference-non-default-search-example.png') %> 
+<p/>The difference is the <strong>field name</strong> <q>citation:</q>, which tells the Editor which field you want searched.
+<br>
+<br>
+<h5>Field names</h5>
+<p/>Field names always end in a colon (<q>:</q>).  
+<p/>Enter them in the search field ahead of the search terms they apply to.
+<p/>Some search terms also determine a search method.
+<p/>A full list of Reference search terms is below.
+<br>
+<br>
+<h5>Default Reference searching is a text search</h5>
+<p/>The default Reference search is a <q>text search</q> on citation that <q>understands</q> the English language and, in particular, words and word prefixes.
+<p/>The result is the same as if you had entered the field name <q>citation:</q> in front of the search terms. 
+<p/>It is also the same as if you had entered the field abbreviation <q>c:</q> in front of the search terms.
 <br>
 <br>
 <h5>Text search on Reference citations</h5>
@@ -21,11 +36,11 @@ Short, P.S. (1986), Notes on Trachymene humilis (J.D.Hook.) Benth. (Umbelliferae
 </pre>
 <p/>Searches that would retrieve this paper include:
 <ul>
-  <li/><%= link_to('short trach',search_path(query_string: 'short trach', query_target: 'reference'),title:"Sample query",class:'blue') %>: 
-  <li/><%= link_to('trach short',search_path(query_string: 'short trach', query_target: 'reference'),title:"Sample query",class:'blue') %>: 
-  <li/><%= link_to('short 1986',search_path(query_string: 'short trach', query_target: 'reference'),title:"Sample query",class:'blue') %>: 
-  <li/><%= link_to('trach 1986',search_path(query_string: 'short trach', query_target: 'reference'),title:"Sample query",class:'blue') %>: 
-  <li/><%= link_to('muell 1986 humil',search_path(query_string: 'muell 1986 humil', query_target: 'reference'),title:"Sample query",class:'blue') %>: 
+  <li><%= link_to('short trach',search_path(query_string: 'short trach', query_target: 'reference'),title:"Sample query",class:'blue') %>: 
+  <li><%= link_to('trach short',search_path(query_string: 'short trach', query_target: 'reference'),title:"Sample query",class:'blue') %>: 
+  <li><%= link_to('short 1986',search_path(query_string: 'short trach', query_target: 'reference'),title:"Sample query",class:'blue') %>: 
+  <li><%= link_to('trach 1986',search_path(query_string: 'short trach', query_target: 'reference'),title:"Sample query",class:'blue') %>: 
+  <li><%= link_to('muell 1986 humil',search_path(query_string: 'muell 1986 humil', query_target: 'reference'),title:"Sample query",class:'blue') %>: 
 </ul>
 
 <br>
@@ -47,7 +62,7 @@ Münchhausen, Otto, Freiherr von (1765-1773), Der Hausvater
 <p/>The text search engine is very powerful, but it has some limitations.  
 <p/>For example, it is word-oriented and prefix-oriented, so a search for <%= link_to('"hookers icon ant"',search_path(query_string: 'hookers icon ant', query_target: 'reference'),title:"Run the query.",class:'blue') %> returns no records because "ant", although part of the word "Plantarum", is not a prefix.  That is, it is not preceded by a space nor is it at the start of the citation.
 
-<p/>For pure wildcarded fragments use the "citation-wildcard:" field, or "cw:" for short.  
+<p/>For pure wildcarded fragments use the "citation:" field name, or "c:" for short.  
 <p/>For example, a search for <%= link_to('"cw:hook icon ant"',search_path(query_string: 'cw:hook icon ant', query_target: 'reference'),title:"Run the query.",class:'blue') %> does return records.  But note "hook" instead of "hookers" in the search.
 <br>
 <br>

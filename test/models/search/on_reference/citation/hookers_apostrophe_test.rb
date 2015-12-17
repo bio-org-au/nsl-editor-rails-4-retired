@@ -19,9 +19,9 @@ load 'test/models/search/users.rb'
 
 class SearchOnReferenceCitationHookersApostropheTest < ActiveSupport::TestCase
 
-  test "search on reference citation for hookers apostrophe" do
+  test "search on reference citation text for hookers apostrophe" do
     params =  ActiveSupport::HashWithIndifferentAccess.new(query_target: 'reference',
-                                                           query_string: "citation: hookers icon pl",
+                                                           query_string: "citation-text: hookers icon pl",
                                                            include_common_and_cultivar_session: true,
                                                            current_user: build_edit_user)
     search = Search::Base.new(params)

@@ -17,11 +17,11 @@
 require 'test_helper'
 load 'test/models/search/users.rb'
 
-class IsADuplicateAndCIsSearchTest < ActiveSupport::TestCase
+class IsADuplicateAndCTIsSearchTest < ActiveSupport::TestCase
 
-  test "is a duplicate and c for citation is search" do
+  test "is a duplicate and ct for citation text is search" do
     params =  ActiveSupport::HashWithIndifferentAccess.new(query_target: 'reference',
-                                                           query_string: "is-duplicate: citation: uplica",
+                                                           query_string: "is-duplicate: ct: uplica",
                                                            include_common_and_cultivar_session: true,
                                                            current_user: build_edit_user)
     search = Search::Base.new(params)

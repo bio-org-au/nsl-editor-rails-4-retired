@@ -30,8 +30,6 @@ class Search::OnReference::PredicateFieldRule
               :has_scope,
               :scope_
 
-  DEFAULT_FIELD = 'citation:'
-
   def initialize(field,value)
     debug("initialize; field: #{field}; value: #{value}")
     @field = field
@@ -82,7 +80,7 @@ class Search::OnReference::PredicateFieldRule
     end
   end
 
-  def build_canon_field(field = DEFAULT_FIELD)
+  def build_canon_field(field)
     if RULES.has_key?(field) 
       field
     elsif RULES.has_key?(ABBREVS[field])
@@ -94,7 +92,7 @@ class Search::OnReference::PredicateFieldRule
 
   ABBREVS = {
     'c:' => 'citation:',
-    'cw:' => 'citation-wildcard:',
+    'ct:' => 'citation-text:',
     't:' => 'title:',
     'ti:' => 'title:',
     'ty:' => 'type:',
@@ -160,9 +158,9 @@ class Search::OnReference::PredicateFieldRule
     'parent-id:'            => {where_clause: " id = ? or parent_id = ?"},
     'master-id:'            => {where_clause: " id = ? or duplicate_of_id = ?"},
 
-    'citation:'             => {scope_: 'search_citation_text_for'},
+    'citation-text:'        => {scope_: 'search_citation_text_for'},
 
-    'citation-wildcard:'    => {trailing_wildcard: true, 
+    'citation:'             => {trailing_wildcard: true, 
                                 leading_wildcard: true, 
                                 tokenize: true,
                                 where_clause: " lower(citation) like ? "},

@@ -17,11 +17,11 @@
 require 'test_helper'
 load 'test/models/search/users.rb'
 
-class SearchOnReferenceCitationPrefixFragmentAnomaliesDuplicaSearchTest < ActiveSupport::TestCase
+class SearchOnReferenceCitationTextPrefixFragmentAnomaliesDuplicaSearchTest < ActiveSupport::TestCase
 
-  test "search on reference citation for prefix fragment anomalies duplica" do
+  test "search on reference citation text for prefix fragment anomalies duplica" do
     params =  ActiveSupport::HashWithIndifferentAccess.new(query_target: 'reference',
-                                                           query_string: "citation: duplica",
+                                                           query_string: "citation-text: duplica",
                                                            include_common_and_cultivar_session: true,
                                                            current_user: build_edit_user)
     search = Search::Base.new(params)

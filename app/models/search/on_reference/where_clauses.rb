@@ -18,6 +18,8 @@ class Search::OnReference::WhereClauses
 
   attr_reader  :sql
 
+  DEFAULT_FIELD = 'citation-text:'
+
   def initialize(parsed_request, incoming_sql)
     @parsed_request = parsed_request
     @sql = incoming_sql
@@ -47,7 +49,8 @@ class Search::OnReference::WhereClauses
     if field.blank? && value.blank?
       @sql
     else 
-      field_or_default = field.blank? ? 'citation:' : field
+      field_or_default = field.blank? ? DEFAULT_FIELD : field
+      debug("field_or_default: #{field_or_default}")
       rule = Search::OnReference::PredicateFieldRule.new(field_or_default,value)
       apply_rule(rule)
     end
