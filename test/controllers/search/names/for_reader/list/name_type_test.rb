@@ -23,6 +23,6 @@ class ReaderSearchControllerNamesNameTypeListTest < ActionController::TestCase
     name = names(:argyle_apple)
     get(:search, { query_target: 'name', query_string: 'type: common' }, username: 'fred', user_full_name: 'Fred Jones', groups: [])
     assert_response :success
-    assert_select "a#name-#{name.id}", /argyle apple/, 'Should see argyle apple.'
+    assert_select "a#name-#{name.id}", true, 'Should see argyle apple.'
   end
 end

@@ -30,6 +30,5 @@ class NameEditorShowAllTabsTest < ActionController::TestCase
     assert_select 'a#name-edit-tab', true, "Should show 'Edit' tab."
     assert_select 'a#name-instances-tab', true, "Should show 'Instance' tab."
     assert_select 'a#name-more-tab', true, "Should show 'More' tab."
-    assert_select 'a#tab-heading', 'a_species', "Should show 'a_species'."
   end
 end

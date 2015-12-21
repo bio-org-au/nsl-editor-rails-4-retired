@@ -1,10 +1,10 @@
 <%= render 'names/details/children' %>
 
-  <%= link_to("Refresh children...",
+  <%= link_to("Refresh descendant names...",
               '#',
               id: "name-refresh-children-link",
               class: "btn btn-primary unconfirmed-action-link pull-right",
-              title: "Refresh constructed parts of children of #{@name.full_name}.",
+              title: "Refresh constructed parts of names descended from #{@name.full_name}.",
               tabindex: increment_tab_index,
               data: {show_this_id: "confirm-or-cancel-refresh-children-link-container"})
   %>

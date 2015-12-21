@@ -36,6 +36,8 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
+    acts_as_tree (1.5.0)
+      activerecord (>= 3.0.0)
     addressable (2.3.7)
     arel (5.0.1.20140414130214)
     autoprefixer-rails (5.1.5)
@@ -306,6 +308,7 @@ DEPENDENCIES
   active_type
   activejob_backport
   activerecord-jdbcpostgresql-adapter
+  acts_as_tree
   autoprefixer-rails
   awesome_print
   better_errors (~> 1.0)

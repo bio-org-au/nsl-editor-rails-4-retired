@@ -128,6 +128,7 @@ class NamesController < ApplicationController
     @message = @name.update_if_changed(name_params,
                                        typeahead_params,
                                        current_user.username)
+    NameChildrenRefresherJob.new.async.perform(@name.id,username)
     render 'update.js'
   rescue => e
     @message = e.to_s
@@ -160,10 +161,10 @@ class NamesController < ApplicationController
 
   def refresh_children
     if @name.combined_children.size > 50
-      NameChildrenRefresherJob.new.async.perform(@name.id)
+      NameChildrenRefresherJob.new.async.perform(@name.id,username)
       render 'names/refresh_children/job_started.js'
     else
-      @total = NameChildrenRefresherJob.new.perform(@name.id)
+      @total = NameChildrenRefresherJob.new.perform(@name.id,username)
       render 'names/refresh_children/ok.js'
     end
   rescue => e

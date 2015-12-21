@@ -30,6 +30,8 @@
 <table class="example-searches table table-striped">
   <% [
       {search_target: 'Names', search_string: "is-a-parent: has-no-instances:",explanation: %Q(List names that have children but no instances.)},
+      {search_target: 'Names', search_string: "has-a-second-parent:",explanation: %Q(List names that have a second parent.)},
+      {search_target: 'Names', search_string: "Grevillea has-a-second-parent:",explanation: %Q(List Grevilleas that have a second parent.)},
       ].each do |val| %>
   <tr>
     <td class="width-30-percent">

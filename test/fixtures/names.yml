@@ -270,7 +270,7 @@ a_species:
   name_status: legitimate
   name_type: scientific
   namespace: apni
-  parent: a_family
+  parent: a_genus
   updated_by: greg
   created_by: greg
 
@@ -295,7 +295,7 @@ a_subspecies:
   name_status: legitimate
   name_type: scientific
   namespace: apni
-  parent: a_family
+  parent: a_species
   updated_by: greg
   created_by: greg
 
@@ -1597,8 +1597,6 @@ boronia_lipstick:
   name_status: default
   name_type: cultivar_hybrid
   namespace: apni
-  parent: a_species
-  second_parent: another_species
   updated_by: greg
   created_by: greg
 

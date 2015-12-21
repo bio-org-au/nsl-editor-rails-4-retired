@@ -20,12 +20,17 @@ require 'search_tools'
 class Name < ActiveRecord::Base
   extend AdvancedSearch
   extend SearchTools
+  #extend ActsAsTree::TreeView
+  #extend ActsAsTree::TreeWalker
+
   strip_attributes
+  #acts_as_tree 
  
   self.table_name = 'name'
   self.primary_key = 'id'
   self.sequence_name = 'nsl_global_seq'
   
+
   attr_accessor :display_as, :give_me_focus, :apc_instance_id, :apc_instance_is_an_excluded_name, :apc_declared_bt, :change_category_to
   scope :not_common_or_cultivar, 
     -> { where([" name_type_id in (select id from name_type where not (cultivar or lower(name_type.name) = 'common'))"]) }
@@ -142,6 +147,10 @@ class Name < ActiveRecord::Base
 
   before_create :set_defaults
   before_save :validate
+
+  def descendents
+    Name.all_children(id)
+  end
 
   def combined_children
     Name.all_children(id)
@@ -502,12 +511,14 @@ class Name < ActiveRecord::Base
   end
 
   def get_names_json
-    names_json = JSON.load(open(Name::AsServices.name_strings_url(id)))
+    logger.debug("get_names_json start for id: #{id}")
+    logger.debug("Name::AsServices.name_strings_url(id) for id: #{id}: #{Name::AsServices.name_strings_url(id)}");
+    JSON.load(open(Name::AsServices.name_strings_url(id)))
   end
 
   # Use update_attribute to avoid validation errors
-  def refresh_constructed_name_fields!
-    logger.debug("refresh_constructed_name_fields!")
+  def refresh_constructed_name_fields!(username)
+    logger.debug("refresh_constructed_name_fields! with username: #{username}")
     is_changed = false
     names_json = get_names_json
     if full_name != names_json['result']['fullName']
@@ -526,6 +537,7 @@ class Name < ActiveRecord::Base
       update_attribute(:simple_name_html, names_json['result']['simpleMarkedUpName'])
       is_changed = true
     end
+    update_attribute(:updated_by,username) if is_changed
     logger.debug("refresh_constructed_name_field! is_changed: #{is_changed}")
     is_changed ? 1 : 0
   rescue => e
@@ -555,11 +567,46 @@ class Name < ActiveRecord::Base
     category == CULTIVAR_HYBRID_CATEGORY
   end
 
+  def xprocess_tree(&consume)
+    puts "process_tree for #{full_name} \u2014 #{name_rank.name}"
+    if block_given?
+      yield self
+    else
+      puts "no block for #{full_name} \u2014 #{name_rank.name}"
+    end
+    children.each {|child| child.process_tree(&consume)}
+  end
+
+  def sub_tree_size(level = 0)
+    if level == 0
+      puts "level 0"
+      @size_ = 0
+    end
+    @size_ ||= 0
+    @size_ += 1
+    level += 1
+    children.each do |child| 
+      @size_ += child.sub_tree_size(level)
+    end
+    puts "level: #{level}; @size: #{@size_}"
+    @size_
+  end
+
+  def refresh_tree(username)
+    @tally ||= 0
+    @tally += refresh_constructed_name_fields!(username)
+    children.each do |child| 
+      @tally += child.refresh_tree(username)
+    end
+    self.second_children.each do |child| 
+      @tally += child.refresh_tree(username)
+    end
+    @tally
+  end
+
   private
   
   def set_defaults
     self.namespace_id = Namespace.apni.id if self.namespace_id.blank?
   end
-  
 end
-

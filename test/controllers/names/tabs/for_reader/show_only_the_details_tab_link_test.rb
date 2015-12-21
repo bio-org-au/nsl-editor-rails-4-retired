@@ -40,6 +40,5 @@ class NameReaderOnlyDetailsTab < ActionController::TestCase
     assert_select 'a#name-edit-tab', false, "Should not show 'Edit' tab."
     assert_select 'a#name-instances-tab', false, "Should not show 'Instance' tab."
     assert_select 'a#name-more-tab', false, "Should not show 'More' tab."
-    assert_select 'a#tab-heading', 'a_species', "Should show 'a_species'."
   end
 end

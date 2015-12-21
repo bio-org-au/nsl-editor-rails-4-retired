@@ -26,6 +26,6 @@ class OnParentIdTest < ActiveSupport::TestCase
                                                           current_user: build_edit_user)
     search = Search::Base.new(params)
     assert_equal search.executed_query.results.class, Name::ActiveRecord_Relation, 'Results should be a Name::ActiveRecord_Relation.'
-    assert_equal 9, search.executed_query.results.size, 'Expected 9 names.'
+    assert_equal 10, search.executed_query.results.size, 'Expected 10 names.'
   end
 end
