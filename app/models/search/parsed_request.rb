@@ -201,7 +201,9 @@ class Search::ParsedRequest
 
   def parse_common_and_cultivar(tokens)
     @common_and_cultivar = false
-    @include_common_and_cultivar_session = @params['include_common_and_cultivar_session']
+    @include_common_and_cultivar_session = \
+      @params['include_common_and_cultivar_session'] ||
+      @params['query_common_and_cultivar'] == 't'
     tokens
   end
   
