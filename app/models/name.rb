@@ -89,6 +89,8 @@ class Name < ActiveRecord::Base
   has_many   :children, class_name: 'Name', foreign_key: 'parent_id', dependent: :restrict_with_exception  
   belongs_to :second_parent, class_name: 'Name', foreign_key: 'second_parent_id'
   has_many   :second_children, class_name: 'Name', foreign_key: 'second_parent_id', dependent: :restrict_with_exception  
+  has_many   :just_second_children, -> { where "parent_id != second_parent_id" },
+    class_name: 'Name', foreign_key: 'second_parent_id', dependent: :restrict_with_exception
   has_many   :comments
   has_many   :name_tag_names
   has_many   :name_tags, through: :name_tag_names
@@ -516,30 +518,22 @@ class Name < ActiveRecord::Base
     JSON.load(open(Name::AsServices.name_strings_url(id)))
   end
 
-  # Use update_attribute to avoid validation errors
-  def refresh_constructed_name_fields!(username)
-    logger.debug("refresh_constructed_name_fields! with username: #{username}")
-    is_changed = false
+  # Use update_columns to avoid validation errors, stale object errors and timestamp changes.
+  def refresh_constructed_name_fields
     names_json = get_names_json
-    if full_name != names_json['result']['fullName']
-      update_attribute(:full_name, names_json['result']['fullName'])
-      is_changed = true
+    if full_name != names_json['result']['fullName'] ||
+       full_name_html != names_json['result']['fullMarkedUpName'] ||
+       simple_name != names_json['result']['simpleName'] ||
+       simple_name_html != names_json['result']['simpleMarkedUpName']
+
+      update_columns(full_name: names_json['result']['fullName'],
+                     full_name_html: names_json['result']['fullMarkedUpName'],
+                     simple_name: names_json['result']['simpleName'],
+                     simple_name_html: names_json['result']['simpleMarkedUpName'])
+      1
+    else
+      0
     end
-    if full_name_html != names_json['result']['fullMarkedUpName']
-      update_attribute(:full_name_html, names_json['result']['fullMarkedUpName'])
-      is_changed = true
-    end
-    if simple_name != names_json['result']['simpleName']
-      update_attribute(:simple_name, names_json['result']['simpleName'])
-      is_changed = true
-    end
-    if simple_name_html != names_json['result']['simpleMarkedUpName']
-      update_attribute(:simple_name_html, names_json['result']['simpleMarkedUpName'])
-      is_changed = true
-    end
-    update_attribute(:updated_by,username) if is_changed
-    logger.debug("refresh_constructed_name_field! is_changed: #{is_changed}")
-    is_changed ? 1 : 0
   rescue => e
     logger.error("refresh_constructed_name_field! exception: #{e.to_s}")
     raise
@@ -567,16 +561,6 @@ class Name < ActiveRecord::Base
     category == CULTIVAR_HYBRID_CATEGORY
   end
 
-  def xprocess_tree(&consume)
-    puts "process_tree for #{full_name} \u2014 #{name_rank.name}"
-    if block_given?
-      yield self
-    else
-      puts "no block for #{full_name} \u2014 #{name_rank.name}"
-    end
-    children.each {|child| child.process_tree(&consume)}
-  end
-
   def sub_tree_size(level = 0)
     if level == 0
       puts "level 0"
@@ -592,14 +576,14 @@ class Name < ActiveRecord::Base
     @size_
   end
 
-  def refresh_tree(username)
+  def refresh_tree
     @tally ||= 0
-    @tally += refresh_constructed_name_fields!(username)
+    @tally += refresh_constructed_name_fields
     children.each do |child| 
-      @tally += child.refresh_tree(username)
+      @tally += child.refresh_tree
     end
-    self.second_children.each do |child| 
-      @tally += child.refresh_tree(username)
+    self.just_second_children.each do |child| 
+      @tally += child.refresh_tree
     end
     @tally
   end

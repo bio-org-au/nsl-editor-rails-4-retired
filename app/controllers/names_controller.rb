@@ -125,10 +125,11 @@ class NamesController < ApplicationController
   # Ajax only.
   def update
     @name = Name::AsEdited.find(params[:id])
+    refresh_after_update = refresh_names_after_update?
     @message = @name.update_if_changed(name_params,
                                        typeahead_params,
                                        current_user.username)
-    NameChildrenRefresherJob.new.async.perform(@name.id,username)
+    refresh_names if refresh_after_update
     render 'update.js'
   rescue => e
     @message = e.to_s
@@ -219,6 +220,14 @@ class NamesController < ApplicationController
     when 'cultivar'        then Name::AsNew.cultivar
     else                        Name::AsNew.other
     end
+  end
+
+  def refresh_names_after_update?
+    @name.name_element != name_params[:name_element]
+  end
+
+  def refresh_names
+    NameChildrenRefresherJob.new.async.perform(@name.id) 
   end
 
   def name_params

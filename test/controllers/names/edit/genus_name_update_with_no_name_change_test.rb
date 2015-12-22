@@ -16,29 +16,24 @@
 #
 require 'test_helper'
 
-class GenusNameChangeAffectsSecondChildSpeciesAndSubspeciesTest < ActionController::TestCase
+class GenusNameUpdateWithNoNameChangeTest < ActionController::TestCase
   tests NamesController
 
-  test 'genus name change affects second child species and subspecies' do
-    skip 'Problem with suckerpunch job in test.'
+  test 'genus name update with no name change' do
     genus = names(:acacia)
-    puts genus.id
     species = names(:another_species)
-    puts species.full_name
     subspecies = names(:hybrid_formula)
     @request.headers['Accept'] = 'application/javascript'
-    #post(:update, { name: { 'name_element' => genus.name_element+'XYZ'}, 
-    post(:update, { name: { 'name_element' => 'XYZ'}, 
+    post(:update, { name: { 'name_element' => 'Acacia', 'verbatim_name' => 'fred'}, 
                     id: genus.id
                   },
                   username: 'fred', user_full_name: 'Fred Jones', groups: ['edit'])
     assert_response :success
     sleep(2) # to allow for the asynch job
     species_afterwards = Name.find(species.id)
-    puts species_afterwards.full_name
-    assert species.full_name != species_afterwards.full_name, "The genus's name has changed and this should affect the species's name."
+    assert species.full_name == species_afterwards.full_name, "The genus's name has not changed so this should not affect the species's name."
     subspecies_afterwards = Name.find(subspecies.id)
-    assert subspecies.full_name != subspecies_afterwards.full_name, "The genus's name has changed and this should affect the subspecies's name."
+    assert subspecies.full_name == subspecies_afterwards.full_name, "The genus's name has not changed so this should not affect the subspecies's name."
   end
 end
 

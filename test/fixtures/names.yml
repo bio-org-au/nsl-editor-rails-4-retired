@@ -1621,4 +1621,45 @@ in_apc:
   updated_by: greg
   created_by: greg
 
+proteaceae:
+  name_element: Proteaceae
+  simple_name: Proteaceae
+  simple_name_html: Proteaceae
+  full_name: Proteaceae
+  full_name_html: Proteaceae
+  name_rank: familia
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  updated_by: greg
+  created_by: greg
+
+grevillea_genus:
+  name_element: Grevillea
+  simple_name: Grevillea
+  simple_name_html: Grevillea
+  full_name: Grevillea
+  full_name_html: Grevillea
+  author: haeckel
+  name_rank: genus
+  name_status: legitimate
+  name_type: scientific
+  parent: proteaceae
+  namespace: apni
+  updated_by: greg
+  created_by: greg
+
+grevillea_cultivar_hybrid:
+  name_element: SOOPA DOOPA
+  simple_name_html: Grevillea
+  full_name: Grevillea
+  full_name_html: Grevillea
+  name_rank: unranked
+  name_status: na
+  name_type: cultivar_hybrid
+  parent: grevillea_genus
+  second_parent: grevillea_genus
+  namespace: apni
+  updated_by: greg
+  created_by: greg
 
