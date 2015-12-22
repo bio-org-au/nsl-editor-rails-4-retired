@@ -27,5 +27,7 @@ class SearchOnReferenceParentIdSimpleTest < ActiveSupport::TestCase
     search = Search::Base.new(params)
     assert_equal search.executed_query.results.class, Reference::ActiveRecord_Relation, 'Results should be a Reference::ActiveRecord_Relation.'
     assert search.executed_query.results.size > 0, 'Results expected.'
+    assert_equal search.executed_query.results.first[:id], reference.parent.id,
+      'Parent should be sorted at the top of result list.'
   end
 end

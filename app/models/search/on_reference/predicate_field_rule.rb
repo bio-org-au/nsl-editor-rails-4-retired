@@ -28,7 +28,8 @@ class Search::OnReference::PredicateFieldRule
               :field,
               :value,
               :has_scope,
-              :scope_
+              :scope_,
+              :order
 
   def initialize(field,value)
     debug("initialize; field: #{field}; value: #{value}")
@@ -44,6 +45,7 @@ class Search::OnReference::PredicateFieldRule
     @multiple_values = rule[:multiple_values] || false
     @canon_value = build_canon_value(value)
     @predicate = build_predicate(rule)
+    @order = rule[:order] || 'citation'
     if @has_scope
       @value_frequency = 1
     else
@@ -155,7 +157,9 @@ class Search::OnReference::PredicateFieldRule
                                 where_clause: " duplicate_of_id = ?",
                                 multiple_values_where_clause: " duplicate_of_id in (?)"},
 
-    'parent-id:'            => {where_clause: " id = ? or parent_id = ?"},
+    'parent-id:'            => {where_clause: " id = ? or parent_id = ?",
+                                order: "case when parent_id is null then 'A' else 'B' end, citation"},
+
     'master-id:'            => {where_clause: " id = ? or duplicate_of_id = ?"},
 
     'citation-text:'        => {scope_: 'search_citation_text_for'},

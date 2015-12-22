@@ -53,6 +53,7 @@ class Search::OnReference::WhereClauses
       debug("field_or_default: #{field_or_default}")
       rule = Search::OnReference::PredicateFieldRule.new(field_or_default,value)
       apply_rule(rule)
+      apply_order(rule)
     end
   end
 
@@ -94,6 +95,13 @@ class Search::OnReference::WhereClauses
     end
   end
 
+  def apply_order(rule)
+    if rule.order
+      @sql = @sql.order(rule.order)
+    else
+      @sql = @sql.order('citation')
+    end
+  end
 end
 
 

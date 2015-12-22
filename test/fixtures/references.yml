@@ -1273,10 +1273,10 @@ section_with_book_parent:
   updated_by: tester
 
 paper_with_journal_parent: 
-  title: paper with journal parent
-  citation: paper with journal parent
-  citation_html: paper with journal parent
-  display_title: paper with journal parent
+  title: aaa sort me high paper with journal parent
+  citation: aaa sort me high paper with journal parent
+  citation_html: aaa sort me high paper with journal parent
+  display_title: aaa sort me high paper with journal parent
   author: unknown
   language: undetermined
   namespace: apni
@@ -1473,10 +1473,10 @@ a_book:
   updated_by: tester
 
 a_journal:
-  title: a journal
-  citation: a journal
-  citation_html: a journal
-  display_title: a journal
+  title: x sort me last a journal
+  citation: x sort me last a journal
+  citation_html: x sort me last a journal
+  display_title: x sort me last a journal
   author: unknown
   language: undetermined
   namespace: apni

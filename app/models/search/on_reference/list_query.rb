@@ -31,7 +31,6 @@ class Search::OnReference::ListQuery
     where_clauses = Search::OnReference::WhereClauses.new(@parsed_request,prepared_query)
     prepared_query = where_clauses.sql
     prepared_query = prepared_query.limit(@parsed_request.limit) if @parsed_request.limited
-    prepared_query = prepared_query.order('citation')
     @sql = prepared_query
   end
 
