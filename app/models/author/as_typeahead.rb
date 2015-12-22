@@ -49,6 +49,7 @@ class Author::AsTypeahead < Author
     end
     where += " 1=1 "
     results = Author.
+        not_duplicate.
         where(binds.unshift(where)).
         joins('left outer join reference on reference.author_id = author.id').
         select('author.name as name, author.id as id, count(reference.id) as ref_count').

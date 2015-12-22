@@ -28,6 +28,8 @@ class Author < ActiveRecord::Base
   scope :lower_name_like, ->(string) { where("lower(name) like ? ",string.gsub(/\*/,'%').downcase) }
   scope :lower_abbrev_like, ->(string) { where("lower(abbrev) like ? ",string.gsub(/\*/,'%').downcase) }
   scope :not_this_id, ->(this_id) { where.not(id: this_id) }
+  scope :not_duplicate, -> { where("author.duplicate_of_id is null") }
+
   has_many :references
   belongs_to :namespace, class_name: 'Namespace', foreign_key: 'namespace_id'
 

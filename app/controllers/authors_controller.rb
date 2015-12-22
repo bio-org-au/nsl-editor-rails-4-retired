@@ -86,10 +86,11 @@ class AuthorsController < ApplicationController
 
   # Columns such as parent and duplicate_of_id use a typeahead search.
   def typeahead_on_name
-    authors = []
-    ter = params[:term]
-    authors = Author::AsTypeahead.on_name(ter) unless params[:term].blank?
-    render json: authors
+    if params[:term].blank?
+      render json: []
+    else
+      render json: Author::AsTypeahead.on_name(params[:term])
+    end
   end
 
   # Columns such as parent and duplicate_of_id use a typeahead search.
