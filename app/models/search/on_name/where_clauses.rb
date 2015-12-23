@@ -146,6 +146,7 @@ class Search::OnName::WhereClauses
     'is-not-a-second-parent:' => " not exists (select null from name child where child.second_parent_id = name.id) ",
     'has-no-instances:' => " not exists (select null from instance i where i.name_id = name.id)",
     'has-instances:' => " exists (select null from instance i where i.name_id = name.id)",
+    'is-orth-var-with-no-orth-var-instances:' => " name_status_id = (select id from name_status ns where ns.name = 'orth. var.') and not exists (select null from instance i where i.name_id = name.id and i.instance_type_id = (select id from instance_type ity where ity.name = 'orthographic variant'))",
   }
 
   WHERE_VALUE_HASH = { 

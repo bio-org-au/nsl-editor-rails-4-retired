@@ -72,21 +72,74 @@
 
 
 <h5>Assertions</h5>
+<h6>Duplication Assertions</h6>
 <table class="table table-striped">
   <% [
       {field_name: 'is-a-duplicate:', description: "marked as a duplicate"},
       {field_name: 'is-not-a-duplicate:', description: "not marked as a duplicate"},
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+        <a href="javascript:void(0)" class="searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
+          <span class="blue"><%= val[:field_name] %></span>
+        </a>
+    </td>
+    <td><%= val[:description].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+<br>
+
+
+<h6>Parent-Child Assertions</h6>
+<table class="table table-striped">
+  <% [
       {field_name: 'is-a-parent:', description: "records exist with this marked as their parent"},
       {field_name: 'is-not-a-parent:', description: "no records exist with this marked as their parent"},
       {field_name: 'has-no-parent:', description: "has no parent"},
       {field_name: 'is-a-child:', description: "has a parent"},
       {field_name: 'is-not-a-child:', description: "has no parent"},
-      {field_name: 'has-a-second-parent:', description: "has second parent"},
-      {field_name: 'has-no-second-parent:', description: "has no second parent"},
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+        <a href="javascript:void(0)" class="searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
+          <span class="blue"><%= val[:field_name] %></span>
+        </a>
+    </td>
+    <td><%= val[:description].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+<br>
+
+
+<h6>Second Parent-Child Assertions</h6>
+<table class="table table-striped">
+  <% [
       {field_name: 'is-a-second-parent:', description: "a record exists with this as its second parent"},
       {field_name: 'is-not-a-second-parent:', description: "no record exists with this as its second parent"},
+      {field_name: 'has-a-second-parent:', description: "has second parent"},
+      {field_name: 'has-no-second-parent:', description: "has no second parent"},
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+        <a href="javascript:void(0)" class="searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
+          <span class="blue"><%= val[:field_name] %></span>
+        </a>
+    </td>
+    <td><%= val[:description].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+<br>
+
+
+<h6>Instance Assertions</h6>
+<table class="table table-striped">
+  <% [
       {field_name: 'has-instances:', description: "instances exist for this name"},
       {field_name: 'has-no-instances:', description: "no instances exist for this name"},
+      {field_name: 'is-orth-var-with-no-orth-var-instances:', description: "name has status orth. var. but it has no orthographic variant type instance"},
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">
