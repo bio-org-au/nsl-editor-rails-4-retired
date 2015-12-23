@@ -62,7 +62,8 @@ class Search::OnReference::WhereClauses
       apply_predicate_to_tokens(rule)
     elsif rule.has_scope
       #@sql = @sql.send(rule.scope_,rule.value).select("*")
-      @sql = @sql.send(rule.scope_,rule.value)
+      # http://stackoverflow.com/questions/14286207/how-to-remove-ranking-of-query-results
+      @sql = @sql.send(rule.scope_,rule.value).reorder('citation')
       # https://github.com/rails/rails/issues/15138
       # Invalid SQL generated when using count with select values
       # @sql = @sql.send(rule.scope_,rule.value).select("ref_type_id,created_at,'thing' as citation_html")
