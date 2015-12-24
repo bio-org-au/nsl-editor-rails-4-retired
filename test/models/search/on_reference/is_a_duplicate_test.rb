@@ -25,6 +25,6 @@ class IsADuplicateSearchTest < ActiveSupport::TestCase
                                                           current_user: build_edit_user)
     search = Search::Base.new(params)
     assert_equal search.executed_query.results.class, Reference::ActiveRecord_Relation, 'Results should be a Reference::ActiveRecord_Relation.'
-    assert_equal 1, search.executed_query.results.size, 'Exactly 1 result is expected.'
+    assert search.executed_query.results.size > 1, 'At least 1 result is expected.'
   end
 end

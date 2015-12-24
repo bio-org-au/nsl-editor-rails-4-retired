@@ -25,6 +25,6 @@ class SearchOnReferenceCitationPrefixFragmentSearchTest < ActiveSupport::TestCas
                                                           current_user: build_edit_user)
     search = Search::Base.new(params)
     assert_equal search.executed_query.results.class, Reference::ActiveRecord_Relation, 'Results should be a Reference::ActiveRecord_Relation.'
-    assert_equal 1, search.executed_query.results.size, 'One result expected.  Citation text search should support prefix text fragments.'
+    assert search.executed_query.results.size > 1, 'At least one result expected.  Citation text search should support prefix text fragments.'
   end
 end

@@ -1860,3 +1860,59 @@ hookers_icones_plantarum:
   created_by: tester
   updated_by: tester
   
+a_book_parent_to_unknown:
+  title: book parent to unknown
+  display_title: book parent to unknown
+  citation: book parent to unknown
+  citation_html: book parent to unknown
+  author: dash
+  ref_author_role: editor
+  namespace: apni
+  ref_type: book
+  language: undetermined
+  created_by: tester
+  updated_by: tester
+  
+an_unknown_type_invalid_child_of_book:
+  title: unknown invalidly child of book
+  display_title: unknown invalidly child of book
+  citation: unknown invalidly child of book
+  citation_html: unknown invalidly child of book
+  author: dash
+  ref_author_role: author
+  namespace: apni
+  ref_type: unknown
+  parent: a_book_parent_to_unknown
+  language: undetermined
+  created_by: tester
+  updated_by: tester
+  
+a_section_type_intended_master:
+  title: a section type intended master
+  display_title: a section type intended master
+  citation: a section type intended master
+  citation_html: a section type intended master
+  author: dash
+  ref_author_role: author
+  namespace: apni
+  ref_type: section
+  parent: a_book_parent_to_unknown
+  language: undetermined
+  created_by: tester
+  updated_by: tester
+
+an_unknown_type_already_a_duplicate:
+  title: an unknown type already a duplicate
+  display_title: an unknown type already a duplicate
+  citation: an unknown type already a duplicate
+  citation_html: an unknown type already a duplicate
+  author: dash
+  ref_author_role: author
+  namespace: apni
+  ref_type: unknown
+  parent: a_book_parent_to_unknown
+  duplicate_of: a_section_type_intended_master
+  language: undetermined
+  created_by: tester
+  updated_by: tester
+  

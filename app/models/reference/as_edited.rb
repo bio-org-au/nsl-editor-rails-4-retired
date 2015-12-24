@@ -30,16 +30,25 @@ class Reference::AsEdited < Reference::AsTypeahead
     logger.error("Reference::AsEdited#create; params: #{params}; typeahead params: #{typeahead_params}")
     raise
   end
+
+  def debug(s)
+    logger.debug("Reference::AsEdited: #{s}")
+  end
+    
  
   def update_if_changed(params,typeahead_params,username)
     params = empty_strings_should_be_nils(params)
     assign_attributes(params)
     resolve_typeahead_params(typeahead_params)
     if changed?
-      self.updated_by = username
-      save!
-      set_citation!
-      'Updated'
+      if just_setting_duplicate_of_id
+        just_set_duplicate_of_id(typeahead_params,username)
+      else
+        self.updated_by = username
+        save!
+        set_citation!
+        'Updated'
+      end
     else
       'No change.'
     end
@@ -47,6 +56,22 @@ class Reference::AsEdited < Reference::AsTypeahead
     logger.error("Reference::AsEdited with params: #{params}, typeahead_params: #{typeahead_params}")
     logger.error("Reference::AsEdited with params: #{e.to_s}")
     raise
+  end
+
+  def just_setting_duplicate_of_id
+    changed_attributes.size == 1 && changed_attributes.has_key?("duplicate_of_id")
+  end
+
+  def just_set_duplicate_of_id(params,username)
+    if params["duplicate_of_typeahead"].blank? 
+      update_attribute(:duplicate_of_id,nil)
+      update_attribute(:updated_by,username)
+      'Duplicate cleared'
+    else
+      update_attribute(:duplicate_of_id,params["duplicate_of_id"])
+      update_attribute(:updated_by,username)
+      'Duplicate set'
+    end
   end
 
   # Empty strings as parameters for string fields are interpreted as a change.
