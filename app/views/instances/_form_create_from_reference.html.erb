@@ -18,6 +18,7 @@
                class="typeahead form-control width-100-percent give-me-focus" 
                tabindex="<%= increment_tab_index %>"
                type="text" 
+               title="Select a name from the list of suggestions that appears as you type."
                placeholder="Name"
                value=""/>
       </section>
@@ -26,7 +27,7 @@
     appears in
     <%= show_field_as_linked_lookup('',@reference,'citation', search_path(query_string: %Q(id:#{@reference.id}),query_target: 'reference'),'reference') %>
     on page
-    <%= f.text_field :page, tabindex: increment_tab_index %>
+    <%= f.text_field :page, title: "Enter the page details for the name usage", tabindex: increment_tab_index %>
     <br>
     as an instance type*
     <%= render partial: 'detail_line', locals: {
@@ -38,15 +39,15 @@
     %>
     with verbatim name
     <br>
-    <%= f.text_field :verbatim_name_string, class: "form-control", tabindex: increment_tab_index %>
+    <%= f.text_field :verbatim_name_string, class: "form-control", title: "The verbatim or literal name as it occurs, if non-standard.", tabindex: increment_tab_index %>
     with BHL URL
-    <%= f.text_field :bhl_url, class: "form-control", tabindex: increment_tab_index %>
+    <%= f.text_field :bhl_url, class: "form-control", title: "Biodiversity Heritage Library link address", tabindex: increment_tab_index %>
     <br>
     <%= f.hidden_field :name_id %>
     <br>
     <%= f.hidden_field :reference_id, value: @reference.id %>
     <br>
-    <%= f.submit class: 'btn-primary', tabindex: increment_tab_index %>
+    <%= f.submit class: 'btn-primary', title: "Create the new instance", tabindex: increment_tab_index %>
     <br>
     <br>
     <% refresh_page_link = link_to("Refresh page",
