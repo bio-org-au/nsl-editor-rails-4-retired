@@ -20,7 +20,8 @@ class Name::AsTypeahead < Name
     if term.blank?
       results = []
     elsif 
-      results = Name.where(["lower(full_name) like ?",term.downcase+'%'])\
+      results = Name.not_a_duplicate \
+        .where(["lower(full_name) like ?",term.downcase+'%'])\
         .order('lower(full_name)').limit(SEARCH_LIMIT) \
         .collect {|n| {value: "#{n.full_name} - #{n.name_status.name}", id: n.id}} 
     end
