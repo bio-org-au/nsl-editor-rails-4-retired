@@ -8,16 +8,13 @@
     </a>
     <ul id="create-dropdown-menu" class="dropdown-menu" role="menu">
       <li role="presentation">
-        <%= link_to "Editor help", help_index_path, title: 'View editor help', tabindex: '-1' %>
+        <%= link_to "Overview", help_index_path, title: 'View editor help', tabindex: '-1' %>
       </li>
       <li role="presentation">
         <%= link_to "Name rules", name_rules_path, title: 'See the name rules', tabindex: '-1' %>
       </li>
       <li role="presentation">
         <%= link_to "Reference type rules", ref_type_rules_path, title: 'See reference type rules', tabindex: '-1' %>
-      </li>
-      <li role="presentation">
-        <%= link_to "History of changes to the editor", history_path, title: 'See the history of changes to the editor', tabindex: '-1' %>
       </li>
       <li role="presentation">
         <%= link_to "Instance models", instance_models_path, title: 'See diagrams modelling instances', tabindex: '-1' %>
@@ -27,6 +24,13 @@
       </li>
       <li role="presentation">
         <%= link_to "Instance Types", instance_types_path, title: 'List of instance types', tabindex: '-1' %>
+      </li>
+      <li role="presentation" class="divider"></li>
+      <li role="presentation">
+        <%= link_to "Changes 2016", history_2016_path, title: 'Changes to the editor recorded for 2016', tabindex: '-1' %>
+      </li>
+      <li role="presentation">
+        <%= link_to "Changes 2015", history_2015_path, title: 'Changes to the editor recorded from May 2015 to the end of 2015', tabindex: '-1' %>
       </li>
     </ul>
 </li>

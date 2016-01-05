@@ -14,18 +14,13 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-class HelpController < ApplicationController
+class HistoryController < ApplicationController
   before_filter :hide_details, :empty_search
 
-  def index
+  def y2015
   end
 
-  def instance_models
+  def y2016
   end
 
-  def ref_type_rules
-  end
-
-  def typeaheads
-  end
 end

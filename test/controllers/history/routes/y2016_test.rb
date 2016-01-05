@@ -1,4 +1,4 @@
-#   Copyright 2015 Australian National Botanic Gardens
+#   Copyright 2016 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
 #
@@ -14,18 +14,11 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-class HelpController < ApplicationController
-  before_filter :hide_details, :empty_search
+require 'test_helper'
 
-  def index
-  end
-
-  def instance_models
-  end
-
-  def ref_type_rules
-  end
-
-  def typeaheads
+class HistoryY2016Test < ActionController::TestCase
+  tests HistoryController
+  test 'history 2016 should route' do
+    assert_routing '/history/2016', controller: 'history', action: 'y2016'
   end
 end

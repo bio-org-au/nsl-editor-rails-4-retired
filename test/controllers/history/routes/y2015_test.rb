@@ -14,18 +14,11 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-class HelpController < ApplicationController
-  before_filter :hide_details, :empty_search
+require 'test_helper'
 
-  def index
-  end
-
-  def instance_models
-  end
-
-  def ref_type_rules
-  end
-
-  def typeaheads
+class HistoryY2015Test < ActionController::TestCase
+  tests HistoryController
+  test 'history 2015 should route' do
+    assert_routing '/history/2015', controller: 'history', action: 'y2015'
   end
 end

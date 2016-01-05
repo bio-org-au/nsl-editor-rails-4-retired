@@ -1,3 +1,5 @@
+# encoding: utf-8
+#
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -14,18 +16,13 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-class HelpController < ApplicationController
-  before_filter :hide_details, :empty_search
+require 'test_helper'
 
-  def index
-  end
+class HistoryAuthorizationsY2015UnauthenticatedTest < ActionController::TestCase
+  tests HistoryController
 
-  def instance_models
-  end
-
-  def ref_type_rules
-  end
-
-  def typeaheads
+  test 'history y2015 should get redirected unauthenticated' do
+    get :y2015
+    assert_response :redirect
   end
 end

@@ -43,6 +43,7 @@ class Ability
     can 'application',        'set_include_common_cultivars'
     can 'authors',            'tab_show_1'
     can 'help',               :all
+    can 'history',            :all
     can 'instance_types',     'index'
     can 'instances',          'tab_show_1'
     can 'instances',          'update_reference_id_widgets'

@@ -140,10 +140,11 @@ Rails.application.routes.draw do
   match '/admin/db_connections', as: "db_connections", to: "admin#db_connections", via: :get
 
   match 'help/index', to: "help#index", via: :get
-  match 'help/history', to: "help#history", as: 'history', via: :get
   match 'help/instance_models', to: "help#instance_models", as: 'instance_models', via: :get
   match 'help/ref_type_rules', to: "help#ref_type_rules", as: 'ref_type_rules', via: :get
   match 'help/typeaheads', to: "help#typeaheads", as: 'typeaheads', via: :get
+  match 'history/2016', to: "history#y2016", as: 'history_2016', via: :get
+  match 'history/2015', to: "history#y2015", as: 'history_2015', via: :get
   resources :instance_types, only: [:index]
 
   match '/set_include_common_and_cultivar', to: "search#set_include_common_and_cultivar", as: 'set_include_common_and_cultivar', via: :post

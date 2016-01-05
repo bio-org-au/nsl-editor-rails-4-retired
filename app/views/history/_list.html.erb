@@ -1,0 +1,45 @@
+
+<% title_text = "View this issue in JIRA. Opens in a new tab or window." %>
+<div id="search-results" 
+     class="col-xs-12 col-sm-12 col-md-12 col-lg-12 
+     nothing-selected stylish-scrollbar">
+  <div id="search-results-inner-for-history" 
+       class="no-left-padding col-xs-12 col-sm-12 col-md-12 
+       col-lg-12 search-results-inner">
+    <h3><%= the_year %> Changes</h3>
+    <p>Changes requested by users, or that should be visible to users, 
+    or that might be but should not be visible to users.  Not the full 
+    set of technical changes.</p>
+    <% if defined? the_note %>
+      <p><%= the_note %></p>
+    <% end %>
+    <ul class="list-group">  
+     <% the_list.each do |val| %>
+       <% if val.has_key?(:release) %>
+       <li class="list-group-item bglavender">
+        <span>
+          <%= val[:date] %>
+          &mdash; &nbsp;
+          Production Release
+        </span>
+       <% else %>
+       <li class="list-group-item">
+        <%= val[:date] %>
+        &mdash;
+        NSL-<%= val[:jira_id] %>:&nbsp;
+        <%= (val[:description]).html_safe %>
+        <span class="badge">
+          <%= link_to "(NSL-#{val[:jira_id]}) 
+            #{icon('external-link fa-lg')}".html_safe, 
+            "https://www.anbg.gov.au/25jira/browse/NSL-#{val[:jira_id]}",
+            class:"white hover-white",
+            title: "#{title_text}",
+            target: "other" %>
+        </span>
+       <% end %>
+       </li>
+     <% end %>
+     </ul>
+  </div>
+</div>
+

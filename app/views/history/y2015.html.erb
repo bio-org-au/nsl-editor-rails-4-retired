@@ -1,0 +1,6 @@
+<% content_for :search_result_summary do %>
+<% end %>
+<%= render partial: 'list', 
+           locals: {the_year: '2015', 
+                    the_list: History::CHANGES_2015,
+                    the_note: 'The change log started in May 2015.'} %>
