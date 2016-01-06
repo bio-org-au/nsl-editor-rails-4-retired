@@ -17,6 +17,11 @@
 #
 class History
   CHANGES_2016 = [
+    { date: '06-Jan-2016',
+      jira_id: '1603',
+      description: 'Double-clicking text fields no 
+      longer selects the whole field. Default behaviour applies:
+      triple click selects whole field.' },
     { date: '05-Jan-2016',
       jira_id: '1601',
       description: 'Split single history page into two yearly pages.

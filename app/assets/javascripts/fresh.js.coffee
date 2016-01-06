@@ -21,8 +21,6 @@ jQuery ->
   $('body').on('click','.edit-details-tab', (event) ->                 loadDetails(event,$(this),true))
   $('body').on('click','.change-name-category-on-edit-tab', (event) -> changeNameCategoryOnEditTab(event,$(this),true))
   $('body').on('click','#master-checkbox.stylish-checkbox', (event) -> masterCheckboxClicked(event,$(this)))
-  $('body').on('dblclick','input', (event) ->                          selectInputContents(event,$(this)))
-  $('body').on('dblclick','textarea', (event) ->                       selectInputContents(event,$(this)))
 
   $('tr.search-result').keydown (event) ->                             searchResultKeyNavigation(event,$(this))
   $('body').on('focus','tr.search-result td.takes-focus', (event) ->   searchResultFocus(event,$(this).parent('tr')))
@@ -439,10 +437,6 @@ searchResultKeyNavigation = (event,$this) ->
       keep_going = true
   event.preventDefault() unless keep_going
 
-selectInputContents = (event,$this) ->
-  $this.select()
-  return false
-  
 clickSearchResultCB = (event,$this) ->
   debug('clickSearchResultCB')
   if $this.hasClass('stylish-checkbox-checked')
