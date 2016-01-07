@@ -13,10 +13,11 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 require 'advanced_search'
 require 'search_tools'
 
+# Instances connect Names to References.
 class Instance < ActiveRecord::Base
   extend AdvancedSearch
   extend SearchTools
@@ -27,29 +28,21 @@ class Instance < ActiveRecord::Base
   self.primary_key = 'id'
   self.sequence_name = 'nsl_global_seq'
 
-  scope :ordered_by_name, -> {joins(:name).order('simple_name asc')}
-  # Explanation for each step below - working from the innermost function out i.e. down
-  # emulate numeric page ordering.
-  # remove dash and anything following; case: 19-20; sort as 19
-  # remove alphas, etc
-  # ltrim spaces
-  # ltrim comma
-  # remove comma and anything after it
-  # left pad with plenty of zeros to emulate numeric sort on strings
-  # then sort on page (again, but the whole field) to correctly order cases like '75, t. 101', '75, t. 102'
-  # noting this does not solve cases like '74, t. 100', '74, t. 99'
-  scope :ordered_by_page, -> {order("lpad(
-                                       regexp_replace(
-                                         regexp_replace(
-                                           regexp_replace(
-                                             regexp_replace(
-                                               regexp_replace(page,'-.*$',''),  
-                                             '[A-z. ]','','g'),                 
-                                           '^  *',''),                          
-                                         '^,',''),                              
-                                       ',.*',''),                               
-                                     12,'0'),name.full_name")}
- 
+  scope :ordered_by_name, -> { joins(:name).order('simple_name asc') }
+  scope :ordered_by_page, -> {
+    order("Lpad(
+            Regexp_replace(
+              Regexp_replace(page, '[A-z. ]','','g'),
+            '[^0-9]*([0-9][0-9]*).*', '\\1')
+            ||
+            Regexp_replace(
+                Regexp_replace(page, '.*-.*', '~'),
+            '[^~].*','0'),
+          12,'0'),
+          page,
+          name.full_name")
+  }
+
   scope :in_nested_instance_type_order, -> {order(
                          "          case instance_type.name " +
                          "          when 'basionym' then 1 " +
@@ -79,8 +72,8 @@ class Instance < ActiveRecord::Base
   scope :order_by_name_full_name, -> { joins(:name).order(' name.full_name ')}
 
 
-  attr_accessor :expanded_instance_type, :display_as, :relationship_flag, 
-                :give_me_focus, :legal_to_order_by, 
+  attr_accessor :expanded_instance_type, :display_as, :relationship_flag,
+                :give_me_focus, :legal_to_order_by,
                 :show_primary_instance_type, :data_fix_in_process,
                 :consider_apc
   belongs_to :namespace, class_name: 'Namespace', foreign_key: 'namespace_id'
@@ -100,7 +93,7 @@ class Instance < ActiveRecord::Base
   has_many :comments
 
   validates_presence_of :name_id, :reference_id, :instance_type_id, message: 'cannot be empty.'
-  validates :name_id, uniqueness: { scope: [:reference_id, :instance_type_id, :cites_id, :cited_by_id, :page], 
+  validates :name_id, uniqueness: { scope: [:reference_id, :instance_type_id, :cites_id, :cited_by_id, :page],
                                     message: 'already has an instance with the same reference, type and page' }
 
   validate :relationship_ref_must_match_cited_by_instance_ref,
@@ -223,7 +216,7 @@ class Instance < ActiveRecord::Base
       'Unknown - unrecognised type'
     end
   end
-  
+
   def is_cited_by
     Instance.where({cited_by_id:self.id}).collect do |instance|
       instance.display_as = 'cited-by-instance'
@@ -274,7 +267,7 @@ class Instance < ActiveRecord::Base
     #self.instance_type_id = InstanceType.unknown.id if instance_type.blank?
     self.namespace_id = Namespace.apni.id if self.namespace_id.blank?
   end
-  
+
   # simple i.e. not a relationship instance
   def simple?
     cites_id.blank? && cited_by_id.blank?
@@ -287,7 +280,7 @@ class Instance < ActiveRecord::Base
   def type
     simple? ? 'simple' : 'relationship'
   end
-  
+
   def misapplied?
     instance_type.misapplied?
   end
@@ -295,11 +288,11 @@ class Instance < ActiveRecord::Base
   def self.find_references
     lambda {|title| Reference.where(' lower(title) = ?',title.downcase)}
   end
-  
+
   def self.find_names
     lambda {|simple_name| Name.where(' lower(simple_name) = ?',simple_name.downcase)}
   end
-   
+
   def self.expansion(search_string)
     expand_wanted = !search_string.match(/expand:/).nil?
     logger.debug("display should be:  expand_wanted: #{expand_wanted}")
@@ -332,7 +325,7 @@ class Instance < ActiveRecord::Base
     results.push(instance.name)
     instance.display_as = 'instance-for-expansion'
     results.push(instance)
-    instance.is_cited_by.each do |cited_by| 
+    instance.is_cited_by.each do |cited_by|
       cited_by.expanded_instance_type = cited_by.instance_type.name
       results.push(cited_by)
     end
@@ -359,7 +352,7 @@ class Instance < ActiveRecord::Base
     reference = Reference.find_by(id: reference_id)
     unless reference.blank?
       reference.display_as_part_of_concept
-      count = 1 
+      count = 1
       query = reference.instances.joins(:name).includes({name: :name_status}).includes(:instance_type).includes(this_is_cited_by: [:name, :instance_type])
       query = order_by == 'page' ? query.ordered_by_page : query.ordered_by_name
       query.each do |instance|
@@ -370,7 +363,7 @@ class Instance < ActiveRecord::Base
             if show_instances
               instance.display_within_reference
               results.push(instance)
-              instance.is_cited_by.each do |cited_by| 
+              instance.is_cited_by.each do |cited_by|
                 count += 1
                 cited_by.expanded_instance_type = cited_by.instance_type.name
                 results.push(cited_by)
@@ -378,9 +371,9 @@ class Instance < ActiveRecord::Base
                   limited = true
                   break
                 end
-              end 
+              end
               unless instance.cites_this.nil?
-                results.push(instance.cites_this) 
+                results.push(instance.cites_this)
                 count += 1
                 if count > limit
                   limited = true
@@ -389,7 +382,7 @@ class Instance < ActiveRecord::Base
               end
             end
           end
-        end  
+        end
         if count > limit
           limited = true
           break
@@ -417,7 +410,7 @@ class Instance < ActiveRecord::Base
     end
     results
   end
- 
+
   # Instances targetted in nsl-720
   def self.nsl_720
     logger.debug("nsl_720")
@@ -456,7 +449,7 @@ class Instance < ActiveRecord::Base
         cited_by_original_instance.expanded_instance_type = cited_by_original_instance.instance_type.name_as_a_noun
         cited_by_original_instance.display_as = 'cited-by-instance'
         results.push(cited_by_original_instance)
-      end       
+      end
     end
     results
   end
@@ -509,7 +502,7 @@ class Instance < ActiveRecord::Base
     self.display_as = :citing_instance_within_name_search
     self
   end
-  
+
   # This turns field descriptors into parts of a where clause.
   # It is for "specific" field descriptors.  The "generic" field descriptors should have been consumed beforehand.
   def self.bindings_to_where(search_terms_array,where,binds)
@@ -520,12 +513,12 @@ class Instance < ActiveRecord::Base
       logger.debug "pairing: #{pairing}"
       logger.debug "pairing class: #{pairing.class}"
       logger.debug "pairing size: #{pairing.size}"
-      if pairing.class == String         
+      if pairing.class == String
         case pairing.downcase
         when 'with-comments'
           where += " and exists (select null from comment where comment.reference_id = reference.id) "
         end
-      elsif pairing.size == 2         
+      elsif pairing.size == 2
         case pairing[0].downcase
         when 'id'
           where += " and id = ? "
@@ -533,7 +526,7 @@ class Instance < ActiveRecord::Base
         when 'instance-type'
           where += " and instance_type_id =  (select id from instance_type where instance_type.name = ?) "
           binds.push(pairing[1])
-        when /^verbatim-name-string$/ 
+        when /^verbatim-name-string$/
           where += " and lower(verbatim_name_string) like ? "
           binds.push(prepare_search_term_string(pairing[1]))
         when 'name-id'
@@ -584,7 +577,7 @@ class Instance < ActiveRecord::Base
                     "reference.pages, reference.source_system, instance_type.name instance_type_name, name.full_name ").
              where(["cited_by_id is null and cites_id is null and lower(name.full_name) like lower(?)","%#{query}%"]).
              order('reference.year, author.name').limit(20).
-             collect do | i | 
+             collect do | i |
                value = "#{i.full_name} in #{i.citation}:#{i.year} #{'['+i.pages+']' unless i.pages.blank? || i.pages.match(/null - null/)}"
                value += "[#{i.instance_type_name}]"  unless i.instance_type_name == 'secondary reference'
                value += "[#{i.source_system.downcase}]" unless i.source_system.blank?
@@ -595,7 +588,7 @@ class Instance < ActiveRecord::Base
 
   # For NSL-720
   def self.synonyms_that_should_be_unpublished_citations
-    long_sql=<<-EOT 
+    long_sql=<<-EOT
       SELECT     i.id,
                  i.cites_id,
                  i.created_by,
@@ -672,16 +665,14 @@ class Instance < ActiveRecord::Base
     done
   end
 
-  # Notes: 
+  # Notes:
   # - setting the updated_by column to audit the user who is deleting the record.
   # - avoid validation on that update - otherwise the delete will not occur.
   def delete_as_user(username)
-    update_attribute(:updated_by, username) 
+    update_attribute(:updated_by, username)
     Instance::AsServices.delete(id)
   rescue => e
     logger.error("delete_as_user exception: #{e.to_s}")
     raise
   end
-
 end
-

@@ -23,6 +23,6 @@ class SearchNamesQueryCommonAndCultivarParamListSecondParentIdTest < ActionContr
     name = names(:another_species)
     get(:search, { query_target: "name", query_string: "second-parent-id: #{name.id}", query_common_and_cultivar: "t" }, username: 'fred', user_full_name: 'Fred Jones', groups: [])
     assert_response :success
-    assert_select '#search-results-summary', /5 records\b/, 'Should find 5 records, including common/cultivars'
+    assert_select '#search-results-summary', /7 records\b/, 'Should find 5 records, including common/cultivars'
   end
 end

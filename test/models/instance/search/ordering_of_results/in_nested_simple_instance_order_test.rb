@@ -73,9 +73,9 @@ class InNestedSimpleInstanceOrderTest < ActiveSupport::TestCase
     assert_with_args(results, 43, '999 - a_varietas')
     assert_with_args(results, 44, ' - an unranked with an instance')
     assert_with_args(results, 45, '999 - an_ordo')
-    assert_with_args(results, 46, '75, t. 102 - Magnoliopsida Brongn. a_classis')
-    assert_with_args(results, 47, '75, t. 101 - Metrosideros costata Gaertn.')
-    assert_with_args(results, 48, '76 - Metrosideros costata Gaertn.')
-    assert_with_args(results, 49, '19-20 - Plantae Haeckel')
+    assert_with_args(results, 48, '75, t. 102 - Magnoliopsida Brongn. a_classis')
+    assert_with_args(results, 49, '75, t. 101 - Metrosideros costata Gaertn.')
+    assert_with_args(results, 50, '76 - Metrosideros costata Gaertn.')
+    assert_with_args(results, 51, '19-20 - Plantae Haeckel')
   end
 end

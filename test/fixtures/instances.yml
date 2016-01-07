@@ -638,3 +638,21 @@ has_no_page_bhl_url_verbatim_name_string:
   created_by: tester
   updated_by: tester
 
+page_57_hyphen_58:
+  reference: reference_1_for_instance_ordering_by_page
+  name: dummy_name_2
+  instance_type: comb_nov
+  page: 57-58
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+
+page_57:
+  reference: reference_1_for_instance_ordering_by_page
+  name: dummy_name_3
+  instance_type: comb_nov
+  page: 57
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+

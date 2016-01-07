@@ -1663,3 +1663,33 @@ grevillea_cultivar_hybrid:
   updated_by: greg
   created_by: greg
 
+dummy_name_2:
+  name_element: dummy_name_2
+  full_name: dummy_name_2
+  full_name_html: dummy_name_2
+  simple_name: dummy_name_2
+  simple_name_html: dummy_name_2
+  name_rank: unranked
+  name_status: default
+  name_type: cultivar_hybrid
+  namespace: apni
+  parent: a_species
+  second_parent: another_species
+  updated_by: greg
+  created_by: greg
+
+dummy_name_3:
+  name_element: dummy_name_3
+  full_name: dummy_name_3
+  full_name_html: dummy_name_3
+  simple_name: dummy_name_3
+  simple_name_html: dummy_name_3
+  name_rank: unranked
+  name_status: default
+  name_type: cultivar_hybrid
+  namespace: apni
+  parent: a_species
+  second_parent: another_species
+  updated_by: greg
+  created_by: greg
+
