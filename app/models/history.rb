@@ -17,6 +17,12 @@
 #
 class History
   CHANGES_2016 = [
+    { date: '08-Jan-2016', release: true },
+    { date: '07-Jan-2016',
+      jira_id: '447',
+      description: 'Instances for a reference query in page
+      order refinement - put hyphenated ranges last . <br>
+      e.g. "58-59" after "58".' },
     { date: '06-Jan-2016',
       jira_id: '1603',
       description: 'Double-clicking text fields no 
