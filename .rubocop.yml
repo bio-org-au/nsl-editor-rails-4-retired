@@ -1,2 +1,10 @@
 Style/TrailingComma:
   Enabled: false
+StringLiterals:
+  EnforcedStyle: double_quotes
+  Enabled: true
+
+# Gives warning: || Warning: unrecognized cop Rails found in /Users/gregc/Dropbox/anbg/rails/ned/.rubocop.yml
+# Rails:
+#   Enabled: true
+
