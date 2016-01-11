@@ -14,17 +14,17 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
-load 'test/models/search/users.rb'
+require "test_helper"
+load "test/models/search/users.rb"
 
 class SearchOnReferenceAuthorRoleSimpleTest < ActiveSupport::TestCase
-  test 'search on reference author role simple' do
+  test "search on reference author role simple" do
     author_role = ref_author_roles(:editor)
-    params = ActiveSupport::HashWithIndifferentAccess.new(query_target: 'reference',
+    params = ActiveSupport::HashWithIndifferentAccess.new(query_target: "reference",
                                                           query_string: "author-role: #{author_role.name}",
                                                           include_common_and_cultivar_session: true,
                                                           current_user: build_edit_user)
     search = Search::Base.new(params)
-    assert search.executed_query.results.size > 0, 'Results expected.'
+    assert search.executed_query.results.size > 0, "Results expected."
   end
 end

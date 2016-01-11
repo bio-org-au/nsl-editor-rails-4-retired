@@ -13,7 +13,7 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 class NameTagNamesController < ApplicationController
   before_action :set_name_tag_name, only: [:show, :edit, :update, :destroy]
 
@@ -32,18 +32,18 @@ class NameTagNamesController < ApplicationController
   def create
     logger.debug("Start create name_tag_name")
     @name_tag_name = NameTagName.new(name_tag_name_params)
-    @message = ''
+    @message = ""
 
     respond_to do |format|
       if @name_tag_name.save_new_record_with_username(current_user.username)
-        format.html { redirect_to @name_tag_name, notice: 'Name tag name was successfully created.' }
+        format.html { redirect_to @name_tag_name, notice: "Name tag name was successfully created." }
         format.json { render :show, status: :created, location: @name_tag_name }
         format.js {}
       else
         @message = "Could not attach that tag because #{@name_tag_name.errors.full_messages.first}"
         format.html { render :new }
         format.json { render json: @name_tag_name.errors, status: :unprocessable_entity }
-        format.js {render :create_failed }
+        format.js { render :create_failed }
       end
     end
   end
@@ -53,20 +53,21 @@ class NameTagNamesController < ApplicationController
   def destroy
     @name_tag_name.destroy
     respond_to do |format|
-      format.html { redirect_to name_tag_names_url, notice: 'Name tag name was successfully destroyed.' }
+      format.html { redirect_to name_tag_names_url, notice: "Name tag name was successfully destroyed." }
       format.json { head :no_content }
       format.js   {}
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_name_tag_name
-      @name_tag_name = NameTagName.where(name_id: params[:name_id]).where(tag_id: params[:tag_id]).first
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def name_tag_name_params
-      params.require(:name_tag_name).permit(:name_id,:tag_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_name_tag_name
+    @name_tag_name = NameTagName.where(name_id: params[:name_id]).where(tag_id: params[:tag_id]).first
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def name_tag_name_params
+    params.require(:name_tag_name).permit(:name_id, :tag_id)
+  end
 end

@@ -14,10 +14,10 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class SanctionedIsScientificTest < ActiveSupport::TestCase
-  test 'sanctioned is a scientific name type' do
-    assert NameType.find_by(name: 'sanctioned').scientific?, 'Sanctioned should be categorised as a "scientific" name type'
+  test "sanctioned is a scientific name type" do
+    assert NameType.find_by(name: "sanctioned").scientific?, 'Sanctioned should be categorised as a "scientific" name type'
   end
 end

@@ -13,17 +13,17 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
-require File.expand_path('../boot', __FILE__)
+#
+require File.expand_path("../boot", __FILE__)
 
-require 'rails/all'
-require 'open-uri'
+require "rails/all"
+require "open-uri"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-ENV['TZ'] = 'Australia/Melbourne'
+ENV["TZ"] = "Australia/Melbourne"
 
 module Ned
   class Application < Rails::Application
@@ -35,7 +35,7 @@ module Ned
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     # config.time_zone = 'Central Time (US & Canada)'
     # http://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html for values
-    config.time_zone = 'Australia/Melbourne'
+    config.time_zone = "Australia/Melbourne"
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]

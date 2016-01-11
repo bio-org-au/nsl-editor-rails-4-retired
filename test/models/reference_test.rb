@@ -14,10 +14,10 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class ReferenceTest < ActiveSupport::TestCase
-  def try_citation(ref, expected, msg = 'unexplained error', debug = false)
+  def try_citation(ref, expected, msg = "unexplained error", debug = false)
     ref.save!
     debug(ref) if debug
     assert ref.citation.match(Regexp.new(Regexp.escape(expected))), "#{msg}; \nexpected: #{expected}; \ngot:                         \"#{ref.citation}\""
@@ -26,18 +26,18 @@ class ReferenceTest < ActiveSupport::TestCase
   def debug(ref)
     puts "ref.title: #{ref.title}"
     puts "ref.author.name: #{ref.author.name}" if ref.author
-    puts ref.parent ? 'ref has parent' : 'ref has no parent'
+    puts ref.parent ? "ref has parent" : "ref has no parent"
     puts "ref.parent.author.name: #{ref.parent.author.name}" if ref.parent
     puts "ref.parent_has_same_author?: #{ref.parent_has_same_author?}"
     puts "ref.citation: #{ref.citation}"
   end
 
-  test 'test for has children' do
-    assert references(:journal_with_children).has_children?, 'Children not detected.'
+  test "test for has children" do
+    assert references(:journal_with_children).has_children?, "Children not detected."
   end
 
-  test 'test for has no children' do
-    assert_not references(:ref_without_children).has_children?, 'Children found where none exist.'
+  test "test for has no children" do
+    assert_not references(:ref_without_children).has_children?, "Children found where none exist."
   end
 
   # test "update title for citation:book:orphan:no year:no publication date:1:" do

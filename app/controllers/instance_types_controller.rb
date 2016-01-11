@@ -20,6 +20,6 @@ class InstanceTypesController < ApplicationController
 
   # GET /instance_types
   def index
-    @instance_types = InstanceType.all.order('sort_order,name')
+    @instance_types = InstanceType.all.order("sort_order,name")
   end
 end

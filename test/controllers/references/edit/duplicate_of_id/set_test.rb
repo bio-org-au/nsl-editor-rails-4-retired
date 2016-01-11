@@ -14,32 +14,32 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class ReferencesEditDuplicateOfIdSetTest < ActionController::TestCase
   tests ReferencesController
 
-  test 'references edit duplicate of id set' do
+  test "references edit duplicate of id set" do
     reference = references(:an_unknown_type_invalid_child_of_book)
-    @request.headers['Accept'] = 'application/javascript'
+    @request.headers["Accept"] = "application/javascript"
     master = references(:a_section_type_intended_master)
-    username = 'fred'
+    username = "fred"
 
     reference_params = reference.attributes
-    reference_params['parent_typeahead'] = reference.parent.citation
-    reference_params['author_typeahead'] = reference.author.name
-    reference_params['duplicate_of_id'] = master.id
-    reference_params['duplicate_of_typeahead'] = master.citation
-    post(:update, { reference: reference_params, 
+    reference_params["parent_typeahead"] = reference.parent.citation
+    reference_params["author_typeahead"] = reference.author.name
+    reference_params["duplicate_of_id"] = master.id
+    reference_params["duplicate_of_typeahead"] = master.citation
+    post(:update, { reference: reference_params,
                     id: reference.id
                   },
-                  username: username, user_full_name: 'Fred Jones', groups: ['edit'])
+         username: username, user_full_name: "Fred Jones", groups: ["edit"])
     assert_response :success
     changed = Reference.find(reference.id)
-    assert reference.duplicate_of_id.blank?, 'Should not have been a duplicate.'
-    assert changed.duplicate_of_id = master.id, 'Should be a duplicate now.'
+    assert reference.duplicate_of_id.blank?, "Should not have been a duplicate."
+    assert changed.duplicate_of_id = master.id, "Should be a duplicate now."
     assert changed.updated_by = username
-    assert reference.updated_by != changed.updated_by, 'Updated_by should be set'
-    assert reference.updated_at != changed.updated_at, 'Updated_at should be set'
+    assert reference.updated_by != changed.updated_by, "Updated_by should be set"
+    assert reference.updated_at != changed.updated_at, "Updated_at should be set"
   end
 end

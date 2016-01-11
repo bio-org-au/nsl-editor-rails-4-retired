@@ -14,13 +14,13 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class AuthorAsEditedDuplicateOfIdWithMatchingString < ActiveSupport::TestCase
-  test 'id with matching string' do
+  test "id with matching string" do
     current_author_id = 1
     author = authors(:chaplin)
     result = Author::AsEdited.duplicate_of_from_typeahead(author.id.to_s, author.name, current_author_id)
-    assert_equal author.id, result, 'Should get a matching id for the duplicate of author'
+    assert_equal author.id, result, "Should get a matching id for the duplicate of author"
   end
 end

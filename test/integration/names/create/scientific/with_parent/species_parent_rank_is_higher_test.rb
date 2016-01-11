@@ -17,20 +17,20 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class SpeciesParentRankIsHigher < ActionDispatch::IntegrationTest
   include Capybara::DSL
 
-  test 'create species with parent of higher rank' do
+  test "create species with parent of higher rank" do
     names_count = Name.count
     visit_home_page_as_editor
-    fill_in 'search-field', with: 'test: create scientific species with parent of higher rank'
+    fill_in "search-field", with: "test: create scientific species with parent of higher rank"
     load_new_scientific_name_form
-    fill_in('name_name_element', with: 'with parent of higher rank')
+    fill_in("name_name_element", with: "with parent of higher rank")
     set_name_parent_to_a_genus
     save_new_record
-    assert_successful_create_for(['with parent of higher rank name not constructed'])
-    assert_equal(Name.count, names_count + 1, 'Wrong name count')
+    assert_successful_create_for(["with parent of higher rank name not constructed"])
+    assert_equal(Name.count, names_count + 1, "Wrong name count")
   end
 end

@@ -17,30 +17,30 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class NamesEditCommentsTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
 
-  test 'create name comment' do
+  test "create name comment" do
     configure_for_webkit
     sign_in
     standard_page_assertions
-    fill_in 'search-field', with: 'create name comment'
-    select 'Names', from: 'query-on'
-    fill_in 'search-field', with: '*'
-    select 'just: 1', from: 'query-limit'
-    click_on 'Search'
+    fill_in "search-field", with: "create name comment"
+    select "Names", from: "query-on"
+    fill_in "search-field", with: "*"
+    select "just: 1", from: "query-limit"
+    click_on "Search"
     make_sure_details_are_showing
-    assert page.has_link?('Comments'), 'No Comments heading for tab.'
-    click_on 'Comments'
-    fill_in 'comment_text', with: 'this is a test comment'
-    assert_difference('Comment.count') do
-      click_on 'Create'
+    assert page.has_link?("Comments"), "No Comments heading for tab."
+    click_on "Comments"
+    fill_in "comment_text", with: "this is a test comment"
+    assert_difference("Comment.count") do
+      click_on "Create"
       big_sleep
-      assert page.has_content?('- gclarke'), 'No new comment by gclarke.'
+      assert page.has_content?("- gclarke"), "No new comment by gclarke."
       assert page.has_css?('input#comment-save-btn'), 'No "Save" button so no new comment by gclarke.'
-      assert page.has_button?('Save'), 'No save button so no new comment.'
+      assert page.has_button?("Save"), "No save button so no new comment."
     end
   end
 end

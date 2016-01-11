@@ -17,19 +17,19 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class Nuytsia2015Test < ActionDispatch::IntegrationTest
   # Make the Capybara DSL available in all integration tests
   include Capybara::DSL
 
-  test 'reference star search' do
+  test "reference star search" do
     visit_home_page
     standard_page_assertions
-    select 'Reference', from: 'query-on'
-    fill_in 'search-field', with: '*'
-    click_button 'Search'
+    select "Reference", from: "query-on"
+    fill_in "search-field", with: "*"
+    click_button "Search"
     sleep(inspection_time = 0.1)
-    search_result_must_include_content('a')
+    search_result_must_include_content("a")
   end
 end

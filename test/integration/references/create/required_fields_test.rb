@@ -17,27 +17,27 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class RequiredFieldsTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
 
-  test 'reference required fields' do
+  test "reference required fields" do
     visit_home_page
-    fill_in 'search-field', with: 'reference check required fields for create'
+    fill_in "search-field", with: "reference check required fields for create"
     select_from_menu(%w(New Reference))
-    search_result_must_include_content('New reference')
-    search_result_details_must_include_content('New Reference')
-    assert(page.has_selector?('#reference_ref_type_id[required]'), 'Reference type should be a required field.')
-    assert(page.has_no_selector?('#reference-parent-typeahead[required]'), 'reference-parent-typeahead should not be a required field.')
-    assert(page.has_selector?('#reference_title[required]'), 'Reference title should be a required field.')
-    assert(page.has_selector?('#reference-author-typeahead[required]'), 'Reference author (typeahead) should be a required field.')
-    assert(page.has_selector?('#reference_ref_author_role_id[required]'), 'Reference author role should be a required field.')
-    assert(page.has_no_selector?('#reference_pages[required]'), 'reference pages should not be a required field.')
-    assert(page.has_no_selector?('#reference_edition[required]'), 'reference edition should not be a required field.')
-    assert(page.has_no_selector?('#reference_volume[required]'), 'reference volume should not be a required field.')
-    assert(page.has_no_selector?('#reference_year[required]'), 'reference year should not be a required field.')
-    assert(page.has_no_selector?('#reference_publication_date[required]'), 'reference publication date should not be a required field.')
-    assert(page.has_no_selector?('#reference_notes[required]'), 'reference notes should not be a required field.')
+    search_result_must_include_content("New reference")
+    search_result_details_must_include_content("New Reference")
+    assert(page.has_selector?('#reference_ref_type_id[required]'), "Reference type should be a required field.")
+    assert(page.has_no_selector?('#reference-parent-typeahead[required]'), "reference-parent-typeahead should not be a required field.")
+    assert(page.has_selector?('#reference_title[required]'), "Reference title should be a required field.")
+    assert(page.has_selector?('#reference-author-typeahead[required]'), "Reference author (typeahead) should be a required field.")
+    assert(page.has_selector?('#reference_ref_author_role_id[required]'), "Reference author role should be a required field.")
+    assert(page.has_no_selector?('#reference_pages[required]'), "reference pages should not be a required field.")
+    assert(page.has_no_selector?('#reference_edition[required]'), "reference edition should not be a required field.")
+    assert(page.has_no_selector?('#reference_volume[required]'), "reference volume should not be a required field.")
+    assert(page.has_no_selector?('#reference_year[required]'), "reference year should not be a required field.")
+    assert(page.has_no_selector?('#reference_publication_date[required]'), "reference publication date should not be a required field.")
+    assert(page.has_no_selector?('#reference_notes[required]'), "reference notes should not be a required field.")
   end
 end

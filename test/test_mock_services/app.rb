@@ -15,10 +15,10 @@
 #   limitations under the License.
 #
 
-require 'sinatra'
-require 'json'
+require "sinatra"
+require "json"
 
-get '/' do
+get "/" do
   "<h1>Services</h1>\n" \
   "<ul>\n" +
     %(<li>Get the <a href="/api/tree/name/APC/91759" >APC tree for a name.</a>\n) +
@@ -31,24 +31,24 @@ get '/' do
     "</ul>\n"
 end
 
-get '/api/makeCitation/reference/:id' do |id|
-  content_type 'application/json'
-  result = Reference.new('silly class',
+get "/api/makeCitation/reference/:id" do |id|
+  content_type "application/json"
+  result = Reference.new("silly class",
                          { permalink: [] },
                          "citation for id #{id}",
                          "html citation for id #{id}",
-                         'unnecessary action',
+                         "unnecessary action",
                          citationHtml: "unnecessarily repeated HTML citation for id #{id}",
                          citation: "unnecessarily repeated citation for id #{id}")
   result.to_json
 end
 
-get '/nsl/services/name/apni/:id/api/name-strings' do |id|
-  content_type 'application/json'
-  result = Name.new('silly name class',
+get "/nsl/services/name/apni/:id/api/name-strings" do |id|
+  content_type "application/json"
+  result = Name.new("silly name class",
                     { permalink: [] },
                     "redundant name element for id #{id}",
-                    'unnecessary action',
+                    "unnecessary action",
                     fullMarkedUpName: "full marked up name for id #{id}",
                     simpleMarkedUpName: "simple marked up name for id #{id}",
                     fullName: "full name for id #{id}",
@@ -56,56 +56,56 @@ get '/nsl/services/name/apni/:id/api/name-strings' do |id|
   result.to_json
 end
 
-get '/nsl/services/name/apni/:id/api/apc.json' do |id|
-  content_type 'application/json'
-  result = InApc.new('silly name class',
+get "/nsl/services/name/apni/:id/api/apc.json" do |id|
+  content_type "application/json"
+  result = InApc.new("silly name class",
                      { permalink: [] },
                      "name element for id: #{id}",
                      "action for id: #{id}",
                      true,
                      false,
-                     'redundant op name',
+                     "redundant op name",
                      1,
                      "nsl-name for id: #{id}",
                      1,
                      "nsl-instance for id: #{id}",
-                     '999999',
-                     'ApcConcept'
+                     "999999",
+                     "ApcConcept"
                     )
   result.to_json
 end
 
 # http://localhost:9090/nsl/services/instance/apni/666/api/delete?apiKey=test-api-key&reason=Edit
 # http://localhost:8080/nsl/services/instance/apni/514039/api/delete?apiKey=d0d1e81d-181c-4ac6-ad75-ddd172594793&reason=Ixxxx
-delete '/nsl/services/instance/apni/:id/api/delete' do |id|
-  api_key = params['apiKey']
-  reason = params['reason']
-  if id == '404'
-    [404, { 'action' => 'delete', 'errors' => ['The Instance was not found.'] }.to_json]
-  elsif id == '666'
-    [200, { 'instance' => { 'class' => 'au.org.biodiversity.nsl.Instance', '_links' => { 'permalink' => { 'link' => 'http://localhost:8080/nsl/mapper/boa/instance/apni/514039', 'preferred' => true, 'resources' => 1 } }, 'instanceType' => 'comb. nov.', 'protologue' => true, 'citation' => 'Britten, J. (1916), Journal of Botany, British and Foreign 54', 'citationHtml' => "Britten, J. (1916), <i>Journal of Botany, British and Foreign<\u002fi> 54" }, 'action' => 'delete', 'ok' => false, 'errors' => ['There are 1 instances that cite this.', 'There are 1 instances that say this cites it.'] }.to_json]
-  elsif id == '5'
+delete "/nsl/services/instance/apni/:id/api/delete" do |id|
+  api_key = params["apiKey"]
+  reason = params["reason"]
+  if id == "404"
+    [404, { "action" => "delete", "errors" => ["The Instance was not found."] }.to_json]
+  elsif id == "666"
+    [200, { "instance" => { "class" => "au.org.biodiversity.nsl.Instance", "_links" => { "permalink" => { "link" => "http://localhost:8080/nsl/mapper/boa/instance/apni/514039", "preferred" => true, "resources" => 1 } }, "instanceType" => "comb. nov.", "protologue" => true, "citation" => "Britten, J. (1916), Journal of Botany, British and Foreign 54", "citationHtml" => "Britten, J. (1916), <i>Journal of Botany, British and Foreign<\u002fi> 54" }, "action" => "delete", "ok" => false, "errors" => ["There are 1 instances that cite this.", "There are 1 instances that say this cites it."] }.to_json]
+  elsif id == "5"
     [500]
   else
-    [200, { 'instance' => { 'class' => 'au.org.biodiversity.nsl.Instance', '_links' => { 'permalink' => { 'link' => 'http://localhost:8080/nsl/mapper/boa/instance/apni/819227', 'preferred' => true, 'resources' => 1 } }, 'instanceType' => 'taxonomic synonym', 'protologue' => false, 'citation' => 'Leach, G.J. (1986), A Revision of the Genus Angophora (Myrtaceae). Telopea 2(6)', 'citationHtml' => 'Leach, G.J. (1986), A Revision of the Genus Angophora (Myrtaceae). <i>Telopea</i> 2(6)' }, 'action' => 'delete', 'ok' => true }.to_json]
+    [200, { "instance" => { "class" => "au.org.biodiversity.nsl.Instance", "_links" => { "permalink" => { "link" => "http://localhost:8080/nsl/mapper/boa/instance/apni/819227", "preferred" => true, "resources" => 1 } }, "instanceType" => "taxonomic synonym", "protologue" => false, "citation" => "Leach, G.J. (1986), A Revision of the Genus Angophora (Myrtaceae). Telopea 2(6)", "citationHtml" => "Leach, G.J. (1986), A Revision of the Genus Angophora (Myrtaceae). <i>Telopea</i> 2(6)" }, "action" => "delete", "ok" => true }.to_json]
   end
 end
 
-delete '/nsl/services/name/apni/:id/api/delete' do
-  content_type 'application/json'
-  id = params['id']
-  reason = params['reason']
+delete "/nsl/services/name/apni/:id/api/delete" do
+  content_type "application/json"
+  id = params["id"]
+  reason = params["reason"]
   case reason
   when /200/
-    [200, { 'ok' => true }.to_json]
+    [200, { "ok" => true }.to_json]
   when /666/
-    [200, { 'ok' => false, 'errors' => ['some silly error'] }.to_json]
+    [200, { "ok" => false, "errors" => ["some silly error"] }.to_json]
   when /404/
-    [404, { 'action' => 'delete', 'errors' => ['Object not found.'] }.to_json]
+    [404, { "action" => "delete", "errors" => ["Object not found."] }.to_json]
   when /5/
     [500]
   else
-    [200, { 'ok' => true }.to_json]
+    [200, { "ok" => true }.to_json]
   end
 end
 
@@ -124,4 +124,4 @@ end
 
 class Reference < Struct.new(:class, :_links, :name, :citation, :action, :result); end
 class Name < Struct.new(:class, :_links, :name_element, :action, :result); end
-class InApc < Struct.new(:class, :_links, 'nameElement', 'action', 'inAPC', 'excluded', 'operation', 'nsl_name', 'nameNs', 'nameId', 'taxonNs', 'taxonId', 'type'); end
+class InApc < Struct.new(:class, :_links, "nameElement", "action", "inAPC", "excluded", "operation", "nsl_name", "nameNs", "nameId", "taxonNs", "taxonId", "type"); end

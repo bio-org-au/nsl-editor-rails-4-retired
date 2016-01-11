@@ -13,10 +13,9 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 class Audit::DefinedQuery::WhereClause::ForInstance
-
-  attr_reader  :sql
+  attr_reader :sql
 
   def initialize(parsed_request, incoming_sql)
     debug("initialize")
@@ -27,25 +26,22 @@ class Audit::DefinedQuery::WhereClause::ForInstance
 
   def build_sql
     debug("#build_sql")
-    remaining_string = @parsed_request.where_arguments.downcase 
+    remaining_string = @parsed_request.where_arguments.downcase
     @common_and_cultivar_included = @parsed_request.common_and_cultivar
     @sql = @sql.for_id(@parsed_request.id) if @parsed_request.id
-    @sql = Audit::DefinedQuery::WhereClause::Authorise.new(sql,@parsed_request.user).sql
-    x = 0 
+    @sql = Audit::DefinedQuery::WhereClause::Authorise.new(sql, @parsed_request.user).sql
+    x = 0
     until remaining_string.blank?
       debug("loop for remaining_string: #{remaining_string}")
-      field,value,remaining_string = Search::NextCriterion.new(remaining_string).get 
+      field, value, remaining_string = Search::NextCriterion.new(remaining_string).get
       debug("field: #{field}; value: #{value}")
-      @sql = Audit::DefinedQuery::WhereClause::Predicate.new(sql,field,value,'instance').sql
+      @sql = Audit::DefinedQuery::WhereClause::Predicate.new(sql, field, value, "instance").sql
       x += 1
-      raise "endless loop #{x}" if x > 50
+      fail "endless loop #{x}" if x > 50
     end
   end
 
   def debug(s)
     Rails.logger.debug("Audit::DefinedQuery::WhereClause::ForInstance #{s}")
   end
-
 end
-
-

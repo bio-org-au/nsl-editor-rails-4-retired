@@ -14,14 +14,14 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
-require 'models/instance/as_typeahead/for_synonymy/test_helper.rb'
+require "test_helper"
+require "models/instance/as_typeahead/for_synonymy/test_helper.rb"
 
 class ForNameAndReferenceYearTest < ActiveSupport::TestCase
-  test 'name and incomplete year search' do
-    results = Instance::AsTypeahead::AsTypeahead.for_synonymy('angophora costata 178')
-    assert results.class == Array, 'Results should be an array.'
-    assert results.size >= 2, 'Results should include at least two records because incomplete year should be ignored.'
+  test "name and incomplete year search" do
+    results = Instance::AsTypeahead::AsTypeahead.for_synonymy("angophora costata 178")
+    assert results.class == Array, "Results should be an array."
+    assert results.size >= 2, "Results should include at least two records because incomplete year should be ignored."
     assert results.collect { |r| r[:value] }.include?(Angophora_Costata_De_Fruct_1788_string), Angophora_Costata_De_Fruct_1788_error
     assert results.collect { |r| r[:value] }.include?(Angophora_Costata_Journal_1916_string), Angophora_Costata_Journal_1916_error
   end

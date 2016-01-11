@@ -14,11 +14,11 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class ReferencesRouteShowTest < ActionController::TestCase
   tests ReferencesController
-  test 'should route to show a reference' do
-    assert_routing '/references/1', controller: 'references', action: 'show', id: '1', tab: 'tab_show_1'
+  test "should route to show a reference" do
+    assert_routing "/references/1", controller: "references", action: "show", id: "1", tab: "tab_show_1"
   end
 end

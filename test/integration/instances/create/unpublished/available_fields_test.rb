@@ -18,24 +18,24 @@
 #
 
 # encoding: utf-8
-require 'test_helper'
+require "test_helper"
 
 class AvailableFieldsTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
 
-  test 'create unpublished instance available fields' do
+  test "create unpublished instance available fields" do
     visit_home_page
     standard_page_assertions
-    select 'Instances', from: 'query-on'
-    select 'with id', from: 'query-field'
-    fill_in 'search-field', with: instances(:britten_created_angophora_costata).id
-    click_on 'Search'
-    all('.takes-focus').first.click
+    select "Instances", from: "query-on"
+    select "with id", from: "query-field"
+    fill_in "search-field", with: instances(:britten_created_angophora_costata).id
+    click_on "Search"
+    all(".takes-focus").first.click
     big_sleep
-    click_on 'Unpub cit'
-    assert page.has_field?('instance-name-typeahead'), 'Instance name typeahead should be there'
-    assert page.has_field?('instance_instance_type_id'), 'Instance type field should be there'
-    assert page.has_field?('instance_page'), 'Instance page field should be there'
-    assert page.has_field?('instance_bhl_url'), 'Instance BHL URL string field should be there'
+    click_on "Unpub cit"
+    assert page.has_field?("instance-name-typeahead"), "Instance name typeahead should be there"
+    assert page.has_field?("instance_instance_type_id"), "Instance type field should be there"
+    assert page.has_field?("instance_page"), "Instance page field should be there"
+    assert page.has_field?("instance_bhl_url"), "Instance BHL URL string field should be there"
   end
 end

@@ -14,11 +14,11 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
-require 'models/reference/update/if_changed/test_helper'
+require "test_helper"
+require "models/reference/update/if_changed/test_helper"
 
 class ForAChangedEditionTest < ActiveSupport::TestCase
-  test 'changed edition' do
-    test_reference_text_field_change_is_detected('edition')
+  test "changed edition" do
+    test_reference_text_field_change_is_detected("edition")
   end
 end

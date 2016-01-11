@@ -23,7 +23,7 @@ class ReferencesController < ApplicationController
   def show
     pick_a_tab
     pick_a_tab_index
-    render 'show', layout: false
+    render "show", layout: false
   end
 
   alias_method :tab, :show
@@ -32,8 +32,8 @@ class ReferencesController < ApplicationController
   def new
     @reference = Reference::AsNew.default
     @no_search_result_details = true
-    @tab_index = (params[:tabIndex] || '40').to_i
-    render 'new.js'
+    @tab_index = (params[:tabIndex] || "40").to_i
+    render "new.js"
   end
 
   # GET /references/new_row
@@ -50,11 +50,11 @@ class ReferencesController < ApplicationController
     @reference = Reference::AsEdited.create(reference_params,
                                             typeahead_params,
                                             current_user.username)
-    render 'create.js'
+    render "create.js"
   rescue => e
     logger.error("Controller:reference:create:rescuing exception #{e}")
     @error = e.to_s
-    render 'create_error.js', status: :unprocessable_entity
+    render "create_error.js", status: :unprocessable_entity
   end
 
   # PUT /references/1.json
@@ -63,11 +63,11 @@ class ReferencesController < ApplicationController
   def update
     @form = params[:form][:name] if params[:form]
     update_reference
-    render 'update.js'
+    render "update.js"
   rescue => e
     logger.error("Controller:reference:update rescuing: #{e}")
     @message = e.to_s
-    render 'update_error.js', status: :unprocessable_entity
+    render "update_error.js", status: :unprocessable_entity
   end
 
   # DELETE /references/1
@@ -117,7 +117,7 @@ class ReferencesController < ApplicationController
   def find_reference
     @reference = Reference.find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    flash[:alert] = 'We could not find the reference.'
+    flash[:alert] = "We could not find the reference."
     redirect_to references_path
   end
 

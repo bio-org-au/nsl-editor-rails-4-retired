@@ -13,23 +13,22 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 class Search::EmptyParsedRequest
-
   attr_reader :empty,
-              :canonical_query_string, 
-              :common_and_cultivar, 
-              :count, 
-              :defined_query, 
+              :canonical_query_string,
+              :common_and_cultivar,
+              :count,
+              :defined_query,
               :defined_query_arg,
-              :id, 
-              :limit, 
-              :limited, 
-              :list, 
-              :order, 
-              :params, 
-              :query_string, 
-              :target_table, 
+              :id,
+              :limit,
+              :limited,
+              :list,
+              :order,
+              :params,
+              :query_string,
+              :target_table,
               :where_arguments,
               :query_target,
               :target_button_text
@@ -39,16 +38,11 @@ class Search::EmptyParsedRequest
     @params = params
     @empty = true
     @defined_query = false
-    @target_button_text = 'Names'
+    @target_button_text = "Names"
     @count = false
     @list = false
     @limited = false
     @common_and_cultivar = false
-    @order = ''
+    @order = ""
   end
-
-
 end
-
-
-

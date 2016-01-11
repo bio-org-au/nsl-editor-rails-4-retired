@@ -14,13 +14,13 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class ReaderSearchControllerNamesWildcardListTest < ActionController::TestCase
   tests SearchController
 
-  test 'reader can do wildcard search for authors' do
-    get(:search, { query_target: 'author', query_string: '*' }, username: 'fred', user_full_name: 'Fred Jones', groups: [])
+  test "reader can do wildcard search for authors" do
+    get(:search, { query_target: "author", query_string: "*" }, username: "fred", user_full_name: "Fred Jones", groups: [])
     assert_response :success
     assert_select '#search-results-summary', /\b[0-9][0-9] records\b/, "Should find several records for an author wildcard search"
   end

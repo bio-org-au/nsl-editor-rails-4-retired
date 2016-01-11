@@ -13,9 +13,8 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 class Search::TreeExecutedQuery
-
   attr_reader :results, :limited, :common_and_cultivar_included, :has_relation, :relation, :count
 
   def initialize(params)
@@ -27,16 +26,12 @@ class Search::TreeExecutedQuery
     @results = []
     @count = -1
     @common_and_cultivar_included = true
-    @target_table = 'tree'
+    @target_table = "tree"
     @has_relation = false
     @relation = nil
   end
 
   def to_history
-    ''
+    ""
   end
-
 end
-
-
-

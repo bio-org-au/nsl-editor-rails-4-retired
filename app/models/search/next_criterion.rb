@@ -13,24 +13,23 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 class Search::NextCriterion
-
   def initialize(criteria_string)
     @criteria_string = criteria_string
   end
 
   def get
-    string = @criteria_string.sub(/:/,': ').sub(/:  /,': ')
+    string = @criteria_string.sub(/:/, ": ").sub(/:  /, ": ")
     @tokens = string.split(/ /)
     if first_is_a_field
       get_field
       get_value
     else
-      @field = ''
+      @field = ""
       get_value
     end
-    return @field,@value,@tokens.join(' ')
+    [@field, @value, @tokens.join(" ")]
   end
 
   def first_is_a_field
@@ -42,25 +41,21 @@ class Search::NextCriterion
     @tokens = @tokens.drop(1)
   end
 
-  # e.g. for ['a', 'b', 'c', 'd:', 'e','f'] 
+  # e.g. for ['a', 'b', 'c', 'd:', 'e','f']
   # @value = "a b c"
   # @tokens = "d: e f"
   def get_value
-    value = '' 
+    value = ""
     found_field = false
     num = 0
-    @tokens.each do |x| 
+    @tokens.each do |x|
       found_field = true if x.match(/:/)
       unless found_field
         num += 1
-        value = value += " #{x}" unless found_field 
+        value = value += " #{x}" unless found_field
       end
     end
     @value = value.strip
     @tokens = @tokens.drop(num)
   end
-
 end
-
-
-

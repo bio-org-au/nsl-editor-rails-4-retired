@@ -14,19 +14,19 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class InstanceUpdateVerbatimNameStringNoUpdateForEmptyStringTest < ActiveSupport::TestCase
-  test 'no update for verbatim name string empty string' do
+  test "no update for verbatim name string empty string" do
     unchanged = instances(:has_no_page_bhl_url_verbatim_name_string)
-    assert unchanged.page.blank?, 'Page should be blank for this test.'
+    assert unchanged.page.blank?, "Page should be blank for this test."
     instance = Instance::AsEdited.find(unchanged.id)
-    empty_string = ''
-    assert unchanged.verbatim_name_string.blank?, 'Verbatim name string should be blank for this test.'
-    message = instance.update_if_changed({ 'verbatim_name_string' => empty_string }, 'fred')
+    empty_string = ""
+    assert unchanged.verbatim_name_string.blank?, "Verbatim name string should be blank for this test."
+    message = instance.update_if_changed({ "verbatim_name_string" => empty_string }, "fred")
     assert message.match(/\ANo change/), "Message should be 'No change' not '#{message}'"
-    assert instance.verbatim_name_string.blank?, 'Verbatim name string should still be blank.'
-    assert instance.updated_at == unchanged.updated_at, 'Updated date-time should be untouched.'
-    assert instance.updated_by != 'fred', 'Updated by should be untouched.'
+    assert instance.verbatim_name_string.blank?, "Verbatim name string should still be blank."
+    assert instance.updated_at == unchanged.updated_at, "Updated date-time should be untouched."
+    assert instance.updated_by != "fred", "Updated by should be untouched."
   end
 end

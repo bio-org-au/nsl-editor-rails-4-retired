@@ -5,7 +5,7 @@ primary_reference:
   misapplied: false
   name: "primary reference"
   nomenclatural: false
-  primary_instance: false
+  primary_instance: true
   relationship: false
   secondary_instance: false
   sort_order: 100
@@ -125,7 +125,7 @@ comb_et_nom_nov:
   misapplied: false
   name: "comb. et nom. nov."
   nomenclatural: false
-  primary_instance: false
+  primary_instance: true
   relationship: false
   secondary_instance: false
   sort_order: 100
@@ -155,7 +155,7 @@ comb_nov:
   misapplied: false
   name: "comb. nov."
   nomenclatural: false
-  primary_instance: false
+  primary_instance: true
   relationship: false
   secondary_instance: false
   sort_order: 100
@@ -380,7 +380,7 @@ nom_et_stat_nov:
   misapplied: false
   name: "nom. et stat. nov."
   nomenclatural: false
-  primary_instance: false
+  primary_instance: true
   relationship: false
   secondary_instance: false
   sort_order: 100
@@ -395,7 +395,7 @@ nom_nov:
   misapplied: false
   name: "nom. nov."
   nomenclatural: false
-  primary_instance: false
+  primary_instance: true
   relationship: false
   secondary_instance: false
   sort_order: 100
@@ -560,7 +560,7 @@ tax_nov:
   misapplied: false
   name: "tax. nov."
   nomenclatural: false
-  primary_instance: false
+  primary_instance: true
   relationship: false
   secondary_instance: false
   sort_order: 100

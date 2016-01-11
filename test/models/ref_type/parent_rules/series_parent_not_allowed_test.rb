@@ -14,10 +14,10 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class SeriesParentNotAllowedTest < ActiveSupport::TestCase
-  test 'series ref type parent is not allowed' do
-    assert ref_types(:series).parent_id.blank? == true, 'Series ref type parent should not be allowed.'
+  test "series ref type parent is not allowed" do
+    assert ref_types(:series).parent_id.blank? == true, "Series ref type parent should not be allowed."
   end
 end

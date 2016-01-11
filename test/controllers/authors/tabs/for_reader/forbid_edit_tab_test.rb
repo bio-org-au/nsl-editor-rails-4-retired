@@ -14,7 +14,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class AuthorEditorNotShowEditTest < ActionController::TestCase
   tests AuthorsController
@@ -22,9 +22,9 @@ class AuthorEditorNotShowEditTest < ActionController::TestCase
     @author = authors(:bentham)
   end
 
-  test 'should not show reader author edit tab' do
-    @request.headers['Accept'] = 'application/javascript'
-    get(:show, { id: @author.id, tab: 'tab_edit' }, username: 'fred', user_full_name: 'Fred Jones', groups: [])
+  test "should not show reader author edit tab" do
+    @request.headers["Accept"] = "application/javascript"
+    get(:show, { id: @author.id, tab: "tab_edit" }, username: "fred", user_full_name: "Fred Jones", groups: [])
     assert_response :forbidden
   end
 end

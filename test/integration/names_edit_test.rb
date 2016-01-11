@@ -17,7 +17,7 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class NamesEditTest < ActionDispatch::IntegrationTest
   # Make the Capybara DSL available in all integration tests
@@ -28,12 +28,12 @@ class NamesEditTest < ActionDispatch::IntegrationTest
   #########
 
   def load_the_form
-    click_link 'New'
-    click_link 'Other name'
-    find_link('New other name').click
-    assert page.has_content?('New Name'), 'No new name.'
-    assert page.has_content?('New other name'), 'No new other name.'
-    assert page.has_field?('search-field'), 'No search field.'
+    click_link "New"
+    click_link "Other name"
+    find_link("New other name").click
+    assert page.has_content?("New Name"), "No new name."
+    assert page.has_content?("New other name"), "No new other name."
+    assert page.has_field?("search-field"), "No search field."
   end
 
   # def fill_autocomplete(field,option)
@@ -56,9 +56,9 @@ class NamesEditTest < ActionDispatch::IntegrationTest
     page.execute_script(script)
   end
 
-  def set_up_an_author(text_field = 'sanctioning-author-by-abbrev',
-                       id_field = 'name_sanctioning_author_id',
-                       abbrev = 'Benth.',
+  def set_up_an_author(text_field = "sanctioning-author-by-abbrev",
+                       id_field = "name_sanctioning_author_id",
+                       abbrev = "Benth.",
                        author = authors(:bentham))
     using_wait_time 20 do
       fill_in(text_field, with: abbrev)
@@ -76,8 +76,8 @@ class NamesEditTest < ActionDispatch::IntegrationTest
   end
 
   def assert_successful_create_for(expected_contents, prohibited_contents = [])
-    assert page.has_link?('Summary'), 'Record not created.'
-    assert page.has_field?('search-field'), 'No search field.'
+    assert page.has_link?("Summary"), "Record not created."
+    assert page.has_field?("search-field"), "No search field."
     expected_contents.each do |expected_content|
       assert page.has_content?(expected_content), "Missing expected content: #{expected_content}"
     end
@@ -87,19 +87,19 @@ class NamesEditTest < ActionDispatch::IntegrationTest
   end
 
   def save_name
-    find_button('Save').click
+    find_button("Save").click
   end
 
   #########
 
-  test 'simple edit' do
+  test "simple edit" do
     names_count = Name.count
     visit_home_page
-    fill_in('query', with: 'Triodia basedowii')
-    click_button('Search')
-    assert find_link('Edit').visible?, 'Edit link not visible'
+    fill_in("query", with: "Triodia basedowii")
+    click_button("Search")
+    assert find_link("Edit").visible?, "Edit link not visible"
     sleep(inspection_time = 4)
-    find_link('Edit').click
+    find_link("Edit").click
     sleep(inspection_time = 10)
     # load_the_form
     # save_name

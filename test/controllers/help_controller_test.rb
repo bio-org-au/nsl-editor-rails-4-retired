@@ -14,25 +14,25 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class HelpControllerTest < ActionController::TestCase
-  test 'should route to help index' do
-    assert_routing '/help/index', controller: 'help', action: 'index'
+  test "should route to help index" do
+    assert_routing "/help/index", controller: "help", action: "index"
   end
 
-  test 'should get redirected unauthenticated' do
+  test "should get redirected unauthenticated" do
     get :index
     assert_response :redirect
   end
 
-  test 'should get index for reader' do
-    get(:index, {}, username: 'fred', user_full_name: 'Fred Jones', groups: [])
+  test "should get index for reader" do
+    get(:index, {}, username: "fred", user_full_name: "Fred Jones", groups: [])
     assert_response :success
   end
 
-  test 'should get index for editor' do
-    get(:index, {}, username: 'fred', user_full_name: 'Fred Jones', groups: [:edit])
+  test "should get index for editor" do
+    get(:index, {}, username: "fred", user_full_name: "Fred Jones", groups: [:edit])
     assert_response :success
   end
 end

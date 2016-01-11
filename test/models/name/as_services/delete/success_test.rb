@@ -14,12 +14,12 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class NameAsServicesDeleteSuccessTest < ActiveSupport::TestCase
-  test 'url' do
+  test "url" do
     name_id = names(:name_to_delete).id
     name = Name::AsServices.find(name_id)
-    assert name.delete_with_reason('200 this is the reason.....'), 'Should be true'
+    assert name.delete_with_reason("200 this is the reason....."), "Should be true"
   end
 end

@@ -14,7 +14,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class ReferenceEditorShowCommentsTabTest < ActionController::TestCase
   tests ReferencesController
@@ -22,12 +22,12 @@ class ReferenceEditorShowCommentsTabTest < ActionController::TestCase
     @reference = references(:a_book)
   end
 
-  test 'should show editor reference comments tab' do
-    @request.headers['Accept'] = 'application/javascript'
-    get(:show, { id: @reference.id, tab: 'tab_comments' }, username: 'fred', user_full_name: 'Fred Jones', groups: ['edit'])
+  test "should show editor reference comments tab" do
+    @request.headers["Accept"] = "application/javascript"
+    get(:show, { id: @reference.id, tab: "tab_comments" }, username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
     assert_response :success
-    assert_select 'li.active a#reference-comments-tab', 'Comments', "Should show 'Comments' tab."
-    assert_select 'form', true
+    assert_select 'li.active a#reference-comments-tab', "Comments", "Should show 'Comments' tab."
+    assert_select "form", true
     assert_select 'textarea#comment_text', true
   end
 end

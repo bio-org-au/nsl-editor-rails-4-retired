@@ -14,11 +14,11 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class ReferencesRouteIndexTest < ActionController::TestCase
   tests ReferencesController
-  test 'references index should route to the catch all' do
-    assert_routing '/references', controller: 'search', action: 'search', random: 'references'
+  test "references index should route to the catch all" do
+    assert_routing "/references", controller: "search", action: "search", random: "references"
   end
 end

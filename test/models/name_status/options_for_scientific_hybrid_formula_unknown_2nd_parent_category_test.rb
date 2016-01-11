@@ -14,21 +14,21 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class OptionsForScientificHybridFormulaUnknown2ndParentCategoryTest < ActiveSupport::TestCase
-  test 'should include [deleted]' do
-    assert NameStatus.options_for_category(Name::SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY).collect(&:first).include?('[deleted]'),
+  test "should include [deleted]" do
+    assert NameStatus.options_for_category(Name::SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY).collect(&:first).include?("[deleted]"),
            'Scientific hybrid formula unknown 2nd parent name status options should include "[deleted]"'
   end
 
-  test 'should include  [n/a]' do
-    assert NameStatus.options_for_category(Name::SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY).collect(&:first).include?('[n/a]'),
+  test "should include  [n/a]" do
+    assert NameStatus.options_for_category(Name::SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY).collect(&:first).include?("[n/a]"),
            'Scientific hybrid formula unknown 2nd parent name status options should include "[n/a]"'
   end
 
-  test 'should have only two entries' do
+  test "should have only two entries" do
     assert_equal(NameStatus.options_for_category(Name::SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY).size, 2,
-                 'Wrong number of name status options for scientific hybrid formula unknown 2nd parent  category')
+                 "Wrong number of name status options for scientific hybrid formula unknown 2nd parent  category")
   end
 end

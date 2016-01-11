@@ -14,21 +14,21 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class AuthorTest < ActiveSupport::TestCase
-  test 'typeahead on name should exclude authors with abbrev including those with empty string abbrev' do
-    typeahead = Author::AsTypeahead.on_name('for typeahead on name')
-    assert_instance_of(Array, typeahead, 'Typeahead on name should return an array')
+  test "typeahead on name should exclude authors with abbrev including those with empty string abbrev" do
+    typeahead = Author::AsTypeahead.on_name("for typeahead on name")
+    assert_instance_of(Array, typeahead, "Typeahead on name should return an array")
     typeahead_ids = typeahead.collect { |val| val[:id].to_i }
     assert_includes(typeahead_ids,
                     authors(:for_typeahead_on_name_null_abbrev).id,
-                    'Author should be in typeahead list')
+                    "Author should be in typeahead list")
     assert_includes(typeahead_ids,
                     authors(:for_typeahead_on_name_has_abbrev).id,
-                    'Author should be in typeahead list')
+                    "Author should be in typeahead list")
     assert_includes(typeahead_ids,
                     authors(:for_typeahead_on_name_empty_string_abbrev).id,
-                    'Author with empty string abbrev should be in typeahead list')
+                    "Author with empty string abbrev should be in typeahead list")
   end
 end

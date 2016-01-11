@@ -14,7 +14,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class ReferenceUnauthenticatedDoNotShowCommentsTabTest < ActionController::TestCase
   tests ReferencesController
@@ -22,9 +22,9 @@ class ReferenceUnauthenticatedDoNotShowCommentsTabTest < ActionController::TestC
     @reference = references(:a_book)
   end
 
-  test 'should not show unauthenticated reference comments tab' do
-    @request.headers['Accept'] = 'application/javascript'
-    get(:show, { id: @reference.id, tab: 'tab_comments' }, {})
+  test "should not show unauthenticated reference comments tab" do
+    @request.headers["Accept"] = "application/javascript"
+    get(:show, { id: @reference.id, tab: "tab_comments" }, {})
     assert response.body.match(/window.location.assign.".sign_in"./)
   end
 end

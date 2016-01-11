@@ -13,9 +13,8 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 class Search::OnInstance::CountQuery
-
   attr_reader :sql, :info_for_display, :common_and_cultivar_included
 
   def initialize(parsed_request)
@@ -26,13 +25,10 @@ class Search::OnInstance::CountQuery
 
   def prepare_query
     Rails.logger.debug("Search::OnInstance::CountQuery#prepare_query")
-    prepared_query = Instance.where('1=1')
-    where_clauses = Search::OnInstance::WhereClauses.new(@parsed_request,prepared_query)
+    prepared_query = Instance.where("1=1")
+    where_clauses = Search::OnInstance::WhereClauses.new(@parsed_request,
+                                                         prepared_query)
     prepared_query = where_clauses.sql
     @sql = prepared_query
   end
-
 end
-
-
-

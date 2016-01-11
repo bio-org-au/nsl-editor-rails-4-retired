@@ -13,15 +13,13 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 class Tree < ActiveType::Object
-
   # Maps query option tokens to user-interface.
   # Used in html select.
   def self.query_options
     {
-      'apc' => 'APC',
+      "apc" => "APC",
     }
   end
-
 end

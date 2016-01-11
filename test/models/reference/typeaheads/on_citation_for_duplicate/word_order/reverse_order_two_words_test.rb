@@ -15,11 +15,11 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class TypeaheadsOnCitationForDuplicateTwoWordsReverseOrder < ActiveSupport::TestCase
-  test 'two words in correct order' do
-    results = Reference::AsTypeahead.on_citation_for_duplicate('wattle maslin', references(:book_by_brassard).id)
-    assert_equal 1, results.size, 'Should be one and just one result'
+  test "two words in correct order" do
+    results = Reference::AsTypeahead.on_citation_for_duplicate("wattle maslin", references(:book_by_brassard).id)
+    assert_equal 1, results.size, "Should be one and just one result"
   end
 end

@@ -14,16 +14,16 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class InstanceAsCopierWithNewReferenceStandaloneRefMustBeValidTest < ActiveSupport::TestCase
-  test 'copy a standalone instance with its citations reference must be valid' do
+  test "copy a standalone instance with its citations reference must be valid" do
     master_instance = Instance::AsCopier.find(instances(:gaertner_created_metrosideros_costata).id)
-    assert master_instance.citations.size > 0, 'Master instance should have at least 1 citation.'
-    dummy_username = 'fred'
+    assert master_instance.citations.size > 0, "Master instance should have at least 1 citation."
+    dummy_username = "fred"
     params = ActionController::Parameters.new(reference_id: Name.first.id.to_s)
 
-    assert_raises RuntimeError, 'Reference id must be valid.' do
+    assert_raises RuntimeError, "Reference id must be valid." do
       copied_instance = master_instance.copy_with_citations_to_new_reference(params, dummy_username)
     end
   end

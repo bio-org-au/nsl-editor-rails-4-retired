@@ -15,11 +15,11 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class AuthorTypeaheadsOnNameWordCountFourWalshesTest < ActiveSupport::TestCase
-  test 'reference typeahead on citation word count four walshes' do
-    results = Author::AsTypeahead.on_name('walsh walsh walsh walsh')
-    assert_equal 0, results.size, 'Should be no records returned.'
+  test "reference typeahead on citation word count four walshes" do
+    results = Author::AsTypeahead.on_name("walsh walsh walsh walsh")
+    assert_equal 0, results.size, "Should be no records returned."
   end
 end

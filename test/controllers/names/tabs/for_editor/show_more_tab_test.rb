@@ -14,7 +14,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class NameShowMoreTabForReadOnlyTest < ActionController::TestCase
   tests NamesController
@@ -22,10 +22,10 @@ class NameShowMoreTabForReadOnlyTest < ActionController::TestCase
     @name = names(:a_species)
   end
 
-  test 'should show more tab' do
-    @request.headers['Accept'] = 'application/javascript'
-    get(:show, { id: @name.id, tab: 'tab_more' }, username: 'fred', user_full_name: 'Fred Jones', groups: ['edit'])
+  test "should show more tab" do
+    @request.headers["Accept"] = "application/javascript"
+    get(:show, { id: @name.id, tab: "tab_more" }, username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
     assert_response :success
-    assert_select 'li.active a#name-comments-tab', 'Comments', "Should show 'Comments' tab."
+    assert_select 'li.active a#name-comments-tab', "Comments", "Should show 'Comments' tab."
   end
 end

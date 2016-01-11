@@ -14,7 +14,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class ReferenceReaderShowOnlyDetailsTabLinkTest < ActionController::TestCase
   tests ReferencesController
@@ -22,9 +22,9 @@ class ReferenceReaderShowOnlyDetailsTabLinkTest < ActionController::TestCase
     @reference = references(:a_book)
   end
 
-  test 'should show only details tab link if reader requests details tab' do
-    @request.headers['Accept'] = 'application/javascript'
-    get(:show, { id: @reference.id, tab: 'tab_show_1' }, username: 'fred', user_full_name: 'Fred Jones', groups: [])
+  test "should show only details tab link if reader requests details tab" do
+    @request.headers["Accept"] = "application/javascript"
+    get(:show, { id: @reference.id, tab: "tab_show_1" }, username: "fred", user_full_name: "Fred Jones", groups: [])
     assert_response :success
     assert_select 'li.active a#reference-edit-show-1-tab', /Details/, "Does not show 'Details' tab link."
     assert_select 'a#reference-edit-tab', false, "Should not show 'Edit' tab."

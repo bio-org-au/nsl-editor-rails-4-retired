@@ -14,10 +14,10 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class TradeIsDeprecatedTest < ActiveSupport::TestCase
-  test 'trade is a deprecated name type' do
-    assert_equal NameType.find_by(name: 'trade').deprecated, true, 'Trade should be a deprecated name type'
+  test "trade is a deprecated name type" do
+    assert_equal NameType.find_by(name: "trade").deprecated, true, "Trade should be a deprecated name type"
   end
 end

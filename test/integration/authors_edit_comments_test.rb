@@ -17,28 +17,28 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class AuthorsEditCommentsTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
 
-  test 'create author comment' do
+  test "create author comment" do
     visit_home_page
     standard_page_assertions
-    select 'Authors', from: 'query-on'
-    fill_in 'search-field', with: '*'
-    select 'just: 1', from: 'query-limit'
-    click_on 'Search'
-    all('.takes-focus').first.click
-    click_on 'Comments'
-    fill_in 'comment_text', with: 'this is a test comment'
-    assert_difference('Comment.count') do
+    select "Authors", from: "query-on"
+    fill_in "search-field", with: "*"
+    select "just: 1", from: "query-limit"
+    click_on "Search"
+    all(".takes-focus").first.click
+    click_on "Comments"
+    fill_in "comment_text", with: "this is a test comment"
+    assert_difference("Comment.count") do
       within('#search-result-details') do
         find('#comment-create-btn').click
       end
       sleep(inspection_time = 0.5)
-      assert page.has_content?('- gclarke'), 'No new comment by gclarke.'
-      assert page.has_button?('Save'), 'No new comment.'
+      assert page.has_content?("- gclarke"), "No new comment by gclarke."
+      assert page.has_button?("Save"), "No new comment."
     end
   end
 end

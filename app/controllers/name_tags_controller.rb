@@ -13,7 +13,7 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 class NameTagsController < ApplicationController
   before_action :set_name_tag, only: [:show, :edit, :update, :destroy]
 
@@ -34,7 +34,7 @@ class NameTagsController < ApplicationController
 
     respond_to do |format|
       if @name_tag.save
-        format.html { redirect_to @name_tag, notice: 'Name tag was successfully created.' }
+        format.html { redirect_to @name_tag, notice: "Name tag was successfully created." }
         format.json { render :show, status: :created, location: @name_tag }
       else
         format.html { render :new }
@@ -48,19 +48,20 @@ class NameTagsController < ApplicationController
   def destroy
     @name_tag.destroy
     respond_to do |format|
-      format.html { redirect_to name_tags_url, notice: 'Name tag was successfully destroyed.' }
+      format.html { redirect_to name_tags_url, notice: "Name tag was successfully destroyed." }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_name_tag
-      @name_tag = NameTag.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def name_tag_params
-      params.require(:name_tag).permit(:name)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_name_tag
+    @name_tag = NameTag.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def name_tag_params
+    params.require(:name_tag).permit(:name)
+  end
 end

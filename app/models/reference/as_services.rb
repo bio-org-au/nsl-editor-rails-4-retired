@@ -13,13 +13,9 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 class Reference::AsServices < Reference
-
   def self.citation_strings_url(id)
     "#{Rails.configuration.reference_services}#{id}/api/citation-strings"
   end
-
 end
-
-

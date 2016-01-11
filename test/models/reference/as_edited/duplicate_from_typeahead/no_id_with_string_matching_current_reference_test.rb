@@ -14,10 +14,10 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class ReferenceAsEditedNoDuplicateOfIdWithStringMatchingCurrentReferenceTest < ActiveSupport::TestCase
-  test 'no id with string matching current reference' do
+  test "no id with string matching current reference" do
     skip
     # reference_1 = references(:has_a_matching_citation_1)
     # reference_2 = references(:has_a_matching_citation_2)

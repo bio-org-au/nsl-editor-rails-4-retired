@@ -17,17 +17,17 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class ShowInstancesLinkButtonIfInstances < ActionDispatch::IntegrationTest
   include Capybara::DSL
 
-  test 'it' do
+  test "it" do
     visit_home_page
-    select 'Name', from: 'query-on'
-    fill_in 'search-field', with: 'a species'
-    click_button 'Search'
+    select "Name", from: "query-on"
+    fill_in "search-field", with: "a species"
+    click_button "Search"
     big_sleep
-    search_result_details_must_include_link('1 instance', 'Instance link link should appear if instances.')
+    search_result_details_must_include_link("1 instance", "Instance link link should appear if instances.")
   end
 end

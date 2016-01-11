@@ -14,12 +14,12 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class ChapterValidWithoutParentTest < ActiveSupport::TestCase
-  test 'chapter valid without parent' do
+  test "chapter valid without parent" do
     ref = references(:chapter_with_book_parent)
     ref.parent_id = nil
-    assert ref.valid? == true, 'Chapter without parent should be valid.'
+    assert ref.valid? == true, "Chapter without parent should be valid."
   end
 end

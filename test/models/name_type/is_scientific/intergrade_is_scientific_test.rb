@@ -14,10 +14,10 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class IntergradeIsScientificTest < ActiveSupport::TestCase
-  test 'intergrade is a scientific name type' do
-    assert NameType.find_by(name: 'intergrade').scientific?, 'Intergrade should be categorised as a "scientific" name type'
+  test "intergrade is a scientific name type" do
+    assert NameType.find_by(name: "intergrade").scientific?, 'Intergrade should be categorised as a "scientific" name type'
   end
 end

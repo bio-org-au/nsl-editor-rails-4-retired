@@ -17,21 +17,21 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class RcNuytsiaY2015Test < ActionDispatch::IntegrationTest
   # Make the Capybara DSL available in all integration tests
   include Capybara::DSL
 
-  test 'reference search for rc Nuytsia y 2015' do
+  test "reference search for rc Nuytsia y 2015" do
     visit_home_page
     standard_page_assertions
-    select 'Reference', from: 'query-on'
-    fill_in 'search-field', with: 'rc:Nuytsia y:2015'
-    click_button 'Search'
+    select "Reference", from: "query-on"
+    fill_in "search-field", with: "rc:Nuytsia y:2015"
+    click_button "Search"
     sleep(inspection_time = 0.1)
-    search_result_must_include_content('Telford')
-    search_result_must_include_content('Telford, I.R.H. & Naaykens, J.,')
-    search_result_must_include_content('(2015) Synostemon hamersleyensis (Phyllanthaceae), a new species endemic to the Pilbara, Western Australia. Nuytsia. 25 : 31-37 ')
+    search_result_must_include_content("Telford")
+    search_result_must_include_content("Telford, I.R.H. & Naaykens, J.,")
+    search_result_must_include_content("(2015) Synostemon hamersleyensis (Phyllanthaceae), a new species endemic to the Pilbara, Western Australia. Nuytsia. 25 : 31-37 ")
   end
 end

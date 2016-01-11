@@ -14,20 +14,20 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class NameAsCopierWithAllInstancesSimpleTest < ActiveSupport::TestCase
-  test 'copy name with all instances' do
+  test "copy name with all instances" do
     before = Name.count
     master_name = Name::AsCopier.find(names(:a_genus_with_two_instances).id)
-    dummy_name_element = 'xyz'
-    dummy_username = 'fred'
+    dummy_name_element = "xyz"
+    dummy_username = "fred"
     master_instances_before = master_name.instances.size
     copied_name = master_name.copy_with_all_instances(dummy_name_element, dummy_username)
     after = Name.count
     copied_instances_after = copied_name.instances.size
-    assert_equal before + 1, after, 'There should be one extra name.'
-    assert_equal master_instances_before, copied_instances_after, 'New name should have instances.'
+    assert_equal before + 1, after, "There should be one extra name."
+    assert_equal master_instances_before, copied_instances_after, "New name should have instances."
     assert_match dummy_name_element, copied_name.name_element
     assert_equal dummy_username, copied_name.created_by
     assert_equal dummy_username, copied_name.updated_by

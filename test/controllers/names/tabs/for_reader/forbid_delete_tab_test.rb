@@ -14,7 +14,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class NameForbidDeleteTabForReaderTest < ActionController::TestCase
   tests NamesController
@@ -22,9 +22,9 @@ class NameForbidDeleteTabForReaderTest < ActionController::TestCase
     @name = names(:a_species)
   end
 
-  test 'reader requests forbidden delete tab' do
-    @request.headers['Accept'] = 'application/javascript'
-    get(:show, { id: @name.id, tab: 'tab_delete' }, username: 'fred', user_full_name: 'Fred Jones', groups: [])
+  test "reader requests forbidden delete tab" do
+    @request.headers["Accept"] = "application/javascript"
+    get(:show, { id: @name.id, tab: "tab_delete" }, username: "fred", user_full_name: "Fred Jones", groups: [])
     assert_response :forbidden
   end
 end

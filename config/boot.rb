@@ -13,8 +13,8 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 # Set up gems listed in the Gemfile.
-ENV['BUNDLE_GEMFILE'] ||= File.expand_path('../../Gemfile', __FILE__)
+ENV["BUNDLE_GEMFILE"] ||= File.expand_path("../../Gemfile", __FILE__)
 
-require 'bundler/setup' if File.exist?(ENV['BUNDLE_GEMFILE'])
+require "bundler/setup" if File.exist?(ENV["BUNDLE_GEMFILE"])

@@ -14,31 +14,31 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class CategoryTest < ActiveSupport::TestCase
-  test 'scientific category' do
-    assert Name::SCIENTIFIC_CATEGORY == 'scientific', "Name::SCIENTIFIC_CATEGORY should equal 'scientific'"
+  test "scientific category" do
+    assert Name::SCIENTIFIC_CATEGORY == "scientific", "Name::SCIENTIFIC_CATEGORY should equal 'scientific'"
   end
 
-  test 'scientific hybrid formula category' do
-    assert Name::SCIENTIFIC_HYBRID_FORMULA_CATEGORY == 'scientific hybrid formula', "Name::SCIENTIFIC_HYBRID_FORMULA_CATEGORY should equal 'scientific hybrid formula'"
+  test "scientific hybrid formula category" do
+    assert Name::SCIENTIFIC_HYBRID_FORMULA_CATEGORY == "scientific hybrid formula", "Name::SCIENTIFIC_HYBRID_FORMULA_CATEGORY should equal 'scientific hybrid formula'"
   end
 
-  test 'scientific hybrid formula unknown 2nd parent category' do
-    assert Name::SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY == 'scientific hybrid formula unknown 2nd parent',
+  test "scientific hybrid formula unknown 2nd parent category" do
+    assert Name::SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY == "scientific hybrid formula unknown 2nd parent",
            "Name::SCIENTIFIC_HYBRID_FORMULA_unknown 2nd parent CATEGORY should equal 'scientific hybrid formula unknown 2nd parent'"
   end
 
-  test 'cultivar category' do
-    assert Name::CULTIVAR_CATEGORY == 'cultivar', "Name::CULTIVAR_CATEGORY should equal 'cultivar'"
+  test "cultivar category" do
+    assert Name::CULTIVAR_CATEGORY == "cultivar", "Name::CULTIVAR_CATEGORY should equal 'cultivar'"
   end
 
-  test 'cultivar hybrid category' do
-    assert Name::CULTIVAR_HYBRID_CATEGORY == 'cultivar hybrid', "Name::CULTIVAR_HYBRID_CATEGORY should equal 'cultivar hybrid'"
+  test "cultivar hybrid category" do
+    assert Name::CULTIVAR_HYBRID_CATEGORY == "cultivar hybrid", "Name::CULTIVAR_HYBRID_CATEGORY should equal 'cultivar hybrid'"
   end
 
-  test 'other category' do
-    assert Name::OTHER_CATEGORY == 'other', "Name::OTHER_CATEGORY should equal 'other'"
+  test "other category" do
+    assert Name::OTHER_CATEGORY == "other", "Name::OTHER_CATEGORY should equal 'other'"
   end
 end

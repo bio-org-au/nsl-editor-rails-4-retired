@@ -14,18 +14,18 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
-load 'test/models/search/users.rb'
+require "test_helper"
+load "test/models/search/users.rb"
 
 class SearchOnReferenceTL2SimpleTest < ActiveSupport::TestCase
-  test 'search on reference TL2 simple' do
+  test "search on reference TL2 simple" do
     reference = references(:stanley_and_ross_1986_flora_of_se_qld)
-    params =  ActiveSupport::HashWithIndifferentAccess.new(query_target: 'reference',
+    params =  ActiveSupport::HashWithIndifferentAccess.new(query_target: "reference",
                                                            query_string: "tl2: #{reference.tl2}",
                                                            include_common_and_cultivar_session: true,
                                                            current_user: build_edit_user)
     search = Search::Base.new(params)
-    assert_equal search.executed_query.results.class, Reference::ActiveRecord_Relation, 'Results should be a Reference::ActiveRecord_Relation.'
-    assert search.executed_query.results.size > 0, 'Results expected.'
+    assert_equal search.executed_query.results.class, Reference::ActiveRecord_Relation, "Results should be a Reference::ActiveRecord_Relation."
+    assert search.executed_query.results.size > 0, "Results expected."
   end
 end

@@ -17,18 +17,18 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class StarTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
 
-  test 'instance star search' do
+  test "instance star search" do
     visit_home_page
     standard_page_assertions
-    select 'Instance', from: 'query-on'
-    fill_in 'search-field', with: '*'
-    click_button 'Search'
+    select "Instance", from: "query-on"
+    fill_in "search-field", with: "*"
+    click_button "Search"
     sleep(inspection_time = 0.1)
-    search_result_must_include_content('a')
+    search_result_must_include_content("a")
   end
 end

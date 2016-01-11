@@ -13,7 +13,7 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 # Be sure to restart your server when you modify this file.
 
 # You can add backtrace silencers for libraries that you're using but don't wish to see in your backtraces.

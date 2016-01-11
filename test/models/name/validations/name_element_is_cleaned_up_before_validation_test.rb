@@ -14,15 +14,15 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class NameElementIsCleanedUpBeforeValidation < ActiveSupport::TestCase
-  test 'name element with leading or trailing spaces is cleaned up before validation' do
+  test "name element with leading or trailing spaces is cleaned up before validation" do
     name = Name.first
-    name.name_element = '  has spaces   '
-    assert name.valid?, 'Name.name_element with leading or trailing spaces should be cleaned up.'
+    name.name_element = "  has spaces   "
+    assert name.valid?, "Name.name_element with leading or trailing spaces should be cleaned up."
     name.save
     name_saved = Name.find(name.id)
-    assert name_saved.name_element.size == 10, 'Name.name_element with leading or trailing spaces should lose spaces.'
+    assert name_saved.name_element.size == 10, "Name.name_element with leading or trailing spaces should lose spaces."
   end
 end

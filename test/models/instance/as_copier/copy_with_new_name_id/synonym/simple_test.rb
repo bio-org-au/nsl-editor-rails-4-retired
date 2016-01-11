@@ -14,7 +14,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class InstanceAsCopierCopySynonymWithNewNameIdTest < ActiveSupport::TestCase
   # test "copy one synonym instance with a new name id" do

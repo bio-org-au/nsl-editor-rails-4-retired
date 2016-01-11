@@ -14,7 +14,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class InstanceForEditorShowMostTabsTest < ActionController::TestCase
   tests InstancesController
@@ -22,9 +22,9 @@ class InstanceForEditorShowMostTabsTest < ActionController::TestCase
     @instance = instances(:britten_created_angophora_costata)
   end
 
-  test 'should show all tab links if editor requests details tab' do
-    @request.headers['Accept'] = 'application/javascript'
-    get(:show, { id: @instance.id, tab: 'tab_show_1', 'row-type' => 'instance_as_part_of_concept_record' }, username: 'fred', user_full_name: 'Fred Jones', groups: ['edit'])
+  test "should show all tab links if editor requests details tab" do
+    @request.headers["Accept"] = "application/javascript"
+    get(:show, { id: @instance.id, tab: "tab_show_1", "row-type" => "instance_as_part_of_concept_record" }, username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
     assert_response :success
     assert_select 'li.active a#instance-show-tab', /Details/, "Does not show 'Details' tab link."
     assert_select 'a#instance-edit-tab', /Edit/, "Does not show 'Edit' tab link."

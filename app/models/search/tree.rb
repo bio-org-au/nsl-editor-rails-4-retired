@@ -13,11 +13,10 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 class Search::Tree
-
-  attr_reader :empty, 
-              :error, 
+  attr_reader :empty,
+              :error,
               :error_message,
               :executed_query,
               :more_allowed,
@@ -27,7 +26,7 @@ class Search::Tree
     Rails.logger.debug("Search::Tree start")
     Rails.logger.debug("#{'=' * 40}")
     @parsed_request = Search::TreeParsedRequest.new(params)
-    @common_and_cultivar_included= true
+    @common_and_cultivar_included = true
     @count = false
     @empty = false
     @error = false
@@ -39,10 +38,6 @@ class Search::Tree
   end
 
   def to_history
-    ''
+    ""
   end
-
 end
-
-
-

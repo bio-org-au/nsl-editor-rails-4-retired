@@ -14,12 +14,12 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class ReferenceAsEditedNoAuthorIdWithPartialValidStringMatchingOneAuthor < ActiveSupport::TestCase
-  test 'no id with partial valid string matching one author' do
+  test "no id with partial valid string matching one author" do
     author = authors(:chaplin)
-    result = Reference::AsEdited.author_from_typeahead('', author.name.chop)
-    assert_equal author.id, result, 'Should get a matching id for the author'
+    result = Reference::AsEdited.author_from_typeahead("", author.name.chop)
+    assert_equal author.id, result, "Should get a matching id for the author"
   end
 end

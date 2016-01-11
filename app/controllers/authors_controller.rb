@@ -24,7 +24,7 @@ class AuthorsController < ApplicationController
   def show
     set_tab
     set_tab_index
-    render 'show', layout: false
+    render "show", layout: false
   end
 
   alias_method :tab, :show
@@ -42,7 +42,7 @@ class AuthorsController < ApplicationController
   def new
     @author = Author.new
     @no_search_result_details = true
-    @tab_index = (params[:tabIndex] || '40').to_i
+    @tab_index = (params[:tabIndex] || "40").to_i
     respond_to do |format|
       format.html {}
       format.js {}
@@ -54,11 +54,11 @@ class AuthorsController < ApplicationController
     @author = Author::AsEdited.create(author_params,
                                       typeahead_params,
                                       current_user.username)
-    render 'create.js'
+    render "create.js"
   rescue => e
     logger.error("Controller:Authors:create:rescuing exception #{e}")
     @error = e.to_s
-    render 'create_error.js', status: :unprocessable_entity
+    render "create_error.js", status: :unprocessable_entity
   end
 
   def update
@@ -66,11 +66,11 @@ class AuthorsController < ApplicationController
     @message = @author.update_if_changed(author_params,
                                          typeahead_params,
                                          current_user.username)
-    render 'update.js'
+    render "update.js"
   rescue => e
     logger.error("Author#update rescuing #{e}")
     @message = e.to_s
-    render 'update_error.js', status: :unprocessable_entity
+    render "update_error.js", status: :unprocessable_entity
   end
 
   # DELETE /authors/1
@@ -116,7 +116,7 @@ class AuthorsController < ApplicationController
   def find_author
     @author = Author.find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    flash[:alert] = 'We could not find the author.'
+    flash[:alert] = "We could not find the author."
     redirect_to authors_path
   end
 
@@ -129,14 +129,14 @@ class AuthorsController < ApplicationController
   end
 
   def set_tab
-    if params[:tab].present? && params[:tab] != 'undefined'
+    if params[:tab].present? && params[:tab] != "undefined"
       @tab = params[:tab]
     else
-      @tab = 'tab_show_1'
+      @tab = "tab_show_1"
     end
   end
 
   def set_tab_index
-    @tab_index = (params[:tabIndex] || '1').to_i
+    @tab_index = (params[:tabIndex] || "1").to_i
   end
 end

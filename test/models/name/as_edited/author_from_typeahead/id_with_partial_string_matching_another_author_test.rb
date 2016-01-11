@@ -14,13 +14,13 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class NameAsEditedAuthorIdWithPartialStringMatchingAnotherAuthor < ActiveSupport::TestCase
-  test 'id with partial string for anther author' do
+  test "id with partial string for anther author" do
     author_1 = authors(:dummy_author_1)
     author_2 = authors(:chaplin)
-    result = Name::AsEdited.author_from_typeahead(author_1.id.to_s, author_2.name.chop, 'Some Author Field')
-    assert_equal author_2.id, result, 'Should get a matching id for the partial string despite mismatched ID'
+    result = Name::AsEdited.author_from_typeahead(author_1.id.to_s, author_2.name.chop, "Some Author Field")
+    assert_equal author_2.id, result, "Should get a matching id for the partial string despite mismatched ID"
   end
 end

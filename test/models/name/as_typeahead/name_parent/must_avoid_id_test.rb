@@ -14,17 +14,17 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class NameParentSuggestionsMustAvoidIdTest < ActiveSupport::TestCase
-  test 'name parent suggestions must avoid id' do
+  test "name parent suggestions must avoid id" do
     name = names(:angophora_costata)
-    suggestions = Name::AsTypeahead.name_parent_suggestions('angophora costata', name.id + 1, name_ranks(:unranked).id)
-    assert(suggestions.is_a?(Array), 'SUggestions should be an array')
+    suggestions = Name::AsTypeahead.name_parent_suggestions("angophora costata", name.id + 1, name_ranks(:unranked).id)
+    assert(suggestions.is_a?(Array), "SUggestions should be an array")
     assert(suggestions.size == 1, 'SUggestions for "angophora costata" should have 1 element')
     assert(suggestions.first[:value].match(/Angophora costata/), "Suggestions should include 'Angophora costata'.")
-    suggestions = Name::AsTypeahead.name_parent_suggestions('angophora costata', name.id, name_ranks(:unranked).id)
-    assert(suggestions.is_a?(Array), 'SUggestions should be an array')
+    suggestions = Name::AsTypeahead.name_parent_suggestions("angophora costata", name.id, name_ranks(:unranked).id)
+    assert(suggestions.is_a?(Array), "SUggestions should be an array")
     assert(suggestions.size == 0, "Suggestions for 'angophora costata' should have no elements since it is told to avoid Angophora costata's id.")
   end
 end

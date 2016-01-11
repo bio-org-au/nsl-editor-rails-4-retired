@@ -14,11 +14,11 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class NameNewRouteTest < ActionController::TestCase
   tests NamesController
-  test 'names new should route to a new name' do
-    assert_routing '/names/new', controller: 'names', action: 'new'
+  test "names new should route to a new name" do
+    assert_routing "/names/new", controller: "names", action: "new"
   end
 end

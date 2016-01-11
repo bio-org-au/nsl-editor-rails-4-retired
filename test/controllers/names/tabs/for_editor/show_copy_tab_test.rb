@@ -14,7 +14,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class NameShowCopyTabForReadOnlyTest < ActionController::TestCase
   tests NamesController
@@ -22,10 +22,10 @@ class NameShowCopyTabForReadOnlyTest < ActionController::TestCase
     @name = names(:a_species)
   end
 
-  test 'should show copy tab' do
-    @request.headers['Accept'] = 'application/javascript'
-    get(:show, { id: @name.id, tab: 'tab_copy' }, username: 'fred', user_full_name: 'Fred Jones', groups: ['edit'])
+  test "should show copy tab" do
+    @request.headers["Accept"] = "application/javascript"
+    get(:show, { id: @name.id, tab: "tab_copy" }, username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
     assert_response :success
-    assert_select 'li.active a#name-copy-tab', 'Copy', "Should show 'Copy' tab."
+    assert_select 'li.active a#name-copy-tab', "Copy", "Should show 'Copy' tab."
   end
 end

@@ -14,10 +14,10 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class ForIdPresentAndStringBlank < ActiveSupport::TestCase
-  test 'id present string blank' do
-    assert_match 'id_only', Reference::AsEdited.resolve_id_and_text('123', '')
+  test "id present string blank" do
+    assert_match "id_only", Reference::AsEdited.resolve_id_and_text("123", "")
   end
 end

@@ -14,12 +14,12 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class InstanceValidationDuplicatesPreventTest < ActiveSupport::TestCase
-  test 'instance prevent duplicate' do
+  test "instance prevent duplicate" do
     instance = instances(:triodia_in_brassard)
-    assert instance.valid?, 'Starting instance must be valid for this test.'
+    assert instance.valid?, "Starting instance must be valid for this test."
     dup = instance.dup
     assert_raises(ActiveRecord::RecordInvalid, "Duplicate instance shouldn't be saved") do
       dup.save!

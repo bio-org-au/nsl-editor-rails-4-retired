@@ -14,17 +14,17 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class AuthorEditorOfferDeleteButtonIfCanBeDeletedTest < ActionController::TestCase
   tests AuthorsController
 
-  test 'should show editor author delete button if can be deleted' do
+  test "should show editor author delete button if can be deleted" do
     author = authors(:has_no_dependents)
-    @request.headers['Accept'] = 'application/javascript'
-    assert author.can_be_deleted?, 'Must be able to delete this author for the test to be valid'
-    get(:show, { id: author.id, tab: 'tab_edit' }, username: 'fred', user_full_name: 'Fred Jones', groups: ['edit'])
-    assert_select 'li.active a#author-edit-tab', 'Edit', "Should show 'Edit' tab."
+    @request.headers["Accept"] = "application/javascript"
+    assert author.can_be_deleted?, "Must be able to delete this author for the test to be valid"
+    get(:show, { id: author.id, tab: "tab_edit" }, username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
+    assert_select 'li.active a#author-edit-tab', "Edit", "Should show 'Edit' tab."
     assert_select 'a#author-delete-link', true
   end
 end

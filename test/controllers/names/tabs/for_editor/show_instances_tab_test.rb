@@ -14,7 +14,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class NameShowInstanceTabForReadOnlyTest < ActionController::TestCase
   tests NamesController
@@ -22,10 +22,10 @@ class NameShowInstanceTabForReadOnlyTest < ActionController::TestCase
     @name = names(:a_species)
   end
 
-  test 'should show instance tab' do
-    @request.headers['Accept'] = 'application/javascript'
-    get(:show, { id: @name.id, tab: 'tab_instances' }, username: 'fred', user_full_name: 'Fred Jones', groups: ['edit'])
+  test "should show instance tab" do
+    @request.headers["Accept"] = "application/javascript"
+    get(:show, { id: @name.id, tab: "tab_instances" }, username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
     assert_response :success
-    assert_select 'li.active a#name-instances-tab', 'Instance', "Should show 'Instance' tab."
+    assert_select 'li.active a#name-instances-tab', "Instance", "Should show 'Instance' tab."
   end
 end

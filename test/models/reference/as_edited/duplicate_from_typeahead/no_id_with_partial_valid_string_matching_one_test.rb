@@ -14,12 +14,12 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class ReferenceAsEditedNoDuplicateOfIdWithPartialValidStringMatchingOne < ActiveSupport::TestCase
-  test 'no id with patial valid string matching one record' do
+  test "no id with patial valid string matching one record" do
     reference = references(:origin_of_species)
-    result = Reference::AsEdited.duplicate_of_from_typeahead('', reference.citation.chop)
-    assert_equal reference.id, result, 'Should get a matching id for the citation'
+    result = Reference::AsEdited.duplicate_of_from_typeahead("", reference.citation.chop)
+    assert_equal reference.id, result, "Should get a matching id for the citation"
   end
 end

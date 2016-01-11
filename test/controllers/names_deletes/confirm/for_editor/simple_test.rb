@@ -14,15 +14,15 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class NamesDeleteConfirmForEditorSimpleTest < ActionController::TestCase
   tests NamesDeletesController
 
-  test 'editor should be able to confirm name delete' do
+  test "editor should be able to confirm name delete" do
     name = names(:name_to_delete)
-    @request.headers['Accept'] = 'application/javascript'
-    delete(:confirm, { names_delete: { name_id: name.id, reason: 'some reason', extra_info: '' } }, username: 'fred', user_full_name: 'Fred Jones', groups: ['edit'])
-    assert_response :success, 'Reader should be able to delete'
+    @request.headers["Accept"] = "application/javascript"
+    delete(:confirm, { names_delete: { name_id: name.id, reason: "some reason", extra_info: "" } }, username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
+    assert_response :success, "Reader should be able to delete"
   end
 end

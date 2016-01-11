@@ -14,14 +14,14 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class ReferenceAsEditedNoAuthorIdWithStringMatchingTwoReferencesTest < ActiveSupport::TestCase
-  test 'no id with invalid string' do
+  test "no id with invalid string" do
     reference_1 = references(:has_a_matching_citation_1)
-    assert Reference.where(citation: reference_1.citation).size == 2, 'Should be two References with the same citation string.'
-    assert_raise(RuntimeError, 'Should raise a RuntimeError for invalid reference string.') do
-      result = Reference::AsEdited.author_from_typeahead('', reference_1.citation)
+    assert Reference.where(citation: reference_1.citation).size == 2, "Should be two References with the same citation string."
+    assert_raise(RuntimeError, "Should raise a RuntimeError for invalid reference string.") do
+      result = Reference::AsEdited.author_from_typeahead("", reference_1.citation)
     end
   end
 end

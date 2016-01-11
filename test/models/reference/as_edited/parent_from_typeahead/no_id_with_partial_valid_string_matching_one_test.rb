@@ -14,12 +14,12 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class ReferenceAsEditedNoParentIdWithPartialValidStringMatchingOne < ActiveSupport::TestCase
-  test 'no id with partial valid string matching one reference' do
+  test "no id with partial valid string matching one reference" do
     reference = references(:origin_of_species)
-    result = Reference::AsEdited.parent_from_typeahead('', reference.citation.chop)
-    assert_equal reference.id, result, 'Should get a matching id for the reference'
+    result = Reference::AsEdited.parent_from_typeahead("", reference.citation.chop)
+    assert_equal reference.id, result, "Should get a matching id for the reference"
   end
 end

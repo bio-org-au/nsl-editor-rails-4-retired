@@ -14,10 +14,10 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class ForRegnumTest < ActiveSupport::TestCase
-  test 'from a higher rank for regnum' do
+  test "from a higher rank for regnum" do
     ranks = Name.from_a_higher_rank(name_ranks(:regnum).id).collect { |name| name.name_rank.name }.uniq
     assert_equal 0, ranks.size
   end

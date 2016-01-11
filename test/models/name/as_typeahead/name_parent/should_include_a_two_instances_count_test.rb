@@ -14,17 +14,17 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class ShouldIncludeATwoInstancesCount < ActiveSupport::TestCase
-  test 'name parent suggestions should include a two instances count' do
+  test "name parent suggestions should include a two instances count" do
     dummy_avoid_id = 1
-    name = Name.find_by(full_name: 'a genus with two instances')
+    name = Name.find_by(full_name: "a genus with two instances")
     assert name.present?, 'The name "a genus with two instances" should be found.'
     assert name.instances.size == 2, "The name 'a genus with two instances' should have two instances."
-    suggestions = Name::AsTypeahead.name_parent_suggestions('a genus with two instances', dummy_avoid_id, NameRank.species.id)
-    assert(suggestions.is_a?(Array), 'suggestions should be an array')
+    suggestions = Name::AsTypeahead.name_parent_suggestions("a genus with two instances", dummy_avoid_id, NameRank.species.id)
+    assert(suggestions.is_a?(Array), "suggestions should be an array")
     assert(suggestions.size == 1, 'suggestions for "a genus with two instances" should have a record')
-    assert_match 'a genus with two instances | Genus | legitimate | 2 instances', suggestions.first[:value], 'Name parent typeahead needs correct value with a 2 instances count'
+    assert_match "a genus with two instances | Genus | legitimate | 2 instances", suggestions.first[:value], "Name parent typeahead needs correct value with a 2 instances count"
   end
 end

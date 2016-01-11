@@ -14,20 +14,20 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class ForTribusTest < ActiveSupport::TestCase
-  test 'from a higher rank for tribus' do
+  test "from a higher rank for tribus" do
     ranks = Name.from_a_higher_rank(name_ranks(:tribus).id).collect { |name| name.name_rank.name }.uniq
-    assert ranks.include?('Regnum'), 'Should include Regnum'
-    assert ranks.include?('Division'), 'Should include Division'
-    assert ranks.include?('Classis'), 'Should include Classis'
-    assert ranks.include?('Subclassis'), 'Should include Subclassis'
-    assert ranks.include?('Superordo'), 'Should include Superordo'
-    assert ranks.include?('Ordo'), 'Should include Ordo'
-    assert ranks.include?('Subordo'), 'Should include Subordo'
-    assert ranks.include?('Familia'), 'Should include Familia'
-    assert ranks.include?('Subfamilia'), 'Should include Subfamilia'
+    assert ranks.include?("Regnum"), "Should include Regnum"
+    assert ranks.include?("Division"), "Should include Division"
+    assert ranks.include?("Classis"), "Should include Classis"
+    assert ranks.include?("Subclassis"), "Should include Subclassis"
+    assert ranks.include?("Superordo"), "Should include Superordo"
+    assert ranks.include?("Ordo"), "Should include Ordo"
+    assert ranks.include?("Subordo"), "Should include Subordo"
+    assert ranks.include?("Familia"), "Should include Familia"
+    assert ranks.include?("Subfamilia"), "Should include Subfamilia"
     assert_equal 9, ranks.size
   end
 end

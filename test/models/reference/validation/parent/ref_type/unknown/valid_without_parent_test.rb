@@ -14,12 +14,12 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class UnknownValidWithoutParentTest < ActiveSupport::TestCase
-  test 'unknown valid without parent' do
+  test "unknown valid without parent" do
     ref = references(:unknown_with_unknown_parent)
     ref.parent_id = nil
-    assert ref.valid? == true, 'Unknown without parent should be valid.'
+    assert ref.valid? == true, "Unknown without parent should be valid."
   end
 end

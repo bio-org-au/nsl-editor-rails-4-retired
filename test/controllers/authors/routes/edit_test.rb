@@ -14,11 +14,11 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class AuthorsRouteEditTest < ActionController::TestCase
   tests AuthorsController
-  test 'authors edit should route to the catch-all' do
-    assert_routing '/authors/edit/1', controller: 'search', action: 'search', random: 'authors/edit/1'
+  test "authors edit should route to the catch-all" do
+    assert_routing "/authors/edit/1", controller: "search", action: "search", random: "authors/edit/1"
   end
 end

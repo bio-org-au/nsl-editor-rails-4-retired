@@ -17,14 +17,14 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class InstancesCreateTest < ActionDispatch::IntegrationTest
   # Make the Capybara DSL available in all integration tests
   include Capybara::DSL
 
-  test 'create instance from scratch' do
-    skip('instance create being reworked')
+  test "create instance from scratch" do
+    skip("instance create being reworked")
     # instances_count = Instance.count
     # references_count = Reference.count
     # names_count = Name.count

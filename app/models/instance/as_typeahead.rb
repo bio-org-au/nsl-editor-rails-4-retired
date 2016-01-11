@@ -13,9 +13,8 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 class Instance::AsTypeahead < Instance
-
   # Return array of instances based primarily on full_name
   # but additionally on reference.year.
   #
@@ -39,31 +38,29 @@ class Instance::AsTypeahead < Instance
     reference_year = ""
     name_binds = []
     reference_binds = []
-    reference_year = terms.gsub(/[^0-9]/,'')
-    terms_without_year = terms.gsub(/[0-9]/,'').strip.gsub(/  /,' ')
+    reference_year = terms.gsub(/[^0-9]/, "")
+    terms_without_year = terms.gsub(/[0-9]/, "").strip.gsub(/  /, " ")
     if reference_year.present? && reference_year.to_i > 1000 && reference_year.to_i < 3000
-      reference_binds.push( " year = ? ")
+      reference_binds.push(" year = ? ")
       reference_binds.push(reference_year)
     end
     if terms_without_year.present?
-      name_binds.push( " lower(full_name) like lower(?) ")
-      name_binds.push(terms_without_year.gsub(/\*/,'%') + '%')
-      results = Instance.select(' name.full_name, reference.citation, reference.year, reference.pages, ' +
-                                    ' instance.id, instance.source_system, instance_type.name as instance_type_name')
-                    .joins(:name).where(name_binds)\
-          .joins(:reference).where(reference_binds)\
-          .joins(:instance_type)\
-          .order('full_name, year').limit(SEARCH_LIMIT)\
-          .collect do | i |
-        value = "#{i.full_name} in #{i.citation}:#{i.year} #{'['+i.pages+']' unless i.pages.blank? || i.pages.match(/null - null/)}"
-        value += "[#{i.instance_type_name}]"  unless i.instance_type_name == 'secondary reference'
+      name_binds.push(" lower(full_name) like lower(?) ")
+      name_binds.push(terms_without_year.gsub(/\*/, "%") + "%")
+      results = Instance.select(" name.full_name, reference.citation, reference.year, reference.pages, " \
+                                    " instance.id, instance.source_system, instance_type.name as instance_type_name")
+                .joins(:name).where(name_binds)\
+                .joins(:reference).where(reference_binds)\
+                .joins(:instance_type)\
+                .order("full_name, year").limit(SEARCH_LIMIT)\
+                .collect do |i|
+        value = "#{i.full_name} in #{i.citation}:#{i.year} #{'[' + i.pages + ']' unless i.pages.blank? || i.pages.match(/null - null/)}"
+        value += "[#{i.instance_type_name}]" unless i.instance_type_name == "secondary reference"
         id = i.id
-        {value: value, id: id}
+        { value: value, id: id }
       end
     else
       []
     end
   end
-
-
 end

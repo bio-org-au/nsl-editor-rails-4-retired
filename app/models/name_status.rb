@@ -13,20 +13,20 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 class NameStatus < ActiveRecord::Base
-  self.table_name = 'name_status'
-  self.primary_key = 'id'
-  self.sequence_name = 'nsl_global_seq'
+  self.table_name = "name_status"
+  self.primary_key = "id"
+  self.sequence_name = "nsl_global_seq"
 
   scope :ordered_by_name, -> { order("replace(name,'[','zzzzzz')") }
 
-  NA = '[n/a]'
+  NA = "[n/a]"
 
   has_many :names
 
   def self.default
-    find_by(name: 'legitimate')
+    find_by(name: "legitimate")
   end
 
   def legitimate?
@@ -42,58 +42,57 @@ class NameStatus < ActiveRecord::Base
   end
 
   def bracketed_non_legitimate_status
-    legitimate? ? '' : "[#{name_without_brackets}]"
+    legitimate? ? "" : "[#{name_without_brackets}]"
   end
 
   def name_without_brackets
-    name.gsub(/\[/,'').gsub(/]/,'')
+    name.gsub(/\[/, "").gsub(/]/, "")
   end
 
   def name_for_instance_display
-    (legitimate? || na?) ? '' : name
+    (legitimate? || na?) ? "" : name
   end
 
   def self.not_applicable
-    self.find_by(name: NA).id
+    find_by(name: NA).id
   end
-  
+
   def self.options_for_category(name_category = :unknown, allow_delete = false)
-    case name_category 
+    case name_category
     when Name::SCIENTIFIC_CATEGORY
-      self.scientific_options(allow_delete)
+      scientific_options(allow_delete)
     when Name::SCIENTIFIC_HYBRID_FORMULA_CATEGORY
-      self.na_and_deleted_options(allow_delete)
-    when Name::SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY 
-      self.na_and_deleted_options(allow_delete)
+      na_and_deleted_options(allow_delete)
+    when Name::SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY
+      na_and_deleted_options(allow_delete)
     when Name::CULTIVAR_HYBRID_CATEGORY
-      self.na_default_and_deleted_options(allow_delete)
+      na_default_and_deleted_options(allow_delete)
     when Name::CULTIVAR_CATEGORY
-      self.na_default_and_deleted_options(allow_delete)
+      na_default_and_deleted_options(allow_delete)
     when Name::OTHER_CATEGORY
-      self.na_and_deleted_options(allow_delete)
+      na_and_deleted_options(allow_delete)
     else
-      self.na_and_deleted_options(allow_delete)
+      na_and_deleted_options(allow_delete)
     end
   end
 
   def self.query_form_options
-    self.all.ordered_by_name.collect{|n| [n.name, "status: #{n.name.downcase}"]}.unshift(['any status',''])
+    all.ordered_by_name.collect { |n| [n.name, "status: #{n.name.downcase}"] }.unshift(["any status", ""])
   end
 
   def self.options(allow_delete = false)
-    self.all.ordered_by_name.collect{|n| [n.name, n.id, disabled: (n.name == '[deleted]' && !allow_delete)]}
+    all.ordered_by_name.collect { |n| [n.name, n.id, disabled: (n.name == "[deleted]" && !allow_delete)] }
   end
 
   def self.scientific_options(allow_delete = false)
-    self.where(" name not in ('nom. cult.', 'nom. cult., nom. alt.') ").ordered_by_name.collect{|n| [n.name, n.id, disabled: (n.name == '[deleted]' && !allow_delete)]}
+    where(" name not in ('nom. cult.', 'nom. cult., nom. alt.') ").ordered_by_name.collect { |n| [n.name, n.id, disabled: (n.name == "[deleted]" && !allow_delete)] }
   end
 
   def self.na_and_deleted_options(allow_delete)
-    self.where(" name = '[n/a]' or name = '[deleted]' ").order('name').collect{|n| [n.name, n.id, disabled: n.name == '[deleted]' && !allow_delete]}
+    where(" name = '[n/a]' or name = '[deleted]' ").order("name").collect { |n| [n.name, n.id, disabled: n.name == "[deleted]" && !allow_delete] }
   end
 
   def self.na_default_and_deleted_options(allow_delete)
-    self.where(" name = '[n/a]' or name = '[default]' or name = '[deleted]' ").order('name').collect{|n| [n.name, n.id, disabled: n.name == '[deleted]' && !allow_delete]}
+    where(" name = '[n/a]' or name = '[default]' or name = '[deleted]' ").order("name").collect { |n| [n.name, n.id, disabled: n.name == "[deleted]" && !allow_delete] }
   end
-
 end

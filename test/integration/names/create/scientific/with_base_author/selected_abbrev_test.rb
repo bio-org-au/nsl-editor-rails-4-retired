@@ -17,24 +17,24 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class SelectedBaseAuthorTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
 
-  test 'create scientific name with base author' do
+  test "create scientific name with base author" do
     names_count = Name.count
     visit_home_page
-    fill_in 'search-field', with: 'create scientific name with base author'
+    fill_in "search-field", with: "create scientific name with base author"
     load_new_scientific_name_form
     set_name_parent
-    fill_in('name_name_element', with: 'Fred')
-    fill_in_author_typeahead('author-by-abbrev', 'name_author_id')
-    fill_in_author_typeahead('ex-author-by-abbrev', 'name_ex_author_id', authors(:hooker))
-    fill_in_author_typeahead('base-author-by-abbrev', 'name_base_author_id', authors(:burbidge))
+    fill_in("name_name_element", with: "Fred")
+    fill_in_author_typeahead("author-by-abbrev", "name_author_id")
+    fill_in_author_typeahead("ex-author-by-abbrev", "name_ex_author_id", authors(:hooker))
+    fill_in_author_typeahead("base-author-by-abbrev", "name_base_author_id", authors(:burbidge))
     save_new_record
-    assert_successful_create_for(['Authored by', 'Ex Authored by', 'Authored by Benth.', 'Ex Authored by Hook.'])
-    assert_successful_create_for(['Base Authored by', 'Base Authored by Burb.'])
+    assert_successful_create_for(["Authored by", "Ex Authored by", "Authored by Benth.", "Ex Authored by Hook."])
+    assert_successful_create_for(["Base Authored by", "Base Authored by Burb."])
     Name.count.must_equal names_count + 1
   end
 end

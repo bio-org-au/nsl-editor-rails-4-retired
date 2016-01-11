@@ -14,14 +14,14 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class AuthorCannotBeDeletedIfHasReferenceTest < ActiveSupport::TestCase
-  test 'author cannot be deleted if has reference' do
+  test "author cannot be deleted if has reference" do
     author = authors(:has_no_dependents)
     reference = references(:simple)
     reference.author = author
     reference.save!
-    assert_not author.can_be_deleted?, 'Should not be able to delete author of reference'
+    assert_not author.can_be_deleted?, "Should not be able to delete author of reference"
   end
 end

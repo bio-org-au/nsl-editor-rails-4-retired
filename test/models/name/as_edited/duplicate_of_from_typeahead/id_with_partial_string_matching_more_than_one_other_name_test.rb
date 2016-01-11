@@ -14,13 +14,13 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class NameAsEditedDuplicateOfIdWithPartialStringMatchingMatchingMoreThanOneOtherName < ActiveSupport::TestCase
-  test 'duplicate of id with partial string matching more than one other name' do
+  test "duplicate of id with partial string matching more than one other name" do
     name_1 = names(:name_matches_another_1)
     name_2 = names(:name_matches_another_1)
-    assert_raise(RuntimeError, 'Should raise error because partial string does not identify just one name') do
+    assert_raise(RuntimeError, "Should raise error because partial string does not identify just one name") do
       result = Name::AsEdited.duplicate_of_from_typeahead(name_1.id.to_s, name_2.full_name[0])
     end
   end

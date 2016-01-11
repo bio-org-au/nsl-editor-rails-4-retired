@@ -14,16 +14,16 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class InstancesDeleteForEditorTest < ActionController::TestCase
   tests InstancesController
 
-  test 'editor should be able to delete instance' do
+  test "editor should be able to delete instance" do
     instance = instances(:triodia_in_brassard)
-    @request.headers['Accept'] = 'application/javascript'
+    @request.headers["Accept"] = "application/javascript"
     # This calls a service, so in Test, no record is actually deleted!
-    delete(:destroy, { id: instance.id }, username: 'fred', user_full_name: 'Fred Jones', groups: ['edit'])
+    delete(:destroy, { id: instance.id }, username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
     assert_response :success
   end
 end

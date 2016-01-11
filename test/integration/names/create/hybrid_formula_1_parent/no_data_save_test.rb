@@ -17,18 +17,18 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class NoDataSaveTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
 
-  test 'hybrid formula 1 parent name try to save without data' do
+  test "hybrid formula 1 parent name try to save without data" do
     names_count = Name.count
     visit_home_page
-    fill_in 'search-field', with: 'test: hybrid 1 parent try to save without data'
+    fill_in "search-field", with: "test: hybrid 1 parent try to save without data"
     load_new_hybrid_formula_unknown_2nd_parent_form
     save_edits
     big_sleep
-    Name.count.must_equal names_count, 'Record created unexpectedly.'
+    Name.count.must_equal names_count, "Record created unexpectedly."
   end
 end

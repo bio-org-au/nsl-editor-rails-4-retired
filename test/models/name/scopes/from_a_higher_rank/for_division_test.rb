@@ -14,14 +14,14 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class ForSubclassisTest < ActiveSupport::TestCase
-  test 'from a higher rank for Subclassis' do
+  test "from a higher rank for Subclassis" do
     ranks = Name.from_a_higher_rank(name_ranks(:subclassis).id).collect { |name| name.name_rank.name }.uniq
-    assert ranks.include?('Regnum'), 'Should include Regnum'
-    assert ranks.include?('Division'), 'Should include Division'
-    assert ranks.include?('Classis'), 'Should include Classis'
+    assert ranks.include?("Regnum"), "Should include Regnum"
+    assert ranks.include?("Division"), "Should include Division"
+    assert ranks.include?("Classis"), "Should include Classis"
     assert_equal 3, ranks.size
   end
 end

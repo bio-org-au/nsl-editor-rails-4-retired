@@ -14,14 +14,14 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
-load 'models/search/users.rb'
+require "test_helper"
+load "models/search/users.rb"
 
 class SearchOnNameAssertionIsOrthVarWithNoOrthVarInstancesTest < ActiveSupport::TestCase
-  test 'name asertion is orth var with no orth var instances' do
-    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_target: 'name',
-                                                                           query_string: 'is-orth-var-with-no-orth-var-instances:',
+  test "name asertion is orth var with no orth var instances" do
+    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_target: "name",
+                                                                           query_string: "is-orth-var-with-no-orth-var-instances:",
                                                                            current_user: build_edit_user))
-    assert search.executed_query.results.size > 0, 'Should find name that has an instance.'
+    assert search.executed_query.results.size > 0, "Should find name that has an instance."
   end
 end

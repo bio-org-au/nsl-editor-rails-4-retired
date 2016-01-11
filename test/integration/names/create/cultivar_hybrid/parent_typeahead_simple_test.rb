@@ -17,17 +17,17 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class CultivarHybridNameParentTypeaheadSimpleTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
 
-  test 'parent typeahead simple' do
+  test "parent typeahead simple" do
     visit_home_page
-    fill_in 'search-field', with: 'test: parent typeahead simple'
-    select_from_menu(['New', 'Cultivar hybrid name'])
-    search_result_must_include_link('New cultivar hybrid name')
-    search_result_details_must_include_content('New Cultivar Hybrid Name')
-    try_typeahead_single('name-parent-typeahead', 'aforma', 'Aforma | Forma | legitimate | 1 instance')
+    fill_in "search-field", with: "test: parent typeahead simple"
+    select_from_menu(["New", "Cultivar hybrid name"])
+    search_result_must_include_link("New cultivar hybrid name")
+    search_result_details_must_include_content("New Cultivar Hybrid Name")
+    try_typeahead_single("name-parent-typeahead", "aforma", "Aforma | Forma | legitimate | 1 instance")
   end
 end

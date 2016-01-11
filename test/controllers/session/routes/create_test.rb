@@ -14,11 +14,11 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class SessionCreateRouteTest < ActionController::TestCase
   tests SessionsController
-  test 'should route to create a session' do
-    assert_routing({ method: 'post', path: '/sign_in' }, controller: 'sessions', action: 'create')
+  test "should route to create a session" do
+    assert_routing({ method: "post", path: "/sign_in" }, controller: "sessions", action: "create")
   end
 end

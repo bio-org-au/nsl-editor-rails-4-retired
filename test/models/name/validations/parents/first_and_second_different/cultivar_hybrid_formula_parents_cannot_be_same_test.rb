@@ -14,15 +14,15 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class NameCultivarHybridFormulaParentAndSecondParentCannotBeTheSameTest < ActiveSupport::TestCase
-  test 'name cultivar hybrid formula parent and second parent cannot be the same' do
+  test "name cultivar hybrid formula parent and second parent cannot be the same" do
     name = names(:a_cultivar_hybrid_formula)
-    assert name.parent_id != name.second_parent_id, 'Name parent and second_parent must differ for this test.'
+    assert name.parent_id != name.second_parent_id, "Name parent and second_parent must differ for this test."
     assert name.valid?, "Name should be valid. Errors: #{name.errors.full_messages.join('; ')}"
     name.second_parent_id = name.parent_id
-    assert_not name.valid?, 'Cultivar Hybrid Formula Name should not be valid even when parent is the same as second_parent.'
-    assert_equal 'Second parent cannot be the same as the first parent', name.errors.full_messages.join('; ')
+    assert_not name.valid?, "Cultivar Hybrid Formula Name should not be valid even when parent is the same as second_parent."
+    assert_equal "Second parent cannot be the same as the first parent", name.errors.full_messages.join("; ")
   end
 end

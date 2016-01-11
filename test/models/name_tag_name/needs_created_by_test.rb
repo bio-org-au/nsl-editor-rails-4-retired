@@ -14,15 +14,15 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class NeedsCreatedBy < ActiveSupport::TestCase
-  test 'check' do
+  test "check" do
     acra = name_tags(:acra)
     a_species = names(:a_species)
-    name_tag_name = NameTagName.new(name_id: a_species.id, tag_id: acra.id, updated_by: 'tester')
-    assert_not name_tag_name.valid?, 'Name Tag Name record should not be valid without created_by.'
-    name_tag_name.created_by = 'tester'
-    assert name_tag_name.valid?, 'Name Tag Name record should now be valid with created_by.'
+    name_tag_name = NameTagName.new(name_id: a_species.id, tag_id: acra.id, updated_by: "tester")
+    assert_not name_tag_name.valid?, "Name Tag Name record should not be valid without created_by."
+    name_tag_name.created_by = "tester"
+    assert name_tag_name.valid?, "Name Tag Name record should now be valid with created_by."
   end
 end

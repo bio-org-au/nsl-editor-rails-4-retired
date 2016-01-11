@@ -27,7 +27,7 @@ class CommentsController < ApplicationController
   # POST /comments
   # POST /comments.json
   def create
-    @message = ''
+    @message = ""
     @comment = Comment.new(comment_params)
     respond_to do |format|
       if @comment.save_with_username(current_user.username)
@@ -42,7 +42,7 @@ class CommentsController < ApplicationController
   # PATCH/PUT /comments/1
   # PATCH/PUT /comments/1.json
   def update
-    @message = 'No change'
+    @message = "No change"
     really_update unless @comment.text.to_s == comment_params[:text].strip
   end
 
@@ -52,7 +52,7 @@ class CommentsController < ApplicationController
     username = current_user.username
     if @comment.update_attributes(updated_by: username) && @comment.destroy
       respond_to do |format|
-        format.html { redirect_to comments_url, notice: 'Comment deleted.' }
+        format.html { redirect_to comments_url, notice: "Comment deleted." }
         format.json { head :no_content }
         format.js {}
       end
@@ -80,7 +80,7 @@ class CommentsController < ApplicationController
   def really_update
     if @comment.update_attributes_with_username(comment_params,
                                                 current_user.username)
-      @message = 'Updated'
+      @message = "Updated"
       render :update
     else
       @message = "Not saved. #{@comment.errors.full_messages.first}"

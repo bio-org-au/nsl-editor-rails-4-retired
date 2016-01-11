@@ -13,9 +13,8 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
-class Reference::DefinedQuery::ReferencesNamesFullSynonymy 
-
+#
+class Reference::DefinedQuery::ReferencesNamesFullSynonymy
   attr_reader :results, :limited, :common_and_cultivar_included, :has_relation, :relation, :count
 
   def initialize(parsed_request)
@@ -26,7 +25,7 @@ class Reference::DefinedQuery::ReferencesNamesFullSynonymy
     tag = "Reference::DefinedQuery::ReferencesNamesFullSynonymy"
     Rails.logger.debug("#{tag}: #{s}")
   end
- 
+
   def run_query(parsed_request)
     debug("")
     debug("parsed_request.where_arguments: #{parsed_request.where_arguments}")
@@ -36,13 +35,13 @@ class Reference::DefinedQuery::ReferencesNamesFullSynonymy
     if parsed_request.count
       debug("run_query counting")
       query = Search::OnReference::ListQuery.new(parsed_request)
-      @relation = query.sql  # TODO: work out how to provide the relation and sql
+      @relation = query.sql # TODO: work out how to provide the relation and sql
       references = relation.all
       debug(references.size)
       tally = 0
-      references.each  do | ref |
+      references.each do |ref|
         debug(ref.id)
-        #tally += ref.instances.size
+        # tally += ref.instances.size
         tally += Instance::AsSearchEngine.ref_usages(ref.id).size
       end
       debug("tally: #{tally}")
@@ -55,7 +54,7 @@ class Reference::DefinedQuery::ReferencesNamesFullSynonymy
       debug(query.results.size)
       results = []
       @limited = false
-      query.results.each  do | ref |
+      query.results.each do |ref|
         results.concat(Instance::AsSearchEngine.ref_usages(ref.id))
         if results.size >= parsed_request.limit
           @limited = true
@@ -70,9 +69,4 @@ class Reference::DefinedQuery::ReferencesNamesFullSynonymy
       @relation = nil
     end
   end
-
-
 end
-
-
-

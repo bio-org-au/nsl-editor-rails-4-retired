@@ -14,16 +14,16 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class NameAPCExcludedTest < ActiveSupport::TestCase
-  test 'name apc excluded' do
+  test "name apc excluded" do
     name = Name.new
     expected_instance_id = 44
-    name.stubs(:get_apc_json).returns('inAPC' => true, 'excluded' => true, 'taxonId' => expected_instance_id.to_s, 'type' => 'ApcExcluded')
-    assert_equal true, name.apc?, 'Name should be in APC'
-    assert_equal expected_instance_id, name.apc_instance_id, 'APC instance id should be set'
-    assert_equal false, name.apc_declared_bt, 'Name should not be a declared BT'
-    assert_equal true, name.apc_instance_is_an_excluded_name, 'Should be an excluded name'
+    name.stubs(:get_apc_json).returns("inAPC" => true, "excluded" => true, "taxonId" => expected_instance_id.to_s, "type" => "ApcExcluded")
+    assert_equal true, name.apc?, "Name should be in APC"
+    assert_equal expected_instance_id, name.apc_instance_id, "APC instance id should be set"
+    assert_equal false, name.apc_declared_bt, "Name should not be a declared BT"
+    assert_equal true, name.apc_instance_is_an_excluded_name, "Should be an excluded name"
   end
 end

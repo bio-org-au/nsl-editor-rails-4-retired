@@ -14,16 +14,16 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
-load 'test/models/search/users.rb'
+require "test_helper"
+load "test/models/search/users.rb"
 
 class OnIdTest < ActiveSupport::TestCase
-  test 'on ID' do
+  test "on ID" do
     name = names(:the_regnum)
     query_string = "id: #{name.id}"
-    params = ActiveSupport::HashWithIndifferentAccess.new(query_target: 'name', query_string: query_string, current_user: build_edit_user)
+    params = ActiveSupport::HashWithIndifferentAccess.new(query_target: "name", query_string: query_string, current_user: build_edit_user)
     search = Search::Base.new(params)
-    assert_equal search.executed_query.results.class, Name::ActiveRecord_Relation, 'Results should be a Name::ActiveRecord_Relation.'
-    assert_equal search.executed_query.results.size, 1, 'Only 1 result is expected.'
+    assert_equal search.executed_query.results.class, Name::ActiveRecord_Relation, "Results should be a Name::ActiveRecord_Relation."
+    assert_equal search.executed_query.results.size, 1, "Only 1 result is expected."
   end
 end

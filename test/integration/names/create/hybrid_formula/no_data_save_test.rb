@@ -17,12 +17,12 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class CannotSaveWithoutEnteringDataTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
 
-  test 'hybrid formula name save without entering data' do
+  test "hybrid formula name save without entering data" do
     names_count = Name.count
     visit_home_page
     load_new_hybrid_formula_unknown_2nd_parent_form

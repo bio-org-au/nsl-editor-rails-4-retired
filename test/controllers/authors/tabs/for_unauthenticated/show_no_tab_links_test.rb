@@ -14,7 +14,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class AuthorUnauthenticatedShowNoTabLinkTest < ActionController::TestCase
   tests AuthorsController
@@ -22,13 +22,13 @@ class AuthorUnauthenticatedShowNoTabLinkTest < ActionController::TestCase
     @author = authors(:bentham)
   end
 
-  test 'should show no tab links if unauthenticated requests details tab' do
-    @request.headers['Accept'] = 'application/javascript'
-    get(:show, { id: @author.id, tab: 'tab_edit' }, {})
+  test "should show no tab links if unauthenticated requests details tab" do
+    @request.headers["Accept"] = "application/javascript"
+    get(:show, { id: @author.id, tab: "tab_edit" }, {})
     # assert_response :redirect, 'Should be redirected.'
     assert_select 'a#author-show-tab', false, "Should not show 'Detail' tab."
     assert_select 'a#author-edit-tab', false, "Should not show 'Edit' tab."
     assert_select 'a#author-comments-tab', false, "Should not show 'Comments' tab."
-    assert_select 'a#tab-heading', false, 'Should not have tab heading showing Bentham.'
+    assert_select 'a#tab-heading', false, "Should not have tab heading showing Bentham."
   end
 end

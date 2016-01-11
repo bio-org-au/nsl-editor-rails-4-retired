@@ -17,20 +17,20 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class ParentTypeaheadSelectTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
 
-  test 'parent typeahead select' do
+  test "parent typeahead select" do
     Capybara.default_driver = :selenium
     visit_home_page
-    fill_in 'search-field', with: 'test: parent typeahead simple'
-    select_from_menu(['New', 'Cultivar hybrid name'])
-    search_result_must_include_link('New cultivar hybrid name')
-    search_result_details_must_include_content('New Cultivar Hybrid Name')
-    try_typeahead_single('name-parent-typeahead', 'aforma', 'Aforma | Forma | legitimate')
-    the_field = find(:css, 'a.show-details-link')
+    fill_in "search-field", with: "test: parent typeahead simple"
+    select_from_menu(["New", "Cultivar hybrid name"])
+    search_result_must_include_link("New cultivar hybrid name")
+    search_result_details_must_include_content("New Cultivar Hybrid Name")
+    try_typeahead_single("name-parent-typeahead", "aforma", "Aforma | Forma | legitimate")
+    the_field = find(:css, "a.show-details-link")
     first_row.native.send_keys :arrow_down
     Capybara.default_driver = :webkit
   end

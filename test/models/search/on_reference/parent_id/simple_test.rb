@@ -14,20 +14,20 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
-load 'test/models/search/users.rb'
+require "test_helper"
+load "test/models/search/users.rb"
 
 class SearchOnReferenceParentIdSimpleTest < ActiveSupport::TestCase
-  test 'search on parent id simple' do
+  test "search on parent id simple" do
     reference = references(:paper_with_journal_parent)
-    params =  ActiveSupport::HashWithIndifferentAccess.new(query_target: 'reference',
+    params =  ActiveSupport::HashWithIndifferentAccess.new(query_target: "reference",
                                                            query_string: "parent-id: #{reference.parent.id}",
                                                            include_common_and_cultivar_session: true,
                                                            current_user: build_edit_user)
     search = Search::Base.new(params)
-    assert_equal search.executed_query.results.class, Reference::ActiveRecord_Relation, 'Results should be a Reference::ActiveRecord_Relation.'
-    assert search.executed_query.results.size > 0, 'Results expected.'
+    assert_equal search.executed_query.results.class, Reference::ActiveRecord_Relation, "Results should be a Reference::ActiveRecord_Relation."
+    assert search.executed_query.results.size > 0, "Results expected."
     assert_equal search.executed_query.results.first[:id], reference.parent.id,
-      'Parent should be sorted at the top of result list.'
+                 "Parent should be sorted at the top of result list."
   end
 end

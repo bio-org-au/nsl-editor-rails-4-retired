@@ -13,9 +13,8 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
-class Reference::DefinedQuery::ReferencesWithNovelties 
-
+#
+class Reference::DefinedQuery::ReferencesWithNovelties
   attr_reader :results, :limited, :common_and_cultivar_included, :has_relation, :relation, :count
 
   def initialize(parsed_request)
@@ -26,7 +25,7 @@ class Reference::DefinedQuery::ReferencesWithNovelties
     tag = "Reference::DefinedQuery::ReferencesWithNovelties"
     Rails.logger.debug("#{tag}: #{s}")
   end
- 
+
   def run_query(parsed_request)
     debug("")
     debug("parsed_request.where_arguments: #{parsed_request.where_arguments}")
@@ -38,8 +37,8 @@ class Reference::DefinedQuery::ReferencesWithNovelties
       debug(parsed_request.inspect)
       query = Search::OnReference::Base.new(parsed_request.as_a_list_request)
       results = []
-      query.results.each  do | ref |
-        results.concat(list_novelties(ref,100000))
+      query.results.each do |ref|
+        results.concat(list_novelties(ref, 100_000))
       end
       @count = results.size
       @limited = false
@@ -50,8 +49,8 @@ class Reference::DefinedQuery::ReferencesWithNovelties
       debug(query.results.size)
       results = []
       @limited = false
-      query.results.each  do | ref |
-        results.concat(list_novelties(ref,parsed_request.limit))
+      query.results.each do |ref|
+        results.concat(list_novelties(ref, parsed_request.limit))
         if results.size >= parsed_request.limit
           @limited = true
           break
@@ -66,13 +65,13 @@ class Reference::DefinedQuery::ReferencesWithNovelties
     end
   end
 
-  def list_novelties(reference, limit = 100, order_by = 'name')
+  def list_novelties(reference, limit = 100, order_by = "name")
     debug("list_novelties: reference.id: #{reference.id}; limit: #{limit}; order by: #{order_by}")
     results = []
     reference.display_as_part_of_concept
-    count = 1 
-    query = reference.instances.joins(:name).includes({name: :name_status}).joins(:instance_type).where(instance_type: {primary_instance: true}) 
-    query = order_by == 'page' ? query.ordered_by_page : query.ordered_by_name
+    count = 1
+    query = reference.instances.joins(:name).includes(name: :name_status).joins(:instance_type).where(instance_type: { primary_instance: true })
+    query = order_by == "page" ? query.ordered_by_page : query.ordered_by_name
     novelties_count = 0
     query.each do |instance|
       novelties_count += 1
@@ -87,8 +86,4 @@ class Reference::DefinedQuery::ReferencesWithNovelties
     results.unshift(reference) if novelties_count > 0
     results
   end
-
 end
-
-
-

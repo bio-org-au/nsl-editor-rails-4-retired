@@ -14,20 +14,20 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class NamesAreSetFromServiceTest < ActiveSupport::TestCase
-  test 'names are set from service' do
+  test "names are set from service" do
     name = names(:without_names_from_service)
-    assert name.full_name.blank?, 'This test needs to start with a blank full_name.'
-    assert name.full_name_html.blank?, 'This test needs to start with a blank full_name_html.'
-    assert name.simple_name.blank?, 'This test needs to start with a blank simple_name.'
-    assert name.simple_name_html.blank?, 'This test needs to start with a blank simple_name_html.'
+    assert name.full_name.blank?, "This test needs to start with a blank full_name."
+    assert name.full_name_html.blank?, "This test needs to start with a blank full_name_html."
+    assert name.simple_name.blank?, "This test needs to start with a blank simple_name."
+    assert name.simple_name_html.blank?, "This test needs to start with a blank simple_name_html."
 
     name.set_names!
-    assert name.full_name.present?, 'Full_name should now be populated.'
-    assert name.full_name_html.present?, 'Full_name_html should now be populated.'
-    assert name.simple_name.present?, 'Simple_name should now be populated.'
-    assert name.simple_name_html.present?, 'Simple_name_html should now be populated.'
+    assert name.full_name.present?, "Full_name should now be populated."
+    assert name.full_name_html.present?, "Full_name_html should now be populated."
+    assert name.simple_name.present?, "Simple_name should now be populated."
+    assert name.simple_name_html.present?, "Simple_name_html should now be populated."
   end
 end

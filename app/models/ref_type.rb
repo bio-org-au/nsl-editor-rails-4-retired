@@ -13,44 +13,43 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 class RefType < ActiveRecord::Base
+  self.table_name = "ref_type"
+  self.primary_key = "id"
 
-  self.table_name = 'ref_type'
-  self.primary_key = 'id'
+  belongs_to :parent, class_name: "RefType", foreign_key: "parent_id"
+  has_many :children, class_name: "RefType", foreign_key: "parent_id", dependent: :restrict_with_exception
 
-  belongs_to :parent, class_name: 'RefType', foreign_key: 'parent_id'
-  has_many   :children, class_name: 'RefType', foreign_key: 'parent_id', dependent: :restrict_with_exception  
-  
   has_many :references
-  
+
   def name?
-    name == 'Name'
+    name == "Name"
   end
-  
+
   def unknown?
-    name == 'Unknown'
+    name == "Unknown"
   end
 
   def indefinite_article
     case name.first.downcase
-    when 'i' then 'an'
-    when 'h' then 'an'
-    when 'u' then 'an'
-    else 'a'
+    when "i" then "an"
+    when "h" then "an"
+    when "u" then "an"
+    else "a"
     end
   end
 
   def self.unknown
-    RefType.where(name: 'Unknown').push( RefType.order('name').limit(1).first).first
+    RefType.where(name: "Unknown").push(RefType.order("name").limit(1).first).first
   end
 
   def self.options
-    self.all.order(:name).collect{|r| [r.name, r.id]}
+    all.order(:name).collect { |r| [r.name, r.id] }
   end
 
   def self.query_form_options
-    self.all.sort{|x,y| x.name <=> y.name}.collect{|n| [n.name, n.name.downcase, class: '']}
+    all.sort { |x, y| x.name <=> y.name }.collect { |n| [n.name, n.name.downcase, class: ""] }
   end
 
   def rule
@@ -67,7 +66,4 @@ class RefType < ActiveRecord::Base
   def parent_allowed?
     parent_id.present?
   end
-
 end
-
-

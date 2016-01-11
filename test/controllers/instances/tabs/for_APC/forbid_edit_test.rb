@@ -14,16 +14,16 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class InstanceEditTabForAPCTest < ActionController::TestCase
   tests InstancesController
   setup do
     @triodia_in_brassard = instances(:triodia_in_brassard)
   end
-  test 'should not show instance edit tab to APC' do
-    @request.headers['Accept'] = 'application/javascript'
-    get(:show, { id: @triodia_in_brassard.id, tab: 'tab_edit' }, username: 'fred', user_full_name: 'Fred Jones', groups: ['APC'])
+  test "should not show instance edit tab to APC" do
+    @request.headers["Accept"] = "application/javascript"
+    get(:show, { id: @triodia_in_brassard.id, tab: "tab_edit" }, username: "fred", user_full_name: "Fred Jones", groups: ["APC"])
     assert_response :forbidden
   end
 end

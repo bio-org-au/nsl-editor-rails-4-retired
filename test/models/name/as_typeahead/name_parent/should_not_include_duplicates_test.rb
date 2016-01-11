@@ -14,14 +14,14 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class ShouldNotIncludeDuplicatesTest < ActiveSupport::TestCase
-  test 'name parent suggestions should not include duplicates' do
+  test "name parent suggestions should not include duplicates" do
     avoid_id = 1
-    suggestions = Name::AsTypeahead.name_parent_suggestions('a duplicate genus', avoid_id, NameRank.species.id)
-    assert(suggestions.is_a?(Array), 'suggestions should be an array')
+    suggestions = Name::AsTypeahead.name_parent_suggestions("a duplicate genus", avoid_id, NameRank.species.id)
+    assert(suggestions.is_a?(Array), "suggestions should be an array")
     assert(suggestions.size == 1, 'suggestions for "a duplicate genus" should have 1 entry')
-    assert suggestions.first[:value].match(/\Aa duplicate genus not /), 'Should match the non-duplicate genus'
+    assert suggestions.first[:value].match(/\Aa duplicate genus not /), "Should match the non-duplicate genus"
   end
 end

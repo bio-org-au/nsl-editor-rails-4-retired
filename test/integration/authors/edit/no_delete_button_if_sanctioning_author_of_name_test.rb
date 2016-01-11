@@ -17,21 +17,21 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class NoDeleteButtonIfSanctioningAuthorOfNameTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
 
-  test 'author has no delete button if sanctioning author of name' do
+  test "author has no delete button if sanctioning author of name" do
     visit_home_page
     standard_page_assertions
-    select 'Author', from: 'query-on'
-    fill_in 'search-field', with: "id: #{authors(:has_sanctioned_one_name_that_is_all).id}"
-    click_button 'Search'
-    search_result_must_include_content('Has Sanctioned One Name That Is All')
-    click_link('Edit')
+    select "Author", from: "query-on"
+    fill_in "search-field", with: "id: #{authors(:has_sanctioned_one_name_that_is_all).id}"
+    click_button "Search"
+    search_result_must_include_content("Has Sanctioned One Name That Is All")
+    click_link("Edit")
     big_sleep
-    search_result_details_must_include_button('Save')
-    search_result_details_must_not_include_link('Delete...')
+    search_result_details_must_include_button("Save")
+    search_result_details_must_not_include_link("Delete...")
   end
 end

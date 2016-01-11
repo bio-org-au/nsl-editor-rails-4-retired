@@ -14,7 +14,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class InstanceSearchOrderOfResultsPageWithHyphensTest < ActiveSupport::TestCase
   setup do
@@ -25,7 +25,7 @@ class InstanceSearchOrderOfResultsPageWithHyphensTest < ActiveSupport::TestCase
 
   # Precondition test to confirm the default is not correct for page order,
   # otherwise, the second test might succeed due to name order.
-  test 'instance search ordering of results by name' do
+  test "instance search ordering of results by name" do
     results = Instance
               .joins(:reference)\
               .joins(:name)\
@@ -39,7 +39,7 @@ class InstanceSearchOrderOfResultsPageWithHyphensTest < ActiveSupport::TestCase
   end
 
   # This is the important test.
-  test 'instance search ordering of results by page' do
+  test "instance search ordering of results by page" do
     results = Instance
               .joins(:reference)\
               .joins(:name)\

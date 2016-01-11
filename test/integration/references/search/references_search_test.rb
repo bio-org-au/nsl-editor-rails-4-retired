@@ -17,7 +17,7 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class ReferencesSearchTest < ActionDispatch::IntegrationTest
   # Make the Capybara DSL available in all integration tests
@@ -32,13 +32,13 @@ class ReferencesSearchTest < ActionDispatch::IntegrationTest
   # end
 
   # "simple"
-  test 'reference simple search for simple' do
+  test "reference simple search for simple" do
     sign_in
-    visit '/search?query=simple&query_on=reference&query_limit=1'
+    visit "/search?query=simple&query_on=reference&query_limit=1"
     standard_page_assertions
     sleep(inspection_time = 0.1)
     # page.should have_content('1 record')
-    assert page.has_content?('1 record'), 'Simple reference search failed.'
+    assert page.has_content?("1 record"), "Simple reference search failed."
     # assert page.has_content?('1 record (limited) for "simple"'), 'Simple reference search failed.'
   end
 

@@ -14,12 +14,12 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class NameAsEditedNoDuplicateOfIdWithInvalidString < ActiveSupport::TestCase
-  test 'no duplicate of id with invalid string' do
-    assert_raise(RuntimeError, 'Should raise a RuntimeError for invalid full name string and no id.') do
-      result = Name::AsEdited.duplicate_of_from_typeahead('', 'asdfasfdasd')
+  test "no duplicate of id with invalid string" do
+    assert_raise(RuntimeError, "Should raise a RuntimeError for invalid full name string and no id.") do
+      result = Name::AsEdited.duplicate_of_from_typeahead("", "asdfasfdasd")
     end
   end
 end

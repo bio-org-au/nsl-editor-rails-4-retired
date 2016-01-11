@@ -17,18 +17,18 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class NameCreateCultivarRequiredFieldsTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
 
-  test 'cultivar name required fields' do
+  test "cultivar name required fields" do
     visit_home_page
     load_new_cultivar_name_form
-    assert(page.has_selector?('#name_name_type_id[required]'), 'Name type should be a required field.')
-    assert(page.has_selector?('#name_name_rank_id[required]'), 'Name rank should be a required field.')
-    assert(page.has_selector?('#name_name_status_id[required]'), 'Name status should be a required field.')
-    assert(page.has_selector?('#name_name_element[required]'), 'Name name element should be a required field.')
-    assert(page.has_selector?('#name-parent-typeahead[required]'), 'Name parent typeahead should be a required field.')
+    assert(page.has_selector?('#name_name_type_id[required]'), "Name type should be a required field.")
+    assert(page.has_selector?('#name_name_rank_id[required]'), "Name rank should be a required field.")
+    assert(page.has_selector?('#name_name_status_id[required]'), "Name status should be a required field.")
+    assert(page.has_selector?('#name_name_element[required]'), "Name name element should be a required field.")
+    assert(page.has_selector?('#name-parent-typeahead[required]'), "Name parent typeahead should be a required field.")
   end
 end

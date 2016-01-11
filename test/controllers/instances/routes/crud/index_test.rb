@@ -14,11 +14,11 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class InstanceIndexRouteTest < ActionController::TestCase
   tests InstancesController
-  test 'index should route to catch all' do
-    assert_routing '/instances', controller: 'search', action: 'search', random: 'instances'
+  test "index should route to catch all" do
+    assert_routing "/instances", controller: "search", action: "search", random: "instances"
   end
 end

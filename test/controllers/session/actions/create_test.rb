@@ -14,12 +14,12 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class SessionsCreateByEditorTest < ActionController::TestCase
   tests SessionsController
 
-  test 'editor should be able to create session that is signin' do
-    post(:create, session: { 'username' => 'fred', 'password' => 'secret' })
+  test "editor should be able to create session that is signin" do
+    post(:create, session: { "username" => "fred", "password" => "secret" })
   end
 end

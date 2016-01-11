@@ -14,19 +14,19 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class NameAsCopierWithAllInstancesErrorShouldRollbackAllTest < ActiveSupport::TestCase
-  test 'copy name with all instances with two identical instances so should fail' do
+  test "copy name with all instances with two identical instances so should fail" do
     before = Name.count
     master_name = Name::AsCopier.find(names(:has_two_instances_the_same).id)
-    dummy_name_element = 'xyz'
-    dummy_username = 'fred'
-    assert_equal 2, master_name.instances.size, 'Master should have two instances.'
+    dummy_name_element = "xyz"
+    dummy_username = "fred"
+    assert_equal 2, master_name.instances.size, "Master should have two instances."
     assert_raises(ActiveRecord::RecordInvalid) do
       copied_name = master_name.copy_with_all_instances(dummy_name_element, dummy_username)
     end
     after = Name.count
-    assert_equal before, after, 'There should be no extra names.'
+    assert_equal before, after, "There should be no extra names."
   end
 end

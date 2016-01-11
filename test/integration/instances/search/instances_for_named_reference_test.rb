@@ -17,21 +17,21 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class InstancesForNamedReference < ActionDispatch::IntegrationTest
   include Capybara::DSL
 
-  test 'ref instances search for string' do
+  test "ref instances search for string" do
     visit_home_page
     standard_page_assertions
-    select 'Instance', from: 'query-on'
-    select 'for reference', from: 'query-field'
-    fill_in 'search-field', with: 'journal of botany'
-    click_button 'Search'
-    search_result_must_include_content('Journal of Botany')
-    search_result_must_include_content('Angophora costata')
-    search_result_must_include_content('Metrosideros costata')
-    search_result_must_include_content('Rusty Gum')
+    select "Instance", from: "query-on"
+    select "for reference", from: "query-field"
+    fill_in "search-field", with: "journal of botany"
+    click_button "Search"
+    search_result_must_include_content("Journal of Botany")
+    search_result_must_include_content("Angophora costata")
+    search_result_must_include_content("Metrosideros costata")
+    search_result_must_include_content("Rusty Gum")
   end
 end

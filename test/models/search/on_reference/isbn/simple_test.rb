@@ -14,17 +14,17 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
-load 'test/models/search/users.rb'
+require "test_helper"
+load "test/models/search/users.rb"
 
 class SearchOnReferenceIsbnSimpleTest < ActiveSupport::TestCase
-  test 'search on reference isbn simple' do
-    params = ActiveSupport::HashWithIndifferentAccess.new(query_target: 'reference',
-                                                          query_string: 'isbn: an_isbn_number',
+  test "search on reference isbn simple" do
+    params = ActiveSupport::HashWithIndifferentAccess.new(query_target: "reference",
+                                                          query_string: "isbn: an_isbn_number",
                                                           include_common_and_cultivar_session: true,
                                                           current_user: build_edit_user)
     search = Search::Base.new(params)
-    assert_equal search.executed_query.results.class, Reference::ActiveRecord_Relation, 'Results should be a Reference::ActiveRecord_Relation.'
-    assert search.executed_query.results.size > 0, 'Results expected.'
+    assert_equal search.executed_query.results.class, Reference::ActiveRecord_Relation, "Results should be a Reference::ActiveRecord_Relation."
+    assert search.executed_query.results.size > 0, "Results expected."
   end
 end

@@ -29,20 +29,20 @@ class InstanceNotesController < ApplicationController
 
   # GET /instance_notes/1/edit
   def edit
-    render 'edit.js'
+    render "edit.js"
   end
 
   # POST /instance_notes
   # POST /instance_notes.json
   def create
-    @message = ''
+    @message = ""
     @instance_note = InstanceNote.new(instance_note_params)
     if @instance_note.save_with_username(current_user.username)
-      @message = 'Saved'
+      @message = "Saved"
       render :create
     else
-      logger.error('Save failed!')
-      @message = 'Not saved'
+      logger.error("Save failed!")
+      @message = "Not saved"
       render :create_failed
     end
   end
@@ -50,7 +50,7 @@ class InstanceNotesController < ApplicationController
   # PATCH/PUT /instance_notes/1
   # PATCH/PUT /instance_notes/1.json
   def update
-    @message = 'No change'
+    @message = "No change"
     really_update if changed?
   end
 
@@ -90,10 +90,10 @@ class InstanceNotesController < ApplicationController
   def really_update
     if @instance_note.update_attributes_with_username!(instance_note_params,
                                                        current_user.username)
-      @message = 'Updated'
+      @message = "Updated"
       render :update
     else
-      @message = 'Not updated'
+      @message = "Not updated"
       render :update_failed
     end
   end

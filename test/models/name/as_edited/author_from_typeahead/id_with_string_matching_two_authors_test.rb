@@ -14,14 +14,14 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class NameAsEditedAuthorIdWithStringMatching2Names < ActiveSupport::TestCase
-  test 'id with string matching 2 authors' do
+  test "id with string matching 2 authors" do
     author_1 = authors(:has_matching_abbrev_1)
     author_2 = authors(:has_matching_abbrev_2)
-    assert author_1.abbrev.match(author_2.abbrev), 'Should be two authors with the same abbrev.'
-    result = Name::AsEdited.author_from_typeahead(author_2.id.to_s, author_1.abbrev, 'Some Author Field')
-    assert_equal author_2.id, result, 'Should get a match for the correct id'
+    assert author_1.abbrev.match(author_2.abbrev), "Should be two authors with the same abbrev."
+    result = Name::AsEdited.author_from_typeahead(author_2.id.to_s, author_1.abbrev, "Some Author Field")
+    assert_equal author_2.id, result, "Should get a match for the correct id"
   end
 end

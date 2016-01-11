@@ -14,16 +14,16 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class SaveNewRecordWithUsername < ActiveSupport::TestCase
-  test 'check' do
+  test "check" do
     acra = name_tags(:acra)
     a_species = names(:a_species)
     name_tag_name = NameTagName.new(name_id: a_species.id, tag_id: acra.id)
-    name_tag_name.save_new_record_with_username('fred')
+    name_tag_name.save_new_record_with_username("fred")
     saved = NameTagName.where(name_id: a_species.id, tag_id: acra.id).first
-    assert_equal saved.created_by, 'fred', 'Should have been created by fred'
-    assert_equal saved.updated_by, 'fred', 'Should have been updated by fred'
+    assert_equal saved.created_by, "fred", "Should have been created by fred"
+    assert_equal saved.updated_by, "fred", "Should have been updated by fred"
   end
 end

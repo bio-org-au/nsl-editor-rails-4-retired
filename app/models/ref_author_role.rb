@@ -13,34 +13,33 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 class RefAuthorRole < ActiveRecord::Base
-  self.table_name = 'ref_author_role'
-  self.primary_key = 'id'
+  self.table_name = "ref_author_role"
+  self.primary_key = "id"
   has_many :references
-  
+
   def as_citation
-    name.downcase.match(/editor/) ? '(ed.)' : ''
+    name.downcase.match(/editor/) ? "(ed.)" : ""
   end
-  
+
   def as_excitation
-    name.downcase.match(/editor/) ? '(ed.)' : ''
+    name.downcase.match(/editor/) ? "(ed.)" : ""
   end
 
   def self.author
-    self.where(name: 'Author').push(self.order('name').limit(1).first).first
+    where(name: "Author").push(order("name").limit(1).first).first
   end
 
   def self.unknown
-    self.where(name: 'Unknown').push(self.order('name').limit(1).first).first
+    where(name: "Unknown").push(order("name").limit(1).first).first
   end
 
   def self.options
-    self.all.order(:name).collect{|r| [r.name, r.id]}
+    all.order(:name).collect { |r| [r.name, r.id] }
   end
 
   def self.query_form_options
-    self.all.sort{|x,y| x.name <=> y.name}.collect{|n| [n.name, n.name.downcase, class: '']}
+    all.sort { |x, y| x.name <=> y.name }.collect { |n| [n.name, n.name.downcase, class: ""] }
   end
-
 end

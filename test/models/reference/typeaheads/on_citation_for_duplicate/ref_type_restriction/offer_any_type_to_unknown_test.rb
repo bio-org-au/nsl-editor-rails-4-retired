@@ -14,13 +14,13 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class TypeaheadsOnCitationForDuplicateRefTypeRestrictionAnyTypeForUnknown < ActiveSupport::TestCase
-  test 'reference typeahead on citation ref type restriction any type for unknown' do
+  test "reference typeahead on citation ref type restriction any type for unknown" do
     current_reference = references(:ref_type_is_unknown)
-    results = Reference::AsTypeahead.on_citation_for_duplicate('%', current_reference.id)
-    assert results.size > 0, 'Should be at least one result'
+    results = Reference::AsTypeahead.on_citation_for_duplicate("%", current_reference.id)
+    assert results.size > 0, "Should be at least one result"
     journals = 0
     unknowns = 0
     papers = 0
@@ -36,9 +36,9 @@ class TypeaheadsOnCitationForDuplicateRefTypeRestrictionAnyTypeForUnknown < Acti
         others += 1
       end
     end
-    assert others > 0, 'Expecting plenty of other ref types.'
-    assert journals > 0, 'Expecting at least 1 journal.'
-    assert papers > 0, 'Expecting at least 1 paper.'
-    assert unknowns > 0, 'Expecting at least 1 unknown ref type.'
+    assert others > 0, "Expecting plenty of other ref types."
+    assert journals > 0, "Expecting at least 1 journal."
+    assert papers > 0, "Expecting at least 1 paper."
+    assert unknowns > 0, "Expecting at least 1 unknown ref type."
   end
 end

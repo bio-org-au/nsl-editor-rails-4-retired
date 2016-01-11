@@ -14,14 +14,14 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class AuthorAsEditedDuplicateOfIdWithPartialStringMatchingAnotherAuthor < ActiveSupport::TestCase
-  test 'id with string for another author' do
+  test "id with string for another author" do
     current_author_id = 1
     author_1 = authors(:stanley)
     author_2 = authors(:chaplin)
-    result = Author::AsEdited.duplicate_of_from_typeahead(author_1.id.to_s, 'chap', current_author_id)
-    assert_equal author_2.id, result, 'Should get a matching id for the first author with matching partial name despite mismatched ID'
+    result = Author::AsEdited.duplicate_of_from_typeahead(author_1.id.to_s, "chap", current_author_id)
+    assert_equal author_2.id, result, "Should get a matching id for the first author with matching partial name despite mismatched ID"
   end
 end

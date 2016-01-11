@@ -13,9 +13,8 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 class NamesDelete < ActiveType::Object
-
   attribute :name_id, :integer
   attribute :reason, :string
   attribute :extra_info, :string
@@ -23,11 +22,11 @@ class NamesDelete < ActiveType::Object
 
   validates :name_id, presence: true
   validates :reason, presence: true
-  #validates :extra_info, presence: true, message: "can't be blank if 'Other' is selected", if: :reason_is_other?
+  # validates :extra_info, presence: true, message: "can't be blank if 'Other' is selected", if: :reason_is_other?
   validates :extra_info, presence: true, if: :reason_is_other?
 
   def possible_reasons
-    ["Name does not exist","Name is represented elsewhere in NSL","Name has not been applied to Australian flora","Name is an autonym that has not yet been established", "Other"]
+    ["Name does not exist", "Name is represented elsewhere in NSL", "Name has not been applied to Australian flora", "Name is an autonym that has not yet been established", "Other"]
   end
 
   def assembled_reason
@@ -39,13 +38,12 @@ class NamesDelete < ActiveType::Object
   end
 
   private
-    def default_values
-      self.reason ||= "for some reason"
-    end
 
-    def reason_is_other?
-      reason.present? && reason.strip.match(/\Aother\z/i)
-    end
+  def default_values
+    self.reason ||= "for some reason"
+  end
+
+  def reason_is_other?
+    reason.present? && reason.strip.match(/\Aother\z/i)
+  end
 end
-
-

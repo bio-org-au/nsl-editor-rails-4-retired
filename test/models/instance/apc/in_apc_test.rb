@@ -14,10 +14,10 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class InstanceInAPCTest < ActiveSupport::TestCase
-  test 'instance in apc' do
+  test "instance in apc" do
     skip
     # unchanged = instances(:has_no_page_bhl_url_verbatim_name_string)
     # assert unchanged.page.blank?, "Page should be blank for this test."

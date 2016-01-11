@@ -13,7 +13,7 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 Rails.application.config.assets.precompile += %w( typeahead.bundle.js )
 Rails.application.config.assets.precompile += %w( typeahead.css )
 Rails.application.config.assets.precompile += %w( typeahead.js )

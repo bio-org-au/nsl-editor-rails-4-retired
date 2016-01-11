@@ -14,18 +14,18 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class NameSearchOnNameWithEmbeddedQuotesTest < ActionController::TestCase
   tests SearchController
 
   # <tr id="search-result-76253122"
-  test 'name search on name with embedded quotes' do
+  test "name search on name with embedded quotes" do
     name = names(:boronia_lipstick)
-    get(:search, { 'query_target' => 'name', 'query_string' => '*lipstick nt:*' },
-        username: 'fred', user_full_name: 'Fred Jones', groups: [])
+    get(:search, { "query_target" => "name", "query_string" => "*lipstick nt:*" },
+        username: "fred", user_full_name: "Fred Jones", groups: [])
     assert_response :success
-    assert_select 'span#search-results-summary', /\b1 record\b/, 'Should find 1 record'
-    assert_select "tr#search-result-#{name.id}", true, 'Should find the name.'
+    assert_select 'span#search-results-summary', /\b1 record\b/, "Should find 1 record"
+    assert_select "tr#search-result-#{name.id}", true, "Should find the name."
   end
 end

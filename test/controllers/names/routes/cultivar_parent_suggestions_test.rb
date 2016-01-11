@@ -14,11 +14,11 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class NameCultivarParentSuggestionsRouteTest < ActionController::TestCase
   tests NamesController
-  test 'should route to cultivar parent suggestions for a name' do
-    assert_routing '/suggestions/name/cultivar_parent', controller: 'names', action: 'cultivar_parent_suggestions'
+  test "should route to cultivar parent suggestions for a name" do
+    assert_routing "/suggestions/name/cultivar_parent", controller: "names", action: "cultivar_parent_suggestions"
   end
 end

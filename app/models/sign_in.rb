@@ -13,9 +13,8 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 class SignIn < ActiveType::Object
-
   attribute :username, :string
   attribute :password, :string
 
@@ -35,15 +34,13 @@ class SignIn < ActiveType::Object
   private
 
   def validate_credentials
-    errors.add(:credentials, 'not verified.') unless build_ldap.save
+    errors.add(:credentials, "not verified.") unless build_ldap.save
   end
 
   def build_ldap
-    credentials = Hash.new
+    credentials = {}
     credentials[:username] = username
     credentials[:password] = password
     Ldap.new(credentials)
   end
-
 end
-

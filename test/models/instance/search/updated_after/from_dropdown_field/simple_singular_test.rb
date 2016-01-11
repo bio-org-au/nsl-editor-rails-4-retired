@@ -14,14 +14,14 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
-load 'models/search/users.rb'
+require "test_helper"
+load "models/search/users.rb"
 
 class InstanceSearchUpdatedAfterFromDropdownSimpleSingularTest < ActiveSupport::TestCase
   # New search for "42993" on instance up to 100 with field: upd-b
-  test 'instance search on updated after from dropdown field simple singular' do
-    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_string: '10 instances-only:', query_target: 'review', current_user: build_edit_user))
-    assert_equal search.executed_query.results.class, Array, 'Results should be an Array'
-    assert search.executed_query.results.size > 20, 'Plenty of records expected.'
+  test "instance search on updated after from dropdown field simple singular" do
+    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_string: "10 instances-only:", query_target: "review", current_user: build_edit_user))
+    assert_equal search.executed_query.results.class, Array, "Results should be an Array"
+    assert search.executed_query.results.size > 20, "Plenty of records expected."
   end
 end

@@ -17,16 +17,16 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
-require 'integration/names/test_helper'
+require "test_helper"
+require "integration/names/test_helper"
 
 class WithNoNameTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
 
-  test 'create scientific name with no name' do
+  test "create scientific name with no name" do
     names_count = Name.count
     visit_home_page
-    fill_in 'search-field', with: 'test: create scientific name with no name'
+    fill_in "search-field", with: "test: create scientific name with no name"
     load_new_scientific_name_form
     set_name_parent
     save_new_record

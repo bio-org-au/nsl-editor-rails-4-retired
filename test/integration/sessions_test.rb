@@ -17,34 +17,34 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class SessionTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
 
-  test 'deep linking to a search' do
+  test "deep linking to a search" do
     configure_for_webkit
-    visit '/search?query_on=name&query_field=&query=deep-linking-to-a-search&query_limit=10&query_common_and_cultivar=t'
+    visit "/search?query_on=name&query_field=&query=deep-linking-to-a-search&query_limit=10&query_common_and_cultivar=t"
     # should be redirected to sign in
     sleep(inspection_time = 0.2)
     wait_for('#sign-in-form-container', 3)
     if page.has_selector?('#sign-in-form-container')
-      assert page.has_content?('Username*'), 'No Username field.'
-      fill_in('sign_in_username', with: 'gclarke')
-      fill_in('sign_in_password', with: 'fred')
-      click_button('Sign in')
+      assert page.has_content?("Username*"), "No Username field."
+      fill_in("sign_in_username", with: "gclarke")
+      fill_in("sign_in_password", with: "fred")
+      click_button("Sign in")
       sleep(inspection_time = 0.2)
       standard_page_assertions
-      assert page.has_content?('deep-linking-to-a-search'), 'Deep linked search not visible - was sign in deep link followed?'
+      assert page.has_content?("deep-linking-to-a-search"), "Deep linked search not visible - was sign in deep link followed?"
     else
-      print('Session was probably already signed in.  Parallel testing?')
+      print("Session was probably already signed in.  Parallel testing?")
     end
   end
 
-  test 'invalid authenticity token' do
+  test "invalid authenticity token" do
     configure_for_webkit
-    visit '/throw_invalid_authenticity_token'
-    assert page.has_content?('Username*'), 'No Username field.'
-    assert page.has_content?('Please try again.'), 'Incorrect or missing stale page message.'
+    visit "/throw_invalid_authenticity_token"
+    assert page.has_content?("Username*"), "No Username field."
+    assert page.has_content?("Please try again."), "Incorrect or missing stale page message."
   end
 end

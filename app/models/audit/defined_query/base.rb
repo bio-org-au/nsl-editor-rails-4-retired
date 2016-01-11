@@ -13,9 +13,8 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 class Audit::DefinedQuery::Base
-
   attr_reader :results, :limited, :common_and_cultivar_included, :has_relation, :relation, :count
 
   def initialize(parsed_request)
@@ -24,10 +23,10 @@ class Audit::DefinedQuery::Base
 
   def debug(s)
     tag = "Audit::DefinedQuery::Base #{s}"
-    #puts("#{tag}: #{s}")
+    # puts("#{tag}: #{s}")
     Rails.logger.debug("#{tag}: #{s}")
   end
- 
+
   def run_query(parsed_request)
     debug("")
     debug("parsed_request.where_arguments: #{parsed_request.where_arguments}")
@@ -77,5 +76,3 @@ class Audit::DefinedQuery::Base
     end
   end
 end
-
-

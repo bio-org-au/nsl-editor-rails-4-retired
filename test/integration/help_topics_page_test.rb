@@ -17,7 +17,7 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class HelpTopicsPageTest < ActionDispatch::IntegrationTest
   # Make the Capybara DSL available in all integration tests

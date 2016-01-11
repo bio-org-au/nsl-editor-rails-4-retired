@@ -14,13 +14,13 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
-load 'models/search/users.rb'
+require "test_helper"
+load "models/search/users.rb"
 
 class ForInstanceTypeUnknown < ActiveSupport::TestCase
-  test 'instance type search for unknown' do
-    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_string: 'type: [unknown]', query_target: 'Instance', current_user: build_edit_user))
-    assert_equal search.executed_query.results.class, Instance::ActiveRecord_Relation, 'Results should be an Instance::ActiveRecord_Relation'
-    assert_equal 1, search.executed_query.results.size, 'One record expected.'
+  test "instance type search for unknown" do
+    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_string: "type: [unknown]", query_target: "Instance", current_user: build_edit_user))
+    assert_equal search.executed_query.results.class, Instance::ActiveRecord_Relation, "Results should be an Instance::ActiveRecord_Relation"
+    assert_equal 1, search.executed_query.results.size, "One record expected."
   end
 end

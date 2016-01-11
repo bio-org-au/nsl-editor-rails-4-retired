@@ -14,7 +14,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class ReferenceEditorShowEdit2Test < ActionController::TestCase
   tests ReferencesController
@@ -22,11 +22,11 @@ class ReferenceEditorShowEdit2Test < ActionController::TestCase
     @reference = references(:a_book)
   end
 
-  test 'should show editor reference edit 2 tab' do
-    @request.headers['Accept'] = 'application/javascript'
-    get(:show, { id: @reference.id, tab: 'tab_edit_2' }, username: 'fred', user_full_name: 'Fred Jones', groups: ['edit'])
+  test "should show editor reference edit 2 tab" do
+    @request.headers["Accept"] = "application/javascript"
+    get(:show, { id: @reference.id, tab: "tab_edit_2" }, username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
     assert_select 'li.active a#reference-edit-2-tab', /Edit\.\./, "Should show 'Edit...' tab."
-    assert_select 'form', true
+    assert_select "form", true
     # assert_select 'select#reference_ref_type_id', true
     # assert_select 'input#reference-parent-typeahead', true
     # assert_select 'input#reference_title', true

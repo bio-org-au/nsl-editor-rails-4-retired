@@ -13,18 +13,17 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 class Audit::DefinedQuery::WhereClause::Authorise
+  attr_reader :sql
 
-  attr_reader  :sql
-
-  def initialize(sql,user)
+  def initialize(sql, user)
     debug("Start user.username: #{user.username};")
 
     if user.qa?
       @sql = sql
     else
-      @sql = sql.where("created_by = ? or updated_by = ?",user.username,user.username)
+      @sql = sql.where("created_by = ? or updated_by = ?", user.username, user.username)
     end
     debug(@sql.to_sql)
   end
@@ -32,8 +31,4 @@ class Audit::DefinedQuery::WhereClause::Authorise
   def debug(s)
     Rails.logger.debug("Audit::DefinedQuery::WhereClause::Authorise #{s}")
   end
-
 end
-
-
-

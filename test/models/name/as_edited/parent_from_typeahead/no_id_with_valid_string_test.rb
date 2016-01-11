@@ -14,12 +14,12 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class NameAsEditedNoParentIdWithValidString < ActiveSupport::TestCase
-  test 'no id with valid string' do
+  test "no id with valid string" do
     name = names(:the_regnum)
-    result = Name::AsEdited.parent_from_typeahead('', name.full_name)
-    assert_equal name.id, result, 'Should get a matching id for the name'
+    result = Name::AsEdited.parent_from_typeahead("", name.full_name)
+    assert_equal name.id, result, "Should get a matching id for the name"
   end
 end

@@ -18,10 +18,10 @@ class ServicesController < ApplicationController
   skip_before_filter :authenticate
 
   def index
-    render layout: 'services.html.erb'
+    render layout: "services.html.erb"
   end
 
   def ping
-    render json: 'Editor here.'.to_json, status: :ok
+    render json: "Editor here.".to_json, status: :ok
   end
 end

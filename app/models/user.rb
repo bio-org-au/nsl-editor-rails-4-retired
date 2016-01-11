@@ -13,10 +13,9 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 
 class User < ActiveType::Object
-
   attr_accessor :username, :full_name, :groups
 
   validates :username, presence: true
@@ -24,20 +23,18 @@ class User < ActiveType::Object
   validates :groups, presence: true
 
   def edit?
-    groups.include?('edit')
+    groups.include?("edit")
   end
 
   def admin?
-    groups.include?('admin')
+    groups.include?("admin")
   end
 
   def apc?
-    groups.include?('APC')
+    groups.include?("APC")
   end
 
   def qa?
-    groups.include?('QA')
+    groups.include?("QA")
   end
-
 end
-

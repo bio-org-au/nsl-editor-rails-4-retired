@@ -14,15 +14,15 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class ReaderSearchControllerNamesNoSuchFieldTest < ActionController::TestCase
   tests SearchController
 
-  test 'reader can search for a name' do
+  test "reader can search for a name" do
     # assert_raises(RuntimeError, "Should raise exception because field is not known") do
-    get(:search, { query_target: 'name', query_string: 'not-a-real-field: r.br.' }, username: 'fred', user_full_name: 'Fred Jones', groups: [])
-    assert_select 'span#search-results-summary', /Cannot search names for: not-a-real-field:./, 'Should get error message.'
+    get(:search, { query_target: "name", query_string: "not-a-real-field: r.br." }, username: "fred", user_full_name: "Fred Jones", groups: [])
+    assert_select 'span#search-results-summary', /Cannot search names for: not-a-real-field:./, "Should get error message."
     # end
   end
 end

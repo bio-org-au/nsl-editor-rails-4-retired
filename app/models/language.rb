@@ -13,31 +13,30 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 class Language < ActiveRecord::Base
-  self.table_name = 'language'
-  self.primary_key = 'id'
+  self.table_name = "language"
+  self.primary_key = "id"
   has_many :references
 
   def self.unknown
-    self.find_by(name: 'Undetermined')
+    find_by(name: "Undetermined")
   end
-    
+
   def self.default
-    self.find_by(name: 'English')
+    find_by(name: "English")
   end
 
   # For any language select list.
   def self.options
-    self.all.order("case name when 'Undetermined' then 'AAA' when 'English' then 'AAB' when 'French' then 'AAC' when 'German' then 'AAD' when 'Latin' then 'AAD' else name end").collect{|lang| [lang.name, lang.id]}.insert(4,['--------------',''])
+    all.order("case name when 'Undetermined' then 'AAA' when 'English' then 'AAB' when 'French' then 'AAC' when 'German' then 'AAD' when 'Latin' then 'AAD' else name end").collect { |lang| [lang.name, lang.id] }.insert(4, ["--------------", ""])
   end
 
   def self.english
-    self.find_by(name: 'English')
+    find_by(name: "English")
   end
 
   def determined?
-    name != 'Undetermined'
+    name != "Undetermined"
   end
-
 end

@@ -14,11 +14,11 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class AuthorTypeaheadsOnNameWordCountOneWalshTest < ActiveSupport::TestCase
-  test 'reference typeahead on citation word count one walsh' do
-    results = Author::AsTypeahead.on_name('walsh')
-    assert_equal 3, results.size, 'Should be exactly three results'
+  test "reference typeahead on citation word count one walsh" do
+    results = Author::AsTypeahead.on_name("walsh")
+    assert_equal 3, results.size, "Should be exactly three results"
   end
 end

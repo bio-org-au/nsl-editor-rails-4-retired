@@ -13,29 +13,28 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 class Instance::AsCopier < Instance
-
-  def copy_with_new_name_id(new_name_id,as_username)
+  def copy_with_new_name_id(new_name_id, as_username)
     Rails.logger.debug("Instance::AsCopier#copy with new name id: #{new_name_id}")
-    raise 'Copied record would have the same name id.' if new_name_id.eql?(name_id)
-    new = self.dup
+    fail "Copied record would have the same name id." if new_name_id.eql?(name_id)
+    new = dup
     new.name_id = new_name_id
     new.created_by = new.updated_by = as_username
     new.save!
-    return new 
+    new
   end
 
-  def copy_with_citations_to_new_reference(params,as_username)
+  def copy_with_citations_to_new_reference(params, as_username)
     new = nil
-    raise 'Need a reference' if params[:reference_id].blank?
-    raise 'Reference must be different' if params[:reference_id].to_i == self.reference.id
-    raise 'Unrecognized reference id' if params[:reference_id].to_i <= 0
-    raise 'No such reference' if Reference.find(params[:reference_id].to_i).blank? 
+    fail "Need a reference" if params[:reference_id].blank?
+    fail "Reference must be different" if params[:reference_id].to_i == reference.id
+    fail "Unrecognized reference id" if params[:reference_id].to_i <= 0
+    fail "No such reference" if Reference.find(params[:reference_id].to_i).blank?
     new_reference_id_string = params[:reference_id]
     new_page = params[:page]
     ActiveRecord::Base.transaction do
-      new = self.dup
+      new = dup
       new_reference_id = new_reference_id_string.to_i
       new.reference_id = new_reference_id
       new.page = new_page
@@ -57,8 +56,6 @@ class Instance::AsCopier < Instance
     end
     new
   rescue => e
-    raise "Copy failed: #{e.to_s}"
+    raise "Copy failed: #{e}"
   end
-
 end
-

@@ -14,17 +14,17 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class NameAsCopierMakeACopySimpleTest < ActiveSupport::TestCase
-  test 'copy one name' do
+  test "copy one name" do
     before = Name.count
     master_name = Name::AsCopier.find(names(:a_genus_with_two_instances).id)
-    dummy_name_element = 'xyz'
-    dummy_username = 'fred'
+    dummy_name_element = "xyz"
+    dummy_username = "fred"
     copied_name = master_name.copy_with_username(dummy_name_element, dummy_username)
     after = Name.count
-    assert_equal before + 1, after, 'There should be one extra name.'
+    assert_equal before + 1, after, "There should be one extra name."
     assert_equal master_name.name_type_id, copied_name.name_type_id
     assert_equal master_name.name_rank_id, copied_name.name_rank_id
     assert_equal master_name.name_status_id, copied_name.name_status_id

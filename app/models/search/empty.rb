@@ -13,21 +13,20 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 class Search::Empty
-
-  attr_reader :empty, 
-              :error, 
+  attr_reader :empty,
+              :error,
               :error_message,
               :executed_query,
               :more_allowed,
               :parsed_request
 
- def initialize(params)
+  def initialize(params)
     Rails.logger.debug("Search::Empty start")
     Rails.logger.debug("#{'=' * 40}")
     @parsed_request = Search::EmptyParsedRequest.new(params)
-    @common_and_cultivar_included= true
+    @common_and_cultivar_included = true
     @count = false
     @empty = true
     @error = false
@@ -36,13 +35,9 @@ class Search::Empty
     @query_string = params[:query]
     @more_allowed = false
     @executed_query = Search::EmptyExecutedQuery.new(params)
-  end
+   end
 
   def to_history
-    ''
+    ""
   end
-
 end
-
-
-

@@ -13,9 +13,8 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 class Search::OnReference::ListQuery
-
   attr_reader :sql, :limited, :info_for_display, :common_and_cultivar_included
 
   def initialize(parsed_request)
@@ -28,13 +27,9 @@ class Search::OnReference::ListQuery
   def prepare_query
     Rails.logger.debug("Search::OnReference::ListQuery#prepare_query")
     prepared_query = Reference.includes(:ref_type)
-    where_clauses = Search::OnReference::WhereClauses.new(@parsed_request,prepared_query)
+    where_clauses = Search::OnReference::WhereClauses.new(@parsed_request, prepared_query)
     prepared_query = where_clauses.sql
     prepared_query = prepared_query.limit(@parsed_request.limit) if @parsed_request.limited
     @sql = prepared_query
   end
-
 end
-
-
-

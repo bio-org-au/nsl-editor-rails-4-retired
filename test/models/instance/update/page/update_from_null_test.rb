@@ -14,18 +14,18 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class InstanceUpdatePageFromNullTest < ActiveSupport::TestCase
-  test 'update page from null' do
+  test "update page from null" do
     unchanged = instances(:has_no_page_bhl_url_verbatim_name_string)
-    assert unchanged.page.blank?, 'Page should be blank for this test.'
+    assert unchanged.page.blank?, "Page should be blank for this test."
     instance = Instance::AsEdited.find(unchanged.id)
-    new_page = 'xzy'
-    message = instance.update_if_changed({ 'page' => new_page }, 'fred')
+    new_page = "xzy"
+    message = instance.update_if_changed({ "page" => new_page }, "fred")
     assert_match /#{new_page}/, instance.page, "New page should be: #{new_page}"
     assert message.match(/\AUpdated/), "Message should be 'Updated' not '#{message}'"
-    assert instance.updated_at > unchanged.updated_at, 'Updated date-time should be changed.'
-    assert instance.updated_by == 'fred', "Updated by should be 'fred'."
+    assert instance.updated_at > unchanged.updated_at, "Updated date-time should be changed."
+    assert instance.updated_by == "fred", "Updated by should be 'fred'."
   end
 end

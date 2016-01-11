@@ -9,6 +9,7 @@ triodia_in_brassard:
   created_at: <%= Time.now + (24*60*60) %>
   updated_at: <%= Time.now + (24*60*60) %>
   page: "xx 200,300"
+  page_qualifier: qualified
  
 # Standalone instance
 britten_created_angophora_costata:
@@ -64,7 +65,7 @@ rusty_gum_is_a_common_name_of_angophora_costata:
   name: rusty_gum
   this_is_cited_by: gaertner_created_metrosideros_costata
   instance_type: vernacular_name
-  verbatim_name_string: verbatim
+  verbatim_name_string: rusty gum
   namespace: apni
   created_by: tester
   updated_by: tester

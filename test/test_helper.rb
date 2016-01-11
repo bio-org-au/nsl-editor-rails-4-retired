@@ -17,27 +17,27 @@
 #   limitations under the License.
 #
 
-ENV['RAILS_ENV'] = 'test'
-require File.expand_path('../../config/environment', __FILE__)
-require 'rails/test_help'
-require 'capybara/rails'
-require 'minitest'
-require 'minitest/rails'
-require 'minitest/capybara'
-require 'minitest/rails/capybara'
-require 'minitest/unit'
-require 'mocha'
-require 'mocha/setup'
-require 'mocha/mini_test'
+ENV["RAILS_ENV"] = "test"
+require File.expand_path("../../config/environment", __FILE__)
+require "rails/test_help"
+require "capybara/rails"
+require "minitest"
+require "minitest/rails"
+require "minitest/capybara"
+require "minitest/rails/capybara"
+require "minitest/unit"
+require "mocha"
+require "mocha/setup"
+require "mocha/mini_test"
 
 # To add Capybara feature tests add `gem "minitest-rails-capybara"`
 # to the test group in the Gemfile and uncomment the following:
 # require "minitest/rails/capybara"
 
 # Uncomment for awesome colorful output
-require 'minitest/pride'
+require "minitest/pride"
 
-require 'capybara-webkit'
+require "capybara-webkit"
 # Capybara.default_driver = :webkit
 Capybara.default_driver = :selenium
 # Capybara.default_wait_time = 5
@@ -59,60 +59,60 @@ def debug(string)
 end
 
 def standard_page_assertions
-  assert page.has_selector?('#query-on'), 'No query-on field'
-  assert page.has_selector?('#search-field'), 'No search-field'
-  assert page.has_content?('© NSL'), message: 'Page needs copyright notice.'
+  assert page.has_selector?('#query-on'), "No query-on field"
+  assert page.has_selector?('#search-field'), "No search-field"
+  assert page.has_content?("© NSL"), message: "Page needs copyright notice."
   assert page.has_selector?('#search-button'), 'Page does not have #search-button'
   assert page.has_selector?('input#search-field'), 'Page does not have #search-field element'
-  assert page.has_field?('query'), 'Page does not have field with id, label or name of "query"'
+  assert page.has_field?("query"), 'Page does not have field with id, label or name of "query"'
 end
 
 def sign_in
-  debug 'start sign_in'
-  visit '/sign_in'
-  debug 'sign_in about to fill_in fields'
-  fill_in('sign_in_username', with: 'gclarke')
-  fill_in('sign_in_password', with: 'fred')
-  click_button('Sign in')
+  debug "start sign_in"
+  visit "/sign_in"
+  debug "sign_in about to fill_in fields"
+  fill_in("sign_in_username", with: "gclarke")
+  fill_in("sign_in_password", with: "fred")
+  click_button("Sign in")
   big_sleep
-  visit '/'
-  debug 'end sign_in'
+  visit "/"
+  debug "end sign_in"
 end
 
 def sign_in_as_editor
-  visit '/sign_in'
-  fill_in('sign_in_username', with: 'editor')
-  fill_in('sign_in_password', with: 'password')
-  click_button('Sign in')
+  visit "/sign_in"
+  fill_in("sign_in_username", with: "editor")
+  fill_in("sign_in_password", with: "password")
+  click_button("Sign in")
   big_sleep
-  visit '/'
+  visit "/"
 end
 
 def sign_in_as_qaonly
-  visit '/sign_in'
-  fill_in('sign_in_username', with: 'qaonly')
-  fill_in('sign_in_password', with: 'password')
-  click_button('Sign in')
+  visit "/sign_in"
+  fill_in("sign_in_username", with: "qaonly")
+  fill_in("sign_in_password", with: "password")
+  click_button("Sign in")
   big_sleep
-  visit '/'
+  visit "/"
 end
 
 def sign_in_as_qaeditor
-  visit '/sign_in'
-  fill_in('sign_in_username', with: 'qaeditor')
-  fill_in('sign_in_password', with: 'password')
-  click_button('Sign in')
+  visit "/sign_in"
+  fill_in("sign_in_username", with: "qaeditor")
+  fill_in("sign_in_password", with: "password")
+  click_button("Sign in")
   big_sleep
-  visit '/'
+  visit "/"
 end
 
 def sign_in_as_read_only_user
-  visit '/sign_in'
-  fill_in('sign_in_username', with: 'reader')
-  fill_in('sign_in_password', with: 'password')
-  click_button('Sign in')
+  visit "/sign_in"
+  fill_in("sign_in_username", with: "reader")
+  fill_in("sign_in_password", with: "password")
+  click_button("Sign in")
   big_sleep
-  visit '/'
+  visit "/"
 end
 
 def tiny_sleep
@@ -128,35 +128,35 @@ def moderate_sleep
 end
 
 def big_sleep
-  debug('start big_sleep')
+  debug("start big_sleep")
   sleep(inspection_time = 1.0)
-  debug('end big_sleep')
+  debug("end big_sleep")
 end
 
 def make_sure_details_are_showing
-  debug 'start make_sure_details_are_showing'
+  debug "start make_sure_details_are_showing"
   found = false
   tries = 0
   until found
-    debug 'looking'
+    debug "looking"
     tries += 1
-    fill_in 'search-field', with: tries.to_s if tries > 1
-    if page.has_selector?('tr.search-result.fresh td.takes-focus.main-content a.show-details-link')
-      unless page.has_selector?('tr.search-result.fresh.showing-details td.takes-focus.main-content a.show-details-link')
-        all('tr.search-result.fresh td.takes-focus.main-content a.show-details-link').first.click
-        debug 'sleeping....'
+    fill_in "search-field", with: tries.to_s if tries > 1
+    if page.has_selector?("tr.search-result.fresh td.takes-focus.main-content a.show-details-link")
+      unless page.has_selector?("tr.search-result.fresh.showing-details td.takes-focus.main-content a.show-details-link")
+        all("tr.search-result.fresh td.takes-focus.main-content a.show-details-link").first.click
+        debug "sleeping...."
         sleep(inspection_time = 0.01)
       else
-        debug 'found.'
+        debug "found."
         found = true
       end
     end
     if tries > 8 # give up
       found = true
-      puts 'make_sure_details_are_showing is exhausted - bailing out'
+      puts "make_sure_details_are_showing is exhausted - bailing out"
     end
   end
-  debug 'end make_sure_details_are_showing'
+  debug "end make_sure_details_are_showing"
 end
 
 def wait_for(selector, max_tries = 5)
@@ -174,27 +174,27 @@ def wait_for(selector, max_tries = 5)
 end
 
 def set_name_parent
-  fill_in_typeahead('name-parent-typeahead', 'name_parent_id', 'Agenus', names(:a_genus).id)
+  fill_in_typeahead("name-parent-typeahead", "name_parent_id", "Agenus", names(:a_genus).id)
   find('#search-result-details h4').click
 end
 
 def set_name_parent_using(parent)
-  fill_in_typeahead('name-parent-typeahead', 'name_parent_id', names(parent).full_name, names(parent).id)
+  fill_in_typeahead("name-parent-typeahead", "name_parent_id", names(parent).full_name, names(parent).id)
   find('#search-result-details h4').click
 end
 
 def set_name_second_parent_to_a_species
-  fill_in_typeahead('name-second-parent-typeahead', 'name_second_parent_id', 'Aspecies', names(:a_species).id)
+  fill_in_typeahead("name-second-parent-typeahead", "name_second_parent_id", "Aspecies", names(:a_species).id)
   find('#search-result-details h4').click
 end
 
 def set_name_parent_to_a_species
-  fill_in_typeahead('name-parent-typeahead', 'name_parent_id', 'Aspecies', names(:a_species).id)
+  fill_in_typeahead("name-parent-typeahead", "name_parent_id", "Aspecies", names(:a_species).id)
   find('#search-result-details h4').click
 end
 
 def set_name_parent_to_a_genus
-  fill_in_typeahead('name-parent-typeahead', 'name_parent_id', 'Agenus', names(:a_genus).id)
+  fill_in_typeahead("name-parent-typeahead", "name_parent_id", "Agenus", names(:a_genus).id)
   find('#search-result-details h4').click
 end
 
@@ -205,92 +205,92 @@ end
 def visit_home_page
   configure_for_webkit
   sign_in
-  visit '/'
+  visit "/"
 end
 
 def visit_home_page_as_editor
   configure_for_webkit
   sign_in_as_editor
-  visit '/'
+  visit "/"
 end
 
 def visit_home_page_as_qaonly
   configure_for_webkit
   sign_in_as_qaonly
-  visit '/'
+  visit "/"
 end
 
 def visit_home_page_as_qaeditor
   configure_for_webkit
   sign_in_as_qaeditor
-  visit '/'
+  visit "/"
 end
 
 def visit_home_page_as_read_only_user
   configure_for_webkit
   sign_in_as_read_only_user
-  visit '/'
+  visit "/"
 end
 
 def load_new_scientific_name_form
   Timeout.timeout(Capybara.default_wait_time) do
-    loop until page.evaluate_script('jQuery.active').zero?
+    loop until page.evaluate_script("jQuery.active").zero?
   end
-  select_from_menu(['New', 'Scientific name'])
-  find_link('New scientific name').click
-  search_result_must_include_content('New scientific name')
-  search_result_details_must_include_content('New Scientific Name')
+  select_from_menu(["New", "Scientific name"])
+  find_link("New scientific name").click
+  search_result_must_include_content("New scientific name")
+  search_result_details_must_include_content("New Scientific Name")
 end
 
 def load_new_hybrid_formula_form
   Timeout.timeout(Capybara.default_wait_time) do
-    loop until page.evaluate_script('jQuery.active').zero?
+    loop until page.evaluate_script("jQuery.active").zero?
   end
-  select_from_menu(['New', 'Hybrid formula name'])
-  find_link('New hybrid formula name').click
-  search_result_must_include_content('New hybrid formula name')
-  search_result_details_must_include_content('New Scientific Hybrid Formula Name')
+  select_from_menu(["New", "Hybrid formula name"])
+  find_link("New hybrid formula name").click
+  search_result_must_include_content("New hybrid formula name")
+  search_result_details_must_include_content("New Scientific Hybrid Formula Name")
 end
 
 def load_new_cultivar_hybrid_name_form
-  select_from_menu(['New', 'Cultivar hybrid name'])
-  search_result_must_include_content('New cultivar hybrid name')
-  search_result_details_must_include_content('New Cultivar Hybrid Name')
+  select_from_menu(["New", "Cultivar hybrid name"])
+  search_result_must_include_content("New cultivar hybrid name")
+  search_result_details_must_include_content("New Cultivar Hybrid Name")
 end
 
 def load_new_cultivar_name_form
-  select_from_menu(['New', 'Cultivar name'])
-  search_result_must_include_content('New cultivar name')
-  search_result_details_must_include_content('New Cultivar Name')
+  select_from_menu(["New", "Cultivar name"])
+  search_result_must_include_content("New cultivar name")
+  search_result_details_must_include_content("New Cultivar Name")
 end
 
 def load_new_hybrid_formula_unknown_2nd_parent_form
   Timeout.timeout(Capybara.default_wait_time) do
-    loop until page.evaluate_script('jQuery.active').zero?
+    loop until page.evaluate_script("jQuery.active").zero?
   end
-  select_from_menu(['New', 'Hybrid formula unknown 2nd parent name'])
-  search_result_must_include_link('New hybrid formula unknown 2nd parent name')
-  search_result_details_must_include_content('New Scientific Hybrid Formula Unknown 2nd Parent Name')
+  select_from_menu(["New", "Hybrid formula unknown 2nd parent name"])
+  search_result_must_include_link("New hybrid formula unknown 2nd parent name")
+  search_result_details_must_include_content("New Scientific Hybrid Formula Unknown 2nd Parent Name")
 end
 
 def load_new_other_name_form
-  select_from_menu(['New', 'Other name'])
-  search_result_must_include_content('New other name')
-  search_result_details_must_include_content('New Other Name')
+  select_from_menu(["New", "Other name"])
+  search_result_must_include_content("New other name")
+  search_result_details_must_include_content("New Other Name")
 end
 
 def load_new_author_form
   Timeout.timeout(Capybara.default_wait_time) do
-    loop until page.evaluate_script('jQuery.active').zero?
+    loop until page.evaluate_script("jQuery.active").zero?
   end
   select_from_menu(%w(New Author))
-  search_result_must_include_link('New author')
-  search_result_details_must_include_content('New Author')
+  search_result_must_include_link("New author")
+  search_result_details_must_include_content("New Author")
 end
 
 def select_from_menu(link_texts)
   Timeout.timeout(Capybara.default_wait_time) do
-    loop until page.evaluate_script('jQuery.active').zero?
+    loop until page.evaluate_script("jQuery.active").zero?
   end
   link_texts.each do |link_text|
     find_link(link_text).click
@@ -299,17 +299,17 @@ end
 
 def save_new_record
   Capybara.match = :first
-  find_button('Save').click
+  find_button("Save").click
 end
 
 def save_edits
   Capybara.match = :first
-  find_button('Save').click
+  find_button("Save").click
 end
 
 def after_javascript_finishes
   Timeout.timeout(Capybara.default_wait_time) do
-    loop until page.evaluate_script('jQuery.active').zero?
+    loop until page.evaluate_script("jQuery.active").zero?
   end
 end
 
@@ -317,7 +317,7 @@ def assert_successful_create_for(expected_contents, prohibited_contents = [])
   after_javascript_finishes
   default = Capybara.default_wait_time
   Capybara.default_wait_time = 2
-  assert page.has_field?('search-field'), 'No search field.'
+  assert page.has_field?("search-field"), "No search field."
   make_sure_details_are_showing
   find('#search-result-details')
   expected_contents.each do |expected_content|
@@ -343,8 +343,8 @@ def fill_in_typeahead(text_field_id,
   end
 end
 
-def fill_in_author_typeahead(text_field = 'sanctioning-author-by-abbrev',
-                             id_field = 'name_sanctioning_author_id',
+def fill_in_author_typeahead(text_field = "sanctioning-author-by-abbrev",
+                             id_field = "name_sanctioning_author_id",
                              author = authors(:bentham))
   fill_in_typeahead(text_field, id_field, author.abbrev, author.id)
 end
@@ -354,12 +354,12 @@ def search_result_must_include_content(content, msg = "Search result content not
   assert find('div#search-result-container').has_content?(content), msg
 end
 
-def search_result_must_include(link_text, msg = 'Search result not found!')
+def search_result_must_include(link_text, msg = "Search result not found!")
   after_javascript_finishes
   assert find('div#search-result-container').has_link?(link_text), msg
 end
 
-def search_result_must_not_include(link_text, msg = 'Search result found!')
+def search_result_must_not_include(link_text, msg = "Search result found!")
   after_javascript_finishes
   assert find('div#search-result-container').has_no_link?(link_text), msg
 end
@@ -394,7 +394,7 @@ def search_result_details_must_not_include_button(button_text, msg = "Prohibited
   assert find('div#search-result-details').has_no_button?(button_text), msg
 end
 
-def search_result_summary_must_include_content(content, msg = 'Search result summary content not found!')
+def search_result_summary_must_include_content(content, msg = "Search result summary content not found!")
   after_javascript_finishes
   assert find('div#search-results-summary-container').has_content?(content), msg
 end
@@ -409,12 +409,12 @@ def search_result_must_include_link(link, msg = "Search result content not found
   assert find('div#search-result-container').has_link?(link), msg
 end
 
-def try_typeahead_multi(field_id, input_text, expected_suggestion, which_suggestion = 'first')
+def try_typeahead_multi(field_id, input_text, expected_suggestion, which_suggestion = "first")
   # See www.rubytutorial.io/how-to-test-an-autocomplete-with-rails
   fill_in(field_id, with: input_text)
   page.execute_script %{ $('##{field_id}').trigger("focus") }
-  suggestion = find('#' + field_id).find(:xpath, './/..').all('div.tt-suggestion').send(which_suggestion)
-  assert_not_nil suggestion, 'Should have found a suggestion.'
+  suggestion = find('#' + field_id).find(:xpath, ".//..").all("div.tt-suggestion").send(which_suggestion)
+  assert_not_nil suggestion, "Should have found a suggestion."
   assert_equal expected_suggestion, suggestion.text, "Suggestion text should have #{expected_suggestion}."
 end
 
@@ -424,7 +424,7 @@ def try_typeahead_single(field_id, input_text, expected_suggestion)
   page.execute_script %{ $('##{field_id}').trigger("focus") }
   suggestion = nil
   begin
-    suggestion = find('#' + field_id).find(:xpath, './/..').find('div.tt-suggestion')
+    suggestion = find('#' + field_id).find(:xpath, ".//..").find("div.tt-suggestion")
   rescue => e
   end
   assert_not_nil suggestion, "Did not find suggestion for '#{expected_suggestion}'"

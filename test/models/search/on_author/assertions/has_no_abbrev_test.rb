@@ -14,12 +14,12 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
-load 'models/search/users.rb'
+require "test_helper"
+load "models/search/users.rb"
 
 class SearchOnAuthorAssertionHasNoAbbrevTest < ActiveSupport::TestCase
-  test 'has no abbrev' do
-    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_string: 'has-no-abbrev:', query_target: 'Author', current_user: build_edit_user))
-    assert 0 < search.executed_query.results.size, 'Should find authors with no abbrev.'
+  test "has no abbrev" do
+    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_string: "has-no-abbrev:", query_target: "Author", current_user: build_edit_user))
+    assert 0 < search.executed_query.results.size, "Should find authors with no abbrev."
   end
 end

@@ -14,11 +14,11 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
-require 'models/author/update/if_changed/test_helper'
+require "test_helper"
+require "models/author/update/if_changed/test_helper"
 
 class ForAnUnchangedFullNameTest < ActiveSupport::TestCase
-  test 'unchanged full name' do
-    test_author_text_field_lack_of_change_is_detected('full_name')
+  test "unchanged full name" do
+    test_author_text_field_lack_of_change_is_detected("full_name")
   end
 end

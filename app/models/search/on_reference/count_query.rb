@@ -13,9 +13,8 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 class Search::OnReference::CountQuery
-
   attr_reader :sql, :info_for_display, :common_and_cultivar_included
 
   def initialize(parsed_request)
@@ -27,12 +26,8 @@ class Search::OnReference::CountQuery
   def prepare_query
     Rails.logger.debug("Search::OnReference::CountQuery#prepare_query")
     prepared_query = Reference.includes(:ref_type)
-    where_clauses = Search::OnReference::WhereClauses.new(@parsed_request,prepared_query)
+    where_clauses = Search::OnReference::WhereClauses.new(@parsed_request, prepared_query)
     prepared_query = where_clauses.sql
     @sql = prepared_query
   end
-
 end
-
-
-

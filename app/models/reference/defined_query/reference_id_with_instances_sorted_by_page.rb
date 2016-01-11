@@ -13,9 +13,8 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
-class Reference::DefinedQuery::ReferenceIdWithInstancesSortedByPage 
-
+#
+class Reference::DefinedQuery::ReferenceIdWithInstancesSortedByPage
   attr_reader :results, :limited, :common_and_cultivar_included, :has_relation, :relation, :count
 
   def initialize(parsed_request)
@@ -24,10 +23,10 @@ class Reference::DefinedQuery::ReferenceIdWithInstancesSortedByPage
 
   def debug(s)
     tag = "Reference::DefinedQuery::ReferenceIdWithInstancesSortedByPage"
-    #puts("#{tag}: #{s}")
+    # puts("#{tag}: #{s}")
     Rails.logger.debug("#{tag}: #{s}")
   end
- 
+
   def run_query(parsed_request)
     debug("")
     debug("parsed_request.where_arguments: #{parsed_request.where_arguments}")
@@ -37,13 +36,13 @@ class Reference::DefinedQuery::ReferenceIdWithInstancesSortedByPage
     if parsed_request.count
       debug("run_query counting")
       query = Search::OnReference::ListQuery.new(parsed_request)
-      @relation = query.sql  # TODO: work out how to provide the relation and sql
+      @relation = query.sql # TODO: work out how to provide the relation and sql
       results = relation.all
       limited = query.limited
 
       debug(results.size)
       tally = results.size
-      results.each  do | ref |
+      results.each do |ref|
         debug(ref.id)
         tally += ref.instances.size
       end
@@ -54,9 +53,9 @@ class Reference::DefinedQuery::ReferenceIdWithInstancesSortedByPage
       @count = tally
     else
       debug("run_query listing")
-      #@results = Instance::AsSearchEngine.name_usages(parsed_request.where_arguments)
-      @results = Instance::AsSearchEngine.for_ref_id(parsed_request.where_arguments,parsed_request.limit.to_i-1,'page')
-      @limited = false; #name_query.limited
+      # @results = Instance::AsSearchEngine.name_usages(parsed_request.where_arguments)
+      @results = Instance::AsSearchEngine.for_ref_id(parsed_request.where_arguments, parsed_request.limit.to_i - 1, "page")
+      @limited = false; # name_query.limited
       @common_and_cultivar_included = true
       @count = @results.size
       @has_relation = false
@@ -64,9 +63,3 @@ class Reference::DefinedQuery::ReferenceIdWithInstancesSortedByPage
     end
   end
 end
-
-
-
-
-
-

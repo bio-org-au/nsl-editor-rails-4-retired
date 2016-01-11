@@ -14,12 +14,12 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class NameTypeaheadOnFullNameSuggestionsShouldNotIncludeDuplicatesTest < ActiveSupport::TestCase
-  test 'name on full name suggestions should not include duplicates' do
-    suggestions = Name::AsTypeahead.on_full_name('a duplicate species')
-    assert(suggestions.is_a?(Array), 'suggestions should be an array')
+  test "name on full name suggestions should not include duplicates" do
+    suggestions = Name::AsTypeahead.on_full_name("a duplicate species")
+    assert(suggestions.is_a?(Array), "suggestions should be an array")
     assert(suggestions.size == 0, 'suggestions for "a duplicate species" should be empty')
   end
 end

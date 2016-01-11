@@ -14,14 +14,14 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class PersonalCommunicationCannotHaveParentTest < ActiveSupport::TestCase
-  test 'personal communication cannot have parent' do
+  test "personal communication cannot have parent" do
     ref = references(:personal_communication_with_parent)
-    assert ref.parent_id.present?, 'Expecting a parent.'
-    assert_not ref.valid?, 'Personal communication with parent should be invalid.'
+    assert ref.parent_id.present?, "Expecting a parent."
+    assert_not ref.valid?, "Personal communication with parent should be invalid."
     ref.parent_id = nil
-    assert ref.valid?, 'Personal communication without parent should be invalid.'
+    assert ref.valid?, "Personal communication without parent should be invalid."
   end
 end

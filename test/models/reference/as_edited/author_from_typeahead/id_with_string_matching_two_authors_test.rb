@@ -14,13 +14,13 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class ReferenceAsEditedAuthorIdWithStringMatching2Authors < ActiveSupport::TestCase
-  test 'id with string matching 2 authors' do
+  test "id with string matching 2 authors" do
     author_1 = authors(:has_matching_name_1)
     author_2 = authors(:has_matching_name_2)
     result = Reference::AsEdited.author_from_typeahead(author_2.id.to_s, author_1.name)
-    assert_equal author_2.id, result, 'Should get a match for the correct id'
+    assert_equal author_2.id, result, "Should get a match for the correct id"
   end
 end

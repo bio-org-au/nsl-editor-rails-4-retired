@@ -17,26 +17,26 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class AvailableFieldsTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
 
-  test 'create standalone instance available fields' do
+  test "create standalone instance available fields" do
     visit_home_page
     standard_page_assertions
-    select 'Names', from: 'query-on'
-    fill_in 'search-field', with: '*'
-    select 'just: 1', from: 'query-limit'
-    click_on 'Search'
-    all('.takes-focus').first.click
+    select "Names", from: "query-on"
+    fill_in "search-field", with: "*"
+    select "just: 1", from: "query-limit"
+    click_on "Search"
+    all(".takes-focus").first.click
     big_sleep
-    click_on 'New instance'
+    click_on "New instance"
     big_sleep
-    assert page.has_field?('instance-reference-typeahead'), 'Instance reference typeahead should be there'
-    assert page.has_field?('instance_page'), 'Instance page field should be there'
-    assert page.has_field?('instance_instance_type_id'), 'Instance type field should be there'
-    assert page.has_field?('instance_verbatim_name_string'), 'Instance verbatim name string field should be there'
-    assert page.has_field?('instance_bhl_url'), 'Instance BHL URL string field should be there'
+    assert page.has_field?("instance-reference-typeahead"), "Instance reference typeahead should be there"
+    assert page.has_field?("instance_page"), "Instance page field should be there"
+    assert page.has_field?("instance_instance_type_id"), "Instance type field should be there"
+    assert page.has_field?("instance_verbatim_name_string"), "Instance verbatim name string field should be there"
+    assert page.has_field?("instance_bhl_url"), "Instance BHL URL string field should be there"
   end
 end

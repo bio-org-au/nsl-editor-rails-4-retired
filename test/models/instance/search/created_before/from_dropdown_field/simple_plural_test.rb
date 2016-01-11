@@ -14,12 +14,12 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
-load 'models/search/users.rb'
+require "test_helper"
+load "models/search/users.rb"
 
 class InstanceSearchCreatedBeforeFromDropdownSimplePluralTest < ActiveSupport::TestCase
   # New search for "42993" on instance up to 100 with field: cr-b
-  test 'instance search on created before from dropdown field simple plural' do
+  test "instance search on created before from dropdown field simple plural" do
     skip # created before, no such query now
     # search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_string: "2",query_target: 'Review',current_user: build_edit_user))
     # assert_equal search.executed_query.results.class, Array, "Results should be an Array"

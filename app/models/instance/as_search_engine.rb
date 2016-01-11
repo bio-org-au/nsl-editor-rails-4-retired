@@ -14,17 +14,15 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-#   
+#
 
 class Instance::AsSearchEngine < Instance
-
-
   def self.for_name_id(name_id)
     Instance::AsSearchEngine.name_usages(name_id)
   end
 
-  def self.for_ref_id(ref_id,limit,sort_by)
-    Instance.ref_usages(ref_id,limit,sort_by)
+  def self.for_ref_id(ref_id, limit, sort_by)
+    Instance.ref_usages(ref_id, limit, sort_by)
   end
 
   # Instances of a name algorithm: work on a single name starts here.
@@ -39,10 +37,10 @@ class Instance::AsSearchEngine < Instance
       name = names.first
       name.display_as_part_of_concept
       already_shown = []
-      name.instances.sort do |i1,i2| 
-        [i1.reference.year||9999,i1.instance_type.primaries_first,i1.reference.author.try('name')||'x'] <=> [i2.reference.year||9999,i2.instance_type.primaries_first,i2.reference.author.try('name')||'x'] 
+      name.instances.sort do |i1, i2|
+        [i1.reference.year || 9999, i1.instance_type.primaries_first, i1.reference.author.try("name") || "x"] <=> [i2.reference.year || 9999, i2.instance_type.primaries_first, i2.reference.author.try("name") || "x"]
       end.each do |instance|
-        logger.debug('after ruby sort')
+        logger.debug("after ruby sort")
         if instance.simple? # simple instance
           Instance::AsSearchEngine.show_simple_instance_under_searched_for_name(instance).each do |one_instance|
             one_instance.show_primary_instance_type = true
@@ -52,7 +50,7 @@ class Instance::AsSearchEngine < Instance
         else # relationship instance
           citing_instance = instance.this_is_cited_by
           unless already_shown.include?(citing_instance.id)
-            Instance::AsSearchEngine.show_relationship_instance_under_searched_for_name(name,citing_instance).each do |element|
+            Instance::AsSearchEngine.show_relationship_instance_under_searched_for_name(name, citing_instance).each do |element|
               element.consider_apc = false
               results.push(element)
             end
@@ -71,33 +69,30 @@ class Instance::AsSearchEngine < Instance
   #   - display these relationship instances as cited_by the simple instance
   def self.show_simple_instance_under_searched_for_name(instance)
     results = [instance.display_as_part_of_concept]
-    Instance.joins(:instance_type, :name, :reference).
-      where(cited_by_id: instance.id).
-      in_nested_instance_type_order.
-      order("reference.year,lower(name.full_name)").
-      each do |cited_by_original_instance|
+    Instance.joins(:instance_type, :name, :reference)
+      .where(cited_by_id: instance.id)
+      .in_nested_instance_type_order
+      .order("reference.year,lower(name.full_name)")
+      .each do |cited_by_original_instance|
         cited_by_original_instance.expanded_instance_type = cited_by_original_instance.instance_type.name
-        cited_by_original_instance.display_as = 'instance-is-cited-by'
+        cited_by_original_instance.display_as = "instance-is-cited-by"
         results.push(cited_by_original_instance)
       end
     results
   end
-  
+
   # NSL-536: If instance name is not the subject name then do not show the instance type.
-  def self.show_relationship_instance_under_searched_for_name(name,instance)
+  def self.show_relationship_instance_under_searched_for_name(name, instance)
     results = [instance.display_as_citing_instance_within_name_search]
-    Instance.joins(:instance_type).
-             where(cited_by_id: instance.id).
-             in_nested_instance_type_order.
-             each do |cited_by_original_instance|
-      if cited_by_original_instance.name.id == name.id
-        cited_by_original_instance.expanded_instance_type = cited_by_original_instance.instance_type.name
-        cited_by_original_instance.display_as = cited_by_original_instance.misapplied? ? 'cited-by-relationship-instance' : 'cited-by-relationship-instance-name-only'
-        results.push(cited_by_original_instance)
-      end
+    Instance.joins(:instance_type)
+      .where(cited_by_id: instance.id)
+      .in_nested_instance_type_order
+      .each do |cited_by_original_instance|
+      next unless cited_by_original_instance.name.id == name.id
+      cited_by_original_instance.expanded_instance_type = cited_by_original_instance.instance_type.name
+      cited_by_original_instance.display_as = cited_by_original_instance.misapplied? ? "cited-by-relationship-instance" : "cited-by-relationship-instance-name-only"
+      results.push(cited_by_original_instance)
     end
     results
   end
-  
 end
-

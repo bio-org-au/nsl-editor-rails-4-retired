@@ -14,13 +14,13 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class ReferenceAsEditedDuplicateOfIdWithStringMatchingAnotherReference < ActiveSupport::TestCase
-  test 'id with string for another reference' do
+  test "id with string for another reference" do
     reference_1 = references(:journal_of_botany_british_and_foreign)
     reference_2 = references(:an_herbarium_annotation)
     result = Reference::AsEdited.duplicate_of_from_typeahead(reference_1.id.to_s, reference_2.citation)
-    assert_equal reference_2.id, result, 'Should get a matching id for the reference citation'
+    assert_equal reference_2.id, result, "Should get a matching id for the reference citation"
   end
 end

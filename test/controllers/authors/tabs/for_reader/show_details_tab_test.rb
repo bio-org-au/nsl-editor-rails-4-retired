@@ -14,7 +14,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class ShowReaderDetailsTabTest < ActionController::TestCase
   tests AuthorsController
@@ -22,9 +22,9 @@ class ShowReaderDetailsTabTest < ActionController::TestCase
     @author = authors(:bentham)
   end
 
-  test 'should show reader author details tab' do
-    @request.headers['Accept'] = 'application/javascript'
-    get(:show, { id: @author.id, tab: 'tab_show_1' }, username: 'fred', user_full_name: 'Fred Jones', groups: [])
+  test "should show reader author details tab" do
+    @request.headers["Accept"] = "application/javascript"
+    get(:show, { id: @author.id, tab: "tab_show_1" }, username: "fred", user_full_name: "Fred Jones", groups: [])
     assert_response :success
   end
 end

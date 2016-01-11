@@ -13,19 +13,18 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 class DbVersion < ActiveRecord::Base
-# Really "Schema Version"
-  
-  self.table_name = 'db_version'
-  self.primary_key = 'id'
+  # Really "Schema Version"
+
+  self.table_name = "db_version"
+  self.primary_key = "id"
 
   def self.current
     DbVersion.first[:version]
   rescue => e
-    Rails.logger.error('Problem detecting current schema version.')
-    Rails.logger.error("Exception: #{e.to_s}")
-    '[Problem finding version]'
+    Rails.logger.error("Problem detecting current schema version.")
+    Rails.logger.error("Exception: #{e}")
+    "[Problem finding version]"
   end
-
 end

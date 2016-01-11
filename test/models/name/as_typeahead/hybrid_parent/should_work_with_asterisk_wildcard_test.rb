@@ -14,14 +14,14 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class ShouldWorkWithAsteriskWildcardTest < ActiveSupport::TestCase
-  test 'hybrid parent suggestion should work with asterisk wildcard' do
-    suggestions = Name::AsTypeahead.hybrid_parent_suggestions('*', -1)
-    assert(suggestions.is_a?(Array), 'asterisk wildcard search should be an array')
-    assert(suggestions.size > 0, 'asterisk wildcard search should not be empty')
-    assert(suggestions.first[:value].present?, 'asterisk wildcard search first element should have a value')
-    assert(suggestions.first[:id].present?, 'asterisk wildcard search first element should have an id')
+  test "hybrid parent suggestion should work with asterisk wildcard" do
+    suggestions = Name::AsTypeahead.hybrid_parent_suggestions("*", -1)
+    assert(suggestions.is_a?(Array), "asterisk wildcard search should be an array")
+    assert(suggestions.size > 0, "asterisk wildcard search should not be empty")
+    assert(suggestions.first[:value].present?, "asterisk wildcard search first element should have a value")
+    assert(suggestions.first[:id].present?, "asterisk wildcard search first element should have an id")
   end
 end

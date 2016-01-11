@@ -14,11 +14,11 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class HistoryY2016Test < ActionController::TestCase
   tests HistoryController
-  test 'history 2016 should route' do
-    assert_routing '/history/2016', controller: 'history', action: 'y2016'
+  test "history 2016 should route" do
+    assert_routing "/history/2016", controller: "history", action: "y2016"
   end
 end

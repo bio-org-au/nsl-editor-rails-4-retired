@@ -18,26 +18,26 @@
 #
 
 # encoding: utf-8
-require 'test_helper'
+require "test_helper"
 
 class AvailableFieldsForOrdinaryEditorTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
 
-  test 'Ordinary Editor gets the right fields' do
+  test "Ordinary Editor gets the right fields" do
     visit_home_page_as_editor
     standard_page_assertions
-    select 'Instances', from: 'query-on'
-    select 'with id', from: 'query-field'
-    fill_in 'search-field', with: instances(:britten_created_angophora_costata).id
-    click_on 'Search'
+    select "Instances", from: "query-on"
+    select "with id", from: "query-field"
+    fill_in "search-field", with: instances(:britten_created_angophora_costata).id
+    click_on "Search"
     little_sleep
-    all('.takes-focus').first.click
-    click_on 'instance-edit-tab'
+    all(".takes-focus").first.click
+    click_on "instance-edit-tab"
     little_sleep
-    search_result_details_must_not_include_field('instance-reference-typeahead', 'Instance reference typeahead should not be there')
-    search_result_details_must_include_field('instance_page', 'Instance page field should be there')
-    search_result_details_must_include_field('instance_instance_type_id', 'Instance type select field should be there')
-    search_result_details_must_include_field('instance_verbatim_name_string', 'Instance verbatim name string field should be there')
-    search_result_details_must_include_field('instance_bhl_url', 'Instance BHL URL string field should be there')
+    search_result_details_must_not_include_field("instance-reference-typeahead", "Instance reference typeahead should not be there")
+    search_result_details_must_include_field("instance_page", "Instance page field should be there")
+    search_result_details_must_include_field("instance_instance_type_id", "Instance type select field should be there")
+    search_result_details_must_include_field("instance_verbatim_name_string", "Instance verbatim name string field should be there")
+    search_result_details_must_include_field("instance_bhl_url", "Instance BHL URL string field should be there")
   end
 end

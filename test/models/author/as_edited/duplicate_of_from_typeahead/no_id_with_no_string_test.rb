@@ -14,12 +14,12 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class AuthorAsEditedNoDuplicateOfIdWithNoString < ActiveSupport::TestCase
-  test 'no id with no string' do
+  test "no id with no string" do
     current_author_id = 1
-    result = Author::AsEdited.duplicate_of_from_typeahead('', '', current_author_id)
-    assert result.blank?, 'Should be no result for blank inputs.'
+    result = Author::AsEdited.duplicate_of_from_typeahead("", "", current_author_id)
+    assert result.blank?, "Should be no result for blank inputs."
   end
 end

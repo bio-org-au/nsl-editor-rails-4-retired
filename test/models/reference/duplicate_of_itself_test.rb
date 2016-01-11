@@ -14,10 +14,10 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class DuplicateOfItselfTest < ActiveSupport::TestCase
-  test 'cannot make duplicate of itself' do
+  test "cannot make duplicate of itself" do
     reference = Reference.first
     reference.duplicate_of_id = reference.id
     assert_raises(ActiveRecord::RecordInvalid) { reference.save! }

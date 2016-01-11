@@ -17,22 +17,22 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class NoDeleteButtonIfHasADuplicate < ActionDispatch::IntegrationTest
   include Capybara::DSL
 
-  test 'author has no delete button if has a duplicate' do
+  test "author has no delete button if has a duplicate" do
     visit_home_page
     standard_page_assertions
-    select 'Author', from: 'query-on'
-    fill_in 'search-field', with: 'Has One Duplicate That Is All'
-    click_button 'Search'
+    select "Author", from: "query-on"
+    fill_in "search-field", with: "Has One Duplicate That Is All"
+    click_button "Search"
     tiny_sleep
-    search_result_must_include_content('Has One Duplicate That Is All')
-    click_link('Edit')
+    search_result_must_include_content("Has One Duplicate That Is All")
+    click_link("Edit")
     big_sleep
-    search_result_details_must_include_button('Save')
-    search_result_details_must_not_include_link('Delete...')
+    search_result_details_must_include_button("Save")
+    search_result_details_must_not_include_link("Delete...")
   end
 end

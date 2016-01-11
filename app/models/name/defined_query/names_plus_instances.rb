@@ -13,9 +13,8 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
-class Name::DefinedQuery::NamesPlusInstances 
-
+#
+class Name::DefinedQuery::NamesPlusInstances
   attr_reader :results, :limited, :common_and_cultivar_included, :has_relation, :relation, :count
 
   def initialize(parsed_request)
@@ -26,7 +25,7 @@ class Name::DefinedQuery::NamesPlusInstances
     tag = "Name::DefinedQuery::NamesPlusInstances"
     Rails.logger.debug("#{tag}: #{s}")
   end
- 
+
   def run_query(parsed_request)
     debug("")
     debug("parsed_request.where_arguments: #{parsed_request.where_arguments}")
@@ -36,14 +35,14 @@ class Name::DefinedQuery::NamesPlusInstances
     if parsed_request.count
       debug("run_query counting")
       query = Search::OnName::ListQuery.new(parsed_request)
-      @relation = query.sql  # TODO: work out how to provide the relation and sql
+      @relation = query.sql # TODO: work out how to provide the relation and sql
       results = @relation.all
       debug("results.size: #{results.size}")
       limited = false
 
       debug(results.size)
-      tally = 0 #results.size
-      results.each  do | name |
+      tally = 0 # results.size
+      results.each do |name|
         debug("tallying for #{name.id}")
         tally += Instance::AsSearchEngine.name_usages(name.id).size
         debug("tally: #{tally}")
@@ -59,7 +58,7 @@ class Name::DefinedQuery::NamesPlusInstances
       debug(query.results.size)
       results = []
       @limited = false
-      query.results.each  do | name |
+      query.results.each do |name|
         results.concat(Instance::AsSearchEngine.name_usages(name.id))
         if results.size >= parsed_request.limit
           @limited = true
@@ -75,7 +74,4 @@ class Name::DefinedQuery::NamesPlusInstances
       @relation = nil
     end
   end
-
 end
-
-

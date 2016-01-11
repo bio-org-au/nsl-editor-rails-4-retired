@@ -14,18 +14,18 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class ForFamiliaTest < ActiveSupport::TestCase
-  test 'from a higher rank for familia' do
+  test "from a higher rank for familia" do
     ranks = Name.from_a_higher_rank(name_ranks(:familia).id).collect { |name| name.name_rank.name }.uniq
-    assert ranks.include?('Regnum'), 'Should include Regnum'
-    assert ranks.include?('Division'), 'Should include Division'
-    assert ranks.include?('Classis'), 'Should include Classis'
-    assert ranks.include?('Subclassis'), 'Should include Subclassis'
-    assert ranks.include?('Superordo'), 'Should include Superordo'
-    assert ranks.include?('Ordo'), 'Should include Ordo'
-    assert ranks.include?('Subordo'), 'Should include Subordo'
+    assert ranks.include?("Regnum"), "Should include Regnum"
+    assert ranks.include?("Division"), "Should include Division"
+    assert ranks.include?("Classis"), "Should include Classis"
+    assert ranks.include?("Subclassis"), "Should include Subclassis"
+    assert ranks.include?("Superordo"), "Should include Superordo"
+    assert ranks.include?("Ordo"), "Should include Ordo"
+    assert ranks.include?("Subordo"), "Should include Subordo"
     assert_equal 7, ranks.size
   end
 end

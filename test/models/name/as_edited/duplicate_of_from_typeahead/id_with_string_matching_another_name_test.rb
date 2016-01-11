@@ -14,13 +14,13 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class NameAsEditedDuplicateOfIdWithStringMatchingAnotherName < ActiveSupport::TestCase
-  test 'id with string for another name' do
+  test "id with string for another name" do
     name_1 = names(:the_regnum)
     name_2 = names(:a_division)
     result = Name::AsEdited.duplicate_of_from_typeahead(name_1.id.to_s, name_2.full_name)
-    assert_equal name_2.id, result, 'Should get a matching id for the name with matching full name despite mismatched ID'
+    assert_equal name_2.id, result, "Should get a matching id for the name with matching full name despite mismatched ID"
   end
 end

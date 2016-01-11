@@ -14,10 +14,10 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class HybridAutonymIsScientificTest < ActiveSupport::TestCase
-  test 'hybrid autonym is a scientific name type' do
-    assert NameType.find_by(name: 'hybrid autonym').scientific?, 'Hybrid Autonym should be categorised as a "scientific" name type'
+  test "hybrid autonym is a scientific name type" do
+    assert NameType.find_by(name: "hybrid autonym").scientific?, 'Hybrid Autonym should be categorised as a "scientific" name type'
   end
 end

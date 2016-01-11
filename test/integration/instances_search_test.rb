@@ -17,19 +17,19 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class InstancesSearchTest < ActionDispatch::IntegrationTest
   # Make the Capybara DSL available in all integration tests
   include Capybara::DSL
 
   # "audit"
-  test 'find instances updated in the last 3 days' do
+  test "find instances updated in the last 3 days" do
     visit_home_page
-    select 'Instances', from: 'query-on'
-    fill_in 'search-field', with: 'upd-a:3'
-    click_on 'Search'
+    select "Instances", from: "query-on"
+    fill_in "search-field", with: "upd-a:3"
+    click_on "Search"
     standard_page_assertions
-    assert page.has_content?(/\d+ records/), 'Instance updated in the last day not found or result is summarised incorrectly.'
+    assert page.has_content?(/\d+ records/), "Instance updated in the last day not found or result is summarised incorrectly."
   end
 end

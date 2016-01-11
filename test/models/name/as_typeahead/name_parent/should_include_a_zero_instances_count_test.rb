@@ -14,17 +14,17 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class ShouldIncludeAZeroInstancesCount < ActiveSupport::TestCase
-  test 'name parent suggestions should include a zero instances count' do
+  test "name parent suggestions should include a zero instances count" do
     dummy_avoid_id = 1
-    name = Name.find_by(full_name: 'a genus without an instance')
+    name = Name.find_by(full_name: "a genus without an instance")
     assert name.present?, 'The name "a genus without an instance" should be found.'
     assert name.instances.size == 0, "The name 'a genus without an instance' should have no instances."
-    suggestions = Name::AsTypeahead.name_parent_suggestions('a genus without an instance', dummy_avoid_id, NameRank.species.id)
-    assert(suggestions.is_a?(Array), 'suggestions should be an array')
+    suggestions = Name::AsTypeahead.name_parent_suggestions("a genus without an instance", dummy_avoid_id, NameRank.species.id)
+    assert(suggestions.is_a?(Array), "suggestions should be an array")
     assert(suggestions.size == 1, 'suggestions for "a genus without an instance" should have a record')
-    assert_match 'a genus without an instance | Genus | legitimate | 0 instances', suggestions.first[:value], 'Name parent typeahead needs correct value with a 0 instances count'
+    assert_match "a genus without an instance | Genus | legitimate | 0 instances", suggestions.first[:value], "Name parent typeahead needs correct value with a 0 instances count"
   end
 end

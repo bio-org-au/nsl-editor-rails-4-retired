@@ -2,20 +2,19 @@
 # More info at https://github.com/guard/guard#readme
 
 # guard :bundler do
-  # watch('Gemfile')
-  # # Uncomment next line if your Gemfile contains the `gemspec' command.
-  # # watch(/^.+\.gemspec/)
+# watch('Gemfile')
+# # Uncomment next line if your Gemfile contains the `gemspec' command.
+# # watch(/^.+\.gemspec/)
 # end
 
 # guard 'rails' do
-  # watch('Gemfile.lock')
-  # watch(%r{^(config|lib)/.*})
+# watch('Gemfile.lock')
+# watch(%r{^(config|lib)/.*})
 # end
-
 
 guard :test do
   watch(%r{^test/.+_test\.rb$})
-  watch('test/test_helper.rb')  { 'test' }
+  watch("test/test_helper.rb") { "test" }
 
   # Non-rails
   watch(%r{^lib/(.+)\.rb$}) { |m| "test/#{m[1]}_test.rb" }
@@ -34,4 +33,3 @@ guard :test do
   # watch(%r{^app/views/.+$})                          { 'test/integration' }
   # watch('app/controllers/application_controller.rb') { ['test/functional', 'test/integration'] }
 end
-

@@ -17,21 +17,21 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class NamesSearchNameRankSimple < ActionDispatch::IntegrationTest
   # Make the Capybara DSL available in all integration tests
   include Capybara::DSL
 
-  test 'simple name rank search' do
+  test "simple name rank search" do
     Capybara.default_driver = :selenium
     visit_home_page
-    select 'Name', from: 'query-on'
-    select 'with name rank', from: 'query-field'
-    assert find("#query-field option[value='nr']")['selected'], 'nr should be selected for name rank search'
-    fill_in 'search-field', with: 'varietas'
-    click_button 'Search'
+    select "Name", from: "query-on"
+    select "with name rank", from: "query-field"
+    assert find("#query-field option[value='nr']")["selected"], "nr should be selected for name rank search"
+    fill_in "search-field", with: "varietas"
+    click_button "Search"
     sleep(inspection_time = 0.1)
-    search_result_must_include('tuberosus', 'Name rank search should have returned a record for tuberosus.')
+    search_result_must_include("tuberosus", "Name rank search should have returned a record for tuberosus.")
   end
 end

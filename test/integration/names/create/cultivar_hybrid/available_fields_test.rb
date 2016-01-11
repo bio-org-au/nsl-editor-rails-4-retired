@@ -17,27 +17,27 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class AvailableFieldsTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
 
-  test 'name cultivar hybrid available fields' do
+  test "name cultivar hybrid available fields" do
     visit_home_page
-    fill_in 'search-field', with: 'test: cultivar hybrid name available fields'
-    select_from_menu(['New', 'Cultivar hybrid name'])
-    search_result_must_include_link('New cultivar hybrid name')
-    search_result_details_must_include_content('New Cultivar Hybrid Name')
-    assert page.has_field?('name_name_type_id'), 'Name type should be there'
-    assert page.has_field?('name_name_rank_id'), 'Name rank should be there'
-    assert page.has_field?('name_name_status_id'), 'Name status should be there'
-    assert page.has_field?('name-parent-typeahead'), 'Name parent typeahead field should be there'
-    assert page.has_field?('name-second-parent-typeahead'), 'Name second parent typeahead field should be there'
-    assert page.has_field?('name_name_element'), 'Name element should be there'
-    assert page.has_no_field?('ex-base-author-by-abbrev'), 'ex-base-author-by-abbrev should not be there'
-    assert page.has_no_field?('base-author-by-abbrev'), 'base-author-by-abbrev should not be there'
-    assert page.has_no_field?('ex-author-by-abbrev'), 'ex-author-by-abbrev should not be there'
-    assert page.has_no_field?('author-by-abbrev'), 'author-by-abbrev should not be there'
-    assert page.has_no_field?('sanctioning-author-by-abbrev'), 'Sanctioning author field should not be there'
+    fill_in "search-field", with: "test: cultivar hybrid name available fields"
+    select_from_menu(["New", "Cultivar hybrid name"])
+    search_result_must_include_link("New cultivar hybrid name")
+    search_result_details_must_include_content("New Cultivar Hybrid Name")
+    assert page.has_field?("name_name_type_id"), "Name type should be there"
+    assert page.has_field?("name_name_rank_id"), "Name rank should be there"
+    assert page.has_field?("name_name_status_id"), "Name status should be there"
+    assert page.has_field?("name-parent-typeahead"), "Name parent typeahead field should be there"
+    assert page.has_field?("name-second-parent-typeahead"), "Name second parent typeahead field should be there"
+    assert page.has_field?("name_name_element"), "Name element should be there"
+    assert page.has_no_field?("ex-base-author-by-abbrev"), "ex-base-author-by-abbrev should not be there"
+    assert page.has_no_field?("base-author-by-abbrev"), "base-author-by-abbrev should not be there"
+    assert page.has_no_field?("ex-author-by-abbrev"), "ex-author-by-abbrev should not be there"
+    assert page.has_no_field?("author-by-abbrev"), "author-by-abbrev should not be there"
+    assert page.has_no_field?("sanctioning-author-by-abbrev"), "Sanctioning author field should not be there"
   end
 end

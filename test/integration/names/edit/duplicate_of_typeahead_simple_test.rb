@@ -17,20 +17,20 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class DuplicateOfTypeaheadSimpleTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
 
-  test 'duplicate of typeahead simple' do
+  test "duplicate of typeahead simple" do
     Capybara.default_driver = :selenium
     visit_home_page
-    fill_in 'search-field', with: 'test: duplicate of typeahead simple'
-    select 'Name', from: 'query-on'
-    fill_in 'search-field', with: 'nt:scientific'
-    click_button 'Search'
-    all('.takes-focus').first.click
-    click_on 'Edit'
-    try_typeahead_multi('duplicate-of-id-typeahead', 'Fred', 'freddy - [n/a]', 'last')
+    fill_in "search-field", with: "test: duplicate of typeahead simple"
+    select "Name", from: "query-on"
+    fill_in "search-field", with: "nt:scientific"
+    click_button "Search"
+    all(".takes-focus").first.click
+    click_on "Edit"
+    try_typeahead_multi("duplicate-of-id-typeahead", "Fred", "freddy - [n/a]", "last")
   end
 end

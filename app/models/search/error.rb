@@ -13,23 +13,21 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
-
+#
 
 class Search::Error
-
-  attr_reader :empty, 
-              :error, 
+  attr_reader :empty,
+              :error,
               :error_message,
               :executed_query,
               :more_allowed,
               :parsed_request
 
- def initialize(params)
+  def initialize(params)
     Rails.logger.debug("Search::Error start with query string: #{params[:query_string]}")
     Rails.logger.debug("#{'=' * 40}")
     @parsed_request = Search::ParsedRequest.new(params)
-    @common_and_cultivar_included= true
+    @common_and_cultivar_included = true
     @count = false
     @empty = false
     @error = true
@@ -40,13 +38,9 @@ class Search::Error
     @more_allowed = false
     @executed_query = Search::EmptyExecutedQuery.new(params)
     @error_message = params[:error_message]
-  end
+   end
 
   def to_history
-    {"query_string" => @query_string, "query_target" => @query_target, "result_size" => 0, "time_stamp" => Time.now, "error" => true, "error_message" => @error_message}
+    { "query_string" => @query_string, "query_target" => @query_target, "result_size" => 0, "time_stamp" => Time.now, "error" => true, "error_message" => @error_message }
   end
-
 end
-
-
-

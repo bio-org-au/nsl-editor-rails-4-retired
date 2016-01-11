@@ -14,19 +14,19 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
-require 'models/reference/update/if_changed/test_helper'
+require "test_helper"
+require "models/reference/update/if_changed/test_helper"
 
 class ForAChangedParentIdTest < ActiveSupport::TestCase
-  test 'changed parent id' do
+  test "changed parent id" do
     reference = Reference::AsEdited.find(references(:for_resolving_typeaheads).id)
     new_parent = references(:for_change_detection)
-    assert_not_equal new_parent.id, reference.parent_id, 'The test setup is broken if the new parent is the same as the old parent.'
+    assert_not_equal new_parent.id, reference.parent_id, "The test setup is broken if the new parent is the same as the old parent."
     new_column_value = new_parent.id
-    assert reference.update_if_changed({}, { 'parent_typeahead' => new_parent.citation, 'parent_id' => new_column_value }, 'a user'), 'Reference should have been changed.'
+    assert reference.update_if_changed({}, { "parent_typeahead" => new_parent.citation, "parent_id" => new_column_value }, "a user"), "Reference should have been changed."
     changed_reference = Reference.find_by(id: reference.id)
-    assert_equal new_column_value, changed_reference.parent_id, 'The parent_id column value should have changed to the new value'
-    assert_match 'a user', changed_reference.updated_by, 'Reference.updated_by should have changed to the updating user'
-    assert reference.created_at < changed_reference.updated_at, 'Reference updated at should have changed.'
+    assert_equal new_column_value, changed_reference.parent_id, "The parent_id column value should have changed to the new value"
+    assert_match "a user", changed_reference.updated_by, "Reference.updated_by should have changed to the updating user"
+    assert reference.created_at < changed_reference.updated_at, "Reference updated at should have changed."
   end
 end

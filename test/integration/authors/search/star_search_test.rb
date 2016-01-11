@@ -17,19 +17,19 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class StarSearchTest < ActionDispatch::IntegrationTest
   # Make the Capybara DSL available in all integration tests
   include Capybara::DSL
 
-  test 'it' do
+  test "it" do
     visit_home_page
     standard_page_assertions
-    select 'Author', from: 'query-on'
-    fill_in 'search-field', with: '*'
-    click_button 'Search'
+    select "Author", from: "query-on"
+    fill_in "search-field", with: "*"
+    click_button "Search"
     big_sleep
-    search_result_must_include_content('a')
+    search_result_must_include_content("a")
   end
 end

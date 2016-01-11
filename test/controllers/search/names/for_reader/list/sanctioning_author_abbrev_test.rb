@@ -14,14 +14,14 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class ReaderSearchControllerNamesSanctioningAuthorAbbrevListTest < ActionController::TestCase
   tests SearchController
 
-  test 'reader can search for a name by sanctioning author abbrev' do
-    get(:search, { query_target: 'name', query_string: 'sanctioning-author: *' }, username: 'fred', user_full_name: 'Fred Jones', groups: [])
+  test "reader can search for a name by sanctioning author abbrev" do
+    get(:search, { query_target: "name", query_string: "sanctioning-author: *" }, username: "fred", user_full_name: "Fred Jones", groups: [])
     assert_response :success
-    assert_select '#search-results-summary', /[2-9] records\b/, 'Should find at least a couple of records'
+    assert_select '#search-results-summary', /[2-9] records\b/, "Should find at least a couple of records"
   end
 end

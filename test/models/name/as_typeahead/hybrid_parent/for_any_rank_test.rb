@@ -14,12 +14,12 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
-require 'models/name/as_typeahead/hybrid_parent/hybrid_parent_test_helper'
+require "test_helper"
+require "models/name/as_typeahead/hybrid_parent/hybrid_parent_test_helper"
 
 class ForAnyRankTest < ActiveSupport::TestCase
-  test 'hybrid parent suggestion' do
-    suggestions = Name::AsTypeahead.hybrid_parent_suggestions('%', -1)
-    hybrid_parent_suggestions_should_only_include(suggestions, 'Forma', %w(Forma Subforma Subvarietas Varietas Nothovarietas Subspecies Species))
+  test "hybrid parent suggestion" do
+    suggestions = Name::AsTypeahead.hybrid_parent_suggestions("%", -1)
+    hybrid_parent_suggestions_should_only_include(suggestions, "Forma", %w(Forma Subforma Subvarietas Varietas Nothovarietas Subspecies Species))
   end
 end

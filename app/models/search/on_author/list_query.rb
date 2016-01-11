@@ -13,9 +13,8 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 class Search::OnAuthor::ListQuery
-
   attr_reader :sql, :limited, :info_for_display, :common_and_cultivar_included
 
   def initialize(parsed_request)
@@ -27,15 +26,11 @@ class Search::OnAuthor::ListQuery
 
   def prepare_query
     Rails.logger.debug("Search::OnAuthor::ListQuery#prepare_query")
-    prepared_query = Author.where('1=1')
-    where_clauses = Search::OnAuthor::WhereClauses.new(@parsed_request,prepared_query)
+    prepared_query = Author.where("1=1")
+    where_clauses = Search::OnAuthor::WhereClauses.new(@parsed_request, prepared_query)
     prepared_query = where_clauses.sql
     prepared_query = prepared_query.limit(@parsed_request.limit) if @parsed_request.limited
-    prepared_query = prepared_query.order('name')
+    prepared_query = prepared_query.order("name")
     @sql = prepared_query
   end
-
 end
-
-
-

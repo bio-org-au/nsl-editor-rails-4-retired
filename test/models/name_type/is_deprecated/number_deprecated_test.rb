@@ -14,10 +14,10 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class NumberDeprecatedTest < ActiveSupport::TestCase
-  test 'number of deprecated name types' do
-    assert_equal 6, NameType.where(deprecated: true).size, 'Should be only 6 deprecated name types.'
+  test "number of deprecated name types" do
+    assert_equal 6, NameType.where(deprecated: true).size, "Should be only 6 deprecated name types."
   end
 end

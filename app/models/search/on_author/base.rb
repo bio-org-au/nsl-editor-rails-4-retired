@@ -13,9 +13,8 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 class Search::OnAuthor::Base
-
   attr_reader :results, :limited, :info_for_display, :rejected_pairings, :common_and_cultivar_included, :has_relation, :relation, :id, :count
 
   def initialize(parsed_request)
@@ -48,8 +47,4 @@ class Search::OnAuthor::Base
       @count = @results.size
     end
   end
-
 end
-
-
-

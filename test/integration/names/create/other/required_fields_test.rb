@@ -17,17 +17,17 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class RequiredFieldsTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
 
-  test 'for required fields' do
+  test "for required fields" do
     visit_home_page
-    fill_in 'search-field', with: 'test: create other name - required fields'
+    fill_in "search-field", with: "test: create other name - required fields"
     load_new_other_name_form
-    assert(page.has_selector?('#name_name_type_id[required]'), 'Name type should be a required field.')
-    assert(page.has_selector?('#name_name_status_id[required]'), 'Name status should be a required field.')
-    assert(page.has_selector?('#name_name_element[required]'), 'Name element should be a required field.')
+    assert(page.has_selector?('#name_name_type_id[required]'), "Name type should be a required field.")
+    assert(page.has_selector?('#name_name_status_id[required]'), "Name status should be a required field.")
+    assert(page.has_selector?('#name_name_element[required]'), "Name element should be a required field.")
   end
 end

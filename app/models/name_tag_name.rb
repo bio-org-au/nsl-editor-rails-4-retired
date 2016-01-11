@@ -13,16 +13,16 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 class NameTagName < ActiveRecord::Base
-  self.table_name = 'name_tag_name'
+  self.table_name = "name_tag_name"
   self.primary_keys = :name_id, :tag_id
 
   belongs_to :name
   belongs_to :name_tag, foreign_key: :tag_id
   validates :name_id, presence: true
   validates :tag_id, presence: true
-  validates :tag_id, uniqueness: {scope: :name_id, message: 'is already attached.'}
+  validates :tag_id, uniqueness: { scope: :name_id, message: "is already attached." }
   validates :created_by, presence: true
   validates :updated_by, presence: true
 
@@ -30,6 +30,4 @@ class NameTagName < ActiveRecord::Base
     self.created_by = self.updated_by = username
     save
   end
-
 end
-

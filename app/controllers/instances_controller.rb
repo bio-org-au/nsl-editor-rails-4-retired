@@ -26,9 +26,9 @@ class InstancesController < ApplicationController
   # and relationship instances.
   def show
     @tab = "#{(params[:tab] && !params[:tab].blank? && params[:tab] != 'undefined') ? params[:tab] : 'tab_show_1'}"
-    @tab_index = (params[:tabIndex] || '1').to_i
+    @tab_index = (params[:tabIndex] || "1").to_i
     @tabs_to_offer = tabs_to_offer
-    render 'show', layout: false
+    render "show", layout: false
   end
 
   alias_method :tab, :show
@@ -37,12 +37,12 @@ class InstancesController < ApplicationController
   def create_cited_by
     if instance_params[:name_id].blank?
       @instance = Instance.new
-      @instance.errors.add(:base, 'You must choose a name.')
-      render 'create_error', locals: { focus_on_this_id: 'instance-name-typeahead' }
+      @instance.errors.add(:base, "You must choose a name.")
+      render "create_error", locals: { focus_on_this_id: "instance-name-typeahead" }
     elsif instance_params[:instance_type_id].blank?
       @instance = Instance.new
-      @instance.errors.add(:base, 'You must choose an instance type.')
-      render 'create_error', locals: { focus_on_this_id: 'instance_instance_type_id' }
+      @instance.errors.add(:base, "You must choose an instance type.")
+      render "create_error", locals: { focus_on_this_id: "instance_instance_type_id" }
     else
       create
     end
@@ -52,16 +52,16 @@ class InstancesController < ApplicationController
   def create_cites_and_cited_by
     if instance_params[:cites_id].blank?
       @instance = Instance.new
-      @instance.errors.add(:base, 'You must choose an instance.')
-      render 'create_error', locals: { focus_on_this_id: 'instance-instance-for-name-showing-reference-typeahead' }
+      @instance.errors.add(:base, "You must choose an instance.")
+      render "create_error", locals: { focus_on_this_id: "instance-instance-for-name-showing-reference-typeahead" }
     elsif instance_params[:cited_by_id].blank?
       @instance = Instance.new
-      @instance.errors.add(:base, 'Please refresh the tab.')
-      render 'create_error', locals: { focus_on_this_id: 'instance-instance-for-name-showing-reference-typeahead' }
+      @instance.errors.add(:base, "Please refresh the tab.")
+      render "create_error", locals: { focus_on_this_id: "instance-instance-for-name-showing-reference-typeahead" }
     elsif instance_params[:instance_type_id].blank?
       @instance = Instance.new
-      @instance.errors.add(:base, 'You must choose an instance type.')
-      render 'create_error', locals: { focus_on_this_id: 'instance_instance_type_id' }
+      @instance.errors.add(:base, "You must choose an instance type.")
+      render "create_error", locals: { focus_on_this_id: "instance_instance_type_id" }
     else
       cites = Instance.find(instance_params[:cites_id])
       cited_by = Instance.find(instance_params[:cited_by_id])
@@ -82,9 +82,9 @@ class InstancesController < ApplicationController
   def create(the_params = instance_params)
     @instance = Instance.new(the_params)
     if @instance.save_with_username(current_user.username)
-      render 'create'
+      render "create"
     else
-      render 'create_error'
+      render "create_error"
     end
   end
 
@@ -93,10 +93,10 @@ class InstancesController < ApplicationController
   def update
     @instance = Instance::AsEdited.find(params[:id])
     @message = @instance.update_if_changed(instance_params, current_user.username)
-    render 'update.js'
+    render "update.js"
   rescue => e
     @message = e.to_s
-    render 'update_error.js', status: :unprocessable_entity
+    render "update_error.js", status: :unprocessable_entity
   end
 
   # PUT /instances/reference/1
@@ -105,19 +105,19 @@ class InstancesController < ApplicationController
   # there may/will exist denormalised ids in dependent instances.
   # We have to temporarily bypass some validations to sort it out.
   def change_reference
-    @message = 'No change'
+    @message = "No change"
     @instance = Instance.find(params[:id])
     @instance.assign_attributes(instance_params)
     if @instance.changed?
       @instance_back_door = InstanceBackDoor.find(params[:id])
       @instance_back_door.change_reference(instance_params, current_user.username)
-      @message = 'Updated'
+      @message = "Updated"
     end
-    render 'update.js'
+    render "update.js"
   rescue => e
     logger.error(e.to_s)
     @message = e.to_s
-    render 'update_error.js', status: :unprocessable_entity
+    render "update_error.js", status: :unprocessable_entity
   end
 
   # DELETE /instances/1
@@ -126,7 +126,7 @@ class InstancesController < ApplicationController
   rescue => e
     logger.error("Instance#destroy exception: #{e}")
     @message = e.to_s
-    render 'destroy_error.js'
+    render "destroy_error.js"
   end
 
   def typeahead_for_synonymy
@@ -144,12 +144,12 @@ class InstancesController < ApplicationController
   def copy_standalone
     current_instance = Instance::AsCopier.find(params[:id])
     @instance = current_instance.copy_with_citations_to_new_reference(instance_params, current_user.username)
-    @message = 'Instance was copied'
-    render 'instances/copy_standalone/success.js'
+    @message = "Instance was copied"
+    render "instances/copy_standalone/success.js"
   rescue => e
     logger.error("There was a problem copying that instance: #{e}")
     @message = e.to_s
-    render 'instances/copy_standalone/error.js'
+    render "instances/copy_standalone/error.js"
   end
 
   private
@@ -157,7 +157,7 @@ class InstancesController < ApplicationController
   def find_instance
     @instance = Instance.find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    flash[:alert] = 'We could not find the instance.'
+    flash[:alert] = "We could not find the instance."
     redirect_to instances_path
   end
 
@@ -169,17 +169,17 @@ class InstancesController < ApplicationController
 
   # Different types of instances require different sets of tabs.
   def tabs_to_offer
-    offer = ['tab_show_1']
-    offer << 'tab_edit'
-    offer << 'tab_edit_notes'
+    offer = ["tab_show_1"]
+    offer << "tab_edit"
+    offer << "tab_edit_notes"
     if @instance.simple?
-      offer << 'tab_synonymy'
-      offer << 'tab_unpublished_citation'
-      offer << 'tab_apc_placement'
+      offer << "tab_synonymy"
+      offer << "tab_unpublished_citation"
+      offer << "tab_apc_placement"
     end
-    offer << 'tab_comments'
-    if @instance.simple? && params['row-type'] == 'instance_as_part_of_concept_record'
-      offer << 'tab_copy_to_new_reference'
+    offer << "tab_comments"
+    if @instance.simple? && params["row-type"] == "instance_as_part_of_concept_record"
+      offer << "tab_copy_to_new_reference"
     end
     offer
   end

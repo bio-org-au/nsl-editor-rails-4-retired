@@ -14,22 +14,22 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class InstancesCopyStandaloneForbiddenForEditUserTest < ActionController::TestCase
   tests InstancesController
 
-  test 'editor should not be able to copy standalone instance' do
+  test "editor should not be able to copy standalone instance" do
     instance = instances(:triodia_in_brassard)
     name = names(:a_species)
     reference = references(:a_book)
-    @request.headers['Accept'] = 'application/javascript'
-    assert_no_difference('Instance.count') do
+    @request.headers["Accept"] = "application/javascript"
+    assert_no_difference("Instance.count") do
       post(:copy_standalone, { id: instance.id,
-                               instance: { 'reference_id' => reference.id,
-                                           'name_id' => name.id,
-                                           'instance_type_id' => instance_types(:basionym) } },
-           username: 'fred', user_full_name: 'Fred Jones', groups: ['edit'])
+                               instance: { "reference_id" => reference.id,
+                                           "name_id" => name.id,
+                                           "instance_type_id" => instance_types(:basionym) } },
+           username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
     end
     assert_response :forbidden
   end

@@ -14,14 +14,14 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class DatabaseCannotHaveParentTest < ActiveSupport::TestCase
-  test 'database cannot have parent' do
+  test "database cannot have parent" do
     ref = references(:database_with_parent)
-    assert ref.parent_id.present?, 'Expecting a parent.'
-    assert_not ref.valid?, 'Database with parent should be invalid.'
+    assert ref.parent_id.present?, "Expecting a parent."
+    assert_not ref.valid?, "Database with parent should be invalid."
     ref.parent_id = nil
-    assert ref.valid?, 'Database without parent should be invalid.'
+    assert ref.valid?, "Database without parent should be invalid."
   end
 end

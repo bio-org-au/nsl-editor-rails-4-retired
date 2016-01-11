@@ -14,11 +14,11 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class SessionsRetrySigninRouteTest < ActionController::TestCase
   tests SessionsController
-  test 'should route to retry a new session' do
-    assert_routing '/retry_sign_in', controller: 'sessions', action: 'retry_new'
+  test "should route to retry a new session" do
+    assert_routing "/retry_sign_in", controller: "sessions", action: "retry_new"
   end
 end

@@ -13,19 +13,17 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 module Audit
-
-private
+  private
 
   def audit_create
     # Rails.logger.debug('audit create')
-    # self.created_by = @username #if self.created_by.blank?      
-    # self.updated_by = @username #if self.updated_by.blank?  
+    # self.created_by = @username #if self.created_by.blank?
+    # self.updated_by = @username #if self.updated_by.blank?
   end
 
   def audit_update
-    # self.updated_by = @username #if self.updated_by.blank?  
+    # self.updated_by = @username #if self.updated_by.blank?
   end
-
 end

@@ -13,7 +13,7 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -55,6 +55,4 @@ Rails.application.configure do
   config.action_controller.perform_caching = true # to investigate caching
 end
 
-
 load "#{ENV['HOME']}/.nsl/development/editor-config.rb"
-

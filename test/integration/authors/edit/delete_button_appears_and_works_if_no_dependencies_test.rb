@@ -17,24 +17,24 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class DeleteButtonAppearsAndWorksIfNoDependencies < ActionDispatch::IntegrationTest
   include Capybara::DSL
 
-  test 'author delete button appears and works if no dependencies' do
+  test "author delete button appears and works if no dependencies" do
     visit_home_page
     standard_page_assertions
-    select 'Author', from: 'query-on'
-    fill_in 'search-field', with: 'Author that can be deleted'
-    click_button 'Search'
+    select "Author", from: "query-on"
+    fill_in "search-field", with: "Author that can be deleted"
+    click_button "Search"
     tiny_sleep
-    search_result_must_include_content('Author that can be deleted')
-    click_link('Edit')
+    search_result_must_include_content("Author that can be deleted")
+    click_link("Edit")
     tiny_sleep
-    click_link('Delete...')
+    click_link("Delete...")
     tiny_sleep
-    click_link('Confirm delete')
-    search_result_must_not_include('Author that can be deleted')
+    click_link("Confirm delete")
+    search_result_must_not_include("Author that can be deleted")
   end
 end

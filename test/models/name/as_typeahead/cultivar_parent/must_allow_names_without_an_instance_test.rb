@@ -14,15 +14,15 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class CultivarParentMustAllowNamesWithoutAnInstanceTest < ActiveSupport::TestCase
-  test 'name cultivar parent suggestions allows names without an instance' do
-    name = Name.find_by(full_name: 'a species without an instance')
+  test "name cultivar parent suggestions allows names without an instance" do
+    name = Name.find_by(full_name: "a species without an instance")
     assert name.present?, 'Target name "a species without an instance" should be found'
     assert name.instances.size == 0, "The name 'a species without an instance' should have no instances."
-    suggestions = Name::AsTypeahead.cultivar_parent_suggestions('a species without an instance', -1)
-    assert(suggestions.is_a?(Array), 'suggestions should be an array')
+    suggestions = Name::AsTypeahead.cultivar_parent_suggestions("a species without an instance", -1)
+    assert(suggestions.is_a?(Array), "suggestions should be an array")
     assert(suggestions.size == 1, 'suggestions for "a species without an instance" should have exactly one element')
     assert(suggestions.first[:value].match(/a species without an instance/), "Suggestions should include 'a species without an instance'.")
   end

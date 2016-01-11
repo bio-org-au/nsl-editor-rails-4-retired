@@ -14,13 +14,13 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class TypeaheadsOnCitationForParentRefTypeRestrictionJournalsForPaper < ActiveSupport::TestCase
-  test 'reference typeahead on citation ref type restriction journals for paper' do
+  test "reference typeahead on citation ref type restriction journals for paper" do
     current_reference = references(:simple)
-    results = Reference::AsTypeahead.on_citation_for_parent('%', current_reference.id, ref_types(:paper).id)
-    assert results.size > 0, 'Should be at least one result'
+    results = Reference::AsTypeahead.on_citation_for_parent("%", current_reference.id, ref_types(:paper).id)
+    assert results.size > 0, "Should be at least one result"
     journals = 0
     others = 0
     results.each do |result|
@@ -30,7 +30,7 @@ class TypeaheadsOnCitationForParentRefTypeRestrictionJournalsForPaper < ActiveSu
         others += 1
       end
     end
-    assert others == 0, 'Expecting no other ref types.'
-    assert journals > 0, 'Expecting at least 1 journal ref type.'
+    assert others == 0, "Expecting no other ref types."
+    assert journals > 0, "Expecting at least 1 journal ref type."
   end
 end

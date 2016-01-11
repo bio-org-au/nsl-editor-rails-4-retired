@@ -14,14 +14,14 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
-load 'models/search/users.rb'
+require "test_helper"
+load "models/search/users.rb"
 
 class SearchOnReferenceAssertionParentIsTest < ActiveSupport::TestCase
-  test 'reference asertion is a parent' do
-    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_target: 'reference',
-                                                                           query_string: 'is-a-parent:',
+  test "reference asertion is a parent" do
+    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_target: "reference",
+                                                                           query_string: "is-a-parent:",
                                                                            current_user: build_edit_user))
-    assert search.executed_query.results.size > 0, 'Should find reference that is a parent.'
+    assert search.executed_query.results.size > 0, "Should find reference that is a parent."
   end
 end

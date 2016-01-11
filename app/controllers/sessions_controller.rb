@@ -23,8 +23,8 @@ class SessionsController < ApplicationController
 
   def retry_new
     build_sign_in
-    @sign_in.errors[:base] << 'Please retry.  There was a system problem.'
-    render 'new'
+    @sign_in.errors[:base] << "Please retry.  There was a system problem."
+    render "new"
   end
 
   def create
@@ -33,7 +33,7 @@ class SessionsController < ApplicationController
       set_up_session
       deep_link || (redirect_to :root)
     else
-      render 'new'
+      render "new"
     end
   rescue => e
     logger.error("Exception signing in: #{e}")
@@ -70,7 +70,7 @@ class SessionsController < ApplicationController
   def deep_link
     if session[:url_after_sign_in].present?
       url_after_sign_in = session[:url_after_sign_in]
-      session[:url_after_sign_in] = ''
+      session[:url_after_sign_in] = ""
       redirect_to url_after_sign_in
     else
       false

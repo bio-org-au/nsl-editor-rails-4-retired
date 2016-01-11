@@ -14,7 +14,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'open-uri'
+require "open-uri"
 
 #   Names are central to the NSL.
 class NamesController < ApplicationController
@@ -30,16 +30,16 @@ class NamesController < ApplicationController
   # Sets up RHS details panel on the search results page.
   # Displays a specified or default tab.
   def show
-    pick_a_tab('tab_details')
+    pick_a_tab("tab_details")
     pick_a_tab_index
     if params[:change_category_to].present?
-      @name.change_category_to = 'scientific'
+      @name.change_category_to = "scientific"
     end
     if params[:tab].match(/\Atab_instances\z/)
       @instance = Instance.new if params[:tab].match(/\Atab_instances\z/)
       @instance.name = @name
     end
-    render 'show', layout: false
+    render "show", layout: false
   end
 
   alias_method :tab, :show
@@ -47,7 +47,7 @@ class NamesController < ApplicationController
   # Used on references - new instance tab
   def typeahead_on_full_name
     render json: [] if params[:term].blank?
-    render json: Name::AsTypeahead.on_full_name(params[:term].gsub(/\*/, '%'))
+    render json: Name::AsTypeahead.on_full_name(params[:term].gsub(/\*/, "%"))
   end
 
   # For the typeahead search.
@@ -79,20 +79,20 @@ class NamesController < ApplicationController
   end
 
   def edit_as_category
-    logger.debug('edit_as_category')
-    @tab = 'tab_edit'
+    logger.debug("edit_as_category")
+    @tab = "tab_edit"
     @tab_index = 1
     if params[:new_category].present?
       logger.debug("there is a params[:new_category]: #{params[:new_category]}")
       @name.change_category_to = params[:new_category]
     end
-    render 'show', layout: false
+    render "show", layout: false
   end
 
   # GET /names/new_row
   def new_row
     @random_id = (Random.new.rand * 10_000_000_000).to_i
-    @category = params[:type].tr('-', ' ')
+    @category = params[:type].tr("-", " ")
     logger.debug("@category: #{@category}")
     respond_to do |format|
       format.html { redirect_to new_search_path }
@@ -102,11 +102,11 @@ class NamesController < ApplicationController
 
   # GET /names/new
   def new
-    logger.debug('new')
-    @tab_index = (params[:tabIndex] || '40').to_i
+    logger.debug("new")
+    @tab_index = (params[:tabIndex] || "40").to_i
     @name = new_name_for_category
     @no_search_result_details = true
-    render 'new.js'
+    render "new.js"
   end
 
   # POST /names
@@ -114,11 +114,11 @@ class NamesController < ApplicationController
     @name = Name::AsEdited.create(name_params,
                                   typeahead_params,
                                   current_user.username)
-    render 'create.js'
+    render "create.js"
   rescue => e
     logger.error("Controller:Names:create:rescuing exception #{e}")
     @error = e.to_s
-    render 'create_error.js', status: :unprocessable_entity
+    render "create_error.js", status: :unprocessable_entity
   end
 
   # PUT /names/1.json
@@ -130,10 +130,10 @@ class NamesController < ApplicationController
                                        typeahead_params,
                                        current_user.username)
     refresh_names if refresh_after_update
-    render 'update.js'
+    render "update.js"
   rescue => e
     @message = e.to_s
-    render 'update_error.js', status: :unprocessable_entity
+    render "update_error.js", status: :unprocessable_entity
   end
 
   def rules
@@ -142,35 +142,35 @@ class NamesController < ApplicationController
   end
 
   def copy
-    logger.debug('copy')
+    logger.debug("copy")
     current_name = Name::AsCopier.find(params[:id])
     @name = current_name.copy_with_username(name_params[:name_element],
                                             current_user.username)
-    render 'names/copy/success.js'
+    render "names/copy/success.js"
   rescue => e
     @message = e.to_s
-    render 'names/copy/error.js'
+    render "names/copy/error.js"
   end
 
   def refresh
     @name.set_names!
-    render 'names/refresh/ok.js'
+    render "names/refresh/ok.js"
   rescue => e
     @message = e.to_s
-    render 'names/refresh/error.js'
+    render "names/refresh/error.js"
   end
 
   def refresh_children
     if @name.combined_children.size > 50
-      NameChildrenRefresherJob.new.async.perform(@name.id,username)
-      render 'names/refresh_children/job_started.js'
+      NameChildrenRefresherJob.new.async.perform(@name.id, username)
+      render "names/refresh_children/job_started.js"
     else
-      @total = NameChildrenRefresherJob.new.perform(@name.id,username)
-      render 'names/refresh_children/ok.js'
+      @total = NameChildrenRefresherJob.new.perform(@name.id, username)
+      render "names/refresh_children/ok.js"
     end
   rescue => e
     @message = e.to_s
-    render 'names/refresh_children/error.js'
+    render "names/refresh_children/error.js"
   end
 
   private
@@ -178,14 +178,14 @@ class NamesController < ApplicationController
   def find_name
     @name = Name.find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    flash[:alert] = 'Could not find the name.'
+    flash[:alert] = "Could not find the name."
     redirect_to names_path
   end
 
   def find_name_as_services
     @name = Name::AsServices.find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    flash[:alert] = 'Could not find the name.'
+    flash[:alert] = "Could not find the name."
     redirect_to names_path
   end
 
@@ -207,17 +207,17 @@ class NamesController < ApplicationController
   def name_parent_suggestions_missing_params
     params[:term].blank? ||
       params[:rank_id].blank? ||
-      params[:rank_id] == 'undefined'
+      params[:rank_id] == "undefined"
   end
 
   def new_name_for_category
     case params[:category]
-    when 'scientific'      then Name::AsNew.scientific
-    when 'hybrid formula'  then Name::AsNew.scientific_hybrid
-    when 'hybrid formula unknown 2nd parent'
+    when "scientific"      then Name::AsNew.scientific
+    when "hybrid formula"  then Name::AsNew.scientific_hybrid
+    when "hybrid formula unknown 2nd parent"
       Name::AsNew.scientific_hybrid_unknown_2nd_parent
-    when 'cultivar hybrid' then Name::AsNew.cultivar_hybrid
-    when 'cultivar'        then Name::AsNew.cultivar
+    when "cultivar hybrid" then Name::AsNew.cultivar_hybrid
+    when "cultivar"        then Name::AsNew.cultivar
     else                        Name::AsNew.other
     end
   end
@@ -227,7 +227,7 @@ class NamesController < ApplicationController
   end
 
   def refresh_names
-    NameChildrenRefresherJob.new.async.perform(@name.id) 
+    NameChildrenRefresherJob.new.async.perform(@name.id)
   end
 
   def name_params

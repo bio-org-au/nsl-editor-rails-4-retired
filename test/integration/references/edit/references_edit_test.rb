@@ -17,7 +17,7 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class ReferencesEditTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
@@ -25,20 +25,20 @@ class ReferencesEditTest < ActionDispatch::IntegrationTest
   # Note: this test currently assumes a mock nsl-services server
   # will be running and that the Rails app will be configured
   # to access it.
-  test 'edited reference lhs to display pages' do
+  test "edited reference lhs to display pages" do
     visit_home_page
     standard_page_assertions
-    select 'References', from: 'query-on'
-    fill_in 'search-field', with: 'a'
-    select 'just: 1', from: 'query-limit'
-    click_on 'Search'
-    fill_in 'search-field', with: 'edited reference lhs to display pages'
-    all('.takes-focus').first.click
-    click_on 'Edit.'
-    fill_in 'reference_pages', with: 'test-pages-xyz'
+    select "References", from: "query-on"
+    fill_in "search-field", with: "a"
+    select "just: 1", from: "query-limit"
+    click_on "Search"
+    fill_in "search-field", with: "edited reference lhs to display pages"
+    all(".takes-focus").first.click
+    click_on "Edit."
+    fill_in "reference_pages", with: "test-pages-xyz"
     save_edits
-    assert page.has_content?('Updated'), 'No "Updated" message.'
-    assert find('#search-result-container').has_content?('test-pages-xyz'), 'Reference pages not displayed in search results after edit.'
-    assert find('#search-result-container').has_content?('citation for id 156436017'), 'Reference citation was not reset after edit. (Are the test mock services running and configured?)'
+    assert page.has_content?("Updated"), 'No "Updated" message.'
+    assert find('#search-result-container').has_content?("test-pages-xyz"), "Reference pages not displayed in search results after edit."
+    assert find('#search-result-container').has_content?("citation for id 156436017"), "Reference citation was not reset after edit. (Are the test mock services running and configured?)"
   end
 end

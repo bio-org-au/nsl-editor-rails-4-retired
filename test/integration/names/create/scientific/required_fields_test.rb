@@ -17,29 +17,29 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class RequiredFieldsTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
 
-  test 'create scientific name required fields' do
+  test "create scientific name required fields" do
     visit_home_page
-    fill_in 'search-field', with: 'for required fields'
+    fill_in "search-field", with: "for required fields"
     load_new_scientific_name_form
-    assert(page.has_selector?('#name_name_type_id[required]'), 'Name type should be a required field.')
-    assert(page.has_selector?('#name_name_rank_id[required]'), 'Name rank should be a required field.')
-    assert(page.has_selector?('#name_name_status_id[required]'), 'Name status should be a required field.')
-    assert(page.has_selector?('#name_name_element[required]'), 'Name element should be a required field.')
-    assert(page.has_selector?('#name-parent-typeahead[required]'), 'Name parent should be a required field.')
-    assert(page.has_selector?('#ex-base-author-by-abbrev'), 'Name ex-base author should be a field.')
-    assert(page.has_no_selector?('#ex-base-author-by-abbrev[required]'), 'Name ex-base author should not be a required field.')
-    assert(page.has_selector?('#base-author-by-abbrev'), 'Name base author should be a field.')
-    assert(page.has_no_selector?('#base-author-by-abbrev[required]'), 'Name base author should not be a required field.')
-    assert(page.has_selector?('#ex-author-by-abbrev'), 'Name ex author should be a field.')
-    assert(page.has_no_selector?('#ex-author-by-abbrev[required]'), 'Name ex author should not be a required field.')
-    assert(page.has_selector?('#author-by-abbrev'), 'Name author should be a field.')
-    assert(page.has_no_selector?('#author-by-abbrev[required]'), 'Name author should not be a required field.')
-    assert(page.has_selector?('#sanctioning-author-by-abbrev'), 'Name sanctioning author should be a field.')
-    assert(page.has_no_selector?('#sanctioning-author-by-abbrev[required]'), 'Name sanctioning0author should not be a required field.')
+    assert(page.has_selector?('#name_name_type_id[required]'), "Name type should be a required field.")
+    assert(page.has_selector?('#name_name_rank_id[required]'), "Name rank should be a required field.")
+    assert(page.has_selector?('#name_name_status_id[required]'), "Name status should be a required field.")
+    assert(page.has_selector?('#name_name_element[required]'), "Name element should be a required field.")
+    assert(page.has_selector?('#name-parent-typeahead[required]'), "Name parent should be a required field.")
+    assert(page.has_selector?('#ex-base-author-by-abbrev'), "Name ex-base author should be a field.")
+    assert(page.has_no_selector?('#ex-base-author-by-abbrev[required]'), "Name ex-base author should not be a required field.")
+    assert(page.has_selector?('#base-author-by-abbrev'), "Name base author should be a field.")
+    assert(page.has_no_selector?('#base-author-by-abbrev[required]'), "Name base author should not be a required field.")
+    assert(page.has_selector?('#ex-author-by-abbrev'), "Name ex author should be a field.")
+    assert(page.has_no_selector?('#ex-author-by-abbrev[required]'), "Name ex author should not be a required field.")
+    assert(page.has_selector?('#author-by-abbrev'), "Name author should be a field.")
+    assert(page.has_no_selector?('#author-by-abbrev[required]'), "Name author should not be a required field.")
+    assert(page.has_selector?('#sanctioning-author-by-abbrev'), "Name sanctioning author should be a field.")
+    assert(page.has_no_selector?('#sanctioning-author-by-abbrev[required]'), "Name sanctioning0author should not be a required field.")
   end
 end

@@ -23,18 +23,18 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActionController::InvalidAuthenticityToken, with: :show_login_page
   rescue_from CanCan::AccessDenied do |_exception|
-    logger.error('Access Denied')
+    logger.error("Access Denied")
     head :forbidden
   end
 
   def show_login_page
-    logger.info('Show login page - invalid authenticity token.')
+    logger.info("Show login page - invalid authenticity token.")
     show_request_info
-    if request.format == 'text/javascript'
+    if request.format == "text/javascript"
       logger.info('JavaScript request with invalid authenticity token\
                   - expired session?')
     else
-      redirect_to start_sign_in_path, notice: 'Please try again.'
+      redirect_to start_sign_in_path, notice: "Please try again."
     end
   end
 
@@ -64,7 +64,7 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate
-    logger.debug('Authenticating.')
+    logger.debug("Authenticating.")
     if session[:username].blank?
       ask_user_to_sign_in
     else
@@ -75,12 +75,12 @@ class ApplicationController < ActionController::Base
   private #####################################################################
 
   def ask_user_to_sign_in
-    logger.debug('Unauthenticated session.')
+    logger.debug("Unauthenticated session.")
     session[:url_after_sign_in] = request.url
     respond_to do |format|
-      format.html { redirect_to start_sign_in_url, notice: 'Please sign in.' }
-      format.json { render partial: 'layouts/no_session.js' }
-      format.js   { render partial: 'layouts/no_session.js' }
+      format.html { redirect_to start_sign_in_url, notice: "Please sign in." }
+      format.json { render partial: "layouts/no_session.js" }
+      format.js   { render partial: "layouts/no_session.js" }
     end
   end
 
@@ -92,9 +92,9 @@ class ApplicationController < ActionController::Base
   end
 
   def set_layout
-    @sidebar_width = 'col-md-1 col-lg-1'
-    @main_content_width = 'col-md-11 col-lg-10'
-    @search_result_details_width = 'col-md-5 col-lg-5'
+    @sidebar_width = "col-md-1 col-lg-1"
+    @main_content_width = "col-md-11 col-lg-10"
+    @search_result_details_width = "col-md-5 col-lg-5"
   end
 
   def set_debug
@@ -106,24 +106,24 @@ class ApplicationController < ActionController::Base
   end
 
   def check_system_broadcast
-    @system_broadcast = ''
+    @system_broadcast = ""
     file_path = Rails.configuration.path_to_broadcast_file
     if File.exist?(file_path)
       logger.debug("System broadcast file exists at #{file_path}")
-      file = File.open(file_path, 'r')
+      file = File.open(file_path, "r")
       @system_broadcast = file.readline unless file.eof?
     end
   rescue => e
-    logger.error('Problem with system broadcast.')
+    logger.error("Problem with system broadcast.")
     logger.error(e.to_s)
   end
 
   # Could not get this to work with a guard clause.
   def javascript_only
-    unless request.format == 'text/javascript'
+    unless request.format == "text/javascript"
       logger.error('Rejecting a non-JavaScript request and re-directing \
                    to the search page. Is Firebug console on?')
-      render text: 'JavaScript only', status: :service_unavailable
+      render text: "JavaScript only", status: :service_unavailable
     end
   end
 
@@ -135,8 +135,8 @@ class ApplicationController < ActionController::Base
     @search = Search::Empty.new(params)
   end
 
-  def pick_a_tab(default_tab = 'tab_show_1')
-    if params[:tab].present? && params[:tab] != 'undefined'
+  def pick_a_tab(default_tab = "tab_show_1")
+    if params[:tab].present? && params[:tab] != "undefined"
       @tab = params[:tab]
     else
       @tab = default_tab
@@ -144,6 +144,6 @@ class ApplicationController < ActionController::Base
   end
 
   def pick_a_tab_index
-    @tab_index = (params[:tabIndex] || '1').to_i
+    @tab_index = (params[:tabIndex] || "1").to_i
   end
 end

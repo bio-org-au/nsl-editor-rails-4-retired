@@ -15,11 +15,11 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class AuthorTypeaheadsOnNameTwoWordsReverseOrder < ActiveSupport::TestCase
-  test 'two words in correct order' do
-    results = Author::AsTypeahead.on_name('Zimmermann Cronquist')
-    assert_equal 1, results.size, 'Should be one and just one result'
+  test "two words in correct order" do
+    results = Author::AsTypeahead.on_name("Zimmermann Cronquist")
+    assert_equal 1, results.size, "Should be one and just one result"
   end
 end

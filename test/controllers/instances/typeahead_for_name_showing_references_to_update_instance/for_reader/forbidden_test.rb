@@ -14,14 +14,14 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class InstancesTypeaheadForNameShowingReferenceToUpdateSynonymyForReaderTest < ActionController::TestCase
   tests InstancesController
 
-  test 'reader should not be able to typehead for synonymy instance' do
-    @request.headers['Accept'] = 'application/javascript'
-    get(:typeahead_for_name_showing_references_to_update_instance, { term: 'ab' }, username: 'fred', user_full_name: 'Fred Jones', groups: [])
+  test "reader should not be able to typehead for synonymy instance" do
+    @request.headers["Accept"] = "application/javascript"
+    get(:typeahead_for_name_showing_references_to_update_instance, { term: "ab" }, username: "fred", user_full_name: "Fred Jones", groups: [])
     assert_response :forbidden
   end
 end

@@ -14,13 +14,13 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
-require 'models/name/as_typeahead/name_parent/name_parent_test_helper'
+require "test_helper"
+require "models/name/as_typeahead/name_parent/name_parent_test_helper"
 
 class ForSpeciesTest < ActiveSupport::TestCase
-  test 'name parent suggestion for species' do
+  test "name parent suggestion for species" do
     avoid_id = 1
-    suggestions = Name::AsTypeahead.name_parent_suggestions('%', avoid_id, NameRank.species.id)
-    suggestions_should_only_include(suggestions, 'Species', %w(Genus Subgenus Sectio Subsectio Series Subseries Superseries Superspecies))
+    suggestions = Name::AsTypeahead.name_parent_suggestions("%", avoid_id, NameRank.species.id)
+    suggestions_should_only_include(suggestions, "Species", %w(Genus Subgenus Sectio Subsectio Series Subseries Superseries Superspecies))
   end
 end

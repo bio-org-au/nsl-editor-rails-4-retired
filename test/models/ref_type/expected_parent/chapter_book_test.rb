@@ -14,11 +14,11 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class ChapterShouldHaveBookParentTest < ActiveSupport::TestCase
-  test 'chapter ref type parent is book' do
+  test "chapter ref type parent is book" do
     ref_type = ref_types(:chapter)
-    assert ref_type.parent.name == ref_types(:book).name, 'Chapter should have book as parent.'
+    assert ref_type.parent.name == ref_types(:book).name, "Chapter should have book as parent."
   end
 end

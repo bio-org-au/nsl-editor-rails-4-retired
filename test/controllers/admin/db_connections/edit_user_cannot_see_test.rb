@@ -14,13 +14,13 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class AdminControllerEditUserCannotSeeDBConnectionsTest < ActionController::TestCase
   tests AdminController
 
-  test 'edit user should not get db connections' do
-    get(:db_connections, {}, username: 'fred', user_full_name: 'Fred Jones', groups: ['edit'])
-    assert_response :forbidden, 'Edit user should not see db connections'
+  test "edit user should not get db connections" do
+    get(:db_connections, {}, username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
+    assert_response :forbidden, "Edit user should not see db connections"
   end
 end

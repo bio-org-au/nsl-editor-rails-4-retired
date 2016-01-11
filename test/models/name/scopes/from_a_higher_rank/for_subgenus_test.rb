@@ -14,23 +14,23 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class ForSubgenusTest < ActiveSupport::TestCase
-  test 'from a higher rank for subgenus' do
+  test "from a higher rank for subgenus" do
     ranks = Name.from_a_higher_rank(name_ranks(:subgenus).id).collect { |name| name.name_rank.name }.uniq
-    assert ranks.include?('Regnum'), 'Should include Regnum'
-    assert ranks.include?('Division'), 'Should include Division'
-    assert ranks.include?('Classis'), 'Should include Classis'
-    assert ranks.include?('Subclassis'), 'Should include Subclassis'
-    assert ranks.include?('Superordo'), 'Should include Superordo'
-    assert ranks.include?('Ordo'), 'Should include Ordo'
-    assert ranks.include?('Subordo'), 'Should include Subordo'
-    assert ranks.include?('Familia'), 'Should include Familia'
-    assert ranks.include?('Subfamilia'), 'Should include Subfamilia'
-    assert ranks.include?('Tribus'), 'Should include Tribus'
-    assert ranks.include?('Subtribus'), 'Should include Subtribus'
-    assert ranks.include?('Genus'), 'Should include Genus'
+    assert ranks.include?("Regnum"), "Should include Regnum"
+    assert ranks.include?("Division"), "Should include Division"
+    assert ranks.include?("Classis"), "Should include Classis"
+    assert ranks.include?("Subclassis"), "Should include Subclassis"
+    assert ranks.include?("Superordo"), "Should include Superordo"
+    assert ranks.include?("Ordo"), "Should include Ordo"
+    assert ranks.include?("Subordo"), "Should include Subordo"
+    assert ranks.include?("Familia"), "Should include Familia"
+    assert ranks.include?("Subfamilia"), "Should include Subfamilia"
+    assert ranks.include?("Tribus"), "Should include Tribus"
+    assert ranks.include?("Subtribus"), "Should include Subtribus"
+    assert ranks.include?("Genus"), "Should include Genus"
     assert_equal 12, ranks.size
   end
 end

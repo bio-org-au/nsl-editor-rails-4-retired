@@ -15,11 +15,11 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class TypeaheadsOnCitationForParentTwoWordsCorrectOrder < ActiveSupport::TestCase
-  test 'two words in correct order' do
-    results = Reference::AsTypeahead.on_citation_for_parent('aaaa bbbb', references(:a_book).id, ref_types(:book).id)
-    assert_equal 1, results.size, 'Should be one and just one result'
+  test "two words in correct order" do
+    results = Reference::AsTypeahead.on_citation_for_parent("aaaa bbbb", references(:a_book).id, ref_types(:book).id)
+    assert_equal 1, results.size, "Should be one and just one result"
   end
 end

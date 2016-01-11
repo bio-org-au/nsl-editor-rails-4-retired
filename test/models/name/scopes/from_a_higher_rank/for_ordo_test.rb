@@ -14,16 +14,16 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class ForOrdoTest < ActiveSupport::TestCase
-  test 'from a higher rank for ordo' do
+  test "from a higher rank for ordo" do
     ranks = Name.from_a_higher_rank(name_ranks(:ordo).id).collect { |name| name.name_rank.name }.uniq
-    assert ranks.include?('Regnum'), 'Should include Regnum'
-    assert ranks.include?('Division'), 'Should include Division'
-    assert ranks.include?('Classis'), 'Should include Classis'
-    assert ranks.include?('Subclassis'), 'Should include Subclassis'
-    assert ranks.include?('Superordo'), 'Should include Superordo'
+    assert ranks.include?("Regnum"), "Should include Regnum"
+    assert ranks.include?("Division"), "Should include Division"
+    assert ranks.include?("Classis"), "Should include Classis"
+    assert ranks.include?("Subclassis"), "Should include Subclassis"
+    assert ranks.include?("Superordo"), "Should include Superordo"
     assert_equal 5, ranks.size
   end
 end

@@ -14,7 +14,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class ReferenceShowEditorDetailsTabTest < ActionController::TestCase
   tests ReferencesController
@@ -22,9 +22,9 @@ class ReferenceShowEditorDetailsTabTest < ActionController::TestCase
     @reference = references(:a_book)
   end
 
-  test 'should show editor reference details tab' do
-    @request.headers['Accept'] = 'application/javascript'
-    get(:show, { id: @reference.id, tab: 'tab_show_1' }, username: 'fred', user_full_name: 'Fred Jones', groups: ['edit'])
+  test "should show editor reference details tab" do
+    @request.headers["Accept"] = "application/javascript"
+    get(:show, { id: @reference.id, tab: "tab_show_1" }, username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
     assert_response :success
   end
 end

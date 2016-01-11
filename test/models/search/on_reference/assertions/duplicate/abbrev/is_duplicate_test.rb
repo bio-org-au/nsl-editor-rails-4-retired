@@ -14,14 +14,14 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
-load 'models/search/users.rb'
+require "test_helper"
+load "models/search/users.rb"
 
 class SearchOnReferenceAssertionDuplicateAbbrevIsDuplicateTest < ActiveSupport::TestCase
-  test 'reference asertion is duplicate' do
-    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_target: 'reference',
-                                                                           query_string: 'is-duplicate:',
+  test "reference asertion is duplicate" do
+    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_target: "reference",
+                                                                           query_string: "is-duplicate:",
                                                                            current_user: build_edit_user))
-    assert search.executed_query.results.size > 0, 'Should find duplicate reference.'
+    assert search.executed_query.results.size > 0, "Should find duplicate reference."
   end
 end

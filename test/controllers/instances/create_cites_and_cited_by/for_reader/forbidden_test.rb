@@ -14,25 +14,25 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class InstancesCreateCitesAndCitedByForReaderTest < ActionController::TestCase
   tests InstancesController
 
-  test 'reader should not be able to create cites and cited by instance' do
+  test "reader should not be able to create cites and cited by instance" do
     name = names(:a_species)
     reference = references(:a_book)
     instance_1 = instances(:triodia_in_brassard)
     instance_2 = instances(:britten_created_angophora_costata)
     instance_type = instance_types(:nomenclatural_synonym)
-    @request.headers['Accept'] = 'application/javascript'
-    assert_no_difference('Instance.count') do
-      post(:create, { instance: { 'cites_id' => instance_1.id,
-                                  'cited_by_id' => instance_2.id,
-                                  'name_id' => instance_1.name.id,
-                                  'reference_id' => instance_2.reference.id,
-                                  'instance_type_id' => instance_type.id } },
-           username: 'fred', user_full_name: 'Fred Jones', groups: [])
+    @request.headers["Accept"] = "application/javascript"
+    assert_no_difference("Instance.count") do
+      post(:create, { instance: { "cites_id" => instance_1.id,
+                                  "cited_by_id" => instance_2.id,
+                                  "name_id" => instance_1.name.id,
+                                  "reference_id" => instance_2.reference.id,
+                                  "instance_type_id" => instance_type.id } },
+           username: "fred", user_full_name: "Fred Jones", groups: [])
     end
     assert_response :forbidden
   end

@@ -14,38 +14,38 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
-load 'test/models/search/parsed_request/defined_queries/test_runner.rb'
+require "test_helper"
+load "test/models/search/parsed_request/defined_queries/test_runner.rb"
 
 class SearchParsedRequestDefinedQueriesAllTest < ActiveSupport::TestCase
   DEFINED_QUERIES = {
-    'instance-name-id:' => 'instances-for-name-id:',
-    'instances-for-name-id' => 'instances-for-name-id:',
-    'instances for name id' => 'instances-for-name-id:',
-    'names with instances' => 'names-plus-instances:',
-    'names + instances' => 'names-plus-instances:',
-    'names plus instances' => 'names-plus-instances:',
-    'instance-name:' => 'names-plus-instances:',
-    'instances-for-name:' => 'names-plus-instances:',
-    'instance-ref-id:' => 'instances-for-ref-id:',
-    'instances-for-ref-id:' => 'instances-for-ref-id:',
-    'instances for ref id' => 'instances-for-ref-id:',
-    'instance-ref-id-sort-by-page:' => 'instances-for-ref-id-sort-by-page:',
-    'instances-for-ref-id-sort-by-page:' => 'instances-for-ref-id-sort-by-page:',
-    'instances for ref id sort by page' => 'instances-for-ref-id-sort-by-page:',
-    'instances sorted by page for ref id' => 'instances-for-ref-id-sort-by-page:',
-    'references with instances' => 'references-name-full-synonymy',
-    'references, names, full synonymy' => 'references-name-full-synonymy',
-    'references + instances' => 'references-name-full-synonymy',
-    'references with novelties' => 'references-with-novelties',
-    'references, accepted names for id' => 'references-accepted-names-for-id',
-    'instance is cited' => 'instance-is-cited',
-    'instance is cited by' => 'instance-is-cited-by',
-    'audit' => 'audit',
-    'review' => 'audit'
+    "instance-name-id:" => "instances-for-name-id:",
+    "instances-for-name-id" => "instances-for-name-id:",
+    "instances for name id" => "instances-for-name-id:",
+    "names with instances" => "names-plus-instances:",
+    "names + instances" => "names-plus-instances:",
+    "names plus instances" => "names-plus-instances:",
+    "instance-name:" => "names-plus-instances:",
+    "instances-for-name:" => "names-plus-instances:",
+    "instance-ref-id:" => "instances-for-ref-id:",
+    "instances-for-ref-id:" => "instances-for-ref-id:",
+    "instances for ref id" => "instances-for-ref-id:",
+    "instance-ref-id-sort-by-page:" => "instances-for-ref-id-sort-by-page:",
+    "instances-for-ref-id-sort-by-page:" => "instances-for-ref-id-sort-by-page:",
+    "instances for ref id sort by page" => "instances-for-ref-id-sort-by-page:",
+    "instances sorted by page for ref id" => "instances-for-ref-id-sort-by-page:",
+    "references with instances" => "references-name-full-synonymy",
+    "references, names, full synonymy" => "references-name-full-synonymy",
+    "references + instances" => "references-name-full-synonymy",
+    "references with novelties" => "references-with-novelties",
+    "references, accepted names for id" => "references-accepted-names-for-id",
+    "instance is cited" => "instance-is-cited",
+    "instance is cited by" => "instance-is-cited-by",
+    "audit" => "audit",
+    "review" => "audit"
   }
 
-  test 'search parsed request defined query all' do
+  test "search parsed request defined query all" do
     DEFINED_QUERIES.each do |key, value|
       run_test(key, value)
     end

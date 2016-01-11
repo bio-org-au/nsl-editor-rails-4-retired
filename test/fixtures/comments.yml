@@ -7,8 +7,8 @@ author_comment:
   updated_by: greg
 
 instance_comment:
-  text: MyText
-  instance: triodia-in-brassard
+  text: instance comment text
+  instance: triodia_in_brassard
   created_by: greg
   updated_by: greg
 

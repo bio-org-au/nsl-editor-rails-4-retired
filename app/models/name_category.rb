@@ -13,15 +13,13 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 class NameCategory < ActiveRecord::Base
-  self.table_name = 'name_category'
-  self.primary_key = 'id'
-  self.sequence_name = 'nsl_global_seq'
-  
+  self.table_name = "name_category"
+  self.primary_key = "id"
+  self.sequence_name = "nsl_global_seq"
+
   # attr_accessible :name
 
   has_many :name_types
-  
-
 end

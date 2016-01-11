@@ -13,10 +13,9 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
-  
-class Reference::AsNew < Reference
+#
 
+class Reference::AsNew < Reference
   def self.default
     reference = Reference.new
     reference.published = true
@@ -24,6 +23,4 @@ class Reference::AsNew < Reference
     reference.ref_author_role_id = RefAuthorRole.author.id
     reference
   end
-
 end
-

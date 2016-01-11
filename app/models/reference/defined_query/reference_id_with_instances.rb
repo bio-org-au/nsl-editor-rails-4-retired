@@ -13,9 +13,8 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
-class Reference::DefinedQuery::ReferenceIdWithInstances 
-
+#
+class Reference::DefinedQuery::ReferenceIdWithInstances
   attr_reader :results, :limited, :common_and_cultivar_included, :has_relation, :relation, :count
 
   def initialize(parsed_request)
@@ -24,10 +23,10 @@ class Reference::DefinedQuery::ReferenceIdWithInstances
 
   def debug(s)
     tag = "Reference::DefinedQuery::ReferenceIdWithInstances"
-    #puts("#{tag}: #{s}")
+    # puts("#{tag}: #{s}")
     Rails.logger.debug("#{tag}: #{s}")
   end
- 
+
   def run_query(parsed_request)
     debug("")
     debug("parsed_request.where_arguments: #{parsed_request.where_arguments}")
@@ -39,14 +38,14 @@ class Reference::DefinedQuery::ReferenceIdWithInstances
       ref = Reference.find(parsed_request.where_arguments)
       @count = ref.instances.size + 1
       @results = []
-      @limited = false 
+      @limited = false
       @common_and_cultivar_included = true
       @has_relation = false
       @relation = nil
     else
       debug("listing with limit: #{parsed_request.limit}")
-      @results = Instance::AsSearchEngine.for_ref_id(parsed_request.where_arguments,parsed_request.limit.to_i,'name')
-      @limited = false; #name_query.limited
+      @results = Instance::AsSearchEngine.for_ref_id(parsed_request.where_arguments, parsed_request.limit.to_i, "name")
+      @limited = false; # name_query.limited
       @common_and_cultivar_included = true
       @count = @results.size
       @has_relation = false
@@ -54,9 +53,3 @@ class Reference::DefinedQuery::ReferenceIdWithInstances
     end
   end
 end
-
-
-
-
-
-

@@ -13,9 +13,8 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 class Instance::AsServices < Instance
-
   def self.name_strings_url(id)
     "#{Rails.configuration.name_services}#{id}/api/name-strings"
   end
@@ -25,21 +24,19 @@ class Instance::AsServices < Instance
   # The interface *should* never let a user try to delete an instance
   # that cannot be deleted, so the chances of hitting a 'meaningful' error are small.
   # The service error messages are not suitable for showing to users. e.g. "There are 1 instances that cite this."
-  # so just log them. 
+  # so just log them.
   def self.delete(id)
     logger.info("Instance::AsServices.delete")
     api_key = Rails.configuration.api_key
     url = "#{Rails.configuration.services}instance/apni/#{id}/api/delete?apiKey=#{api_key}&reason=Edit"
-    s_response = RestClient.delete(url,{accept: :json})
+    s_response = RestClient.delete(url, accept: :json)
     json = JSON.load(s_response)
-    raise "Delete Service said: #{json["errors"].try('join')} [#{s_response.code}]" unless s_response.code == 200 and json["ok"] == true
+    fail "Delete Service said: #{json['errors'].try('join')} [#{s_response.code}]" unless s_response.code == 200 && json["ok"] == true
   rescue => e
-    logger.error("Instance::AsServices.delete exception : #{e.to_s}")
+    logger.error("Instance::AsServices.delete exception : #{e}")
     logger.error("Instance::AsServices.delete exception for url: #{url}")
     logger.error("Instance::AsServices.delete exception with s_response: #{s_response}")
     logger.error("Instance::AsServices.delete exception with errors: #{json['errors'] if json.present?}")
-    raise 
+    raise
   end
-
 end
-

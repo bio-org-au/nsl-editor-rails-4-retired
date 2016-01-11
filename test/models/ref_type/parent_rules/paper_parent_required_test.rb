@@ -14,10 +14,10 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class PaperParentRequiredTest < ActiveSupport::TestCase
-  test 'paper ref type parent is required' do
-    assert ref_types(:paper).parent_optional == false, 'Paper ref type parent should be required.'
+  test "paper ref type parent is required" do
+    assert ref_types(:paper).parent_optional == false, "Paper ref type parent should be required."
   end
 end

@@ -16,12 +16,12 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class HistoryAuthorizationsY2016UnauthenticatedTest < ActionController::TestCase
   tests HistoryController
 
-  test 'history y2016 should get redirected unauthenticated' do
+  test "history y2016 should get redirected unauthenticated" do
     get :y2016
     assert_response :redirect
   end

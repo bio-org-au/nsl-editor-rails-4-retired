@@ -18,25 +18,25 @@
 #
 
 # encoding: utf-8
-require 'test_helper'
+require "test_helper"
 
 class AvailableFieldsTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
 
-  test 'edit synonymy instance available fields' do
+  test "edit synonymy instance available fields" do
     visit_home_page
     standard_page_assertions
-    select 'Instances', from: 'query-on'
-    fill_in 'search-field', with: "id: #{instances(:metrosideros_costata_is_basionym_of_angophora_costata).id}"
-    select 'just: 1', from: 'query-limit'
-    click_on 'Search'
-    all('.takes-focus').first.click
-    click_on 'Edit'
+    select "Instances", from: "query-on"
+    fill_in "search-field", with: "id: #{instances(:metrosideros_costata_is_basionym_of_angophora_costata).id}"
+    select "just: 1", from: "query-limit"
+    click_on "Search"
+    all(".takes-focus").first.click
+    click_on "Edit"
     big_sleep
-    assert page.has_field?('instance-instance-for-name-showing-reference-typeahead'), 'Instance for name field should be there'
-    assert page.has_field?('instance_page'), 'Instance page field should be there'
-    assert page.has_field?('instance_instance_type_id'), 'Instance type field should be there'
-    assert page.has_field?('instance_verbatim_name_string'), 'Instance verbatim name string field should be there'
-    search_result_details_must_include_field('instance_bhl_url', 'Instance BHL URL string field should be there')
+    assert page.has_field?("instance-instance-for-name-showing-reference-typeahead"), "Instance for name field should be there"
+    assert page.has_field?("instance_page"), "Instance page field should be there"
+    assert page.has_field?("instance_instance_type_id"), "Instance type field should be there"
+    assert page.has_field?("instance_verbatim_name_string"), "Instance verbatim name string field should be there"
+    search_result_details_must_include_field("instance_bhl_url", "Instance BHL URL string field should be there")
   end
 end

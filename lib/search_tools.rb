@@ -13,27 +13,25 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 module SearchTools
-
   # simple search because no field descriptors?
   def search_is_simple?(raw)
-    raw.gsub(/[^:]/,'').length == 0
+    raw.gsub(/[^:]/, "").length == 0
   end
 
-  def format_search_terms(default_descriptor,raw)
+  def format_search_terms(default_descriptor, raw)
     raw.strip\
-      .gsub(/\A:/,'')\
-      .gsub(/\s([\S]+:)/,"\034"+'\1')\
-      .sub(/^\034/,'')\
+      .gsub(/\A:/, "")\
+      .gsub(/\s([\S]+:)/, "\034" + '\1')\
+      .sub(/^\034/, "")\
       .split("\034")\
-      .collect {|term| term.include?(':') ? term\
-        .strip\
-        .split(/:/)\
-        .collect {|e| e.strip} : [default_descriptor,term] }\
-        .sort {|a,b| a[0] <=> b[0]}
+      .collect do|term|
+        term.include?(":") ? term\
+          .strip\
+          .split(/:/)\
+          .collect(&:strip) : [default_descriptor, term]
+      end\
+      .sort { |a, b| a[0] <=> b[0] }
   end
-
-
 end
-

@@ -14,12 +14,12 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class TypeaheadsOnCitationForParentRefTypeRestrictionNothingForDatabase < ActiveSupport::TestCase
-  test 'reference typeahead on citation ref type restriction nothing for database' do
+  test "reference typeahead on citation ref type restriction nothing for database" do
     current_reference = references(:simple)
-    results = Reference::AsTypeahead.on_citation_for_parent('%', current_reference.id, ref_types(:database).id)
-    assert results.size == 0, 'Should be no results because database takes no parent.'
+    results = Reference::AsTypeahead.on_citation_for_parent("%", current_reference.id, ref_types(:database).id)
+    assert results.size == 0, "Should be no results because database takes no parent."
   end
 end

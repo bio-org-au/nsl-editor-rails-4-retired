@@ -14,11 +14,11 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class InstanceRouteToNoSuchTabTest < ActionController::TestCase
   tests InstancesController
-  test 'should route to instance show tab' do
+  test "should route to instance show tab" do
     skip
     # assert_routing '/instances/1/tab/no-such-tab', { controller: "instances", action: "show", id: "1", tab: 'show'}
   end

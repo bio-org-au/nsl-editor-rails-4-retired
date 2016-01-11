@@ -14,19 +14,19 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class BaseAuthorExBaseAuthorMustDifferOnCreateTest < ActiveSupport::TestCase
-  test 'base author and ex base author must be different' do
+  test "base author and ex base author must be different" do
     name = Name.new
     name.namespace = namespaces(:apni)
-    name.name_element = 'test for base author and ex-base-author'
+    name.name_element = "test for base author and ex-base-author"
     name.name_type = name_types(:scientific)
     name.name_rank = name_ranks(:species)
     name.name_status = name_statuses(:legitimate)
     name.parent = names(:a_genus)
-    name.created_by = 'fred'
-    name.updated_by = 'fred'
+    name.created_by = "fred"
+    name.updated_by = "fred"
     assert name.valid?, "New name should be valid without authors. Errors: #{name.errors.full_messages.join('; ')}"
     name.author = authors(:bentham)
     assert name.valid?, "New name should be valid with an author. Errors: #{name.errors.full_messages.join('; ')}"
@@ -35,7 +35,7 @@ class BaseAuthorExBaseAuthorMustDifferOnCreateTest < ActiveSupport::TestCase
     name.ex_base_author = authors(:bentham)
     assert name.valid?, "New name should be valid with an ex-base author. Errors: #{name.errors.full_messages.join('; ')}"
     name.ex_base_author = authors(:joe)
-    assert_not name.valid?, 'New name should not be valid with the same base author and ex-base author'
-    assert_equal name.errors.full_messages.first, 'The ex-base author cannot be the same as the base author.', 'Wrong error message.'
+    assert_not name.valid?, "New name should not be valid with the same base author and ex-base author"
+    assert_equal name.errors.full_messages.first, "The ex-base author cannot be the same as the base author.", "Wrong error message."
   end
 end

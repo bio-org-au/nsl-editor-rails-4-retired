@@ -17,15 +17,15 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class ExBaseAuthorIdTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
 
-  test 'name search option ex base author id' do
+  test "name search option ex base author id" do
     visit_home_page
-    select 'Name', from: 'query-on'
-    select 'ex base author id', from: 'query-field'
-    assert find('#query-field').value == 'eba-id', 'Ex Base Author ID query key should be in use.'
+    select "Name", from: "query-on"
+    select "ex base author id", from: "query-field"
+    assert find('#query-field').value == "eba-id", "Ex Base Author ID query key should be in use."
   end
 end

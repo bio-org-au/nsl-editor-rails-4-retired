@@ -14,7 +14,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class ReferenceDestroyForEditorSimpleTest < ActionController::TestCase
   tests ReferencesController
@@ -23,11 +23,11 @@ class ReferenceDestroyForEditorSimpleTest < ActionController::TestCase
   end
 
   #  assert_difference('Reference.count') do
-  test 'editor should destroy reference' do
-    @request.headers['Accept'] = 'application/javascript'
-    assert_difference('Reference.count', -1, 'References should reduce by 1 when editor destroys 1') do
-      post(:destroy, { id: @reference.id }, username: 'fred', user_full_name: 'Fred Jones', groups: ['edit'])
+  test "editor should destroy reference" do
+    @request.headers["Accept"] = "application/javascript"
+    assert_difference("Reference.count", -1, "References should reduce by 1 when editor destroys 1") do
+      post(:destroy, { id: @reference.id }, username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
     end
-    assert_response :success, 'Editor should be able to destroy reference'
+    assert_response :success, "Editor should be able to destroy reference"
   end
 end

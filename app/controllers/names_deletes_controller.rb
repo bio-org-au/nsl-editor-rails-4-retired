@@ -13,32 +13,31 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 class NamesDeletesController < ApplicationController
-
   # Confirm user wants to delete the name
   def confirm
     @names_delete = NamesDelete.new(names_delete_params)
     if @names_delete.save # i.e. successfully confirm
-      logger.debug('NamesDeletes confirmed!')
+      logger.debug("NamesDeletes confirmed!")
       @name = Name::AsServices.find(names_delete_params[:name_id])
       logger.debug("NamesDeletes is for name: #{@name.id}")
-      @name.update_attribute(:updated_by, current_user.username) 
+      @name.update_attribute(:updated_by, current_user.username)
       if @name.delete_with_reason(@names_delete.assembled_reason)
-        render partial: 'ok.js'
+        render partial: "ok.js"
       else
         @message = @name.errors.full_messages.first
-        render partial: 'error.js'
+        render partial: "error.js"
       end
     else
-      logger.debug('NamesDeletes not saved!')
+      logger.debug("NamesDeletes not saved!")
       @message = @names_delete.errors.full_messages.first
-      render partial: 'error.js'
+      render partial: "error.js"
     end
   rescue => e
-    logger.error("Exception deleting name: #{e.to_s}")
+    logger.error("Exception deleting name: #{e}")
     @message = e.to_s
-    render partial: 'error.js'
+    render partial: "error.js"
   end
 
   private
@@ -53,5 +52,4 @@ class NamesDeletesController < ApplicationController
   def names_delete_params
     params.require(:names_delete).permit(:name_id, :reason, :extra_info)
   end
-
 end

@@ -16,21 +16,21 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class HistoryActionsY2016Test < ActionController::TestCase
   tests HistoryController
-  #setup do
-    #@comment = comments(:author_comment)
-  #end
+  # setup do
+  # @comment = comments(:author_comment)
+  # end
 
-  test 'history actions y2016 page' do
-    get("y2016", {}, username: 'fred', user_full_name: 'Fred Jones', groups: [])
+  test "history actions y2016 page" do
+    get("y2016", {}, username: "fred", user_full_name: "Fred Jones", groups: [])
     assert_response :success
-    assert_select 'h3', /\b2016 Changes\b/, 'Should find heading for 2016 Changes'
-    assert_select 'li.list-group-item', /\b04-Jan-2016/, 
-      'Should find NSL-1505 a'
-    assert_select 'li.list-group-item', /\bNSL-1505:/, 
-      'Should find NSL-1505 b'
+    assert_select "h3", /\b2016 Changes\b/, "Should find heading for 2016 Changes"
+    assert_select "li.list-group-item", /\b04-Jan-2016/,
+                  "Should find NSL-1505 a"
+    assert_select "li.list-group-item", /\bNSL-1505:/,
+                  "Should find NSL-1505 b"
   end
 end

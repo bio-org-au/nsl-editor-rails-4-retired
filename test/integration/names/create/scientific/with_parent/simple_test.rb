@@ -17,20 +17,20 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class WithParentSimpleTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
 
-  test 'create scientific name with parent simple' do
+  test "create scientific name with parent simple" do
     names_count = Name.count
     visit_home_page
-    fill_in 'search-field', with: 'create scientific name with parent allowing for no serv....'
+    fill_in "search-field", with: "create scientific name with parent allowing for no serv...."
     load_new_scientific_name_form
     set_name_parent
-    fill_in('name_name_element', with: 'fred')
+    fill_in("name_name_element", with: "fred")
     save_new_record
-    assert_successful_create_for(['full name for id '])
+    assert_successful_create_for(["full name for id "])
     Name.count.must_equal names_count + 1
   end
 end

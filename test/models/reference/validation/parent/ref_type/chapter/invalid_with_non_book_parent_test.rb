@@ -14,34 +14,34 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class ChapterInvalidWithNonBookParentTest < ActiveSupport::TestCase
-  test 'chapter invalid with non book parent' do
+  test "chapter invalid with non book parent" do
     ref = references(:chapter_without_parent)
-    assert ref.parent.blank?, 'Chapter should start test without parent'
-    assert ref.valid?, 'chapter without parent should be valid - starting condition.'
+    assert ref.parent.blank?, "Chapter should start test without parent"
+    assert ref.valid?, "chapter without parent should be valid - starting condition."
     ref.parent = references(:a_book)
-    assert ref.valid?, 'Chapter with book parent should be valid.'
+    assert ref.valid?, "Chapter with book parent should be valid."
     ref.parent = references(:a_chapter)
-    assert_not ref.valid?, 'Chapter with chapter parent should be invalid.'
+    assert_not ref.valid?, "Chapter with chapter parent should be invalid."
     ref.parent = references(:a_database)
-    assert_not ref.valid?, 'Chapter with database parent should be invalid.'
+    assert_not ref.valid?, "Chapter with database parent should be invalid."
     ref.parent = references(:a_database_record)
-    assert_not ref.valid?, 'Chapter with database record parent should be invalid.'
+    assert_not ref.valid?, "Chapter with database record parent should be invalid."
     ref.parent = references(:an_herbarium_annotation)
-    assert_not ref.valid?, 'Chapter with herbarium annotation parent should be invalid.'
+    assert_not ref.valid?, "Chapter with herbarium annotation parent should be invalid."
     ref.parent = references(:an_index)
-    assert_not ref.valid?, 'Chapter with index parent should be invalid.'
+    assert_not ref.valid?, "Chapter with index parent should be invalid."
     ref.parent = references(:a_journal)
-    assert_not ref.valid?, 'Chapter with journal parent should be invalid.'
+    assert_not ref.valid?, "Chapter with journal parent should be invalid."
     ref.parent = references(:a_series)
-    assert_not ref.valid?, 'Chapter with series parent should be invalid.'
+    assert_not ref.valid?, "Chapter with series parent should be invalid."
     ref.parent = references(:a_paper)
-    assert_not ref.valid?, 'Chapter with paper parent should be invalid.'
+    assert_not ref.valid?, "Chapter with paper parent should be invalid."
     ref.parent = references(:a_section)
-    assert_not ref.valid?, 'Chapter with section parent should be invalid.'
+    assert_not ref.valid?, "Chapter with section parent should be invalid."
     ref.parent = references(:an_unknown)
-    assert_not ref.valid?, 'Chapter with an unknown parent should be invalid.'
+    assert_not ref.valid?, "Chapter with an unknown parent should be invalid."
   end
 end

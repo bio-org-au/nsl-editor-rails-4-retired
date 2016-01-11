@@ -29,9 +29,9 @@ class SearchController < ApplicationController
   def tree
     set_tree_defaults
     @search = Search::Tree.new(params)
-    @ng_template_path = tree_ng_path('dummy').gsub(/dummy/, '')
+    @ng_template_path = tree_ng_path("dummy").gsub(/dummy/, "")
     logger.debug("@ng_template_path: #{@ng_template_path}")
-    render 'trees/index'
+    render "trees/index"
   rescue => e
     logger.error("SearchController::tree exception: #{e}")
     params[:error_message] = e.to_s
@@ -40,13 +40,13 @@ class SearchController < ApplicationController
 
   def search_name_with_instances
     @search = Search::Base.new(
-      'query_string' => "instances-for-name-id: #{params[:name_id]}"
+      "query_string" => "instances-for-name-id: #{params[:name_id]}"
     )
-    render 'search'
+    render "search"
   end
 
   def set_include_common_and_cultivar
-    logger.debug('set_include_common_and_cultivar')
+    logger.debug("set_include_common_and_cultivar")
     session[:include_common_and_cultivar] = \
       !session[:include_common_and_cultivar]
   end
@@ -67,8 +67,8 @@ class SearchController < ApplicationController
   def tree_search
     set_tree_defaults
     @search = Search::Tree.new(params)
-    @ng_template_path = tree_ng_path('dummy').gsub(/dummy/, '')
-    render 'trees/index'
+    @ng_template_path = tree_ng_path("dummy").gsub(/dummy/, "")
+    render "trees/index"
   rescue => e
     logger.error("SearchController::tree exception: #{e}")
     params[:error_message] = e.to_s
@@ -78,9 +78,9 @@ class SearchController < ApplicationController
   # translate services/search/link
   def handle_old_style_params
     return unless params[:query].present?
-    return unless params[:query_field] == 'name-instances'
-    params[:query_target] = 'instances-for-name-id'
-    params[:query_string] = params[:query].sub(/id:/, '')
+    return unless params[:query_field] == "name-instances"
+    params[:query_target] = "instances-for-name-id"
+    params[:query_string] = params[:query].sub(/id:/, "")
   end
 
   def run_tree_search
@@ -106,11 +106,11 @@ class SearchController < ApplicationController
   end
 
   def set_tree_defaults
-    params[:query_field] = 'apc' if params[:query_field].blank?
+    params[:query_field] = "apc" if params[:query_field].blank?
     params[:query] = plantae_haeckel if params[:query].blank?
   end
 
   def plantae_haeckel
-    Name.find_by(full_name: 'Plantae Haeckel').id
+    Name.find_by(full_name: "Plantae Haeckel").id
   end
 end

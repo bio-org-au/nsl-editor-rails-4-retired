@@ -14,14 +14,14 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
-load 'models/search/users.rb'
+require "test_helper"
+load "models/search/users.rb"
 
 class SearchOnReferenceAssertionIsNotPublishedTest < ActiveSupport::TestCase
-  test 'reference asertion is not published' do
-    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_target: 'reference',
-                                                                           query_string: 'is-not-published:',
+  test "reference asertion is not published" do
+    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_target: "reference",
+                                                                           query_string: "is-not-published:",
                                                                            current_user: build_edit_user))
-    assert search.executed_query.results.size > 0, 'Should find reference that is not published.'
+    assert search.executed_query.results.size > 0, "Should find reference that is not published."
   end
 end

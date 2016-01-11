@@ -15,11 +15,11 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class TypeaheadsOnCitationWordCountTwoWalshesTest < ActiveSupport::TestCase
-  test 'reference typeahead on citation word count two walshes' do
-    results = Reference::AsTypeahead.on_citation('walsh walsh')
-    assert_equal 1, results.size, 'Should be one and only one result'
+  test "reference typeahead on citation word count two walshes" do
+    results = Reference::AsTypeahead.on_citation("walsh walsh")
+    assert_equal 1, results.size, "Should be one and only one result"
   end
 end

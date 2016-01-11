@@ -14,13 +14,13 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
-require 'models/instance/as_typeahead/for_synonymy/test_helper.rb'
+require "test_helper"
+require "models/instance/as_typeahead/for_synonymy/test_helper.rb"
 
 class ForNameAndReferenceYearTest < ActiveSupport::TestCase
-  test 'name out of order search' do
-    results = Instance::AsTypeahead.for_synonymy('costata angophora')
-    assert results.class == Array, 'Results should be an array.'
-    assert results.size == 0, 'Results should include no records.'
+  test "name out of order search" do
+    results = Instance::AsTypeahead.for_synonymy("costata angophora")
+    assert results.class == Array, "Results should be an array."
+    assert results.size == 0, "Results should include no records."
   end
 end

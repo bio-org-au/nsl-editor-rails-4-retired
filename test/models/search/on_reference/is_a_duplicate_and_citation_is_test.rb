@@ -14,17 +14,17 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
-load 'test/models/search/users.rb'
+require "test_helper"
+load "test/models/search/users.rb"
 
 class IsADuplicateAndCitationIsSearchTest < ActiveSupport::TestCase
-  test 'is a duplicate and citation-text is search' do
-    params = ActiveSupport::HashWithIndifferentAccess.new(query_target: 'reference',
-                                                          query_string: 'is-duplicate: citation-text: uplica',
+  test "is a duplicate and citation-text is search" do
+    params = ActiveSupport::HashWithIndifferentAccess.new(query_target: "reference",
+                                                          query_string: "is-duplicate: citation-text: uplica",
                                                           include_common_and_cultivar_session: true,
                                                           current_user: build_edit_user)
     search = Search::Base.new(params)
-    assert_equal search.executed_query.results.class, Reference::ActiveRecord_Relation, 'Results should be a Reference::ActiveRecord_Relation.'
-    assert_equal 0, search.executed_query.results.size, 'No results are expected.  Citation text search does not support pure text fragments.'
+    assert_equal search.executed_query.results.class, Reference::ActiveRecord_Relation, "Results should be a Reference::ActiveRecord_Relation."
+    assert_equal 0, search.executed_query.results.size, "No results are expected.  Citation text search does not support pure text fragments."
   end
 end

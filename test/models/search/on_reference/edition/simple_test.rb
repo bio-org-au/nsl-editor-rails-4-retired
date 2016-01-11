@@ -14,17 +14,17 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
-load 'test/models/search/users.rb'
+require "test_helper"
+load "test/models/search/users.rb"
 
 class SearchOnReferenceEditionSimpleTest < ActiveSupport::TestCase
-  test 'search on reference edition simple' do
+  test "search on reference edition simple" do
     reference = references(:handbook_of_the_vascular_plants_of_sydney)
-    params =  ActiveSupport::HashWithIndifferentAccess.new(query_target: 'reference',
-                                                           query_string: 'edition: 1',
+    params =  ActiveSupport::HashWithIndifferentAccess.new(query_target: "reference",
+                                                           query_string: "edition: 1",
                                                            include_common_and_cultivar_session: true,
                                                            current_user: build_edit_user)
     search = Search::Base.new(params)
-    assert search.executed_query.results.size > 0, 'Results expected.'
+    assert search.executed_query.results.size > 0, "Results expected."
   end
 end

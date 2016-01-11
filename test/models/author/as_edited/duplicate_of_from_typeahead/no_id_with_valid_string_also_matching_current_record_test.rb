@@ -14,10 +14,10 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class AuthorAsEditedNoDuplicateOfIdWithValidStringAlsoMatchingCurrentRecord < ActiveSupport::TestCase
-  test 'no id with valid string also matching current record' do
+  test "no id with valid string also matching current record" do
     skip
     # author = authors(:chaplin)
     # result = Author::AsEdited.duplicate_of_from_typeahead('',author.name)

@@ -13,9 +13,8 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 class Search::OnName::CountQuery
-
   attr_reader :sql, :info_for_display, :common_and_cultivar_included
 
   def initialize(parsed_request)
@@ -27,7 +26,7 @@ class Search::OnName::CountQuery
   def prepare_query
     Rails.logger.debug("Search::OnName::CountQuery#prepare_query")
     prepared_query = Name.includes(:name_status)
-    where_clauses = Search::OnName::WhereClauses.new(@parsed_request,prepared_query)
+    where_clauses = Search::OnName::WhereClauses.new(@parsed_request, prepared_query)
     prepared_query = where_clauses.sql
     if @parsed_request.common_and_cultivar || where_clauses.common_and_cultivar_included? || @parsed_request.include_common_and_cultivar_session
       Rails.logger.debug("Search::OnName::ListQuery#prepare_query yes, we need common, cultivars")
@@ -39,8 +38,4 @@ class Search::OnName::CountQuery
     end
     @sql = prepared_query
   end
-
 end
-
-
-

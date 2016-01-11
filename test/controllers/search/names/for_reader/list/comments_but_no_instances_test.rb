@@ -14,13 +14,13 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class ReaderSearchControllerNamesCommentsButNoInstancesListTest < ActionController::TestCase
   tests SearchController
 
-  test 'reader can search for a name' do
-    skip 'Is name search for comments-but-no-instances required?  If so, here is the test.'
+  test "reader can search for a name" do
+    skip "Is name search for comments-but-no-instances required?  If so, here is the test."
     # get(:search,{query_target: 'name', query_string: 'comments-but-no-instances:'},{username: 'fred', user_full_name: 'Fred Jones', groups: []})
     # assert_response :success
     # assert_select '#search-results-summary', /\b1 record\b/, "Should find at least 1 record for comments-but-no-instances:"

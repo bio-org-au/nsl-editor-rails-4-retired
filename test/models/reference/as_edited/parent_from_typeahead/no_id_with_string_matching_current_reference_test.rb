@@ -14,10 +14,10 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class ReferenceAsEditedNoParentIdWithStringMatchingCurrentReferenceTest < ActiveSupport::TestCase
-  test 'no id with string matching current reference' do
+  test "no id with string matching current reference" do
     skip
     # reference_1 = references(:has_a_matching_citation_1)
     # assert Reference.where(citation: reference_1.citation).size == 2, "Should be two References with the same citation string."

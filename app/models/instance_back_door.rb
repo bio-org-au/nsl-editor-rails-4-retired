@@ -13,23 +13,21 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 class InstanceBackDoor < ActiveRecord::Base
+  self.table_name = "instance"
+  self.primary_key = "id"
 
-  self.table_name = 'instance'
-  self.primary_key = 'id'
-
-  def change_reference(params,username)
+  def change_reference(params, username)
     InstanceBackDoor.transaction do
       self.reference_id = params["reference_id"]
       self.updated_by = username
-      self.save
-      InstanceBackDoor.find_by_sql(['select * from instance where cited_by_id = ?',self.id]).each do |instance|
+      save
+      InstanceBackDoor.find_by_sql(["select * from instance where cited_by_id = ?", id]).each do |instance|
         instance.reference_id = params["reference_id"]
         instance.updated_by = username
         instance.save
       end
     end
   end
-
 end

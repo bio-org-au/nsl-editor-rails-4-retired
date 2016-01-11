@@ -14,12 +14,12 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class TypeaheadsOnCitationForParentWildcardsTranslatesAsteriskToPercent < ActiveSupport::TestCase
-  test 'reference typeahead on citation wildcards translates asterisk to percent' do
+  test "reference typeahead on citation wildcards translates asterisk to percent" do
     current_reference = references(:simple)
-    results = Reference::AsTypeahead.on_citation_for_parent('*', current_reference.id, ref_types(:book).id)
-    assert results.size > 0, 'Should be at least one result for asterisk wildcard'
+    results = Reference::AsTypeahead.on_citation_for_parent("*", current_reference.id, ref_types(:book).id)
+    assert results.size > 0, "Should be at least one result for asterisk wildcard"
   end
 end

@@ -14,10 +14,10 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class RelationshipMustMatchCitedByRefTest < ActiveSupport::TestCase
-  test 'instance relationship must match cited by reference' do
+  test "instance relationship must match cited by reference" do
     skip
   end
 end

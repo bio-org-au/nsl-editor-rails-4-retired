@@ -14,12 +14,12 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class SectionValidWithoutParentTest < ActiveSupport::TestCase
-  test 'section valid without parent' do
+  test "section valid without parent" do
     ref = references(:section_with_book_parent)
     ref.parent_id = nil
-    assert ref.valid? == true, 'Section without parent should be valid.'
+    assert ref.valid? == true, "Section without parent should be valid."
   end
 end

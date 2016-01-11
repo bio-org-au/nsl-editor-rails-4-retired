@@ -14,10 +14,10 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class ScientificIsScientificTest < ActiveSupport::TestCase
-  test 'scientific is a scientific name type' do
-    assert NameType.find_by(name: 'scientific').scientific?, 'Scientific should be categorised as a "scientific" name type'
+  test "scientific is a scientific name type" do
+    assert NameType.find_by(name: "scientific").scientific?, 'Scientific should be categorised as a "scientific" name type'
   end
 end

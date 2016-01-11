@@ -13,14 +13,13 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 class Search::Mapper::Extras
-
   attr_reader :partial
 
   def initialize(params)
     debug("Start for #{params[:extra_id]}")
-    @partial = 'names/advanced_search/help' 
+    @partial = "names/advanced_search/help"
     @partial = MAP[params[:extras_id]]
   end
 
@@ -29,7 +28,7 @@ class Search::Mapper::Extras
   end
 
   MAP = {
-    'reference-search-help' => 'references/advanced_search/help',
+    "reference-search-help" => "references/advanced_search/help",
     "name-search-help" => "names/advanced_search/help",
     "name-plus-instances-search-help" => "names/advanced_search/plus_instances/help",
     "author-search-help" => "authors/advanced_search/help",
@@ -68,7 +67,5 @@ class Search::Mapper::Extras
     "references-shared-names-search-help" => "references/advanced_search/shared_names/help",
     "references-shared-names-search-examples" => "references/advanced_search/shared_names/examples",
     "references-shared-names-search-advanced" => "references/advanced_search/shared_names/advanced",
-   }
-
+  }
 end
-

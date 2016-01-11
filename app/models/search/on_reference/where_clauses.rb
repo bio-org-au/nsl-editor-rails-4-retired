@@ -53,7 +53,7 @@ class Search::OnReference::WhereClauses
     else
       field_or_default = field.blank? ? DEFAULT_FIELD : field
       rule = Search::OnReference::Predicate.new(field_or_default,
-                                                         value)
+                                                value)
       apply_rule(rule)
       apply_order(rule)
     end

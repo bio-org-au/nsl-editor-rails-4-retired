@@ -14,12 +14,12 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class CultivarTest < ActiveSupport::TestCase
-  test 'cultivar name type options' do
+  test "cultivar name type options" do
     current_category = Name::CULTIVAR_CATEGORY
     assert_equal 1, NameType.options_for_category(current_category).size, "Should be just 1 #{current_category} name type."
-    assert NameType.options_for_category(current_category).collect(&:first).include?('cultivar'), "'cultivar' should be a #{current_category} name type."
+    assert NameType.options_for_category(current_category).collect(&:first).include?("cultivar"), "'cultivar' should be a #{current_category} name type."
   end
 end

@@ -13,18 +13,17 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 class Namespace < ActiveRecord::Base
-  self.table_name = 'namespace'
-  self.primary_key = 'id'
-  self.sequence_name = 'nsl_global_seq'
-  
-  has_many :references, foreign_key: 'namespace_id'
-  has_many :names, foreign_key: 'namespace_id'
-  has_many :instances, foreign_key: 'namespace_id'
-  
-  def self.apni
-    self.find_by(name: 'APNI')
-  end
+  self.table_name = "namespace"
+  self.primary_key = "id"
+  self.sequence_name = "nsl_global_seq"
 
+  has_many :references, foreign_key: "namespace_id"
+  has_many :names, foreign_key: "namespace_id"
+  has_many :instances, foreign_key: "namespace_id"
+
+  def self.apni
+    find_by(name: "APNI")
+  end
 end

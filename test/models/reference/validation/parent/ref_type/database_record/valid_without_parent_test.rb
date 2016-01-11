@@ -14,12 +14,12 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class DatabaseRecordValidWithoutParentTest < ActiveSupport::TestCase
-  test 'database record valid without parent' do
+  test "database record valid without parent" do
     ref = references(:database_record_with_database_parent)
     ref.parent_id = nil
-    assert ref.valid? == true, 'Database record without parent should be valid.'
+    assert ref.valid? == true, "Database record without parent should be valid."
   end
 end

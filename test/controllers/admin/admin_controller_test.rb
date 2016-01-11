@@ -14,20 +14,20 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class AdminControllerTest < ActionController::TestCase
   setup do
   end
 
-  test 'editor should not get index' do
-    get(:index, {}, username: 'fred', user_full_name: 'Fred Jones', groups: [:edit])
+  test "editor should not get index" do
+    get(:index, {}, username: "fred", user_full_name: "Fred Jones", groups: [:edit])
     assert_response :forbidden
   end
 
-  test 'admin user should get index' do
-    get(:index, {}, username: 'fred', user_full_name: 'Fred Jones', groups: ['admin'])
+  test "admin user should get index" do
+    get(:index, {}, username: "fred", user_full_name: "Fred Jones", groups: ["admin"])
     assert_response :success
-    assert_select 'h2', 'Admin', "Should have 'Admin' heading."
+    assert_select "h2", "Admin", "Should have 'Admin' heading."
   end
 end

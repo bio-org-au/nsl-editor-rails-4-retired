@@ -17,22 +17,22 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class NamesSearchNameStatusSimple < ActionDispatch::IntegrationTest
   # Make the Capybara DSL available in all integration tests
   include Capybara::DSL
 
-  test 'name status search' do
+  test "name status search" do
     Capybara.default_driver = :selenium
     visit_home_page
-    select 'Name', from: 'query-on'
-    select 'with name status', from: 'query-field'
-    assert find("#query-field option[value='ns']")['selected'], 'ns should be selected for name rank search'
-    fill_in 'search-field', with: 'nom. inval.'
-    click_button 'Search'
+    select "Name", from: "query-on"
+    select "with name status", from: "query-field"
+    assert find("#query-field option[value='ns']")["selected"], "ns should be selected for name rank search"
+    fill_in "search-field", with: "nom. inval."
+    click_button "Search"
     sleep(inspection_time = 0.1)
-    search_result_must_include('[nom. inval.]', 'Name status search should have returned a record for nom. inval.')
-    search_result_must_not_include('[nom. inval., nom. nud.]', 'Name status search should not have returned a record for nom. inval., nom. nud.')
+    search_result_must_include("[nom. inval.]", "Name status search should have returned a record for nom. inval.")
+    search_result_must_not_include("[nom. inval., nom. nud.]", "Name status search should not have returned a record for nom. inval., nom. nud.")
   end
 end

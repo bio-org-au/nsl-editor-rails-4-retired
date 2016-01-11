@@ -14,19 +14,19 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class NameTagNamesCreateByReaderForbiddenTest < ActionController::TestCase
   tests NameTagNamesController
 
-  test 'reader should not be able to create name tag name' do
+  test "reader should not be able to create name tag name" do
     name = names(:a_species)
     name_tag = name_tags(:acra)
-    @request.headers['Accept'] = 'application/javascript'
-    assert_no_difference('NameTagName.count') do
+    @request.headers["Accept"] = "application/javascript"
+    assert_no_difference("NameTagName.count") do
       post(:create,
-           { name_tag_name: { 'name_id' => name.id, 'tag_id' => name_tag.id } },
-           username: 'fred', user_full_name: 'Fred Jones', groups: [])
+           { name_tag_name: { "name_id" => name.id, "tag_id" => name_tag.id } },
+           username: "fred", user_full_name: "Fred Jones", groups: [])
     end
     assert_response :forbidden
   end

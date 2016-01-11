@@ -14,14 +14,14 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class NameAsEditedNoDuplicateOfIdWithStringMatchingTwoNamesTest < ActiveSupport::TestCase
-  test 'no id with invalid string' do
+  test "no id with invalid string" do
     name_1 = names(:name_matches_another_1)
-    assert Name.where(full_name: name_1.full_name).size == 2, 'Should be two Names with the same full name string.'
-    assert_raise(RuntimeError, 'Should raise a RuntimeError for invalid author string.') do
-      result = Name::AsEdited.duplicate_of_from_typeahead('', name_1.full_name)
+    assert Name.where(full_name: name_1.full_name).size == 2, "Should be two Names with the same full name string."
+    assert_raise(RuntimeError, "Should raise a RuntimeError for invalid author string.") do
+      result = Name::AsEdited.duplicate_of_from_typeahead("", name_1.full_name)
     end
   end
 end

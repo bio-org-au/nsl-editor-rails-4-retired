@@ -14,10 +14,10 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class DatabaseParentNotAllowedTest < ActiveSupport::TestCase
-  test 'database ref type parent is not allowed' do
-    assert ref_types(:database).parent_id.blank? == true, 'Database ref type parent should not be allowed.'
+  test "database ref type parent is not allowed" do
+    assert ref_types(:database).parent_id.blank? == true, "Database ref type parent should not be allowed."
   end
 end

@@ -14,11 +14,11 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class InstanceRouteToAPCTabTest < ActionController::TestCase
   tests InstancesController
-  test 'should route to instance APC tab' do
-    assert_routing '/instances/1/tab/apc', controller: 'instances', action: 'tab', id: '1', tab: 'apc'
+  test "should route to instance APC tab" do
+    assert_routing "/instances/1/tab/apc", controller: "instances", action: "tab", id: "1", tab: "apc"
   end
 end

@@ -25,6 +25,6 @@ class AdminController < ApplicationController
   end
 
   def throw
-    fail 'Exception!!!'
+    fail "Exception!!!"
   end
 end

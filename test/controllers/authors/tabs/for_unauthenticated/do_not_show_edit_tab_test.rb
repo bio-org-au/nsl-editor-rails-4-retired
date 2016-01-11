@@ -14,7 +14,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class AuthorEditorNotShowEditTest < ActionController::TestCase
   tests AuthorsController
@@ -22,9 +22,9 @@ class AuthorEditorNotShowEditTest < ActionController::TestCase
     @author = authors(:bentham)
   end
 
-  test 'should not show unauthenticated user author edit tab' do
-    @request.headers['Accept'] = 'application/javascript'
-    get(:show, { id: @author.id, tab: 'tab_edit' }, {})
+  test "should not show unauthenticated user author edit tab" do
+    @request.headers["Accept"] = "application/javascript"
+    get(:show, { id: @author.id, tab: "tab_edit" }, {})
     assert response.body.match(/window.location.assign.".sign_in"./)
   end
 end

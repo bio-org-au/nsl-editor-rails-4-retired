@@ -14,13 +14,13 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
-require 'models/name/as_typeahead/hybrid_parent/hybrid_parent_test_helper'
+require "test_helper"
+require "models/name/as_typeahead/hybrid_parent/hybrid_parent_test_helper"
 
 class HybridParentForUnrankedTest < ActiveSupport::TestCase
-  test 'name parent suggestion for unranked' do
+  test "name parent suggestion for unranked" do
     avoid_id = 1
-    suggestions = Name::AsTypeahead.hybrid_parent_suggestions('%', avoid_id, NameRank.find_by(name: '[unranked]').id)
-    hybrid_parent_suggestions_should_only_include(suggestions, '[unranked]', %w([unranked] Subforma Forma Subvarietas Varietas Nothovarietas Subspecies Species))
+    suggestions = Name::AsTypeahead.hybrid_parent_suggestions("%", avoid_id, NameRank.find_by(name: "[unranked]").id)
+    hybrid_parent_suggestions_should_only_include(suggestions, "[unranked]", %w([unranked] Subforma Forma Subvarietas Varietas Nothovarietas Subspecies Species))
   end
 end

@@ -14,16 +14,16 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class AuthorCannotBeDeletedIfHasBaseNameTest < ActiveSupport::TestCase
-  test 'author cannot be deleted if dependent name' do
+  test "author cannot be deleted if dependent name" do
     author = authors(:has_no_dependents)
     bentham = authors(:bentham)
     name = Name.first
     name.author = bentham # must have to pass validation
     name.base_author = author
     name.save!
-    assert_not author.can_be_deleted?, 'Should not be able to delete author of base name'
+    assert_not author.can_be_deleted?, "Should not be able to delete author of base name"
   end
 end

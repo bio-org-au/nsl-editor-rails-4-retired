@@ -14,16 +14,16 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class MustNotExcludeNamesWithoutAnInstanceTest < ActiveSupport::TestCase
-  test 'name parent suggestions should not exclude names without an instance' do
+  test "name parent suggestions should not exclude names without an instance" do
     avoid_id = 1
-    name = Name.find_by(full_name: 'a genus without an instance')
+    name = Name.find_by(full_name: "a genus without an instance")
     assert name.present?, 'The name "a genus without an instance" should be found.'
     assert name.instances.size == 0, "The name 'a genus without an instance' should have no instances."
-    suggestions = Name::AsTypeahead.name_parent_suggestions('a genus without an instance', avoid_id, NameRank.species.id)
-    assert(suggestions.is_a?(Array), 'suggestions should be an array')
+    suggestions = Name::AsTypeahead.name_parent_suggestions("a genus without an instance", avoid_id, NameRank.species.id)
+    assert(suggestions.is_a?(Array), "suggestions should be an array")
     assert(suggestions.size == 1, 'suggestions for "a genus without an instance" should have a record')
   end
 end

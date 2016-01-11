@@ -14,14 +14,14 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class NameAsEditedResolveTypeaheadParamsSetAuthorTest < ActiveSupport::TestCase
-  test 'name as edited revolve typeahead params set author' do
+  test "name as edited revolve typeahead params set author" do
     dummy_author = authors(:dummy_author_1)
     name = Name::AsEdited.find(names(:has_no_authors).id)
-    assert name.author_id.blank?, 'Name should be have no author to start this test.'
-    name.resolve_typeahead_params('author_id' => dummy_author.id, 'author_typeahead' => dummy_author.abbrev)
-    assert_equal dummy_author.id, name.author_id, 'Should now have an author id'
+    assert name.author_id.blank?, "Name should be have no author to start this test."
+    name.resolve_typeahead_params("author_id" => dummy_author.id, "author_typeahead" => dummy_author.abbrev)
+    assert_equal dummy_author.id, name.author_id, "Should now have an author id"
   end
 end

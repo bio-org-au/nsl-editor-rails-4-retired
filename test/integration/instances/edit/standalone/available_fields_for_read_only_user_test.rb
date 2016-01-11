@@ -17,22 +17,22 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class AvailableFieldsForReadOnlyUserTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
 
-  test 'it' do
+  test "it" do
     visit_home_page_as_read_only_user
     standard_page_assertions
-    select 'Instances', from: 'query-on'
-    select 'with id', from: 'query-field'
-    fill_in 'search-field', with: instances(:britten_created_angophora_costata).id
-    click_on 'Search'
+    select "Instances", from: "query-on"
+    select "with id", from: "query-field"
+    fill_in "search-field", with: instances(:britten_created_angophora_costata).id
+    click_on "Search"
     big_sleep
-    all('.takes-focus').first.click
+    all(".takes-focus").first.click
     little_sleep
-    search_result_details_must_include_link('Details', 'Read only user should see Details tab.')
-    search_result_details_must_not_include_link('Edit', 'Read only user should not see Edit tab.')
+    search_result_details_must_include_link("Details", "Read only user should see Details tab.")
+    search_result_details_must_not_include_link("Edit", "Read only user should not see Edit tab.")
   end
 end

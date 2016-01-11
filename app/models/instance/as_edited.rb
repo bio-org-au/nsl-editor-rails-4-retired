@@ -13,37 +13,34 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 class Instance::AsEdited < Instance
-
-  def update_if_changed(params,username)
+  def update_if_changed(params, username)
     logger.debug("Update if changed for params: #{params}")
     assign_attributes(clean_all(params))
     if changed?
       logger.debug("Instance has changes to: #{changed}")
       self.updated_by = username
       save!
-      'Updated'
+      "Updated"
     else
-      'No change'
+      "No change"
     end
   rescue => e
     logger.error("Instance::AsEdited with params: #{params}")
-    logger.error("Instance::AsEdited with params: #{e.to_s}")
-    raise 
+    logger.error("Instance::AsEdited with params: #{e}")
+    raise
   end
-
 
   private
 
-
   # Prevent empty or blank-filled params being treated as changes to empty columns.
   def clean(param)
-    if param == ''
+    if param == ""
       return nil
     elsif param.nil?
       return nil
-    elsif param.rstrip == ''
+    elsif param.rstrip == ""
       return nil
     else
       return param
@@ -51,11 +48,8 @@ class Instance::AsEdited < Instance
   end
 
   def clean_all(params)
-    params.each do |key,value|
+    params.each do |key, value|
       params[key] = clean(value)
     end
   end
-
 end
-
-

@@ -14,21 +14,21 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class OptionsForOtherCategoryTest < ActiveSupport::TestCase
-  test 'should include [deleted]' do
-    assert NameStatus.options_for_category(Name::OTHER_CATEGORY).collect(&:first).include?('[deleted]'),
+  test "should include [deleted]" do
+    assert NameStatus.options_for_category(Name::OTHER_CATEGORY).collect(&:first).include?("[deleted]"),
            'Other category name status options should include "[deleted]"'
   end
 
-  test 'should include  [n/a]' do
-    assert NameStatus.options_for_category(Name::OTHER_CATEGORY).collect(&:first).include?('[n/a]'),
+  test "should include  [n/a]" do
+    assert NameStatus.options_for_category(Name::OTHER_CATEGORY).collect(&:first).include?("[n/a]"),
            'Other category name status options should include "[n/a]"'
   end
 
-  test 'should have only two entries' do
+  test "should have only two entries" do
     assert_equal(NameStatus.options_for_category(Name::OTHER_CATEGORY).size, 2,
-                 'Wrong number of name status options for other category')
+                 "Wrong number of name status options for other category")
   end
 end

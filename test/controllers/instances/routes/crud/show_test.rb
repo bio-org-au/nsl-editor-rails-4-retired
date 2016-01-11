@@ -14,11 +14,11 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class InstanceShowRouteTest < ActionController::TestCase
   tests InstancesController
-  test 'should route to show an instance' do
-    assert_routing({ method: 'get', path: '/instances/1' }, controller: 'instances', action: 'show', id: '1', tab: 'tab_show_1')
+  test "should route to show an instance" do
+    assert_routing({ method: "get", path: "/instances/1" }, controller: "instances", action: "show", id: "1", tab: "tab_show_1")
   end
 end

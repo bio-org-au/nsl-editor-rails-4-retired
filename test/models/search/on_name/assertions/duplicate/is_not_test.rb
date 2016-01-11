@@ -14,14 +14,14 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
-load 'models/search/users.rb'
+require "test_helper"
+load "models/search/users.rb"
 
 class SearchOnNameAssertionDuplicateIsNotTest < ActiveSupport::TestCase
-  test 'name asertion is not a duplicate' do
-    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_target: 'name',
-                                                                           query_string: 'is-not-a-duplicate:',
+  test "name asertion is not a duplicate" do
+    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_target: "name",
+                                                                           query_string: "is-not-a-duplicate:",
                                                                            current_user: build_edit_user))
-    assert search.executed_query.results.size > 0, 'Should find non-duplicate name.'
+    assert search.executed_query.results.size > 0, "Should find non-duplicate name."
   end
 end

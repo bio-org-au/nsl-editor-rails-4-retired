@@ -14,7 +14,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class InstancesQADoNotShowCopyTabLinksUnlessPartOfConceptRecordTest < ActionController::TestCase
   tests InstancesController
@@ -23,9 +23,9 @@ class InstancesQADoNotShowCopyTabLinksUnlessPartOfConceptRecordTest < ActionCont
   end
 
   # would be better to test the controller method
-  test 'do not show copy tab links unless part of concept record' do
-    @request.headers['Accept'] = 'application/javascript'
-    get(:show, { id: @instance.id, tab: 'tab_show_1', 'row-type' => 'instance' }, username: 'fred', user_full_name: 'Fred Jones', groups: ['qa'])
+  test "do not show copy tab links unless part of concept record" do
+    @request.headers["Accept"] = "application/javascript"
+    get(:show, { id: @instance.id, tab: "tab_show_1", "row-type" => "instance" }, username: "fred", user_full_name: "Fred Jones", groups: ["qa"])
     assert_response :success
     assert_select 'li.active a#instance-show-tab', /Details/, "Should show 'Details' tab link."
     assert_select 'a#instance-edit-tab', false, "Should not show 'Edit' tab link."

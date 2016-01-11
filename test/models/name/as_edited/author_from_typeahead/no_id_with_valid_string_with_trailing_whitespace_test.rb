@@ -14,12 +14,12 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class NameAsEditedNoAuthorIdWithValidStringWithTrailingWhitespace < ActiveSupport::TestCase
-  test 'no id with valid string' do
+  test "no id with valid string" do
     author = authors(:dummy_author_1)
-    result = Name::AsEdited.author_from_typeahead('', author.name + ' ', 'some field')
-    assert_equal author.id, result, 'Should get a matching id for the author name'
+    result = Name::AsEdited.author_from_typeahead("", author.name + " ", "some field")
+    assert_equal author.id, result, "Should get a matching id for the author name"
   end
 end

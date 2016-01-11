@@ -14,14 +14,14 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
-load 'models/search/users.rb'
+require "test_helper"
+load "models/search/users.rb"
 
 class SearchOnNameAssertionChildIsNotTest < ActiveSupport::TestCase
-  test 'name asertion is not a child' do
-    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_target: 'name',
-                                                                           query_string: 'is-not-a-child:',
+  test "name asertion is not a child" do
+    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_target: "name",
+                                                                           query_string: "is-not-a-child:",
                                                                            current_user: build_edit_user))
-    assert search.executed_query.results.size > 0, 'Should find name that is not a child i.e. has no parent.'
+    assert search.executed_query.results.size > 0, "Should find name that is not a child i.e. has no parent."
   end
 end

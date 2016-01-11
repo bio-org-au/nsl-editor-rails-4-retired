@@ -14,11 +14,11 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class NameEditRouteTest < ActionController::TestCase
   tests NamesController
-  test 'names edit should route to the catch-all' do
-    assert_routing '/names/edit/1', controller: 'search', action: 'search', random: 'names/edit/1'
+  test "names edit should route to the catch-all" do
+    assert_routing "/names/edit/1", controller: "search", action: "search", random: "names/edit/1"
   end
 end

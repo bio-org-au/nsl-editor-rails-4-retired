@@ -14,12 +14,12 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class InstancesCreateByEditorTest < ActionController::TestCase
   tests InstancesController
 
-  test 'editor should be able to call create' do
+  test "editor should be able to call create" do
     skip # the current code means the create method should not be called directly - see create_cited_by, create_cites_and_cited_by
     # so I'd prefer the create method was private, but making it private broke lots of things.
     # name = names(:a_species)

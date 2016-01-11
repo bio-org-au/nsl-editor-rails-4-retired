@@ -17,25 +17,25 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class MustHaveNameOrAbbrevTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
 
-  test 'author must have name or abbrev' do
+  test "author must have name or abbrev" do
     visit_home_page
-    select 'Author', from: 'query-on'
-    fill_in 'search-field', with: 'Author that can be deleted'
-    click_button 'Search'
+    select "Author", from: "query-on"
+    fill_in "search-field", with: "Author that can be deleted"
+    click_button "Search"
     big_sleep
-    search_result_must_include_content('Author that can be deleted')
-    click_link('Edit')
+    search_result_must_include_content("Author that can be deleted")
+    click_link("Edit")
     big_sleep
-    fill_in('author_name', with: '')
-    fill_in('author_abbrev', with: '')
+    fill_in("author_name", with: "")
+    fill_in("author_abbrev", with: "")
     save_edits
     big_sleep
-    search_result_details_must_include_content('2 errors prohibited this author from being saved:')
+    search_result_details_must_include_content("2 errors prohibited this author from being saved:")
     search_result_details_must_include_content("Name can't be blank if abbrev is blank.")
     search_result_details_must_include_content("Abbrev can't be blank if name is blank.")
   end

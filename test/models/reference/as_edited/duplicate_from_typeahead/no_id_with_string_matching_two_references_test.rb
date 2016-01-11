@@ -14,15 +14,15 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class ReferenceAsEditedNoDuplicateOfIdWithStringMatchingTwoReferencesTest < ActiveSupport::TestCase
-  test 'no id with string matching two references' do
+  test "no id with string matching two references" do
     reference_1 = references(:has_a_matching_citation_1)
     reference_2 = references(:has_a_matching_citation_2)
-    assert reference_1.citation.match(reference_2.citation), 'Should be two references with the same citation.'
-    assert_raise(RuntimeError, 'Should object to 2 matches without ID to help.') do
-      Reference::AsEdited.duplicate_of_from_typeahead('', reference_2.citation)
+    assert reference_1.citation.match(reference_2.citation), "Should be two references with the same citation."
+    assert_raise(RuntimeError, "Should object to 2 matches without ID to help.") do
+      Reference::AsEdited.duplicate_of_from_typeahead("", reference_2.citation)
     end
   end
 end

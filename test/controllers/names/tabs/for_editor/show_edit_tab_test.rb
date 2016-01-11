@@ -14,7 +14,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class ShowEditTest < ActionController::TestCase
   tests NamesController
@@ -22,12 +22,12 @@ class ShowEditTest < ActionController::TestCase
     @name = names(:a_species)
   end
 
-  test 'should show name edit tab' do
-    @request.headers['Accept'] = 'application/javascript'
-    get(:show, { id: @name.id, tab: 'tab_edit' }, username: 'fred', user_full_name: 'Fred Jones', groups: ['edit'])
+  test "should show name edit tab" do
+    @request.headers["Accept"] = "application/javascript"
+    get(:show, { id: @name.id, tab: "tab_edit" }, username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
     assert_response :success
-    assert_select 'li.active a#name-edit-tab', 'Edit', "Should show 'Edit' tab."
-    assert_select 'form', true
+    assert_select 'li.active a#name-edit-tab', "Edit", "Should show 'Edit' tab."
+    assert_select "form", true
     assert_select 'select#name_name_type_id', true
     assert_select 'select#name_name_status_id', true
     assert_select 'select#name_name_rank_id', true

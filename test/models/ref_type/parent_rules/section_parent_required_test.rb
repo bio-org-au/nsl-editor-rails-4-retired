@@ -14,10 +14,10 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class SectionParentRequiredTest < ActiveSupport::TestCase
-  test 'section ref type parent is required' do
-    assert ref_types(:section).parent_optional == false, 'Section ref type parent should be required.'
+  test "section ref type parent is required" do
+    assert ref_types(:section).parent_optional == false, "Section ref type parent should be required."
   end
 end

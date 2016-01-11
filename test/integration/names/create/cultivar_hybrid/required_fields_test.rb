@@ -17,20 +17,20 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class RequiredFieldsTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
 
-  test 'cultivar hybrid name required fields' do
+  test "cultivar hybrid name required fields" do
     visit_home_page
-    fill_in 'search-field', with: 'test: cultivar hybrid name required fields'
+    fill_in "search-field", with: "test: cultivar hybrid name required fields"
     load_new_cultivar_hybrid_name_form
-    assert_not_nil(page.find('#name_name_type_id')[:required], 'Name type should be a required field.')
-    assert_not_nil(page.find('#name_name_rank_id')[:required], 'Name rank should be a required field.')
-    assert_not_nil(page.find('#name_name_status_id')[:required], 'Name status should be a required field.')
-    assert_not_nil(page.find('#name-parent-typeahead')[:required], 'Name parent should be a required field.')
-    assert_not_nil(page.find('#name-second-parent-typeahead')[:required], 'Name second parent should be a required field.')
-    assert_not_nil(page.find('#name_name_element')[:required], 'Name should be a required field.')
+    assert_not_nil(page.find('#name_name_type_id')[:required], "Name type should be a required field.")
+    assert_not_nil(page.find('#name_name_rank_id')[:required], "Name rank should be a required field.")
+    assert_not_nil(page.find('#name_name_status_id')[:required], "Name status should be a required field.")
+    assert_not_nil(page.find('#name-parent-typeahead')[:required], "Name parent should be a required field.")
+    assert_not_nil(page.find('#name-second-parent-typeahead')[:required], "Name second parent should be a required field.")
+    assert_not_nil(page.find('#name_name_element')[:required], "Name should be a required field.")
   end
 end

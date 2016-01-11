@@ -14,10 +14,10 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class NameAsEditedNoDuplicateOfIdWithStringMatchingCurrentNameTest < ActiveSupport::TestCase
-  test 'no id with string matching current name' do
+  test "no id with string matching current name" do
     skip
     # name_1 = names(:name_matches_another_1)
     # assert Name.where(full_name: name_1.full_name).size == 2, "Should be two Names with the same full name string."

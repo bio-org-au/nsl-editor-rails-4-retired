@@ -13,15 +13,13 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 class NameTag < ActiveRecord::Base
-  self.table_name = 'name_tag'
-  self.primary_key = 'id'
-  self.sequence_name = 'nsl_global_seq'
+  self.table_name = "name_tag"
+  self.primary_key = "id"
+  self.sequence_name = "nsl_global_seq"
 
   validates :version, presence: true
   has_many :name_tag_names, foreign_key: :tag_id
   has_many :names, through: :name_tag_names
-
 end
- 

@@ -14,11 +14,11 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class InstanceCreateRouteTest < ActionController::TestCase
   tests InstancesController
-  test 'should route to create an instance' do
-    assert_routing({ method: 'post', path: '/instances' }, controller: 'instances', action: 'create')
+  test "should route to create an instance" do
+    assert_routing({ method: "post", path: "/instances" }, controller: "instances", action: "create")
   end
 end

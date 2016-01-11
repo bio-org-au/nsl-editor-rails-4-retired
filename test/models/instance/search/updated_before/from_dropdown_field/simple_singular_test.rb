@@ -14,11 +14,11 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class InstanceSearchUpdatedBeforeFromDropdownSimpleSingularTest < ActiveSupport::TestCase
   # New search for "42993" on instance up to 100 with field: upd-b
-  test 'instance search on updated before from dropdown field simple singular' do
+  test "instance search on updated before from dropdown field simple singular" do
     skip # was an upd-b search, no current translation
     # search = Search::Base.new({query_string: "updated-before: 1, instances-only:",query_target: 'Instance'})
     # assert_equal search.results.class, Instance::ActiveRecord_Relation, "Results should be an Array"

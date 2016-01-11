@@ -15,8 +15,8 @@
 #   limitations under the License.
 #
 # from: https://github.com/wojtekmach/minitest-capybara-example/blob/master/test/integration/home_test.rb
-require 'test_helper'
-require 'capybara/rails'
+require "test_helper"
+require "capybara/rails"
 
 class AcceptanceSpec < Minitest::Spec
   include Capybara::DSL

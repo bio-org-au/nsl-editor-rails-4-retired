@@ -14,11 +14,11 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class NameDuplicateSuggestionsRouteTest < ActionController::TestCase
   tests NamesController
-  test 'should route to name duplicate suggestions' do
-    assert_routing '/suggestions/name/duplicate', controller: 'names', action: 'duplicate_suggestions'
+  test "should route to name duplicate suggestions" do
+    assert_routing "/suggestions/name/duplicate", controller: "names", action: "duplicate_suggestions"
   end
 end

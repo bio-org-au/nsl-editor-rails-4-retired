@@ -14,7 +14,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class CommentsControllerActionsFormatsHtmlShouldNotCreateTest < ActionController::TestCase
   tests NamesController
@@ -22,9 +22,9 @@ class CommentsControllerActionsFormatsHtmlShouldNotCreateTest < ActionController
     @comment = comments(:author_comment)
   end
 
-  test 'html format should not create comment' do
-    assert_no_difference('Comment.count') do
-      post(:create, { comment: { text: @comment.text, author_id: authors('haeckel') } }, username: 'fred', user_full_name: 'Fred Jones', groups: ['edit'])
+  test "html format should not create comment" do
+    assert_no_difference("Comment.count") do
+      post(:create, { comment: { text: @comment.text, author_id: authors("haeckel") } }, username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
     end
     assert_response :service_unavailable
   end

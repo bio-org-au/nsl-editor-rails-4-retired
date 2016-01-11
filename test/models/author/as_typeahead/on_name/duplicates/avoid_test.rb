@@ -14,12 +14,12 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class AuthorTypeaheadsOnNameDuplicatesAvoidTest < ActiveSupport::TestCase
-  test 'author typeahead on name duplicates avoid' do
+  test "author typeahead on name duplicates avoid" do
     duplicate = authors(:schlechter_a_duplicate)
-    results = Author::AsTypeahead.on_name('schlechter')
-    assert !(results.collect{|r| r[:id]}.include?(duplicate.id.to_s)), 'Duplicate author should not be in typeahead'
+    results = Author::AsTypeahead.on_name("schlechter")
+    assert !(results.collect { |r| r[:id] }.include?(duplicate.id.to_s)), "Duplicate author should not be in typeahead"
   end
 end

@@ -13,9 +13,8 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
-class Name::DefinedQuery::NameIdWithInstances 
-
+#
+class Name::DefinedQuery::NameIdWithInstances
   attr_reader :results, :limited, :common_and_cultivar_included, :has_relation, :relation, :count
 
   def initialize(parsed_request)
@@ -24,10 +23,10 @@ class Name::DefinedQuery::NameIdWithInstances
 
   def debug(s)
     tag = "Name::DefinedQuery::NameIdWithInstances"
-    #puts("#{tag}: #{s}")
+    # puts("#{tag}: #{s}")
     Rails.logger.debug("#{tag}: #{s}")
   end
- 
+
   def run_query(parsed_request)
     debug("")
     debug("parsed_request.where_arguments: #{parsed_request.where_arguments}")
@@ -37,13 +36,13 @@ class Name::DefinedQuery::NameIdWithInstances
     if parsed_request.count
       debug("run_query counting")
       name_query = Search::OnName::ListQuery.new(parsed_request)
-      @relation = name_query.sql  # TODO: work out how to provide the relation and sql
+      @relation = name_query.sql # TODO: work out how to provide the relation and sql
       results = relation.all
       limited = name_query.limited
 
       debug(results.size)
       tally = results.size
-      results.each  do | name |
+      results.each  do |name|
         debug(name.id)
         tally += name.instances.size
       end
@@ -55,14 +54,11 @@ class Name::DefinedQuery::NameIdWithInstances
     else
       debug("run_query listing")
       @results = Instance::AsSearchEngine.name_usages(parsed_request.where_arguments)
-      @limited = false; #name_query.limited
+      @limited = false; # name_query.limited
       @common_and_cultivar_included = true
       @count = @results.size
       @has_relation = false
       @relation = nil
     end
   end
-
 end
-
-

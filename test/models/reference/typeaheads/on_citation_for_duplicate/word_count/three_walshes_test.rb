@@ -15,11 +15,11 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class TypeaheadsOnCitationForDuplicateWordCountThreeWalshesTest < ActiveSupport::TestCase
-  test 'reference typeahead on citation word count three walshes' do
-    results = Reference::AsTypeahead.on_citation_for_duplicate('walsh walsh walsh', references(:book_by_brassard).id)
-    assert_equal 0, results.size, 'Should be no records returned.'
+  test "reference typeahead on citation word count three walshes" do
+    results = Reference::AsTypeahead.on_citation_for_duplicate("walsh walsh walsh", references(:book_by_brassard).id)
+    assert_equal 0, results.size, "Should be no records returned."
   end
 end

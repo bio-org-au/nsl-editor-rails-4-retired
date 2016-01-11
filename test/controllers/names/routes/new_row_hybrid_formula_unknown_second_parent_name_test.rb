@@ -14,11 +14,11 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class NameNewRowRouteTest < ActionController::TestCase
   tests NamesController
-  test 'should route to names new row for a hybrid formula unknown 2nd parent type' do
-    assert_routing '/names/new_row/hybrid-formula-unknown-2nd-parent', controller: 'names', action: 'new_row', type: 'hybrid-formula-unknown-2nd-parent'
+  test "should route to names new row for a hybrid formula unknown 2nd parent type" do
+    assert_routing "/names/new_row/hybrid-formula-unknown-2nd-parent", controller: "names", action: "new_row", type: "hybrid-formula-unknown-2nd-parent"
   end
 end

@@ -14,17 +14,17 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
-require 'models/reference/update/if_changed/test_helper'
+require "test_helper"
+require "models/reference/update/if_changed/test_helper"
 
 class ForAChangedPublishedTest < ActiveSupport::TestCase
-  test 'changed published' do
+  test "changed published" do
     reference = Reference::AsEdited.find(references(:for_change_detection).id)
     new_column_value = !reference.published
-    assert reference.update_if_changed({ 'published' => new_column_value }, {}, 'a user'), 'Reference should have been changed.'
+    assert reference.update_if_changed({ "published" => new_column_value }, {}, "a user"), "Reference should have been changed."
     changed_reference = Reference.find_by(id: reference.id)
-    assert_equal new_column_value, changed_reference.published, 'The published column value should have changed to the new value'
-    assert_match 'a user', changed_reference.updated_by, 'Reference.updated_by should have changed to the updating user'
-    assert reference.created_at < changed_reference.updated_at, 'Reference updated at should have changed.'
+    assert_equal new_column_value, changed_reference.published, "The published column value should have changed to the new value"
+    assert_match "a user", changed_reference.updated_by, "Reference.updated_by should have changed to the updating user"
+    assert reference.created_at < changed_reference.updated_at, "Reference updated at should have changed."
   end
 end

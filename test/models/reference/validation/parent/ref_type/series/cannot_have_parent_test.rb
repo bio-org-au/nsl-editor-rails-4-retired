@@ -14,14 +14,14 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class SeriesCannotHaveParentTest < ActiveSupport::TestCase
-  test 'series cannot have parent' do
+  test "series cannot have parent" do
     ref = references(:series_with_parent)
-    assert ref.parent_id.present?, 'Expecting a parent.'
-    assert_not ref.valid?, 'Series with parent should be invalid.'
+    assert ref.parent_id.present?, "Expecting a parent."
+    assert_not ref.valid?, "Series with parent should be invalid."
     ref.parent_id = nil
-    assert ref.valid?, 'Series without parent should be invalid.'
+    assert ref.valid?, "Series without parent should be invalid."
   end
 end

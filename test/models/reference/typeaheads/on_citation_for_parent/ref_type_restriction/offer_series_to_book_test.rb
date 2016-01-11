@@ -14,13 +14,13 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class TypeaheadsOnCitationForParentRefTypeRestrictionSeriesForBook < ActiveSupport::TestCase
-  test 'reference typeahead on citation ref type restriction series for book' do
+  test "reference typeahead on citation ref type restriction series for book" do
     current_reference = references(:simple)
-    results = Reference::AsTypeahead.on_citation_for_parent('%', current_reference.id, ref_types(:book).id)
-    assert results.size > 0, 'Should be at least one result'
+    results = Reference::AsTypeahead.on_citation_for_parent("%", current_reference.id, ref_types(:book).id)
+    assert results.size > 0, "Should be at least one result"
     series = 0
     others = 0
     results.each do |result|
@@ -30,7 +30,7 @@ class TypeaheadsOnCitationForParentRefTypeRestrictionSeriesForBook < ActiveSuppo
         others += 1
       end
     end
-    assert others == 0, 'Expecting no other ref types.'
-    assert series > 0, 'Expecting at least 1 series ref type.'
+    assert others == 0, "Expecting no other ref types."
+    assert series > 0, "Expecting at least 1 series ref type."
   end
 end

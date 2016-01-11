@@ -14,11 +14,11 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class InstanceEditRouteTest < ActionController::TestCase
   tests InstancesController
-  test 'edit request should route to the catch-all' do
-    assert_routing '/instances/edit/1', controller: 'search', action: 'search', random: 'instances/edit/1'
+  test "edit request should route to the catch-all" do
+    assert_routing "/instances/edit/1", controller: "search", action: "search", random: "instances/edit/1"
   end
 end

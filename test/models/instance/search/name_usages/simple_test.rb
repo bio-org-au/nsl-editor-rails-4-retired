@@ -14,10 +14,10 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class NameUsagesSimpleTest < ActiveSupport::TestCase
-  test 'name usages simple for casuarina inophloia' do
+  test "name usages simple for casuarina inophloia" do
     # name = names(:casuarina_inophloia) # triodia_basedowii:
     name = names(:triodia_basedowii)
     Instance::AsSearchEngine.name_usages(name.id)

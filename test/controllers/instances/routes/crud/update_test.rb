@@ -14,11 +14,11 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class InstanceUpdateRouteTest < ActionController::TestCase
   tests InstancesController
-  test 'should route to update an instance' do
-    assert_routing({ method: 'patch', path: '/instances/1' }, controller: 'instances', action: 'update', id: '1')
+  test "should route to update an instance" do
+    assert_routing({ method: "patch", path: "/instances/1" }, controller: "instances", action: "update", id: "1")
   end
 end

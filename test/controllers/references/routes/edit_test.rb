@@ -14,11 +14,11 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class ReferencesRouteEditTest < ActionController::TestCase
   tests ReferencesController
-  test 'references edit should route to the catch-all' do
-    assert_routing '/references/edit/1', controller: 'search', action: 'search', random: 'references/edit/1'
+  test "references edit should route to the catch-all" do
+    assert_routing "/references/edit/1", controller: "search", action: "search", random: "references/edit/1"
   end
 end

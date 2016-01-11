@@ -17,19 +17,19 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class SimpleTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
 
-  test 'instances for name agenus' do
+  test "instances for name agenus" do
     visit_home_page
     standard_page_assertions
-    select 'Instance', from: 'query-on'
+    select "Instance", from: "query-on"
     sleep(inspection_time = 0.1)
-    select 'for name', from: 'query-field'
-    fill_in 'search-field', with: 'agenus'
-    click_button 'Search'
-    search_result_must_include_content('Agenus', 'Search failed')
+    select "for name", from: "query-field"
+    fill_in "search-field", with: "agenus"
+    click_button "Search"
+    search_result_must_include_content("Agenus", "Search failed")
   end
 end

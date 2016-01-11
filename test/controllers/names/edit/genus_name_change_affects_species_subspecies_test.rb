@@ -14,20 +14,20 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require 'test_helper'
+require "test_helper"
 
 class GenusNameChangeAffectsSpeciesAndSubspeciesTest < ActionController::TestCase
   tests NamesController
 
-  test 'genus name change affects species and subspecies' do
+  test "genus name change affects species and subspecies" do
     genus = names(:a_genus)
     species = names(:a_species)
     subspecies = names(:a_subspecies)
-    @request.headers['Accept'] = 'application/javascript'
-    post(:update, { name: { 'full_name' => 'newfullname'}, 
+    @request.headers["Accept"] = "application/javascript"
+    post(:update, { name: { "full_name" => "newfullname" },
                     id: genus.id
                   },
-                  username: 'fred', user_full_name: 'Fred Jones', groups: ['edit'])
+         username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
     assert_response :success
     sleep(2) # to allow for the asynch job
     species_afterwards = Name.find(species.id)
@@ -36,4 +36,3 @@ class GenusNameChangeAffectsSpeciesAndSubspeciesTest < ActionController::TestCas
     assert subspecies.full_name != subspecies_afterwards.full_name, "The genus's name has changed and this should affect the subspecies's name."
   end
 end
-

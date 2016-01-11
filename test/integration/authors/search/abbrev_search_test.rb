@@ -17,21 +17,21 @@
 #   limitations under the License.
 #
 
-require 'test_helper'
+require "test_helper"
 
 class AbbrevSearchTest < ActionDispatch::IntegrationTest
   # Make the Capybara DSL available in all integration tests
   include Capybara::DSL
 
-  test 'it' do
+  test "it" do
     Capybara.default_driver = :selenium
     visit_home_page
     standard_page_assertions
-    select 'Author', from: 'query-on'
-    select 'with abbrev', from: 'query-field'
-    fill_in 'search-field', with: 'haeck'
-    click_button 'Search'
+    select "Author", from: "query-on"
+    select "with abbrev", from: "query-field"
+    fill_in "search-field", with: "haeck"
+    click_button "Search"
     big_sleep
-    search_result_must_include_content('Haeckel')
+    search_result_must_include_content("Haeckel")
   end
 end
