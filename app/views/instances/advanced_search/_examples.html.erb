@@ -133,6 +133,26 @@
 <br>
 
 
+<h5 class="">Assertions</h5>
+<table class="example-searches table table-striped">
+  <% [
+      {search_target: 'Instances', 
+       search_string: "is-tax-nov-for-orth-var-name:",
+       explanation: %Q(Tax. nov. instances with an orth. var. name.)},
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent">
+      <a href="javascript:void(0)" 
+         class="example-search width-100-percent" 
+         title="Link to search">
+         <span class="blue"><%= link_to(val[:search_string], search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue', title: "Run the described search.") %></span>
+      </a>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+<br>
 
 <h5 class="">Count instances</h5>
 <table class="example-searches table table-striped">
@@ -145,7 +165,10 @@
       {search_target: 'Instances', search_string: "count acacia type:basionym,comb. nov.", explanation: %Q(Count by name and allow two types.)},
       {search_target: 'Instances', search_string: "count adnot:*", explanation: %Q(Count instances with an Adnot (comment).)},
       {search_target: 'Instances', search_string: "count adnot-by:*", explanation: %Q(Count instances with an Adnot (comment) by someone.)},
-      {search_target: 'Instances', search_string: "count cites-an-instance:", explanation: %Q(Count instances that cite another instance.)}
+      {search_target: 'Instances', search_string: "count cites-an-instance:", explanation: %Q(Count instances that cite another instance.)},
+      {search_target: 'Instances', 
+       search_string: "count is-tax-nov-for-orth-var-name:",
+       explanation: %Q(Count tax. nov. instances with an orth-var name.)},
       ].each do |val| %>
   <tr>
     <td class="width-30-percent">

@@ -1693,3 +1693,17 @@ dummy_name_3:
   updated_by: greg
   created_by: greg
 
+orth_var_for_tax_nov:
+  name_element: orth var for tax nov
+  full_name: orth var for tax nov
+  full_name_html: orth var for tax nov
+  simple_name: orth var for tax nov
+  simple_name_html: orth var for tax nov
+  name_rank: species
+  name_status: orth_var
+  name_type: scientific
+  namespace: apni
+  parent: angophora
+  updated_by: greg
+  created_by: greg
+

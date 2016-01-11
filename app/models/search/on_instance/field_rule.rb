@@ -116,5 +116,10 @@ class Search::OnInstance::FieldRule
                        from instance_type
                        where instance_type_id = instance_type.id
                        and instance_type.primary_instance) " },
+    "is-tax-nov-for-orth-var-name:" => { where_clause: " exists (select null
+                                 from instance_type
+                                 where instance_type_id = instance_type.id
+                                 and instance_type.name = 'tax. nov.') and
+                                         exists (select null from name where name.id = instance.name_id and exists (select null from name_status where name_status.id = name.name_status_id and name_status.name = 'orth. var.'))" },
   }
 end

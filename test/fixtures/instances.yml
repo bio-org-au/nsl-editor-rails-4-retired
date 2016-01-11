@@ -657,3 +657,12 @@ page_57:
   created_by: tester
   updated_by: tester
 
+tax_nov_for_an_orth_var:
+  reference: tax_nov_for_an_orth_var_ref
+  name: orth_var_for_tax_nov
+  instance_type: tax_nov
+  page: 9999999999
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+

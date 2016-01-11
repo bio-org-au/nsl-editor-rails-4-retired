@@ -19,7 +19,8 @@ require "test_helper"
 class InNestedSimpleInstanceOrderTest < ActiveSupport::TestCase
   def assert_with_args(results, index, expected)
     actual = "#{results[index].page} - #{results[index].name.full_name}"
-    assert /\A#{Regexp.escape(actual)}\z/.match(expected), "Wrong at index #{index}; should be: #{expected} NOT #{actual}"
+    assert(/\A#{Regexp.escape(actual)}\z/.match(expected),
+           "Wrong at index #{index}; should be: #{expected} NOT #{actual}")
   end
 
   test "instances in nested simple instance order" do
@@ -27,19 +28,29 @@ class InNestedSimpleInstanceOrderTest < ActiveSupport::TestCase
               .in_nested_instance_type_order
               .order("reference.year,lower(name.full_name)")
               .order("instance_type.name") # make test results definitive
-    # results.each_with_index {|i,ndx| puts "#{ndx}: #{i.page} - #{i.name.full_name}" if ndx < 50};
+    # results.each_with_index do |i,ndx|
+    #   puts "#{ndx}: #{i.page} - #{i.name.full_name}" if ndx < 80
+    # end
     assert_with_args(results, 0, "xx,20,900 - Metrosideros costata Gaertn.")
     assert_with_args(results, 1, "3 - Angophora costata (Gaertn.) Britten")
     assert_with_args(results, 2, "xx 1 - Metrosideros costata Gaertn.")
     assert_with_args(results, 3, "2 - Metrosideros costata Gaertn.")
-    assert_with_args(results, 4, "zzzz99902 - Casuarina inophloia F.Muell. & F.M.Bailey")
-    assert_with_args(results, 5, "zzzz99901 - Casuarina inophloia F.Muell. & F.M.Bailey")
+    assert_with_args(results,
+                     4,
+                     "zzzz99902 - Casuarina inophloia F.Muell. & F.M.Bailey")
+    assert_with_args(results,
+                     5,
+                     "zzzz99901 - Casuarina inophloia F.Muell. & F.M.Bailey")
     assert_with_args(results, 6, "zzzz99904 - a genus with one instance")
     assert_with_args(results, 7, "zzzz99905 - a genus with two instances")
-    assert_with_args(results, 8, "zzzz99903 - Casuarina inophloia F.Muell. & F.M.Bailey")
+    assert_with_args(results,
+                     8,
+                     "zzzz99903 - Casuarina inophloia F.Muell. & F.M.Bailey")
     assert_with_args(results, 9, "zzzz99907 - has two instances the same")
     assert_with_args(results, 10, "zzzz99907 - has two instances the same")
-    assert_with_args(results, 11, "xx 15 - Angophora costata (Gaertn.) Britten")
+    assert_with_args(results,
+                     11,
+                     "xx 15 - Angophora costata (Gaertn.) Britten")
     assert_with_args(results, 12, "xx,20,1000 - Metrosideros costata Gaertn.")
     assert_with_args(results, 13, "146 - Angophora costata (Gaertn.) Britten")
     assert_with_args(results, 14, "xx,20,600 - Angophora lanceolata Cav.")
@@ -73,9 +84,11 @@ class InNestedSimpleInstanceOrderTest < ActiveSupport::TestCase
     assert_with_args(results, 43, "999 - a_varietas")
     assert_with_args(results, 44, " - an unranked with an instance")
     assert_with_args(results, 45, "999 - an_ordo")
-    assert_with_args(results, 48, "75, t. 102 - Magnoliopsida Brongn. a_classis")
+    assert_with_args(results,
+                     48,
+                     "75, t. 102 - Magnoliopsida Brongn. a_classis")
     assert_with_args(results, 49, "75, t. 101 - Metrosideros costata Gaertn.")
     assert_with_args(results, 50, "76 - Metrosideros costata Gaertn.")
-    assert_with_args(results, 51, "19-20 - Plantae Haeckel")
+    assert_with_args(results, 52, "19-20 - Plantae Haeckel")
   end
 end

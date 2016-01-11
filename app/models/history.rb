@@ -17,6 +17,9 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "11-Jan-2016",
+      jira_id: "1602",
+      description: 'Query for tax. nov. instances with an orth. var. name.' },
     { date: "08-Jan-2016", release: true },
     { date: "07-Jan-2016",
       jira_id: "447",
