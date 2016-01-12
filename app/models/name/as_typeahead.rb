@@ -15,17 +15,6 @@
 #   limitations under the License.
 #
 class Name::AsTypeahead < Name
-  def self.on_full_name(term)
-    if term.blank?
-      results = []
-    elsif
-      results = Name.not_a_duplicate \
-                .where(["lower(full_name) like ?", term.downcase + "%"])\
-                .order("lower(full_name)").limit(SEARCH_LIMIT) \
-                .collect { |n| { value: "#{n.full_name} - #{n.name_status.name}", id: n.id } }
-    end
-    results
-  end
 
   # Offer parents of the appropriate rank:
   # - infra-species (below species)   : rank must be above the name's rank and equal to or below species rank

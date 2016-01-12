@@ -17,6 +17,10 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "12-Jan-2016",
+      jira_id: "1606",
+      description: 'For Reference > (new) Instance, the name typeahead is now
+      ordered by rank.' },
     { date: "11-Jan-2016",
       jira_id: "1602",
       description: 'Query for tax. nov. instances with an orth. var. name.' },

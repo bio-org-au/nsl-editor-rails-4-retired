@@ -46,8 +46,8 @@ class NamesController < ApplicationController
 
   # Used on references - new instance tab
   def typeahead_on_full_name
-    render json: [] if params[:term].blank?
-    render json: Name::AsTypeahead.on_full_name(params[:term].gsub(/\*/, "%"))
+    typeahead = Name::AsTypeahead::OnFullName.new(params)
+    render json: typeahead.suggestions
   end
 
   # For the typeahead search.

@@ -16,10 +16,11 @@
 #
 require "test_helper"
 
-class NameTypeaheadOnFullNameSuggestionsShouldNotIncludeDuplicatesTest < ActiveSupport::TestCase
-  test "name on full name suggestions should not include duplicates" do
-    suggestions = Name::AsTypeahead::OnFullName.new({term:"a duplicate species"}).suggestions
+class SimpleTest < ActiveSupport::TestCase
+  test "simple" do
+    suggestions = Name::AsTypeahead::OnFullName.new(term: "**").suggestions
     assert(suggestions.is_a?(Array), "suggestions should be an array")
-    assert(suggestions.size == 0, 'suggestions for "a duplicate species" should be empty')
+    assert suggestions.size > 0,
+           "should be plenty of suggestions"
   end
 end
