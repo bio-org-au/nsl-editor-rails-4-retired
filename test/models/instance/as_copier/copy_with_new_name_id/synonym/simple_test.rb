@@ -19,15 +19,18 @@ require "test_helper"
 class InstanceAsCopierCopySynonymWithNewNameIdTest < ActiveSupport::TestCase
   # test "copy one synonym instance with a new name id" do
   # before = Instance.count
-  # master_instance = Instance::AsCopier.find(instances(:metrosideros_costata_is_basionym_of_angophora_costata).id)
+  # master_instance = Instance::AsCopier.find(instances(
+  #   :metrosideros_costata_is_basionym_of_angophora_costata).id)
   # target_name = names(:casuarina_inophloia)
   # before_for_name = target_name.instances.count
-  # dummy_username = 'fred'
-  # copied_instance = master_instance.copy_with_new_name_id(target_name.id,dummy_username)
+  # dummy_username = "fred"
+  # copied_instance = master_instance.copy_with_new_name_id(target_name.id,
+  #                                                         dummy_username)
   # after = Instance.count
   # after_for_name = target_name.instances.count
-  # assert_equal before + 1, after, 'There should be one extra instance.'
-  # assert_equal before_for_name + 1, after_for_name, 'There should be one extra instance attached to the target name.'
+  # assert_equal before + 1, after, "There should be one extra instance."
+  # assert_equal before_for_name + 1, after_for_name, "There should be one \
+  # extra instance attached to the target name."
   # assert_equal copied_instance.name_id, target_name.id
   # assert_equal copied_instance.reference_id, master_instance.reference_id
   # assert_equal dummy_username, copied_instance.created_by

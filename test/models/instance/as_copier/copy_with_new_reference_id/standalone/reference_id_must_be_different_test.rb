@@ -16,15 +16,19 @@
 #
 require "test_helper"
 
-class InstanceAsCopierWithNewReferenceStandaloneRefMustBeDifferentTest < ActiveSupport::TestCase
-  test "copy a standalone instance with its citations reference must be different" do
-    master_instance = Instance::AsCopier.find(instances(:gaertner_created_metrosideros_costata).id)
-    assert master_instance.citations.size > 0, "Master instance should have at least 1 citation."
+class InstanceAsCopierWithNewRefStandaloneRefMustBeDiffTest <
+  ActiveSupport::TestCase
+  test "copy a standalone instance with its citations ref must be different" do
+    master_instance = Instance::AsCopier.find(
+      instances(:gaertner_created_metrosideros_costata).id)
+    assert master_instance.citations.size > 0,
+           "Master instance should have at least 1 citation."
     dummy_username = "fred"
-    params = ActionController::Parameters.new(reference_id: master_instance.reference.id.to_s)
-
+    params = ActionController::Parameters.new(
+      reference_id: master_instance.reference.id.to_s)
     assert_raises RuntimeError, "Should not allow copy to same reference id." do
-      copied_instance = master_instance.copy_with_citations_to_new_reference(params, dummy_username)
+      master_instance.copy_with_citations_to_new_reference(params,
+                                                           dummy_username)
     end
   end
 end

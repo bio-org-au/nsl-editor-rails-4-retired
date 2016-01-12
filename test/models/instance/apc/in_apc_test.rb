@@ -25,9 +25,11 @@ class InstanceInAPCTest < ActiveSupport::TestCase
     # empty_string = ''
     # assert unchanged.bhl_url.blank?, "BHL URL should be blank for this test."
     # message = instance.update_if_changed({'bhl_url'=>empty_string},'fred')
-    # assert message.match(/\ANo change/), "Message should be 'No change' not '#{message}'"
+    # assert message.match(/\ANo change/),
+    #        "Message should be 'No change' not '#{message}'"
     # assert instance.bhl_url.blank?, "BHL URL should still be blank."
-    # assert instance.updated_at == unchanged.updated_at, "Updated date-time should be untouched."
+    # assert instance.updated_at == unchanged.updated_at,
+    #        "Updated date-time should be untouched."
     # assert instance.updated_by != 'fred', "Updated by should be untouched."
   end
 end

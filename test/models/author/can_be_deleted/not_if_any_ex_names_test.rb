@@ -24,6 +24,7 @@ class AuthorCannotBeDeletedIfHasExNameTest < ActiveSupport::TestCase
     name.author = bentham # must have to pass validation
     name.ex_author = author
     name.save!
-    assert_not author.can_be_deleted?, "Should not be able to delete author of ex name"
+    assert_not author.can_be_deleted?,
+               "Should not be able to delete author of ex name"
   end
 end

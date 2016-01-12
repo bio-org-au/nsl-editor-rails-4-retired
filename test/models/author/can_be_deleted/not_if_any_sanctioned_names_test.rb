@@ -24,6 +24,7 @@ class AuthorCannotBeDeletedIfHasSanctioningNameTest < ActiveSupport::TestCase
     name.author = bentham # must have to pass validation
     name.sanctioning_author = author
     name.save!
-    assert_not author.can_be_deleted?, "Should not be able to delete author of sanctioning name"
+    assert_not author.can_be_deleted?,
+               "Should not be able to delete author of sanctioning name"
   end
 end

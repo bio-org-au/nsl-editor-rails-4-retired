@@ -22,6 +22,7 @@ class AuthorCannotBeDeletedIfHasReferenceTest < ActiveSupport::TestCase
     reference = references(:simple)
     reference.author = author
     reference.save!
-    assert_not author.can_be_deleted?, "Should not be able to delete author of reference"
+    assert_not author.can_be_deleted?,
+               "Should not be able to delete author of reference"
   end
 end

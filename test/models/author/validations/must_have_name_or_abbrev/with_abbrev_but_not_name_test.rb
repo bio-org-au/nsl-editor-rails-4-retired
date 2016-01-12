@@ -20,9 +20,15 @@ class AuthorWithAbbrevButNoNameIsValidTest < ActiveSupport::TestCase
   test "author with abbrev but no name valid test" do
     author = Author.new
     assert_not author.valid?, "New author should be invalid"
-    assert_match /Name can't be blank if abbrev is blank/, author.errors.full_messages.join(";"), "Error should mention blank name"
-    assert_match /Abbrev can't be blank if name is blank/, author.errors.full_messages.join(";"), "Error should mention blank abbrev"
+    assert_match(/Name can't be blank if abbrev is blank/,
+                 author.errors.full_messages.join(";"),
+                 "Error should mention blank name")
+    assert_match(/Abbrev can't be blank if name is blank/,
+                 author.errors.full_messages.join(";"),
+                 "Error should mention blank abbrev")
     author.abbrev = "wilma"
-    assert author.valid?, "Author should be valid with an abbrev even if no name. Errors: #{author.errors.full_messages.join('; ')}"
+    assert author.valid?,
+           "Author should be valid with an abbrev even if no name. \
+Errors: #{author.errors.full_messages.join('; ')}"
   end
 end

@@ -16,33 +16,49 @@
 #
 require "test_helper"
 
-class InstanceAsCopierWithNewReferenceStandaloneWithCitationsTest < ActiveSupport::TestCase
+class InstanceAsCopierWNewRefSAloneWithCitationsTest < ActiveSupport::TestCase
   test "copy a standalone instance with its citers to a new reference" do
     before = Instance.count
-    master_instance = Instance::AsCopier.find(instances(:gaertner_created_metrosideros_costata).id)
-    assert master_instance.citations.size > 0, "Master instance should have at least 1 citation."
-    # puts master_instance.id
-    # puts master_instance.citations.size
-    # puts master_instance.citeds.size
+    master_instance = Instance::AsCopier.find(
+      instances(:gaertner_created_metrosideros_costata).id)
+    assert master_instance.citations.size > 0,
+           "Master instance should have at least 1 citation."
     target_reference = references(:never_used)
-    instances_attached_to_new_reference_before = target_reference.instances.count
-    instances_attached_to_name_before = master_instance.name.instances.count
+    instances_attached_to_new_ref_b4 = target_reference.instances.count
+    instances_attached_to_name_b4 = master_instance.name.instances.count
     dummy_username = "fred"
-    params = ActionController::Parameters.new(reference_id: target_reference.id.to_s)
-
-    copied_instance = master_instance.copy_with_citations_to_new_reference(params, dummy_username)
+    params = ActionController::Parameters.new(
+      reference_id: target_reference.id.to_s)
+    copied_instance = master_instance.copy_with_citations_to_new_reference(
+      params, dummy_username)
 
     after = Instance.count
-    instances_attached_to_new_reference_after = target_reference.instances.count
+    instances_attached_to_new_ref_after = target_reference.instances.count
     instances_attached_to_name_after = master_instance.name.instances.count
-    assert_equal instances_attached_to_new_reference_before + 1 + master_instance.reverse_of_this_is_cited_by.size, instances_attached_to_new_reference_after,
-                 "Unexpected number of instances attached to the target reference"
-    assert_equal instances_attached_to_name_before + 1, instances_attached_to_name_after, "There should be one extra instance attached to the current name."
-    assert_equal copied_instance.reference_id, target_reference.id, "The copied instance should link to the new (i.e. target) reference."
-    assert_equal copied_instance.name_id, master_instance.name_id, "The copied instance should link to the same name as the original instance."
-    assert_equal dummy_username, copied_instance.created_by, "Create audit should record the expected username."
-    assert_equal dummy_username, copied_instance.updated_by, "Update audit should record the expected username."
-    assert_equal master_instance.reverse_of_this_is_cited_by.size, copied_instance.reverse_of_this_is_cited_by.size, "Copied instance should have the same number of relationships."
-    assert_equal before + 1 + master_instance.reverse_of_this_is_cited_by.size, after, "There should be the correct number of extra instances."
+    assert_equal instances_attached_to_new_ref_b4 +
+      1 + master_instance.reverse_of_this_is_cited_by.size,
+                 instances_attached_to_new_ref_after,
+                 "Unexpected number of instances attached to the target ref"
+    assert_equal instances_attached_to_name_b4 + 1,
+                 instances_attached_to_name_after,
+                 "Should be 1 extra instance attached to current name."
+    assert_equal copied_instance.reference_id,
+                 target_reference.id,
+                 "Copied instance should link to the new (i.e. target) ref."
+    assert_equal copied_instance.name_id,
+                 master_instance.name_id,
+                 "Copied instance should link to same name as orig. instance."
+    assert_equal dummy_username,
+                 copied_instance.created_by,
+                 "Create audit should record the expected username."
+    assert_equal dummy_username,
+                 copied_instance.updated_by,
+                 "Update audit should record the expected username."
+    assert_equal master_instance.reverse_of_this_is_cited_by.size,
+                 copied_instance.reverse_of_this_is_cited_by.size,
+                 "Copied instance should have the same number of relationships."
+    assert_equal before + 1 + master_instance.reverse_of_this_is_cited_by.size,
+                 after,
+                 "There should be the correct number of extra instances."
   end
 end
