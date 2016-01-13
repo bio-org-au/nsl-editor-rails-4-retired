@@ -35,7 +35,12 @@
 		showTabindexes();
 		return(false);
 	});
-  
+
+  // http://stackoverflow.com/questions/2196641/how-do-i-make-jquery-contains-case-insensitive-including-jquery-1-8
+  // "I would do something like this"
+  $.expr[':'].containsIgnoreCase = function (n, i, m) {
+        return jQuery(n).text().toUpperCase().indexOf(m[3].toUpperCase()) >= 0;
+  };
   debug('End of main.js document ready.');
 });  // end of document ready
 // ===================================  end of document ready ================================================

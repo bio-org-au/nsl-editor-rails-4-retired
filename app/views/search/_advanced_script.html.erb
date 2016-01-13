@@ -197,25 +197,22 @@ $( "select#name-advanced-search-list-or-count" )
 
     function setActiveHelpOnLoad() {
       debug("setActiveHelpOnLoad search-target-button-text: " + $('#search-target-button-text').text().trim());
-      var helpId = $('ul#search-target-list li a:contains(' +  $('#search-target-button-text').text().trim()  + ')').first().attr('data-help');
+      var helpId = $('ul#search-target-list li a:containsIgnoreCase(' +  $('#search-target-button-text').text().trim()  + ')').first().attr('data-help');
       showHelpForSearchTarget(helpId);
     }
 
     function showExamplesForSearchTarget(examplesElement) {
       debug('-----   showExamplesForSearchTarget for ' + examplesElement);
       $('#example-search-tab-container-link').attr('data-load-context',examplesElement);
-      debug('HIDING all examples');
       $('.search-examples').addClass('hidden');
-      debug('UNHIDING ' + '#' + examplesElement);
       $('#'+examplesElement).removeClass('hidden');
       if ($('#example-search-tab-container-link').closest('li').hasClass('active')) {
-        debug('about to click tab');
         $('#example-search-tab-container-link').click();
       };
     }
 
     function setActiveExamplesOnLoad() {
-      var id = $('ul#search-target-list li a:contains(' +  $('#search-target-button-text').text().trim()  + ')').first().attr('data-examples');
+      var id = $('ul#search-target-list li a:containsIgnoreCase(' +  $('#search-target-button-text').text().trim()  + ')').first().attr('data-examples');
       debug("search-target-button-text: " + $('#search-target-button-text').text().trim());
       debug("setActiveExamplesOnLoad id: " + id);
       showExamplesForSearchTarget(id);
@@ -224,20 +221,15 @@ $( "select#name-advanced-search-list-or-count" )
     function showAdvancedForSearchTarget(advancedElement) {
       debug('-----   showAdvancedForSearchTarget: ' + advancedElement);
       $('#advanced-search-tab-container-link').attr('data-load-context',advancedElement);
-      debug('HIDING all advanced');
       $('.search-advanced').addClass('hidden');
-      debug('UNHIDING ' + '#' + advancedElement);
       $('#'+advancedElement).removeClass('hidden');
       if ($('#advanced-search-tab-container-link').closest('li').hasClass('active')) {
-        debug('about to click tab');
         $('#advanced-search-tab-container-link').click();
       };
     }
 
     function setActiveAdvancedOnLoad() {
-      var id = $('ul#search-target-list li a:contains(' +  $('#search-target-button-text').text().trim()  + ')').first().attr('data-advanced');
-      debug("search-target-button-text: " + $('#search-target-button-text').text().trim());
-      debug("setActiveAdvancedOnLoad id: " + id);
+      var id = $('ul#search-target-list li a:containsIgnoreCase(' +  $('#search-target-button-text').text().trim()  + ')').first().attr('data-advanced');
       showAdvancedForSearchTarget(id);
     }
 

@@ -17,6 +17,10 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "13-Jan-2016",
+      jira_id: "1612",
+      description: 'Help, examples now showing on initial query for instance
+      sorted by page for ref id.' },
     { date: "12-Jan-2016",
       jira_id: "1606",
       description: 'For Reference > (new) Instance, the name typeahead is now
