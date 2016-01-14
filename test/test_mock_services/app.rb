@@ -19,16 +19,47 @@ require "sinatra"
 require "json"
 
 get "/" do
-  "<h1>Services</h1>\n" \
-  "<ul>\n" +
-    %(<li>Get the <a href="/api/tree/name/APC/91759" >APC tree for a name.</a>\n) +
-    %(<li>Find out if a name is <a href="/nsl/services/name/apni/91755/api/apc.json" >in APC.</a>\n) +
-    %(<li>Find out if a name is <a href="/nsl/services/name/apni/91755/api/apni.json" >in APNI.</a>\n) +
-    %(<li>Find out which <a href="/nsl/services/name/apni/91755/api/family.json" >family a name belongs to.</a>\n) +
-    %(<li>Get new <a href="/nsl/services/name/apni/91755/api/name-strings" >name strings.</a>\n) +
-    %(<li>Get a <a href="/nsl/services/reference/apni/17575/api/citation-strings.json" >newly constructed reference citation.</a>\n) +
-    %(<li>Get a <a href="/api/ref/citation" >reference citation.</a>\n) +
-    "</ul>\n"
+  "<h1>Services</h1>\n" + "<ul>\n" + menu_list + "</ul>\n"
+end
+
+def menu_list
+  apc_tree_for_name +
+    find_out_if_name_in_apni +
+    find_out_which_family_a_name_belongs_to +
+    new_name_strings +
+    construct_reference_citation +
+    reference_citation
+end
+
+def apc_tree_for_name
+  %(<li>Get the <a href="/api/tree/name/APC/91759" >) +
+    %(APC tree for a name.</a>\n)
+end
+
+def find_out_if_name_in_apni
+  %(<li>Find out if a name is ) +
+    %(<a href="/nsl/services/name/apni/91755/api/apc.json" >in APC.</a>\n)
+end
+
+def find_out_which_family_a_name_belongs_to
+  %(<li>Find out which ) +
+    %(<a href="/nsl/services/name/apni/91755/api/family.json" >family a ) +
+    %(name belongs to.</a>\n)
+end
+
+def new_name_strings
+  %(<li>Get new <a href="/nsl/services/name/apni/91755/api/name-strings" >) +
+    %(name strings.</a>\n)
+end
+
+def construct_reference_citation
+  %(<li>Get a ) +
+    %(<a href="/nsl/services/reference/apni/17575/api/citation-strings.json") +
+    %(>newly constructed reference citation.</a>\n)
+end
+
+def reference_citation
+  %(<li>Get a <a href="/api/ref/citation" >reference citation.</a>\n)
 end
 
 get "/api/makeCitation/reference/:id" do |id|
@@ -38,8 +69,10 @@ get "/api/makeCitation/reference/:id" do |id|
                          "citation for id #{id}",
                          "html citation for id #{id}",
                          "unnecessary action",
-                         citationHtml: "unnecessarily repeated HTML citation for id #{id}",
-                         citation: "unnecessarily repeated citation for id #{id}")
+                         citationHtml:
+                         "unnecessarily repeated HTML citation for id #{id}",
+                         citation:
+                         "unnecessarily repeated citation for id #{id}")
   result.to_json
 end
 
@@ -78,22 +111,60 @@ end
 # http://localhost:9090/nsl/services/instance/apni/666/api/delete?apiKey=test-api-key&reason=Edit
 # http://localhost:8080/nsl/services/instance/apni/514039/api/delete?apiKey=d0d1e81d-181c-4ac6-ad75-ddd172594793&reason=Ixxxx
 delete "/nsl/services/instance/apni/:id/api/delete" do |id|
-  api_key = params["apiKey"]
-  reason = params["reason"]
   if id == "404"
-    [404, { "action" => "delete", "errors" => ["The Instance was not found."] }.to_json]
+    [404, { "action" => "delete",
+            "errors" => ["The Instance was not found."] }.to_json]
   elsif id == "666"
-    [200, { "instance" => { "class" => "au.org.biodiversity.nsl.Instance", "_links" => { "permalink" => { "link" => "http://localhost:8080/nsl/mapper/boa/instance/apni/514039", "preferred" => true, "resources" => 1 } }, "instanceType" => "comb. nov.", "protologue" => true, "citation" => "Britten, J. (1916), Journal of Botany, British and Foreign 54", "citationHtml" => "Britten, J. (1916), <i>Journal of Botany, British and Foreign<\u002fi> 54" }, "action" => "delete", "ok" => false, "errors" => ["There are 1 instances that cite this.", "There are 1 instances that say this cites it."] }.to_json]
+    [200, { "instance" =>
+            { "class" => "au.org.biodiversity.nsl.Instance",
+              "_links" =>
+                { "permalink" =>
+                  { "link" =>
+                    "http://localhost:8080/nsl/mapper/boa/instance/apni/514039",
+                    "preferred" => true,
+                    "resources" => 1 }
+                },
+              "instanceType" => "comb. nov.",
+              "protologue" => true,
+              "citation" =>
+              "Britten, J. (1916), Journal of Botany, British and Foreign 54",
+              "citationHtml" =>
+              "Britten, J. (1916), \
+                <i>Journal of Botany, British and Foreign<\u002fi> 54" },
+            "action" => "delete",
+            "ok" => false,
+            "errors" => ["There are 1 instances that cite this.",
+                         "There are 1 instances that say this cites it."]
+          }.to_json]
   elsif id == "5"
     [500]
   else
-    [200, { "instance" => { "class" => "au.org.biodiversity.nsl.Instance", "_links" => { "permalink" => { "link" => "http://localhost:8080/nsl/mapper/boa/instance/apni/819227", "preferred" => true, "resources" => 1 } }, "instanceType" => "taxonomic synonym", "protologue" => false, "citation" => "Leach, G.J. (1986), A Revision of the Genus Angophora (Myrtaceae). Telopea 2(6)", "citationHtml" => "Leach, G.J. (1986), A Revision of the Genus Angophora (Myrtaceae). <i>Telopea</i> 2(6)" }, "action" => "delete", "ok" => true }.to_json]
+    [200,
+     { "instance" =>
+       { "class" =>
+         "au.org.biodiversity.nsl.Instance",
+         "_links" =>
+           { "permalink" =>
+             { "link" =>
+                 "http://localhost:8080/nsl/mapper/boa/instance/apni/819227",
+               "preferred" => true,
+               "resources" => 1 }
+           },
+         "instanceType" => "taxonomic synonym",
+         "protologue" => false,
+         "citation" =>
+           "Leach, G.J. (1986), A Revision of the Genus Angophora (Myrtaceae).\
+           Telopea 2(6)",
+         "citationHtml" => "Leach, G.J. (1986), A Revision of the Genus \
+         Angophora (Myrtaceae). <i>Telopea</i> 2(6)"
+       },
+       "action" => "delete",
+       "ok" => true }.to_json]
   end
 end
 
 delete "/nsl/services/name/apni/:id/api/delete" do
   content_type "application/json"
-  id = params["id"]
   reason = params["reason"]
   case reason
   when /200/
@@ -109,7 +180,6 @@ delete "/nsl/services/name/apni/:id/api/delete" do
   end
 end
 
-# [200, {"name" => {"class" => "au.org.biodiversity.nsl.Name","_links" => {"permalink" => {"link" => "http://localhost:8080/nsl/mapper/boa/name/apni/4463989","preferred" => true,"resources" => 1}},"nameElement" => "asdfasdfa"},"action" => "delete","ok" => true}.to_json]
 class Struct
   def to_map
     map = {}
@@ -122,6 +192,30 @@ class Struct
   end
 end
 
-class Reference < Struct.new(:class, :_links, :name, :citation, :action, :result); end
-class Name < Struct.new(:class, :_links, :name_element, :action, :result); end
-class InApc < Struct.new(:class, :_links, "nameElement", "action", "inAPC", "excluded", "operation", "nsl_name", "nameNs", "nameId", "taxonNs", "taxonId", "type"); end
+class Reference < Struct.new(:class,
+                             :_links,
+                             :name,
+                             :citation,
+                             :action,
+                             :result)
+end
+class Name < Struct.new(:class,
+                        :_links,
+                        :name_element,
+                        :action,
+                        :result)
+end
+class InApc < Struct.new(:class,
+                         :_links,
+                         "nameElement",
+                         "action",
+                         "inAPC",
+                         "excluded",
+                         "operation",
+                         "nsl_name",
+                         "nameNs",
+                         "nameId",
+                         "taxonNs",
+                         "taxonId",
+                         "type")
+end

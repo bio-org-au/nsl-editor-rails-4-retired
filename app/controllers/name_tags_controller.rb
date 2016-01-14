@@ -31,10 +31,9 @@ class NameTagsController < ApplicationController
   # POST /name_tags.json
   def create
     @name_tag = NameTag.new(name_tag_params)
-
     respond_to do |format|
       if @name_tag.save
-        format.html { redirect_to @name_tag, notice: "Name tag was successfully created." }
+        format.html { redirect_to @name_tag, notice: "Created." }
         format.json { render :show, status: :created, location: @name_tag }
       else
         format.html { render :new }
@@ -48,7 +47,7 @@ class NameTagsController < ApplicationController
   def destroy
     @name_tag.destroy
     respond_to do |format|
-      format.html { redirect_to name_tags_url, notice: "Name tag was successfully destroyed." }
+      format.html { redirect_to name_tags_url, notice: "Deleted." }
       format.json { head :no_content }
     end
   end

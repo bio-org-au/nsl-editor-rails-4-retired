@@ -25,7 +25,7 @@ class InstancesController < ApplicationController
   # ToDo: sticky tabs to handle different tabs for standalone
   # and relationship instances.
   def show
-    @tab = "#{(params[:tab] && !params[:tab].blank? && params[:tab] != 'undefined') ? params[:tab] : 'tab_show_1'}"
+    @tab = tab_or_default_tab
     @tab_index = (params[:tabIndex] || "1").to_i
     @tabs_to_offer = tabs_to_offer
     render "show", layout: false
@@ -36,13 +36,11 @@ class InstancesController < ApplicationController
   # Create the lesser version of relationship instance.
   def create_cited_by
     if instance_params[:name_id].blank?
-      @instance = Instance.new
-      @instance.errors.add(:base, "You must choose a name.")
-      render "create_error", locals: { focus_on_this_id: "instance-name-typeahead" }
+      render_create_error("You must choose a name.",
+                          "instance-name-typeahead")
     elsif instance_params[:instance_type_id].blank?
-      @instance = Instance.new
-      @instance.errors.add(:base, "You must choose an instance type.")
-      render "create_error", locals: { focus_on_this_id: "instance_instance_type_id" }
+      render_create_error("You must choose an instance type.",
+                          "instance_instance_type_id")
     else
       create
     end
@@ -51,34 +49,18 @@ class InstancesController < ApplicationController
   # Create full synonymy instance.
   def create_cites_and_cited_by
     if instance_params[:cites_id].blank?
-      @instance = Instance.new
-      @instance.errors.add(:base, "You must choose an instance.")
-      render "create_error", locals: { focus_on_this_id: "instance-instance-for-name-showing-reference-typeahead" }
+      render_cites_id_error
     elsif instance_params[:cited_by_id].blank?
-      @instance = Instance.new
-      @instance.errors.add(:base, "Please refresh the tab.")
-      render "create_error", locals: { focus_on_this_id: "instance-instance-for-name-showing-reference-typeahead" }
+      render_cited_by_id_error
     elsif instance_params[:instance_type_id].blank?
-      @instance = Instance.new
-      @instance.errors.add(:base, "You must choose an instance type.")
-      render "create_error", locals: { focus_on_this_id: "instance_instance_type_id" }
+      render_instance_type_id_error
     else
-      cites = Instance.find(instance_params[:cites_id])
-      cited_by = Instance.find(instance_params[:cited_by_id])
-      the_params = { name_id: cites.name.id,
-                     cites_id: cites.id,
-                     cited_by_id: cited_by.id,
-                     reference_id: cited_by.reference.id,
-                     instance_type_id: instance_params[:instance_type_id],
-                     verbatim_name_string: instance_params[:verbatim_name_string],
-                     bhl_url: instance_params[:bhl_url],
-                     page: instance_params[:page] }
-      create(the_params)
+      create(build_the_params)
     end
   end
 
   # Core create action.
-  # Sometimes we need to massage the params - safely - before calling this create.
+  # Sometimes we need to massage the params (safely) before calling this create.
   def create(the_params = instance_params)
     @instance = Instance.new(the_params)
     if @instance.save_with_username(current_user.username)
@@ -92,7 +74,8 @@ class InstancesController < ApplicationController
   # PUT /instances/1.json
   def update
     @instance = Instance::AsEdited.find(params[:id])
-    @message = @instance.update_if_changed(instance_params, current_user.username)
+    @message = @instance.update_if_changed(instance_params,
+                                           current_user.username)
     render "update.js"
   rescue => e
     @message = e.to_s
@@ -108,16 +91,19 @@ class InstancesController < ApplicationController
     @message = "No change"
     @instance = Instance.find(params[:id])
     @instance.assign_attributes(instance_params)
-    if @instance.changed?
-      @instance_back_door = InstanceBackDoor.find(params[:id])
-      @instance_back_door.change_reference(instance_params, current_user.username)
-      @message = "Updated"
-    end
+    make_back_door_changes if @instance.changed?
     render "update.js"
   rescue => e
     logger.error(e.to_s)
     @message = e.to_s
     render "update_error.js", status: :unprocessable_entity
+  end
+
+  def make_back_door_changes
+    @instance_back_door = InstanceBackDoor.find(params[:id])
+    @instance_back_door.change_reference(instance_params,
+                                         current_user.username)
+    @message = "Updated"
   end
 
   # DELETE /instances/1
@@ -143,7 +129,9 @@ class InstancesController < ApplicationController
   # Copy an instance with its citations
   def copy_standalone
     current_instance = Instance::AsCopier.find(params[:id])
-    @instance = current_instance.copy_with_citations_to_new_reference(instance_params, current_user.username)
+    @instance = current_instance.copy_with_citations_to_new_reference(
+      instance_params,
+      current_user.username)
     @message = "Instance was copied"
     render "instances/copy_standalone/success.js"
   rescue => e
@@ -162,25 +150,81 @@ class InstancesController < ApplicationController
   end
 
   def instance_params
-    params.require(:instance).permit(:instance_type, :name_id, :reference_id,
-                                     :instance_type_id, :verbatim_name_string, :page,
-                                     :cites_id, :cited_by_id, :bhl_url)
+    params.require(:instance).permit(:instance_type,
+                                     :name_id,
+                                     :reference_id,
+                                     :instance_type_id,
+                                     :verbatim_name_string,
+                                     :page,
+                                     :cites_id,
+                                     :cited_by_id,
+                                     :bhl_url)
+  end
+
+  def tab_or_default_tab
+    if params[:tab] && !params[:tab].blank? && params[:tab] != "undefined"
+      params[:tab]
+    else
+      "tab_show_1"
+    end
   end
 
   # Different types of instances require different sets of tabs.
   def tabs_to_offer
-    offer = ["tab_show_1"]
-    offer << "tab_edit"
-    offer << "tab_edit_notes"
+    offer = %w(tab_show_1 tab_edit tab_edit_notes)
     if @instance.simple?
       offer << "tab_synonymy"
       offer << "tab_unpublished_citation"
       offer << "tab_apc_placement"
     end
     offer << "tab_comments"
-    if @instance.simple? && params["row-type"] == "instance_as_part_of_concept_record"
-      offer << "tab_copy_to_new_reference"
-    end
+    offer << "tab_copy_to_new_reference" if offer_tab_copy_to_new_ref?
     offer
+  end
+
+  def offer_tab_copy_to_new_ref?
+    @instance.simple? &&
+      params["row-type"] == "instance_as_part_of_concept_record"
+  end
+
+  def render_create_error(base_error_string, focus_id)
+    @instance = Instance.new
+    @instance.errors.add(:base, base_error_string)
+    render "create_error", locals: { focus_on_this_id: focus_id }
+  end
+
+  def render_cites_id_error
+    render_create_error(
+      "You must choose an instance.",
+      "instance-instance-for-name-showing-reference-typeahead")
+  end
+
+  def render_cited_by_id_error
+    render_create_error(
+      "Please refresh the tab.",
+      "instance-instance-for-name-showing-reference-typeahead")
+  end
+
+  def render_instance_type_id_error
+    render_create_error(
+      "You must choose an instance type.",
+      "instance_instance_type_id")
+  end
+
+  def cites_and_cited_by
+    [Instance.find(instance_params[:cites_id]),
+     Instance.find(instance_params[:cited_by_id])]
+  end
+
+  def build_the_params
+    cites, cited_by = cites_and_cited_by
+    { name_id: cites.name.id,
+      cites_id: cites.id,
+      cited_by_id: cited_by.id,
+      reference_id: cited_by.reference.id,
+      instance_type_id: instance_params[:instance_type_id],
+      verbatim_name_string: instance_params[:verbatim_name_string],
+      bhl_url: instance_params[:bhl_url],
+      page: instance_params[:page] }
   end
 end

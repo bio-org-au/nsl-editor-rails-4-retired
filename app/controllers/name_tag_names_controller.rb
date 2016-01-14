@@ -36,11 +36,12 @@ class NameTagNamesController < ApplicationController
 
     respond_to do |format|
       if @name_tag_name.save_new_record_with_username(current_user.username)
-        format.html { redirect_to @name_tag_name, notice: "Name tag name was successfully created." }
+        format.html { redirect_to @name_tag_name, notice: "Created." }
         format.json { render :show, status: :created, location: @name_tag_name }
         format.js {}
       else
-        @message = "Could not attach that tag because #{@name_tag_name.errors.full_messages.first}"
+        error = "#{@name_tag_name.errors.full_messages.first}"
+        @message = "Could not attach that tag because #{error}"
         format.html { render :new }
         format.json { render json: @name_tag_name.errors, status: :unprocessable_entity }
         format.js { render :create_failed }
@@ -53,7 +54,7 @@ class NameTagNamesController < ApplicationController
   def destroy
     @name_tag_name.destroy
     respond_to do |format|
-      format.html { redirect_to name_tag_names_url, notice: "Name tag name was successfully destroyed." }
+      format.html { redirect_to name_tag_names_url, notice: "Deleted." }
       format.json { head :no_content }
       format.js   {}
     end
@@ -63,10 +64,12 @@ class NameTagNamesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_name_tag_name
-    @name_tag_name = NameTagName.where(name_id: params[:name_id]).where(tag_id: params[:tag_id]).first
+    @name_tag_name = NameTagName
+                     .where(name_id: params[:name_id])
+                     .where(tag_id: params[:tag_id]).first
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
+  # White list
   def name_tag_name_params
     params.require(:name_tag_name).permit(:name_id, :tag_id)
   end
