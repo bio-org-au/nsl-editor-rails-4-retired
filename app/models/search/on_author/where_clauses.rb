@@ -177,3 +177,103 @@ class Search::OnAuthor::WhereClauses
     "ids:" => true,
   }
 end
+
+
+class Search::OnAuthor::WhereClauses
+  attr_reader :sql
+
+  DEFAULT_FIELD = "name-or-abbrev:"
+
+  def initialize(parsed_request, incoming_sql)
+    @parsed_request = parsed_request
+    @sql = incoming_sql
+    build_sql
+  end
+
+  def debug(s)
+    Rails.logger.debug("Search::OnAuthor::WhereClause - #{s}")
+  end
+
+  def build_sql
+    args = @parsed_request.where_arguments.downcase
+    @common_and_cultivar_included = @parsed_request.common_and_cultivar
+    @sql = @sql.for_id(@parsed_request.id) if @parsed_request.id
+    apply_args_to_sql(args)
+  end
+
+  def apply_args_to_sql(args)
+    x = 0
+    until args.blank?
+      field, value, args = Search::NextCriterion.new(args).get
+      add_clause(field, value)
+      x += 1
+      fail "endless loop #{x}" if x > 50
+    end
+  end
+
+  def add_clause(field, value)
+    debug("add_clause for field: #{field}; value: #{value}")
+    if field.blank? && value.blank?
+      @sql
+    else
+      field_or_default = field.blank? ? DEFAULT_FIELD : field
+      rule = Search::OnAuthor::Predicate.new(field_or_default,
+                                                value)
+      apply_rule(rule)
+      apply_order(rule)
+    end
+  end
+
+  def apply_rule(rule)
+    if rule.tokenize
+      apply_predicate_to_tokens(rule)
+    elsif rule.has_scope
+      # http://stackoverflow.com/questions/14286207/
+      # how-to-remove-ranking-of-query-results
+      @sql = @sql.send(rule.scope_, rule.value).reorder("name")
+    else
+      apply_predicate(rule)
+    end
+  end
+
+  def apply_predicate(rule)
+    case rule.value_frequency
+    when 0 then @sql = @sql.where(rule.predicate)
+    when 1 then @sql = @sql.where(rule.predicate, rule.processed_value)
+    when 2 then supply_value_twice(rule)
+    when 3 then supply_value_thrice(rule)
+    else
+      fail "Where clause value frequency: #{rule.value_frequency}, is too high."
+    end
+  end
+
+  def supply_value_thrice(rule)
+    @sql = @sql.where(rule.predicate,
+                      rule.processed_value,
+                      rule.processed_value,
+                      rule.processed_value)
+  end
+
+  def supply_value_twice(rule)
+    @sql = @sql.where(rule.predicate,
+                      rule.processed_value,
+                      rule.processed_value)
+  end
+
+  def apply_predicate_to_tokens(rule)
+    debug("apply_predicate_to_tokens: rule.predicate: #{rule.predicate}")
+    debug("apply_predicate_to_tokens: rule.value: #{rule.value}")
+    predicate = rule.predicate
+    rule.value.gsub(/\*/, "%").gsub(/%+/, " ").split.each do |term|
+      @sql = @sql.where(predicate, "%#{term}%")
+    end
+  end
+
+  def apply_order(rule)
+    if rule.order
+      @sql = @sql.order(rule.order)
+    else
+      @sql = @sql.order("name")
+    end
+  end
+end

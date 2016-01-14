@@ -17,9 +17,14 @@
 require "test_helper"
 load "models/search/users.rb"
 
-class SearchOnAuthorAssertionHasNoAbbrevTest < ActiveSupport::TestCase
-  test "has no abbrev" do
-    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_string: "has-no-abbrev:", query_target: "Author", current_user: build_edit_user))
-    assert 0 < search.executed_query.results.size, "Should find authors with no abbrev."
+class SearchOnAuthorAssertionNameHasTest < ActiveSupport::TestCase
+  test "has name" do
+    search = Search::Base.new(
+      ActiveSupport::HashWithIndifferentAccess.new(query_string: "has-name:",
+                                                   query_target: "Author",
+                                                   current_user:
+                                                   build_edit_user))
+    assert 0 < search.executed_query.results.size,
+           "Should find authors with name."
   end
 end

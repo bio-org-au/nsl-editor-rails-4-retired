@@ -15,11 +15,20 @@
 #   limitations under the License.
 #
 require "test_helper"
-load "models/search/users.rb"
+load "test/models/search/users.rb"
 
-class SearchOnAuthorAssertionHasNoNameTest < ActiveSupport::TestCase
-  test "has no name" do
-    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_string: "has-no-name:", query_target: "Author", current_user: build_edit_user))
-    assert 0 < search.executed_query.results.size, "Should find authors with no name."
+class SearchOnAuthorIdMultipleTest < ActiveSupport::TestCase
+  test "search on author id multiple" do
+    author = authors(:haeckel)
+    a2 = authors(:brongn)
+    params = ActiveSupport::HashWithIndifferentAccess.new(
+      query_target: "author",
+      query_string: "id: #{author.id}, #{a2.id}",
+      include_common_and_cultivar_session: true,
+      current_user: build_edit_user)
+    search = Search::Base.new(params)
+    assert_equal 2,
+                 search.executed_query.results.size,
+                 "Exactly 2 results expected for author id search for 2 ids."
   end
 end

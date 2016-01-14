@@ -15,11 +15,17 @@
 #   limitations under the License.
 #
 require "test_helper"
-load "models/search/users.rb"
+load "test/models/search/users.rb"
 
-class SearchOnAuthorAssertionHasAbbrevTest < ActiveSupport::TestCase
-  test "has abbrev" do
-    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_string: "has-abbrev:", query_target: "Author", current_user: build_edit_user))
-    assert 0 < search.executed_query.results.size, "Should find authors with abbrev."
+class SearchOnAuthorCommentsByCaseInsensitiveTest < ActiveSupport::TestCase
+  test "search on author comments by case insensitive" do
+    params = ActiveSupport::HashWithIndifferentAccess.new(
+      query_target: "author",
+      query_string: "comments-by: GREG",
+      include_common_and_cultivar_session: true,
+      current_user: build_edit_user)
+    search = Search::Base.new(params)
+    assert search.executed_query.results.size > 0,
+           "Authors with comments by GREG expected for case insensitive test."
   end
 end

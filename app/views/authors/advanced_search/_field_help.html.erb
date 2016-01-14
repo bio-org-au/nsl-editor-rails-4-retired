@@ -49,29 +49,6 @@
   <% end %>
 </table>
 
-  <h5>Notes</h5>
-<table class="table table-striped">
-  <tr><th>Field</th><th>Description</th></tr>
-  <% [
-      {field_name: 'notes:', description: "note text, with leading and trailing wildcards added automatically"},
-      {field_name: 'notes-exact:', description: "note text"},
-      ].each do |val| %>
-  <tr>
-    <td class="width-20-percent">
-      <a href="javascript:void(0)" class="searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
-        <span class="blue"><%= val[:field_name] %></span>
-      </a>
-    </td>
-    <td><%= val[:description].html_safe %></td>
-    <% if val[:partial].present? %>
-      <td><%= render partial: val[:partial] %></td>
-    <% else %>
-      <td></td>
-    <% end %>
-  </tr>
-  <% end %>
-</table>
-
 <%= render partial: 'comments/advanced_search/help' %>
 <%= render partial: 'help/id_search_help' %>
 <%= render partial: 'help/case_and_wildcards_search' %>
