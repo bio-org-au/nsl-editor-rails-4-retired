@@ -18,9 +18,19 @@ class InstanceNoteKey < ActiveRecord::Base
   self.table_name = "instance_note_key"
   self.primary_key = "id"
   has_many :instance_notes
+  scope :apc, -> { where(name: ["APC Comment", "APC Dist."]) }
+  scope :non_apc, -> { where.not(name: ["APC Comment", "APC Dist."]) }
 
   def self.options
     all.where(deprecated: false).order(:sort_order).collect { |n| [n.name, n.id] }
+  end
+
+  def self.apc_options
+    all.where(deprecated: false).apc.order(:sort_order).collect { |n| [n.name, n.id] }
+  end
+
+  def self.non_apc_options
+    all.where(deprecated: false).non_apc.order(:sort_order).collect { |n| [n.name, n.id] }
   end
 
   def self.query_form_options

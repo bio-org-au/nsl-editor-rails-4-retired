@@ -1,0 +1,11 @@
+<div id="instance-note-fields" >
+  <%= render partial: 'instances/tabs/non_apc_note_edit_widgets',
+           locals: { instance_notes: @instance.non_apc_instance_notes } %>
+
+<h5>Add Instance Note</h5>
+  <%= render partial: 'instance_notes/form_new', 
+    locals: { instance_note: InstanceNote.new,
+              options: InstanceNoteKey.non_apc_options } %>
+</div>
+
+

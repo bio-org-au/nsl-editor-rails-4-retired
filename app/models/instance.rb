@@ -91,6 +91,9 @@ class Instance < ActiveRecord::Base
   has_many :citations,                   class_name: "Instance", inverse_of: :this_is_cited_by, foreign_key: "cited_by_id"
 
   has_many :instance_notes, dependent: :restrict_with_error
+
+  #has_many :apc_instance_notes, class_name: "InstanceNote", dependent: :restrict_with_error, -> { "where instance_note_key_id in (select id from instance_note_key where ink.name in ('APC Comment', 'APC Dist.')" } 
+
   has_many :comments
 
   validates_presence_of :name_id, :reference_id, :instance_type_id, message: "cannot be empty."
@@ -114,6 +117,14 @@ class Instance < ActiveRecord::Base
   before_validation :set_defaults
   before_create :set_defaults
   # before_update :update_allowed?
+
+  def apc_instance_notes
+    self.instance_notes.apc
+  end
+
+  def non_apc_instance_notes
+    self.instance_notes.non_apc
+  end
 
   def name_id_must_not_change
     errors[:base] << "You cannot use a different name." if name_id_changed?

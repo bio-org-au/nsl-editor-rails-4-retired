@@ -23,6 +23,8 @@ class InstanceNote < ActiveRecord::Base
   belongs_to :instance_note_key
   validates :value, presence: true
   validates :instance_note_key_id, presence: true
+  scope :apc, -> { joins(:instance_note_key).where('instance_note_key.name' => ["APC Comment", "APC Dist."]) }
+  scope :non_apc, -> { joins(:instance_note_key).where.not('instance_note_key.name' => ["APC Comment", "APC Dist."]) }
 
   def set_defaults
     self.namespace_id = Namespace.apni.id if namespace_id.blank?

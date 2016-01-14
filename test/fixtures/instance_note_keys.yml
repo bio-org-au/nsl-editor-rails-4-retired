@@ -1,25 +1,101 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-neotype:
-  name: NEOTYPE
-  sort_order: 0
-
-ex_distribution:
-  name: EX.DISTRIBUTION
+type:
+  name: Type
   sort_order: 1
+  deprecated: false
 
-apc_comment:
-  name: APC COMMENT
+lectotype:
+  name: Lectotype
   sort_order: 2
+  deprecated: false
 
-common:
-  name: COMMON
-  sort_order: 16
+neotype:
+  name: Neotype
+  sort_order: 3
+  deprecated: false
+
+text:
+  name: Text
+  sort_order: 4
+  deprecated: false
+
+comment:
+  name: Comment
+  sort_order: 5
+  deprecated: false
 
 etymology:
-  name: ETYMOLOGY
-  sort_order: 17
+  name: Etymology
+  sort_order: 6
+  deprecated: false
+
+apc_comment:
+  name: APC Comment
+  sort_order: 7
+  deprecated: false
+
+apc_dist:
+  name: APC Dist.
+  sort_order: 8
+  deprecated: false
+
+epbc_advice:
+  name: EPBC Advice
+  sort_order: 9
+  deprecated: false
+
+epbc_impact:
+  name: EPBC Impact
+  sort_order: 10
+  deprecated: false
+
+type_herbarium:
+  name: Type herbarium
+  sort_order: 11
+  deprecated: false
+
+vernacular:
+  name: Vernacular
+  sort_order: 100
+
+context:
+  name: Context
+  sort_order: 100
+  deprecated: true
+
+synonym:
+  name: Synonym
+  sort_order: 100
+  deprecated: true
+
+url:
+  name: URL
+  sort_order: 100
+  deprecated: true
+
+distribution:
+  name: Distribution
+  sort_order: 100
+  deprecated: true
+
+under:
+  name: Under
+  sort_order: 100
+  deprecated: true
+
+status:
+  name: Status
+  sort_order: 100
+  deprecated: true
 
 apni:
   name: APNI
-  sort_order: 19
+  sort_order: 100
+  deprecated: true
+
+ex_distribution:
+  name: Ex.distribution
+  sort_order: 100
+  deprecated: true
+

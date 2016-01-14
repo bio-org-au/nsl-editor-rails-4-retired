@@ -127,6 +127,7 @@ class Search::ParsedRequest
     if DEFINED_QUERIES.key?(query_target_downcase)
       debug("parse_query_target - #{query_target_downcase} is recognized as a defined query.")
       @defined_query = DEFINED_QUERIES[query_target_downcase]
+      #@target_button_text = @params["query_target"].capitalize
       @target_button_text = @params["query_target"].capitalize
     else
       debug("parse_query_target - '#{query_target_downcase}' is NOT recognized as a defined query.")

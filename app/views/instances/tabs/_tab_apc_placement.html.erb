@@ -198,3 +198,12 @@
     NSL_SUGGEST_URL = "<%= Rails.configuration.services_clientside_root_url %>suggest/";
     angular.bootstrap($('#apc-tree-placement')[0], ['au.org.biodiversity.nsl.editor.apc-tree-placement']);
 </script>
+
+         
+<div id="instance-note-fields" >
+  <%= render partial: 'instances/tabs/apc_note_widgets',
+           locals: { instance_notes: @instance.apc_instance_notes } %>
+</div>
+
+
+

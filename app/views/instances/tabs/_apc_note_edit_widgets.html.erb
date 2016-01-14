@@ -1,0 +1,13 @@
+  <% instance_notes.sort do |x,y| 
+    [x.instance_note_key.sort_order,x.value.downcase] <=> 
+    [y.instance_note_key.sort_order,y.value.downcase]
+     end.each do |instance_note| %>
+        <div id="container-for-instance-note-<%= instance_note.id %>">
+          <%= render partial: 'instance_notes/form', 
+            locals: {instance_note: instance_note,
+                     options: InstanceNoteKey.apc_options } %>
+        </div>
+    <% end %>
+
+
+
