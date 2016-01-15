@@ -22,8 +22,22 @@ class NameRank < ActiveRecord::Base
   has_many :names
   belongs_to :name_group
 
-  NEEDS_GENERIC_EPITHET = %w(Subgenus Sectio Subsectio Series Subseries Superspecies Species)
-  NEEDS_SPECIFIC_EPITHET = %w(Subspecies Nothosubspecies Nothovarietas Varietas Subvarietas Forma Subforma morphological nothomorph.)
+  NEEDS_GENERIC_EPITHET = %w(Subgenus
+                             Sectio
+                             Subsectio
+                             Series
+                             Subseries
+                             Superspecies
+                             Species)
+  NEEDS_SPECIFIC_EPITHET = %w(Subspecies
+                              Nothosubspecies
+                              Nothovarietas
+                              Varietas
+                              Subvarietas
+                              Forma
+                              Subforma
+                              morphological
+                              nothomorph.)
 
   Species = "Species"
   Genus = "Genus"
@@ -77,33 +91,43 @@ class NameRank < ActiveRecord::Base
   end
 
   def self.options
-    where("deprecated is false").order(:sort_order).collect { |n| [n.name, n.id] }
+    where("deprecated is false")
+      .order(:sort_order)
+      .collect { |n| [n.name, n.id] }
   end
 
   def self.query_form_options
-    where("deprecated is false").order(:sort_order).collect { |n| [n.name, "rank: #{n.name.downcase}"] }
+    where("deprecated is false")
+      .order(:sort_order)
+      .collect { |n| [n.name, "rank: #{n.name.downcase}"] }
   end
 
   def self.query_form_ranked_below_options
-    where("deprecated is false").order(:sort_order).collect { |n| [n.name, "below-rank: #{n.name.downcase}"] }
+    where("deprecated is false")
+      .order(:sort_order)
+      .collect { |n| [n.name, "below-rank: #{n.name.downcase}"] }
   end
 
   def self.query_form_ranked_above_options
-    where("deprecated is false").order(:sort_order).collect { |n| [n.name, "above-rank: #{n.name.downcase}"] }
+    where("deprecated is false")
+      .order(:sort_order)
+      .collect { |n| [n.name, "above-rank: #{n.name.downcase}"] }
   end
 
   def self.cultivar_hybrid_options
     where("deprecated is false")
       .where("(name not like '%[%' or name = '[unranked]') ")
       .where(" sort_order >= (select sort_order from name_rank where lower(name) = 'species')")
-      .order(:sort_order).collect { |n| [n.name, n.id] }
+      .order(:sort_order)
+      .collect { |n| [n.name, n.id] }
   end
 
   def self.cultivar_options
     where("deprecated is false")
       .where("name not like '%[%' or name = '[unranked]' ")
       .where(" sort_order >= (select sort_order from name_rank where lower(name) = 'species')")
-      .order(:sort_order).collect { |n| [n.name, n.id] }
+      .order(:sort_order)
+      .collect { |n| [n.name, n.id] }
   end
 
   def self.id_is_unranked?(id)
@@ -186,17 +210,29 @@ class NameRank < ActiveRecord::Base
   end
 
   def self.print_parent_divisions
-    NameRank.all.each { |name_rank| puts "#{name_rank.name}  #{name_rank.below_species? ? 'is below species' : ''}" }
+    NameRank.all.each do |name_rank|
+      if name_rank.below_species?
+        puts "#{name_rank.name} is below species"
+      else
+        puts name_rank.name
+      end
+    end
     ""
   end
 
   def self.print_parents
-    NameRank.all.each { |name_rank| printf("%20s:  %s\n", name_rank.name, name_rank.parent.try("name")) }
+    NameRank.all.each do |name_rank|
+      printf("%20s:  %s\n", name_rank.name, name_rank.parent.try("name"))
+    end
     ""
   end
 
   def self.print_takes_parent
-    NameRank.all.each { |name_rank| printf("%20s:  %s\n", name_rank.name, name_rank.parent.takes_parent? ? "takes parent" : "does not take parent") }
+    NameRank.all.each do |name_rank|
+      printf("%20s:  %s\n",
+             name_rank.name,
+             name_rank.parent.takes_parent? ? "takes parent" : "no parent")
+    end
     ""
   end
 
@@ -221,6 +257,7 @@ class NameRank < ActiveRecord::Base
   end
 end
 
+# A stand-in class when there is no parent.
 class NoParent
   def name
     "No parent"
@@ -235,12 +272,14 @@ class NoParent
   end
 end
 
+# A stand-in class when parent is unknown
 class UnknownParent < NoParent
   def name
     "Unknown parent"
   end
 end
 
+# A stand-in class when no parent because deprecated
 class DeprecatedNoParent < NoParent
   def name
     "No parent because deprecated"

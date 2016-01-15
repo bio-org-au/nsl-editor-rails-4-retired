@@ -20,8 +20,6 @@ require "search_tools"
 class Name < ActiveRecord::Base
   extend AdvancedSearch
   extend SearchTools
-  # extend ActsAsTree::TreeView
-  # extend ActsAsTree::TreeWalker
 
   strip_attributes
   # acts_as_tree
@@ -30,7 +28,13 @@ class Name < ActiveRecord::Base
   self.primary_key = "id"
   self.sequence_name = "nsl_global_seq"
 
-  attr_accessor :display_as, :give_me_focus, :apc_instance_id, :apc_instance_is_an_excluded_name, :apc_declared_bt, :change_category_to
+  attr_accessor :display_as,
+                :give_me_focus,
+                :apc_instance_id,
+                :apc_instance_is_an_excluded_name,
+                :apc_declared_bt,
+                :change_category_to
+
   scope :not_common_or_cultivar,
         -> { where([" name_type_id in (select id from name_type where not (cultivar or lower(name_type.name) = 'common'))"]) }
   scope :not_a_duplicate, -> { where(duplicate_of_id: nil) }
@@ -51,8 +55,8 @@ class Name < ActiveRecord::Base
                    " and sort_order <  (select sort_order from name_rank where id = ?)))", rank_id)
   }
   scope :name_rank_not_deprecated, -> { where("not name_rank.deprecated") }
-  scope :name_rank_not_infra, -> { where("name_rank.name not in ('[infrafamily]','[infragenus]','[infrasp.]') ") }
-  scope :name_rank_not_na, -> { where("name_rank.name != '[n/a]' ") }
+  scope :name_rank_not_infra,
+         -> { where("name_rank.name not in ('[infrafamily]','[infragenus]','[infrasp.]') ") }
   scope :name_rank_not_na, -> { where("name_rank.name != '[n/a]' ") }
   scope :name_rank_not_unknown, -> { where("name_rank.name != '[unknown]' ") }
   scope :name_rank_not_unranked, -> { where("name_rank.name != '[unranked]' ") }
@@ -62,13 +66,19 @@ class Name < ActiveRecord::Base
   scope :all_children, ->(parent_id) { where("name.parent_id = ? or name.second_parent_id = ?", parent_id, parent_id) }
   scope :for_id, ->(id) { where("name.id = ?", id) }
 
-  scope :created_n_days_ago, ->(n) { where("current_date - created_at::date = ?", n) }
-  scope :updated_n_days_ago, ->(n) { where("current_date - updated_at::date = ?", n) }
-  scope :changed_n_days_ago, ->(n) { where("current_date - created_at::date = ? or current_date - updated_at::date = ?", n, n) }
+  scope :created_n_days_ago,
+        ->(n) { where("current_date - created_at::date = ?", n) }
+  scope :updated_n_days_ago,
+        ->(n) { where("current_date - updated_at::date = ?", n) }
+  scope :changed_n_days_ago,
+        ->(n) { where("current_date - created_at::date = ? or current_date - updated_at::date = ?", n, n) }
 
-  scope :created_in_the_last_n_days, ->(n) { where("current_date - created_at::date < ?", n) }
-  scope :updated_in_the_last_n_days, ->(n) { where("current_date - updated_at::date < ?", n) }
-  scope :changed_in_the_last_n_days, ->(n) { where("current_date - created_at::date < ? or current_date - updated_at::date < ?", n, n) }
+  scope :created_in_the_last_n_days,
+        ->(n) { where("current_date - created_at::date < ?", n) }
+  scope :updated_in_the_last_n_days,
+        ->(n) { where("current_date - updated_at::date < ?", n) }
+  scope :changed_in_the_last_n_days,
+        ->(n) { where("current_date - created_at::date < ? or current_date - updated_at::date < ?", n, n) }
 
   belongs_to :name_rank
   belongs_to :name_type
@@ -81,17 +91,30 @@ class Name < ActiveRecord::Base
   belongs_to :namespace, class_name: "Namespace", foreign_key: "namespace_id"
 
   belongs_to :duplicate_of, class_name: "Name", foreign_key: "duplicate_of_id"
-  has_many :duplicates, class_name: "Name", foreign_key: "duplicate_of_id", dependent: :restrict_with_exception # , order: 'name_element'
+  has_many :duplicates,
+           class_name: "Name",
+           foreign_key: "duplicate_of_id",
+           dependent: :restrict_with_exception # , order: 'name_element'
 
-  has_many :instances, foreign_key: "name_id", dependent: :restrict_with_error
-  # has_many   :instances_for_name_usages, -> { includes :instance_type}, class: Instance, foreign_key: 'name_id', dependent: :restrict_with_error
+  has_many :instances,
+           foreign_key: "name_id",
+           dependent: :restrict_with_error
+  # has_many   :instances_for_name_usages, -> { includes :instance_type},
+  # class: Instance, foreign_key: 'name_id', dependent: :restrict_with_error
 
   belongs_to :parent, class_name: "Name", foreign_key: "parent_id"
-  has_many :children, class_name: "Name", foreign_key: "parent_id", dependent: :restrict_with_exception
+  has_many :children,
+           class_name: "Name",
+           foreign_key: "parent_id",
+           dependent: :restrict_with_exception
   belongs_to :second_parent, class_name: "Name", foreign_key: "second_parent_id"
-  has_many :second_children, class_name: "Name", foreign_key: "second_parent_id", dependent: :restrict_with_exception
+  has_many :second_children,
+           class_name: "Name",
+           foreign_key: "second_parent_id",
+           dependent: :restrict_with_exception
   has_many :just_second_children, -> { where "parent_id != second_parent_id" },
-           class_name: "Name", foreign_key: "second_parent_id", dependent: :restrict_with_exception
+           class_name: "Name", foreign_key: "second_parent_id",
+           dependent: :restrict_with_exception
   has_many :comments
   has_many :name_tag_names
   has_many :name_tags, through: :name_tag_names
@@ -105,9 +128,15 @@ class Name < ActiveRecord::Base
   validates :name_rank_id, presence: true
   validates :name_type_id, presence: true
   validates :name_status_id, presence: true
-  validates :ex_base_author, absence: { message: "cannot be set if there is no base author.", if: "base_author_id.nil?" }
-  validates :base_author, absence: { message: "cannot be set if there is no author.", if: "author_id.nil?" }
-  validates :ex_author, absence: { message: "cannot be set if there is no author.", if: "author_id.nil?" }
+  validates :ex_base_author,
+            absence: { message: "cannot be set if there is no base author.",
+                       if: "base_author_id.nil?" }
+  validates :base_author,
+            absence: { message: "cannot be set if there is no author.",
+                       if: "author_id.nil?" }
+  validates :ex_author,
+            absence: { message: "cannot be set if there is no author.",
+                       if: "author_id.nil?" }
   validates :name_element, presence: true, if: :requires_name_element?
   validate :name_element_is_stripped
   validates :parent_id, presence: true, if: :requires_parent? # tested
@@ -119,9 +148,18 @@ class Name < ActiveRecord::Base
   validates :updated_by, presence: true
 
   validates_length_of :status_summary, maximum: 50
-  validates_exclusion_of :duplicate_of_id, in: ->(name) { [name.id] }, allow_blank: true, message: "and master cannot be the same record"
-  validates_exclusion_of :parent_id, in: ->(name) { [name.id] }, allow_blank: true, message: "cannot be the same record"
-  validates_exclusion_of :second_parent_id, in: ->(name) { [name.id] }, allow_blank: true, message: "cannot be the same record"
+  validates_exclusion_of :duplicate_of_id,
+                         in: ->(name) { [name.id] },
+                         allow_blank: true,
+                         message: "and master cannot be the same record"
+  validates_exclusion_of :parent_id,
+                         in: ->(name) { [name.id] },
+                         allow_blank: true,
+                         message: "cannot be the same record"
+  validates_exclusion_of :second_parent_id,
+                         in: ->(name) { [name.id] },
+                         allow_blank: true,
+                         message: "cannot be the same record"
   validates_exclusion_of :second_parent_id,
                          in: ->(name) { [name.parent_id] },
                          allow_blank: true,
@@ -136,12 +174,16 @@ class Name < ActiveRecord::Base
   AUTOCOMPLETE_SEARCH_LIMIT = 20
   DEFAULT_DESCRIPTOR = "n" # for full_name
   DEFAULT_ORDER_BY = "full_name"
-  LEGAL_TO_ORDER_BY = { "fn" => "full_name", "sn" => "simple_name", "ne" => "name_element", "r" => "name_rank_id" }
+  LEGAL_TO_ORDER_BY = { "fn" => "full_name",
+                        "sn" => "simple_name",
+                        "ne" => "name_element",
+                        "r" => "name_rank_id" }
 
   # Category constants
   SCIENTIFIC_CATEGORY = "scientific"
   SCIENTIFIC_HYBRID_FORMULA_CATEGORY = "scientific hybrid formula"
-  SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY = "scientific hybrid formula unknown 2nd parent"
+  SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY =
+    "scientific hybrid formula unknown 2nd parent"
   CULTIVAR_CATEGORY = "cultivar"
   CULTIVAR_HYBRID_CATEGORY = "cultivar hybrid"
   OTHER_CATEGORY = "other"
@@ -160,9 +202,10 @@ class Name < ActiveRecord::Base
   end
 
   def name_type_must_match_category
-    unless NameType.option_ids_for_category(category).include?(name_type_id)
-      errors.add(:name_type_id, "Wrong name type for category! Category: #{category} vs name type: #{name_type.name}.")
-    end
+    return if NameType.option_ids_for_category(category).include?(name_type_id)
+    errors.add(:name_type_id,
+               "Wrong name type for category! Category: #{category} vs
+               name type: #{name_type.name}.")
   end
 
   def author_and_ex_author_must_differ
@@ -172,19 +215,23 @@ class Name < ActiveRecord::Base
   end
 
   def base_author_and_ex_base_author_must_differ
-    if base_author_id.present? && ex_base_author_id.present? && base_author_id == ex_base_author_id
-      errors[:base] << "The ex-base author cannot be the same as the base author."
-    end
+    return unless base_author_id.present? &&
+                  ex_base_author_id.present? &&
+                  base_author_id == ex_base_author_id
+    errors[:base] << "The ex-base author cannot be the same as the base author."
   end
 
   def parent_rank_above?
-    parent.present? && parent.name_rank.present? && name_rank.present? && parent.name_rank.above?(name_rank)
+    parent.present? &&
+      parent.name_rank.present? &&
+      name_rank.present? &&
+      parent.name_rank.above?(name_rank)
   end
 
   def name_element_is_stripped
-    if name_element.present?
-      errors.add(:name_element, "has whitespace") unless name_element == name_element.strip
-    end
+    return unless name_element.present?
+    return if name_element == name_element.strip
+    errors.add(:name_element, "has whitespace")
   end
 
   def both_unranked?
@@ -194,7 +241,9 @@ class Name < ActiveRecord::Base
   def parent_rank_high_enough?
     if requires_parent? && requires_higher_ranked_parent?
       unless parent.blank? || parent_rank_above? || both_unranked?
-        errors.add(:parent_id, "rank (#{parent.try('name_rank').try('name')}) must be higher than the name rank (#{name_rank.try('name')})")
+        errors.add(:parent_id, "rank (#{parent.try('name_rank').try('name')})
+                   must be higher than the name rank (#{name_rank.try('name')})"
+                  )
       end
     end
   end
@@ -228,35 +277,65 @@ class Name < ActiveRecord::Base
 
   def raw_category
     case name_type.try("name") || nil
-    when "autonym"                           then SCIENTIFIC_CATEGORY
-    when "hybrid formula unknown 2nd parent" then SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY
-    when "named hybrid"                      then SCIENTIFIC_CATEGORY
-    when "named hybrid autonym"              then SCIENTIFIC_CATEGORY
-    when "sanctioned"                        then SCIENTIFIC_CATEGORY
-    when "scientific"                        then SCIENTIFIC_CATEGORY
-    when "phrase name"                       then SCIENTIFIC_CATEGORY
-    when "cultivar hybrid formula"           then SCIENTIFIC_HYBRID_FORMULA_CATEGORY
-    when "graft/chimera"                     then SCIENTIFIC_HYBRID_FORMULA_CATEGORY
-    when "hybrid"                            then SCIENTIFIC_HYBRID_FORMULA_CATEGORY
-    when "hybrid autonym"                    then SCIENTIFIC_HYBRID_FORMULA_CATEGORY
-    when "hybrid formula parents known"      then SCIENTIFIC_HYBRID_FORMULA_CATEGORY
-    when "intergrade"                        then SCIENTIFIC_HYBRID_FORMULA_CATEGORY
-    when "formula"                           then SCIENTIFIC_HYBRID_FORMULA_CATEGORY
-    when "acra"                              then CULTIVAR_CATEGORY
-    when "acra hybrid"                       then CULTIVAR_HYBRID_CATEGORY  # deprecated name type
-    when "cultivar"                          then CULTIVAR_CATEGORY
-    when "cultivar hybrid"                   then CULTIVAR_HYBRID_CATEGORY
-    when "pbr"                               then CULTIVAR_CATEGORY
-    when "pbr hybrid"                        then CULTIVAR_HYBRID_CATEGORY  # deprecated name type
-    when "trade"                             then CULTIVAR_CATEGORY
-    when "trade hybrid"                      then CULTIVAR_HYBRID_CATEGORY  # deprecated name type
-    when "[default]"                         then OTHER_CATEGORY
-    when "[n/a]"                             then OTHER_CATEGORY
-    when "[unknown]"                         then OTHER_CATEGORY
-    when "common"                            then OTHER_CATEGORY
-    when "informal"                          then OTHER_CATEGORY
+    when "autonym"
+      then SCIENTIFIC_CATEGORY
+    when "hybrid formula unknown 2nd parent"
+      then SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY
+    when "named hybrid"
+      then SCIENTIFIC_CATEGORY
+    when "named hybrid autonym"
+      then SCIENTIFIC_CATEGORY
+    when "sanctioned"
+      then SCIENTIFIC_CATEGORY
+    when "scientific"
+      then SCIENTIFIC_CATEGORY
+    when "phrase name"
+      then SCIENTIFIC_CATEGORY
+    when "cultivar hybrid formula"
+      then SCIENTIFIC_HYBRID_FORMULA_CATEGORY
+    when "graft/chimera"
+      then SCIENTIFIC_HYBRID_FORMULA_CATEGORY
+    when "hybrid"
+      then SCIENTIFIC_HYBRID_FORMULA_CATEGORY
+    when "hybrid autonym"
+      then SCIENTIFIC_HYBRID_FORMULA_CATEGORY
+    when "hybrid formula parents known"
+      then SCIENTIFIC_HYBRID_FORMULA_CATEGORY
+    when "intergrade"
+      then SCIENTIFIC_HYBRID_FORMULA_CATEGORY
+    when "formula"
+      then SCIENTIFIC_HYBRID_FORMULA_CATEGORY
+    when "acra"
+      then CULTIVAR_CATEGORY
+    # deprecated name type
+    when "acra hybrid"
+      then CULTIVAR_HYBRID_CATEGORY
+    when "cultivar"
+      then CULTIVAR_CATEGORY
+    when "cultivar hybrid"
+      then CULTIVAR_HYBRID_CATEGORY
+    when "pbr"
+      then CULTIVAR_CATEGORY
+    # deprecated name type
+    when "pbr hybrid"
+      then CULTIVAR_HYBRID_CATEGORY
+    when "trade"
+      then CULTIVAR_CATEGORY
+    # deprecated name type
+    when "trade hybrid"
+      then CULTIVAR_HYBRID_CATEGORY
+    when "[default]"
+      then OTHER_CATEGORY
+    when "[n/a]"
+      then OTHER_CATEGORY
+    when "[unknown]"
+      then OTHER_CATEGORY
+    when "common"
+      then OTHER_CATEGORY
+    when "informal"
+      then OTHER_CATEGORY
     else OTHER_CATEGORY
-                  end
+    end
   end
 
   def status_options
@@ -264,7 +343,8 @@ class Name < ActiveRecord::Base
   end
 
   def takes_name_element?
-    !(category == SCIENTIFIC_HYBRID_FORMULA_CATEGORY || category == SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY)
+    !(category == SCIENTIFIC_HYBRID_FORMULA_CATEGORY ||
+      category == SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY)
   end
 
   def takes_status?
@@ -316,18 +396,25 @@ class Name < ActiveRecord::Base
 
   def parent_rule
     case category
-    when SCIENTIFIC_HYBRID_FORMULA_CATEGORY then "hybrid - species and below or unranked if unranked"
-    when SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY then "hybrid - species and below or unranked if unranked"
-    when CULTIVAR_HYBRID_CATEGORY then "cultivar - genus and below, or unranked if unranked"
-    when CULTIVAR_CATEGORY then "cultivar - genus and below, or unranked if unranked"
-    else "ordinary - restricted by rank, or unranked if unranked"
+    when SCIENTIFIC_HYBRID_FORMULA_CATEGORY
+      then "hybrid - species and below or unranked if unranked"
+    when SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY
+      then "hybrid - species and below or unranked if unranked"
+    when CULTIVAR_HYBRID_CATEGORY
+      then "cultivar - genus and below, or unranked if unranked"
+    when CULTIVAR_CATEGORY
+      then "cultivar - genus and below, or unranked if unranked"
+    else
+      "ordinary - restricted by rank, or unranked if unranked"
     end
   end
 
   def second_parent_rule
     case category
-    when SCIENTIFIC_HYBRID_FORMULA_CATEGORY then "hybrid - species and below or unranked if unranked"
-    when CULTIVAR_HYBRID_CATEGORY then "cultivar - genus and below, or unranked if unranked"
+    when SCIENTIFIC_HYBRID_FORMULA_CATEGORY
+      then "hybrid - species and below or unranked if unranked"
+    when CULTIVAR_HYBRID_CATEGORY
+      then "cultivar - genus and below, or unranked if unranked"
     else ""
     end
   end
@@ -352,7 +439,9 @@ class Name < ActiveRecord::Base
   end
 
   def has_only_one_type?
-    category == CULTIVAR_CATEGORY || category == CULTIVAR_HYBRID_CATEGORY || category == SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY
+    category == CULTIVAR_CATEGORY ||
+      category == CULTIVAR_HYBRID_CATEGORY ||
+      category == SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY
   end
 
   def self.created_in_the_last(amount = 1, time_unit = "hour")
@@ -414,7 +503,8 @@ class Name < ActiveRecord::Base
     if json["inAPC"] == true
       self.apc_instance_id = json["taxonId"].to_i
       self.apc_declared_bt = (json["type"] == DECLARED_BT)
-      self.apc_instance_is_an_excluded_name = (!apc_declared_bt && json["excluded"] == true)
+      self.apc_instance_is_an_excluded_name =
+        (!apc_declared_bt && json["excluded"] == true)
     else
       self.apc_instance_id = nil
       self.apc_instance_is_an_excluded_name = false
@@ -452,7 +542,8 @@ class Name < ActiveRecord::Base
       JSON.load(open(Name::AsServices.apni_family_url(id), read_timeout: 1))
     end
   rescue => e
-    logger.error("Name#get_apni_family exception: #{e} for URL: #{Name::AsServices.apni_family_url(id)}")
+    logger.error("Name#get_apni_family exception: #{e} for URL:
+                 #{Name::AsServices.apni_family_url(id)}")
     raise
   end
 
@@ -515,11 +606,13 @@ class Name < ActiveRecord::Base
 
   def get_names_json
     logger.debug("get_names_json start for id: #{id}")
-    logger.debug("Name::AsServices.name_strings_url(id) for id: #{id}: #{Name::AsServices.name_strings_url(id)}")
+    logger.debug("Name::AsServices.name_strings_url(id) for
+                 id: #{id}: #{Name::AsServices.name_strings_url(id)}")
     JSON.load(open(Name::AsServices.name_strings_url(id)))
   end
 
-  # Use update_columns to avoid validation errors, stale object errors and timestamp changes.
+  # Use update_columns to avoid validation errors, stale object
+  # errors and timestamp changes.
   def refresh_constructed_name_fields
     names_json = get_names_json
     if full_name != names_json["result"]["fullName"] ||
@@ -530,7 +623,8 @@ class Name < ActiveRecord::Base
       update_columns(full_name: names_json["result"]["fullName"],
                      full_name_html: names_json["result"]["fullMarkedUpName"],
                      simple_name: names_json["result"]["simpleName"],
-                     simple_name_html: names_json["result"]["simpleMarkedUpName"])
+                     simple_name_html:
+                     names_json["result"]["simpleMarkedUpName"])
       1
     else
       0

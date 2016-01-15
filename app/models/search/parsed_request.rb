@@ -49,9 +49,11 @@ class Search::ParsedRequest
     "instances-for-ref-id:" => "instances-for-ref-id:",
     "instances for ref id" => "instances-for-ref-id:",
     "instance-ref-id-sort-by-page:" => "instances-for-ref-id-sort-by-page:",
-    "instances-for-ref-id-sort-by-page:" => "instances-for-ref-id-sort-by-page:",
+    "instances-for-ref-id-sort-by-page:" =>
+    "instances-for-ref-id-sort-by-page:",
     "instances for ref id sort by page" => "instances-for-ref-id-sort-by-page:",
-    "instances sorted by page for ref id" => "instances-for-ref-id-sort-by-page:",
+    "instances sorted by page for ref id" =>
+    "instances-for-ref-id-sort-by-page:",
     "references with instances" => "references-name-full-synonymy",
     "references, names, full synonymy" => "references-name-full-synonymy",
     "references + instances" => "references-name-full-synonymy",
@@ -91,10 +93,13 @@ class Search::ParsedRequest
   end
 
   def inspect
-    "Parsed Request: count: #{@count}; list: #{@list}; defined_query: #{@defined_query};" \
-    "where_arguments: #{@where_arguments}, defined_query_args: #{@defined_query_args}; " \
-    "query_target: #{@query_target}; " \
-    "common_and_cultivar: #{@common_and_cultivar}; include_common_and_cultivar_session: #{@include_common_and_cultivar_session};"
+    "Parsed Request: count: #{@count}; list: #{@list};
+    defined_query: #{@defined_query}; where_arguments: #{@where_arguments},
+    defined_query_args: #{@defined_query_args};
+    query_target: #{@query_target};
+    common_and_cultivar: #{@common_and_cultivar};
+    include_common_and_cultivar_session
+    : #{@include_common_and_cultivar_session};"
   end
 
   def as_a_list_request
@@ -104,18 +109,21 @@ class Search::ParsedRequest
   end
 
   def parse_request
-    debug("parse_request start: ===============================")
     debug("parse_request start: @params: #{@params}")
     @query_string = @params["query_string"].gsub(/  */, " ")
-    debug("parse_request @query_string: #{@query_string}")
     @query_target = (@params["query_target"] || "").strip.downcase
-    debug("parse_request @query_target: #{@query_target}")
     @user = @params[:current_user]
-    # Before splitting on spaces, make sure every colon has at least one space after it.
-    remaining_tokens = @query_string.strip.gsub(/:/, ": ").gsub(/:  /, ": ").split(/ /)
+    # Before splitting on spaces, make sure every colon has at least
+    # one space after it.
+    remaining_tokens = @query_string
+                       .strip.gsub(/:/, ": ")
+                       .gsub(/:  /, ": ")
+                       .split(/ /)
     remaining_tokens = parse_query_target(remaining_tokens)
     remaining_tokens = parse_count_or_list(remaining_tokens)
-    remaining_tokens = parse_limit(remaining_tokens) # limit needs to be a delimited field limit: NNN to avoid confusion with IDs.
+    # limit needs to be a delimited field limit: NNN
+    # to avoid confusion with IDs.
+    remaining_tokens = parse_limit(remaining_tokens)
     remaining_tokens = parse_target(remaining_tokens)
     remaining_tokens = parse_common_and_cultivar(remaining_tokens)
     remaining_tokens = parse_order(remaining_tokens)
@@ -125,12 +133,14 @@ class Search::ParsedRequest
   def parse_query_target(tokens)
     query_target_downcase = @query_target.downcase
     if DEFINED_QUERIES.key?(query_target_downcase)
-      debug("parse_query_target - #{query_target_downcase} is recognized as a defined query.")
+      debug("parse_query_target - #{query_target_downcase}
+            is recognized as a defined query.")
       @defined_query = DEFINED_QUERIES[query_target_downcase]
-      #@target_button_text = @params["query_target"].capitalize
+      # @target_button_text = @params["query_target"].capitalize
       @target_button_text = @params["query_target"].capitalize
     else
-      debug("parse_query_target - '#{query_target_downcase}' is NOT recognized as a defined query.")
+      debug("parse_query_target - '#{query_target_downcase}'
+            is NOT recognized as a defined query.")
       @defined_query = false
     end
     tokens
@@ -184,11 +194,9 @@ class Search::ParsedRequest
   def parse_target(tokens)
     debug(" parse_target")
     if @defined_query == false
-      debug(" parse_target not a defined query")
       if SIMPLE_QUERY_TARGETS.key?(@query_target)
         @target_table = SIMPLE_QUERY_TARGETS[@query_target]
         @target_button_text = @target_table.capitalize.pluralize
-        debug(" parse_target has a simple query! @target_table: #{@target_table}")
         tokens = tokens.drop(1) if SIMPLE_QUERY_TARGETS.key?(tokens.first)
       else
         fail "Cannot parse target: #{@query_target}"

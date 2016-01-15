@@ -14,7 +14,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-
+#  Reference entity - books, papers, journals, etc
 class Reference < ActiveRecord::Base
   include PgSearch
   self.table_name = "reference"
@@ -35,7 +35,8 @@ class Reference < ActiveRecord::Base
                     }
                   }
 
-  # https://robots.thoughtbot.com/optimizing-full-text-search-with-postgres-tsvector-columns-and-triggers
+  # https://robots.thoughtbot.com/optimizing-full-text-search-with-postgres-
+  # tsvector-columns-and-triggers
   pg_search_scope :search_citation_tsv_for,
                   against: :citation,
                   using: {
@@ -46,31 +47,43 @@ class Reference < ActiveRecord::Base
                     }
                   }
 
-  scope :lower_citation_equals, ->(string) { where("lower(citation) = ? ", string.downcase) }
-  scope :lower_citation_like, ->(string) { where("lower(citation) like ? ", string.gsub(/\*/, "%").downcase) }
-  scope :not_duplicate, -> { where("duplicate_of_id is null") }
-  scope :is_duplicate, -> { where("duplicate_of_id is not null") }
+  scope :lower_citation_equals,
+        ->(string) { where("lower(citation) = ? ", string.downcase) }
+  scope :lower_citation_like,
+        ->(string) { where("lower(citation) like ? ", string.gsub(/\*/, "%").downcase) }
+  scope :not_duplicate,
+        -> { where("duplicate_of_id is null") }
+  scope :is_duplicate,
+        -> { where("duplicate_of_id is not null") }
 
-  scope :created_n_days_ago, ->(n) { where("current_date - created_at::date = ?", n) }
-  scope :updated_n_days_ago, ->(n) { where("current_date - updated_at::date = ?", n) }
-  scope :changed_n_days_ago, ->(n) { where("current_date - created_at::date = ? or current_date - updated_at::date = ?", n, n) }
+  scope :created_n_days_ago,
+        ->(n) { where("current_date - created_at::date = ?", n) }
+  scope :updated_n_days_ago,
+        ->(n) { where("current_date - updated_at::date = ?", n) }
+  scope :changed_n_days_ago,
+        ->(n) { where("current_date - created_at::date = ? or current_date - updated_at::date = ?", n, n) }
 
-  scope :created_in_the_last_n_days, ->(n) { where("current_date - created_at::date < ?", n) }
-  scope :updated_in_the_last_n_days, ->(n) { where("current_date - updated_at::date < ?", n) }
-  scope :changed_in_the_last_n_days, ->(n) { where("current_date - created_at::date < ? or current_date - updated_at::date < ?", n, n) }
+  scope :created_in_the_last_n_days,
+        ->(n) { where("current_date - created_at::date < ?", n) }
+  scope :updated_in_the_last_n_days,
+        ->(n) { where("current_date - updated_at::date < ?", n) }
+  scope :changed_in_the_last_n_days,
+        ->(n) { where("current_date - created_at::date < ? or current_date - updated_at::date < ?", n, n) }
 
   belongs_to :ref_type, foreign_key: "ref_type_id"
   belongs_to :ref_author_role, foreign_key: "ref_author_role_id"
   belongs_to :author, foreign_key: "author_id"
 
-  # Prevent parent references being destroyed; cannot see how to enforce this via acts_as_tree.
+  # Prevent parent references being destroyed; cannot see how to enforce
+  # this via acts_as_tree.
   belongs_to :parent, class_name: Reference, foreign_key: "parent_id"
   has_many :children,
            class_name: "Reference",
            foreign_key:  "parent_id",
            dependent: :restrict_with_exception
 
-  # acts_as_tree foreign_key: :duplicate_of_id, order: "title"  # Cannot have 2 acts_as_tree in one model.
+  # acts_as_tree foreign_key: :duplicate_of_id, order: "title"
+  # Cannot have 2 acts_as_tree in one model.
   belongs_to :duplicate_of,
              class_name: "Reference",
              foreign_key: "duplicate_of_id"
@@ -83,34 +96,72 @@ class Reference < ActiveRecord::Base
   belongs_to :language
 
   has_many :instances, foreign_key: "reference_id"
-  has_many :name_instances, -> { where "cited_by_id is not null" }, class_name: "Instance", foreign_key: "reference_id"
-  has_many :novelties, -> { where "instance.instance_type_id in (select id from instance_type where primary_instance)" }, class_name: "Instance", foreign_key: "reference_id"
+  has_many :name_instances,
+           -> { where "cited_by_id is not null" },
+           class_name: "Instance",
+           foreign_key: "reference_id"
+  has_many :novelties,
+           -> { where "instance.instance_type_id in (select id from instance_type where primary_instance)" },
+           class_name: "Instance",
+           foreign_key: "reference_id"
   has_many :comments
 
   validates :published, inclusion: { in: [true, false] }
-  validates_length_of :volume, maximum: 50, message: "cannot be longer than 50 characters"
-  validates_length_of :edition, maximum: 50, message: "cannot be longer than 50 characters"
-  validates_length_of :pages, maximum: 255, message: "cannot be longer than 255 characters"
-  validates_presence_of :ref_type_id, :author_id, :ref_author_role_id, message: "cannot be empty."
-  # Title and display_title are mandatory columns, but many records have simply a single space in these column.
-  # But a single space is not enough to avoid the validates_presence_of test, so using this length test instead.
+  validates_length_of :volume,
+                      maximum: 50,
+                      message: "cannot be longer than 50 characters"
+  validates_length_of :edition,
+                      maximum: 50,
+                      message: "cannot be longer than 50 characters"
+  validates_length_of :pages,
+                      maximum: 255,
+                      message: "cannot be longer than 255 characters"
+  validates_presence_of :ref_type_id,
+                        :author_id,
+                        :ref_author_role_id,
+                        message: "cannot be empty."
+  # Title and display_title are mandatory columns, but many records have
+  # simply a single space in these column. But a single space is not enough
+  # to avoid the validates_presence_of test, so using this length test instead.
   validates :display_title, :title,
-            length: { minimum: 1 } # title, display_title are mandatory columns but can consist of a single space.
-  validates :year, numericality: { only_integer: true, greater_than_or_equal_to: 1000, less_than_or_equal_to: Time.now.year }, allow_nil: true
-  validates_exclusion_of :parent_id, in: ->(reference) { [reference.id] },
-                                     allow_blank: true,
-                                     message: "and child cannot be the same record"
-  validates_exclusion_of :duplicate_of_id, in: ->(reference) { [reference.id] },
-                                           allow_blank: true,
-                                           message: "and master cannot be the same record"
+            length: { minimum: 1 }
+  validates :year,
+            numericality: { only_integer: true,
+                            greater_than_or_equal_to: 1000,
+                            less_than_or_equal_to: Time.now.year },
+            allow_nil: true
+  validates_exclusion_of :parent_id,
+                         in: ->(reference) { [reference.id] },
+                         allow_blank: true,
+                         message: "and child cannot be the same record"
+  validates_exclusion_of :duplicate_of_id,
+                         in: ->(reference) { [reference.id] },
+                         allow_blank: true,
+                         message: "and master cannot be the same record"
   validates :language_id, presence: true
   validate :validate_parent
 
-  ID_AND_AUDIT_FIELDS = %w(id created_at created_by updated_at updated_by namespace_id source_system source_id lock_version)
-  VIEW_ONLY_FIELDS = %w(author ref_author_role_name comma_after_edition \
-                        mark_as_ed_if_editor parent_known_author known_author_comma \
-                        publication_date_with_parens verbatim_author \
-                        verbatim_citation year_with_parens known_author verbatim_title)
+  ID_AND_AUDIT_FIELDS = %w(id
+                           created_at
+                           created_by
+                           updated_at
+                           updated_by
+                           namespace_id
+                           source_system
+                           source_id
+                           lock_version)
+  VIEW_ONLY_FIELDS = %w(author
+                        ref_author_role_name
+                        comma_after_edition
+                        mark_as_ed_if_editor
+                        parent_known_author
+                        known_author_comma
+                        publication_date_with_parens
+                        verbatim_author
+                        verbatim_citation
+                        year_with_parens
+                        known_author
+                        verbatim_title)
   SEARCH_LIMIT = 50
   DEFAULT_DESCRIPTOR = "citation" # for citation
   LEGAL_TO_ORDER_BY = { "p" => "parent_id",
@@ -147,9 +198,13 @@ class Reference < ActiveRecord::Base
     if ref_type.blank?
       "Please choose a type."
     elsif ref_type_permits_parent?
-      "#{ref_type.indefinite_article.capitalize} #{ref_type.name.downcase} type can have #{ref_type.parent.indefinite_article} #{ref_type.parent.name.downcase} type parent."
+      article = ref_type.parent.indefinite_article
+      "#{ref_type.indefinite_article.capitalize} #{ref_type.name.downcase}
+      type can
+      have #{article} #{ref_type.parent.name.downcase} type parent."
     else
-      "#{ref_type.indefinite_article.capitalize} #{ref_type.name.downcase} type cannot have a parent."
+      "#{ref_type.indefinite_article.capitalize} #{ref_type.name.downcase}
+      type cannot have a parent."
     end
   end
 
@@ -162,8 +217,10 @@ class Reference < ActiveRecord::Base
       if ref_type.parent.name == parent.ref_type.name
         # ok because the parent is what we would expect
       else
-        logger.debug("Found error in validate_parent current errors: #{errors.size}")
-        errors.add(:parent_id, "#{parent.ref_type.name.downcase} cannot contain a #{ref_type.name.downcase}. Please change Type or Parent.")
+        logger.debug("Error in validate_parent current errors: #{errors.size}")
+        errors.add(:parent_id,
+                   "#{parent.ref_type.name.downcase} cannot contain
+                   a #{ref_type.name.downcase}. Please change Type or Parent.")
       end
     else
       logger.debug("Error because parent is not allowed.")
@@ -201,56 +258,12 @@ class Reference < ActiveRecord::Base
     ->(title) { Reference.where(" lower(title) = ?", title.downcase) }
   end
 
-  # Local lookup value hashes
-  # #########################
-  # These hashes are set up once each time the app starts
-  # when application.rb calls the initialize_rtn and initialize_rar methods.
-  # One aim is to avoid querying these lookups every request.
-  # Also, storing them in the Reference class is the fastest option I've found -
-  # the next most efficient method I tried added ~ 0.1sec/request on average.
-  # Of course, if there is a faster way or an equally fast way that is less
-  # hacked, do it that way.
-  RTN = {}  # Will hold a mapping from ref_type.id to ref_type.name.
-  RAR = {}  # Will hold a mapping from ref_author_role.id to ref_author_role.name.
-
-  # Sets up a mapping from ref_type.id to ref_type.name.
-  def self.initialize_rtn
-    if RTN.size == 0
-      logger.debug("Initializing RTN")
-      RefType.all.each { |ref_type| RTN[ref_type.id] = ref_type.name }
-    end
-  end
-
-  # Sets up a mapping from ref_author_role.id to ref_author_role.name.
-  def self.initialize_rar
-    if RAR.size == 0
-      logger.debug("Initializing RAR")
-      RefAuthorRole.all.each { |ref_author_role| RAR[ref_author_role.id] = ref_author_role.name }
-    end
-  end
-
-  def self.show_RAR
-    RAR.each { |n, v| logger.debug("#{n}: #{v}") }
-  end
-
-  def self.show_RTN
-    RTN.each { |n, v| logger.debug("#{n}: #{v}") }.collect
-  end
-
   def self.dummy_record
     find_by_title("Unknown")
   end
 
   def display_as_part_of_concept
     self.display_as = :reference_as_part_of_concept
-  end
-
-  # During development (at least) RAR goes empty - presumably on reload after changes.
-  def ref_author_role_string
-    RAR[ref_author_role_id].downcase # downcase throws exception if nil returned from hash.
-  rescue => e
-    self.class.initialize_rar
-    RAR[ref_author_role_id].downcase
   end
 
   def duplicate?
@@ -286,7 +299,8 @@ class Reference < ActiveRecord::Base
     parent && !!author.name.match(/\A#{Regexp.escape(parent.author.name)}\z/)
   end
 
-  # String referenceTitle = (reference.title && reference.title != 'Not set') ? reference.title.fullStop() : ''
+  # String referenceTitle = (reference.title && reference.title != 'Not set')
+  # ? reference.title.fullStop() : ''
   def title_citation
     if title.strip.match(/\Anot set\z/i)
       ""

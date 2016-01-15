@@ -15,6 +15,7 @@
 #   limitations under the License.
 #
 class Reference::AsEdited < Reference::AsTypeahead
+  LABEL = "Reference::AsEdited: "
   def self.create(params, typeahead_params, username)
     reference = Reference::AsEdited.new(params)
     reference.resolve_typeahead_params(typeahead_params)
@@ -25,13 +26,14 @@ class Reference::AsEdited < Reference::AsTypeahead
     end
     reference
   rescue => e
-    logger.error("Reference::AsEdited:rescuing: #{e}")
-    logger.error("Reference::AsEdited#create; params: #{params}; typeahead params: #{typeahead_params}")
+    logger.error("#{LABEL}:rescuing: #{e}")
+    logger.error("#{LABEL}#create; params: #{params};
+                 typeahead params: #{typeahead_params}")
     raise
   end
 
   def debug(s)
-    logger.debug("Reference::AsEdited: #{s}")
+    logger.debug("#{LABEL}: #{s}")
   end
 
   def update_if_changed(params, typeahead_params, username)
@@ -51,8 +53,9 @@ class Reference::AsEdited < Reference::AsTypeahead
       "No change."
     end
   rescue => e
-    logger.error("Reference::AsEdited with params: #{params}, typeahead_params: #{typeahead_params}")
-    logger.error("Reference::AsEdited with params: #{e}")
+    logger.error("#{LABEL} with params: #{params},
+                 typeahead_params: #{typeahead_params}")
+    logger.error("#{LABEL} with params: #{e}")
     raise
   end
 
@@ -92,26 +95,42 @@ class Reference::AsEdited < Reference::AsTypeahead
   end
 
   def resolve_typeahead_params(params)
-    self.author_id = Reference::AsEdited.author_from_typeahead(params["author_id"], params["author_typeahead"]) if params.key?("author_id")
-    self.parent_id = Reference::AsEdited.parent_from_typeahead(params["parent_id"], params["parent_typeahead"]) if params.key?("parent_id")
-    self.duplicate_of_id = Reference::AsEdited.duplicate_of_from_typeahead(params["duplicate_of_id"], params["duplicate_of_typeahead"]) if params.key?("duplicate_of_id")
+    if params.key?("author_id")
+      self.author_id = Reference::AsEdited
+                       .author_from_typeahead(params["author_id"],
+                                              params["author_typeahead"])
+    end
+
+    if params.key?("parent_id")
+      self.parent_id = Reference::AsEdited.parent_from_typeahead(
+                         params["parent_id"],
+                         params["parent_typeahead"])
+    end
+
+    if params.key?("duplicate_of_id")
+      self.duplicate_of_id =
+      Reference::AsEdited
+      .duplicate_of_from_typeahead(params["duplicate_of_id"],
+                                   params["duplicate_of_typeahead"])
+    end
   rescue => e
-    logger.error("Reference::AsEdited:resolved_typeahead_params: rescuing exception: #{e}")
+    logger.error("#{LABEL}:resolved_typeahead_params: rescuing exception: #{e}")
     raise
   end
 
   def self.author_from_typeahead(id_string, text)
-    logger.debug("Reference::AsEdited:author_from_typeahead: id_string: #{id_string}; text: #{text}")
+    logger.debug("#{LABEL}:author_from_typeahead: id_string: #{id_string};
+                 text: #{text}")
     name_text = text.sub(/ *\|.*\z/, "")
     name_text.rstrip!
-    logger.debug("Reference::AsEdited:author_from_typeahead: name_text: #{name_text}")
+    logger.debug("#{LABEL}:author_from_typeahead: name_text: #{name_text}")
     case resolve_id_and_text(id_string, name_text)
     when :no_id_or_text
       value = ""
     when :id_only # assume delete
       value = ""
     when :text_only
-      logger.info("Reference::AsEdited:author_from_typeahead: string")
+      logger.info("#{LABEL}:author_from_typeahead: string")
       possibles = Author.lower_name_equals(name_text)
       case possibles.size
       when 0
@@ -128,7 +147,7 @@ class Reference::AsEdited < Reference::AsTypeahead
         fail "please choose author from suggestions (more than 1 match)"
       end
     when :id_and_text
-      logger.debug("Reference::AsEdited:author_from_typeahead: id and text")
+      logger.debug("#{LABEL}:author_from_typeahead: id and text")
       possibles = Author.lower_name_equals(name_text)
       case possibles.size
       when 0
@@ -142,7 +161,8 @@ class Reference::AsEdited < Reference::AsTypeahead
       when 1
         value = possibles.first.id
       else
-        possibles_with_id = Author.where(id: id_string.to_i).lower_name_equals(name_text)
+        possibles_with_id = Author.where(id: id_string.to_i)
+                                  .lower_name_equals(name_text)
         if possibles_with_id.size == 1
           value = possibles_with_id.first.id
         else
@@ -150,25 +170,26 @@ class Reference::AsEdited < Reference::AsTypeahead
         end
       end
     else
-      logger.debug("Reference::AsEdited:author_from_typeahead: strange data")
+      logger.debug("#{LABEL}:author_from_typeahead: strange data")
       fail "unrecognized information"
     end
-    logger.debug("Reference::AsEdited:author_from_typeahead: returning value: #{value}")
+    logger.debug("#{LABEL}:author_from_typeahead: returning value: #{value}")
     value
   end
 
   def self.parent_from_typeahead(id_string, text)
-    logger.debug("Reference::AsEdited:parent_from_typeahead: id_string: #{id_string}; text: #{text}")
+    logger.debug("#{LABEL}:parent_from_typeahead: id_string: #{id_string};
+                 text: #{text}")
     text = text.sub(/ *\|.*\z/, "")
     text.rstrip!
-    logger.debug("Reference::AsEdited:parent_from_typeahead: text: #{text}")
+    logger.debug("#{LABEL}:parent_from_typeahead: text: #{text}")
     case resolve_id_and_text(id_string, text)
     when :no_id_or_text
       value = ""
     when :id_only # assume delete
       value = ""
     when :text_only
-      logger.info("Reference::AsEdited:parent_from_typeahead: string")
+      logger.info("#{LABEL}:parent_from_typeahead: string")
       possibles = Reference.lower_citation_equals(text)
       case possibles.size
       when 0
@@ -185,7 +206,7 @@ class Reference::AsEdited < Reference::AsTypeahead
         fail "please choose parent from suggestions (more than 1 match)"
       end
     when :id_and_text
-      logger.debug("Reference::AsEdited:parent_from_typeahead: id and text")
+      logger.debug("#{LABEL}:parent_from_typeahead: id and text")
       possibles = Reference.lower_citation_equals(text)
       case possibles.size
       when 0
@@ -199,7 +220,9 @@ class Reference::AsEdited < Reference::AsTypeahead
       when 1
         value = possibles.first.id
       else
-        possibles_with_id = Reference.where(id: id_string.to_i).lower_citation_equals(text)
+        possibles_with_id = Reference
+                            .where(id: id_string.to_i)
+                            .lower_citation_equals(text)
         if possibles_with_id.size == 1
           value = possibles_with_id.first.id
         else
@@ -207,25 +230,27 @@ class Reference::AsEdited < Reference::AsTypeahead
         end
       end
     else
-      logger.debug("Reference::AsEdited:parent_from_typeahead: strange data")
+      logger.debug("#{LABEL}:parent_from_typeahead: strange data")
       fail "unrecognized information"
     end
-    logger.debug("Reference::AsEdited:parent_from_typeahead: returning value: #{value}")
+    logger.debug("#{LABEL}:parent_from_typeahead: returning value: #{value}")
     value
   end
 
   def self.duplicate_of_from_typeahead(id_string, text)
-    logger.debug("Reference::AsEdited:duplicate_of_from_typeahead: id_string: #{id_string}; text: #{text}")
+    logger.debug("#{LABEL}:duplicate_of_from_typeahead:
+                 id_string: #{id_string}; text: #{text}")
     citation_text = text.sub(/ *\|.*\z/, "")
     citation_text.rstrip!
-    logger.debug("Reference::AsEdited:duplicate_of_from_typeahead: citation_text: #{citation_text}")
+    logger.debug("#{LABEL}:duplicate_of_from_typeahead:
+                 citation_text: #{citation_text}")
     case resolve_id_and_text(id_string, citation_text)
     when :no_id_or_text
       value = ""
     when :id_only # assume delete
       value = ""
     when :text_only
-      logger.info("Reference::AsEdited:duplicate_of_from_typeahead: string")
+      logger.info("#{LABEL}:duplicate_of_from_typeahead: string")
       possibles = Reference.lower_citation_equals(citation_text)
       case possibles.size
       when 0
@@ -242,7 +267,7 @@ class Reference::AsEdited < Reference::AsTypeahead
         fail "please choose duplicate of from suggestions (more than 1 match)"
       end
     when :id_and_text
-      logger.debug("Reference::AsEdited:duplicate_of_from_typeahead: id and text")
+      logger.debug("#{LABEL}:duplicate_of_from_typeahead: id and text")
       possibles = Reference.lower_citation_equals(citation_text)
       case possibles.size
       when 0
@@ -256,7 +281,9 @@ class Reference::AsEdited < Reference::AsTypeahead
       when 1
         value = possibles.first.id
       else
-        possibles_with_id = Reference.where(id: id_string.to_i).lower_citation_equals(citation_text)
+        possibles_with_id = Reference
+                            .where(id: id_string.to_i)
+                            .lower_citation_equals(citation_text)
         if possibles_with_id.size == 1
           value = possibles_with_id.first.id
         else
@@ -264,10 +291,10 @@ class Reference::AsEdited < Reference::AsTypeahead
         end
       end
     else
-      logger.debug("Reference::AsEdited:duplicate_of_from_typeahead: strange data")
+      logger.debug("#{LABEL}:duplicate_of_from_typeahead: strange data")
       fail "unrecognized information"
     end
-    logger.debug("Reference::AsEdited:duplicate_of_from_typeahead: returning value: #{value}")
+    logger.debug("#{LABEL}:duplicate_of_from_typeahead: return value: #{value}")
     value
   end
 
@@ -277,7 +304,7 @@ class Reference::AsEdited < Reference::AsTypeahead
     elsif id_string.blank? && text.present?
       return :text_only
     elsif id_string.present? && text.blank?
-      return :id_only # assume intention was (ultimately) to remove the field value
+      return :id_only
     elsif id_string.present? && text.present?
       return :id_and_text
     else

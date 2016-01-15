@@ -26,12 +26,14 @@ class Name::AsEdited < Name::AsTypeahead
     name
   rescue => e
     logger.error("Name::AsEdited:rescuing: #{e}")
-    logger.error("Name::AsEdited#create; params: #{params}; typeahead params: #{typeahead_params}")
+    logger.error("Name::AsEdited#create; params: #{params};
+                 typeahead params: #{typeahead_params}")
     raise
   end
 
   def update_if_changed(params, typeahead_params, username)
-    params["verbatim_rank"] = nil if params["verbatim_rank"] == "" # empty string "changes" null field
+    # empty string "changes" null field
+    params["verbatim_rank"] = nil if params["verbatim_rank"] == ""
     assign_attributes(params)
     resolve_typeahead_params(typeahead_params)
     if changed?
@@ -43,28 +45,78 @@ class Name::AsEdited < Name::AsTypeahead
       "No change"
     end
   rescue => e
-    logger.error("Name::AsEdited with params: #{params}, typeahead_params: #{typeahead_params}")
-    logger.error("Name::AsEdited with params: #{e}")
+    logger.error("Name::AsEdited with params: #{params}")
+    logger.error("Name::AsEdited with typeahead_params: #{typeahead_params}")
+    logger.error("Name::AsEdited error: #{e}")
     raise
   end
 
   def resolve_typeahead_params(params)
-    logger.debug("Name:AsTypeahead.resolve_typeahead_params for params: #{params}")
-    self.author_id = Name::AsEdited.author_from_typeahead(params["author_id"], params["author_typeahead"], "Author") if params.key?("author_id")
-    self.ex_author_id = Name::AsEdited.author_from_typeahead(params["ex_author_id"], params["ex_author_typeahead"], "Ex Author") if params.key?("ex_author_id")
-    self.base_author_id = Name::AsEdited.author_from_typeahead(params["base_author_id"], params["base_author_typeahead"], "Base Author") if params.key?("base_author_id")
-    self.ex_base_author_id = Name::AsEdited.author_from_typeahead(params["ex_base_author_id"], params["ex_base_author_typeahead"], "Ex Base Author") if params.key?("ex_base_author_id")
-    self.sanctioning_author_id = Name::AsEdited.author_from_typeahead(params["sanctioning_author_id"], params["sanctioning_author_typeahead"], "Sanctioning Author") if params.key?("sanctioning_author_id")
-    self.parent_id = Name::AsEdited.parent_from_typeahead(params["parent_id"], params["parent_typeahead"]) if params.key?("parent_id")
-    self.second_parent_id = Name::AsEdited.parent_from_typeahead(params["second_parent_id"], params["second_parent_typeahead"]) if params.key?("second_parent_id")
-    self.duplicate_of_id = Name::AsEdited.duplicate_of_from_typeahead(params["duplicate_of_id"], params["duplicate_of_typeahead"]) if params.key?("duplicate_of_id")
+    logger.debug("Name:AsEdited.resolve_typeahead_params for params: #{params}")
+
+    if params.key?("author_id")
+      self.author_id =
+        Name::AsEdited.author_from_typeahead(params["author_id"],
+                                             params["author_typeahead"],
+                                             "Author")
+    end
+
+    if params.key?("ex_author_id")
+      self.ex_author_id =
+        Name::AsEdited.author_from_typeahead(params["ex_author_id"],
+                                             params["ex_author_typeahead"],
+                                             "Ex Author")
+    end
+
+    if params.key?("base_author_id")
+      self.base_author_id =
+        Name::AsEdited.author_from_typeahead(params["base_author_id"],
+                                             params["base_author_typeahead"],
+                                             "Base Author")
+    end
+
+    if params.key?("ex_base_author_id")
+      self.ex_base_author_id =
+        Name::AsEdited.author_from_typeahead(params["ex_base_author_id"],
+                                             params["ex_base_author_typeahead"],
+                                             "Ex Base Author")
+    end
+
+    if params.key?("sanctioning_author_id")
+      self.sanctioning_author_id =
+        Name::AsEdited
+        .author_from_typeahead(params["sanctioning_author_id"],
+                               params["sanctioning_author_typeahead"],
+                               "Sanctioning Author")
+    end
+
+    if params.key?("parent_id")
+      self.parent_id =
+        Name::AsEdited.parent_from_typeahead(params["parent_id"],
+                                             params["parent_typeahead"])
+    end
+
+    if params.key?("second_parent_id")
+      self.second_parent_id =
+        Name::AsEdited.parent_from_typeahead(params["second_parent_id"],
+                                             params["second_parent_typeahead"])
+    end
+
+    if params.key?("duplicate_of_id")
+      self.duplicate_of_id =
+      Name::AsEdited
+      .duplicate_of_from_typeahead(params["duplicate_of_id"],
+                                   params["duplicate_of_typeahead"])
+    end
+
   rescue => e
     logger.error("Name::AsEdited:resolve_typeahead_params:found error: #{e}")
     raise
   end
 
   def self.author_from_typeahead(id_string, text, field_name)
-    logger.debug("Name::AsEdited:author_from_typeahead: id_string: #{id_string}; text: #{text}")
+    logger.debug("Name::AsEdited:author_from_typeahead:
+                 id_string: #{id_string}; text: #{text}")
     text = text.sub(/ *\|.*\z/, "")
     text.rstrip!
     case resolve_id_and_text(id_string, text)
@@ -102,11 +154,13 @@ class Name::AsEdited < Name::AsTypeahead
       when 1
         value = possibles.first.id
       else
-        possibles_with_id = Author.where(id: id_string.to_i).lower_abbrev_equals(text)
+        possibles_with_id = Author
+                            .where(id: id_string.to_i)
+                            .lower_abbrev_equals(text)
         if possibles_with_id.size == 1
           value = possibles_with_id.first.id
         else
-          fail "please choose #{field_name} from suggestions (more than 1 match)"
+          fail "please choose #{field_name} from suggestions (> 1 match)"
         end
       end
     else
@@ -116,7 +170,8 @@ class Name::AsEdited < Name::AsTypeahead
   end
 
   def self.parent_from_typeahead(id_string, text)
-    logger.debug("Name::AsEdited:parent_from_typeahead: id_string: #{id_string}; text: #{text}")
+    logger.debug("Name::AsEdited:parent_from_typeahead:
+                 id_string: #{id_string}; text: #{text}")
     text = text.sub(/ *\|.*\z/, "")
     text.rstrip!
     logger.debug("Name::AsEdited:parent_from_typeahead: text: #{text}")
@@ -158,7 +213,10 @@ class Name::AsEdited < Name::AsTypeahead
       when 1
         value = possibles.first.id
       else
-        possibles_with_id = Name.where(id: id_string.to_i).lower_full_name_like(text).not_a_duplicate
+        possibles_with_id = Name
+                            .where(id: id_string.to_i)
+                            .lower_full_name_like(text)
+                            .not_a_duplicate
         if possibles_with_id.size == 1
           value = possibles_with_id.first.id
         else
@@ -169,12 +227,14 @@ class Name::AsEdited < Name::AsTypeahead
       logger.debug("Name::AsEdited:parent_from_typeahead: strange data")
       fail "please check Parent"
     end
-    logger.debug("Name::AsEdited:parent_from_typeahead: returning value: #{value}")
+    logger.debug("Name::AsEdited:parent_from_typeahead:
+                 returning value: #{value}")
     value
   end
 
   def self.duplicate_of_from_typeahead(id_string, text)
-    logger.debug("Name::AsEdited:duplicate_of_from_typeahead: id_string: #{id_string}; text: #{text}")
+    logger.debug("Name::AsEdited:duplicate_of_from_typeahead:
+                 id_string: #{id_string}; text: #{text}")
     text = text.sub(/ *\|.*\z/, "")
     text.rstrip!
     logger.debug("Name::AsEdited:duplicate_of_from_typeahead: text: #{text}")
@@ -215,7 +275,9 @@ class Name::AsEdited < Name::AsTypeahead
       when 1
         value = possibles.first.id
       else
-        possibles_with_id = Name.where(id: id_string.to_i).lower_full_name_equals(text)
+        possibles_with_id = Name
+                            .where(id: id_string.to_i)
+                            .lower_full_name_equals(text)
         if possibles_with_id.size == 1
           value = possibles_with_id.first.id
         else
@@ -226,7 +288,8 @@ class Name::AsEdited < Name::AsTypeahead
       logger.debug("Name::AsEdited:duplicate_of_from_typeahead: strange data")
       fail "unrecognized information"
     end
-    logger.debug("Name::AsEdited:duplicate_of_from_typeahead: returning value: #{value}")
+    logger.debug("Name::AsEdited:duplicate_of_from_typeahead:
+                 returning value: #{value}")
     value
   end
 
@@ -236,7 +299,7 @@ class Name::AsEdited < Name::AsTypeahead
     elsif id_string.blank? && text.present?
       return :text_only
     elsif id_string.present? && text.blank?
-      return :id_only # assume intention was (ultimately) to remove the field value
+      return :id_only # assume intention was to remove the field value
     elsif id_string.present? && text.present?
       return :id_and_text
     else

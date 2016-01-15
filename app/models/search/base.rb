@@ -65,7 +65,10 @@ class Search::Base
   end
 
   def query_string_for_more
-    query_string_without_limit.sub(/^ *list/i, "").sub(/^ *\d+/, "").sub(/^/, "all ")
+    query_string_without_limit
+      .sub(/^ *list/i, "")
+      .sub(/^ *\d+/, "")
+      .sub(/^/, "all ")
     raw_limit = @query_string.sub(/^ *list/i, "").trim.split.first
 
     current_limit = case raw_limit
@@ -75,7 +78,7 @@ class Search::Base
                       raw_limit.to_i
                     else
                       100
-    end
+                    end
     if current_limit == "all"
       @more_allowed = false
       new_limit = current_limit
@@ -84,13 +87,18 @@ class Search::Base
       new_limit = current_limit
     else
       @more_allowed = true
-      new_limit = (current_limit + PAGE_INCREMENT_SIZE > MAX_PAGE_SIZE) ? MAX_PAGE_SIZE : current_limit + PAGE_INCREMENT_SIZE
+      if (current_limit + PAGE_INCREMENT_SIZE) > MAX_PAGE_SIZE
+        new_limit = MAX_PAGE_SIZE
+      else
+        new_limit = current_limit + PAGE_INCREMENT_SIZE
+      end
     end
     "#{new_limit} #{query_string_without_limit}"
   end
 
   def run_query
-    debug("run_query for @parsed_request.target_table: #{@parsed_request.target_table}")
+    debug("run_query for
+          @parsed_request.target_table: #{@parsed_request.target_table}")
     @count_allowed = true
     case @parsed_request.target_table
     when /any/
@@ -112,49 +120,63 @@ class Search::Base
 
   def run_defined_query
     @count_allowed = false
-    fail "Defined queries need an argument." if @parsed_request.defined_query_arg.blank? && @parsed_request.where_arguments.blank?
+    if @parsed_request.defined_query_arg.blank? &&
+       @parsed_request.where_arguments.blank?
+      fail "Defined queries need an argument."
+    end
     case @parsed_request.defined_query
     when /instances-for-name-id:/
       debug("\nrun_defined_query instances-for-name-id:\n")
-      @executed_query = Name::DefinedQuery::NameIdWithInstances.new(@parsed_request)
+      @executed_query =
+        Name::DefinedQuery::NameIdWithInstances.new(@parsed_request)
     when /names-plus-instances:/
       debug("\nrun_defined_query instances-for-name:\n")
-      @executed_query = Name::DefinedQuery::NamesPlusInstances.new(@parsed_request)
+      @executed_query =
+        Name::DefinedQuery::NamesPlusInstances.new(@parsed_request)
     when /instances-for-ref-id:/
       debug("\nrun_defined_query instances-for-ref-id:\n")
-      @executed_query = Reference::DefinedQuery::ReferenceIdWithInstances.new(@parsed_request)
-      # @results = Instance::AsSearchEngine.for_ref_id(@defined_query_arg, @limit,'name')
+      @executed_query =
+        Reference::DefinedQuery::ReferenceIdWithInstances.new(@parsed_request)
     when /instances-for-ref-id-sort-by-page:/
       debug("\nrun_defined_query instances-for-ref-id-sort-by-page:\n")
-      @executed_query = Reference::DefinedQuery::ReferenceIdWithInstancesSortedByPage.new(@parsed_request)
-      # @results = Instance::AsSearchEngine.for_ref_id(@defined_query_arg, @limit,'page')
+      @executed_query =
+        Reference::DefinedQuery::ReferenceIdWithInstancesSortedByPage
+        .new(@parsed_request)
     when /references-name-full-synonymy/
       debug("\nrun_defined_query references-name-full-synonymy\n")
-      @executed_query = Reference::DefinedQuery::ReferencesNamesFullSynonymy.new(@parsed_request)
+      @executed_query =
+        Reference::DefinedQuery::ReferencesNamesFullSynonymy
+        .new(@parsed_request)
     when /\Ainstance-is-cited\z/
       debug("\nrun_defined_query instance-id-is-cited\n")
-      @executed_query = Instance::DefinedQuery::IsCited.new(@parsed_request)
+      @executed_query =
+        Instance::DefinedQuery::IsCited.new(@parsed_request)
     when /\Ainstance-is-cited-by\z/
       debug("\nrun_defined_query instance-id-is-cited-by\n")
-      @executed_query = Instance::DefinedQuery::IsCitedBy.new(@parsed_request)
+      @executed_query =
+        Instance::DefinedQuery::IsCitedBy.new(@parsed_request)
     when /\Aaudit\z/
       debug("\nrun_defined_query audit\n")
       @executed_query = Audit::DefinedQuery::Base.new(@parsed_request)
     when /\Areferences-with-novelties\z/
       debug("\nrun_defined_query references-with-novelties\n")
-      @executed_query = Reference::DefinedQuery::ReferencesWithNovelties.new(@parsed_request)
+      @executed_query =
+        Reference::DefinedQuery::ReferencesWithNovelties.new(@parsed_request)
     when /\Areferences-accepted-names-for-id\z/i
       debug("\nrun_defined_query references-accepted-names-for-id\n")
-      @executed_query = Reference::DefinedQuery::ReferencesAcceptedNamesForId.new(@parsed_request)
+      @executed_query =
+        Reference::DefinedQuery::ReferencesAcceptedNamesForId
+        .new(@parsed_request)
     when /\Areferences-shared-names\z/i
       debug("\nrun_defined_query references-shared-names\n")
-      @executed_query = Reference::DefinedQuery::ReferencesSharedNames.new(@parsed_request)
+      @executed_query =
+        Reference::DefinedQuery::ReferencesSharedNames.new(@parsed_request)
     else
       fail "Run Defined Query has no match for #{@parsed_request.defined_query}"
     end
   end
 
-  ########################################################################################
+  ###########################################################################
   def search_from_string(params)
     debug("Search::Base -> search_from_string")
     @specific_search = Search::FromString.new(params)

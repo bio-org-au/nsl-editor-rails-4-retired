@@ -15,13 +15,16 @@
 #   limitations under the License.
 #
 class Name::AsTypeahead < Name
-
   # Offer parents of the appropriate rank:
-  # - infra-species (below species)   : rank must be above the name's rank and equal to or below species rank
-  # - species                         : any rank above species and equal to or below genus
-  # - genus, above genus, below family: rank must be above the name's rank and equal to or below family
+  # - infra-species (below species)   : rank must be above the name's rank
+  #                                     and equal to or below species rank
+  # - species                         : any rank above species and equal to
+  #                                     or below genus
+  # - genus, above genus, below family: rank must be above the name's rank
+  #                                     and equal to or below family
   # - family and above                : any rank above the name's rank
-  # - [unranked]                      : [unranked] and any non-deprecated rank above [unranked]
+  # - [unranked]                      : [unranked] and any non-deprecated
+  #                                     rank above [unranked]
   #
   # Exclude names marked as duplicates.
   # Show an instance count for each result.
@@ -43,8 +46,10 @@ class Name::AsTypeahead < Name
         query = query.but_rank_not_too_high(rank_id)
       end
       query = query.select_fields_for_parent_typeahead
-              .group("name.id, name.full_name, name_rank.name, name_status.name")
-              .collect { |n| { value: "#{n.full_name} | #{n.name_rank_name} | #{n.name_status_name} | #{ActionController::Base.helpers.pluralize(n.instance_count, 'instance')} ", id: n.id } }
+              .group("name.id,name.full_name,name_rank.name,name_status.name")
+              .collect do |n|
+                { value: "#{n.full_name} | #{n.name_rank_name} | #{n.name_status_name} | #{ActionController::Base.helpers.pluralize(n.instance_count, 'instance')} ", id: n.id }
+              end
       results = query
     end
     results
@@ -53,7 +58,8 @@ class Name::AsTypeahead < Name
   # Rule is to offer species and below, but above the name's rank.
   # If unranked, also offer unranked.
   def self.cultivar_parent_suggestions(term, avoid_id, rank_id = -1)
-    logger.debug("cultivar_parent_suggestions term: #{term} avoiding: #{avoid_id} for rank: #{rank_id}")
+    logger.debug("cultivar_parent_suggestions term: #{term}
+                 avoiding: #{avoid_id} for rank: #{rank_id}")
     if term.blank?
       results = []
     else
@@ -75,7 +81,9 @@ class Name::AsTypeahead < Name
       else
         query = query.name_rank_not_unranked
       end
-      query = query.collect { |n| { value: "#{n.full_name} | #{n.name_rank_name} ", id: n.id } }
+      query = query.collect do |n|
+        { value: "#{n.full_name} | #{n.name_rank_name} ", id: n.id }
+      end
       results = query
     end
     results
@@ -84,7 +92,8 @@ class Name::AsTypeahead < Name
   # Rule is to offer species and below, but above the name's rank.
   # If unranked, also offer unranked.
   def self.hybrid_parent_suggestions(term, avoid_id, rank_id = -1)
-    logger.debug("hybrid_parent_suggestions term: #{term} avoiding: #{avoid_id} for rank: #{rank_id}")
+    logger.debug("hybrid_parent_suggestions term: #{term}
+                 avoiding: #{avoid_id} for rank: #{rank_id}")
     if term.blank?
       results = []
     else
@@ -106,7 +115,9 @@ class Name::AsTypeahead < Name
       else
         query = query.name_rank_not_unranked
       end
-      query = query.collect { |n| { value: "#{n.full_name} | #{n.name_rank_name}", id: n.id } }
+      query = query.collect do |n|
+        { value: "#{n.full_name} | #{n.name_rank_name}", id: n.id }
+      end
       results = query
     end
     results
@@ -115,7 +126,8 @@ class Name::AsTypeahead < Name
   # Rule is to offer species and below, but above the name's rank.
   # If unranked, also offer unranked.
   def self.duplicate_suggestions(term, avoid_id)
-    logger.debug("duplicate_suggestions for term: #{term}; avoiding: #{avoid_id}")
+    logger.debug("duplicate_suggestions for term: #{term};
+                 avoiding: #{avoid_id}")
     if term.blank?
       results = []
     else
@@ -127,7 +139,9 @@ class Name::AsTypeahead < Name
               .select_fields_for_typeahead
               .limit(SEARCH_LIMIT)
               .order_by_full_name
-      results = query.collect { |n| { value: "#{n.full_name} | #{n.name_status_name}", id: n.id } }
+      results = query.collect do |n|
+        { value: "#{n.full_name} | #{n.name_status_name}", id: n.id }
+      end
     end
     results
   end
