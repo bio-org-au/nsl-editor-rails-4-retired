@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single reference controller test.
 class ReferencesEditDuplicateOfIdClearTest < ActionController::TestCase
   tests ReferencesController
 
@@ -38,7 +39,9 @@ class ReferencesEditDuplicateOfIdClearTest < ActionController::TestCase
     assert !reference.duplicate_of_id.blank?, "Should have been a duplicate."
     assert changed.duplicate_of_id.blank?, "Should not be a duplicate now."
     assert changed.updated_by = username
-    assert reference.updated_by != changed.updated_by, "Updated_by should be set"
-    assert reference.updated_at != changed.updated_at, "Updated_at should be set"
+    assert reference.updated_by != changed.updated_by,
+           "Updated_by should be set"
+    assert reference.updated_at != changed.updated_at,
+           "Updated_at should be set"
   end
 end

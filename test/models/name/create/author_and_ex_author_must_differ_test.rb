@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single name model test.
 class AuthorExAuthorMustDifferOnCreateTest < ActiveSupport::TestCase
   test "author and ex author are different" do
     name = Name.new

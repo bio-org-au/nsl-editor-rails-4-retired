@@ -16,9 +16,14 @@
 #
 require "test_helper"
 
+# Single controller test.
 class InstanceDestroyRouteTest < ActionController::TestCase
   tests InstancesController
   test "should route to destroy an instance" do
-    assert_routing({ method: "delete", path: "/instances/1" }, controller: "instances", action: "destroy", id: "1")
+    assert_routing({ method: "delete",
+                     path: "/instances/1" },
+                     controller: "instances",
+                     action: "destroy",
+                     id: "1")
   end
 end

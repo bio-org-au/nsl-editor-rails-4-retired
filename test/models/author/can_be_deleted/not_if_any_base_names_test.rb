@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single author model test.
 class AuthorCannotBeDeletedIfHasBaseNameTest < ActiveSupport::TestCase
   test "author cannot be deleted if dependent name" do
     author = authors(:has_no_dependents)

@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single name model scope test.
 class ForUnrankedTest < ActiveSupport::TestCase
   test "for unranked" do
     ranks = Name.ranks_for_unranked.collect { |name| name.name_rank.name }.uniq

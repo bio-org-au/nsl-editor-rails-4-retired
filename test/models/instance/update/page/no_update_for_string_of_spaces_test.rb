@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single instance model test.
 class InstanceUpdatePageNoUpdateForStringOfSpacesTest < ActiveSupport::TestCase
   test "instance page no update for string of spaces" do
     unchanged = instances(:has_no_page_bhl_url_verbatim_name_string)

@@ -16,15 +16,25 @@
 #
 require "test_helper"
 
-class AuthorEditorDoNotOfferDeleteButtonIfCannotBeDeletedTest < ActionController::TestCase
+# Single controller test.
+class AuthorEditorDoNotOfferDelButtonIfNoDeleteTest < ActionController::TestCase
   tests AuthorsController
 
   test "should not show editor author delete button if cannot be deleted" do
     author = authors(:bentham)
     @request.headers["Accept"] = "application/javascript"
-    assert_not author.can_be_deleted?, "Must not be able to delete this author for the test to be valid"
-    get(:show, { id: author.id, tab: "tab_edit" }, username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
-    assert_select 'li.active a#author-edit-tab', "Edit", "Should show 'Edit' tab."
-    assert_select 'a#author-delete-link', false, "Should be no delete button because author cannot be deleted."
+    assert_not author.can_be_deleted?,
+               "Must not be able to delete this author for the test to be valid"
+    get(:show,
+        { id: author.id, tab: "tab_edit" },
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: ["edit"])
+    assert_select "li.active a#author-edit-tab",
+                  "Edit",
+                  "Should show 'Edit' tab."
+    assert_select 'a#author-delete-link',
+                  false,
+                  "Should be no delete button because author cannot be deleted."
   end
 end

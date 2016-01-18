@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single author model test.
 class AuthorAsEditedNoDuplicateOfIdWithValidStringWithTrailingWhitespace < ActiveSupport::TestCase
   test "no id with valid string" do
     current_author_id = 1

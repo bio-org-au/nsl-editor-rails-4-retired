@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Ref Type expected parent test.
 class ChapterShouldHaveBookParentTest < ActiveSupport::TestCase
   test "chapter ref type parent is book" do
     ref_type = ref_types(:chapter)

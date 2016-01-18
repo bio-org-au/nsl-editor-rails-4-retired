@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single author model test.
 class ForAnUnchangedDuplicateOfIdTest < ActiveSupport::TestCase
   test "unchanged duplicate of id" do
     author = Author::AsEdited.find(authors(:is_a_duplicate_of_that_is_all).id)

@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Name type is scientific test.
 class HybrdFormulaParentsKnownIsScientificTest < ActiveSupport::TestCase
   test "hybrd formula parents known is a scientific name type" do
     assert NameType.find_by(name: "hybrid formula parents known").scientific?, 'hybrid formula parents known should be categorised as a "scientific" name type'

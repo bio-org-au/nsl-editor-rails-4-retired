@@ -17,6 +17,7 @@
 require "test_helper"
 load "test/models/search/users.rb"
 
+# Single Search model test for Reference target.
 class SearchOnReferencePublisherSimpleTest < ActiveSupport::TestCase
   test "search on reference publisher simple" do
     reference = references(:stanley_and_ross_1986_flora_of_se_qld)

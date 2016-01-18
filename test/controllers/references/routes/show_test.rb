@@ -16,9 +16,14 @@
 #
 require "test_helper"
 
+# Single reference controller test.
 class ReferencesRouteShowTest < ActionController::TestCase
   tests ReferencesController
   test "should route to show a reference" do
-    assert_routing "/references/1", controller: "references", action: "show", id: "1", tab: "tab_show_1"
+    assert_routing "/references/1",
+                   controller: "references",
+                   action: "show",
+                   id: "1",
+                   tab: "tab_show_1"
   end
 end

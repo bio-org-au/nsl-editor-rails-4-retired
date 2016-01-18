@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Name type options for category test.
 class ScientificHybridFormula1ParentTest < ActiveSupport::TestCase
   test "scientific hybrid formula 1 parent name type options" do
     current_category = Name::SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY

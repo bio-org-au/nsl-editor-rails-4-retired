@@ -18,6 +18,7 @@
 require "test_helper"
 require "capybara/rails"
 
+# Test home page.
 class AcceptanceSpec < Minitest::Spec
   include Capybara::DSL
   # include Capybara::Assertions

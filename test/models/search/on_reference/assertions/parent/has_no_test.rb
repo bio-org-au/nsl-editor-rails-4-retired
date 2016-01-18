@@ -17,6 +17,7 @@
 require "test_helper"
 load "models/search/users.rb"
 
+# Single Search model test for Reference target.
 class SearchOnReferenceAssertionHasNoParentTest < ActiveSupport::TestCase
   test "reference asertion has no parent" do
     search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_target: "reference",

@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single name model test.
 class NameAsEditedAuthorIdWithPartialStringMatchingMatchingMoreThanOneOtherAuthor < ActiveSupport::TestCase
   test "id with partial string matching more than one other author" do
     author_1 = authors(:dummy_author_1)

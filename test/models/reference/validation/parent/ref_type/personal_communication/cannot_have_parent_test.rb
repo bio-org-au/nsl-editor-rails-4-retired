@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Reference model test.
 class PersonalCommunicationCannotHaveParentTest < ActiveSupport::TestCase
   test "personal communication cannot have parent" do
     ref = references(:personal_communication_with_parent)

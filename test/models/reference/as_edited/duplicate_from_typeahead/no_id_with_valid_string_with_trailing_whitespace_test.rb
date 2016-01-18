@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Reference model typeahead test.
 class ReferenceAsEditedNoDuplicateOfIdWithValidStringWithTrailingWhitespace < ActiveSupport::TestCase
   test "no id with valid string" do
     reference_1 = references(:origin_of_species)

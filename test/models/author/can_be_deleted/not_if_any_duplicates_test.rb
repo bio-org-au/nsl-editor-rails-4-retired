@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single author model test.
 class AuthorCannotBeDeletedIfHasDuplicateTest < ActiveSupport::TestCase
   test "author cannot be deleted if has duplicate" do
     author = authors(:has_no_dependents)

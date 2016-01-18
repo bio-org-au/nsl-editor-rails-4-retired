@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single author model test.
 class AuthorAsEditedNoDuplicateOfIdWithPartialValidStringMatchingOneRecord < ActiveSupport::TestCase
   test "no id with partial valid string matching one record" do
     current_author_id = 1

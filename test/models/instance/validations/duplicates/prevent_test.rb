@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single instance model test.
 class InstanceValidationDuplicatesPreventTest < ActiveSupport::TestCase
   test "instance prevent duplicate" do
     instance = instances(:triodia_in_brassard)

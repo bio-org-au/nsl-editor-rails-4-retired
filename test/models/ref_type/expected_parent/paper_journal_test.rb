@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Ref Type expected parent test.
 class PaperShouldHaveJournalParentTest < ActiveSupport::TestCase
   test "paper ref type parent is journal" do
     ref_type = ref_types(:paper)

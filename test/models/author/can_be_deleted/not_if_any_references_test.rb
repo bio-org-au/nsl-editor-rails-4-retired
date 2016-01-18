@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single author model test.
 class AuthorCannotBeDeletedIfHasReferenceTest < ActiveSupport::TestCase
   test "author cannot be deleted if has reference" do
     author = authors(:has_no_dependents)

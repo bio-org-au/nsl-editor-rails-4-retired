@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single name model test.
 class NameAsEditedDuplicateOfIdWithParialStringMatchingAnotherName < ActiveSupport::TestCase
   test "id with partial string for another name" do
     name_1 = names(:the_regnum)

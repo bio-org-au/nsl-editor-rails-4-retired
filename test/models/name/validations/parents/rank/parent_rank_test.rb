@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Name rank validation tests.
 class NameRankTest < ActiveSupport::TestCase
   test "Regnum takes no parent" do
     assert name_ranks(:regnum).takes_parent? == false, "Regnum should take no parent"

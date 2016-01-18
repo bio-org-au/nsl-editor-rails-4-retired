@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single instance model test.
 class CannotDeleteSynonymIfDependentsTest < ActiveSupport::TestCase
   test "cannot delete synonym with dependents" do
     before = Instance.count

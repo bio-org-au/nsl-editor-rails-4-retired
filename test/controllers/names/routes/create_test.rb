@@ -16,9 +16,12 @@
 #
 require "test_helper"
 
+# Single controller test.
 class NameCreateRouteTest < ActionController::TestCase
   tests NamesController
   test "should route to create a name" do
-    assert_routing({ method: "post", path: "/names" }, controller: "names", action: "create")
+    assert_routing({ method: "post", path: "/names" },
+                   controller: "names",
+                   action: "create")
   end
 end

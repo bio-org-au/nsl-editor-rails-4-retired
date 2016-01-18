@@ -16,9 +16,14 @@
 #
 require "test_helper"
 
+# Single controller test.
 class InstanceUpdateRouteTest < ActionController::TestCase
   tests InstancesController
   test "should route to update an instance" do
-    assert_routing({ method: "patch", path: "/instances/1" }, controller: "instances", action: "update", id: "1")
+    assert_routing({ method: "patch",
+                     path: "/instances/1" },
+                     controller: "instances",
+                     action: "update",
+                     id: "1")
   end
 end

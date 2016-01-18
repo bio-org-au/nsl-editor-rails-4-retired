@@ -17,6 +17,7 @@
 require "test_helper"
 load "test/models/search/users.rb"
 
+# Single Search model test on Instance search.
 class SearchOnInstanceIdsSimpleTest < ActiveSupport::TestCase
   test "search on instance ids simple" do
     instance = instances(:triodia_in_brassard)

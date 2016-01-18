@@ -19,6 +19,7 @@
 
 require "test_helper"
 
+# Test authors editing comments.
 class AuthorsEditCommentsTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
 

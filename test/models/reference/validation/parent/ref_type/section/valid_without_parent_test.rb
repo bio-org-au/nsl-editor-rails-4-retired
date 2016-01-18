@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Reference model test.
 class SectionValidWithoutParentTest < ActiveSupport::TestCase
   test "section valid without parent" do
     ref = references(:section_with_book_parent)

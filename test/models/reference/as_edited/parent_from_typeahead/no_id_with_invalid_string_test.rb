@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Reference model parent from typeahead test.
 class ReferenceAsEditedNoParentIdWithInvalidString < ActiveSupport::TestCase
   test "no parent id with invalid string" do
     assert_raise(RuntimeError, "Should raise a RuntimeError for invalid reference string.") do

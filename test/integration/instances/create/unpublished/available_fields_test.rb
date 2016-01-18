@@ -20,6 +20,7 @@
 # encoding: utf-8
 require "test_helper"
 
+# Single integration test.
 class AvailableFieldsTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
 

@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Reference model test.
 class ForIdPresentAndStringBlank < ActiveSupport::TestCase
   test "id present string blank" do
     assert_match "id_only", Reference::AsEdited.resolve_id_and_text("123", "")

@@ -19,6 +19,7 @@
 
 require "test_helper"
 
+# Test edit name.
 class NamesEditTest < ActionDispatch::IntegrationTest
   # Make the Capybara DSL available in all integration tests
   include Capybara::DSL

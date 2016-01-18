@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Name typeahead test.
 class ShouldIncludeAZeroInstancesCount < ActiveSupport::TestCase
   test "name parent suggestions should include a zero instances count" do
     dummy_avoid_id = 1

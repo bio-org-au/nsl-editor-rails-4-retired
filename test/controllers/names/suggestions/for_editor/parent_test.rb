@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single controller test.
 class NameParentSuggestionsForEditorTest < ActionController::TestCase
   tests NamesController
   setup do
@@ -24,7 +25,11 @@ class NameParentSuggestionsForEditorTest < ActionController::TestCase
 
   test "name parent suggestions for editor" do
     @request.headers["Accept"] = "application/javascript"
-    get(:name_parent_suggestions, { rank_id: name_ranks(:unranked).id, term: "search for this" }, username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
+    get(:name_parent_suggestions,
+        { rank_id: name_ranks(:unranked).id, term: "search for this" },
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: ["edit"])
     assert_response :success
   end
 end

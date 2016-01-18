@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single author model test.
 class TwoAuthorsSameNameWithRefCount < ActiveSupport::TestCase
   test "two authors same name" do
     result = Author::AsTypeahead.on_name("masl")

@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Utility for author testing.
 class AbbrevIfPossibleTest < ActiveSupport::TestCase
   test "author method abbrev if possible" do
     assert Author.find(authors(:has_no_abbrev).id).abbrev_if_possible == "[No abbreviation - id: #{authors(:has_no_abbrev).id}]", "bad abbrev if possible"

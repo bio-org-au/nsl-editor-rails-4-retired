@@ -20,6 +20,7 @@
 require "test_helper"
 load "test/models/search/users.rb"
 
+# Single Search model test.
 class SearchOnAuthorNameExactCaseInsensitiveTest < ActiveSupport::TestCase
   test "search on author name case insensitive" do
     params = ActiveSupport::HashWithIndifferentAccess.new(query_target:

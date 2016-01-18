@@ -17,6 +17,7 @@
 require "test_helper"
 load "test/models/search/users.rb"
 
+# Single Search model test for Reference target.
 class SearchOnReferenceDuplicateOfIdSimpleTest < ActiveSupport::TestCase
   test "search on duplicate of id simple" do
     reference = references(:master)

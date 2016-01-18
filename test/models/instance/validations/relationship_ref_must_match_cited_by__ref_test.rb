@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single instance model test.
 class RelationshipMustMatchCitedByRefTest < ActiveSupport::TestCase
   test "instance relationship must match cited by reference" do
     skip

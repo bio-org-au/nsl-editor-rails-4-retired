@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single instance model test.
 class InstanceDeleteServiceTrueSuccess200Test < ActiveSupport::TestCase
   test "instance delete service true success 200" do
     assert_nothing_raised("Should not raise exception if everything is ok") do

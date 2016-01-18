@@ -19,6 +19,7 @@
 
 require "test_helper"
 
+# Test session deep linking - after login.
 class SessionTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
 

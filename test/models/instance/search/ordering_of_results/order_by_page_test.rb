@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single instance model test.
 class OrderByPage < ActiveSupport::TestCase
   test "approximates numeric sorting" do
     name = names(:angophora_costata)

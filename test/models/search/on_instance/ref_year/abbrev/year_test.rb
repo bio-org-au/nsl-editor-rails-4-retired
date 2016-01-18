@@ -17,6 +17,7 @@
 require "test_helper"
 load "test/models/search/users.rb"
 
+# Single Search model test on Instance search.
 class SearchOnInstanceRefYearAbbrevYearTest < ActiveSupport::TestCase
   test "search on instance ref year abbrev year" do
     params = ActiveSupport::HashWithIndifferentAccess.new(

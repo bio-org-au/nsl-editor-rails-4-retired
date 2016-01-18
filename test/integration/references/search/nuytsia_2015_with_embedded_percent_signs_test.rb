@@ -19,6 +19,7 @@
 
 require "test_helper"
 
+# Single integration test.
 class Nuytsia2015WithEmbeddedPercentSignsTest < ActionDispatch::IntegrationTest
   # Make the Capybara DSL available in all integration tests
   include Capybara::DSL

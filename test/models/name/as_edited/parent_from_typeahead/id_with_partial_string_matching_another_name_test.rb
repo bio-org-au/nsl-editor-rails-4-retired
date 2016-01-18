@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single name model test.
 class NameAsEditedParentIdWithPartialStringMatchingAnotherNameTest < ActiveSupport::TestCase
   test "parent id with partial string for anther name" do
     name_1 = names(:the_regnum)

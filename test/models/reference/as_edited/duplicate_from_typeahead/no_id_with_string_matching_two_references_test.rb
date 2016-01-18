@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Reference model typeahead test.
 class ReferenceAsEditedNoDuplicateOfIdWithStringMatchingTwoReferencesTest < ActiveSupport::TestCase
   test "no id with string matching two references" do
     reference_1 = references(:has_a_matching_citation_1)

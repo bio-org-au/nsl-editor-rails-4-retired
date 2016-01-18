@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Name typeahead test.
 class NameHybridParentSuggestionsMustAvoidIdTest < ActiveSupport::TestCase
   test "name hybrid parent suggestions must avoid id" do
     name = names(:angophora_costata)

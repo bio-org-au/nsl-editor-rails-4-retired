@@ -17,6 +17,7 @@
 require "test_helper"
 require "models/reference/update/if_changed/test_helper"
 
+# Single Reference model test.
 class ForAChangedParentIdTest < ActiveSupport::TestCase
   test "changed parent id" do
     reference = Reference::AsEdited.find(references(:for_resolving_typeaheads).id)

@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Instance type options test.
 class InstanceTypeUnpublishedCitationOptionsTest < ActiveSupport::TestCase
   test "instance type unpublished citation options" do
     options = InstanceType.unpublished_citation_options

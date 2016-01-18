@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single session test.
 class SessionsRetrySigninRouteTest < ActionController::TestCase
   tests SessionsController
   test "should route to retry a new session" do

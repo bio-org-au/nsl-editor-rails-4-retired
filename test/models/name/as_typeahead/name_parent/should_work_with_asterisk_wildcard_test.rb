@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Name typeahead test.
 class ShouldWorkWithAsteriskWildcardTest < ActiveSupport::TestCase
   test "name parent suggestion should work with asterisk wildcard" do
     avoid_id = 1

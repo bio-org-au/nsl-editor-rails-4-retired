@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Name fixture tests.
 class FixtureTest < ActiveSupport::TestCase
   test "fixture unknown species name should be valid" do
     name = names(:unknown_species)

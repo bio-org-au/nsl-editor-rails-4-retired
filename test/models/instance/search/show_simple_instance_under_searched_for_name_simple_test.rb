@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single instance model test.
 class ShowSimpleInstanceUnderSearchedForNameSimpleTest < ActiveSupport::TestCase
   def assert_with_args(results, index, expected, actual)
     result = results[index]

@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Search model test.
 class SearchParsedRequestCountNameLeadingSpaceTest < ActiveSupport::TestCase
   test "search parse query count name leading space" do
     query_string = " count"

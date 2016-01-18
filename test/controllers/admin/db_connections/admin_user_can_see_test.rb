@@ -16,11 +16,16 @@
 #
 require "test_helper"
 
-class AdminControllerAdminUserCanSeeDBConnectionsTest < ActionController::TestCase
+# Single test per file
+class AdminControllerAdminUserCanSeeDBConnsTest < ActionController::TestCase
   tests AdminController
 
   test "admin user should get db connections" do
-    get(:db_connections, {}, username: "fred", user_full_name: "Fred Jones", groups: ["admin"])
+    get(:db_connections,
+        {},
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: ["admin"])
     assert_response :success
   end
 end

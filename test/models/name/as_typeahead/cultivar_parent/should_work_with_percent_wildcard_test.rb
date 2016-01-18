@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Name typeahead test.
 class CultivarParentSuggestionsShouldWorkWithPercentWildcardTest < ActiveSupport::TestCase
   test "cultivar parent suggestion should work with percent wildcard" do
     suggestions = Name::AsTypeahead.cultivar_parent_suggestions("%", -1)

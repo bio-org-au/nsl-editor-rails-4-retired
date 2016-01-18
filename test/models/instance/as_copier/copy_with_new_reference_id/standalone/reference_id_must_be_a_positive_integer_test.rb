@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single instance model test.
 class InstanceAsCopierWithNewRefStandaloneRefMustBeAPositiveIntTest <
   ActiveSupport::TestCase
   test "copy a standalone instance with citations ref must be positive int" do

@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Name model test.
 class AllowUnrankedNameToHaveUnrankedParentTest < ActiveSupport::TestCase
   test "unranked scientific name having unranked parent" do
     name = names(:unranked_scientific_name_with_unranked_parent)

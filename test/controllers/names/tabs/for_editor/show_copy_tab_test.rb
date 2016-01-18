@@ -24,8 +24,14 @@ class NameShowCopyTabForReadOnlyTest < ActionController::TestCase
 
   test "should show copy tab" do
     @request.headers["Accept"] = "application/javascript"
-    get(:show, { id: @name.id, tab: "tab_copy" }, username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
+    get(:show,
+        { id: @name.id, tab: "tab_copy" },
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: ["edit"])
     assert_response :success
-    assert_select 'li.active a#name-copy-tab', "Copy", "Should show 'Copy' tab."
+    assert_select "li.active a#name-copy-tab",
+                  "Copy",
+                  "Should show 'Copy' tab."
   end
 end

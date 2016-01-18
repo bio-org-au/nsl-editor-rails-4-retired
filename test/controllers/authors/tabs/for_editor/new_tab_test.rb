@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single controller test.
 class AuthorEditorNewTest < ActionController::TestCase
   tests AuthorsController
   setup do
@@ -23,18 +24,28 @@ class AuthorEditorNewTest < ActionController::TestCase
   end
 
   test "author should get new author tab" do
-    skip # 2015-08-31 15:07:00.840 [hmm] Security warning: an embedded <script> tag on another site
-    #      requested protected JavaScript. If you know what you're doing, go ahead and disable forgery
-    #      protection on this action to permit cross-origin JavaScript embedding. (pid:78529)
+    skip
+    # 2015-08-31 15:07:00.840 [hmm] Security warning:
+    #      an embedded <script> tag on another site
+    #      requested protected JavaScript. If you know what you're doing,
+    #      go ahead and disable forgery
+    #      protection on this action to permit cross-origin
+    #      JavaScript embedding. (pid:78529)
     @request.headers["Accept"] = "application/javascript"
-    get(:new, { random_id: "12345" }, username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
+    get(:new,
+        { random_id: "12345" },
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: ["edit"])
     puts response.body
-    # assert_select 'li.active a#author-edit-tab', 'Edit', "Should show 'Edit' tab."
+    # assert_select "li.active a#author-edit-tab",
+    #               "Edit",
+    #               "Should show 'Edit' tab."
     assert_select "form", true
-    assert_select 'input#author_name', true
-    assert_select 'input#author_abbrev', true
-    assert_select 'input#author_full_name', true
-    assert_select 'textarea#author_notes', true
+    assert_select "input#author_name", true
+    assert_select "input#author_abbrev", true
+    assert_select "input#author_full_name", true
+    assert_select "textarea#author_notes", true
     # assert_select 'input#author_duplicate_of_id', true
   end
 end

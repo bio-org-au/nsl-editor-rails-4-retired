@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Reference model typeahead test.
 class ReferenceAsEditedDuplicateOfIdWithMatchingString < ActiveSupport::TestCase
   test "id with matching string" do
     reference = references(:journal_of_botany_british_and_foreign)

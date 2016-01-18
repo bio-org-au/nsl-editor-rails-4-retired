@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Name type options for category test.
 class CultivarTest < ActiveSupport::TestCase
   test "cultivar name type options" do
     current_category = Name::CULTIVAR_CATEGORY

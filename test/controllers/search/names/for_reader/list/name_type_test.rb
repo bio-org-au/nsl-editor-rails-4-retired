@@ -16,12 +16,17 @@
 #
 require "test_helper"
 
+# Single search controller test.
 class ReaderSearchControllerNamesNameTypeListTest < ActionController::TestCase
   tests SearchController
 
   test "reader can search for a name by type" do
     name = names(:argyle_apple)
-    get(:search, { query_target: "name", query_string: "type: common" }, username: "fred", user_full_name: "Fred Jones", groups: [])
+    get(:search,
+        { query_target: "name", query_string: "type: common" },
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: [])
     assert_response :success
     assert_select "a#name-#{name.id}", true, "Should see argyle apple."
   end

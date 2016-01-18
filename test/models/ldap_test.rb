@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# LDAP test
 class LdapTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true

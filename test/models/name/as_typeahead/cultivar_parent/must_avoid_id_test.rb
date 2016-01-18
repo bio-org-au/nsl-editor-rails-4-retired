@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Name typeahead test.
 class NameCultivarParentSuggestionsMustAvoidIdTest < ActiveSupport::TestCase
   test "name cultivar parent suggestions must avoid id" do
     name = names(:angophora_costata)

@@ -18,6 +18,7 @@
 #
 require "test_helper"
 
+# Single controller test.
 class HistoryAuthorizationsY2016UnauthenticatedTest < ActionController::TestCase
   tests HistoryController
 

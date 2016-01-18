@@ -17,6 +17,7 @@
 require "test_helper"
 load "models/search/users.rb"
 
+# Single instance model test.
 class OnNameIdTest < ActiveSupport::TestCase
   test "instance search on Name ID" do
     search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_string: "#{names(:angophora_costata).id}",

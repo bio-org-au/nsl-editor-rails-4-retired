@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single instance model test.
 class InstanceAsCopierWithNewRefStandaloneRefMustBeDiffTest <
   ActiveSupport::TestCase
   test "copy a standalone instance with its citations ref must be different" do

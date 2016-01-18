@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Reference model typeahead test.
 class ReferenceAsEditedAuthorIdWithNoString < ActiveSupport::TestCase
   test "id with no string" do
     result = Reference::AsEdited.author_from_typeahead("1", "")

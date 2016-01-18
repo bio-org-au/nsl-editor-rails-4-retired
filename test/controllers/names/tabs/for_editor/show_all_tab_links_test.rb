@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single controller test.
 class NameEditorShowAllTabsTest < ActionController::TestCase
   tests NamesController
   setup do
@@ -24,7 +25,11 @@ class NameEditorShowAllTabsTest < ActionController::TestCase
 
   test "should show all tabs if editor requests details tab" do
     @request.headers["Accept"] = "application/javascript"
-    get(:show, { id: @name.id, tab: "tab_edit" }, username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
+    get(:show,
+        { id: @name.id, tab: "tab_edit" },
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: ["edit"])
     assert_response :success
     assert_select 'a#name-details-tab', true, "Should show 'Detail' tab."
     assert_select 'a#name-edit-tab', true, "Should show 'Edit' tab."

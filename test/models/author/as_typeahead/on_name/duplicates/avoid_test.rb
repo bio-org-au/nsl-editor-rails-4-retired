@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single author model test.
 class AuthorTypeaheadsOnNameDuplicatesAvoidTest < ActiveSupport::TestCase
   test "author typeahead on name duplicates avoid" do
     duplicate = authors(:schlechter_a_duplicate)

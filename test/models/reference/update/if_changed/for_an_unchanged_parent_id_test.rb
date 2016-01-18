@@ -17,6 +17,7 @@
 require "test_helper"
 require "models/reference/update/if_changed/test_helper"
 
+# Single Reference model test.
 class ForAnUnchangedRefParentIdTest < ActiveSupport::TestCase
   test "unchanged parent id" do
     reference = Reference::AsEdited.find(references(:paper_in_bulletin_of_torrey_botanical_club).id)

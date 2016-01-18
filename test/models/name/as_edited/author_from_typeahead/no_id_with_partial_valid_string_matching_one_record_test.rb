@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single name model test.
 class NameAsEditedNoAuthorIdWithPartialValidStringMatchingOneRecord < ActiveSupport::TestCase
   test "no id with partial valid string matching one record" do
     author = authors(:chaplin)

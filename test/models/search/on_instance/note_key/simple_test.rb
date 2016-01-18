@@ -17,6 +17,7 @@
 require "test_helper"
 load "test/models/search/users.rb"
 
+# Single Search model test on Instance search.
 class SearchOnInstanceNoteKeySimpleTest < ActiveSupport::TestCase
   test "search on instance note key simple" do
     params = ActiveSupport::HashWithIndifferentAccess.new(

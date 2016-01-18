@@ -17,6 +17,7 @@
 require "test_helper"
 load "test/models/search/users.rb"
 
+# Single Search model test for Reference target.
 class SearchOnReferenceAuthorRoleSimpleTest < ActiveSupport::TestCase
   test "search on reference author role simple" do
     author_role = ref_author_roles(:editor)

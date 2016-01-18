@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single name model test.
 class NameAsEditedNoDuplicateOfIdWithPartialValidStringMatchingOneRecord < ActiveSupport::TestCase
   test "no id with partial valid string matching one record" do
     name = names(:the_regnum)

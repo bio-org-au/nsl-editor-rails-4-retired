@@ -20,6 +20,7 @@
 require "test_helper"
 load "test/models/search/users.rb"
 
+# Search model test for Name search for special characters.
 class SimpleSearchForOUmlaut < ActiveSupport::TestCase
   test "simple search for o umlaut with o umlaut" do
     params = ActiveSupport::HashWithIndifferentAccess.new(query_target: "name",

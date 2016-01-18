@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Ref Type parent rule test.
 class IndexParentNotAllowedTest < ActiveSupport::TestCase
   test "index ref type parent is not allowed" do
     assert ref_types(:index).parent_id.blank? == true, "Index ref type parent should not be allowed."

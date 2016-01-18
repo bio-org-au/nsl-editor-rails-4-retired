@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single instance model test.
 class InstanceUpdateVerbatimNameStringNoUpdateForEmptyStringTest < ActiveSupport::TestCase
   test "no update for verbatim name string empty string" do
     unchanged = instances(:has_no_page_bhl_url_verbatim_name_string)

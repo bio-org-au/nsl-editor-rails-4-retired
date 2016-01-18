@@ -16,9 +16,12 @@
 #
 require "test_helper"
 
+# Single controller test.
 class InstanceTypesIndexRouteTest < ActionController::TestCase
   tests InstanceTypesController
   test "index should route ok" do
-    assert_routing "/instance_types", controller: "instance_types", action: "index"
+    assert_routing "/instance_types",
+                   controller: "instance_types",
+                   action: "index"
   end
 end

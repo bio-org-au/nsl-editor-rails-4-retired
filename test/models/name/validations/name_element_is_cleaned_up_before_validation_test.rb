@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Name model test.
 class NameElementIsCleanedUpBeforeValidation < ActiveSupport::TestCase
   test "name element with leading or trailing spaces is cleaned up before validation" do
     name = Name.first

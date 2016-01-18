@@ -14,6 +14,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
+# Single Name model test.
 class ScientificNameCannotHaveBaseAuthorWithoutAuthor < ActiveSupport::TestCase
   require "test_helper"
 

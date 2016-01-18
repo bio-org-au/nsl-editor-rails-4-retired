@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Instance tests.  Not yet split into single files.
 class InstanceTest < ActiveSupport::TestCase
   test "britten_created_angophora_costata should be a standalone instance" do
     britten_instance = instances(:britten_created_angophora_costata)

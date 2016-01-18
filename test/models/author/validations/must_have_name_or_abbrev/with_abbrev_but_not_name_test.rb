@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single author model test.
 class AuthorWithAbbrevButNoNameIsValidTest < ActiveSupport::TestCase
   test "author with abbrev but no name valid test" do
     author = Author.new

@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Name typeahead test.
 class OrderedByRankTest < ActiveSupport::TestCase
   test "ordered by rank" do
     suggestions = Name::AsTypeahead::OnFullName.new(term: "**").suggestions

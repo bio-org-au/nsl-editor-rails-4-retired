@@ -17,6 +17,7 @@
 require "test_helper"
 load "test/models/search/users.rb"
 
+# Single Search model test for Reference target.
 class SearchOnReferenceCitationTextPrefixFragmentAnomaliesDuplicaSearchTest < ActiveSupport::TestCase
   test "search on reference citation text for prefix fragment anomalies duplica" do
     params = ActiveSupport::HashWithIndifferentAccess.new(query_target: "reference",

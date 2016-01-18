@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Nam rank options test.
 class RankOptionTest < ActiveSupport::TestCase
   test "scientific ranks" do
     options = NameRank.options_for_category(Name::SCIENTIFIC_CATEGORY)

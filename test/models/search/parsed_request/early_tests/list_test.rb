@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Search model test.
 class SearchParsedRequestListTest < ActiveSupport::TestCase
   test "search parse query list" do
     query_string = "list"

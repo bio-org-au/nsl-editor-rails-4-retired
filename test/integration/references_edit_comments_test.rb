@@ -19,6 +19,7 @@
 
 require "test_helper"
 
+# Test edit reference.
 class ReferencesEditCommentsTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
 

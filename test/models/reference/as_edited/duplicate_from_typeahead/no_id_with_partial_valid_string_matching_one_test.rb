@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Reference model typeahead test.
 class ReferenceAsEditedNoDuplicateOfIdWithPartialValidStringMatchingOne < ActiveSupport::TestCase
   test "no id with patial valid string matching one record" do
     reference = references(:origin_of_species)

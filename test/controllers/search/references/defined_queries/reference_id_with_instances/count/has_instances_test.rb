@@ -16,13 +16,21 @@
 #
 require "test_helper"
 
-class SearchReferencesDefinedQueriesReferenceIdWithInstancesCountHasInstancesTest < ActionController::TestCase
+# Single search controller test.
+class SrchRefsDefinedQuerRefIdWithInstCountHasInst < ActionController::TestCase
   tests SearchController
 
   test "reference id with instances count" do
     ref = references(:bucket_reference_for_default_instances)
-    get(:search, { query_target: "instances for ref id", query_string: "count #{ref.id}" }, username: "fred", user_full_name: "Fred Jones", groups: [])
+    get(:search,
+        { query_target: "instances for ref id",
+          query_string: "count #{ref.id}" },
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: [])
     assert_response :success
-    assert_select '#search-results-summary', /29 records\b/, "Should show a correct count of records"
+    assert_select '#search-results-summary',
+                  /29 records\b/,
+                  "Should show a correct count of records"
   end
 end

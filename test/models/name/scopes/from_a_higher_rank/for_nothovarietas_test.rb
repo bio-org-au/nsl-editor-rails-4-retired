@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single name model scope test.
 class ForNothovarietasTest < ActiveSupport::TestCase
   test "from a higher rank for nothovarietas" do
     ranks = Name.from_a_higher_rank(name_ranks(:nothovarietas).id).collect { |name| name.name_rank.name }.uniq

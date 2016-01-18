@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single name model test.
 class NameAsEditedNoDuplicateOfIdWithInvalidString < ActiveSupport::TestCase
   test "no duplicate of id with invalid string" do
     assert_raise(RuntimeError, "Should raise a RuntimeError for invalid full name string and no id.") do

@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Reference model test.
 class DatabaseRecordValidWithoutParentTest < ActiveSupport::TestCase
   test "database record valid without parent" do
     ref = references(:database_record_with_database_parent)

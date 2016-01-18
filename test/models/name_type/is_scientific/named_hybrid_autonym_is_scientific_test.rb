@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Name type is scientific test.
 class NamedHybridAutonymIsScientificTest < ActiveSupport::TestCase
   test "named hybrid autonym is a scientific name type" do
     assert NameType.find_by(name: "named hybrid autonym").scientific?, 'Named hybrid autonym should be categorised as a "scientific" name type'

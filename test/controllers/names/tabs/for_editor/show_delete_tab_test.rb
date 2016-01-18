@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single controller test.
 class NameShowDeleteTabForReadOnlyTest < ActionController::TestCase
   tests NamesController
   setup do
@@ -24,8 +25,14 @@ class NameShowDeleteTabForReadOnlyTest < ActionController::TestCase
 
   test "should show delete tab" do
     @request.headers["Accept"] = "application/javascript"
-    get(:show, { id: @name.id, tab: "tab_delete" }, username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
+    get(:show,
+        { id: @name.id, tab: "tab_delete" },
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: ["edit"])
     assert_response :success
-    assert_select 'li.active a#name-delete-tab', "Delete", "Should show 'Delete' tab."
+    assert_select "li.active a#name-delete-tab",
+                  "Delete",
+                  "Should show 'Delete' tab."
   end
 end

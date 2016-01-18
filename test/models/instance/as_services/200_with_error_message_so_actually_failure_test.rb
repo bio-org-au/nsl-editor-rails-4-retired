@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single instance model test.
 class InstanceDeleteService200WithErrorMessageTest < ActiveSupport::TestCase
   test "instance delete service 200 with error message" do
     assert_raise(RuntimeError, "Should raise runtime error for no delete") do

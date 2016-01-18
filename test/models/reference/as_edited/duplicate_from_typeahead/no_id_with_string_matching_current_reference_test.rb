@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Reference model typeahead test.
 class ReferenceAsEditedNoDuplicateOfIdWithStringMatchingCurrentReferenceTest < ActiveSupport::TestCase
   test "no id with string matching current reference" do
     skip

@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Reference model test.
 class DatabaseCannotHaveParentTest < ActiveSupport::TestCase
   test "database cannot have parent" do
     ref = references(:database_with_parent)

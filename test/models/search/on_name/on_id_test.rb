@@ -17,6 +17,7 @@
 require "test_helper"
 load "test/models/search/users.rb"
 
+# Single Search model test for Name search.
 class OnIdTest < ActiveSupport::TestCase
   test "on ID" do
     name = names(:the_regnum)

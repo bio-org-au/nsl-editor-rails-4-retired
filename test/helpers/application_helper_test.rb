@@ -16,5 +16,6 @@
 #
 require "test_helper"
 
-class InstanceNotesHelperTest < ActionView::TestCase
+# Application helper test
+class ApplicationHelperTest < ActionView::TestCase
 end

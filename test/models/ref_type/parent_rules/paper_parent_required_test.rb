@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Ref Type parent rule test.
 class PaperParentRequiredTest < ActiveSupport::TestCase
   test "paper ref type parent is required" do
     assert ref_types(:paper).parent_optional == false, "Paper ref type parent should be required."

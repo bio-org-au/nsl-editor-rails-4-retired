@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Instance Note Key test.
 class InstanceNoteKeyTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true

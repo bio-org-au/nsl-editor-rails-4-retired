@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single name model test.
 class NameAsEditedParentIdWithPartialStringMatchingMatchingMoreThanOneOtherName < ActiveSupport::TestCase
   test "parent id with partial string matching more than one other name" do
     name_1 = names(:name_matches_another_1)

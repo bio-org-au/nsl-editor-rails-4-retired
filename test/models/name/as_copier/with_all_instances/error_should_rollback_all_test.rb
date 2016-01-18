@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single name model test.
 class NameAsCopierWithAllInstancesErrorShouldRollbackAllTest < ActiveSupport::TestCase
   test "copy name with all instances with two identical instances so should fail" do
     before = Name.count

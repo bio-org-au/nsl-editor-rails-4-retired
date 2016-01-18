@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Ref Type parent rule test.
 class BookParentOptionalTest < ActiveSupport::TestCase
   test "book ref type parent is optional" do
     ref_type = ref_types(:book)

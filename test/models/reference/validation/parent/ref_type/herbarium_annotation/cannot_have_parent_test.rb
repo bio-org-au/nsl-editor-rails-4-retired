@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Reference model test.
 class HerbariumAnnotationCannotHaveParentTest < ActiveSupport::TestCase
   test "herbarium annotation cannot have parent" do
     ref = references(:herbarium_annotation_with_parent)

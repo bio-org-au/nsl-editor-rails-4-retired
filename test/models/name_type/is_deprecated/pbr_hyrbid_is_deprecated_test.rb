@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Name type is deprecated test.
 class PbrHybridIsDeprecatedTest < ActiveSupport::TestCase
   test "pbr hybrid is a deprecated name type" do
     assert_equal NameType.find_by(name: "pbr hybrid").deprecated, true, "PBR Hybrid should be a deprecated name type"

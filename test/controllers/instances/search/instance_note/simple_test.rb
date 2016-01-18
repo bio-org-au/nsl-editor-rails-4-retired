@@ -16,15 +16,26 @@
 #
 require "test_helper"
 
+# Single controller test.
 class InstanceSearchOnInstanceNoteSimpleTest < ActionController::TestCase
   tests SearchController
 
   test "instance search on instance note with simple text" do
     instance = instances(:triodia_in_brassard)
-    get(:search, ActiveSupport::HashWithIndifferentAccess.new(query_target: "instance", query_string: "note: *ystrin*"), username: "fred", user_full_name: "Fred Jones", groups: [])
+    get(:search,
+        ActiveSupport::HashWithIndifferentAccess.new(
+          query_target: "instance",
+          query_string: "note: *ystrin*"),
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: [])
     assert_response :success
     assert_select 'span#search-results-summary', true, "Should find 1 record"
-    assert_select 'span#search-results-summary', /\b1 record\b/, "Should find 1 record"
-    assert_select "tr#search-result-#{instance.id}", true, "Should find the instance."
+    assert_select 'span#search-results-summary',
+                  /\b1 record\b/,
+                  "Should find 1 record"
+    assert_select "tr#search-result-#{instance.id}",
+                  true,
+                  "Should find the instance."
   end
 end

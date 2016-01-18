@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Ref Type expected parent test.
 class UnknownShouldHaveUnknownParentTest < ActiveSupport::TestCase
   test "unknown ref type parent is unknown" do
     ref_type = ref_types(:unknown)

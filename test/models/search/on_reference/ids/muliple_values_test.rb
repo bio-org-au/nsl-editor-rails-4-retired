@@ -17,6 +17,7 @@
 require "test_helper"
 load "test/models/search/users.rb"
 
+# Single Search model test for Reference target.
 class SearchOnReferenceIdsMultipleValuesTest < ActiveSupport::TestCase
   test "search on ids multiple values" do
     reference = references(:simple)

@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single name model test.
 class NameAsServicesDeleteURLTest < ActiveSupport::TestCase
   test "url" do
     url = Name::AsServices.delete_url(12_345, "this is the reason.....")

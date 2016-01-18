@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Name category tests.
 class CategoryTest < ActiveSupport::TestCase
   test "scientific category" do
     assert Name::SCIENTIFIC_CATEGORY == "scientific", "Name::SCIENTIFIC_CATEGORY should equal 'scientific'"

@@ -16,6 +16,7 @@
 #
 # require 'test_helper'
 #
+# Name Tags controller tests
 # class NameTagsControllerTest < ActionController::TestCase
 #   setup do
 #     @name_tag = name_tags(:one)

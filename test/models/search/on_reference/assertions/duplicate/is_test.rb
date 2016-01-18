@@ -17,6 +17,7 @@
 require "test_helper"
 load "models/search/users.rb"
 
+# Single Search model test for Reference target.
 class SearchOnReferenceAssertionDuplicateIsTest < ActiveSupport::TestCase
   test "reference asertion is a duplicate" do
     search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_target: "reference",

@@ -17,6 +17,7 @@
 require "test_helper"
 load "test/models/search/users.rb"
 
+# Single Search model test for Reference target.
 class IsADuplicateAndCitationIsSearchTest < ActiveSupport::TestCase
   test "is a duplicate and citation-text is search" do
     params = ActiveSupport::HashWithIndifferentAccess.new(query_target: "reference",

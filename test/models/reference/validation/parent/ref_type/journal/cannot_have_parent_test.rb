@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Reference model test.
 class JournalCannotHaveParentTest < ActiveSupport::TestCase
   test "journal cannot have parent" do
     ref = references(:journal_with_parent)

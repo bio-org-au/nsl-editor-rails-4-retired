@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single instance model test.
 class InstanceUpdateChangeReferenceSimpleTest < ActiveSupport::TestCase
   test "change reference simple" do
     instance = instances(:britten_created_angophora_costata)

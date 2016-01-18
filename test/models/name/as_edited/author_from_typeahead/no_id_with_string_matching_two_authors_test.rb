@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single name model test.
 class NameAsEditedNoAuthorIdWithStringMatchingTwoNamesTest < ActiveSupport::TestCase
   test "no author id with string matching 2 abbrevs" do
     author_1 = authors(:has_matching_abbrev_1)

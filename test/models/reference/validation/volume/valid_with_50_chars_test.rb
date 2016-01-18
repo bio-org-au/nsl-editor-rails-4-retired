@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Reference model test.
 class VolumeValidWith50CharsTest < ActiveSupport::TestCase
   test "volume valid with 50 chars" do
     reference = references(:simple)

@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Help test.
 class HelpTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true

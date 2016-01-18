@@ -16,13 +16,22 @@
 #
 require "test_helper"
 
-class SearchNamesQueryCommonAndCultivarParamListSecondParentIdTest < ActionController::TestCase
+# Single search controller test.
+class SearchNamesCommNCultivarParamList2ndParentId < ActionController::TestCase
   tests SearchController
 
-  test "search names second parent id with query common and cultivar param true" do
+  test "search names second parent id with common and cultivar param true" do
     name = names(:another_species)
-    get(:search, { query_target: "name", query_string: "second-parent-id: #{name.id}", query_common_and_cultivar: "t" }, username: "fred", user_full_name: "Fred Jones", groups: [])
+    get(:search,
+        { query_target: "name",
+          query_string: "second-parent-id: #{name.id}",
+          query_common_and_cultivar: "t" },
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: [])
     assert_response :success
-    assert_select '#search-results-summary', /7 records\b/, "Should find 5 records, including common/cultivars"
+    assert_select '#search-results-summary',
+                  /7 records\b/,
+                  "Should find 7 records, including common/cultivars"
   end
 end

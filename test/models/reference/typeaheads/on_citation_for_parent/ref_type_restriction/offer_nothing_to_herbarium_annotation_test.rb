@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Reference model typeahead search.
 class TypeaheadsOnCitationForParentRefTypeRestrictionNothingForHerbariumAnnotation < ActiveSupport::TestCase
   test "reference typeahead on citation ref type restriction nothing for herbarium annotation" do
     current_reference = references(:simple)

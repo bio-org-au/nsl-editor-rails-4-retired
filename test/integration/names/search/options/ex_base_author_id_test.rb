@@ -19,6 +19,7 @@
 
 require "test_helper"
 
+# Single integration test.
 class ExBaseAuthorIdTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
 

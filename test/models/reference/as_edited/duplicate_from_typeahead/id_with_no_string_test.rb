@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Reference model typeahead test.
 class ReferenceAsEditedDuplicateOfIdWithNoString < ActiveSupport::TestCase
   test "id with no string" do
     reference = references(:journal_of_botany_british_and_foreign)

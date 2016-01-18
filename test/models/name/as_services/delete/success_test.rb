@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single name model test.
 class NameAsServicesDeleteSuccessTest < ActiveSupport::TestCase
   test "url" do
     name_id = names(:name_to_delete).id

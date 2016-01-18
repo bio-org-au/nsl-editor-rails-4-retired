@@ -16,9 +16,12 @@
 #
 require "test_helper"
 
+# Single controller test.
 class InstanceNewRouteTest < ActionController::TestCase
   tests InstancesController
   test "should route to a new instance" do
-    assert_routing "/instances/new", controller: "instances", action: "new"
+    assert_routing "/instances/new",
+                   controller: "instances",
+                   action: "new"
   end
 end

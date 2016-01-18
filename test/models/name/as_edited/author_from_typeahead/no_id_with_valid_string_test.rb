@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single name model test.
 class NameAsEditedNoAuthorIdWithValidString < ActiveSupport::TestCase
   test "no id with valid string" do
     author = authors(:dummy_author_1)

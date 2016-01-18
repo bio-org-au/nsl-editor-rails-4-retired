@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single controller test.
 class NoInstanceCreateForDuplicateTest < ActionController::TestCase
   tests NamesController
   setup do
@@ -25,12 +26,17 @@ class NoInstanceCreateForDuplicateTest < ActionController::TestCase
   test "no instance create for duplicate name" do
     assert @name.duplicate?, "Test name must be a duplicate"
     @request.headers["Accept"] = "application/javascript"
-    get(:show, { id: @name.id, tab: "tab_instances" }, username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
+    get(:show,
+        { id: @name.id, tab: "tab_instances" },
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: ["edit"])
     assert_response :success
     assert_template "names/tabs/_tab"
     assert_template "names/tabs/_tab_instances"
     assert_select ".focus-details" do
-      assert_select "span.message", "Cannot create instances for a duplicate name."
+      assert_select "span.message",
+                    "Cannot create instances for a duplicate name."
     end
     assert_template partial: "instances/form_create", count: 0
   end

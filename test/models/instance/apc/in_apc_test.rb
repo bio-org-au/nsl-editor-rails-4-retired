@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single instance model test.
 class InstanceInAPCTest < ActiveSupport::TestCase
   test "instance in apc" do
     skip

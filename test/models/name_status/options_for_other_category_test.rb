@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Name status options tests.
 class OptionsForOtherCategoryTest < ActiveSupport::TestCase
   test "should include [deleted]" do
     assert NameStatus.options_for_category(Name::OTHER_CATEGORY).collect(&:first).include?("[deleted]"),

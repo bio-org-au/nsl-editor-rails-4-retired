@@ -16,13 +16,18 @@
 #
 require "test_helper"
 
+# Single controller test.
 class InstancesCreateByReaderTest < ActionController::TestCase
   tests InstancesController
 
   test "reader should not be able to call create instance" do
     @request.headers["Accept"] = "application/javascript"
     assert_no_difference("Instance.count") do
-      post(:create, { instance: {} }, username: "fred", user_full_name: "Fred Jones", groups: [])
+      post(:create,
+           { instance: {} },
+           username: "fred",
+           user_full_name: "Fred Jones",
+           groups: [])
     end
     assert_response :forbidden
   end

@@ -17,6 +17,7 @@
 require "test_helper"
 # require 'sucker_punch/testing/inline'
 
+# Single controller test.
 class GenusNameChangeHandlesDoubleParentTest < ActionController::TestCase
   tests NamesController
 
@@ -26,8 +27,10 @@ class GenusNameChangeHandlesDoubleParentTest < ActionController::TestCase
     skip "Cannot get the suckerpunch job to run in test."
     grevillea = names(:grevillea_genus)
     descendant = names(:grevillea_cultivar_hybrid)
-    assert descendant.parent == grevillea, "Grevillea should be the parent for this test."
-    assert descendant.second_parent == grevillea, "Grevillea should be the second parent for this test."
+    assert descendant.parent == grevillea,
+           "Grevillea should be the parent for this test."
+    assert descendant.second_parent == grevillea,
+           "Grevillea should be the second parent for this test."
     @request.headers["Accept"] = "application/javascript"
     att = grevillea.attributes
     att["name_element"] = "xyz"
@@ -60,6 +63,7 @@ class GenusNameChangeHandlesDoubleParentTest < ActionController::TestCase
     assert_response :success
     # sleep(2) # to allow for the asynch job
     descendant_after = Name.find(descendant.id)
-    assert descendant.full_name != descendant_after.full_name, "Grevillea's name has changed and this should affect the descendant's name."
+    assert descendant.full_name != descendant_after.full_name,
+           "Grevillea's name change should affect the descendant's name."
   end
 end

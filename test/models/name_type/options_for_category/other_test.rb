@@ -17,6 +17,7 @@
 
 require "test_helper"
 
+# Name type options for category test.
 class OtherTest < ActiveSupport::TestCase
   test "other name type options" do
     current_category = Name::OTHER_CATEGORY

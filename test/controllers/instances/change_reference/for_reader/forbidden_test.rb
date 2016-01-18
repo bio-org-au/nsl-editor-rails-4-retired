@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single controller test.
 class InstancesChangeReferenceForReaderSimpleTest < ActionController::TestCase
   tests InstancesController
 
@@ -24,7 +25,11 @@ class InstancesChangeReferenceForReaderSimpleTest < ActionController::TestCase
     reference = references(:a_book)
     assert instance.reference_id != reference.id
     @request.headers["Accept"] = "application/javascript"
-    put(:change_reference, { id: instance.id, instance: { "reference_id" => reference.id } }, username: "fred", user_full_name: "Fred Jones", groups: [])
+    put(:change_reference,
+        { id: instance.id, instance: { "reference_id" => reference.id } },
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: [])
     assert_response :forbidden
     assert Instance.find(instance.id).reference_id != reference.id
   end

@@ -67,10 +67,10 @@ class Author::AsEdited < Author::AsTypeahead
     logger.debug("#{AED}resolve_typeahead_params for params: #{params}")
     return unless params.key?(:duplicate_of_id)
     self.duplicate_of_id =
-    Author::AsEdited.duplicate_of_from_typeahead(
-      params[:duplicate_of_id],
-      params[:duplicate_of_typeahead],
-      id)
+      Author::AsEdited.duplicate_of_from_typeahead(
+        params[:duplicate_of_id],
+        params[:duplicate_of_typeahead],
+        id)
   rescue => e
     logger.error("#{AED}resolve_typeahead_params:found error: #{e}")
     raise

@@ -17,6 +17,7 @@
 require "test_helper"
 load "test/models/search/users.rb"
 
+# Single Search model test for Reference target.
 class SearchOnReferenceOnMasterIdTest < ActiveSupport::TestCase
   test "on master ID" do
     reference = references(:master)

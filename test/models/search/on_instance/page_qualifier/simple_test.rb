@@ -17,6 +17,7 @@
 require "test_helper"
 load "test/models/search/users.rb"
 
+# Single Search model test on Instance search.
 class SearchOnInstancePageQualifierSimpleTest < ActiveSupport::TestCase
   test "search on instance page qualifier simple" do
     params = ActiveSupport::HashWithIndifferentAccess.new(

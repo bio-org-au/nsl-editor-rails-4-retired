@@ -16,16 +16,28 @@
 #
 require "test_helper"
 
-class SearchReferencesDefinedQueriesReferenceSharedNamesListLimitAppliesTest < ActionController::TestCase
+# Single search controller test.
+class SearchRefsDefdQueryRefSharedNamesListLimit < ActionController::TestCase
   tests SearchController
 
   test "reference shared names limited" do
     ref_1 = references(:de_fructibus_et_seminibus_plantarum)
     ref_2 = references(:paper_by_britten_on_angophora)
-    get(:search, { query_target: "references shared names", query_string: "#{ref_1.id},#{ref_2.id} limit:1" }, username: "fred", user_full_name: "Fred Jones", groups: [])
+    get(:search,
+        { query_target: "references shared names",
+          query_string: "#{ref_1.id},#{ref_2.id} limit:1" },
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: [])
     assert_response :success
-    assert_select '#search-results-summary', /\b1 record\b/, "Should find one record"
-    assert_select '#search-results-summary', /\blimited\b/, "Should say result is limited"
-    assert_select '#search-results-summary', /of an unknown total\b/, "Should say of an unknown total"
+    assert_select '#search-results-summary',
+                  /\b1 record\b/,
+                  "Should find one record"
+    assert_select '#search-results-summary',
+                  /\blimited\b/,
+                  "Should say result is limited"
+    assert_select '#search-results-summary',
+                  /of an unknown total\b/,
+                  "Should say of an unknown total"
   end
 end

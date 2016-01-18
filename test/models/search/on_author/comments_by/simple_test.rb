@@ -17,6 +17,7 @@
 require "test_helper"
 load "test/models/search/users.rb"
 
+# Single Search model test.
 class SearchOnAuthorCommentsBySimpleTest < ActiveSupport::TestCase
   test "search on author comments by simple" do
     params = ActiveSupport::HashWithIndifferentAccess.new(

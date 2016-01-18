@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Name model test.
 class NamesAreSetFromServiceTest < ActiveSupport::TestCase
   test "names are set from service" do
     name = names(:without_names_from_service)

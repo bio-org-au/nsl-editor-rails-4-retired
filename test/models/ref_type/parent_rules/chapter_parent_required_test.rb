@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Ref Type parent rule test.
 class ChapterParentRequiredTest < ActiveSupport::TestCase
   test "chapter ref type parent is required" do
     assert ref_types(:chapter).parent_optional == false, "Chapter ref type parent should be required."

@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Reference model test.
 class UnknownInvalidWithNonUnknownParentTest < ActiveSupport::TestCase
   test "unknown invalid with non unknown parent" do
     ref = references(:unknown_without_parent)

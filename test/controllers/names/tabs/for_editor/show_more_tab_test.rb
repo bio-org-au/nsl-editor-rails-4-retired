@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single controller test.
 class NameShowMoreTabForReadOnlyTest < ActionController::TestCase
   tests NamesController
   setup do
@@ -24,8 +25,14 @@ class NameShowMoreTabForReadOnlyTest < ActionController::TestCase
 
   test "should show more tab" do
     @request.headers["Accept"] = "application/javascript"
-    get(:show, { id: @name.id, tab: "tab_more" }, username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
+    get(:show,
+        { id: @name.id, tab: "tab_more" },
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: ["edit"])
     assert_response :success
-    assert_select 'li.active a#name-comments-tab', "Comments", "Should show 'Comments' tab."
+    assert_select "li.active a#name-comments-tab",
+                  "Comments",
+                  "Should show 'Comments' tab."
   end
 end

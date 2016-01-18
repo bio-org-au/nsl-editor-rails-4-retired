@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single reference controller test.
 class ReferenceDestroyForEditorSimpleTest < ActionController::TestCase
   tests ReferencesController
   setup do
@@ -25,8 +26,14 @@ class ReferenceDestroyForEditorSimpleTest < ActionController::TestCase
   #  assert_difference('Reference.count') do
   test "editor should destroy reference" do
     @request.headers["Accept"] = "application/javascript"
-    assert_difference("Reference.count", -1, "References should reduce by 1 when editor destroys 1") do
-      post(:destroy, { id: @reference.id }, username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
+    assert_difference("Reference.count",
+                      -1,
+                      "References should reduce by 1 when editor destroys 1") do
+      post(:destroy,
+           { id: @reference.id },
+           username: "fred",
+           user_full_name: "Fred Jones",
+           groups: ["edit"])
     end
     assert_response :success, "Editor should be able to destroy reference"
   end

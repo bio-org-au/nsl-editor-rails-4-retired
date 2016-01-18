@@ -16,12 +16,17 @@
 #
 require "test_helper"
 
-class InstancesTypeaheadForNameShowingReferenceToUpdateSynonymyForReaderTest < ActionController::TestCase
+# Single controller test.
+class InstThead4NameShowingRefToUpdSyn4ReaderTest < ActionController::TestCase
   tests InstancesController
 
   test "reader should not be able to typehead for synonymy instance" do
     @request.headers["Accept"] = "application/javascript"
-    get(:typeahead_for_name_showing_references_to_update_instance, { term: "ab" }, username: "fred", user_full_name: "Fred Jones", groups: [])
+    get(:typeahead_for_name_showing_references_to_update_instance,
+        { term: "ab" },
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: [])
     assert_response :forbidden
   end
 end

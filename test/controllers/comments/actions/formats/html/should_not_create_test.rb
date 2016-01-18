@@ -16,7 +16,8 @@
 #
 require "test_helper"
 
-class CommentsControllerActionsFormatsHtmlShouldNotCreateTest < ActionController::TestCase
+# Single controller test.
+class CommentsContActsFmatsHtmlShouldNotCreateTest < ActionController::TestCase
   tests NamesController
   setup do
     @comment = comments(:author_comment)
@@ -24,7 +25,11 @@ class CommentsControllerActionsFormatsHtmlShouldNotCreateTest < ActionController
 
   test "html format should not create comment" do
     assert_no_difference("Comment.count") do
-      post(:create, { comment: { text: @comment.text, author_id: authors("haeckel") } }, username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
+      post(:create,
+           { comment: { text: @comment.text, author_id: authors("haeckel") } },
+           username: "fred",
+           user_full_name: "Fred Jones",
+           groups: ["edit"])
     end
     assert_response :service_unavailable
   end

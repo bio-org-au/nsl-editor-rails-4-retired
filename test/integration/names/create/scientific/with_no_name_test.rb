@@ -20,6 +20,7 @@
 require "test_helper"
 require "integration/names/test_helper"
 
+# Single integration test.
 class WithNoNameTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
 

@@ -17,6 +17,7 @@
 require "test_helper"
 load "models/search/users.rb"
 
+# Single Search model test.
 class SearchOnAuthorAssertionNameHasTest < ActiveSupport::TestCase
   test "has name" do
     search = Search::Base.new(

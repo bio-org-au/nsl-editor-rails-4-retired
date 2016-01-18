@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single name model test.
 class NameAsEditedNoParentIdWithNoString < ActiveSupport::TestCase
   test "no id with no string" do
     assert_raise(RuntimeError, "Should raise a RuntimeError for no parent.") do

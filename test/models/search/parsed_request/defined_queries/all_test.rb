@@ -17,6 +17,7 @@
 require "test_helper"
 load "test/models/search/parsed_request/defined_queries/test_runner.rb"
 
+# Single Search model test.
 class SearchParsedRequestDefinedQueriesAllTest < ActiveSupport::TestCase
   DEFINED_QUERIES = {
     "instance-name-id:" => "instances-for-name-id:",

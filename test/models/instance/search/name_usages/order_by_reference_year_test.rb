@@ -17,6 +17,7 @@
 require "test_helper"
 load "models/search/users.rb"
 
+# Single instance model test.
 class NameUsagesOrderByReferenceYear < ActiveSupport::TestCase
   test "instance search name usages for casuarina inophloia order" do
     name = names(:casuarina_inophloia)

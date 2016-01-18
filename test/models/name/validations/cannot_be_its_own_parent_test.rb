@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Name model test.
 class NameCannotBeItsOwnParentTest < ActiveSupport::TestCase
   test "name with itself as parent is invalid" do
     name = names(:hybrid_formula)

@@ -16,7 +16,8 @@
 #
 require "test_helper"
 
-class NameSearchForNameTypeAndRankWildcardRankThenTypeTest < ActionController::TestCase
+# Single controller test.
+class NameSearch4NameTypeNRankWildcardRankThenTypeT < ActionController::TestCase
   tests SearchController
 
   test "editor search for name type and rank wildcard rank then type test" do

@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single instance model test.
 class InstanceAsCopierCopySynonymWithNewNameIdTest < ActiveSupport::TestCase
   # test "copy one synonym instance with a new name id" do
   # before = Instance.count

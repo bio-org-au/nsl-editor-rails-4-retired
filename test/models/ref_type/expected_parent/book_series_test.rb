@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Ref Type expected parent test.
 class BookShouldHaveSeriesParentTest < ActiveSupport::TestCase
   test "book ref type parent is series" do
     ref_type = ref_types(:book)

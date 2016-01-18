@@ -17,6 +17,7 @@
 require "test_helper"
 load "test/models/search/users.rb"
 
+# Single Search model test for Reference target.
 class SearchOnReferenceCitationAbbrevCTest < ActiveSupport::TestCase
   test "search on reference citation abbrev c simple" do
     reference = references(:ref_type_is_book)

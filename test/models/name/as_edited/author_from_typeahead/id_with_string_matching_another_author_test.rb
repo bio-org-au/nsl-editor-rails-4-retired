@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single name model test.
 class NameAsEditedAuthorIdWithStringMatchingAnotherAuthor < ActiveSupport::TestCase
   test "id with string for anther author" do
     author_1 = authors(:dummy_author_1)

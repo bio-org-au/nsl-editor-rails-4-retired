@@ -16,9 +16,14 @@
 #
 require "test_helper"
 
+# Single controller test.
 class InstanceRouteToSynTabTest < ActionController::TestCase
   tests InstancesController
   test "should route to instance syn tab" do
-    assert_routing "/instances/1/tab/syn", controller: "instances", action: "tab", id: "1", tab: "syn"
+    assert_routing "/instances/1/tab/syn",
+                   controller: "instances",
+                   action: "tab",
+                   id: "1",
+                   tab: "syn"
   end
 end

@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Ref Type parent rule test.
 class JournalParentNotAllowedTest < ActiveSupport::TestCase
   test "journal ref type parent is not allowed" do
     assert ref_types(:journal).parent_id.blank? == true, "Journal ref type parent should not be allowed."

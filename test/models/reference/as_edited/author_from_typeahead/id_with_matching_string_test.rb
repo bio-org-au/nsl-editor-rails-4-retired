@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Reference model typeahead test.
 class ReferenceAsEditedAuthorIdWithMatchingString < ActiveSupport::TestCase
   test "id with matching string" do
     author = authors(:chaplin)

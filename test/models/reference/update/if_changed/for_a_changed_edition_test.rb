@@ -17,6 +17,7 @@
 require "test_helper"
 require "models/reference/update/if_changed/test_helper"
 
+# Single Reference model test.
 class ForAChangedEditionTest < ActiveSupport::TestCase
   test "changed edition" do
     test_reference_text_field_change_is_detected("edition")

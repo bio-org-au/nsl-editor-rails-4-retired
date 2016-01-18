@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Reference model parent from typeahead test.
 class ReferenceAsEditedNoParentIdWithValidStringWithTrailingWhitespace < ActiveSupport::TestCase
   test "no id with valid string" do
     reference = references(:origin_of_species)

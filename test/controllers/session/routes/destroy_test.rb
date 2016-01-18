@@ -16,9 +16,12 @@
 #
 require "test_helper"
 
+# Single session test.
 class SessionDestroyRouteTest < ActionController::TestCase
   tests SessionsController
   test "should route to destroy a session" do
-    assert_routing({ method: "delete", path: "/sign_out" }, controller: "sessions", action: "destroy")
+    assert_routing({ method: "delete", path: "/sign_out" },
+                   controller: "sessions",
+                   action: "destroy")
   end
 end

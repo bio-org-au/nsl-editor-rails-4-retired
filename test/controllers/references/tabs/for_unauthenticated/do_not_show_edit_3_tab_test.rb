@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single reference controller test.
 class ReferenceUnauthenticatedDoNotShowEdit3est < ActionController::TestCase
   tests ReferencesController
   setup do

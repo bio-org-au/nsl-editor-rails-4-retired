@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single controller test.
 class AuthorEditorShowEditTest < ActionController::TestCase
   tests AuthorsController
   setup do
@@ -24,13 +25,19 @@ class AuthorEditorShowEditTest < ActionController::TestCase
 
   test "should show editor author edit tab" do
     @request.headers["Accept"] = "application/javascript"
-    get(:show, { id: @author.id, tab: "tab_edit" }, username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
-    assert_select 'li.active a#author-edit-tab', "Edit", "Should show 'Edit' tab."
+    get(:show,
+        { id: @author.id, tab: "tab_edit" },
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: ["edit"])
+    assert_select "li.active a#author-edit-tab",
+                  "Edit",
+                  "Should show 'Edit' tab."
     assert_select "form", true
-    assert_select 'input#author_name', true
-    assert_select 'input#author_abbrev', true
-    assert_select 'input#author_full_name', true
-    assert_select 'textarea#author_notes', true
-    assert_select 'input#author_duplicate_of_id', true
+    assert_select "input#author_name", true
+    assert_select "input#author_abbrev", true
+    assert_select "input#author_full_name", true
+    assert_select "textarea#author_notes", true
+    assert_select "input#author_duplicate_of_id", true
   end
 end

@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single instance typeahead search.
 class TypeaheadForSynonymySimpleTest < ActiveSupport::TestCase
   test "instance typeahead for synonymy simple" do
     results = Instance::AsTypeahead.for_synonymy("angophora")

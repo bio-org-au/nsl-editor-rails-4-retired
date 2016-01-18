@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Name model test.
 class ScientificNamesMustHaveAParentTest < ActiveSupport::TestCase
   test "scientific name without parent is invalid" do
     name = names(:scientific_name)

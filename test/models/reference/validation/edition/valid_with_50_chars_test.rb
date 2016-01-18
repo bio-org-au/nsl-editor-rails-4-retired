@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Reference model test.
 class EditionValidWith50CharsTest < ActiveSupport::TestCase
   test "edition valid with 50 chars" do
     reference = references(:simple)

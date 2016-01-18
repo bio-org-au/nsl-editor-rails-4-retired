@@ -17,6 +17,7 @@
 require "test_helper"
 load "models/search/users.rb"
 
+# Single Search model test.
 class ForInstanceTypeUnknown < ActiveSupport::TestCase
   # Search model run_search for Instance for : "id: 86355" in "name-instances", up to 1000000000 record(s)
   # Search model run_search for Instance for : "[unknown]" in "instance-type", up to 100 record(s) (pid:93252)

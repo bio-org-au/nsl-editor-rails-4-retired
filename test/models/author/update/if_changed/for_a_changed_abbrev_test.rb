@@ -17,6 +17,7 @@
 require "test_helper"
 require "models/author/update/if_changed/test_helper"
 
+# Single author model test.
 class ForAChangedAbbrevTest < ActiveSupport::TestCase
   test "changed abbrev" do
     test_author_text_field_change_is_detected("abbrev")

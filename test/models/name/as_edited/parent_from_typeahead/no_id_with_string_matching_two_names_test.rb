@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single name model test.
 class NameAsEditedNoParentIdWithStringMatchingTwoNamesTest < ActiveSupport::TestCase
   test "no id with string matching two names" do
     name_1 = names(:name_matches_another_1)

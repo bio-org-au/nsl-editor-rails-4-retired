@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Name typeahead test.
 class ShouldIncludeATwoInstancesCount < ActiveSupport::TestCase
   test "name parent suggestions should include a two instances count" do
     dummy_avoid_id = 1

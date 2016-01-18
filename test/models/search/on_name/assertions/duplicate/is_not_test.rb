@@ -17,6 +17,7 @@
 require "test_helper"
 load "models/search/users.rb"
 
+# Single Search model test for Name search.
 class SearchOnNameAssertionDuplicateIsNotTest < ActiveSupport::TestCase
   test "name asertion is not a duplicate" do
     search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_target: "name",

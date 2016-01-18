@@ -19,6 +19,7 @@
 
 require "test_helper"
 
+# Test authors search.
 class AuthorsSearchTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
 

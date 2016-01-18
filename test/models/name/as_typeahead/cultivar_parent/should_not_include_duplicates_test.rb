@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Name typeahead test.
 class CultivarParentSuggestionsShouldNotIncludeDuplicatesTest < ActiveSupport::TestCase
   test "name parent suggestions should not include duplicates" do
     suggestions = Name::AsTypeahead.cultivar_parent_suggestions("a duplicate species", -1)

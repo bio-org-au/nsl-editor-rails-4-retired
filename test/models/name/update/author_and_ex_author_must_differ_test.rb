@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Name model test.
 class AuthorExAuthorMustDifferOnUpdateTest < ActiveSupport::TestCase
   test "author and ex author are different" do
     name = names(:triodia_basedowii)

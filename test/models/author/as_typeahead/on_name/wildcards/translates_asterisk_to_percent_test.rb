@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single author model test.
 class AuthorTypeaheadsOnNameWildcardsTranslatesAsteriskToPercent < ActiveSupport::TestCase
   test "author typeahead on name wildcards translates asterisk to percent" do
     results = Author::AsTypeahead.on_name("*")

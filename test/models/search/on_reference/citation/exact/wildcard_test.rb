@@ -17,6 +17,7 @@
 require "test_helper"
 load "test/models/search/users.rb"
 
+# Single Search model test for Reference target.
 class SearchOnReferenceCitationExactWildcardTest < ActiveSupport::TestCase
   test "search on reference citation exact wildcard" do
     reference = references(:journal_with_papers)

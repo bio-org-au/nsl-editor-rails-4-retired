@@ -17,6 +17,7 @@
 
 require "test_helper"
 
+# Reference model typeahead search.
 class TypeaheadsOnCitationForParentWordCountThreeChaplinsTest < ActiveSupport::TestCase
   test "reference typeahead on citation for parent word count three chaplines" do
     results = Reference::AsTypeahead.on_citation_for_parent("chaplin chaplin chaplin", references(:simple).id, ref_types(:paper).id)

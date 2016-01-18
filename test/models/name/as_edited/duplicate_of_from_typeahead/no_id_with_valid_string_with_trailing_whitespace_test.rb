@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single name model test.
 class NameAsEditedNoDuplicateOfIdWithValidStringWithTrailingWhitespace < ActiveSupport::TestCase
   test "no id with valid string" do
     name = names(:the_regnum)

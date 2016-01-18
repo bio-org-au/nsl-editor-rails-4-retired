@@ -17,6 +17,7 @@
 require "test_helper"
 load "test/models/search/users.rb"
 
+# Single Search model test for Reference target.
 class SearchOnReferenceTitleExactWildcardTest < ActiveSupport::TestCase
   test "search on reference title exact wildcard" do
     reference = references(:nuytsia)

@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Reference model test.
 class PaperValidWithoutParentTest < ActiveSupport::TestCase
   test "paper valid without parent" do
     ref = references(:paper_with_journal_parent)

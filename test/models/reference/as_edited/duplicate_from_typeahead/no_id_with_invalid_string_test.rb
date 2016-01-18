@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Reference model typeahead test.
 class ReferenceAsEditedNoDuplicateOfIdWithInvalidString < ActiveSupport::TestCase
   test "no duplicate of id with invalid string" do
     assert_raise(RuntimeError, "Should raise a RuntimeError for invalid author string.") do

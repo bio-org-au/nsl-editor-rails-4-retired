@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Nam status options test.
 class OptionsForCultivarHybridCategoryTest < ActiveSupport::TestCase
   test "should include [deleted]" do
     assert NameStatus.options_for_category(Name::CULTIVAR_HYBRID_CATEGORY).collect(&:first).include?("[deleted]"), 'Cultivar hybrid category name status options should include "[deleted]"'

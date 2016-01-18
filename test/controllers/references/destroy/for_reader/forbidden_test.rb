@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single reference controller test.
 class ReferenceDestroyForbiddenForReaderTest < ActionController::TestCase
   tests ReferencesController
   setup do
@@ -24,8 +25,13 @@ class ReferenceDestroyForbiddenForReaderTest < ActionController::TestCase
 
   test "reader should not be able to destroy a reference" do
     @request.headers["Accept"] = "application/javascript"
-    assert_no_difference("Reference.count", "No references should be harmed in this test") do
-      post(:destroy, { id: @reference.id }, username: "fred", user_full_name: "Fred Jones", groups: [])
+    assert_no_difference("Reference.count",
+                         "No references should be harmed in this test") do
+      post(:destroy,
+           { id: @reference.id },
+           username: "fred",
+           user_full_name: "Fred Jones",
+           groups: [])
     end
     assert_response :forbidden, "Reader should not be able to destroy reference"
   end

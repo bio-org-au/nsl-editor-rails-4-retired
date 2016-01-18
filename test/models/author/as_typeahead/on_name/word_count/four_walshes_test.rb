@@ -17,6 +17,7 @@
 
 require "test_helper"
 
+# Single author model test.
 class AuthorTypeaheadsOnNameWordCountFourWalshesTest < ActiveSupport::TestCase
   test "reference typeahead on citation word count four walshes" do
     results = Author::AsTypeahead.on_name("walsh walsh walsh walsh")

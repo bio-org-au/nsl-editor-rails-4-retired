@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single controller test.
 class InstanceCreateTabTest < ActionController::TestCase
   tests NamesController
   setup do
@@ -24,7 +25,11 @@ class InstanceCreateTabTest < ActionController::TestCase
 
   test "instance create for name" do
     @request.headers["Accept"] = "application/javascript"
-    get(:show, { id: @name.id, tab: "tab_instances" }, username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
+    get(:show,
+        { id: @name.id, tab: "tab_instances" },
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: ["edit"])
     assert_response :success
     assert_template "names/tabs/_tab"
     assert_template "names/tabs/_tab_instances"

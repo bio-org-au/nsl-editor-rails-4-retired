@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single name model test.
 class NameAsEditedNoDuplicateOfIdWithNoString < ActiveSupport::TestCase
   test "no id with no string" do
     result = Name::AsEdited.duplicate_of_from_typeahead("", "")

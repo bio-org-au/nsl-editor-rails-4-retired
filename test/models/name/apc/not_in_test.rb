@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single name model test.
 class NameNotInAPCTest < ActiveSupport::TestCase
   test "name not in apc" do
     name = Name.new

@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Name model test.
 class NameCultivarHybridParentAndSecondParentCanBeTheSameTest < ActiveSupport::TestCase
   test "name cultivar hybrid parent and second parent can be the same" do
     name = names(:a_cultivar_hybrid)

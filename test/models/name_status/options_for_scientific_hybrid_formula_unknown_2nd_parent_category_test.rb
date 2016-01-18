@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Name status options tests.
 class OptionsForScientificHybridFormulaUnknown2ndParentCategoryTest < ActiveSupport::TestCase
   test "should include [deleted]" do
     assert NameStatus.options_for_category(Name::SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY).collect(&:first).include?("[deleted]"),

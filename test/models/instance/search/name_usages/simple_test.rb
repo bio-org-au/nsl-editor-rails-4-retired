@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single instance model test.
 class NameUsagesSimpleTest < ActiveSupport::TestCase
   test "name usages simple for casuarina inophloia" do
     # name = names(:casuarina_inophloia) # triodia_basedowii:

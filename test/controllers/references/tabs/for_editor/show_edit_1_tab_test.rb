@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single reference controller test.
 class ReferenceEditorShowEdit1TabTest < ActionController::TestCase
   tests ReferencesController
   setup do
@@ -24,8 +25,14 @@ class ReferenceEditorShowEdit1TabTest < ActionController::TestCase
 
   test "should show editor reference edit 1 tab" do
     @request.headers["Accept"] = "application/javascript"
-    get(:show, { id: @reference.id, tab: "tab_edit_1" }, username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
-    assert_select 'li.active a#reference-edit-1-tab', /Edit\./, "Should show 'Edit 1' tab."
+    get(:show,
+        { id: @reference.id, tab: "tab_edit_1" },
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: ["edit"])
+    assert_select 'li.active a#reference-edit-1-tab',
+                  /Edit\./,
+                  "Should show 'Edit 1' tab."
     assert_select "form", true
     assert_select 'select#reference_ref_type_id', true
     assert_select 'input#reference-parent-typeahead', true

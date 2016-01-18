@@ -17,6 +17,7 @@
 require "test_helper"
 require "models/name/as_typeahead/cultivar_parent/cultivar_parent_test_helper"
 
+# Single Name typeahead test.
 class CultivarParentForFormaRankTest < ActiveSupport::TestCase
   test "cultivar parent suggestion" do
     suggestions = Name::AsTypeahead.cultivar_parent_suggestions("%", -1)

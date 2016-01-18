@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Name typeahead test.
 class MustNotExcludeNamesWithoutAnInstanceTest < ActiveSupport::TestCase
   test "name parent suggestions should not exclude names without an instance" do
     avoid_id = 1

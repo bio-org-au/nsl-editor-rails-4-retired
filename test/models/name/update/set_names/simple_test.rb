@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Name model test.
 class NameUpdateSetNamesSimpleTest < ActiveSupport::TestCase
   test "name update set names simple" do
     name = names(:a_species)

@@ -17,6 +17,7 @@
 require "test_helper"
 require "models/reference/update/if_changed/test_helper"
 
+# Single Reference model test.
 class ForAChangedVolumeTest < ActiveSupport::TestCase
   test "changed volume" do
     test_reference_text_field_change_is_detected("volume")

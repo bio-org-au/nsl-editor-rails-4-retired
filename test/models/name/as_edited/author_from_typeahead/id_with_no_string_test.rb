@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single name model test.
 class NameeAsEditedAuthorIdWithNoString < ActiveSupport::TestCase
   test "id with no string" do
     result = Name::AsEdited.author_from_typeahead("1", "", "some field")

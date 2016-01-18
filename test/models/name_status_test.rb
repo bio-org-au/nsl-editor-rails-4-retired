@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Name Status tests.
 class NameStatusTest < ActiveSupport::TestCase
   test "select options for na and deleted with delete allowed" do
     delete_allowed = true

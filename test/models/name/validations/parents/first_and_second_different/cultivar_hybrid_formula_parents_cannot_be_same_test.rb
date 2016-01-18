@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Name model test.
 class NameCultivarHybridFormulaParentAndSecondParentCannotBeTheSameTest < ActiveSupport::TestCase
   test "name cultivar hybrid formula parent and second parent cannot be the same" do
     name = names(:a_cultivar_hybrid_formula)

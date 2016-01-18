@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single author model test.
 class AuthorAsEditedDuplicateOfIdWithMatchingString < ActiveSupport::TestCase
   test "id with matching string" do
     current_author_id = 1

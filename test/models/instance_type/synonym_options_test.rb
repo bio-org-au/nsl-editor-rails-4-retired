@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Instance type options test.
 class InstanceTypeSynonymOptionsTest < ActiveSupport::TestCase
   test "instance type synonym options" do
     options = InstanceType.synonym_options

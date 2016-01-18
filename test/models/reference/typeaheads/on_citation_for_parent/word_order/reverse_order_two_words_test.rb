@@ -17,6 +17,7 @@
 
 require "test_helper"
 
+# Reference model typeahead search.
 class TypeaheadsOnCitationForParentTwoWordsReverseOrder < ActiveSupport::TestCase
   test "two words in correct order" do
     results = Reference::AsTypeahead.on_citation_for_parent("bbbb aaaa", references(:a_book).id, ref_types(:book).id)

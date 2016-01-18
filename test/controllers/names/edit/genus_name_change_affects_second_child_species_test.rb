@@ -16,7 +16,8 @@
 #
 require "test_helper"
 
-class GenusNameChangeAffectsSecondChildSpeciesAndSubspeciesTest < ActionController::TestCase
+# Single controller test.
+class GenusNameChangeAffects2ndChildSpAndSubspTest < ActionController::TestCase
   tests NamesController
 
   test "genus name change affects second child species and subspecies" do
@@ -36,8 +37,12 @@ class GenusNameChangeAffectsSecondChildSpeciesAndSubspeciesTest < ActionControll
     sleep(2) # to allow for the asynch job
     species_afterwards = Name.find(species.id)
     puts species_afterwards.full_name
-    assert species.full_name != species_afterwards.full_name, "The genus's name has changed and this should affect the species's name."
+    assert species.full_name != species_afterwards.full_name,
+           "The genus's name has changed and this should affect the
+           species's name."
     subspecies_afterwards = Name.find(subspecies.id)
-    assert subspecies.full_name != subspecies_afterwards.full_name, "The genus's name has changed and this should affect the subspecies's name."
+    assert subspecies.full_name != subspecies_afterwards.full_name,
+           "The genus's name has changed and this should affect the
+           subspecies's name."
   end
 end

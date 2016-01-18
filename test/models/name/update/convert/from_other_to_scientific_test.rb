@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Name model test.
 class FromOtherToScientficTest < ActiveSupport::TestCase
   test "convert name from other - to - scientific test" do
     name = names(:other_informal)

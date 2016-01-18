@@ -17,6 +17,7 @@
 require "test_helper"
 load "test/models/search/users.rb"
 
+# Single Search model test for Reference target.
 class SearchOnReferenceYearAbbrevYTest < ActiveSupport::TestCase
   test "search on year abbrev Y" do
     reference = references(:paper_by_brassard)

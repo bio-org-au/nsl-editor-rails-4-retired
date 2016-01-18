@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Name type is scientific test.
 class SanctionedIsScientificTest < ActiveSupport::TestCase
   test "sanctioned is a scientific name type" do
     assert NameType.find_by(name: "sanctioned").scientific?, 'Sanctioned should be categorised as a "scientific" name type'

@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Reference model typeahead search.
 class TypeaheadsOnCitationForParentWildcardsTranslatesAsteriskToPercent < ActiveSupport::TestCase
   test "reference typeahead on citation wildcards translates asterisk to percent" do
     current_reference = references(:simple)

@@ -16,13 +16,19 @@
 #
 require "test_helper"
 
-class ReaderSearchControllerNamesCommentsButNoInstancesListTest < ActionController::TestCase
+# Single search controller test.
+class ReaderSearchContNamesCommentsButNoInstListTst < ActionController::TestCase
   tests SearchController
 
-  test "reader can search for a name" do
-    skip "Is name search for comments-but-no-instances required?  If so, here is the test."
-    # get(:search,{query_target: 'name', query_string: 'comments-but-no-instances:'},{username: 'fred', user_full_name: 'Fred Jones', groups: []})
+  test "reader can search for a name with comments but no instances" do
+    skip "Is name search for comments-but-no-instances
+         required?  If so, here is the test."
+    # get(:search,
+    #     {query_target: 'name', query_string: 'comments-but-no-instances:'},
+    #     {username: 'fred', user_full_name: 'Fred Jones', groups: []})
     # assert_response :success
-    # assert_select '#search-results-summary', /\b1 record\b/, "Should find at least 1 record for comments-but-no-instances:"
+    # assert_select '#search-results-summary',
+    #               /\b1 record\b/,
+    #               "Should find 1 or more recs for comments-but-no-instances:"
   end
 end

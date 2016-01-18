@@ -17,6 +17,7 @@
 require "test_helper"
 load "models/search/users.rb"
 
+# Single Search model test.
 class SearchOnAuthorAssertionDuplicateIsNotATest < ActiveSupport::TestCase
   test "is not a duplicate" do
     search = Search::Base.new(

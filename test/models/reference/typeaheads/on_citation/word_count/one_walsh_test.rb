@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Reference model typeahead search.
 class TypeaheadsOnCitationWordCountOneWalshTest < ActiveSupport::TestCase
   test "reference typeahead on citation word count one walsh" do
     results = Reference::AsTypeahead.on_citation("walsh")

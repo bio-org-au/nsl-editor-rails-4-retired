@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Reference model parent from typeahead test.
 class ReferenceAsEditedNoParentIdWithStringMatchingCurrentReferenceTest < ActiveSupport::TestCase
   test "no id with string matching current reference" do
     skip

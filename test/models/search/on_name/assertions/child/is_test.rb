@@ -17,6 +17,7 @@
 require "test_helper"
 load "models/search/users.rb"
 
+# Single Search model test for Name search.
 class SearchOnNameAssertionChildIsTest < ActiveSupport::TestCase
   test "name asertion is a child" do
     search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_target: "name",

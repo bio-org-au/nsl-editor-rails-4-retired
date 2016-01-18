@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Comment tests.
 class CommentTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true

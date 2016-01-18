@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single controller test.
 class HistoryY2016Test < ActionController::TestCase
   tests HistoryController
   test "history 2016 should route" do

@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Name model test.
 class NameHybridFormulaParentAndSecondParentCannotBeTheSameTest < ActiveSupport::TestCase
   test "name hybrid formula parent and second parent cannot be the same" do
     name = names(:hybrid_formula)

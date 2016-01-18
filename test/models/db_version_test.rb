@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# DB Version test.
 class DbVersionTest < ActiveSupport::TestCase
   test "simple" do
     assert_equal 1, DbVersion.count, "Should be just 1 record in db_version."

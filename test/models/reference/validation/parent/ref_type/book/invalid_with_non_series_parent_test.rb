@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Reference model test.
 class BookInvalidWithNonSeriesParentTest < ActiveSupport::TestCase
   test "book invalid with non series parent" do
     ref = references(:book_without_parent)

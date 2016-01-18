@@ -17,6 +17,7 @@
 require "test_helper"
 load "test/models/search/users.rb"
 
+# Single Search model test for Name search.
 class SearchOnNameOnDuplicateOfIdTest < ActiveSupport::TestCase
   test "on duplicate of ID" do
     name = names(:name_three_for_eflora)

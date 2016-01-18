@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Name model test.
 class ParentRankMustBeAboveNameRank < ActiveSupport::TestCase
   test "scientific name with parent of lower rank is invalid" do
     name = names(:scientific_name)

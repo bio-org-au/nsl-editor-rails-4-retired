@@ -17,6 +17,7 @@
 require "test_helper"
 load "models/search/users.rb"
 
+# Single instance model test.
 class InstanceSearchUpdatedBeforeFromDropdownSimplePluralTest < ActiveSupport::TestCase
   # New search for "42993" on instance up to 100 with field: upd-b
   test "instance search on updated before from dropdown field simple plural" do

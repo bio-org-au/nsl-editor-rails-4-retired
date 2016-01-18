@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Name Tag tests.
 class NameTagTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true

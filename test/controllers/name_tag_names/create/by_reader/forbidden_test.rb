@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single controller test.
 class NameTagNamesCreateByReaderForbiddenTest < ActionController::TestCase
   tests NameTagNamesController
 

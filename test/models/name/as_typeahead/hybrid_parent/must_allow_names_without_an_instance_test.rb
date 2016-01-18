@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Name typeahead test.
 class HybridParentMustAllowNamesWithoutAnInstanceTest < ActiveSupport::TestCase
   test "name parent suggestions allows names without an instance" do
     name = Name.find_by(full_name: "a species without an instance")

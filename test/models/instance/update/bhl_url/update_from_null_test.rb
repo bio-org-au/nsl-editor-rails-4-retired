@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single instance model test.
 class InstanceUpdateBHLURLFromNullTest < ActiveSupport::TestCase
   test "update bhl url from null" do
     unchanged = instances(:has_no_page_bhl_url_verbatim_name_string)

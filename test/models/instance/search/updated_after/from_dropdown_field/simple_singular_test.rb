@@ -17,6 +17,7 @@
 require "test_helper"
 load "models/search/users.rb"
 
+# Single instance model test.
 class InstanceSearchUpdatedAfterFromDropdownSimpleSingularTest < ActiveSupport::TestCase
   # New search for "42993" on instance up to 100 with field: upd-b
   test "instance search on updated after from dropdown field simple singular" do

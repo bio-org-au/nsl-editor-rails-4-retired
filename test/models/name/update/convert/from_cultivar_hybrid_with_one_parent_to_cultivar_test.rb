@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Name model test.
 class FromCultivarHybridWithOneParentToCultivarTest < ActiveSupport::TestCase
   test "convert name from cultivar hybrid with one parent - to - cultivar" do
     name = names(:cultivar_hybrid_with_one_parent)

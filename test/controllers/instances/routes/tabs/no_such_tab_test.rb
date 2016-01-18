@@ -16,10 +16,12 @@
 #
 require "test_helper"
 
+# Single controller test.
 class InstanceRouteToNoSuchTabTest < ActionController::TestCase
   tests InstancesController
   test "should route to instance show tab" do
     skip
-    # assert_routing '/instances/1/tab/no-such-tab', { controller: "instances", action: "show", id: "1", tab: 'show'}
+    # assert_routing '/instances/1/tab/no-such-tab',
+    # { controller: "instances", action: "show", id: "1", tab: 'show'}
   end
 end

@@ -17,6 +17,7 @@
 
 require "test_helper"
 
+# Name type options for category test.
 class ScientificTest < ActiveSupport::TestCase
   test "scientific name type options" do
     current_category = Name::SCIENTIFIC_CATEGORY

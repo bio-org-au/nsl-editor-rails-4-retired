@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Reference model test.
 class ChapterValidWithoutParentTest < ActiveSupport::TestCase
   test "chapter valid without parent" do
     ref = references(:chapter_with_book_parent)

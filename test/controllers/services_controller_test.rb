@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Services controller tests not yet broken into single test files.
 class ServicesControllerTest < ActionController::TestCase
   setup do
   end

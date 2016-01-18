@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single controller test.
 class AuthorEditorShowCommentsTabTest < ActionController::TestCase
   tests AuthorsController
   setup do
@@ -24,10 +25,16 @@ class AuthorEditorShowCommentsTabTest < ActionController::TestCase
 
   test "should show editor author comments tab" do
     @request.headers["Accept"] = "application/javascript"
-    get(:show, { id: @author.id, tab: "tab_comments" }, username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
+    get(:show,
+        { id: @author.id, tab: "tab_comments" },
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: ["edit"])
     assert_response :success
-    assert_select 'li.active a#author-comments-tab', "Comments", "Should show 'Comments' tab."
+    assert_select "li.active a#author-comments-tab",
+                  "Comments",
+                  "Should show 'Comments' tab."
     assert_select "form", true
-    assert_select 'textarea#comment_text', true
+    assert_select "textarea#comment_text", true
   end
 end

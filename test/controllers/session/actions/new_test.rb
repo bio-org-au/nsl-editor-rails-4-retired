@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Test new signin.
 class SessionsNewTest < ActionController::TestCase
   tests SessionsController
 

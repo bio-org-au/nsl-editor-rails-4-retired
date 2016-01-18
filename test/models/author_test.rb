@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single model test.
 class AuthorTest < ActiveSupport::TestCase
   test "typeahead on name should exclude authors with abbrev including those with empty string abbrev" do
     typeahead = Author::AsTypeahead.on_name("for typeahead on name")

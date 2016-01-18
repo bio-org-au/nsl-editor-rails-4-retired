@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single name model test.
 class NameAsEditedResolveTypeaheadParamsSetSanctioningAuthorTest < ActiveSupport::TestCase
   test "name as edited revolve typeahead params set sanctioning author" do
     dummy = authors(:dummy_author_1)

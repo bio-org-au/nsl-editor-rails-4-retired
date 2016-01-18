@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single controller test.
 class AuthorUnauthenticatedDoNotShowCommentsTabTest < ActionController::TestCase
   tests AuthorsController
   setup do

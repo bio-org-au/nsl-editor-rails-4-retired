@@ -16,12 +16,17 @@
 #
 require "test_helper"
 
-class InstancesTypeaheadForNameShowingReferenceToUpdateSynonymyForEditorTest < ActionController::TestCase
+# Single controller test.
+class InstTAhead4NameShowRefToUpdSynonymy4EditTest < ActionController::TestCase
   tests InstancesController
 
   test "editor should be able to typehead for synonymy instance" do
     @request.headers["Accept"] = "application/javascript"
-    get(:typeahead_for_name_showing_references_to_update_instance, { term: "ab" }, username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
+    get(:typeahead_for_name_showing_references_to_update_instance,
+        { term: "ab" },
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: ["edit"])
     assert_response :success
   end
 end

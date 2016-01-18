@@ -17,6 +17,7 @@
 require "test_helper"
 load "models/search/users.rb"
 
+# Single instance model test.
 class OnReferenceIdTest < ActiveSupport::TestCase
   test "instance search on Reference ID" do
     search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_string: "#{references(:paper_by_britten_on_angophora).id}",

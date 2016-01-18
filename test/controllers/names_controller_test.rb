@@ -16,18 +16,23 @@
 #
 require "test_helper"
 
+# Name controller tests not yet broken into single test files.
 class NamesControllerTest < ActionController::TestCase
   setup do
     @a_species = names(:a_species)
   end
 
   # Wat?
-  # ActionController::InvalidCrossOriginRequest: Security warning: an embedded <script> tag on another site requested protected JavaScript.
-  # If you know what you're doing, go ahead and disable forgery protection on this action to permit cross-origin JavaScript embedding.
-  #  test/controllers/names_controller_test.rb:18:in `block in <class:NamesControllerTest>'
+  # ActionController::InvalidCrossOriginRequest: Security warning: an
+  # embedded <script> tag on another site requested protected JavaScript.
+  # If you know what you're doing, go ahead and disable forgery protection
+  # on this action to permit cross-origin JavaScript embedding.
+  #  test/controllers/names_controller_test.rb:18:in
+  #  `block in <class:NamesControllerTest>'
   # test "should get new" do
   # @request.headers["Accept"] = "application/javascript"
-  # get(:new,{},{username: 'fred', user_full_name: 'Fred Jones', groups: ['edit']})
+  # get(:new,{},{username: 'fred', user_full_name: 'Fred Jones',
+  # groups: ['edit']})
   # assert_response :success
   # end
   #

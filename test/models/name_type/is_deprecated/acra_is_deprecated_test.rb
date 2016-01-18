@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Name type is deprecated test.
 class AcraIsDeprecatedTest < ActiveSupport::TestCase
   test "acra is a deprecated name type" do
     assert_equal NameType.find_by(name: "acra").deprecated, true, "ACRA should be a deprecated name type"

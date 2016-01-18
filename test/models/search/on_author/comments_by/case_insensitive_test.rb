@@ -17,6 +17,7 @@
 require "test_helper"
 load "test/models/search/users.rb"
 
+# Single Search model test.
 class SearchOnAuthorCommentsByCaseInsensitiveTest < ActiveSupport::TestCase
   test "search on author comments by case insensitive" do
     params = ActiveSupport::HashWithIndifferentAccess.new(

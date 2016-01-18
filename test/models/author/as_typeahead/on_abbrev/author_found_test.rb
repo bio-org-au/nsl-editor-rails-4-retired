@@ -17,6 +17,7 @@
 
 require "test_helper"
 
+# Single author model test.
 class AuthorAsTypeaheadOnAbbrevAuthorFoundTest < ActiveSupport::TestCase
   test "author found" do
     results = Author::AsTypeahead.on_abbrev("masl")

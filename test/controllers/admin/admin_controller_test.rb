@@ -16,17 +16,26 @@
 #
 require "test_helper"
 
+# Administration tests.
 class AdminControllerTest < ActionController::TestCase
   setup do
   end
 
   test "editor should not get index" do
-    get(:index, {}, username: "fred", user_full_name: "Fred Jones", groups: [:edit])
+    get(:index,
+        {},
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: [:edit])
     assert_response :forbidden
   end
 
   test "admin user should get index" do
-    get(:index, {}, username: "fred", user_full_name: "Fred Jones", groups: ["admin"])
+    get(:index,
+        {},
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: ["admin"])
     assert_response :success
     assert_select "h2", "Admin", "Should have 'Admin' heading."
   end

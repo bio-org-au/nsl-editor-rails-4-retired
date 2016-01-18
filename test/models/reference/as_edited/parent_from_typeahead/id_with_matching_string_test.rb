@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Reference model parent from typeahead test.
 class ReferenceAsEditedParentIdWithMatchingString < ActiveSupport::TestCase
   test "id with matching string" do
     reference = references(:origin_of_species)

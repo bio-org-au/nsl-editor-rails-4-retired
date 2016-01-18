@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single instance model test.
 class InNestedSimpleInstanceOrderTest < ActiveSupport::TestCase
   def assert_with_args(results, index, expected)
     actual = "#{results[index].page} - #{results[index].name.full_name}"

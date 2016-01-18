@@ -19,6 +19,7 @@
 
 require "test_helper"
 
+# Test user queries page
 class UserQueriesPageTest < ActionDispatch::IntegrationTest
   # Make the Capybara DSL available in all integration tests
   include Capybara::DSL

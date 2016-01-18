@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single controller test.
 class NameTagNamesCreateByEditorSimpleTest < ActionController::TestCase
   tests NameTagNamesController
 

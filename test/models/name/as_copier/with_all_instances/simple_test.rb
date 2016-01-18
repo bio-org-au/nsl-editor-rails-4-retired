@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single name model test.
 class NameAsCopierWithAllInstancesSimpleTest < ActiveSupport::TestCase
   test "copy name with all instances" do
     before = Name.count

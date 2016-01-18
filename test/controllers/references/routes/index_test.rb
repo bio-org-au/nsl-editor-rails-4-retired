@@ -16,9 +16,13 @@
 #
 require "test_helper"
 
+# Single reference controller test.
 class ReferencesRouteIndexTest < ActionController::TestCase
   tests ReferencesController
   test "references index should route to the catch all" do
-    assert_routing "/references", controller: "search", action: "search", random: "references"
+    assert_routing "/references",
+                   controller: "search",
+                   action: "search",
+                   random: "references"
   end
 end

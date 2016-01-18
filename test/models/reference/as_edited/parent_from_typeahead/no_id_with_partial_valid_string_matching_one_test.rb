@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Reference model parent from typeahead test.
 class ReferenceAsEditedNoParentIdWithPartialValidStringMatchingOne < ActiveSupport::TestCase
   test "no id with partial valid string matching one reference" do
     reference = references(:origin_of_species)

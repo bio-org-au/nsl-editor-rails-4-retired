@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Name status options tests.
 class OptionsForScientificCategoryTest < ActiveSupport::TestCase
   test "should include default" do
     assert NameStatus.options_for_category(Name::SCIENTIFIC_CATEGORY).collect(&:first).include?("[default]"), 'Scientific name status options should include "default"'

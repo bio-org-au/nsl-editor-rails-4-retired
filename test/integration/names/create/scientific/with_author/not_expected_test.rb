@@ -19,6 +19,7 @@
 
 require "test_helper"
 
+# Single integration test.
 class AuthorNotExpectedTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
 

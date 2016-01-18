@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single reference controller test.
 class ReferenceShowReaderDetailsTabTest < ActionController::TestCase
   tests ReferencesController
   setup do
@@ -24,7 +25,11 @@ class ReferenceShowReaderDetailsTabTest < ActionController::TestCase
 
   test "should show reader reference details tab" do
     @request.headers["Accept"] = "application/javascript"
-    get(:show, { id: @reference.id, tab: "tab_show_1" }, username: "fred", user_full_name: "Fred Jones", groups: [])
+    get(:show,
+        { id: @reference.id, tab: "tab_show_1" },
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: [])
     assert_response :success
   end
 end

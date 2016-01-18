@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Search model test.
 class SearchParsedRequest20Test < ActiveSupport::TestCase
   test "search parse query 20" do
     query_string = "limit:20"

@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Reference tests.  Most now split into single-test files.
 class ReferenceTest < ActiveSupport::TestCase
   def try_citation(ref, expected, msg = "unexplained error", debug = false)
     ref.save!

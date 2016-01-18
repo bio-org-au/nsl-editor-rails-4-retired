@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Ref Type parent rule test.
 class SectionParentRequiredTest < ActiveSupport::TestCase
   test "section ref type parent is required" do
     assert ref_types(:section).parent_optional == false, "Section ref type parent should be required."

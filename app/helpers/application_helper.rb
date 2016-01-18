@@ -144,7 +144,7 @@ module ApplicationHelper
       content_tag(:section,
                   content_tag(:article,
                               content_tag(:span),
-                  class: "field-data inline") +
+                              class: "field-data inline") +
                   content_tag(:label,
                               label.as_field_description,
                               class: "field-label inline pull-right"),
@@ -404,9 +404,10 @@ module ApplicationHelper
 
   def citation_summary(instance)
     instance.citations.collect do |c|
-      c.instance_type.name end.collect.each_with_object(Hash.new(0)) do |o, h|
-        h[o] += 1
-      end.collect { |k, v| pluralize(v, k) }.join(" and ")
+      c.instance_type.name
+    end.collect.each_with_object(Hash.new(0)) do |o, h|
+      h[o] += 1
+    end.collect { |k, v| pluralize(v, k) }.join(" and ")
   end
 
   def created_by_whom_and_when(record)
@@ -423,7 +424,7 @@ module ApplicationHelper
       %(Last updated
       <span class="purple">#{time_ago_in_words(record.updated_at)}&nbsp;ago
       </span> by #{record.updated_by.downcase} #{formatted_timestamp(
-      record.updated_at)})
+        record.updated_at)})
     end
   end
 end

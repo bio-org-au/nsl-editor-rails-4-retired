@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Ref Type parent rule test.
 class DatabaseRecordParentRequiredTest < ActiveSupport::TestCase
   test "database record ref type parent is required" do
     assert ref_types(:database_record).parent_optional == false, "Database record ref type parent should be required."

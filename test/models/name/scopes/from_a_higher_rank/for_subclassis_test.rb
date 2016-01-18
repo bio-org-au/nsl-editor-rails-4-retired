@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single name model scope test.
 class ForSubclassisTest < ActiveSupport::TestCase
   test "from a higher rank for subclassis" do
     ranks = Name.from_a_higher_rank(name_ranks(:subclassis).id).collect { |name| name.name_rank.name }.uniq

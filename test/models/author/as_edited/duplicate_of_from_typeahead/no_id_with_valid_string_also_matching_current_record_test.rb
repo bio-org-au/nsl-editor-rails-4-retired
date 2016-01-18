@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single author model test.
 class AuthorAsEditedNoDuplicateOfIdWithValidStringAlsoMatchingCurrentRecord < ActiveSupport::TestCase
   test "no id with valid string also matching current record" do
     skip

@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single name model test.
 class NameAsEditedDuplicateOfIdWithStringMatching2Names < ActiveSupport::TestCase
   test "id with string matching 2 names" do
     name_1 = names(:name_matches_another_1)

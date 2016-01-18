@@ -17,6 +17,7 @@
 require "test_helper"
 require "models/instance/as_typeahead/for_synonymy/test_helper.rb"
 
+# Single instance typeahead search.
 class ForNameAndReferenceYearTest < ActiveSupport::TestCase
   test "name only search make sure works without source system" do
     assert_nil instances(:no_source_system).source_system

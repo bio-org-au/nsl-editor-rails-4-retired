@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single reference controller test.
 class ReferenceUnauthenticatedShowNoTabLinkTest < ActionController::TestCase
   tests ReferencesController
   setup do
@@ -28,7 +29,11 @@ class ReferenceUnauthenticatedShowNoTabLinkTest < ActionController::TestCase
     # assert_response :redirect, 'Should be redirected.'
     assert_select 'a#reference-show-tab', false, "Should not show 'Detail' tab."
     assert_select 'a#reference-edit-tab', false, "Should not show 'Edit' tab."
-    assert_select 'a#reference-comments-tab', false, "Should not show 'Comments' tab."
-    assert_select 'a#tab-heading', false, "Should not have tab heading showing a_book."
+    assert_select 'a#reference-comments-tab',
+                  false,
+                  "Should not show 'Comments' tab."
+    assert_select 'a#tab-heading',
+                  false,
+                  "Should not have tab heading showing a_book."
   end
 end

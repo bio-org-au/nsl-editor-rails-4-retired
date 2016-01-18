@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Name typeahead test.
 class NameTypeaheadOnFullNameSuggestionsShouldNotIncludeDuplicatesTest < ActiveSupport::TestCase
   test "name on full name suggestions should not include duplicates" do
     suggestions = Name::AsTypeahead::OnFullName.new({term:"a duplicate species"}).suggestions

@@ -17,6 +17,7 @@
 require "test_helper"
 require "models/author/update/if_changed/test_helper"
 
+# Single author model test.
 class ForAnUnchangedNameTest < ActiveSupport::TestCase
   test "unchanged name" do
     test_author_text_field_lack_of_change_is_detected("name")

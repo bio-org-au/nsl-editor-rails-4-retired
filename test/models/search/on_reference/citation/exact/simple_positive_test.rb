@@ -17,6 +17,7 @@
 require "test_helper"
 load "test/models/search/users.rb"
 
+# Single Search model test for Reference target.
 class SearchOnReferenceCitationExactSimplePositiveTest < ActiveSupport::TestCase
   test "search on reference citation exact simple positive" do
     reference = references(:journal_with_papers)

@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single controller test.
 class GenusNameUpdateWithNoNameChangeTest < ActionController::TestCase
   tests NamesController
 
@@ -24,15 +25,20 @@ class GenusNameUpdateWithNoNameChangeTest < ActionController::TestCase
     species = names(:another_species)
     subspecies = names(:hybrid_formula)
     @request.headers["Accept"] = "application/javascript"
-    post(:update, { name: { "name_element" => "Acacia", "verbatim_name" => "fred" },
-                    id: genus.id
-                  },
-         username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
+    post(:update,
+         { name: { "name_element" => "Acacia", "verbatim_name" => "fred" },
+           id: genus.id
+         },
+         username: "fred",
+         user_full_name: "Fred Jones",
+         groups: ["edit"])
     assert_response :success
     sleep(2) # to allow for the asynch job
     species_afterwards = Name.find(species.id)
-    assert species.full_name == species_afterwards.full_name, "The genus's name has not changed so this should not affect the species's name."
+    assert species.full_name == species_afterwards.full_name,
+           "Genus name not changed so species's name should not change"
     subspecies_afterwards = Name.find(subspecies.id)
-    assert subspecies.full_name == subspecies_afterwards.full_name, "The genus's name has not changed so this should not affect the subspecies's name."
+    assert subspecies.full_name == subspecies_afterwards.full_name,
+           "Genus name has not changed so subspecies's name. should not change"
   end
 end

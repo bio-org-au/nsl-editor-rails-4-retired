@@ -17,6 +17,7 @@
 require "test_helper"
 load "test/models/search/users.rb"
 
+# Single Search model test for Name search.
 class OnParentIdTest < ActiveSupport::TestCase
   test "on parent ID" do
     query_string = "parent-id: #{names(:a_genus).id}"

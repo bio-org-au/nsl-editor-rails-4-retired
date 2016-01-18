@@ -17,6 +17,7 @@
 
 require "test_helper"
 
+# Single author model test.
 class AuthorTypeaheadsOnNameTwoWordsReverseOrder < ActiveSupport::TestCase
   test "two words in correct order" do
     results = Author::AsTypeahead.on_name("Zimmermann Cronquist")

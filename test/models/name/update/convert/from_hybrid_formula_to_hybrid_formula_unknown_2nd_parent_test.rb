@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Name model test.
 class FromHybridFormulaToHybridFormulaUnknown2ndParentTest < ActiveSupport::TestCase
   test "convert name from hybrid formula - to - hybrid formula unknown 2nd parent test" do
     name = names(:hybrid_formula)

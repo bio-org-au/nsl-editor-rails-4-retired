@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single instance model test.
 class InstanceSearchReverseOfCitedByIdNoSuchInstanceTest < ActiveSupport::TestCase
   # New search for "42993" on instance up to 100 with field: reverse-of-cited-by-id-query
   test "instance search on reverse of cited by instance id" do

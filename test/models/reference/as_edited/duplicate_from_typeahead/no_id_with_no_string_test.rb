@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Reference model typeahead test.
 class ReferenceAsEditedNoDuplicateOfIdWithNoString < ActiveSupport::TestCase
   test "no id with no string" do
     result = Reference::AsEdited.duplicate_of_from_typeahead("", "")

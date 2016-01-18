@@ -17,6 +17,7 @@
 require "test_helper"
 load "models/search/users.rb"
 
+# Single Search model test.
 class DefaultSearchNameTest < ActiveSupport::TestCase
   test "it" do
     search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_string: "hasnameonly", query_target: "Author", current_user: build_edit_user))

@@ -19,6 +19,7 @@
 
 require "test_helper"
 
+# Test search instance.
 class InstancesSearchTest < ActionDispatch::IntegrationTest
   # Make the Capybara DSL available in all integration tests
   include Capybara::DSL

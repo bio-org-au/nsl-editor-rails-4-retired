@@ -16,12 +16,19 @@
 #
 require "test_helper"
 
-class SearchInstancesListUsingRefTypeSingleValuePaperTest < ActionController::TestCase
+# Single search controller test.
+class SearchInstListUsingRefTypeSingleValPaperTest < ActionController::TestCase
   tests SearchController
 
   test "search for instances with a specific ref type" do
-    get(:search, { query_target: "instance", query_string: "ref-type: paper" }, username: "fred", user_full_name: "Fred Jones", groups: [])
+    get(:search,
+        { query_target: "instance", query_string: "ref-type: paper" },
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: [])
     assert_response :success
-    assert_select '#search-results-summary', /[0-9][0-9] records\b/, "Should find some records"
+    assert_select '#search-results-summary',
+                  /[0-9][0-9] records\b/,
+                  "Should find some records"
   end
 end

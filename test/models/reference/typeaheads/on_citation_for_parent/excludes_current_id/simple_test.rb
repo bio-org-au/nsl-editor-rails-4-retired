@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Reference model typeahead search.
 class TypeaheadsOnCitationForParentExcludesCurrentIdTest < ActiveSupport::TestCase
   test "reference typeahead on citation for parent excludes current id" do
     current_reference = references(:simple)

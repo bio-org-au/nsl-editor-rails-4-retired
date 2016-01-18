@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Name type is scientific test.
 class NoOthersAreScientificTest < ActiveSupport::TestCase
   # Instead of confirming all the non-scientific name types,
   # test for the scientific ones and

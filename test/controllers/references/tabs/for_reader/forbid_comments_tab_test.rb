@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single reference controller test.
 class ReferenceReaderNotShowCommentsTabTest < ActionController::TestCase
   tests ReferencesController
   setup do
@@ -24,7 +25,11 @@ class ReferenceReaderNotShowCommentsTabTest < ActionController::TestCase
 
   test "should not show reader reference comments tab" do
     @request.headers["Accept"] = "application/javascript"
-    get(:show, { id: @reference.id, tab: "tab_comments" }, username: "fred", user_full_name: "Fred Jones", groups: [])
+    get(:show,
+        { id: @reference.id, tab: "tab_comments" },
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: [])
     assert_response :forbidden
   end
 end

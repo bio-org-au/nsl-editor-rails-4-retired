@@ -73,10 +73,12 @@ class Instance < ActiveRecord::Base
   scope :changed_in_the_last_n_days, ->(n) { where("current_date - created_at::date < ?  or current_date - updated_at::date < ?", n, n) }
 
   scope :for_ref, ->(ref_id) { where(reference_id: ref_id) }
-  scope :for_ref_and_correlated_on_name_id, ->(ref_id) \
-    { where(["exists (select null from instance i2
+  scope :for_ref_and_correlated_on_name_id, lambda \
+    { |ref_id|
+      where(["exists (select null from instance i2
              where i2.reference_id = ? and instance.name_id = i2.name_id)",
-             ref_id]) }
+             ref_id])
+    }
   # scope :order_by_name_full_name, -> { joins(:name).order(name: [:full_name])}
   scope :order_by_name_full_name, -> { joins(:name).order(" name.full_name ") }
 
@@ -96,8 +98,8 @@ class Instance < ActiveRecord::Base
            foreign_key: "cites_id"
   has_many :citeds, class_name:
            "Instance",
-           inverse_of: :this_cites,
-           foreign_key: "cites_id"
+                    inverse_of: :this_cites,
+                    foreign_key: "cites_id"
 
   belongs_to :this_is_cited_by,
              class_name: "Instance",
@@ -116,7 +118,7 @@ class Instance < ActiveRecord::Base
   has_many :instance_notes,
            dependent: :restrict_with_error
 
-  #has_many :apc_instance_notes,
+  # has_many :apc_instance_notes,
   #         class_name: "InstanceNote",
   #         dependent: :restrict_with_error,
   #         -> { "where instance_note_key_id in
@@ -206,7 +208,7 @@ class Instance < ActiveRecord::Base
     \ncited by ref: #{this_is_cited_by.try('reference').try('citation')}
     \ncites name: #{this_cites.try('name').try('full_name')}"
   rescue => e
-    "Error in to_s: #{e.to_s}"
+    "Error in to_s: #{e}"
   end
 
   def synonymy_name_must_match_cites_instance_name
@@ -375,7 +377,7 @@ class Instance < ActiveRecord::Base
   def self.consume_token(search_string, requested_token)
     found_token = search_string.match(/#{requested_token.downcase}:[^ ]*/)
     [!found_token.blank?,
-     search_string.gsub(/#{requested_token.downcase}:/,"")]
+     search_string.gsub(/#{requested_token.downcase}:/, "")]
   end
 
   def self.get_id_for(search_string, query_token)
@@ -408,7 +410,7 @@ class Instance < ActiveRecord::Base
     results = []
     Reference.where([" lower(citation) like ? ",
                      "%" + search_string.downcase + "%"])
-             .order("citation").limit(limit).each do |ref|
+      .order("citation").limit(limit).each do |ref|
       results.concat(Instance.ref_usages(ref.id))
     end
     results
@@ -496,32 +498,32 @@ class Instance < ActiveRecord::Base
   def self.nsl_720
     logger.debug("nsl_720")
     results = Instance
-      .where("id in (?) ",
-             [3_593_450, 3_455_690, 3_455_747, 3_587_295, 3_534_663,
-              3_454_920, 3_454_936, 3_536_329, 3_456_370, 3_454_931,
-              3_454_850, 3_454_945, 3_498_251, 3_454_966, 3_456_380,
-              3_480_899, 3_524_687, 3_456_385, 3_458_910, 3_454_921,
-              3_454_961, 3_526_347, 3_456_333, 3_506_487, 3_455_711,
-              3_508_136, 3_454_956, 3_455_757, 3_454_975, 3_456_353,
-              3_454_976, 3_545_422, 3_489_094, 3_456_371, 3_456_350,
-              3_509_786, 3_463_066, 3_547_132, 3_511_437, 3_516_396,
-              3_503_189, 3_479_256, 3_480_890, 3_548_842, 3_504_839,
-              3_454_926, 3_513_089, 3_455_691, 3_514_742, 3_480_894,
-              3_480_902, 3_484_174, 3_454_950, 3_552_262, 3_484_176,
-              3_454_910, 3_454_896, 3_518_051, 3_484_178, 3_455_692,
-              3_585_418, 3_454_869, 3_559_102, 3_455_752, 3_485_815,
-              3_456_351, 3_454_901, 3_482_538, 3_454_895, 3_487_453,
-              3_503_192, 3_553_972, 3_455_732, 3_555_682, 3_456_373,
-              3_454_951, 3_529_670, 3_455_742, 3_563_245, 3_490_734,
-              3_562_028, 3_455_699, 3_519_710, 3_454_911, 3_455_766,
-              3_492_375, 3_492_378, 3_454_870, 3_518_054, 3_455_729,
-              3_586_356, 3_455_767, 3_455_702, 3_499_895, 3_455_712,
-              3_550_552, 3_501_540, 3_519_713, 3_454_867, 3_460_541,
-              3_531_333, 3_501_543, 3_588_277, 3_454_830, 3_455_730,
-              3_560_812, 3_456_352, 3_456_372, 3_480_893, 3_557_392,
-              3_521_370, 3_456_328, 3_523_028, 3_454_868, 3_528_008,
-              3_454_885, 3_455_731, 3_460_547, 3_455_741, 3_455_689,
-              3_454_886])
+              .where("id in (?) ",
+                     [3_593_450, 3_455_690, 3_455_747, 3_587_295, 3_534_663,
+                      3_454_920, 3_454_936, 3_536_329, 3_456_370, 3_454_931,
+                      3_454_850, 3_454_945, 3_498_251, 3_454_966, 3_456_380,
+                      3_480_899, 3_524_687, 3_456_385, 3_458_910, 3_454_921,
+                      3_454_961, 3_526_347, 3_456_333, 3_506_487, 3_455_711,
+                      3_508_136, 3_454_956, 3_455_757, 3_454_975, 3_456_353,
+                      3_454_976, 3_545_422, 3_489_094, 3_456_371, 3_456_350,
+                      3_509_786, 3_463_066, 3_547_132, 3_511_437, 3_516_396,
+                      3_503_189, 3_479_256, 3_480_890, 3_548_842, 3_504_839,
+                      3_454_926, 3_513_089, 3_455_691, 3_514_742, 3_480_894,
+                      3_480_902, 3_484_174, 3_454_950, 3_552_262, 3_484_176,
+                      3_454_910, 3_454_896, 3_518_051, 3_484_178, 3_455_692,
+                      3_585_418, 3_454_869, 3_559_102, 3_455_752, 3_485_815,
+                      3_456_351, 3_454_901, 3_482_538, 3_454_895, 3_487_453,
+                      3_503_192, 3_553_972, 3_455_732, 3_555_682, 3_456_373,
+                      3_454_951, 3_529_670, 3_455_742, 3_563_245, 3_490_734,
+                      3_562_028, 3_455_699, 3_519_710, 3_454_911, 3_455_766,
+                      3_492_375, 3_492_378, 3_454_870, 3_518_054, 3_455_729,
+                      3_586_356, 3_455_767, 3_455_702, 3_499_895, 3_455_712,
+                      3_550_552, 3_501_540, 3_519_713, 3_454_867, 3_460_541,
+                      3_531_333, 3_501_543, 3_588_277, 3_454_830, 3_455_730,
+                      3_560_812, 3_456_352, 3_456_372, 3_480_893, 3_557_392,
+                      3_521_370, 3_456_328, 3_523_028, 3_454_868, 3_528_008,
+                      3_454_885, 3_455_731, 3_460_547, 3_455_741, 3_455_689,
+                      3_454_886])
   end
 
   def self.reverse_of_cites_id_query(instance_id)
@@ -559,7 +561,7 @@ class Instance < ActiveRecord::Base
     name.display_as_part_of_concept
     name.instances.sort do |i1, i2|
       [i1.reference.year, i1.reference.author.name] <=>
-      [i2.reference.year, i2.reference.author.name]
+        [i2.reference.year, i2.reference.author.name]
     end.each do |instance|
       if instance.simple?
         Instance.show_simple_instance_within_all_unfiltered_synonyms(name,
@@ -702,7 +704,7 @@ class Instance < ActiveRecord::Base
                instance_type.name instance_type_name, name.full_name ")
       .where(["cited_by_id is null and cites_id is null
                and lower(name.full_name) like lower(?)",
-               "%#{query}%"])
+              "%#{query}%"])
       .order("reference.year, author.name").limit(20)
       .collect do |i|
       # # value = "#{i.full_name} in #{i.citation}:#{i.year} #{'[' + i.pages

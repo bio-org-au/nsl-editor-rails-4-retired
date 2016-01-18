@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Reference model typeahead test.
 class ReferenceAsEditedDuplicateOfIdWithPartialStringMatchingAnotherReference < ActiveSupport::TestCase
   test "id with partial string for another reference" do
     reference_1 = references(:journal_of_botany_british_and_foreign)

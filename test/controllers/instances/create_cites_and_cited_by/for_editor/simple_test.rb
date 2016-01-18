@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single controller test.
 class InstancesCreateCitesAndCitedByByEditorTest < ActionController::TestCase
   tests InstancesController
 

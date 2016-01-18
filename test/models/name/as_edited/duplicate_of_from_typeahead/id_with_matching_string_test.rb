@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single name model test.
 class NameAsEditedDuplicateOfIdWithMatchingString < ActiveSupport::TestCase
   test "id with matching string" do
     name = names(:the_regnum)

@@ -19,6 +19,7 @@
 
 require "test_helper"
 
+# Reference search tests - mostly now split into single files.
 class ReferencesSearchTest < ActionDispatch::IntegrationTest
   # Make the Capybara DSL available in all integration tests
   include Capybara::DSL

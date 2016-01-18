@@ -17,6 +17,7 @@
 require "test_helper"
 require "models/reference/update/if_changed/test_helper"
 
+# Single Reference model test.
 class ForAChangedPublishedTest < ActiveSupport::TestCase
   test "changed published" do
     reference = Reference::AsEdited.find(references(:for_change_detection).id)

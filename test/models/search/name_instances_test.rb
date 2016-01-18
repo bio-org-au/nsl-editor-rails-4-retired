@@ -17,6 +17,7 @@
 require "test_helper"
 load "models/search/users.rb"
 
+# Single Search model test.
 class SearchNameInstancesTest < ActiveSupport::TestCase
   # Search model run_search for Instance for : "id: 86355" in "name-instances", up to 1000000000 record(s)
   test "search" do

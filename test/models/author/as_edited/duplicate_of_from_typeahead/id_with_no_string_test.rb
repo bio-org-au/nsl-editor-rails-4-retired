@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single author model test.
 class AuthorAsEditedDuplicateOfIdWithNoString < ActiveSupport::TestCase
   test "id with no string" do
     current_author_id = 1

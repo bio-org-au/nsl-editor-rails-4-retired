@@ -16,13 +16,21 @@
 #
 require "test_helper"
 
-class ReaderSearchControllerNamesSanctioningAuthorIdListTest < ActionController::TestCase
+# Single search controller test.
+class ReaderSearchContrNamesSanctioningAuthIdListT < ActionController::TestCase
   tests SearchController
 
   test "reader can search for a name by sanctioning author id" do
     author = authors(:is_a_name_authority_of_every_type)
-    get(:search, { query_target: "name", query_string: "sanctioning-author-id: #{author.id}" }, username: "fred", user_full_name: "Fred Jones", groups: [])
+    get(:search,
+        { query_target: "name",
+          query_string: "sanctioning-author-id: #{author.id}" },
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: [])
     assert_response :success
-    assert_select '#search-results-summary', /\b1 record\b/, "Should find 1 record for sanctioning author ID using #{author.abbrev}"
+    assert_select '#search-results-summary',
+                  /\b1 record\b/,
+                  "Should find sanctioning author from ID: #{author.id}"
   end
 end

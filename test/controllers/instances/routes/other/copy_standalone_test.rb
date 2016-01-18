@@ -16,10 +16,15 @@
 #
 require "test_helper"
 
+# Single controller test.
 class ShouldRouteToCopyStandaloneInstanceTest < ActionController::TestCase
   tests InstancesController
 
   test "should route to copy a standalone instance" do
-    assert_routing({ method: "post", path: "/instances/54/standalone/copy" }, controller: "instances", action: "copy_standalone", id: "54")
+    assert_routing({ method: "post",
+                     path: "/instances/54/standalone/copy" },
+                     controller: "instances",
+                     action: "copy_standalone",
+                     id: "54")
   end
 end

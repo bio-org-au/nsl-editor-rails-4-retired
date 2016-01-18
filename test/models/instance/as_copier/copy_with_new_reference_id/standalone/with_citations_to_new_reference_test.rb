@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single instance model test.
 class InstanceAsCopierWNewRefSAloneWithCitationsTest < ActiveSupport::TestCase
   test "copy a standalone instance with its citers to a new reference" do
     before = Instance.count

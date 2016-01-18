@@ -16,13 +16,20 @@
 #
 require "test_helper"
 
-class ReaderSearchControllerNamesBaseAuthorIdListTest < ActionController::TestCase
+# Single search controller test.
+class ReaderSearchControllerNamesBaseAuthorIdListT < ActionController::TestCase
   tests SearchController
 
   test "reader can search for a name by base author id" do
     author = authors(:cronquist_et_al)
-    get(:search, { query_target: "name", query_string: "base-author-id: #{author.id}" }, username: "fred", user_full_name: "Fred Jones", groups: [])
+    get(:search,
+        { query_target: "name", query_string: "base-author-id: #{author.id}" },
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: [])
     assert_response :success
-    assert_select '#search-results-summary', /\b1 record\b/, "Should find 1 record for base author ID using #{author.abbrev}"
+    assert_select '#search-results-summary',
+                  /\b1 record\b/,
+                  "Should find 1 record for base author ID: #{author.id}"
   end
 end

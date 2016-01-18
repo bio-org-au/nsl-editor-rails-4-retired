@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single controller test.
 class ShowReaderDetailsTabTest < ActionController::TestCase
   tests AuthorsController
   setup do
@@ -24,7 +25,11 @@ class ShowReaderDetailsTabTest < ActionController::TestCase
 
   test "should show reader author details tab" do
     @request.headers["Accept"] = "application/javascript"
-    get(:show, { id: @author.id, tab: "tab_show_1" }, username: "fred", user_full_name: "Fred Jones", groups: [])
+    get(:show,
+        { id: @author.id, tab: "tab_show_1" },
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: [])
     assert_response :success
   end
 end

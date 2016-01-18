@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Search model test.
 class SearchParsedRequestCountTest < ActiveSupport::TestCase
   test "search parse query count" do
     query_string = "count"

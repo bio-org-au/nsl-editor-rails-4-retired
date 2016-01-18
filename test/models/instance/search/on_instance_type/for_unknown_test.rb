@@ -17,6 +17,7 @@
 require "test_helper"
 load "models/search/users.rb"
 
+# Single instance model test.
 class ForInstanceTypeUnknown < ActiveSupport::TestCase
   test "instance type search for unknown" do
     search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_string: "type: [unknown]", query_target: "Instance", current_user: build_edit_user))

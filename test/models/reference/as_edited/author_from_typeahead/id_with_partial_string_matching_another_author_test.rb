@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Reference model typeahead test.
 class ReferenceAsEditedAuthorIdWithPartialStringMatchingAnotherAuthorTest < ActiveSupport::TestCase
   test "author id with partial string for another author" do
     author_1 = authors(:chaplin)

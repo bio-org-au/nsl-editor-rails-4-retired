@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Reference model parent from typeahead test.
 class ReferenceAsEditedNoParentIdWithStringMatchingTwoReferencesTest < ActiveSupport::TestCase
   test "no id with invalid string" do
     reference_1 = references(:has_a_matching_citation_1)

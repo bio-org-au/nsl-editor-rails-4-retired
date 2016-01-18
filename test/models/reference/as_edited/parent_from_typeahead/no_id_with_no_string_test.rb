@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Reference model parent from typeahead test.
 class ReferenceAsEditedNoParentIdWithNoString < ActiveSupport::TestCase
   test "no id with no string" do
     result = Reference::AsEdited.parent_from_typeahead("", "")

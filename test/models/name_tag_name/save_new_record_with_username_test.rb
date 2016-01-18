@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Name tag name test
 class SaveNewRecordWithUsername < ActiveSupport::TestCase
   test "check" do
     acra = name_tags(:acra)

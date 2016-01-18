@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Name typeahead test.
 class HybridParentSuggestionsShouldNotIncludeDuplicatesTest < ActiveSupport::TestCase
   test "name parent suggestions should not include duplicates" do
     suggestions = Name::AsTypeahead.hybrid_parent_suggestions("a duplicate species", -1)

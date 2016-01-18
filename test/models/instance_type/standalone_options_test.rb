@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Instance type options test.
 class InstanceTypeStandaloneOptionsTest < ActiveSupport::TestCase
   test "instance type standalone options" do
     options = InstanceType.standalone_options

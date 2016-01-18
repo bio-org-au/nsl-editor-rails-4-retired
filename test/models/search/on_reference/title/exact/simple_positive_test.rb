@@ -17,6 +17,7 @@
 require "test_helper"
 load "test/models/search/users.rb"
 
+# Single Search model test for Reference target.
 class SearchOnReferenceTitleExactSimplePositiveTest < ActiveSupport::TestCase
   test "search on reference title exact simple positive" do
     reference = references(:nuytsia)

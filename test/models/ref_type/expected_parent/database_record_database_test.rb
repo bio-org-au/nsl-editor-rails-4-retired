@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Ref Type expected parent test.
 class DatabaseRecordShouldHaveDatabaseParentTest < ActiveSupport::TestCase
   test "database record ref type parent is database" do
     ref_type = ref_types(:database_record)

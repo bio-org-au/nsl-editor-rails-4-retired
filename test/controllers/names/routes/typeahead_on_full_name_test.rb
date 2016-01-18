@@ -16,9 +16,12 @@
 #
 require "test_helper"
 
+# Single controller test.
 class NameTypeaheadOnFullNameRouteTest < ActionController::TestCase
   tests NamesController
   test "should route to typeahead on full name" do
-    assert_routing "/names/typeahead_on_full_name", controller: "names", action: "typeahead_on_full_name"
+    assert_routing "/names/typeahead_on_full_name",
+                   controller: "names",
+                   action: "typeahead_on_full_name"
   end
 end

@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Instance model test for default and non-default ordering.
 class InstanceSearchOrderOfResultsPageWithHyphensTest < ActiveSupport::TestCase
   setup do
     @reference = references(:reference_1_for_instance_ordering_by_page)

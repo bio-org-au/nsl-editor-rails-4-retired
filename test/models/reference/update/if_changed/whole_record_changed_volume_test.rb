@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Reference model test.
 class WholeRecordChangedVolumeTest < ActiveSupport::TestCase
   test "realistic form submission" do
     reference = Reference::AsEdited.find(references(:for_whole_record_change_detection).id)

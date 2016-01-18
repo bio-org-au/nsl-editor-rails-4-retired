@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single reference controller test.
 class ReferenceEditorShowCommentsTabTest < ActionController::TestCase
   tests ReferencesController
   setup do
@@ -24,10 +25,16 @@ class ReferenceEditorShowCommentsTabTest < ActionController::TestCase
 
   test "should show editor reference comments tab" do
     @request.headers["Accept"] = "application/javascript"
-    get(:show, { id: @reference.id, tab: "tab_comments" }, username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
+    get(:show,
+        { id: @reference.id, tab: "tab_comments" },
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: ["edit"])
     assert_response :success
-    assert_select 'li.active a#reference-comments-tab', "Comments", "Should show 'Comments' tab."
+    assert_select "li.active a#reference-comments-tab",
+                  "Comments",
+                  "Should show 'Comments' tab."
     assert_select "form", true
-    assert_select 'textarea#comment_text', true
+    assert_select "textarea#comment_text", true
   end
 end

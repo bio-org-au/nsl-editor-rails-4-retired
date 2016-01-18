@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single controller test.
 class NameForbidDeleteTabForReaderTest < ActionController::TestCase
   tests NamesController
   setup do
@@ -24,7 +25,11 @@ class NameForbidDeleteTabForReaderTest < ActionController::TestCase
 
   test "reader requests forbidden delete tab" do
     @request.headers["Accept"] = "application/javascript"
-    get(:show, { id: @name.id, tab: "tab_delete" }, username: "fred", user_full_name: "Fred Jones", groups: [])
+    get(:show,
+        { id: @name.id, tab: "tab_delete" },
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: [])
     assert_response :forbidden
   end
 end

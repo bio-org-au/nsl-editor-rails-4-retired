@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single name model test.
 class NameAsEditedNoParentIdWithStringMatchingCurrentNameTest < ActiveSupport::TestCase
   test "no id with string matching current name" do
     skip

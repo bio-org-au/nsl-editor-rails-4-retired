@@ -17,6 +17,7 @@
 require "test_helper"
 require "models/name/as_typeahead/hybrid_parent/hybrid_parent_test_helper"
 
+# Single Name typeahead test.
 class HybridParentForUnrankedTest < ActiveSupport::TestCase
   test "name parent suggestion for unranked" do
     avoid_id = 1

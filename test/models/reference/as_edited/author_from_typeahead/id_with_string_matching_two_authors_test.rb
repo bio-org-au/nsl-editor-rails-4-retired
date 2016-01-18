@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Reference model typeahead test.
 class ReferenceAsEditedAuthorIdWithStringMatching2Authors < ActiveSupport::TestCase
   test "id with string matching 2 authors" do
     author_1 = authors(:has_matching_name_1)

@@ -17,6 +17,7 @@
 require "test_helper"
 load "test/models/search/users.rb"
 
+# Single Search model test for Name search.
 class SearchOnNameOnMasterIdTest < ActiveSupport::TestCase
   test "on master ID" do
     name = names(:name_three_for_eflora)

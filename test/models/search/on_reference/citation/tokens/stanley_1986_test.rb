@@ -17,6 +17,7 @@
 require "test_helper"
 load "test/models/search/users.rb"
 
+# Single Search model test for Reference target.
 class SearchOnReferenceCitationTokensStanley1986Test < ActiveSupport::TestCase
   test "search on reference citation tokens stanley 1986" do
     params = ActiveSupport::HashWithIndifferentAccess.new(query_target: "reference",

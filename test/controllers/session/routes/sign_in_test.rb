@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single session test.
 class SessionsSigninRouteTest < ActionController::TestCase
   tests SessionsController
   test "should route to a signin a new session" do

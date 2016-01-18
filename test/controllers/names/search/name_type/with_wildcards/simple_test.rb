@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single controller test.
 class NameSearchForNameTypeWithWildCardsSimpleTest < ActionController::TestCase
   tests SearchController
 
@@ -23,10 +24,21 @@ class NameSearchForNameTypeWithWildCardsSimpleTest < ActionController::TestCase
     skip # Expect this to be no longer needed under revised search.
     common = names(:argyle_apple)
     # Set the common-and-cultivar flag to false.
-    get(:search, { "search_from" => "string", "query" => "count D* nt:*", "controller" => "new_search", "action" => "search" },
-        username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
+    get(:search,
+        { "search_from" => "string",
+          "query" => "count D* nt:*",
+          "controller" => "new_search",
+          "action" => "search" },
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: ["edit"])
     assert_response :success
-    # assert_select "input.checkbox[type=checkbox][id=query_common_and_cultivar][value=t]", true, "The query-common-and-cultivar checkbox should be true"
-    assert_select "tr[id=search-result-#{common.id}]", true, "Should find one common at least"
+    # assert_select "input.checkbox[type=checkbox]
+    #               [id=query_common_and_cultivar][value=t]",
+    #               true,
+    #               "The query-common-and-cultivar checkbox should be true"
+    assert_select "tr[id=search-result-#{common.id}]",
+                  true,
+                  "Should find one common at least"
   end
 end

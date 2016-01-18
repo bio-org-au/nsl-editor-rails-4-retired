@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Name typeahead test.
 class ShouldWorkWithPercentWildcardTest < ActiveSupport::TestCase
   test "name parent suggestion should work with percent wildcard" do
     avoid_id = 1

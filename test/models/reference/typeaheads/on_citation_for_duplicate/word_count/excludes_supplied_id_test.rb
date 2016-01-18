@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Reference model typeahead search.
 class TypeaheadsOnCitationForDuplicateExcludesSuppliedIdTest < ActiveSupport::TestCase
   test "reference typeahead on citation excludes supplied id" do
     reference_to_exclude = references(:adams_paper_in_walsh_book)

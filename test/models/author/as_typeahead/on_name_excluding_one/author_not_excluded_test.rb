@@ -17,6 +17,7 @@
 
 require "test_helper"
 
+# Single author model test.
 class AuthorAsTypeaheadOnNameExcludingOneSimpleTest < ActiveSupport::TestCase
   test "haeckel not excluded" do
     result = Author::AsTypeahead.on_name_duplicate_of("haeck", authors(:haeckel).id + 1)

@@ -19,6 +19,7 @@
 
 require "test_helper"
 
+# Single integration test.
 class TNuytsiaRcJournalTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
 

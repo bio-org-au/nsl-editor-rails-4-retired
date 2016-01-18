@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Reference model parent from typeahead test.
 class ReferenceAsEditedParentIdWithPartialStringMatchingAnotherReferenceTest < ActiveSupport::TestCase
   test "parent id with partial string for another reference" do
     reference_1 = references(:journal_of_botany_british_and_foreign)

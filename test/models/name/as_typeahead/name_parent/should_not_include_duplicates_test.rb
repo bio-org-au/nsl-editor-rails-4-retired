@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Name typeahead test.
 class ShouldNotIncludeDuplicatesTest < ActiveSupport::TestCase
   test "name parent suggestions should not include duplicates" do
     avoid_id = 1

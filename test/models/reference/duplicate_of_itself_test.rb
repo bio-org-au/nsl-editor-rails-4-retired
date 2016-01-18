@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Reference model test.
 class DuplicateOfItselfTest < ActiveSupport::TestCase
   test "cannot make duplicate of itself" do
     reference = Reference.first

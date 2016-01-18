@@ -17,6 +17,7 @@
 require "test_helper"
 load "models/search/users.rb"
 
+# Single instance model test.
 class InstanceSearchCreatedAfterFromDropdownSimplePluralTest < ActiveSupport::TestCase
   # New search for "42993" on instance up to 100 with field: cr-b
   test "instance search on created after from dropdown field simple plural" do

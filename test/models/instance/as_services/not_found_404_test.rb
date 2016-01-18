@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single instance model test.
 class InstanceDeleteServiceNotFound404Test < ActiveSupport::TestCase
   test "instance delete service not found 404" do
     assert_raise(RestClient::ResourceNotFound, "Should raise runtime exception for not found") do

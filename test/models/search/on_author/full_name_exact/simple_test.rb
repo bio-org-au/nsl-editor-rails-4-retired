@@ -20,6 +20,7 @@
 require "test_helper"
 load "test/models/search/users.rb"
 
+# Single Search model test.
 class SearchOnAuthorFullNameExactSimpleTest < ActiveSupport::TestCase
   test "search on full name exact simple" do
     params = ActiveSupport::HashWithIndifferentAccess.new(query_target:

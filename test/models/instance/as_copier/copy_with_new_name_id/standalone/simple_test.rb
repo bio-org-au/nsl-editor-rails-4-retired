@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single instance model test.
 class InstanceAsCopierCopyStandaloneWithNewNameIdTest < ActiveSupport::TestCase
   test "copy one standalone instance with a new name id" do
     before = Instance.count

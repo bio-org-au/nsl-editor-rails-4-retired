@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Name typeahead test.
 class NoSearchTermTest < ActiveSupport::TestCase
   test "simple" do
     suggestions = Name::AsTypeahead::OnFullName.new({}).suggestions

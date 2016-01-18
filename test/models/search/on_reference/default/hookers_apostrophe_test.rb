@@ -17,6 +17,7 @@
 require "test_helper"
 load "test/models/search/users.rb"
 
+# Single Search model test for Reference target.
 class SearchOnReferenceDefaultHookersApostropheTest < ActiveSupport::TestCase
   test "search on reference default for hookers apostrophe" do
     params = ActiveSupport::HashWithIndifferentAccess.new(query_target: "reference",

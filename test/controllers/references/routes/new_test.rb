@@ -16,9 +16,12 @@
 #
 require "test_helper"
 
+# Single reference controller test.
 class ReferencesRouteNewTest < ActionController::TestCase
   tests ReferencesController
   test "references new should route to a new reference" do
-    assert_routing "/references/new", controller: "references", action: "new"
+    assert_routing "/references/new",
+                   controller: "references",
+                   action: "new"
   end
 end

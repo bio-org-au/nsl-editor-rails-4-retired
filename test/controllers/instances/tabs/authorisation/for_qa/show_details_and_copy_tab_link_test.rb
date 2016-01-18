@@ -16,23 +16,46 @@
 #
 require "test_helper"
 
+# Single controller test.
 class InstancesShowQAUserDetailsAndCopyTabLinksTest < ActionController::TestCase
   tests InstancesController
   setup do
     @instance = instances(:britten_created_angophora_costata)
   end
 
-  test "should show detail and copy tab links if qa user requests details tab" do
+  test "should show detail and copy tab links if qa user gets details tab" do
     @request.headers["Accept"] = "application/javascript"
-    get(:show, { id: @instance.id, tab: "tab_show_1", "row-type" => "instance_as_part_of_concept_record" }, username: "fred", user_full_name: "Fred Jones", groups: ["QA"])
+    get(:show,
+        { id: @instance.id,
+          tab: "tab_show_1",
+          "row-type" => "instance_as_part_of_concept_record" },
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: ["QA"])
     assert_response :success
-    assert_select 'li.active a#instance-show-tab', /Details/, "Should show 'Details' tab link."
-    assert_select 'a#instance-edit-tab', false, "Should not show 'Edit' tab link."
-    assert_select 'a#instance-edit-notes-tab', false, "Should not show 'Notes' tab link."
-    assert_select 'a#instance-cite-this-instance-tab', false, "Should not show 'Syn' tab link."
-    assert_select 'a#unpublished-citation-tab', false, "Should not show 'Unpub' tab link."
-    assert_select 'a#instance-apc-placement-tab', false, "Should not show 'APC' tab link."
-    assert_select 'a#instance-comments-tab', false, "Should not show 'Adnot' tab link."
-    assert_select 'a#instance-copy-to-new-reference-tab', /Copy/, "Should show 'Copy' tab link."
+    assert_select "li.active a#instance-show-tab",
+                  /Details/,
+                  "Should show 'Details' tab link."
+    assert_select "a#instance-edit-tab",
+                  false,
+                  "Should not show 'Edit' tab link."
+    assert_select "a#instance-edit-notes-tab",
+                  false,
+                  "Should not show 'Notes' tab link."
+    assert_select "a#instance-cite-this-instance-tab",
+                  false,
+                  "Should not show 'Syn' tab link."
+    assert_select "a#unpublished-citation-tab",
+                  false,
+                  "Should not show 'Unpub' tab link."
+    assert_select "a#instance-apc-placement-tab",
+                  false,
+                  "Should not show 'APC' tab link."
+    assert_select "a#instance-comments-tab",
+                  false,
+                  "Should not show 'Adnot' tab link."
+    assert_select "a#instance-copy-to-new-reference-tab",
+                  /Copy/,
+                  "Should show 'Copy' tab link."
   end
 end

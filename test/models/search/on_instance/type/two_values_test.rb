@@ -17,6 +17,7 @@
 require "test_helper"
 load "test/models/search/users.rb"
 
+# Single Search model test on Instance search.
 class SearchOnInstanceTypeTwoValuesTest < ActiveSupport::TestCase
   test "search on instance type two values" do
     params = ActiveSupport::HashWithIndifferentAccess.new(

@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single name model test.
 class NameCreateScientificHybridFormulaTest < ActiveSupport::TestCase
   test "simple" do
     name_type = name_types(:hybrid_formula_parents_known)

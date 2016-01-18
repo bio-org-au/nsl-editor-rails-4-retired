@@ -16,9 +16,13 @@
 #
 require "test_helper"
 
+# Single controller test.
 class NameNewRowRouteTest < ActionController::TestCase
   tests NamesController
-  test "should route to names new row for a hybrid formula unknown 2nd parent type" do
-    assert_routing "/names/new_row/hybrid-formula-unknown-2nd-parent", controller: "names", action: "new_row", type: "hybrid-formula-unknown-2nd-parent"
+  test "route to names new row for hybrid formula unkn 2nd parent type" do
+    assert_routing "/names/new_row/hybrid-formula-unknown-2nd-parent",
+                   controller: "names",
+                   action: "new_row",
+                   type: "hybrid-formula-unknown-2nd-parent"
   end
 end

@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single controller test.
 class NameShowDetailsTabForEditor < ActionController::TestCase
   tests NamesController
   setup do
@@ -24,7 +25,11 @@ class NameShowDetailsTabForEditor < ActionController::TestCase
 
   test "should show name to editor" do
     @request.headers["Accept"] = "application/javascript"
-    get(:show, { id: @name, tab: "tab_details" }, username: "fred", user_full_name: "Fred Jones", groups: [:edit])
+    get(:show,
+        { id: @name, tab: "tab_details" },
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: [:edit])
     assert_response :success
   end
 end

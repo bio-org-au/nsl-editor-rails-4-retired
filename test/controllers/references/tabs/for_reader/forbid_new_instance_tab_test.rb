@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single reference controller test.
 class ReferenceEditorNotShowNewInstanceTabTest < ActionController::TestCase
   tests ReferencesController
   setup do
@@ -24,7 +25,11 @@ class ReferenceEditorNotShowNewInstanceTabTest < ActionController::TestCase
 
   test "should not show reader reference new instance tab" do
     @request.headers["Accept"] = "application/javascript"
-    get(:show, { id: @reference.id, tab: "tab_new_instance" }, username: "fred", user_full_name: "Fred Jones", groups: [])
+    get(:show,
+        { id: @reference.id, tab: "tab_new_instance" },
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: [])
     assert_response :forbidden
   end
 end

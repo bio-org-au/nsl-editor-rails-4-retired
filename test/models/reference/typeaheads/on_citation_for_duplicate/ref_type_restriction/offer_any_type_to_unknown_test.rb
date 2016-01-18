@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Reference model typeahead search.
 class TypeaheadsOnCitationForDuplicateRefTypeRestrictionAnyTypeForUnknown < ActiveSupport::TestCase
   test "reference typeahead on citation ref type restriction any type for unknown" do
     current_reference = references(:ref_type_is_unknown)

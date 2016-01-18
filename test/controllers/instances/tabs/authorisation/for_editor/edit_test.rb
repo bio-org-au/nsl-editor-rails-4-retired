@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single controller test.
 class InstanceEditTabForEditorTest < ActionController::TestCase
   tests InstancesController
   setup do
@@ -23,7 +24,11 @@ class InstanceEditTabForEditorTest < ActionController::TestCase
   end
   test "should show instance edit tab to editor" do
     @request.headers["Accept"] = "application/javascript"
-    get(:show, { id: @triodia_in_brassard.id, tab: "tab_edit" }, username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
+    get(:show,
+        { id: @triodia_in_brassard.id, tab: "tab_edit" },
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: ["edit"])
     assert_response :success
   end
 end

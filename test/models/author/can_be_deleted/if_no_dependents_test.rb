@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single author model test.
 class AuthorCanBeDeletedIfNoDependentsTest < ActiveSupport::TestCase
   test "author can be deleted if no dependents" do
     author = authors(:has_no_dependents)

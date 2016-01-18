@@ -17,6 +17,7 @@
 require "test_helper"
 load "test/models/search/users.rb"
 
+# Single Search model test.
 class SearchOnAuthorIdsSimpleTest < ActiveSupport::TestCase
   test "search on author ids simple" do
     author = authors(:haeckel)

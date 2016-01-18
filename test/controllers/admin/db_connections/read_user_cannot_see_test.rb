@@ -16,11 +16,16 @@
 #
 require "test_helper"
 
-class AdminControllerReadUserCannotSeeDBConnectionsTest < ActionController::TestCase
+# Single test per file
+class AdminControllerReadUserCannotSeeDBConnsTest < ActionController::TestCase
   tests AdminController
 
   test "read user should not get db connections" do
-    get(:db_connections, {}, username: "fred", user_full_name: "Fred Jones", groups: [])
+    get(:db_connections,
+        {},
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: [])
     assert_response :forbidden, "Read user should not get db_connections"
   end
 end

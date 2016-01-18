@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Reference model test.
 class SeriesCannotHaveParentTest < ActiveSupport::TestCase
   test "series cannot have parent" do
     ref = references(:series_with_parent)

@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single name model test.
 class NameAsEditedDuplicateOfIdWithNoString < ActiveSupport::TestCase
   test "id with no string" do
     name = names(:the_regnum)

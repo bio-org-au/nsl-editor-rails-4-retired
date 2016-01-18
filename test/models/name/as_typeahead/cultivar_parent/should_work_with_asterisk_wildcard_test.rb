@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Name typeahead test.
 class ShouldWorkWithAsteriskWildcardTest < ActiveSupport::TestCase
   test "Cultivar parent suggestion should work with asterisk wildcard" do
     suggestions = Name::AsTypeahead.cultivar_parent_suggestions("*", -1)

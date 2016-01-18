@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Reference model parent from typeahead test.
 class ReferenceAsEditedParentIdWithStringMatching2References < ActiveSupport::TestCase
   test "id with string matching 2 references" do
     reference_1 = references(:journal_of_botany_british_and_foreign)

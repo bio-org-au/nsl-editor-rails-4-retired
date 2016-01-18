@@ -17,6 +17,7 @@
 require "test_helper"
 require "models/name/as_typeahead/name_parent/name_parent_test_helper"
 
+# Single Name typeahead test.
 class NameParentGenusIsOfferedForUnrankedTest < ActiveSupport::TestCase
   test "name parent suggestion for unranked include genus" do
     avoid_id = 1

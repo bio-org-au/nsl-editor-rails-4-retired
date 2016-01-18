@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single name model test.
 class NameAsEditedResolveTypeaheadParamsSetParentTest < ActiveSupport::TestCase
   test "name as edited revolve typeahead params set parent" do
     dummy = names(:a_genus)

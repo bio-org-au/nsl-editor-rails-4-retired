@@ -16,9 +16,14 @@
 #
 require "test_helper"
 
+# Single controller test.
 class NameShowRouteTest < ActionController::TestCase
   tests NamesController
   test "should route to show a name" do
-    assert_routing "/names/1", controller: "names", action: "show", id: "1", tab: "tab_details"
+    assert_routing "/names/1",
+                   controller: "names",
+                   action: "show",
+                   id: "1",
+                   tab: "tab_details"
   end
 end

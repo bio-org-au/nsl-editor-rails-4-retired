@@ -16,9 +16,12 @@
 #
 require "test_helper"
 
+# Single controller test.
 class NameNewRouteTest < ActionController::TestCase
   tests NamesController
   test "names new should route to a new name" do
-    assert_routing "/names/new", controller: "names", action: "new"
+    assert_routing "/names/new",
+                   controller: "names",
+                   action: "new"
   end
 end

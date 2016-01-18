@@ -16,9 +16,12 @@
 #
 require "test_helper"
 
+# Single controller test.
 class NameDuplicateSuggestionsRouteTest < ActionController::TestCase
   tests NamesController
   test "should route to name duplicate suggestions" do
-    assert_routing "/suggestions/name/duplicate", controller: "names", action: "duplicate_suggestions"
+    assert_routing "/suggestions/name/duplicate",
+                   controller: "names",
+                   action: "duplicate_suggestions"
   end
 end

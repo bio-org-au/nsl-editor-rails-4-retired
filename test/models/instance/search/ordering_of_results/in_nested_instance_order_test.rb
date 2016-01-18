@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single instance model test.
 class InNestedInstanceOrderTest < ActiveSupport::TestCase
   def assert_with_args(results, index, expected)
     assert /\A#{Regexp.escape(expected)}\z/.match(results[index].instance_type.name),

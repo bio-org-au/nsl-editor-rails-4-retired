@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Reference model test.
 class PagesValidWith255CharsTest < ActiveSupport::TestCase
   test "pages valid with 255 chars" do
     reference = references(:simple)

@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single name model test.
 class NameAPCExcludedTest < ActiveSupport::TestCase
   test "name apc excluded" do
     name = Name.new

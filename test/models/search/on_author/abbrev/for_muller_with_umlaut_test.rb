@@ -20,6 +20,7 @@
 require "test_helper"
 load "test/models/search/users.rb"
 
+# Single Search model test.
 class ForMullerWithUmlautAdvancedInlineTest < ActiveSupport::TestCase
   test "inline search for muller with umlaut using umlaut" do
     params = ActiveSupport::HashWithIndifferentAccess.new(query_target:

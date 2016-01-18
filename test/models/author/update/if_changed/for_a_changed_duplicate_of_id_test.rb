@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single author model test.
 class ForAChangedDuplicateOfIdTest < ActiveSupport::TestCase
   test "changed duplicate of id" do
     author = Author::AsEdited.find(authors(:haeckel).id)

@@ -16,11 +16,16 @@
 #
 require "test_helper"
 
+# Single controller test.
 class NameHybridParentSuggestionsForEditorTest < ActionController::TestCase
   tests NamesController
   test "should get name hybrid parent suggestions" do
     @request.headers["Accept"] = "application/javascript"
-    get(:hybrid_parent_suggestions, { rank_id: name_ranks(:unranked).id, term: "search for this" }, username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
+    get(:hybrid_parent_suggestions,
+        { rank_id: name_ranks(:unranked).id, term: "search for this" },
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: ["edit"])
     assert_response :success
   end
 end

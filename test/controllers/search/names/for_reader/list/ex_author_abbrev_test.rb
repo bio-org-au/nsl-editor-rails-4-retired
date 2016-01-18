@@ -16,12 +16,19 @@
 #
 require "test_helper"
 
-class ReaderSearchControllerNamesExAuthorAbbrevListTest < ActionController::TestCase
+# Single search controller test.
+class ReaderSearchControllerNamesExAuthAbbrevListT < ActionController::TestCase
   tests SearchController
 
   test "reader can search for a name by ex-author abbrev" do
-    get(:search, { query_target: "name", query_string: "ex-author: cronquist*" }, username: "fred", user_full_name: "Fred Jones", groups: [])
+    get(:search,
+        { query_target: "name", query_string: "ex-author: cronquist*" },
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: [])
     assert_response :success
-    assert_select '#search-results-summary', /1 record\b/, "Should find one record"
+    assert_select '#search-results-summary',
+                  /1 record\b/,
+                  "Should find one record"
   end
 end

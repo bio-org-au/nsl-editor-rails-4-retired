@@ -16,12 +16,19 @@
 #
 require "test_helper"
 
+# Single search controller test.
 class ReaderSearchControllerNamesCommentsListTest < ActionController::TestCase
   tests SearchController
 
   test "reader can search for a name with comments" do
-    get(:search, { query_target: "name", query_string: "comments: *" }, username: "fred", user_full_name: "Fred Jones", groups: [])
+    get(:search,
+        { query_target: "name", query_string: "comments: *" },
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: [])
     assert_response :success
-    assert_select '#search-results-summary', /\b1 record\b/, "Should find at least a couple of records"
+    assert_select '#search-results-summary',
+                  /\b1 record\b/,
+                  "Should find at least a couple of records"
   end
 end

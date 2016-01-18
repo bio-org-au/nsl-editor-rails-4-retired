@@ -20,6 +20,7 @@
 require "test_helper"
 load "test/models/search/users.rb"
 
+# Single Search model test.
 class SearchOnAuthorDefaultSimpleTest < ActiveSupport::TestCase
   test "search on author default simple" do
     params = ActiveSupport::HashWithIndifferentAccess.new(query_target:

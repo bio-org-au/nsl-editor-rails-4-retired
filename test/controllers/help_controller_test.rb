@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Help controller tests.
 class HelpControllerTest < ActionController::TestCase
   test "should route to help index" do
     assert_routing "/help/index", controller: "help", action: "index"
@@ -32,7 +33,11 @@ class HelpControllerTest < ActionController::TestCase
   end
 
   test "should get index for editor" do
-    get(:index, {}, username: "fred", user_full_name: "Fred Jones", groups: [:edit])
+    get(:index,
+        {},
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: [:edit])
     assert_response :success
   end
 end

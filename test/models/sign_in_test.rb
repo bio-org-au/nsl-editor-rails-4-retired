@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Sign In test file.
 class SignInTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true

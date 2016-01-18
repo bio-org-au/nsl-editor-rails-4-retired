@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single instance model test.
 class InstanceSearchUpdatedBeforeFromDropdownSimpleSingularTest < ActiveSupport::TestCase
   # New search for "42993" on instance up to 100 with field: upd-b
   test "instance search on updated before from dropdown field simple singular" do

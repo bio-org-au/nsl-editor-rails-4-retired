@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single name model test.
 class NameAsEditedResolveTypeaheadParamsSetDuplicateOfTest < ActiveSupport::TestCase
   test "name as edited revolve typeahead params set duplicate of" do
     dummy = names(:a_genus)

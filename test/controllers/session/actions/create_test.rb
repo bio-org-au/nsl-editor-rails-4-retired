@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Test User can sign in.
 class SessionsCreateByEditorTest < ActionController::TestCase
   tests SessionsController
 

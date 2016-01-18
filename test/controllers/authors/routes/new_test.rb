@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single controller test.
 class AuthorsRouteNewTest < ActionController::TestCase
   tests AuthorsController
   test "authors new should route to a new author" do

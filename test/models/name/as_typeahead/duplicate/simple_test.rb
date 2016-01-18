@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Name typeahead test.
 class NameDuplicateSuggestionsSimpleTest < ActiveSupport::TestCase
   test "name duplicate suggestions simple test" do
     name = names(:angophora_costata)

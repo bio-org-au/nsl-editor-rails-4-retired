@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Reference model typeahead search.
 class TypeaheadsOnCitationForParentRefTypeRestrictionBooksForChapter < ActiveSupport::TestCase
   test "reference typeahead on citation ref type restriction books for chapter" do
     current_reference = references(:simple)

@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single Name typeahead test.
 class HybridParentSuggestionsShouldWorkWithPercentWildcardTest < ActiveSupport::TestCase
   test "hybrid parent suggestion should work with percent wildcard" do
     suggestions = Name::AsTypeahead.hybrid_parent_suggestions("%", -1)

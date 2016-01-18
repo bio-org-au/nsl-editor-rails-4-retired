@@ -16,7 +16,8 @@
 #
 require "test_helper"
 
-class ReferenceUnauthenticatedDoNotShowNewInstanceTabTest < ActionController::TestCase
+# Single reference controller test.
+class ReferenceUnauthDoNotShowNewInstanceTabTest < ActionController::TestCase
   tests ReferencesController
   setup do
     @reference = references(:a_book)

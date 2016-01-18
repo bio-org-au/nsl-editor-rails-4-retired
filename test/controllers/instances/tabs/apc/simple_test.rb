@@ -16,6 +16,7 @@
 #
 require "test_helper"
 
+# Single controller test.
 class InstanceTabsNotesTest < ActionController::TestCase
   tests InstancesController
   setup do
