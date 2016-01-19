@@ -26,7 +26,8 @@ class WithParentSimpleTest < ActionDispatch::IntegrationTest
   test "create scientific name with parent simple" do
     names_count = Name.count
     visit_home_page
-    fill_in "search-field", with: "create scientific name with parent allowing for no serv...."
+    fill_in "search-field",
+            with: "create scientific name with parent allowing for no serv...."
     load_new_scientific_name_form
     set_name_parent
     fill_in("name_name_element", with: "fred")

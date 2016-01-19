@@ -19,27 +19,33 @@ require "test_helper"
 # Single instance model test.
 class InNestedInstanceOrderTest < ActiveSupport::TestCase
   def assert_with_args(results, index, expected)
-    assert /\A#{Regexp.escape(expected)}\z/.match(results[index].instance_type.name),
-           "Wrong at index #{index}; should be: #{expected} NOT #{results[index].instance_type.name}"
+    assert(
+      /\A#{Regexp.escape(expected)}\z/.match(results[index].instance_type.name),
+      "Wrong at index #{index}; should be: #{expected}
+      NOT #{results[index].instance_type.name}")
   end
 
   test "instances in nested instance type order" do
     results = Instance.joins(:instance_type)
-              .where(instance_type: { name: ["basionym",
-                                             "common name",
-                                             "vernacular name",
-                                             "doubtful nomenclatural synonym",
-                                             "nomenclatural synonym",
-                                             "doubtful taxonomic synonym",
-                                             "taxonomic synonym",
-                                             "doubtful pro parte nomenclatural synonym",
-                                             "pro parte nomenclatural synonym",
-                                             "pro parte taxonomic synonym",
-                                             "doubtful pro parte taxonomic synonym"] }).
-              # extra order clause to make definitive and repeatable ordering for these tests
+              .where(
+                instance_type: { name:
+                               ["basionym",
+                                "common name",
+                                "vernacular name",
+                                "doubtful nomenclatural synonym",
+                                "nomenclatural synonym",
+                                "doubtful taxonomic synonym",
+                                "taxonomic synonym",
+                                "doubtful pro parte nomenclatural synonym",
+                                "pro parte nomenclatural synonym",
+                                "pro parte taxonomic synonym",
+                                "doubtful pro parte taxonomic synonym"] }).
+              # extra order clause to make definitive and
+              # repeatable ordering for these tests
               in_nested_instance_type_order.order("instance_type.name")
 
-    # results.each_with_index {|i,ndx| puts "#{ndx}: #{i.instance_type.name}" if ndx < 30};
+    # results.each_with_index {|i,ndx| puts "#{ndx}:
+    # #{i.instance_type.name}" if ndx < 30};
     assert_with_args(results, 0, "basionym")
     assert_with_args(results, 1, "doubtful nomenclatural synonym")
     assert_with_args(results, 2, "doubtful pro parte taxonomic synonym")

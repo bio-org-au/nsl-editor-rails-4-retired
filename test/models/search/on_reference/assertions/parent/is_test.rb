@@ -20,9 +20,11 @@ load "models/search/users.rb"
 # Single Search model test for Reference target.
 class SearchOnReferenceAssertionParentIsTest < ActiveSupport::TestCase
   test "reference asertion is a parent" do
-    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_target: "reference",
-                                                                           query_string: "is-a-parent:",
-                                                                           current_user: build_edit_user))
-    assert search.executed_query.results.size > 0, "Should find reference that is a parent."
+    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess
+             .new(query_target: "reference",
+                  query_string: "is-a-parent:",
+                  current_user: build_edit_user))
+    assert search.executed_query.results.size > 0,
+           "Should find reference that is a parent."
   end
 end

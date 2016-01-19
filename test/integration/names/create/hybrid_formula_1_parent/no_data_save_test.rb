@@ -26,7 +26,8 @@ class NoDataSaveTest < ActionDispatch::IntegrationTest
   test "hybrid formula 1 parent name try to save without data" do
     names_count = Name.count
     visit_home_page
-    fill_in "search-field", with: "test: hybrid 1 parent try to save without data"
+    fill_in "search-field",
+            with: "test: hybrid 1 parent try to save without data"
     load_new_hybrid_formula_unknown_2nd_parent_form
     save_edits
     big_sleep

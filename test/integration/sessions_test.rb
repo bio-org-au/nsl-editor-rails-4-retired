@@ -25,18 +25,21 @@ class SessionTest < ActionDispatch::IntegrationTest
 
   test "deep linking to a search" do
     configure_for_webkit
-    visit "/search?query_on=name&query_field=&query=deep-linking-to-a-search&query_limit=10&query_common_and_cultivar=t"
+    string_1 = "/search?query_on=name&query_field=&query=deep-linking-to-a-"
+    string_2 = "search&query_limit=10&query_common_and_cultivar=t"
+    visit "#{string_1}#{string_2}"
     # should be redirected to sign in
-    sleep(inspection_time = 0.2)
+    sleep(0.2)
     wait_for('#sign-in-form-container', 3)
     if page.has_selector?('#sign-in-form-container')
       assert page.has_content?("Username*"), "No Username field."
       fill_in("sign_in_username", with: "gclarke")
       fill_in("sign_in_password", with: "fred")
       click_button("Sign in")
-      sleep(inspection_time = 0.2)
+      sleep(0.2)
       standard_page_assertions
-      assert page.has_content?("deep-linking-to-a-search"), "Deep linked search not visible - was sign in deep link followed?"
+      assert page.has_content?("deep-linking-to-a-search"),
+             "Deep linked search not visible - was sign in deep link followed?"
     else
       print("Session was probably already signed in.  Parallel testing?")
     end
@@ -46,6 +49,7 @@ class SessionTest < ActionDispatch::IntegrationTest
     configure_for_webkit
     visit "/throw_invalid_authenticity_token"
     assert page.has_content?("Username*"), "No Username field."
-    assert page.has_content?("Please try again."), "Incorrect or missing stale page message."
+    assert page.has_content?("Please try again."),
+           "Incorrect or missing stale page message."
   end
 end

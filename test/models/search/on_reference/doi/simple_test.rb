@@ -21,12 +21,15 @@ load "test/models/search/users.rb"
 class SearchOnReferenceDOISimpleTest < ActiveSupport::TestCase
   test "search on reference DOI simple" do
     reference = references(:stanley_and_ross_1986_flora_of_se_qld)
-    params =  ActiveSupport::HashWithIndifferentAccess.new(query_target: "reference",
-                                                           query_string: "doi: #{reference.doi}",
-                                                           include_common_and_cultivar_session: true,
-                                                           current_user: build_edit_user)
+    params =  ActiveSupport::HashWithIndifferentAccess
+              .new(query_target: "reference",
+                   query_string: "doi: #{reference.doi}",
+                   include_common_and_cultivar_session: true,
+                   current_user: build_edit_user)
     search = Search::Base.new(params)
-    assert_equal search.executed_query.results.class, Reference::ActiveRecord_Relation, "Results should be a Reference::ActiveRecord_Relation."
+    assert_equal search.executed_query.results.class,
+                 Reference::ActiveRecord_Relation,
+                 "Results should be a Reference::ActiveRecord_Relation."
     assert search.executed_query.results.size > 0, "Results expected."
   end
 end

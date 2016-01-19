@@ -21,10 +21,11 @@ load "test/models/search/users.rb"
 class SearchOnReferenceCitationExactWildcardTest < ActiveSupport::TestCase
   test "search on reference citation exact wildcard" do
     reference = references(:journal_with_papers)
-    params =  ActiveSupport::HashWithIndifferentAccess.new(query_target: "reference",
-                                                           query_string: %(citation-exact: #{reference.citation.chop}*),
-                                                           include_common_and_cultivar_session: true,
-                                                           current_user: build_edit_user)
+    params =  ActiveSupport::HashWithIndifferentAccess
+              .new(query_target: "reference",
+                   query_string: %(citation-exact: #{reference.citation.chop}*),
+                   include_common_and_cultivar_session: true,
+                   current_user: build_edit_user)
     search = Search::Base.new(params)
     assert search.executed_query.results.size > 0, "Results expected."
   end

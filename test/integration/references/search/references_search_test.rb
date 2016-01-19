@@ -40,39 +40,54 @@ class ReferencesSearchTest < ActionDispatch::IntegrationTest
     sleep(inspection_time = 0.1)
     # page.should have_content('1 record')
     assert page.has_content?("1 record"), "Simple reference search failed."
-    # assert page.has_content?('1 record (limited) for "simple"'), 'Simple reference search failed.'
+    # assert page.has_content?('1 record (limited) for "simple"'),
+    #        'Simple reference search failed.'
   end
 
   # # "query=* query_limit=10"
   # test "reference search for simple with correct limit criterion" do
   #   visit '/search?query=*&query_on=reference&query_limit=10'
   #   standard_page_assertions
-  #   assert page.has_content?('10 records'), 'Wildcard reference search with limit of 10: criterion failed.'
+  #   assert page.has_content?('10 records'),
+  #          'Wildcard reference search with limit of 10: criterion failed.'
   # end
   #
   # # "simple limit:"
   # test "reference search for simple with incomplete limit criterion" do
   #   visit '/search?query=simple+limit%3A&query_on=reference&query_limit=100'
   #   standard_page_assertions
-  #   assert page.has_content?('0 records'), 'Simple reference search with empty limit: criterion failed.'
-  #   assert page.has_content?('for "simple limit:"'), 'Simple reference search with empty limit: criterion failed.'
-  #   assert page.has_content?('Ignored criteria: limit)'), 'Simple reference search with empty limit: criterion failed.'
+  #   assert page.has_content?('0 records'),
+  #          'Simple reference search with empty limit: criterion failed.'
+  #   assert page.has_content?('for "simple limit:"'),
+  #          'Simple reference search with empty limit: criterion failed.'
+  #   assert page.has_content?('Ignored criteria: limit)'),
+  #          'Simple reference search with empty limit: criterion failed.'
   # end
   #
   # # "distens a:bentham cr-b:7"
   # test "reference advanced search with text and author and created before" do
-  #   visit '/search?query=distens+a%3Abentham+cr-b%3A7&query_on=reference&query_limit=100'
+  #   visit '/search?query=distens+a%3Abentham+cr-b%3A7&query_on=
+  #   reference&query_limit=100'
   #   standard_page_assertions
-  #   assert page.has_content?('1 record'), 'Search result for reference "distens a:bentham cr-b:7" not found.'
-  #   assert page.has_content?('distens a:bentham cr-b:7'), 'Search result for reference "distens a:bentham cr-b:7" not found.'
+  #   assert page.has_content?('1 record'),
+  #          'Search result for reference "distens a:bentham cr-b:7" not found.'
+  #   assert page.has_content?('distens a:bentham cr-b:7'),
+  #          'Search result for reference "distens a:bentham cr-b:7" not found.'
   # end
   #
   # # "distens a:bentham cr-b:"
   # test "reference advanced search with empty criterion " do
-  #   visit '/search?query=distens+a%3Abentham+cr-b%3A&query_on=reference&query_limit=100'
+  #   visit '/search?query=distens+a%3Abentham+cr-b%3A&query_on=
+  #   reference&query_limit=100'
   #   standard_page_assertions
-  #   assert page.has_content?('0 records'), 'Search result for reference "distens a:bentham cr-b:" not found. Test for empty criterion'
-  #   assert page.has_content?('distens a:bentham cr-b:'), 'Search result for reference "distens a:bentham cr-b:" not found. Test for empty criterion'
-  #   assert page.has_content?('(Ignored criteria: cr-b)'), 'Search result for reference "distens a:bentham cr-b:" not found. Test for empty criterion'
+  #   assert page.has_content?('0 records'),
+  #          'Search result for ref "distens a:bentham cr-b:" not
+  #          found. Test for empty criterion'
+  #   assert page.has_content?('distens a:bentham cr-b:'),
+  #          'Search result for reference "distens a:bentham cr-b:"
+  #          not found. Test for empty criterion'
+  #   assert page.has_content?('(Ignored criteria: cr-b)'),
+  #          'Search result for reference "distens a:bentham cr-b:"
+  #          not found. Test for empty criterion'
   # end
 end

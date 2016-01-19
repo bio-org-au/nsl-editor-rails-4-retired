@@ -31,9 +31,13 @@ class WithExAuthorTest < ActionDispatch::IntegrationTest
     set_name_parent
     fill_in("name_name_element", with: "Fred")
     fill_in_author_typeahead("author-by-abbrev", "name_author_id")
-    fill_in_author_typeahead("ex-author-by-abbrev", "name_ex_author_id", authors(:hooker))
+    fill_in_author_typeahead("ex-author-by-abbrev",
+                             "name_ex_author_id", authors(:hooker))
     save_new_record
-    assert_successful_create_for(["Authored by", "Ex Authored by", "Authored by Benth.", "Ex Authored by Hook."])
+    assert_successful_create_for(["Authored by",
+                                  "Ex Authored by",
+                                  "Authored by Benth.",
+                                  "Ex Authored by Hook."])
     Name.count.must_equal names_count + 1
   end
 end

@@ -30,7 +30,8 @@ class AuthorsSearchTest < ActionDispatch::IntegrationTest
     fill_in "search-field", with: "bentham"
     click_on "Search"
     standard_page_assertions
-    assert page.has_content?("bentham"), 'Search result for author "bentham" not found.'
+    assert page.has_content?("bentham"),
+           "Search result for author 'bentham' not found."
   end
 
   # "bentham cr-b:4"
@@ -41,20 +42,30 @@ class AuthorsSearchTest < ActionDispatch::IntegrationTest
     fill_in "search-field", with: "bentham cr-b:4"
     click_on "Search"
 
-    sleep(inspection_time = 2)
-    search_result_summary_must_include_content("0 records", 'Incorrect summary for simple name search on "acacia" - missing: 0 records.')
-    search_result_summary_must_include_content('Author search: "bentham cr-b:4"', 'Incorrect summary for author search on "bentham cr-b:4" - missing: Author search: "bentham cr-b:4".')
+    sleep(2)
+    search_result_summary_must_include_content("0 records",
+                                               'Incorrect summary for simple
+                                               name search on "acacia" -
+                                               missing: 0 records.')
+    search_result_summary_must_include_content(
+      'Author search: "bentham cr-b:4"',
+      'Bad summary for author search on "bentham cr-b:4" -
+      missing: Author search: "bentham cr-b:4".')
   end
 
   # "bentham cr-b:"
-  test "better author advanced search with text and empty created before criterion" do
+  test "better author advanced search w text and empty created b4 criterion" do
     sign_in
     standard_page_assertions
     select "Authors", from: "query-on"
     fill_in "search-field", with: "bentham cr-b:"
     click_on "Search"
-    sleep(inspection_time = 2)
-    search_result_summary_must_include_content("0 records", 'Incorrect summary for simple name search on "acacia" - missing: 0 records.')
-    search_result_summary_must_include_content('0 records Author search: "bentham cr-b:"(Ignored criteria: cr-b)', "Incorrect summary for author search with empty criterion.")
+    sleep(2)
+    search_result_summary_must_include_content(
+      "0 records",
+      'Bad summary for simple name search on "acacia" - missing: 0 records.')
+    search_result_summary_must_include_content(
+      '0 records Author search: "bentham cr-b:"(Ignored criteria: cr-b)',
+      "Incorrect summary for author search with empty criterion.")
   end
 end

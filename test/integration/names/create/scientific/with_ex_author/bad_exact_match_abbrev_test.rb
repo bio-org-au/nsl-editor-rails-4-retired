@@ -26,7 +26,8 @@ class WithBadExactMatchAuthorAbbrevTest < ActionDispatch::IntegrationTest
   test "create scientific name with bad exact match author abbrev" do
     names_count = Name.count
     visit_home_page
-    fill_in "search-field", with: "test:create scientific name with bad exact match author abbrev"
+    fill_in "search-field",
+            with: "test:create scientific name with mismatched Author abbrev"
     load_new_scientific_name_form
     set_name_parent
     fill_in("name_name_element", with: "Fred")
@@ -36,8 +37,10 @@ class WithBadExactMatchAuthorAbbrevTest < ActionDispatch::IntegrationTest
     save_new_record
     sleep(inspection_time = 1)
     assert page.has_content?("error"), "No error message."
-    assert page.has_content?("1 error prohibited this name from being saved"), "Incorrect error message."
-    assert page.has_content?("Author not specified correctly"), "Incorrect error message."
+    assert page.has_content?("1 error prohibited this name from being saved"),
+           "Incorrect error message."
+    assert page.has_content?("Author not specified correctly"),
+           "Incorrect error message."
     Name.count.must_equal names_count
   end
 end

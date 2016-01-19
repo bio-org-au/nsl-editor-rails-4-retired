@@ -20,7 +20,7 @@
 require "test_helper"
 
 # Single integration test.
-class RcColonNuytsia2015WithEmbeddedPercentsTest < ActionDispatch::IntegrationTest
+class RcColonNuytsia2015WEmbeddedPercentsTest < ActionDispatch::IntegrationTest
   # Make the Capybara DSL available in all integration tests
   include Capybara::DSL
 
@@ -33,6 +33,9 @@ class RcColonNuytsia2015WithEmbeddedPercentsTest < ActionDispatch::IntegrationTe
     sleep(inspection_time = 0.1)
     search_result_must_include_content("Telford")
     search_result_must_include_content("Telford, I.R.H. & Naaykens, J.,")
-    search_result_must_include_content("(2015) Synostemon hamersleyensis (Phyllanthaceae), a new species endemic to the Pilbara, Western Australia. Nuytsia. 25 : 31-37 ")
+    string = "(2015) Synostemon hamersleyensis (Phyllanthaceae), a new"
+    string << " species endemic to the Pilbara, Western Australia. Nuytsia."
+    string << " 25 : 31-37 "
+    search_result_must_include_content(string)
   end
 end

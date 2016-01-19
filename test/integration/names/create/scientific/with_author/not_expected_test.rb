@@ -26,7 +26,8 @@ class AuthorNotExpectedTest < ActionDispatch::IntegrationTest
   test "create scientific name author not expected" do
     names_count = Name.count
     visit_home_page
-    fill_in "search-field", with: "test: create scientific name author not expected"
+    fill_in "search-field",
+            with: "test: create scientific name author not expected"
     load_new_scientific_name_form
     set_name_parent
     fill_in("name_name_element", with: "Fred")

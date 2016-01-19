@@ -21,12 +21,15 @@ load "test/models/search/users.rb"
 class SearchOnReferenceCitationAbbrevCTest < ActiveSupport::TestCase
   test "search on reference citation abbrev c simple" do
     reference = references(:ref_type_is_book)
-    params =  ActiveSupport::HashWithIndifferentAccess.new(query_target: "reference",
-                                                           query_string: "c: #{reference.citation}",
-                                                           include_common_and_cultivar_session: true,
-                                                           current_user: build_edit_user)
+    params =  ActiveSupport::HashWithIndifferentAccess
+              .new(query_target: "reference",
+                   query_string: "c: #{reference.citation}",
+                   include_common_and_cultivar_session: true,
+                   current_user: build_edit_user)
     search = Search::Base.new(params)
-    assert_equal search.executed_query.results.class, Reference::ActiveRecord_Relation, "Results should be a Reference::ActiveRecord_Relation."
+    assert_equal search.executed_query.results.class,
+                 Reference::ActiveRecord_Relation,
+                 "Results should be a Reference::ActiveRecord_Relation."
     assert search.executed_query.results.size > 0, "Results expected."
   end
 end

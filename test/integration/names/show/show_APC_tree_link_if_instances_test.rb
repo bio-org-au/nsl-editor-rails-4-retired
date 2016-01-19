@@ -29,6 +29,8 @@ class ShowAPCTreeLinkIfInstances < ActionDispatch::IntegrationTest
     fill_in "search-field", with: "a species"
     click_button "Search"
     big_sleep
-    search_result_details_must_include_link("APC tree", "APC tree link should appear if instances.")
+    search_result_details_must_include_link("APC tree",
+                                            "APC tree link should appear
+                                            if instances.")
   end
 end

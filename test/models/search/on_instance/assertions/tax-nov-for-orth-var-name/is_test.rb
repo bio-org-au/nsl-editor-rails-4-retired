@@ -25,7 +25,7 @@ class SearchOnInstanceIsTaxNovForOrthVarNameTest < ActiveSupport::TestCase
         query_target: "instance",
         query_string: "is-tax-nov-for-orth-var-name:",
         current_user: build_edit_user))
-    assert search.executed_query.results.size > 0, 
+    assert search.executed_query.results.size > 0,
       'Should find tax. nov. instance for an orth. var. name.'
   end
 end

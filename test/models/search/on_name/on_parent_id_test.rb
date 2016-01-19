@@ -21,12 +21,15 @@ load "test/models/search/users.rb"
 class OnParentIdTest < ActiveSupport::TestCase
   test "on parent ID" do
     query_string = "parent-id: #{names(:a_genus).id}"
-    params = ActiveSupport::HashWithIndifferentAccess.new(query_target: "name",
-                                                          query_string: query_string,
-                                                          include_common_and_cultivar_session: true,
-                                                          current_user: build_edit_user)
+    params = ActiveSupport::HashWithIndifferentAccess
+             .new(query_target: "name",
+                  query_string: query_string,
+                  include_common_and_cultivar_session: true,
+                  current_user: build_edit_user)
     search = Search::Base.new(params)
-    assert_equal search.executed_query.results.class, Name::ActiveRecord_Relation, "Results should be a Name::ActiveRecord_Relation."
+    assert_equal search.executed_query.results.class,
+                 Name::ActiveRecord_Relation,
+                 "Results should be a Name::ActiveRecord_Relation."
     assert_equal 10, search.executed_query.results.size, "Expected 10 names."
   end
 end

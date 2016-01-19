@@ -19,14 +19,27 @@ load "models/search/users.rb"
 
 # Single Search model test.
 class ForInstanceTypeUnknown < ActiveSupport::TestCase
-  # Search model run_search for Instance for : "id: 86355" in "name-instances", up to 1000000000 record(s)
-  # Search model run_search for Instance for : "[unknown]" in "instance-type", up to 100 record(s) (pid:93252)
-  # @search = Search.new(params[:query],params[:query_on],params[:query_limit],params[:query_common_and_cultivar]||'f',params[:query_sort],params[:query_field])
+  # Search model run_search for Instance for : "id: 86355" in "name-instances",
+  # up to 1000000000 record(s)
+  # Search model run_search for Instance for : "[unknown]" in "instance-type",
+  # up to 100 record(s) (pid:93252)
+  # @search = Search.new(params[:query],
+  # params[:query_on],
+  # params[:query_limit],
+  # params[:query_common_and_cultivar]||'f',
+  # params[:query_sort],params[:query_field])
   test "search for instance type of unknown using the query alone" do
-    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_string: "type: [unknown]", query_target: "instance", current_user: build_edit_user))
+    search = Search::Base
+             .new(ActiveSupport::HashWithIndifferentAccess
+             .new(query_string: "type: [unknown]",
+                  query_target: "instance",
+                  current_user: build_edit_user))
     assert_equal search.class, Search::Base, "Results should be a Search."
-    results = search.executed_query.results
-    assert_equal search.executed_query.results.class, Instance::ActiveRecord_Relation, "Results should be an Instance::ActiveRecord_Relation."
-    assert_equal 1, search.executed_query.results.size, "Expected 1 search result for instance-type search for [unknown]."
+    assert_equal search.executed_query.results.class,
+                 Instance::ActiveRecord_Relation,
+                 "Results should be an Instance::ActiveRecord_Relation."
+    assert_equal 1,
+                 search.executed_query.results.size,
+                 "Expected 1 result for instance-type search for [unknown]."
   end
 end

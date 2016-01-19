@@ -27,6 +27,7 @@ class SearchPageTest < ActionDispatch::IntegrationTest
   test "search page load" do
     visit_home_page
     standard_page_assertions
-    # assert page.has_content?('1 reference for simple'), 'Simple reference search failed.'
+    # assert page.has_content?('1 reference for simple'),
+    #        'Simple reference search failed.'
   end
 end

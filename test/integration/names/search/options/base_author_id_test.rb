@@ -27,6 +27,7 @@ class BaseAuthorIdTest < ActionDispatch::IntegrationTest
     visit_home_page
     select "Name", from: "query-on"
     select "base author id", from: "query-field"
-    assert find('#query-field').value == "ba-id", "Base Author ID key should be in use."
+    assert find('#query-field').value == "ba-id",
+           "Base Author ID key should be in use."
   end
 end

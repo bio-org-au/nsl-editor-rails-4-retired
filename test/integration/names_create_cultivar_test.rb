@@ -43,7 +43,8 @@ class NamesCreateCultivarTest < ActionDispatch::IntegrationTest
   # def fill_autocomplete(field,option)
   # page.execute_script %Q{ $('##{field}').trigger('focus') }
   # page.execute_script %Q{ $('##{field}').trigger('keydown') }
-  # selector = %Q{ul.ui-autocomplete li.ui-menu-item a:contains("#{options[:select]}")}
+  # selector =
+  # %Q{ul.ui-autocomplete li.ui-menu-item a:contains("#{options[:select]}")}
   #
   # page.should have_selector('ul.ui-autocomplete li.ui-menu-item a')
   # page.execute_script %Q{ $('#{selector}').trigger('mouseenter').click() }
@@ -67,7 +68,8 @@ class NamesCreateCultivarTest < ActionDispatch::IntegrationTest
     using_wait_time 20 do
       fill_in(text_field, with: abbrev)
     end
-    script = "document.getElementById('" + id_field + "').setAttribute('type','text')"
+    script =
+    "document.getElementById('" + id_field + "').setAttribute('type','text')"
     execute_script(script)
     using_wait_time 20 do
       fill_in(id_field, with: author.id)
@@ -83,10 +85,12 @@ class NamesCreateCultivarTest < ActionDispatch::IntegrationTest
     assert page.has_link?("Summary"), "Record not created."
     assert page.has_field?("search-field"), "No search field."
     expected_contents.each do |expected_content|
-      assert page.has_content?(expected_content), "Missing expected content: #{expected_content}"
+      assert page.has_content?(expected_content),
+             "Missing expected content: #{expected_content}"
     end
     prohibited_contents.each do |prohibited_content|
-      assert page.has_no_content?(prohibited_content), "Missing prohibited content: #{prohibited_content}"
+      assert page.has_no_content?(prohibited_content),
+             "Missing prohibited content: #{prohibited_content}"
     end
   end
 
@@ -102,23 +106,31 @@ class NamesCreateCultivarTest < ActionDispatch::IntegrationTest
     assert page.has_field?("name_name_type_id"), "Name type should be there"
     assert page.has_field?("name_name_rank_id"), "Name rank should be there"
     assert page.has_field?("name_name_status_id"), "Name status should be there"
-    assert page.has_field?("name-parent-typeahead"), "Name parent typeahead field should be there"
+    assert page.has_field?("name-parent-typeahead"),
+           "Name parent typeahead field should be there"
     assert page.has_field?("name_name_element"), "Name element should be there"
     # The following negatives will wait the full time and slow things down, so
     # first reset the wait time.
     default = Capybara.default_wait_time
     Capybara.default_wait_time = 0.1
-    assert page.has_no_field?("name-name-second-parent-typeahead"), "name-name-second-parent-typeahead should not be there"
-    assert page.has_no_field?("ex-base-author-by-abbrev"), "ex-base-author-by-abbrev should not be there"
-    assert page.has_no_field?("ex-base-author-by-abbrev"), "ex-base-author-by-abbrev should not be there"
-    assert page.has_no_field?("base-author-by-abbrev"), "base-author-by-abbrev should not be there"
-    assert page.has_no_field?("ex-author-by-abbrev"), "ex-author-by-abbrev should not be there"
-    assert page.has_no_field?("author-by-abbrev"), "author-by-abbrev should not be there"
-    assert page.has_no_field?("sanctioning-author-by-abbrev"), "Sanctioning author field should not be there"
+    assert page.has_no_field?("name-name-second-parent-typeahead"),
+           "name-name-second-parent-typeahead should not be there"
+    assert page.has_no_field?("ex-base-author-by-abbrev"),
+           "ex-base-author-by-abbrev should not be there"
+    assert page.has_no_field?("ex-base-author-by-abbrev"),
+           "ex-base-author-by-abbrev should not be there"
+    assert page.has_no_field?("base-author-by-abbrev"),
+           "base-author-by-abbrev should not be there"
+    assert page.has_no_field?("ex-author-by-abbrev"),
+           "ex-author-by-abbrev should not be there"
+    assert page.has_no_field?("author-by-abbrev"),
+           "author-by-abbrev should not be there"
+    assert page.has_no_field?("sanctioning-author-by-abbrev"),
+           "Sanctioning author field should not be there"
     Capybara.default_wait_time = default
   end
 
-  test "try to save without entering date for hybrid formula unknown 2nd parent name" do
+  test "try to save without date for hybrid formula unknown 2nd parent name" do
     names_count = Name.count
     visit_home_page
     load_the_form

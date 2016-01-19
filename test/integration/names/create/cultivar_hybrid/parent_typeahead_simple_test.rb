@@ -20,7 +20,7 @@
 require "test_helper"
 
 # Single integration test.
-class CultivarHybridNameParentTypeaheadSimpleTest < ActionDispatch::IntegrationTest
+class CultivarHybNameParentTypeaheadSimpleTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
 
   test "parent typeahead simple" do
@@ -29,6 +29,8 @@ class CultivarHybridNameParentTypeaheadSimpleTest < ActionDispatch::IntegrationT
     select_from_menu(["New", "Cultivar hybrid name"])
     search_result_must_include_link("New cultivar hybrid name")
     search_result_details_must_include_content("New Cultivar Hybrid Name")
-    try_typeahead_single("name-parent-typeahead", "aforma", "Aforma | Forma | legitimate | 1 instance")
+    try_typeahead_single("name-parent-typeahead",
+                         "aforma",
+                         "Aforma | Forma | legitimate | 1 instance")
   end
 end

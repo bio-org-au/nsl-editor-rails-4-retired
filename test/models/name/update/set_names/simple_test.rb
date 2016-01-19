@@ -24,10 +24,20 @@ class NameUpdateSetNamesSimpleTest < ActiveSupport::TestCase
     name.save!
     name.set_names!
     updated_name = Name.find(name.id)
-    assert_equal "full name for id #{name.id}", name.full_name, "Full name not set - make sure the test mock server is running."
-    assert_equal "full name for id #{name.id}", updated_name.full_name, "Full name not set"
-    assert_equal "full marked up name for id #{name.id}", updated_name.full_name_html, "Full name html not set"
-    assert_equal "simple name for id #{name.id}", updated_name.simple_name, "Simple name not set"
-    assert_equal "simple marked up name for id #{name.id}", updated_name.simple_name_html, "Simple name html not set"
+    assert_equal "full name for id #{name.id}",
+                 name.full_name,
+                 "Full name not set - make sure the test mock server running."
+    assert_equal "full name for id #{name.id}",
+                 updated_name.full_name,
+                 "Full name not set"
+    assert_equal "full marked up name for id #{name.id}",
+                 updated_name.full_name_html,
+                 "Full name html not set"
+    assert_equal "simple name for id #{name.id}",
+                 updated_name.simple_name,
+                 "Simple name not set"
+    assert_equal "simple marked up name for id #{name.id}",
+                 updated_name.simple_name_html,
+                 "Simple name html not set"
   end
 end

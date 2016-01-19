@@ -27,13 +27,15 @@ class AvailableFieldsTest < ActionDispatch::IntegrationTest
     visit_home_page
     standard_page_assertions
     select "Instances", from: "query-on"
-    fill_in "search-field", with: "id: #{instances(:rusty_gum_is_a_common_name_of_angophora_costata).id}"
+    instance = instances(:rusty_gum_is_a_common_name_of_angophora_costata)
+    fill_in "search-field", with: "id: #{instance.id}"
     select "just: 1", from: "query-limit"
     click_on "Search"
     all(".takes-focus").first.click
     click_on "Edit"
     big_sleep
-    assert page.has_field?("instance_instance_type_id"), "Instance type field should be there"
+    assert page.has_field?("instance_instance_type_id"),
+           "Instance type field should be there"
     assert page.has_field?("instance_bhl_url"), "BHL URL field should be there"
     assert page.has_field?("instance_page"), "Page field should be there"
   end

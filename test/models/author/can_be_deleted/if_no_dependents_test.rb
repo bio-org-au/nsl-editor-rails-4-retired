@@ -20,7 +20,7 @@ require "test_helper"
 class AuthorCanBeDeletedIfNoDependentsTest < ActiveSupport::TestCase
   test "author can be deleted if no dependents" do
     author = authors(:has_no_dependents)
-    assert author.can_be_deleted?, 
+    assert author.can_be_deleted?,
            "Should be able to delete author with no dependents"
   end
 end

@@ -30,8 +30,10 @@ class ParentTypeaheadSelectTest < ActionDispatch::IntegrationTest
     select_from_menu(["New", "Cultivar hybrid name"])
     search_result_must_include_link("New cultivar hybrid name")
     search_result_details_must_include_content("New Cultivar Hybrid Name")
-    try_typeahead_single("name-parent-typeahead", "aforma", "Aforma | Forma | legitimate")
-    the_field = find(:css, "a.show-details-link")
+    try_typeahead_single("name-parent-typeahead",
+                         "aforma",
+                         "Aforma | Forma | legitimate")
+    # the_field = find(:css, "a.show-details-link")
     first_row.native.send_keys :arrow_down
     Capybara.default_driver = :webkit
   end

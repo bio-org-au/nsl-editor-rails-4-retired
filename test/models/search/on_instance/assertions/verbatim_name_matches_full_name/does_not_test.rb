@@ -18,7 +18,7 @@ require "test_helper"
 load "models/search/users.rb"
 
 # Test search on instance
-class SearchOnInstanceVerbatimNameDoesNotMatchFullNameTest < 
+class SearchOnInstanceVerbatimNameDoesNotMatchFullNameTest <
   ActiveSupport::TestCase
   test "instance verbatim name does not match full name" do
     search = Search::Base.new(

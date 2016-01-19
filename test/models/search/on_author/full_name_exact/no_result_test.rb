@@ -26,7 +26,7 @@ class SearchOnAuthorFullNameExactNoResultTest < ActiveSupport::TestCase
     params = ActiveSupport::HashWithIndifferentAccess.new(query_target:
                                                           "author",
                                                           query_string:
-                                                          "full-name-exact: 
+                                                          "full-name-exact:
                                                           tanley",
                                                           current_user:
                                                           build_edit_user)

@@ -34,9 +34,12 @@ class MismatchedAuthorTest < ActionDispatch::IntegrationTest
     fill_in("author-by-abbrev", with: "MISMATCHED TEXT")
     save_new_record
     sleep(inspection_time = 1)
-    assert page.has_content?("error"), "No error message. Mismatch of Author not detected"
-    assert page.has_content?("1 error prohibited this name from being saved"), "Incorrect error message."
-    assert page.has_content?("Author not specified correctly"), "Incorrect error message."
+    assert page.has_content?("error"),
+           "No error message. Mismatch of Author not detected"
+    assert page.has_content?("1 error prohibited this name from being saved"),
+           "Incorrect error message."
+    assert page.has_content?("Author not specified correctly"),
+           "Incorrect error message."
     Name.count.must_equal names_count
   end
 end

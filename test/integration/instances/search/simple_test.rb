@@ -29,7 +29,9 @@ class SimpleTest < ActionDispatch::IntegrationTest
     select "Instance", from: "query-on"
     fill_in "search-field", with: "agenus"
     click_button "Search"
-    search_result_summary_must_include_content("2 records", "Search should have returned 2 records")
-    search_result_must_include_content("Agenus", 'Search should have returned "Agenus"')
+    search_result_summary_must_include_content("2 records",
+                                               "Should have returned 2 records")
+    search_result_must_include_content("Agenus",
+                                       'Search should have returned "Agenus"')
   end
 end

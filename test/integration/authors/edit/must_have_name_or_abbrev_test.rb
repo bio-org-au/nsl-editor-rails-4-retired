@@ -36,8 +36,11 @@ class MustHaveNameOrAbbrevTest < ActionDispatch::IntegrationTest
     fill_in("author_abbrev", with: "")
     save_edits
     big_sleep
-    search_result_details_must_include_content("2 errors prohibited this author from being saved:")
-    search_result_details_must_include_content("Name can't be blank if abbrev is blank.")
-    search_result_details_must_include_content("Abbrev can't be blank if name is blank.")
+    search_result_details_must_include_content(
+      "2 errors prohibited this author from being saved:")
+    search_result_details_must_include_content(
+      "Name can't be blank if abbrev is blank.")
+    search_result_details_must_include_content(
+      "Abbrev can't be blank if name is blank.")
   end
 end

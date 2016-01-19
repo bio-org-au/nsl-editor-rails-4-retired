@@ -20,12 +20,18 @@ load "test/models/search/users.rb"
 # Single Search model test for Reference target.
 class SearchOnReferenceDefaultSuffixFragmentSearchTest < ActiveSupport::TestCase
   test "search on reference default for suffix fragment" do
-    params = ActiveSupport::HashWithIndifferentAccess.new(query_target: "reference",
-                                                          query_string: "uplicate",
-                                                          include_common_and_cultivar_session: true,
-                                                          current_user: build_edit_user)
+    params = ActiveSupport::HashWithIndifferentAccess
+             .new(query_target: "reference",
+                  query_string: "uplicate",
+                  include_common_and_cultivar_session: true,
+                  current_user: build_edit_user)
     search = Search::Base.new(params)
-    assert_equal search.executed_query.results.class, Reference::ActiveRecord_Relation, "Results should be a Reference::ActiveRecord_Relation."
-    assert_equal 0, search.executed_query.results.size, "No results are expected.  Citation text search does not support suffix text fragments."
+    assert_equal search.executed_query.results.class,
+                 Reference::ActiveRecord_Relation,
+                 "Results should be a Reference::ActiveRecord_Relation."
+    assert_equal 0,
+                 search.executed_query.results.size,
+                 "No results are expected.  Citation text search does not
+                 support suffix text fragments."
   end
 end

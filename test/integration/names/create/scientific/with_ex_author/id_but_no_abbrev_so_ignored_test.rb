@@ -31,7 +31,8 @@ class WithExAuthorIdButNoAbbrevSoIgnoredTest < ActionDispatch::IntegrationTest
     set_name_parent
     fill_in("name_name_element", with: "Fred")
     fill_in_author_typeahead("author-by-abbrev", "name_author_id")
-    fill_in_author_typeahead("ex-author-by-abbrev", "name_ex_author_id", authors(:hooker))
+    fill_in_author_typeahead("ex-author-by-abbrev",
+                             "name_ex_author_id", authors(:hooker))
     blank_string = " "
     fill_in("ex-author-by-abbrev", with: blank_string)
     save_new_record

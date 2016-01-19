@@ -27,7 +27,8 @@ class NoDeleteButtonIfExAuthorOfNameTest < ActionDispatch::IntegrationTest
     visit_home_page
     standard_page_assertions
     select "Author", from: "query-on"
-    fill_in "search-field", with: "id: #{authors(:has_ex_authored_one_name_that_is_all).id}"
+    fill_in "search-field",
+            with: "id: #{authors(:has_ex_authored_one_name_that_is_all).id}"
     click_button "Search"
     tiny_sleep
     search_result_must_include_content("Has Ex Authored One Name That Is All")

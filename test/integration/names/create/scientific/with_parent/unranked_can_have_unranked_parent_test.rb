@@ -26,11 +26,16 @@ class UnrankedCanHaveUnrankedParentTest < ActionDispatch::IntegrationTest
   test "create unranked with unranked parent" do
     Capybara.default_driver = :selenium
     visit_home_page_as_editor
-    fill_in "search-field", with: "test: create unranked scientific with unranked parent"
+    fill_in "search-field",
+            with: "test: create unranked scientific with unranked parent"
     load_new_scientific_name_form
     fill_in("name_name_element", with: "with parent of higher rank")
     select "[unranked]", from: "name_name_rank_id"
-    try_typeahead_single("name-parent-typeahead", "aforma", "Aforma | Forma | legitimate | 1 instance")
-    try_typeahead_single("name-parent-typeahead", "unranked name 1", "unranked name 1 | [unranked] | [unknown] | 0 instances")
+    try_typeahead_single("name-parent-typeahead",
+                         "aforma", "Aforma | Forma | legitimate | 1 instance")
+    try_typeahead_single("name-parent-typeahead",
+                         "unranked name 1",
+                         "unranked name 1 | [unranked] | [unknown] |
+                         0 instances")
   end
 end

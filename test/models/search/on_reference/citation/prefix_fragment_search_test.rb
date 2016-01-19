@@ -18,14 +18,19 @@ require "test_helper"
 load "test/models/search/users.rb"
 
 # Single Search model test for Reference target.
-class SearchOnReferenceCitationPrefixFragmentSearchTest < ActiveSupport::TestCase
+class SearchOnRefCitationPrefixFragmentSearchTest < ActiveSupport::TestCase
   test "search on reference citation for prefix fragment" do
-    params = ActiveSupport::HashWithIndifferentAccess.new(query_target: "reference",
-                                                          query_string: "citation: duplic",
-                                                          include_common_and_cultivar_session: true,
-                                                          current_user: build_edit_user)
+    params = ActiveSupport::HashWithIndifferentAccess.new(
+      query_target: "reference",
+      query_string: "citation: duplic",
+      include_common_and_cultivar_session: true,
+      current_user: build_edit_user)
     search = Search::Base.new(params)
-    assert_equal search.executed_query.results.class, Reference::ActiveRecord_Relation, "Results should be a Reference::ActiveRecord_Relation."
-    assert search.executed_query.results.size > 1, "At least one result expected.  Citation text search should support prefix text fragments."
+    assert_equal search.executed_query.results.class,
+                 Reference::ActiveRecord_Relation,
+                 "Results should be a Reference::ActiveRecord_Relation."
+    assert search.executed_query.results.size > 1,
+           "At least one result expected.  Citation text search should
+           support prefix text fragments."
   end
 end

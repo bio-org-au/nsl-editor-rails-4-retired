@@ -28,16 +28,23 @@ class AvailableFieldsTest < ActionDispatch::IntegrationTest
     visit_home_page
     standard_page_assertions
     select "Instances", from: "query-on"
-    fill_in "search-field", with: "id: #{instances(:metrosideros_costata_is_basionym_of_angophora_costata).id}"
+    instance = instances(:metrosideros_costata_is_basionym_of_angophora_costata)
+    fill_in "search-field", with: "id: #{instance.id}"
     select "just: 1", from: "query-limit"
     click_on "Search"
     all(".takes-focus").first.click
     click_on "Edit"
     big_sleep
-    assert page.has_field?("instance-instance-for-name-showing-reference-typeahead"), "Instance for name field should be there"
-    assert page.has_field?("instance_page"), "Instance page field should be there"
-    assert page.has_field?("instance_instance_type_id"), "Instance type field should be there"
-    assert page.has_field?("instance_verbatim_name_string"), "Instance verbatim name string field should be there"
-    search_result_details_must_include_field("instance_bhl_url", "Instance BHL URL string field should be there")
+    field_id = "instance-instance-for-name-showing-reference-typeahead"
+    assert page.has_field?(field_id), "Instance for name field should be there"
+    assert page.has_field?("instance_page"),
+           "Instance page field should be there"
+    assert page.has_field?("instance_instance_type_id"),
+           "Instance type field should be there"
+    assert page.has_field?("instance_verbatim_name_string"),
+           "Instance verbatim name string field should be there"
+    search_result_details_must_include_field(
+      "instance_bhl_url",
+      "Instance BHL URL string field should be there")
   end
 end

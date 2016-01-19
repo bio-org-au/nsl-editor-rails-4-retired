@@ -20,7 +20,7 @@
 require "test_helper"
 
 # Single integration test.
-class DeleteButtonAppearsAndWorksIfNoDependencies < ActionDispatch::IntegrationTest
+class DeleteButtAppearsNWorksIfNoDependencies < ActionDispatch::IntegrationTest
   include Capybara::DSL
 
   test "author delete button appears and works if no dependencies" do

@@ -40,6 +40,8 @@ class SimpleTest < ActionDispatch::IntegrationTest
     select("Author", from: "Author role*")
     save_new_record
     assert_successful_create_for(["HTML citation for id 1064021178"])
-    assert_equal(Reference.count, reference_count + 1, "Wrong reference count after attempted create")
+    assert_equal(Reference.count,
+                 reference_count + 1,
+                 "Wrong reference count after attempted create")
   end
 end

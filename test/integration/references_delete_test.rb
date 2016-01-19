@@ -25,8 +25,10 @@ class ReferencesDeleteTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
 
   def search_result_must_include(link_text, msg)
-    # assert find('div#search-result-container').has_link?(/#{link_text}/i), msg                # Does not work with has_link?
-    assert find('div#search-result-container').has_content?(/#{link_text}/i), msg # Does not work with has_link?
+    # assert find('div#search-result-container').has_link?(/#{link_text}/i),
+    #        msg                # Does not work with has_link?
+    assert find('div#search-result-container').has_content?(/#{link_text}/i),
+           msg # Does not work with has_link?
   end
 
   test "delete button if no children" do
@@ -36,11 +38,16 @@ class ReferencesDeleteTest < ActionDispatch::IntegrationTest
     fill_in "search-field", with: "Book by Blume"
     click_button "Search"
     all(".takes-focus").first.click
-    search_result_must_include("Book by Blume", 'Reference search should have returned a record for "Book by Blume".')
+    search_result_must_include("Book by Blume",
+                               'Reference search should have
+                               returned a record for "Book by Blume".')
     click_link "Edit..."
     sleep(inspection_time = 1)
-    assert find('#search-result-details').has_content?(/DOI/), "Edit... tab not visible."
-    assert find('#search-result-details').has_content?(/Delete the reference.../), "Delete button should be visible."
+    assert find('#search-result-details').has_content?(/DOI/),
+           "Edit... tab not visible."
+    assert find('#search-result-details')
+           .has_content?(/Delete the reference.../),
+           "Delete button should be visible."
   end
 
   test "no delete button if children" do
@@ -50,10 +57,16 @@ class ReferencesDeleteTest < ActionDispatch::IntegrationTest
     fill_in "search-field", with: "Journal by Blume"
     click_button "Search"
     all(".takes-focus").first.click
-    search_result_must_include("Journal by Blume, C.L. .von. .Editor", 'Reference search should have returned a record for "Journal by Blume, C.L. [von] (Editor)".')
+    search_result_must_include("Journal by Blume, C.L. .von. .Editor",
+                               'Reference search should have returned a
+                               record for "Journal by Blume,
+                               C.L. [von] (Editor)".')
     click_link "Edit..."
     sleep(inspection_time = 1)
-    assert find('#search-result-details').has_content?(/DOI/), "Edit... tab not visible."
-    assert_not find('#search-result-details').has_content?(/Delete the reference.../), "Delete button should not be visible."
+    assert find('#search-result-details').has_content?(/DOI/),
+           "Edit... tab not visible."
+    assert_not find('#search-result-details')
+               .has_content?(/Delete the reference.../),
+               "Delete button should not be visible."
   end
 end

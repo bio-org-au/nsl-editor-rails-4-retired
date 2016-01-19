@@ -18,11 +18,14 @@ require "test_helper"
 load "models/search/users.rb"
 
 # Single Search model test for Name search.
-class SearchOnNameAssertionIsOrthVarWithNoOrthVarInstancesTest < ActiveSupport::TestCase
+class SearchOnNameAssertIsOrthVarWithNoOrthVarInstTest < ActiveSupport::TestCase
   test "name asertion is orth var with no orth var instances" do
-    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_target: "name",
-                                                                           query_string: "is-orth-var-with-no-orth-var-instances:",
-                                                                           current_user: build_edit_user))
-    assert search.executed_query.results.size > 0, "Should find name that has an instance."
+    search = Search::Base.new(
+      ActiveSupport::HashWithIndifferentAccess.new(
+        query_target: "name",
+        query_string: "is-orth-var-with-no-orth-var-instances:",
+        current_user: build_edit_user))
+    assert search.executed_query.results.size > 0,
+           "Should find name that has an instance."
   end
 end

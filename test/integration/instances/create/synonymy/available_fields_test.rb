@@ -29,15 +29,21 @@ class AvailableFieldsTest < ActionDispatch::IntegrationTest
     standard_page_assertions
     select "Instances", from: "query-on"
     select "with id", from: "query-field"
-    fill_in "search-field", with: instances(:britten_created_angophora_costata).id
+    fill_in "search-field",
+            with: instances(:britten_created_angophora_costata).id
     click_on "Search"
     all(".takes-focus").first.click
     big_sleep
     click_on "Synonymy"
-    assert page.has_field?("instance-instance-for-name-showing-reference-typeahead"), "Instance name typeahead should be there"
-    assert page.has_field?("instance_instance_type_id"), "Instance type field should be there"
-    assert page.has_field?("instance_page"), "Instance page field should be there"
-    assert page.has_field?("instance_verbatim_name_string"), "Instance verbatim name string field should be there"
-    assert page.has_field?("instance_bhl_url"), "Instance BHL URL string field should be there"
+    field_id = "instance-instance-for-name-showing-reference-typeahead"
+    assert page.has_field?(field_id), "Instance name typeahead should be there"
+    assert page.has_field?("instance_instance_type_id"),
+           "Instance type field should be there"
+    assert page.has_field?("instance_page"),
+           "Instance page field should be there"
+    assert page.has_field?("instance_verbatim_name_string"),
+           "Instance verbatim name string field should be there"
+    assert page.has_field?("instance_bhl_url"),
+           "Instance BHL URL string field should be there"
   end
 end

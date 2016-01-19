@@ -20,7 +20,7 @@
 require "test_helper"
 
 # Single integration test.
-class ByReferenceIdAndInstanceTypeInvalidPublicationTest < ActionDispatch::IntegrationTest
+class ByRefIdAndInstTypeInvalidPubnTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
 
   test "find instances by reference id" do
@@ -29,9 +29,13 @@ class ByReferenceIdAndInstanceTypeInvalidPublicationTest < ActionDispatch::Integ
     select "for reference id", from: "query-field"
     fill_in "search-field", with: references(:paper_by_brassard).id
     click_on "Search"
-    sleep(inspection_time = 0.1)
-    assert page.has_content?("2 records"), "Instance search by reference id did not get just 2 record."
-    assert page.has_content?("paper by brassard"), "Instance search by reference id did not get the expected reference."
-    assert page.has_content?("Triodia basedowii E.Pritz : xx 200,300 [primary reference]"), "Instance search by reference id did not get the expected instance."
+    sleep(0.1)
+    assert page.has_content?("2 records"),
+           "Instance search by reference id did not get just 2 record."
+    assert page.has_content?("paper by brassard"),
+           "Instance search by reference id did not get the expected reference."
+    string = "Triodia basedowii E.Pritz : xx 200,300 [primary reference]"
+    assert page.has_content?(string),
+           "Instance search by reference id did not get the expected instance."
   end
 end

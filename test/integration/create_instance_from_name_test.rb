@@ -29,6 +29,7 @@ class InstancesCreateTest < ActionDispatch::IntegrationTest
     standard_page_assertions
     fill_in("query", with: "triodia basedowii")
     click_on("search-button")
-    assert page.has_content?("Trio"), "Search should return Triodia basedowii E.Pritz"
+    assert page.has_content?("Trio"),
+           "Search should return Triodia basedowii E.Pritz"
   end
 end

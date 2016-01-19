@@ -20,19 +20,24 @@
 require "test_helper"
 
 # Single integration test.
-class ByReferenceIdAndInstanceTypeInvalidPublicationTest < ActionDispatch::IntegrationTest
+class ByRefIdAndInstTypeInvalidPublicationTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
 
-  test "find instances by reference id and instance type of invalid publication" do
+  test "find instances by ref id and instance type of invalid publication" do
     visit_home_page
     select "Instances", from: "query-on"
     select "for reference id", from: "query-field"
-    fill_in "search-field", with: references(:de_fructibus_et_seminibus_plantarum).id
+    fill_in "search-field",
+            with: references(:de_fructibus_et_seminibus_plantarum).id
     click_on "Search"
-    sleep(inspection_time = 0.1)
-    assert page.has_content?("6 records"), "Instance search by reference id did not get the expected 6 records."
-    assert page.has_content?("De Fructibus et Seminibus Plantarum"), "Instance search by reference id did not get the expected instance."
-    assert page.has_content?("[invalid publication]"), "Instance search by reference id did not get the expected invalid publication instance."
-    assert page.has_content?("[comb. nov.]"), "Instance search by reference id did not get the expected comb. nov. instance."
+    sleep(0.1)
+    assert page.has_content?("6 records"),
+           "Instance search by reference id did not get the expected 6 records."
+    assert page.has_content?("De Fructibus et Seminibus Plantarum"),
+           "Instance search by reference id did not get the expected instance."
+    assert page.has_content?("[invalid publication]"),
+           "Instance search by ref ID got wrong publication instance."
+    assert page.has_content?("[comb. nov.]"),
+           "Instance search by Ref ID didnt get expected comb. nov. instance."
   end
 end

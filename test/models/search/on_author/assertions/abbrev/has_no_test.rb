@@ -21,7 +21,7 @@ load "models/search/users.rb"
 class SearchOnAuthorAssertionAbbrevHasNoTest < ActiveSupport::TestCase
   test "has abbrev" do
     search = Search::Base.new(
-      ActiveSupport::HashWithIndifferentAccess.new(query_string: 
+      ActiveSupport::HashWithIndifferentAccess.new(query_string:
                                                    "has-no-abbrev:",
                                                    query_target: "Author",
                                                    current_user:

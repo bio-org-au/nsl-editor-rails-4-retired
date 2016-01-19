@@ -23,24 +23,36 @@ load "test/models/search/users.rb"
 # Search model test for Name search for special characters.
 class SimpleSearchForOUmlaut < ActiveSupport::TestCase
   test "simple search for o umlaut with o umlaut" do
-    params = ActiveSupport::HashWithIndifferentAccess.new(query_target: "name",
-                                                          query_string: "belonia Körb.",
-                                                          include_common_and_cultivar_session: true,
-                                                          current_user: build_edit_user)
+    params = ActiveSupport::HashWithIndifferentAccess.new(
+      query_target: "name",
+      query_string: "belonia Körb.",
+      include_common_and_cultivar_session: true,
+      current_user: build_edit_user)
     search = Search::Base.new(params)
-    assert_equal search.executed_query.results.class, Name::ActiveRecord_Relation, "Results should be a Name::ActiveRecord_Relation."
-    assert_equal 1, search.executed_query.results.size, "Exactly 1 result is expected."
-    assert_equal names(:belonia_korb_with_diacrit).full_name, search.executed_query.results.first[:full_name]
+    assert_equal search.executed_query.results.class,
+                 Name::ActiveRecord_Relation,
+                 "Results should be a Name::ActiveRecord_Relation."
+    assert_equal 1,
+                 search.executed_query.results.size,
+                 "Exactly 1 result is expected."
+    assert_equal names(:belonia_korb_with_diacrit).full_name,
+                 search.executed_query.results.first[:full_name]
   end
 
   test "simple search for o umlaut with just o" do
-    params = ActiveSupport::HashWithIndifferentAccess.new(query_target: "name",
-                                                          query_string: "belonia Korb.",
-                                                          include_common_and_cultivar_session: true,
-                                                          current_user: build_edit_user)
+    params = ActiveSupport::HashWithIndifferentAccess.new(
+      query_target: "name",
+      query_string: "belonia Korb.",
+      include_common_and_cultivar_session: true,
+      current_user: build_edit_user)
     search = Search::Base.new(params)
-    assert_equal search.executed_query.results.class, Name::ActiveRecord_Relation, "Results should be a Name::ActiveRecord_Relation."
-    assert_equal 1, search.executed_query.results.size, "Exactly 1 result is expected."
-    assert_equal names(:belonia_korb_with_diacrit).full_name, search.executed_query.results.first[:full_name]
+    assert_equal search.executed_query.results.class,
+                 Name::ActiveRecord_Relation,
+                 "Results should be a Name::ActiveRecord_Relation."
+    assert_equal 1,
+                 search.executed_query.results.size,
+                 "Exactly 1 result is expected."
+    assert_equal names(:belonia_korb_with_diacrit).full_name,
+                 search.executed_query.results.first[:full_name]
   end
 end

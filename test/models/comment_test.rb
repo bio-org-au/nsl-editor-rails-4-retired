@@ -32,7 +32,7 @@ class CommentTest < ActiveSupport::TestCase
   test "author comment fixture should be valid" do
     author_comment = comments("author_comment")
     assert author_comment.present?
-    assert author_comment.valid?, "Comment fixture author_comment should be valid"
+    assert author_comment.valid?, "Comment fixture author_comment shld be valid"
   end
 
   test "instance comment fixture should be valid" do
@@ -64,21 +64,25 @@ class CommentTest < ActiveSupport::TestCase
     author_comment = comments("author_comment")
     assert author_comment.present?
     author_comment.instance = instances("triodia_in_brassard")
-    assert_not author_comment.valid?, "Comment with 2 parents (author and instance) should be invalid"
+    assert_not author_comment.valid?,
+               "Comment with 2 parents (author and instance) should be invalid"
   end
 
   test "author comment with name parent" do
     author_comment = comments("author_comment")
     assert author_comment.present?
     author_comment.name = names("a_species")
-    assert_not author_comment.valid?, "Comment with 2 parents (author and name) should be invalid"
+    assert_not author_comment.valid?,
+               "Comment with 2 parents (author and name) should be invalid"
   end
 
   test "author comment with reference parent" do
     author_comment = comments("author_comment")
     assert author_comment.present?
-    author_comment.reference = references("handbook_of_the_vascular_plants_of_sydney")
-    assert_not author_comment.valid?, "Comment with 2 parents (author and reference) should be invalid"
+    author_comment.reference =
+      references("handbook_of_the_vascular_plants_of_sydney")
+    assert_not author_comment.valid?,
+               "Comment with 2 parents (author and reference) should be invalid"
   end
 
   test "create comment with no text" do

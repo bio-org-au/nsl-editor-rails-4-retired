@@ -31,13 +31,17 @@ class WithMismatchedExAuthorTest < ActionDispatch::IntegrationTest
     set_name_parent
     fill_in("name_name_element", with: "Fred")
     fill_in_author_typeahead("author-by-abbrev", "name_author_id")
-    fill_in_author_typeahead("ex-author-by-abbrev", "name_ex_author_id", authors(:hooker))
+    fill_in_author_typeahead("ex-author-by-abbrev",
+                             "name_ex_author_id", authors(:hooker))
     fill_in("ex-author-by-abbrev", with: "MISMATCHED TEXT")
     save_new_record
-    sleep(inspection_time = 1)
-    assert page.has_content?("error"), "No error message. Mismatch of ex-author not detected"
-    assert page.has_content?("1 error prohibited this name from being saved"), "Mismatch of ex-author: incorrect error message."
-    assert page.has_content?("Ex Author not specified correctly"), "Mismatch of ex-author: incorrect typeahead error message."
+    sleep(1)
+    assert page.has_content?("error"),
+           "No error message. Mismatch of ex-author not detected"
+    assert page.has_content?("1 error prohibited this name from being saved"),
+           "Mismatch of ex-author: incorrect error message."
+    assert page.has_content?("Ex Author not specified correctly"),
+           "Mismatch ex-Auth: wrong typeahead error message."
     Name.count.must_equal names_count
   end
 end

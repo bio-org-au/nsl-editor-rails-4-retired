@@ -15,20 +15,41 @@
 #   limitations under the License.
 #
 
-def hybrid_parent_suggestions_should_include(suggestions, given_rank_name, expected_rank_name)
-  assert(suggestions.collect { |h| h[:value].match(/\s#{Regexp.quote(expected_rank_name)}/) ? 1 : 0 }.sum > 0, "suggestions for #{given_rank_name} should include #{expected_rank_name} [caller: #{caller[1]}]")
+def hybrid_parent_suggestions_should_include(suggestions,
+                                             given_rank_name,
+                                             expected_rank_name)
+  re = Regexp.quote(expected_rank_name)
+  assert(
+    suggestions.collect do |h|
+      h[:value].match(/\s#{re}/) ? 1 : 0
+    end.sum > 0,
+    "suggestions for #{given_rank_name} should
+    include #{expected_rank_name} [caller: #{caller[1]}]")
   end
 
-def hybrid_parent_suggestions_should_not_include(suggestions, given_rank_name, unexpected_rank_name)
-  assert_not(suggestions.collect { |h| h[:value].match(/\s#{Regexp.quote(unexpected_rank_name)}/) ? 1 : 0 }.sum > 0, "suggestions for #{given_rank_name} should not include #{unexpected_rank_name}[caller: #{caller[1]}]")
+def hybrid_parent_suggestions_should_not_include(suggestions,
+                                                 given_rank_name,
+                                                 unexpected_rank_name)
+  re = Regexp.quote(unexpected_rank_name)
+  assert_not(suggestions.collect do |h|
+    h[:value].match(/\s#{re}/) ? 1 : 0
+  end.sum > 0,
+             "suggestions for #{given_rank_name} should not
+             include #{unexpected_rank_name}[caller: #{caller[1]}]")
 end
 
-def hybrid_parent_suggestions_should_only_include(suggestions, given_rank_name, expected_rank_names)
+def hybrid_parent_suggestions_should_only_include(suggestions,
+                                                  given_rank_name,
+                                                  expected_rank_names)
   NameRank.all.sort { |a, b| a.sort_order <=> b.sort_order }.each do |rank|
     if expected_rank_names.include?(rank.name)
-      hybrid_parent_suggestions_should_include(suggestions, given_rank_name, rank.name)
+      hybrid_parent_suggestions_should_include(suggestions,
+                                               given_rank_name,
+                                               rank.name)
     else
-      hybrid_parent_suggestions_should_not_include(suggestions, given_rank_name, rank.name)
+      hybrid_parent_suggestions_should_not_include(suggestions,
+                                                   given_rank_name,
+                                                   rank.name)
     end
   end
 end

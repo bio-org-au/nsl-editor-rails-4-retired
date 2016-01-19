@@ -27,6 +27,7 @@ class ExBaseAuthorIdTest < ActionDispatch::IntegrationTest
     visit_home_page
     select "Name", from: "query-on"
     select "ex base author id", from: "query-field"
-    assert find('#query-field').value == "eba-id", "Ex Base Author ID query key should be in use."
+    assert find('#query-field').value == "eba-id",
+           "Ex Base Author ID query key should be in use."
   end
 end

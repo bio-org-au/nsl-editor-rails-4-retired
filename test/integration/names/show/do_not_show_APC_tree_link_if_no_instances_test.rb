@@ -29,7 +29,11 @@ class DoNotShowAPCTreeLinkIfNoInstances < ActionDispatch::IntegrationTest
     fill_in "search-field", with: "has no instances"
     click_button "Search"
     big_sleep
-    search_result_details_must_not_include_link("APC tree", "APC tree link should not appear if no instances.")
-    search_result_details_must_include_content("No instances", '"No instances" content should not appear if no instances.')
+    search_result_details_must_not_include_link("APC tree",
+                                                "APC tree link should not
+                                                appear if no instances.")
+    search_result_details_must_include_content("No instances",
+                                               "'No instances' content should
+                                               not appear if no instances.")
   end
 end

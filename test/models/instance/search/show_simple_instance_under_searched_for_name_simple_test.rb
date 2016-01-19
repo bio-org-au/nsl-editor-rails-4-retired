@@ -18,18 +18,35 @@ require "test_helper"
 
 # Single instance model test.
 class ShowSimpleInstanceUnderSearchedForNameSimpleTest < ActiveSupport::TestCase
-  def assert_with_args(results, index, expected, actual)
-    result = results[index]
-    assert /\A#{Regexp.escape(expected)}\z/.match(actual), "Wrong at index #{index}; should be: #{expected} NOT #{actual}"
+  def assert_with_args(_results, index, expected, actual)
+    assert(/\A#{Regexp.escape(expected)}\z/.match(actual),
+           "Wrong at index #{index}; should be: #{expected} NOT #{actual}")
   end
 
   test "show simple instance under searched for name simple" do
     instance = instances(:gaertner_created_metrosideros_costata)
-    results = Instance::AsSearchEngine.show_simple_instance_under_searched_for_name(instance)
-    # results.each {|r| puts "#{r.name.full_name} #{r.instance_type.name} #{r.display_as}"}
+    results = Instance::AsSearchEngine
+              .show_simple_instance_under_searched_for_name(instance)
+    # results.each do |r|
+    # puts "#{r.name.full_name} #{r.instance_type.name} #{r.display_as}"
+    # end
     assert results.size == 3
-    assert_with_args(results, 0, "Metrosideros costata Gaertn. comb. nov. instance_as_part_of_concept", "#{results[0].name.full_name} #{results[0].instance_type.name} #{results[0].display_as}")
-    assert_with_args(results, 1, "Rusty Gum vernacular name instance-is-cited-by", "#{results[1].name.full_name} #{results[1].instance_type.name} #{results[1].display_as}")
-    assert_with_args(results, 2, "nothing common name instance-is-cited-by", "#{results[2].name.full_name} #{results[2].instance_type.name} #{results[2].display_as}")
+    expected = "Metrosideros costata Gaertn. comb. nov. "
+    expected << "instance_as_part_of_concept"
+    assert_with_args(results,
+                     0,
+                     expected,
+                     "#{results[0].name.full_name} #{results[0]\
+                     .instance_type.name} #{results[0].display_as}")
+    assert_with_args(results,
+                     1,
+                     "Rusty Gum vernacular name instance-is-cited-by",
+                     "#{results[1].name.full_name} #{results[1]\
+                     .instance_type.name} #{results[1].display_as}")
+    assert_with_args(results,
+                     2,
+                     "nothing common name instance-is-cited-by",
+                     "#{results[2].name.full_name} #{results[2]\
+                     .instance_type.name} #{results[2].display_as}")
   end
 end

@@ -33,6 +33,9 @@ class RcNuytsiaY2015Test < ActionDispatch::IntegrationTest
     sleep(inspection_time = 0.1)
     search_result_must_include_content("Telford")
     search_result_must_include_content("Telford, I.R.H. & Naaykens, J.,")
-    search_result_must_include_content("(2015) Synostemon hamersleyensis (Phyllanthaceae), a new species endemic to the Pilbara, Western Australia. Nuytsia. 25 : 31-37 ")
+    string = "(2015) Synostemon hamersleyensis (Phyllanthaceae),
+    a new species endemic to the Pilbara, Western Australia.
+    Nuytsia. 25 : 31-37 "
+    search_result_must_include_content(string)
   end
 end

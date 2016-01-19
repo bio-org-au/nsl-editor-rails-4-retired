@@ -34,10 +34,15 @@ class AvailableFieldsTest < ActionDispatch::IntegrationTest
     big_sleep
     click_on "New instance"
     big_sleep
-    assert page.has_field?("instance-reference-typeahead"), "Instance reference typeahead should be there"
-    assert page.has_field?("instance_page"), "Instance page field should be there"
-    assert page.has_field?("instance_instance_type_id"), "Instance type field should be there"
-    assert page.has_field?("instance_verbatim_name_string"), "Instance verbatim name string field should be there"
-    assert page.has_field?("instance_bhl_url"), "Instance BHL URL string field should be there"
+    assert page.has_field?("instance-reference-typeahead"),
+           "Instance reference typeahead should be there"
+    assert page.has_field?("instance_page"),
+           "Instance page field should be there"
+    assert page.has_field?("instance_instance_type_id"),
+           "Instance type field should be there"
+    assert page.has_field?("instance_verbatim_name_string"),
+           "Instance verbatim name string field should be there"
+    assert page.has_field?("instance_bhl_url"),
+           "Instance BHL URL string field should be there"
   end
 end

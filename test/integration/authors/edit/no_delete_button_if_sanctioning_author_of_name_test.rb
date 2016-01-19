@@ -20,14 +20,15 @@
 require "test_helper"
 
 # Single integration test.
-class NoDeleteButtonIfSanctioningAuthorOfNameTest < ActionDispatch::IntegrationTest
+class NoDeleteButtIfSanctioningAuthorOfNameTst < ActionDispatch::IntegrationTest
   include Capybara::DSL
 
   test "author has no delete button if sanctioning author of name" do
     visit_home_page
     standard_page_assertions
     select "Author", from: "query-on"
-    fill_in "search-field", with: "id: #{authors(:has_sanctioned_one_name_that_is_all).id}"
+    fill_in "search-field",
+            with: "id: #{authors(:has_sanctioned_one_name_that_is_all).id}"
     click_button "Search"
     search_result_must_include_content("Has Sanctioned One Name That Is All")
     click_link("Edit")

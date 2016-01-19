@@ -30,13 +30,21 @@ class AvailableFieldsTest < ActionDispatch::IntegrationTest
     assert page.has_field?("name_name_type_id"), "Name type should be here"
     assert page.has_field?("name_name_rank_id"), "Name rank should be here"
     assert page.has_field?("name_name_status_id"), "Name status should be here"
-    assert page.has_field?("name-parent-typeahead"), "Name parent typeahead field should be here"
-    assert page.has_field?("name-second-parent-typeahead"), "Name second parent typeahead field should be here"
-    assert page.has_no_field?("name_name_element"), "Name element should not be here"
-    assert page.has_no_field?("ex-base-author-by-abbrev"), "ex-base-author-by-abbrev should not be here"
-    assert page.has_no_field?("base-author-by-abbrev"), "base-author-by-abbrev should not be here"
-    assert page.has_no_field?("ex-author-by-abbrev"), "ex-author-by-abbrev should not be here"
-    assert page.has_no_field?("author-by-abbrev"), "author-by-abbrev should not be here"
-    assert page.has_no_field?("sanctioning-author-by-abbrev"), "Sanctioning author field should not be here"
+    assert page.has_field?("name-parent-typeahead"),
+           "Name parent typeahead field should be here"
+    assert page.has_field?("name-second-parent-typeahead"),
+           "Name second parent typeahead field should be here"
+    assert page.has_no_field?("name_name_element"),
+           "Name element should not be here"
+    assert page.has_no_field?("ex-base-author-by-abbrev"),
+           "ex-base-author-by-abbrev should not be here"
+    assert page.has_no_field?("base-author-by-abbrev"),
+           "base-author-by-abbrev should not be here"
+    assert page.has_no_field?("ex-author-by-abbrev"),
+           "ex-author-by-abbrev should not be here"
+    assert page.has_no_field?("author-by-abbrev"),
+           "author-by-abbrev should not be here"
+    assert page.has_no_field?("sanctioning-author-by-abbrev"),
+           "Sanctioning author field should not be here"
   end
 end

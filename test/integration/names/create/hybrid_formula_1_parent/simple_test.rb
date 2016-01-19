@@ -26,12 +26,13 @@ class SimpleTest < ActionDispatch::IntegrationTest
   test "save simple hybrid formula unknown 2nd parent name" do
     names_count = Name.count
     visit_home_page
-    fill_in "search-field", with: "test: hybrid 1 parent try to save without data"
+    fill_in "search-field",
+            with: "test: hybrid 1 parent try to save without data"
     load_new_hybrid_formula_unknown_2nd_parent_form
     set_name_parent_to_a_species
     save_edits
     big_sleep
     assert_successful_create_for(["name not constructed [n/a]"])
-    Name.count.must_equal (names_count + 1), "Record not created"
+    Name.count.must_equal names_count + 1, "Record not created"
   end
 end

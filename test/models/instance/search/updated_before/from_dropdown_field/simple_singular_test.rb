@@ -17,13 +17,18 @@
 require "test_helper"
 
 # Single instance model test.
-class InstanceSearchUpdatedBeforeFromDropdownSimpleSingularTest < ActiveSupport::TestCase
+class InstSrchUpdBeforeFromDropdownSimpleSingularTest < ActiveSupport::TestCase
   # New search for "42993" on instance up to 100 with field: upd-b
-  test "instance search on updated before from dropdown field simple singular" do
+  test "instance search on updated before frm dropdown field simple singular" do
     skip # was an upd-b search, no current translation
-    # search = Search::Base.new({query_string: "updated-before: 1, instances-only:",query_target: 'Instance'})
-    # assert_equal search.results.class, Instance::ActiveRecord_Relation, "Results should be an Array"
+    # search = Search::Base.new({query_string: "updated-before: 1,
+    #                            instances-only:",
+    #                            query_target: 'Instance'})
+    # assert_equal search.results.class,
+    #              Instance::ActiveRecord_Relation,
+    #              "Results should be an Array"
     # assert search.results.size > 0, "At least 1 record expected."
-    # assert_match /Search for instances updated more than 1 day ago./, search.info.join
+    # assert_match /Search for instances updated more than 1 day ago./,
+    #              search.info.join
   end
 end

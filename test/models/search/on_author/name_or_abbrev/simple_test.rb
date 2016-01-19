@@ -26,8 +26,8 @@ class SearchOnAuthorNameOrAbbrevSimpleTest < ActiveSupport::TestCase
     params = ActiveSupport::HashWithIndifferentAccess.new(query_target:
                                                           "author",
                                                           query_string:
-                                                          "name-or-abbrev: 
-                                                          xyz_name_or_abbrev", 
+                                                          "name-or-abbrev:
+                                                          xyz_name_or_abbrev",
                                                           current_user:
                                                           build_edit_user)
     search = Search::Base.new(params)

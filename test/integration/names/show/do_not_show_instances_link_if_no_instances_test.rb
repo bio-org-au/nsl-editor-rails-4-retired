@@ -29,6 +29,8 @@ class DoNotShowInstancesLinkIfNoInstances < ActionDispatch::IntegrationTest
     fill_in "search-field", with: "has no instances"
     click_button "Search"
     big_sleep
-    search_result_details_must_not_include_link("0 instances", "Instance link link should not appear if no instances.")
+    search_result_details_must_not_include_link("0 instances",
+                                                "Instance link link should
+                                                not appear if no instances.")
   end
 end

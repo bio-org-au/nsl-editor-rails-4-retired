@@ -32,6 +32,7 @@ class DuplicateOfTypeaheadSimpleTest < ActionDispatch::IntegrationTest
     click_button "Search"
     all(".takes-focus").first.click
     click_on "Edit"
-    try_typeahead_multi("duplicate-of-id-typeahead", "Fred", "freddy - [n/a]", "last")
+    try_typeahead_multi("duplicate-of-id-typeahead",
+                        "Fred", "freddy - [n/a]", "last")
   end
 end

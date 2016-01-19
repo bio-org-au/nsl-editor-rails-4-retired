@@ -29,10 +29,12 @@ class NamesSearchNameRankSimple < ActionDispatch::IntegrationTest
     visit_home_page
     select "Name", from: "query-on"
     select "with name rank", from: "query-field"
-    assert find("#query-field option[value='nr']")["selected"], "nr should be selected for name rank search"
+    assert find("#query-field option[value='nr']")["selected"],
+           "nr should be selected for name rank search"
     fill_in "search-field", with: "varietas"
     click_button "Search"
     sleep(inspection_time = 0.1)
-    search_result_must_include("tuberosus", "Name rank search should have returned a record for tuberosus.")
+    search_result_must_include("tuberosus",
+                               "Search should have returned tuberosus.")
   end
 end

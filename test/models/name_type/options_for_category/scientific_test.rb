@@ -21,12 +21,32 @@ require "test_helper"
 class ScientificTest < ActiveSupport::TestCase
   test "scientific name type options" do
     current_category = Name::SCIENTIFIC_CATEGORY
-    assert_equal 6, NameType.options_for_category(current_category).size, "Should be 6 #{current_category} name types."
-    assert NameType.options_for_category(current_category).collect(&:first).include?("scientific"), "Scientific should be a #{current_category} name type."
-    assert NameType.options_for_category(current_category).collect(&:first).include?("autonym"), "Autonym should be a #{current_category} name type."
-    assert NameType.options_for_category(current_category).collect(&:first).include?("sanctioned"), "Sanctioned should be a #{current_category} name type."
-    assert NameType.options_for_category(current_category).collect(&:first).include?("named hybrid"), "Named hybrid should be a #{current_category} name type."
-    assert NameType.options_for_category(current_category).collect(&:first).include?("named hybrid autonym"), "Named hybrid autonym should be a #{current_category} name type."
-    assert NameType.options_for_category(current_category).collect(&:first).include?("phrase name"), "Phrase name should be a #{current_category} name type."
+    assert_equal 6,
+                 NameType.options_for_category(current_category).size,
+                 "Should be 6 #{current_category} name types."
+    assert NameType.options_for_category(current_category)
+      .collect(&:first)
+      .include?("scientific"),
+           "Scientific should be a #{current_category} name type."
+    assert NameType.options_for_category(current_category)
+      .collect(&:first)
+      .include?("autonym"),
+           "Autonym should be a #{current_category} name type."
+    assert NameType.options_for_category(current_category)
+      .collect(&:first)
+      .include?("sanctioned"),
+           "Sanctioned should be a #{current_category} name type."
+    assert NameType.options_for_category(current_category)
+      .collect(&:first)
+      .include?("named hybrid"),
+           "Named hybrid should be a #{current_category} name type."
+    assert NameType.options_for_category(current_category)
+      .collect(&:first)
+      .include?("named hybrid autonym"),
+           "Named hybrid autonym should be a #{current_category} name type."
+    assert NameType.options_for_category(current_category)
+      .collect(&:first)
+      .include?("phrase name"),
+           "Phrase name should be a #{current_category} name type."
   end
 end

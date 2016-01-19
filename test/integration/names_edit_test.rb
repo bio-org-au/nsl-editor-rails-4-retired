@@ -40,7 +40,8 @@ class NamesEditTest < ActionDispatch::IntegrationTest
   # def fill_autocomplete(field,option)
   # page.execute_script %Q{ $('##{field}').trigger('focus') }
   # page.execute_script %Q{ $('##{field}').trigger('keydown') }
-  # selector = %Q{ul.ui-autocomplete li.ui-menu-item a:contains("#{options[:select]}")}
+  # selector =
+  # %Q{ul.ui-autocomplete li.ui-menu-item a:contains("#{options[:select]}")}
   #
   # page.should have_selector('ul.ui-autocomplete li.ui-menu-item a')
   # page.execute_script %Q{ $('#{selector}').trigger('mouseenter').click() }
@@ -64,7 +65,8 @@ class NamesEditTest < ActionDispatch::IntegrationTest
     using_wait_time 20 do
       fill_in(text_field, with: abbrev)
     end
-    script = "document.getElementById('" + id_field + "').setAttribute('type','text')"
+    script =
+      "document.getElementById('" + id_field + "').setAttribute('type','text')"
     execute_script(script)
     using_wait_time 20 do
       fill_in(id_field, with: author.id)
@@ -80,10 +82,12 @@ class NamesEditTest < ActionDispatch::IntegrationTest
     assert page.has_link?("Summary"), "Record not created."
     assert page.has_field?("search-field"), "No search field."
     expected_contents.each do |expected_content|
-      assert page.has_content?(expected_content), "Missing expected content: #{expected_content}"
+      assert page.has_content?(expected_content),
+             "Missing expected content: #{expected_content}"
     end
     prohibited_contents.each do |prohibited_content|
-      assert page.has_no_content?(prohibited_content), "Missing prohibited content: #{prohibited_content}"
+      assert page.has_no_content?(prohibited_content),
+             "Missing prohibited content: #{prohibited_content}"
     end
   end
 
@@ -94,14 +98,13 @@ class NamesEditTest < ActionDispatch::IntegrationTest
   #########
 
   test "simple edit" do
-    names_count = Name.count
     visit_home_page
     fill_in("query", with: "Triodia basedowii")
     click_button("Search")
     assert find_link("Edit").visible?, "Edit link not visible"
-    sleep(inspection_time = 4)
+    sleep(4)
     find_link("Edit").click
-    sleep(inspection_time = 10)
+    sleep(10)
     # load_the_form
     # save_name
   end

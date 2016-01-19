@@ -20,7 +20,7 @@
 require "test_helper"
 
 # Single integration test.
-class CreateScientificNameWithBaseAuthorBadExactMatchAuthorAbbrev < ActionDispatch::IntegrationTest
+class CrScientNameWBaseAuthBadMatchAuthAbbrev < ActionDispatch::IntegrationTest
   include Capybara::DSL
 
   test "create scientific name with bad exact match base author abbrev" do
@@ -29,16 +29,20 @@ class CreateScientificNameWithBaseAuthorBadExactMatchAuthorAbbrev < ActionDispat
     load_new_scientific_name_form
     fill_in("name_name_element", with: "Fred")
     set_name_parent
-    fill_in_author_typeahead("author-by-abbrev", "name_author_id", authors(:burbidge))
-    fill_in_author_typeahead("ex-author-by-abbrev", "name_ex_author_id", authors(:hooker))
+    fill_in_author_typeahead("author-by-abbrev",
+                             "name_author_id", authors(:burbidge))
+    fill_in_author_typeahead("ex-author-by-abbrev",
+                             "name_ex_author_id", authors(:hooker))
     using_wait_time 2 do
       fill_in("base-author-by-abbrev", with: "BXnth.")
     end
     save_new_record
     sleep(inspection_time = 1)
     assert page.has_content?("error"), "No error message."
-    assert page.has_content?("1 error prohibited this name from being saved"), "Incorrect error message."
-    assert page.has_content?("Base Author not specified correctly"), "Incorrect error message."
+    assert page.has_content?("1 error prohibited this name from being saved"),
+                             "Incorrect error message."
+    assert page.has_content?("Base Author not specified correctly"),
+                             "Incorrect error message."
     Name.count.must_equal names_count
   end
 end

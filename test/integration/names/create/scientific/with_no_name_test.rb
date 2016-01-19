@@ -31,7 +31,8 @@ class WithNoNameTest < ActionDispatch::IntegrationTest
     load_new_scientific_name_form
     set_name_parent
     save_new_record
-    # HTML5 required attribute should prevent, but not sure how to assert error message.
+    # HTML5 required attribute should prevent,
+    # but not sure how to assert error message.
     Name.count.must_equal names_count
   end
 end

@@ -29,6 +29,8 @@ class DoNotShowAPNIFormatLinkIfNoInstances < ActionDispatch::IntegrationTest
     fill_in "search-field", with: "has no instances"
     click_button "Search"
     big_sleep
-    search_result_details_must_not_include_link("APNI format", "APNI format link should not appear if no instances.")
+    search_result_details_must_not_include_link("APNI format",
+                                                "APNI format link should not
+                                                appear if no instances.")
   end
 end

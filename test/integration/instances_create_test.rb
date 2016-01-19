@@ -31,8 +31,10 @@ class InstancesCreateTest < ActionDispatch::IntegrationTest
     # names_count = Name.count
     # visit '/instances'
     # click_link 'Create'
-    # Instance.count.must_equal instances_count + 1 , 'Error: failed to add an instance.'
-    # Reference.count.must_equal references_count + 1 , 'Error: failed to add a reference.'
+    # Instance.count.must_equal instances_count + 1 ,
+    #                           'Error: failed to add an instance.'
+    # Reference.count.must_equal references_count + 1 ,
+    #                           'Error: failed to add a reference.'
     # Name.count.must_equal names_count + 1 , 'Error: failed to add a name.'
   end
 end

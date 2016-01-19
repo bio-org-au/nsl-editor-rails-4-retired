@@ -20,18 +20,20 @@
 require "test_helper"
 
 # Single integration test.
-class ExAuthorNotExpectedBecauseSelectedThenDeletedTest < ActionDispatch::IntegrationTest
+class ExAuthNotExpectedCozSelectedThenDelTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
 
-  test "create scientific name ex author not expected because selected then deleted" do
+  test "create scientific Name: ex auth not expected - selected then deleted" do
     names_count = Name.count
     visit_home_page
-    fill_in "search-field", with: "create scientific name ex author not expected because selected then deleted"
+    fill_in "search-field",
+            with: "create sci Name Ex Auth not expected cause sel then deleted"
     load_new_scientific_name_form
     set_name_parent
     fill_in("name_name_element", with: "Fred")
     fill_in_author_typeahead("author-by-abbrev", "name_author_id")
-    fill_in_author_typeahead("ex-author-by-abbrev", "name_ex_author_id", authors(:hooker))
+    fill_in_author_typeahead("ex-author-by-abbrev",
+                             "name_ex_author_id", authors(:hooker))
     blank_string = " "
     fill_in("ex-author-by-abbrev", with: blank_string)
     save_new_record

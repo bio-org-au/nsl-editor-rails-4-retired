@@ -29,16 +29,27 @@ class AvailableFieldsForQAEditorTest < ActionDispatch::IntegrationTest
     standard_page_assertions
     select "Instances", from: "query-on"
     select "with id", from: "query-field"
-    fill_in "search-field", with: instances(:britten_created_angophora_costata).id
+    fill_in "search-field",
+            with: instances(:britten_created_angophora_costata).id
     click_on "Search"
     little_sleep
     all(".takes-focus").first.click
     click_on "instance-edit-tab"
     little_sleep
-    search_result_details_must_include_field("instance-reference-typeahead", "Instance reference typeahead should be there")
-    search_result_details_must_include_field("instance_page", "Instance page field should be there")
-    search_result_details_must_include_field("instance_instance_type_id", "Instance type select field should be there")
-    search_result_details_must_include_field("instance_verbatim_name_string", "Instance verbatim name string field should be there")
-    search_result_details_must_include_field("instance_bhl_url", "Instance BHL URL string field should be there")
+    search_result_details_must_include_field("instance-reference-typeahead",
+                                             "Instance reference typeahead
+                                             should be there")
+    search_result_details_must_include_field("instance_page",
+                                             "Instance page field should be
+                                             there")
+    search_result_details_must_include_field("instance_instance_type_id",
+                                             "Instance type select field
+                                             should be there")
+    search_result_details_must_include_field("instance_verbatim_name_string",
+                                             "Instance verbatim name string
+                                             field should be there")
+    search_result_details_must_include_field("instance_bhl_url",
+                                             "Instance BHL URL string field
+                                             should be there")
   end
 end

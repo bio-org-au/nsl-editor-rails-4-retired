@@ -15,21 +15,45 @@
 #   limitations under the License.
 #
 
-def cultivar_parent_suggestions_should_include(suggestions, given_rank_name, expected_rank_name, caller_test)
-  assert(suggestions.collect { |h| h[:value].match(/\s#{Regexp.quote(expected_rank_name)}/) ? 1 : 0 }.sum > 0, "suggestions for #{given_rank_name} should include #{expected_rank_name} [caller: #{caller_test}]")
-  end
-
-def cultivar_parent_suggestions_should_not_include(suggestions, given_rank_name, unexpected_rank_name, caller_test)
-  assert_not(suggestions.collect { |h| h[:value].match(/\s#{Regexp.quote(unexpected_rank_name)}/) ? 1 : 0 }.sum > 0, "suggestions for #{given_rank_name} should not include #{unexpected_rank_name} [caller: #{caller_test}]")
+def cultivar_parent_suggestions_should_include(suggestions,
+                                               given_rank_name,
+                                               expected_rank_name,
+                                               caller_test)
+  re = Regexp.quote(expected_rank_name)
+  assert(suggestions.collect do |h|
+    h[:value].match(/\s#{re}/) ? 1 : 0
+  end.sum > 0,
+         "suggestions for #{given_rank_name} should
+         include #{expected_rank_name} [caller: #{caller_test}]")
 end
 
-def cultivar_parent_suggestions_should_only_include(suggestions, given_rank_name, expected_rank_names)
+def cultivar_parent_suggestions_should_not_include(suggestions,
+                                                   given_rank_name,
+                                                   unexpected_rank_name,
+                                                   caller_test)
+  re = Regexp.quote(unexpected_rank_name)
+  assert_not(suggestions.collect do |h|
+    h[:value].match(/\s#{re}/) ? 1 : 0
+  end.sum > 0,
+             "suggestions for #{given_rank_name} should not
+             include #{unexpected_rank_name} [caller: #{caller_test}]")
+end
+
+def cultivar_parent_suggestions_should_only_include(suggestions,
+                                                    given_rank_name,
+                                                    expected_rank_names)
   caller_test = caller.first
   NameRank.all.sort { |a, b| a.sort_order <=> b.sort_order }.each do |rank|
     if expected_rank_names.include?(rank.name)
-      cultivar_parent_suggestions_should_include(suggestions, given_rank_name, rank.name, caller_test)
+      cultivar_parent_suggestions_should_include(suggestions,
+                                                 given_rank_name,
+                                                 rank.name,
+                                                 caller_test)
     else
-      cultivar_parent_suggestions_should_not_include(suggestions, given_rank_name, rank.name, caller_test)
+      cultivar_parent_suggestions_should_not_include(suggestions,
+                                                     given_rank_name,
+                                                     rank.name,
+                                                     caller_test)
     end
   end
 end

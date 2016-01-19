@@ -29,6 +29,8 @@ class ShowInstancesLinkButtonIfInstances < ActionDispatch::IntegrationTest
     fill_in "search-field", with: "a species"
     click_button "Search"
     big_sleep
-    search_result_details_must_include_link("1 instance", "Instance link link should appear if instances.")
+    search_result_details_must_include_link("1 instance",
+                                            "Instance link link should
+                                            appear if instances.")
   end
 end

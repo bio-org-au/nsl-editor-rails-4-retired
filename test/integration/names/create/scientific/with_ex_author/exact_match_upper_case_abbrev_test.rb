@@ -30,7 +30,8 @@ class ExactMatchUpperCaseExAuthorAbbrevTest < ActionDispatch::IntegrationTest
     load_new_scientific_name_form
     set_name_parent
     fill_in("name_name_element", with: "Fred")
-    fill_in_author_typeahead("author-by-abbrev", "name_author_id", authors(:gaertn))
+    fill_in_author_typeahead("author-by-abbrev",
+                             "name_author_id", authors(:gaertn))
     using_wait_time 2 do
       fill_in("ex-author-by-abbrev", with: "BENTH.")
     end

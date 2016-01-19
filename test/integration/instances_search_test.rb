@@ -31,6 +31,7 @@ class InstancesSearchTest < ActionDispatch::IntegrationTest
     fill_in "search-field", with: "upd-a:3"
     click_on "Search"
     standard_page_assertions
-    assert page.has_content?(/\d+ records/), "Instance updated in the last day not found or result is summarised incorrectly."
+    assert page.has_content?(/\d+ records/),
+           "Instance updated in the last day not found or summarised badly."
   end
 end
