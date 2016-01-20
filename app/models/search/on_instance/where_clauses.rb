@@ -17,6 +17,8 @@
 class Search::OnInstance::WhereClauses
   attr_reader :sql
 
+  DEFAULT_FIELD = "name:"
+
   def initialize(parsed_request, incoming_sql)
     @parsed_request = parsed_request
     @sql = incoming_sql
