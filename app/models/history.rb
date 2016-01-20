@@ -21,6 +21,7 @@ class History
       jira_id: "1608",
       description: "APC Comment and Dist. Instance Notes are now created and
       edited on the APC tab." },
+    { date: "14-Jan-2016", release: true },
     { date: "13-Jan-2016",
       jira_id: "1612",
       description: "Help, examples now showing on initial query for instance
