@@ -15,7 +15,13 @@
 #   limitations under the License.
 #
 class Reference::DefinedQuery::ReferencesWithNovelties
-  attr_reader :results, :limited, :common_and_cultivar_included, :has_relation, :relation, :count
+  attr_reader :results,
+              :limited,
+              :common_and_cultivar_included,
+              :has_relation,
+              :relation,
+              :count,
+              :show_csv
 
   def initialize(parsed_request)
     run_query(parsed_request)
@@ -32,6 +38,7 @@ class Reference::DefinedQuery::ReferencesWithNovelties
     debug("parsed_request.defined_query_arg: #{parsed_request.defined_query_arg}")
     debug("parsed_request.count: #{parsed_request.count}")
     debug("parsed_request.limit: #{parsed_request.limit}")
+    @show_csv = false
     if parsed_request.count
       debug("run_query counting")
       debug(parsed_request.inspect)
@@ -85,5 +92,9 @@ class Reference::DefinedQuery::ReferencesWithNovelties
     end
     results.unshift(reference) if novelties_count > 0
     results
+  end
+
+  def csv?
+    @show_csv
   end
 end

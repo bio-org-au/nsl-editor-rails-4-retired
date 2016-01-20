@@ -15,7 +15,13 @@
 #   limitations under the License.
 #
 class Name::DefinedQuery::NamesPlusInstances
-  attr_reader :results, :limited, :common_and_cultivar_included, :has_relation, :relation, :count
+  attr_reader :results,
+              :limited,
+              :common_and_cultivar_included,
+              :has_relation,
+              :relation,
+              :count,
+              :show_csv
 
   def initialize(parsed_request)
     run_query(parsed_request)
@@ -32,6 +38,7 @@ class Name::DefinedQuery::NamesPlusInstances
     debug("parsed_request.defined_query_arg: #{parsed_request.defined_query_arg}")
     debug("parsed_request.count: #{parsed_request.count}")
     debug("parsed_request.limit: #{parsed_request.limit}")
+    @show_csv = false
     if parsed_request.count
       debug("run_query counting")
       query = Search::OnName::ListQuery.new(parsed_request)
@@ -73,5 +80,9 @@ class Name::DefinedQuery::NamesPlusInstances
       @has_relation = false
       @relation = nil
     end
+  end
+
+  def csv?
+    @show_csv
   end
 end

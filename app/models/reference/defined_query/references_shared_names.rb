@@ -15,7 +15,13 @@
 #   limitations under the License.
 #
 class Reference::DefinedQuery::ReferencesSharedNames
-  attr_reader :results, :limited, :common_and_cultivar_included, :has_relation, :relation, :count
+  attr_reader :results,
+              :limited,
+              :common_and_cultivar_included,
+              :has_relation,
+              :relation,
+              :count,
+              :show_csv
 
   def initialize(parsed_request)
     run_query(parsed_request)
@@ -38,6 +44,7 @@ class Reference::DefinedQuery::ReferencesSharedNames
     ref_id_2 = args.last.to_i
     fail "No Reference exists for ID:#{args.first}" unless Reference.exists?(ref_id_1)
     fail "No Reference exists for ID:#{args.last}" unless Reference.exists?(ref_id_2)
+    @show_csv = false
     if parsed_request.count
       debug("counting")
       instances = Instance.for_ref(ref_id_1).for_ref_and_correlated_on_name_id(ref_id_2)
@@ -56,5 +63,9 @@ class Reference::DefinedQuery::ReferencesSharedNames
       @has_relation = false
       @relation = nil
     end
+  end
+
+  def csv?
+    @show_csv
   end
 end
