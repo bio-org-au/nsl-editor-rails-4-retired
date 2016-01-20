@@ -24,7 +24,8 @@ class Search::OnAuthor::Base
               :has_relation,
               :relation,
               :id,
-              :count
+              :count,
+              :show_csv
 
   def initialize(parsed_request)
     run_query(parsed_request)
@@ -49,6 +50,7 @@ class Search::OnAuthor::Base
     @rejected_pairings = []
     @common_and_cultivar_included = count_query.common_and_cultivar_included
     @results = []
+    @show_csv = false
   end
 
   def run_list_query(parsed_request)
@@ -66,5 +68,9 @@ class Search::OnAuthor::Base
 
   def debug(s)
     Rails.logger.debug("Search::OnAuthor::Base: #{s}")
+  end
+
+  def csv?
+    @show_csv
   end
 end

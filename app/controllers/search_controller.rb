@@ -20,6 +20,10 @@ class SearchController < ApplicationController
   def search
     handle_old_style_params
     run_tree_search || run_local_search || run_empty_search
+    respond_to do |format|
+      format.html
+      format.csv     
+    end
   rescue => e
     params[:error_message] = e.to_s
     @search = Search::Error.new(params) unless @search.present?

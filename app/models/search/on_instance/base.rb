@@ -24,6 +24,7 @@ class Search::OnInstance::Base
               :relation,
               :id,
               :count
+              :show_csv
 
   def initialize(parsed_request)
     run_query(parsed_request)
@@ -48,6 +49,7 @@ class Search::OnInstance::Base
     @rejected_pairings = []
     @common_and_cultivar_included = count_query.common_and_cultivar_included
     @results = []
+    @show_csv = false
   end
 
   def run_list_query(parsed_request)
@@ -61,9 +63,14 @@ class Search::OnInstance::Base
     @rejected_pairings = []
     @common_and_cultivar_included = list_query.common_and_cultivar_included
     @count = @results.size
+    @show_csv = @results.size > 0
   end
 
   def debug(s)
     Rails.logger.debug("Search::OnInstance::Base: #{s}")
+  end
+
+  def csv?
+    @show_csv
   end
 end

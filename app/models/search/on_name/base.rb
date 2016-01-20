@@ -15,7 +15,16 @@
 #   limitations under the License.
 #
 class Search::OnName::Base
-  attr_reader :results, :limited, :info_for_display, :rejected_pairings, :common_and_cultivar_included, :has_relation, :relation, :id, :count
+  attr_reader :results,
+              :limited,
+              :info_for_display,
+              :rejected_pairings,
+              :common_and_cultivar_included,
+              :has_relation,
+              :relation,
+              :id,
+              :count,
+              :show_csv
 
   def initialize(parsed_request)
     run_query(parsed_request)
@@ -23,6 +32,7 @@ class Search::OnName::Base
 
   def run_query(parsed_request)
     Rails.logger.debug('Search::OnName::Base#run_query')
+    @show_csv = false
     if parsed_request.count
       count_query = Search::OnName::CountQuery.new(parsed_request)
       @has_relation = true
@@ -44,5 +54,9 @@ class Search::OnName::Base
       @common_and_cultivar_included = list_query.common_and_cultivar_included
       @count = results.size
     end
+  end
+
+  def csv?
+    @show_csv
   end
 end

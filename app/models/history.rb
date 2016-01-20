@@ -17,6 +17,9 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "20-Jan-2016",
+      jira_id: "1618",
+      description: "CSV output for instance queries." },
     { date: "14-Jan-2016",
       jira_id: "1608",
       description: "APC Comment and Dist. Instance Notes are now created and

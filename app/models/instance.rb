@@ -811,4 +811,21 @@ class Instance < ActiveRecord::Base
     logger.error("delete_as_user exception: #{e}")
     raise
   end
+
+  # Assemble the attributes and related entities into a standard CSV
+  # view of an instance.
+  def for_csv
+    attributes
+      .values_at("id", "name_id")
+      .concat(name.attributes.values_at("full_name"))
+      .concat(attributes.values_at("reference_id"))
+      .concat(reference.attributes.values_at("citation"))
+      .concat(instance_notes
+      .sort do |x, y|
+        x.instance_note_key.sort_order <=> y.instance_note_key.sort_order
+      end
+      .each
+      .collect { |n| [n.instance_note_key.name, n.value] })
+      .flatten
+  end
 end
