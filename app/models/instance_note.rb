@@ -23,6 +23,7 @@ class InstanceNote < ActiveRecord::Base
   belongs_to :instance_note_key
   validates :value, presence: true
   validates :instance_note_key_id, presence: true
+  validate :only_one_apc_dist_per_instance, on: [:create, :update]
   scope :apc, -> { joins(:instance_note_key).where('instance_note_key.name' => ["APC Comment", "APC Dist."]) }
   scope :non_apc, -> { joins(:instance_note_key).where.not('instance_note_key.name' => ["APC Comment", "APC Dist."]) }
 
@@ -32,11 +33,23 @@ class InstanceNote < ActiveRecord::Base
 
   def save_with_username(username)
     self.created_by = self.updated_by = username
-    save
+    save!
   end
 
   def update_attributes_with_username!(attributes, username)
     self.updated_by = username
     update_attributes!(attributes)
+  end
+
+  def only_one_apc_dist_per_instance
+    return unless instance_note_key_id == InstanceNoteKey.apc_dist.first.id
+    return if instance.can_have_apc_dist?
+    errors.add(:instance_note_key_id,
+               "for APC Dist. Instance already has an APC Dist. note. \
+                Only one APC Dist. Note allowed per instance.")
+  end
+
+  def apc_dist?
+    instance_note_key.apc_dist?
   end
 end

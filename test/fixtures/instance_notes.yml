@@ -8,8 +8,26 @@ one:
   updated_by: x
   created_by: x
 
-#
-#two:
-#value: MyString
-#updated_by: x
-#created_by: x
+apc_comment_1:
+  instance: has_apc_comment_note
+  instance_note_key: apc_comment
+  value: apc comment one
+  namespace: apni
+  updated_by: greg
+  created_by: greg
+
+apc_dist_1:
+  instance: has_apc_dist_note
+  instance_note_key: apc_dist
+  value: apc dist one
+  namespace: apni
+  updated_by: greg
+  created_by: greg
+
+apc_dist_2:
+  instance: has_apc_2_dist_notes
+  instance_note_key: apc_dist
+  value: apc dist two
+  namespace: apni
+  updated_by: greg
+  created_by: greg

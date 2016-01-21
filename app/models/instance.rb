@@ -828,4 +828,15 @@ class Instance < ActiveRecord::Base
       .collect { |n| [n.instance_note_key.name, n.value] })
       .flatten
   end
+
+  # Sometimes need to know if an instance has an APC Dist. instance note.
+  def apc_dist_note?
+    instance_notes.collect do |n|
+      n.instance_note_key.name
+    end.include?(InstanceNoteKey::APC_DIST)
+  end
+
+  def can_have_apc_dist?
+    instance_notes.to_a.keep_if { |n| n.instance_note_key.apc_dist? }.size == 0
+  end
 end

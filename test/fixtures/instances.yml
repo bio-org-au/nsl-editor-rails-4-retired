@@ -665,4 +665,33 @@ tax_nov_for_an_orth_var:
   namespace: apni
   created_by: tester
   updated_by: tester
+ 
+# Standalone instance
+has_apc_dist_note:
+  reference: dummy_reference_1
+  name: dummy_name_1
+  instance_type: comb_nov
+  page: zzzzzzzzzzzzz99999999999999
+  namespace: apni
+  created_by: tester
+  updated_by: tester
 
+# Standalone instance
+has_apc_comment_note:
+  reference: dummy_reference_1
+  name: dummy_name_1
+  instance_type: comb_nov
+  page: zzzzzzzzzzzzz99999999999999
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+
+# Standalone instance
+has_apc_dist_note_2:
+  reference: dummy_reference_1
+  name: dummy_name_2
+  instance_type: comb_nov
+  page: zzzzzzzzzzzzz99999999999999
+  namespace: apni
+  created_by: tester
+  updated_by: tester

@@ -17,8 +17,11 @@
 class InstanceNoteKey < ActiveRecord::Base
   self.table_name = "instance_note_key"
   self.primary_key = "id"
+  APC_DIST = "APC Dist."
   has_many :instance_notes
   scope :apc, -> { where(name: ["APC Comment", "APC Dist."]) }
+  scope :apc_comment, -> { where(name: ["APC Comment"]) }
+  scope :apc_dist, -> { where(name: [APC_DIST]) }
   scope :non_apc, -> { where.not(name: ["APC Comment", "APC Dist."]) }
 
   def self.options
@@ -29,6 +32,17 @@ class InstanceNoteKey < ActiveRecord::Base
     all.where(deprecated: false).apc.order(:sort_order).collect { |n| [n.name, n.id] }
   end
 
+  def self.apc_options_for_instance(instance)
+    if instance.apc_dist_note?
+      all.where(deprecated: false)
+        .apc_comment
+        .order(:sort_order)
+        .collect { |n| [n.name, n.id] }
+    else
+      apc_options
+    end
+  end
+
   def self.non_apc_options
     all.where(deprecated: false).non_apc.order(:sort_order).collect { |n| [n.name, n.id] }
   end
@@ -36,4 +50,9 @@ class InstanceNoteKey < ActiveRecord::Base
   def self.query_form_options
     all.where(deprecated: false).sort { |x, y| x.name <=> y.name }.collect { |n| [n.name, n.name.downcase, class: ""] }
   end
+
+  def apc_dist?
+    name == APC_DIST
+  end
+  
 end

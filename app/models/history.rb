@@ -17,6 +17,10 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "21-Jan-2016",
+      jira_id: "1608",
+      description: "Allow one and only one <q>APC Dist.</q> field for each APC
+      instance. If one already exists, only offer <q>APC comment</q> option." },
     { date: "20-Jan-2016",
       jira_id: "1618",
       description: "CSV output for instance queries." },
