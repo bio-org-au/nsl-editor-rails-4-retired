@@ -15,6 +15,7 @@
 #   limitations under the License.
 #
 
+# Instance as query.
 class Instance::AsQuery < Instance
   def self.options
     {

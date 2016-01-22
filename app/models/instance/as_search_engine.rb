@@ -16,6 +16,7 @@
 #
 #
 
+# Instance as a search engine.
 class Instance::AsSearchEngine < Instance
   def self.for_name_id(name_id)
     Instance::AsSearchEngine.name_usages(name_id)

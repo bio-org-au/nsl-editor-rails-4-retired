@@ -15,6 +15,7 @@
 #   limitations under the License.
 #
 
+# Reference as a Query
 class Reference::AsQuery < Reference
   def self.options
     {

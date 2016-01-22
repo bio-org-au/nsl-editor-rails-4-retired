@@ -15,6 +15,8 @@
 #   limitations under the License.
 #
 
+# Reference typeaheads
+# TODO: break into one-class-per-typeahead
 class Reference::AsTypeahead < Reference
   # Tokenize search terms so word order is not important.
   # Recognise repeated search tokens

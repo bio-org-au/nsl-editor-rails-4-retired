@@ -30,7 +30,8 @@ class Search::OnName::WhereClauses
     @sql = @sql.for_id(@parsed_request.id) if @parsed_request.id
     x = 0
     until remaining_string.blank?
-      field, value, remaining_string = Search::OnName::NextCriterion.new(remaining_string).get
+      field, value, remaining_string =
+        Search::OnName::NextCriterion.new(remaining_string).get
       Rails.logger.info("field: #{field}; value: #{value}")
       add_clause(field, value)
       x += 1
@@ -47,13 +48,17 @@ class Search::OnName::WhereClauses
       # we have a field
       canonical_field = canon_field(field)
       canonical_value = value.blank? ? "" : canon_value(value)
-      @common_and_cultivar_included ||= AUTO_INCLUDE_COMMON_AND_CULTIVAR_FIELDS.key?(canonical_field)
-      if ALLOWS_MULTIPLE_VALUES.key?(canonical_field) && canonical_value.split(/,/).size > 1
+      @common_and_cultivar_included ||=
+        AUTO_INCLUDE_COMMON_AND_CULTIVAR_FIELDS.key?(canonical_field)
+      if ALLOWS_MULTIPLE_VALUES
+         .key?(canonical_field) && canonical_value.split(/,/).size > 1
         case canonical_field
         when /\Aid:\z/
-          @sql = @sql.where("id in (?)", canonical_value.split(",").collect(&:strip))
+          @sql = @sql.where("id in (?)",
+                            canonical_value.split(",").collect(&:strip))
         when /\Aids:\z/
-          @sql = @sql.where("id in (?)", canonical_value.split(",").collect(&:strip))
+          @sql = @sql.where("id in (?)",
+                            canonical_value.split(",").collect(&:strip))
         when /\Arank:\z/
           @sql = @sql.where("name_rank_id in (select id from name_rank where lower(name) in (?))", canonical_value.split(",").collect(&:strip))
         when /\Atype:\z/

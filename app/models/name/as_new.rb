@@ -15,6 +15,7 @@
 #   limitations under the License.
 #
 
+# Name - for new Names.
 class Name::AsNew < Name
   def self.scientific
     name = Name.new

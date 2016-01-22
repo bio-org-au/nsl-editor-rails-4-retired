@@ -15,6 +15,8 @@
 #   limitations under the License.
 #
 
+# Author as Typeahead
+# TODO: break into one-class-per-typeahead
 class Author::AsTypeahead < Author
   SEARCH_LIMIT = 50
 

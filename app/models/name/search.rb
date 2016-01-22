@@ -49,8 +49,10 @@ class Name::Search
     @name_search_author_abbrev = @params["name_search_author_abbrev"]
     @name_search_ex_author_abbrev = @params["name_search_ex_author_abbrev"]
     @name_search_base_author_abbrev = @params["name_search_base_author_abbrev"]
-    @name_search_ex_base_author_abbrev = @params["name_search_ex_base_author_abbrev"]
-    @name_search_sanctioning_author_abbrev = @params["name_search_sanctioning_author_abbrev"]
+    @name_search_ex_base_author_abbrev =
+      @params["name_search_ex_base_author_abbrev"]
+    @name_search_sanctioning_author_abbrev =
+      @params["name_search_sanctioning_author_abbrev"]
     @name_search_comments = @params["name_search_comments"]
     @name_search_comments_by = @params["name_search_comments_by"]
   end

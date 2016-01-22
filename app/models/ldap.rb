@@ -26,7 +26,9 @@ class Ldap < ActiveType::Object
   # Groups user is assigned to.
   def users_groups
     Rails.logger.info('Ldap#users_groups')
-    Ldap.new.admin_search(Rails.configuration.ldap_groups, "uniqueMember", "uid=#{username}", "cn")
+    Ldap.new.admin_search(Rails.configuration.ldap_groups,
+                          "uniqueMember",
+                          "uid=#{username}", "cn")
   rescue => e
     Rails.logger.error("Error in Ldap#users_groups for username: #{username}")
     Rails.logger.error(e.to_s)
@@ -36,7 +38,10 @@ class Ldap < ActiveType::Object
   # Users full name.
   def user_full_name
     Rails.logger.info('Ldap#user_full_name')
-    Ldap.new.admin_search(Rails.configuration.ldap_users, "uid", username, "cn").first || username
+    Ldap.new.admin_search(Rails.configuration.ldap_users,
+                          "uid",
+                          username,
+                          "cn").first || username
   rescue => e
     Rails.logger.error("Error in Ldap#user_full_name for username: #{username}")
     Rails.logger.error(e.to_s)
@@ -45,18 +50,22 @@ class Ldap < ActiveType::Object
 
   # Known groups
   def self.groups
-    Ldap.new.admin_search(Rails.configuration.ldap_groups, "objectClass", "groupOfUniqueNames", "cn")
+    Ldap.new.admin_search(Rails.configuration.ldap_groups,
+                          "objectClass",
+                          "groupOfUniqueNames",
+                          "cn")
   end
 
   # Return an array of search results
   def admin_search(base, attribute, value, print_attribute)
-    Rails.logger.info("Ldap#admin_search: base: #{base}; attribute: #{attribute}, value: #{value}, print_attribute: #{print_attribute}")
     filter = Net::LDAP::Filter.eq(attribute, value)
-    result = admin_connection.search(base: base, filter: filter).try("collect") do |entry|
-      Rails.logger.info("Found something: #{entry}")
+    result = admin_connection.search(base: base,
+                                     filter: filter).try("collect") do |entry|
       entry.send(print_attribute)
     end.try("flatten") || []
-    fail admin_connection.get_operation_result.error_message if admin_connection.get_operation_result.error_message.present?
+    if admin_connection.get_operation_result.error_message.present?
+      fail admin_connection.get_operation_result.error_message
+    end
     result
   end
 
@@ -67,8 +76,12 @@ class Ldap < ActiveType::Object
     ldap = Net::LDAP.new
     ldap.host = Rails.configuration.ldap_host
     ldap.port = Rails.configuration.ldap_port
-    ldap.auth Rails.configuration.ldap_admin_username, Rails.configuration.ldap_admin_password
-    Rails.logger.error("LDAP error - #{ldap.get_operation_result.error_message}") unless ldap.bind
+    ldap.auth Rails.configuration.ldap_admin_username,
+              Rails.configuration.ldap_admin_password
+    unless ldap.bind
+      Rails.logger.error("LDAP error")
+      Rails.logger.error(ldap.get_operation_result.error_message)
+    end
     ldap
   end
 
@@ -80,7 +93,7 @@ class Ldap < ActiveType::Object
       password: password)
     unless result
       errors.add(:connection, "failed")
-      Rails.logger.error("Validating user credentials (user authentication) failed.")
+      Rails.logger.error("Validating user credentials failed.")
     end
   rescue => e
     Rails.logger.error("Exception in validate_user_credentials")

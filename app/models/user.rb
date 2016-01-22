@@ -15,6 +15,7 @@
 #   limitations under the License.
 #
 
+# User model.
 class User < ActiveType::Object
   attr_accessor :username, :full_name, :groups
 

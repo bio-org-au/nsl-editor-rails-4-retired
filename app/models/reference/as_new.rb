@@ -15,6 +15,7 @@
 #   limitations under the License.
 #
 
+# For creating a new reference
 class Reference::AsNew < Reference
   def self.default
     reference = Reference.new

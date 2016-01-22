@@ -15,6 +15,7 @@
 #   limitations under the License.
 #
 
+# Name querying.
 class Name::AsQuery < Name
   def self.options
     {

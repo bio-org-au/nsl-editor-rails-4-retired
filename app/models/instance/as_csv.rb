@@ -15,6 +15,7 @@
 #   limitations under the License.
 #
 class Instance
+  # Instance as CSV.
   class AsCsv < Instance
     def self.heading
       ["Instance ID","Name ID","Full Name","Reference ID",

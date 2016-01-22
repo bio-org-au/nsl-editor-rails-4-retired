@@ -15,6 +15,7 @@
 #   limitations under the License.
 #
 
+# Used when Search::Error needs to be returned.
 class Search::Error
   attr_reader :empty,
               :error,
