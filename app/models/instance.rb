@@ -814,7 +814,7 @@ class Instance < ActiveRecord::Base
 
   # Assemble the attributes and related entities into a standard CSV
   # view of an instance.
-  def for_csv
+  def fields_for_csv
     attributes
       .values_at("id", "name_id")
       .concat(name.attributes.values_at("full_name"))

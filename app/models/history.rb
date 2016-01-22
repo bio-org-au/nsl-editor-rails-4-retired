@@ -18,6 +18,9 @@
 class History
   CHANGES_2016 = [
     { date: "22-Jan-2016",
+      jira_id: "1618",
+      description: "Add headings to Instance CSV output." },
+    { date: "22-Jan-2016",
       jira_id: "1624",
       description: "Allow searches for instances with specified text in 'type'
       notes" },

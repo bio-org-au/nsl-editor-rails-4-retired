@@ -1,2 +1,3 @@
+<%= render partial: 'heading.csv' %>
 <%= render partial: 'results.csv' %>
 
