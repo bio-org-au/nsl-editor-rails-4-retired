@@ -72,6 +72,18 @@ class Search::OnInstance::FieldRule
                                  leading_wildcard: true,
                                  trailing_wildcard: true },
 
+    "note-key-type-note:"   => { where_clause: " exists (select null
+                                 from instance_note
+                                 where instance_id = instance.id
+                                 and lower(instance_note.value) like ?
+                                 and exists (select null
+                                 from instance_note_key
+                                 where instance_note_key_id =
+                                 instance_note_key.id
+                                 and lower(instance_note_key.name) = 'type')) ",
+                                 leading_wildcard: true,
+                                 trailing_wildcard: true },
+
     "type:"                 => { where_clause: " exists (select null
                                  from instance_type
                                  where instance_type_id = instance_type.id
@@ -81,8 +93,8 @@ class Search::OnInstance::FieldRule
                                  " exists (select null
                                  from instance_type
                                  where instance_type_id = instance_type.id
-                                 and instance_type.name in (?))",
-  },
+                                 and instance_type.name in (?))" },
+
     "ref-type:"             => { where_clause: " exists (select null
                                  from reference ref
                                  where ref.id = instance.reference_id

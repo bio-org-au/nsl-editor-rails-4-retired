@@ -17,6 +17,10 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "22-Jan-2016",
+      jira_id: "1624",
+      description: "Allow searches for instances with specified text in 'type'
+      notes" },
     { date: "21-Jan-2016",
       jira_id: "1608",
       description: "Allow one and only one <q>APC Dist.</q> field for each APC

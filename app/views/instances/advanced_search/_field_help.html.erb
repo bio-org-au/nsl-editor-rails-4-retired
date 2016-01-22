@@ -28,6 +28,29 @@
   </tr>
   <% end %>
 </table>
+
+  <h5>Special Combination fields</h5>
+<table class="table table-striped">
+  <tr><th>Field</th><th>Description</th></tr>
+  <% [
+      {field_name: 'note-key-type-note:', description: "Instances with the specified text in a note with a key of 'type'."},
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+      <a href="javascript:void(0)" class="searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
+        <span class="blue"><%= val[:field_name] %></span>
+      </a>
+    </td>
+    <td><%= val[:description].html_safe %></td>
+    <% if val[:partial].present? %>
+      <td><%= render partial: val[:partial] %></td>
+    <% else %>
+      <td></td>
+    <% end %>
+  </tr>
+  <% end %>
+</table>
+
   <h5>Coded fields</h5>
 <table class="table table-striped">
   <tr><th>Field</th><th>Description</th></tr>
