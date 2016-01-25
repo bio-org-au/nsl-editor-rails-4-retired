@@ -14,6 +14,24 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
+
+# Core Name count query class
+# TODO: sort out common and cultivars
+#   if @parsed_request.common_and_cultivar ||
+#      where_clauses.common_and_cultivar_included?
+#      || @parsed_request.include_common_and_cultivar_session
+#     Rails.logger.debug("Search::OnName::ListQuery#prepare_query yes,
+#     we need common, cultivars")
+#     @common_and_cultivar_included = true
+#   else
+#     Rails.logger.debug("Search::OnName::ListQuery#prepare_query no,
+#     we will not look for common, cultivars")
+#     unless @parsed_request.common_and_cultivar
+#       prepared_query = prepared_query.not_common_or_cultivar
+#     end
+#     @common_and_cultivar_included = false
+#   end
+# Handle queries that just need a count of the records.
 class Search::OnName::CountQuery
   attr_reader :sql, :info_for_display, :common_and_cultivar_included
 
@@ -25,17 +43,11 @@ class Search::OnName::CountQuery
 
   def prepare_query
     Rails.logger.debug("Search::OnName::CountQuery#prepare_query")
-    prepared_query = Name.includes(:name_status)
-    where_clauses = Search::OnName::WhereClauses.new(@parsed_request, prepared_query)
+    # prepared_query = Name.includes(:ref_type)
+    prepared_query = Name.all
+    where_clauses = Search::OnName::WhereClauses.new(@parsed_request,
+                                                     prepared_query)
     prepared_query = where_clauses.sql
-    if @parsed_request.common_and_cultivar || where_clauses.common_and_cultivar_included? || @parsed_request.include_common_and_cultivar_session
-      Rails.logger.debug("Search::OnName::ListQuery#prepare_query yes, we need common, cultivars")
-      @common_and_cultivar_included = true
-    else
-      Rails.logger.debug("Search::OnName::ListQuery#prepare_query no, we will not look for common, cultivars")
-      prepared_query = prepared_query.not_common_or_cultivar unless @parsed_request.common_and_cultivar
-      @common_and_cultivar_included = false
-    end
     @sql = prepared_query
   end
 end

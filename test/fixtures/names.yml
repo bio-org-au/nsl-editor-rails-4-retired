@@ -1549,6 +1549,8 @@ name_to_delete:
     
 a_cultivar: 
   name_element: acultivar
+  full_name: acultivar
+  simple_name: acultivar
   name_rank: species
   name_status: na
   name_type: cultivar
@@ -1707,3 +1709,16 @@ orth_var_for_tax_nov:
   updated_by: greg
   created_by: greg
 
+common_with_second_parent:
+  name_element: common with second parent
+  full_name: common with second parent
+  simple_name: common with second parent
+  name_rank: unranked
+  name_status: na
+  name_type: common
+  namespace: apni
+  parent: a_genus
+  parent: a_species
+  author: bentham
+  updated_by: greg
+  created_by: greg

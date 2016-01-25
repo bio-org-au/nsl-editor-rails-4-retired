@@ -14,6 +14,8 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
+#
+# Core search class for Name search
 class Search::OnName::Base
   attr_reader :results,
               :limited,
@@ -31,29 +33,43 @@ class Search::OnName::Base
   end
 
   def run_query(parsed_request)
-    Rails.logger.debug('Search::OnName::Base#run_query')
-    @show_csv = false
     if parsed_request.count
-      count_query = Search::OnName::CountQuery.new(parsed_request)
-      @has_relation = true
-      @relation = count_query.sql
-      @count = relation.count
-      @limited = false
-      @info_for_display = count_query.info_for_display
-      @rejected_pairings = []
-      @common_and_cultivar_included = count_query.common_and_cultivar_included
-      @results = []
+      run_count_query(parsed_request)
     else
-      list_query = Search::OnName::ListQuery.new(parsed_request)
-      @has_relation = true
-      @relation = list_query.sql
-      @results = relation.all
-      @limited = list_query.limited
-      @info_for_display = list_query.info_for_display
-      @rejected_pairings = []
-      @common_and_cultivar_included = list_query.common_and_cultivar_included
-      @count = results.size
+      run_list_query(parsed_request)
     end
+  end
+
+  def run_count_query(parsed_request)
+    debug('#run_count_query')
+    count_query = Search::OnName::CountQuery.new(parsed_request)
+    @has_relation = true
+    @relation = count_query.sql
+    @count = relation.count
+    @limited = false
+    @info_for_display = count_query.info_for_display
+    @rejected_pairings = []
+    @common_and_cultivar_included = count_query.common_and_cultivar_included
+    @results = []
+    @show_csv = false
+  end
+
+  def run_list_query(parsed_request)
+    debug('#run_list_query')
+    list_query = Search::OnName::ListQuery.new(parsed_request)
+    @has_relation = true
+    @relation = list_query.sql
+    @results = relation.all
+    @limited = list_query.limited
+    @info_for_display = list_query.info_for_display
+    @rejected_pairings = []
+    @common_and_cultivar_included = list_query.common_and_cultivar_included
+    @count = @results.size
+    @show_csv = false
+  end
+
+  def debug(s)
+    Rails.logger.debug("Search::OnName::Base: #{s}")
   end
 
   def csv?

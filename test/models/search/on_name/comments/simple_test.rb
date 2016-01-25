@@ -15,22 +15,17 @@
 #   limitations under the License.
 #
 require "test_helper"
+load "test/models/search/users.rb"
 
-# Single search controller test.
-class ReaderSearchControllerNamesNoSuchFieldTest < ActionController::TestCase
-  tests SearchController
-
-  test "reader can search for a name" do
-    # assert_raises(RuntimeError,
-    #               "Should raise exception because field is not known") do
-    get(:search,
-        { query_target: "name", query_string: "not-a-real-field: r.br." },
-        username: "fred",
-        user_full_name: "Fred Jones",
-        groups: [])
-    assert_select "span#search-results-summary",
-                  /Cannot search name for: not-a-real-field:./,
-                  "Should get error message."
-    # end
+# Single Search model test for Name target.
+class SearchOneNameCommentsSimpleTest < ActiveSupport::TestCase
+  test "search on name comments simple" do
+    params =  ActiveSupport::HashWithIndifferentAccess
+              .new(query_target: "name",
+                   query_string: "comments: *",
+                   include_common_and_cultivar_session: true,
+                   current_user: build_edit_user)
+    search = Search::Base.new(params)
+    assert search.executed_query.results.size > 0, "Results expected."
   end
 end

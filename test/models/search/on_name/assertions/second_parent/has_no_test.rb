@@ -15,22 +15,14 @@
 #   limitations under the License.
 #
 require "test_helper"
+load "models/search/users.rb"
 
-# Single search controller test.
-class ReaderSearchControllerNamesNoSuchFieldTest < ActionController::TestCase
-  tests SearchController
-
-  test "reader can search for a name" do
-    # assert_raises(RuntimeError,
-    #               "Should raise exception because field is not known") do
-    get(:search,
-        { query_target: "name", query_string: "not-a-real-field: r.br." },
-        username: "fred",
-        user_full_name: "Fred Jones",
-        groups: [])
-    assert_select "span#search-results-summary",
-                  /Cannot search name for: not-a-real-field:./,
-                  "Should get error message."
-    # end
+# Single Search model test for Name search.
+class SearchOnNameeAssertionHasNoSecondParentTest < ActiveSupport::TestCase
+  test "name asertion has no second parent" do
+    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_target: "name",
+                                                                           query_string: "has-no-second-parent:",
+                                                                           current_user: build_edit_user))
+    assert search.executed_query.results.size > 0, "Should find name that has no second parent."
   end
 end
