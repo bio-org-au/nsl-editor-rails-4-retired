@@ -1,0 +1,2183 @@
+explain select count(*)  
+  FROM   "reference" 
+ WHERE  To_tsvector('english', COALESCE("reference"."citation"::text,'')) @@ (to_tsquery('english', 'hookers')) ;
+explain select count(*) from reference where to_tsvector('english',citation) @@ to_tsquery('english','hookers,icon');
+create index ref_citation_text_index on reference using gin(to_tsvector('english',citation));
+drop index ref_citation_text_index ;
+create index ref_citation_text_index on reference using gin(to_tsvector('english'::regconfig,coalesce((citation)::text,''::text));
+);
+create index ref_citation_text_index on reference using gin(to_tsvector('english'::regconfig,coalesce((citation)::text,''::text)));
+explain select count(*) from reference where to_tsvector('english',citation) @@ to_tsquery('english','hookers,icon');
+explain select count(*)  
+  FROM   "reference" 
+ WHERE  To_tsvector('english', COALESCE("reference"."citation"::text,'')) @@ (to_tsquery('english', 'hookers')) ;
+SELECT ts_headline('english',
+  'The most common type of search
+is to find all documents containing given query terms
+and return them in order of their similarity to the
+query.',
+  to_tsquery('query & similarity'));
+                        ts_headline    
+SELECT ts_headline('english',
+  'The most common type of search
+is to find all documents containing given query terms
+and return them in order of their similarity to the
+query.',
+  to_tsquery('query & similarity'));
+SELECT ts_headline('english',
+  'The most common type of search
+is to find all documents containing given query terms
+and return them in order of their similarity to the
+query.',
+  to_tsquery('query & similarity'));
+                        ts_headline    
+SELECT     count(id,ts_headline('english'::regconfig,COALESCE((citation)::text,''::text), plainto_tsquery('english', ''' '
+                      || unaccent('hookers') 
+                      || ' ''' 
+                      || ':*')) AS excerpt) 
+FROM       "reference" 
+INNER JOIN 
+           ( 
+                  SELECT "reference"."id" AS pg_search_id, 
+                         (ts_rank((to_tsvector('english', COALESCE("reference"."citation"::text, ''))), (to_tsquery('english', ''' '
+                                || 'hookers' 
+                                || ' ''' 
+                                || ':*') && to_tsquery('english', ''' ' 
+                                || 'icon' 
+                                || ' ''' 
+                                || ':*') && to_tsquery('english', ''' ' 
+                                || 'pl' 
+                                || ' ''' 
+                                || ':*')), 0)) AS rank 
+                  FROM   "reference" 
+                  WHERE  ((( 
+                                              to_tsvector('english', COALESCE("reference"."citation"::text, ''))) @@ (to_tsquery('english', ''' '
+                                              || 'hookers' 
+                                              || ' ''' 
+                                              || ':*') && to_tsquery('english', ''' ' 
+                                              || 'icon' 
+                                              || ' ''' 
+                                              || ':*') && to_tsquery('english', ''' ' 
+                                              || 'pl' 
+                                              || ' ''' 
+                                              || ':*'))))) AS pg_search_52367a6622b19f08825e91 
+ON         "reference"."id" = pg_search_52367a6622b19f08825e91.pg_search_id;
+SELECT     count(id,ts_headline('english'::regconfig,COALESCE((citation)::text,''::text), plainto_tsquery('english', ''' '
+                      || unaccent('hookers') 
+                      || ' ''' 
+                      || ':*')) AS excerpt) 
+FROM       "reference" 
+INNER JOIN 
+           ( 
+                  SELECT "reference"."id" AS pg_search_id, 
+                         (ts_rank((to_tsvector('english', COALESCE("reference"."citation"::text, ''))), (to_tsquery('english', ''' '
+                                || 'hookers' 
+                                || ' ''' 
+                                || ':*') && to_tsquery('english', ''' ' 
+                                || 'icon' 
+                                || ' ''' 
+                                || ':*') && to_tsquery('english', ''' ' 
+                                || 'pl' 
+                                || ' ''' 
+                                || ':*')), 0)) AS rank 
+                  FROM   "reference" 
+                  WHERE  ((( 
+                                              to_tsvector('english', COALESCE("reference"."citation"::text, ''))) @@ (to_tsquery('english', ''' '
+                                              || 'hookers' 
+                                              || ' ''' 
+                                              || ':*') && to_tsquery('english', ''' ' 
+                                              || 'icon' 
+                                              || ' ''' 
+                                              || ':*') && to_tsquery('english', ''' ' 
+                                              || 'pl' 
+                                              || ' ''' 
+                                              || ':*'))))) AS pg_search_52367a6622b19f08825e91 
+ON         "reference"."id" = pg_search_52367a6622b19f08825e91.pg_search_id
+;
+SELECT     id,ts_headline('english'::regconfig,COALESCE((citation)::text,''::text), plainto_tsquery('english', ''' '
+                      || unaccent('hookers') 
+                      || ' ''' 
+                      || ':*')) 
+FROM       "reference" 
+INNER JOIN 
+           ( 
+                  SELECT "reference"."id" AS pg_search_id, 
+                         (ts_rank((to_tsvector('english', COALESCE("reference"."citation"::text, ''))), (to_tsquery('english', ''' '
+                                || 'hookers' 
+                                || ' ''' 
+                                || ':*') && to_tsquery('english', ''' ' 
+                                || 'icon' 
+                                || ' ''' 
+                                || ':*') && to_tsquery('english', ''' ' 
+                                || 'pl' 
+                                || ' ''' 
+                                || ':*')), 0)) AS rank 
+                  FROM   "reference" 
+                  WHERE  ((( 
+                                              to_tsvector('english', COALESCE("reference"."citation"::text, ''))) @@ (to_tsquery('english', ''' '
+                                              || 'hookers' 
+                                              || ' ''' 
+                                              || ':*') && to_tsquery('english', ''' ' 
+                                              || 'icon' 
+                                              || ' ''' 
+                                              || ':*') && to_tsquery('english', ''' ' 
+                                              || 'pl' 
+                                              || ' ''' 
+                                              || ':*'))))) AS pg_search_52367a6622b19f08825e91 
+ON         "reference"."id" = pg_search_52367a6622b19f08825e91.pg_search_id
+;
+SELECT     id,ts_headline('english'::regconfig,COALESCE((citation)::text,''::text), plainto_tsquery('english', ''' '
+                      || unaccent('hookers') 
+                      || ' ''' 
+                      || ':*')) as xxxx
+FROM       "reference" 
+INNER JOIN 
+           ( 
+                  SELECT "reference"."id" AS pg_search_id, 
+                         (ts_rank((to_tsvector('english', COALESCE("reference"."citation"::text, ''))), (to_tsquery('english', ''' '
+                                || 'hookers' 
+                                || ' ''' 
+                                || ':*') && to_tsquery('english', ''' ' 
+                                || 'icon' 
+                                || ' ''' 
+                                || ':*') && to_tsquery('english', ''' ' 
+                                || 'pl' 
+                                || ' ''' 
+                                || ':*')), 0)) AS rank 
+                  FROM   "reference" 
+                  WHERE  ((( 
+                                              to_tsvector('english', COALESCE("reference"."citation"::text, ''))) @@ (to_tsquery('english', ''' '
+                                              || 'hookers' 
+                                              || ' ''' 
+                                              || ':*') && to_tsquery('english', ''' ' 
+                                              || 'icon' 
+                                              || ' ''' 
+                                              || ':*') && to_tsquery('english', ''' ' 
+                                              || 'pl' 
+                                              || ' ''' 
+                                              || ':*'))))) AS pg_search_52367a6622b19f08825e91 
+ON         "reference"."id" = pg_search_52367a6622b19f08825e91.pg_search_id
+;
+SELECT id,ts_headline('english'::regconfig,coalesce((citation)::text,''::text), plainto_tsquery('english', ''' ' || unaccent('hookers')|| ' ''' || ':*')) AS excerpt FROM "reference" INNER JOIN (SELECT "reference"."id" AS pg_search_id, (ts_rank((to_tsvector('english', coalesce("reference"."citation"::text, ''))), (to_tsquery('english', ''' ' || 'hookers' || ' ''' || ':*') && to_tsquery('english', ''' ' || 'icon' || ' ''' || ':*') && to_tsquery('english', ''' ' || 'pl' || ' ''' || ':*')), 0)) AS rank FROM "reference"  WHERE (((to_tsvector('english', coalesce("reference"."citation"::text, ''))) @@ (to_tsquery('english', ''' ' || 'hookers' || ' ''' || ':*') && to_tsquery('english', ''' ' || 'icon' || ' ''' || ':*') && to_tsquery('english', ''' ' || 'pl' || ' ''' || ':*'))))) AS pg_search_52367a6622b19f08825e91 ON "reference"."id" = pg_search_52367a6622b19f08825e91.pg_search_id  ORDER BY pg_search_52367a6622b19f08825e91.rank DESC, "reference"."id" ASC;
+00.352 [omg] ActiveRecord::StatementInvalid - ActiveRecord::JDBCError: org.postgresql.util.PSQLException: ERROR: syntax error at or near "AS"
+  Position: 161: SELECT COUNT(id,ts_headline('english'::regconfig,coalesce((citation)::text,''::text), plainto_tsquery('english', ''' ' || unaccent('hookers')|| ' ''' || ':*')) AS citation_html) FROM "reference" INNER JOIN (SELECT "reference"."id" AS pg_search_id, (ts_rank((to_tsvector('english', coalesce("reference"."citation"::text, ''))), (to_tsquery('english', ''' ' || 'nuytsia' || ' ''' || ':*')), 0)) AS rank FROM "reference"  WHERE (((to_tsvector('english', coalesce("reference"."citation"::text, ''))) @@ (to_tsquery('english', ''' ' || 'nuytsia' || ' ''' || ':*'))))) AS pg_search_52367a6622b19f08825e91 ON "reference"."id" = pg_search_52367a6622b19f08825e91.pg_search_id;
+SELECT COUNT(id,ts_headline('english'::regconfig,coalesce((citation)::text,''::text), plainto_tsquery('english', ''' ' || unaccent('hookers')|| ' ''' || ':*')) AS citation_html) FROM "reference" INNER JOIN (SELECT "reference"."id" AS pg_search_id, (ts_rank((to_tsvector('english', coalesce("reference"."citation"::text, ''))), (to_tsquery('english', ''' ' || 'nuytsia' || ' ''' || ':*')), 0)) AS rank FROM "reference"  WHERE (((to_tsvector('english', coalesce("reference"."citation"::text, ''))) @@ (to_tsquery('english', ''' ' || 'nuytsia' || ' ''' || ':*'))))) AS pg_search_52367a6622b19f08825e91 ON "reference"."id" = pg_search_52367a6622b19f08825e91.pg_search_id;
+SELECT COUNT(ts_headline('english'::regconfig,coalesce((citation)::text,''::text), plainto_tsquery('english', ''' ' || unaccent('hookers')|| ' ''' || ':*')) AS citation_html) FROM "reference" INNER JOIN (SELECT "reference"."id" AS pg_search_id, (ts_rank((to_tsvector('english', coalesce("reference"."citation"::text, ''))), (to_tsquery('english', ''' ' || 'nuytsia' || ' ''' || ':*')), 0)) AS rank FROM "reference"  WHERE (((to_tsvector('english', coalesce("reference"."citation"::text, ''))) @@ (to_tsquery('english', ''' ' || 'nuytsia' || ' ''' || ':*'))))) AS pg_search_52367a6622b19f08825e91 ON "reference"."id" = pg_search_52367a6622b19f08825e91.pg_search_id;
+SELECT COUNT(ts_headline('english'::regconfig,coalesce((citation)::text,''::text), plainto_tsquery('english', ''' ' || unaccent('hookers')|| ' ''' || ':*')) ) FROM "reference" INNER JOIN (SELECT "reference"."id" AS pg_search_id, (ts_rank((to_tsvector('english', coalesce("reference"."citation"::text, ''))), (to_tsquery('english', ''' ' || 'nuytsia' || ' ''' || ':*')), 0)) AS rank FROM "reference"  WHERE (((to_tsvector('english', coalesce("reference"."citation"::text, ''))) @@ (to_tsquery('english', ''' ' || 'nuytsia' || ' ''' || ':*'))))) AS pg_search_52367a6622b19f08825e91 ON "reference"."id" = pg_search_52367a6622b19f08825e91.pg_search_id;
+SELECT COUNT(ts_headline('english'::regconfig,coalesce((citation)::text,''::text), plainto_tsquery('english', ''' ' || unaccent('hookers')|| ' ''' || ':*')) AS citation_html) FROM "reference" INNER JOIN (SELECT "reference"."id" AS pg_search_id, (ts_rank((to_tsvector('english', coalesce("reference"."citation"::text, ''))), (to_tsquery('english', ''' ' || 'nuytsia' || ' ''' || ':*')), 0)) AS rank FROM "reference"  WHERE (((to_tsvector('english', coalesce("reference"."citation"::text, ''))) @@ (to_tsquery('english', ''' ' || 'nuytsia' || ' ''' || ':*'))))) AS pg_search_52367a6622b19f08825e91 ON "reference"."id" = pg_search_52367a6622b19f08825e91.pg_search_id;
+SELECT COUNT(id,ts_headline('english'::regconfig,coalesce((citation)::text,''::text), plainto_tsquery('english', ''' ' || unaccent('hookers')|| ' ''' || ':*')) ) FROM "reference" INNER JOIN (SELECT "reference"."id" AS pg_search_id, (ts_rank((to_tsvector('english', coalesce("reference"."citation"::text, ''))), (to_tsquery('english', ''' ' || 'nuytsia' || ' ''' || ':*')), 0)) AS rank FROM "reference"  WHERE (((to_tsvector('english', coalesce("reference"."citation"::text, ''))) @@ (to_tsquery('english', ''' ' || 'nuytsia' || ' ''' || ':*'))))) AS pg_search_52367a6622b19f08825e91 ON "reference"."id" = pg_search_52367a6622b19f08825e91.pg_search_id;
+SELECT COUNT(ts_headline('english'::regconfig,coalesce((citation)::text,''::text), plainto_tsquery('english', ''' ' || unaccent('hookers')|| ' ''' || ':*')) ) FROM "reference" INNER JOIN (SELECT "reference"."id" AS pg_search_id, (ts_rank((to_tsvector('english', coalesce("reference"."citation"::text, ''))), (to_tsquery('english', ''' ' || 'nuytsia' || ' ''' || ':*')), 0)) AS rank FROM "reference"  WHERE (((to_tsvector('english', coalesce("reference"."citation"::text, ''))) @@ (to_tsquery('english', ''' ' || 'nuytsia' || ' ''' || ':*'))))) AS pg_search_52367a6622b19f08825e91 ON "reference"."id" = pg_search_52367a6622b19f08825e91.pg_search_id;
+SELECT COUNT(ts_headline('english'::regconfig,coalesce((citation)::text,''::text), plainto_tsquery('english', ''' ' || unaccent('hookers')|| ' ''' || ':*')) AS citation_html) FROM "reference" INNER JOIN (SELECT "reference"."id" AS pg_search_id, (ts_rank((to_tsvector('english', coalesce("reference"."citation"::text, ''))), (to_tsquery('english', ''' ' || 'nuytsia' || ' ''' || ':*')), 0)) AS rank FROM "reference" WHERE (((to_tsvector('english', coalesce("reference"."citation"::text, ''))) @@ (to_tsquery('english', ''' ' || 'nuytsia' || ' ''' || ':*'))))) AS pg_search_52367a6622b19f08825e91 ON "reference"."id" = pg_search_52367a6622b19f08825e91.pg_search_id;
+SELECT COUNT(ts_headline('english'::regconfig,coalesce((citation)::text,''::text), plainto_tsquery('english', ''' ' || unaccent('hookers')|| ' ''' || ':*')) citation_html) FROM "reference" INNER JOIN (SELECT "reference"."id" AS pg_search_id, (ts_rank((to_tsvector('english', coalesce("reference"."citation"::text, ''))), (to_tsquery('english', ''' ' || 'nuytsia' || ' ''' || ':*')), 0)) AS rank FROM "reference" WHERE (((to_tsvector('english', coalesce("reference"."citation"::text, ''))) @@ (to_tsquery('english', ''' ' || 'nuytsia' || ' ''' || ':*'))))) AS pg_search_52367a6622b19f08825e91 ON "reference"."id" = pg_search_52367a6622b19f08825e91.pg_search_id;
+SELECT COUNT(ts_headline('english'::regconfig,coalesce((citation)::text,''::text), plainto_tsquery('english', ''' ' || unaccent('hookers')|| ' ''' || ':*')) itation_html) FROM "reference" INNER JOIN (SELECT "reference"."id" AS pg_search_id, (ts_rank((to_tsvector('english', coalesce("reference"."citation"::text, ''))), (to_tsquery('english', ''' ' || 'nuytsia' || ' ''' || ':*')), 0)) AS rank FROM "reference" WHERE (((to_tsvector('english', coalesce("reference"."citation"::text, ''))) @@ (to_tsquery('english', ''' ' || 'nuytsia' || ' ''' || ':*'))))) AS pg_search_52367a6622b19f08825e91 ON "reference"."id" = pg_search_52367a6622b19f08825e91.pg_search_id;
+SELECT COUNT(ts_headline('english'::regconfig,coalesce((citation)::text,''::text), plainto_tsquery('english', ''' ' || unaccent('hookers')|| ' ''' || ':*')) ) FROM "reference" INNER JOIN (SELECT "reference"."id" AS pg_search_id, (ts_rank((to_tsvector('english', coalesce("reference"."citation"::text, ''))), (to_tsquery('english', ''' ' || 'nuytsia' || ' ''' || ':*')), 0)) AS rank FROM "reference" WHERE (((to_tsvector('english', coalesce("reference"."citation"::text, ''))) @@ (to_tsquery('english', ''' ' || 'nuytsia' || ' ''' || ':*'))))) AS pg_search_52367a6622b19f08825e91 ON "reference"."id" = pg_search_52367a6622b19f08825e91.pg_search_id;
+\q
+create index ref_citation_text_index on reference using gin(to_tsvector('english'::regconfig,coalesce((citation)::text,''::text)));
+\q
+create index ref_citation_text_index on reference using gin(to_tsvector('english'::regconfig,coalesce((citation)::text,''::text)));
+\q
+select count(*) from instance where reference_id = 25943;
+select id from instance where reference_id = 25943;
+select id from instance where reference_id = 25943
+union
+select id from instance where reference_id = 22010;
+select count(*) from (select id from instance where reference_id = 25943
+union
+select id from instance where reference_id = 22010);
+select count(*) from (select id from instance where reference_id = 25943
+union
+select id from instance where reference_id = 22010) as in_both;
+select count(*) from (select id from instance where reference_id = 25943
+intersect
+select id from instance where reference_id = 22010) as in_both;
+select id from instance where reference_id = 25943 and id in (select id from instance where reference_id = 22010);
+select id from instance where reference_id = 22010 and id in (select id from instance where reference_id = 22010);
+select id from instance where reference_id = 22010 and id in (select id from instance where reference_id = 25943);
+select id from instance where reference_id = 25943 and id in (select id from instance where reference_id = 22010);
+\q
+select count(*) from (select id from instance where reference_id = 25943
+intersect
+select id from instance where reference_id = 22010) as in_both;
+select id from instance where reference_id = 22010 and id in (select id from instance where reference_id = 25943);
+select id from instance where reference_id = 25943 and id in (select id from instance where reference_id = 22010;
+);
+select id from instance where reference_id = 25943 and id in (select id from instance where reference_id = 22010);
+select count(*) from
+(select id from instance where reference_id = 25943
+intersect
+select id from instance where reference_id = 22010)
+as in_both;
+select count(*) from instance where reference_id = 22010;
+select count(*) from instance where reference_id = 22010;
+\d
+\d instance
+select count(*) from instance where reference_id = 22010 and cited_by_id is null;
+select count(*) from instance where reference_id = 22010 and cites_id is null;
+select citation from reference where id = 22010;
+\q
+select citation from reference where id = 22010;
+select count(*) from instance where reference_id = 22010 ;
+select count(*) from instance where reference_id = 25943 ;
+select citation from reference where id = 25943;
+select id from instance where reference_id = 25943 and id in (select id from instance where reference_id = 22010;
+);
+select id from instance where reference_id = 25943 and id in (select id from instance where reference_id = 22010);
+select count(*) from
+(select id from instance where reference_id = 25943
+intersect
+select id from instance where reference_id = 22010)
+as in_both;
+\q
+select count(*) from instance;
+select count(*) from reference;
+select count(*) from instance where reference_id = 25943 ;
+\q
+select id, count(*) from instance group by id having count(*) > 2
+;
+select count(*) from instance where reference_id = 22010 ;
+select id, count(*) from reference group by id having count(*) > 2
+;
+select count(*) from instance where reference_id = 25943 ;
+select count(*) from instance; 
+select count(*) from reference;
+select count(*) from instance where reference_id = 25943 ;
+select count(*) from instance; 
+select count(*) from reference;
+select count(*) from name;
+\q
+select count(*) from instance;
+select count(*) from reference;
+select count(*) from name;
+\q
+select count(*) from instance; 
+select count(*) from reference;
+select count(*) from name;
+select 567260 * 2;
+select 37660 * 2;
+\q
+select count(*) from name;
+select count(*) from instance; 
+select count(*) from reference;
+\q
+create index ref_citation_text_index on reference using gin(to_tsvector('english'::regconfig,coalesce((citation)::text,''::text)));
+\q
+ select ts_headline('english'::regconfig,coalesce((citation)::text,''::text), plainto_tsquery('english', ''' ' || unaccent('hookers')|| ' ''' || ':*'))  from reference limit 3;
+ select ts_headline('english'::regconfig,coalesce((citation)::text,''::text), plainto_tsquery('english', ''' ' || unaccent('hookers')|| ' ''' || ':*'))  from reference where id in (25315) limit 3;
+SELECT  ts_headline(pg_search_documents.content, plainto_tsquery(?)) AS excerpt, NULL FROM "pg_search_documents" INNER JOIN (SELECT "pg_search_documents"."id" AS pg_search_id, (ts_rank((to_tsvector('english', coalesce("pg_search_documents"."content"::text, ''))), (to_tsquery('english', ''' ' || 'Angophora' || ' ''' || ':*') && to_tsquery('english', ''' ' || 'Costata' || ' ''' || ':*')), 0)) AS rank FROM "pg_search_documents"  WHERE (((to_tsvector('english', coalesce("pg_search_documents"."content"::text, ''))) @@ (to_tsquery('english', ''' ' || 'Angophora' || ' ''' || ':*') && to_tsquery('english', ''' ' || 'Costata' || ' ''' || ':*'))))) AS pg_search_ce9b9dd18c5c0023f2116f ON "pg_search_documents"."id" = pg_search_ce9b9dd18c5c0023f2116f.pg_search_id  ORDER BY pg_search_ce9b9dd18c5c0023f2116f.rank DESC, "pg_search_documents"."id" ASC LIMIT 100
+;
+SELECT  ts_headline(pg_search_documents.content, plainto_tsquery(?)), NULL FROM "pg_search_documents" INNER JOIN (SELECT "pg_search_documents"."id" AS pg_search_id, (ts_rank((to_tsvector('english', coalesce("pg_search_documents"."content"::text, ''))), (to_tsquery('english', ''' ' || 'Angophora' || ' ''' || ':*') && to_tsquery('english', ''' ' || 'Costata' || ' ''' || ':*')), 0)) AS rank FROM "pg_search_documents"  WHERE (((to_tsvector('english', coalesce("pg_search_documents"."content"::text, ''))) @@ (to_tsquery('english', ''' ' || 'Angophora' || ' ''' || ':*') && to_tsquery('english', ''' ' || 'Costata' || ' ''' || ':*'))))) AS pg_search_ce9b9dd18c5c0023f2116f ON "pg_search_documents"."id" = pg_search_ce9b9dd18c5c0023f2116f.pg_search_id  ORDER BY pg_search_ce9b9dd18c5c0023f2116f.rank DESC, "pg_search_documents"."id" ASC LIMIT 100;
+SELECT  ts_headline(pg_search_documents.content, plainto_tsquery(?)), NULL FROM "pg_search_documents" INNER JOIN (SELECT "pg_search_documents"."id" AS pg_search_id, (ts_rank((to_tsvector('english', coalesce("pg_search_documents"."content"::text, ''))), (to_tsquery('english', ''' ' || 'Angophora' || ' ''' || ':*') && to_tsquery('english', ''' ' || 'Costata' || ' ''' || ':*')), 0)) AS rank FROM "pg_search_documents"  WHERE (((to_tsvector('english', coalesce("pg_search_documents"."content"::text, ''))) @@ (to_tsquery('english', ''' ' || 'Angophora' || ' ''' || ':*') && to_tsquery('english', ''' ' || 'Costata' || ' ''' || ':*'))))) AS pg_search_ce9b9dd18c5c0023f2116f ON "pg_search_documents"."id" = pg_search_ce9b9dd18c5c0023f2116f.pg_search_id  ORDER BY pg_search_ce9b9dd18c5c0023f2116f.rank DESC, "pg_search_documents"."id" ASC LIMIT 100;
+ SELECT  ts_headline(pg_search_documents.content, plainto_tsquery('Angophora')) AS excerpt, NULL FROM "pg_search_documents" INNER JOIN (SELECT "pg_search_documents"."id" AS pg_search_id, (ts_rank((to_tsvector('english', coalesce("pg_search_documents"."content"::text, ''))), (to_tsquery('english', ''' ' || 'Angophora' || ' ''' || ':*') && to_tsquery('english', ''' ' || 'Costata' || ' ''' || ':*')), 0)) AS rank FROM "pg_search_documents"  WHERE (((to_tsvector('english', coalesce("pg_search_documents"."content"::text, ''))) @@ (to_tsquery('english', ''' ' || 'Angophora' || ' ''' || ':*') && to_tsquery('english', ''' ' || 'Costata' || ' ''' || ':*'))))) AS pg_search_ce9b9dd18c5c0023f2116f ON "pg_search_documents"."id" = pg_search_ce9b9dd18c5c0023f2116f.pg_search_id  ORDER BY pg_search_ce9b9dd18c5c0023f2116f.rank DESC, "pg_search_documents"."id" ASC LIMIT 100;
+ SELECT  ts_headline(pg_search_documents.content, plainto_tsquery('Angophora Costata')) AS excerpt, NULL FROM "pg_search_documents" INNER JOIN (SELECT "pg_search_documents"."id" AS pg_search_id, (ts_rank((to_tsvector('english', coalesce("pg_search_documents"."content"::text, ''))), (to_tsquery('english', ''' ' || 'Angophora' || ' ''' || ':*') && to_tsquery('english', ''' ' || 'Costata' || ' ''' || ':*')), 0)) AS rank FROM "pg_search_documents"  WHERE (((to_tsvector('english', coalesce("pg_search_documents"."content"::text, ''))) @@ (to_tsquery('english', ''' ' || 'Angophora' || ' ''' || ':*') && to_tsquery('english', ''' ' || 'Costata' || ' ''' || ':*'))))) AS pg_search_ce9b9dd18c5c0023f2116f ON "pg_search_documents"."id" = pg_search_ce9b9dd18c5c0023f2116f.pg_search_id  ORDER BY pg_search_ce9b9dd18c5c0023f2116f.rank DESC, "pg_search_documents"."id" ASC LIMIT 100;
+create index ref_citation_text_index on reference using gin(to_tsvector('english'::regconfig,coalesce((citation)::text,''::text)));
+SELECT COUNT(count_column) FROM (SELECT  1 AS count_column FROM "name"  WHERE (lower(f_unaccent(full_name)) like f_unaccent('grev%queen%') ) AND ( name_type_id in (select id from name_type where not (cultivar or lower(name_type.name) = 'common'))) LIMIT 100) subquery_for_count;
+SELECT COUNT(*) FROM "name"  WHERE "name"."duplicate_of_id" = 197769;
+\timing
+SELECT COUNT(*) FROM "name"  WHERE "name"."duplicate_of_id" = 197769;
+\q
+select count(*) from reference;
+select count(*) from name;
+select count(*) from instance;
+\q
+vacuum analyze
+;
+\q
+create index ref_citation_text_index on reference using gin(to_tsvector('english'::regconfig,coalesce((citation)::text,''::text)));
+\q
+create index ref_citation_text_index on reference using gin(to_tsvector('english'::regconfig,f_unaccent(coalesce((citation)::text,''::text))));
+drop index ref_citation_text_index;
+create index ref_citation_text_index on reference using gin(to_tsvector('english'::regconfig,f_unaccent(coalesce((citation)::text,''::text))));
+ets
+;
+\q
+create index ref_citation_text_index on reference using gin(to_tsvector('english'::regconfig,f_unaccent(coalesce((citation)::text,''::text))));
+\q
+explain SELECT "reference".* FROM "reference" INNER JOIN (SELECT "reference"."id" AS pg_search_id, (ts_rank((to_tsvector('english', unaccent(coalesce("reference"."citation"::text, '')))), (to_tsquery('english', ''' ' || unaccent('bent') || ' ''' || ':*') && to_tsquery('english', ''' ' || unaccent('hook') || ' ''' || ':*') && to_tsquery('english', ''' ' || unaccent('notes') || ' ''' || ':*')), 0)) AS rank FROM "reference" WHERE (((to_tsvector('english', unaccent(coalesce("reference"."citation"::text, '')))) @@ (to_tsquery('english', ''' ' || unaccent('bent') || ' ''' || ':*') && to_tsquery('english', ''' ' || unaccent('hook') || ' ''' || ':*') && to_tsquery('english', ''' ' || unaccent('notes') || ' ''' || ':*'))))) AS pg_search_52367a6622b19f08825e91 ON "reference"."id" = pg_search_52367a6622b19f08825e91.pg_search_id ORDER BY pg_search_52367a6622b19f08825e91.rank DESC, "reference"."id" ASC, citation LIMIT 100;
+drop index ref_citation_text_index ;
+create index ref_citation_text_index on reference using gin(to_tsvector('english'::regconfig,unaccent(coalesce((citation)::text,''::text))));
+create index ref_citation_text_index on reference using gin(to_tsvector('english'::regconfig,f_unaccent(coalesce((citation)::text,''::text))));
+explain SELECT "reference".* FROM "reference" INNER JOIN (SELECT "reference"."id" AS pg_search_id, (ts_rank((to_tsvector('english', unaccent(coalesce("reference"."citation"::text, '')))), (to_tsquery('english', ''' ' || unaccent('bent') || ' ''' || ':*') && to_tsquery('english', ''' ' || unaccent('hook') || ' ''' || ':*') && to_tsquery('english', ''' ' || unaccent('notes') || ' ''' || ':*')), 0)) AS rank FROM "reference" WHERE (((to_tsvector('english', unaccent(coalesce("reference"."citation"::text, '')))) @@ (to_tsquery('english', ''' ' || unaccent('bent') || ' ''' || ':*') && to_tsquery('english', ''' ' || unaccent('hook') || ' ''' || ':*') && to_tsquery('english', ''' ' || unaccent('notes') || ' ''' || ':*'))))) AS pg_search_52367a6622b19f08825e91 ON "reference"."id" = pg_search_52367a6622b19f08825e91.pg_search_id ORDER BY pg_search_52367a6622b19f08825e91.rank DESC, "reference"."id" ASC, citation LIMIT 100;
+explain SELECT "reference".* FROM "reference" INNER JOIN (SELECT "reference"."id" AS pg_search_id, (ts_rank((to_tsvector('english', f_unaccent(coalesce("reference"."citation"::text, '')))), (to_tsquery('english', ''' ' || f_unaccent('bent') || ' ''' || ':*') && to_tsquery('english', ''' ' || f_unaccent('hook') || ' ''' || ':*') && to_tsquery('english', ''' ' || f_unaccent('notes') || ' ''' || ':*')), 0)) AS rank FROM "reference" WHERE (((to_tsvector('english', f_unaccent(coalesce("reference"."citation"::text, '')))) @@ (to_tsquery('english', ''' ' || f_unaccent('bent') || ' ''' || ':*') && to_tsquery('english', ''' ' || f_unaccent('hook') || ' ''' || ':*') && to_tsquery('english', ''' ' || f_unaccent('notes') || ' ''' || ':*'))))) AS pg_search_52367a6622b19f08825e91 ON "reference"."id" = pg_search_52367a6622b19f08825e91.pg_search_id ORDER BY pg_search_52367a6622b19f08825e91.rank DESC, "reference"."id" ASC, citation LIMIT 100 ;
+\q
+create index ref_citation_text_index on reference using gin(to_tsvector('english'::regconfig,f_unaccent(coalesce((citation)::text,''::text))));
+\q
+grant all to nsl;
+grant all on all to nsl;
+grant all on nslimprt to nsl;
+grant all on nslimport to nsl;
+grant all on database nslimport to nsl;
+\dt
+\ds
+\q
+\q
+\d author
+\q
+CREATE INDEX ref_citation_text_index ON reference USING gin(to_tsvector('english'::regconfig,f_unaccent(coalesce((citation)::text,''::text))));
+drop index ref_citation_text_index;
+CREATE INDEX ref_citation_text_index ON reference USING gin(to_tsvector('english'::regconfig,f_unaccent(coalesce((citation)::text,''::text))));
+select count(*) from instance where reference_id = 22010;
+select count(*) from instance where reference_id = 25943;
+select count(*) from (select name_id from instance where reference_id = 25943 union select name_id from instance where reference_id = 22010) as main;
+select count(*) from (select name_id from instance where reference_id = 25943 intersect select name_id from instance where reference_id = 22010) as main;
+select count(*) from (select name_id,instance_type_id from instance where reference_id = 25943 intersect select name_id,instance_type_id from instance where reference_id = 22010) as main;
+select id,name_id,instance_type_id from instance where reference_id = 25943 where exists (select null from instance i2 where i2.reference_id = 22010 and instance.name_id = i2.name_id)
+;
+select id,name_id,instance_type_id from instance where reference_id = 25943 and exists (select null from instance i2 where i2.reference_id = 22010 and instance.name_id = i2.name_id)
+;
+select id,name_id,instance_type_id from instance where reference_id = 25943 and exists (select null from instance i2 where i2.reference_id = 22010 and instance.name_id = i2.name_id)
+;
+explain SELECT "name".* FROM "name"  WHERE (lower(full_name) like 'angophora costata%');
+\d name
+explain SELECT "name".* FROM "name"  WHERE (lower(full_name) = 'angophora costata');
+explain SELECT "name".* FROM "name"  WHERE (lower(full_name) like 'angophora costata');
+explain SELECT "name".* FROM "name"  WHERE (lower(full_name) like 'angophora costata%');
+explain SELECT "name".* FROM "name"  WHERE (full_name like 'angophora costata%');
+explain SELECT "name".* FROM "name"  WHERE (full_name like 'angophora costata');
+explain SELECT "name".* FROM "name"  WHERE (lower(full_name) like 'angophora costata%');
+explain SELECT "name".* FROM "name"  WHERE (lower(full_name) like 'angophora costata');
+SELECT "name".* FROM "name"  WHERE (lower(full_name) like 'angophora costata%');
+\timing
+SELECT "name".* FROM "name"  WHERE (lower(full_name) like 'angophora costata%');
+SELECT "name".* FROM "name"  WHERE (lower(full_name) like 'angophora costata');
+create index lower_full_name_for_like_operator on name (lower(full_name varchar_pattern_ops));
+create index lower_full_name_for_like_operator on name (lower(full_name) varchar_pattern_ops);
+explain SELECT "name".* FROM "name"  WHERE (lower(full_name) like 'angophora costata%');
+SELECT "name".* FROM "name"  WHERE (lower(full_name) like 'angophora costata%');
+SELECT "name".* FROM "name"  WHERE (lower(full_name) like 'angophora costata%');
+drop index lower_full_name_for_like_operator; 
+SELECT "name".* FROM "name"  WHERE (lower(full_name) like 'angophora costata%');
+create index lower_full_name_for_like_operator on name (lower(full_name) varchar_pattern_ops);
+explain SELECT "name".* FROM "name"  WHERE (lower(full_name) like 'angophora costata%');
+drop index lower_full_name_for_like_operator; 
+explain SELECT "name".* FROM "name"  WHERE (lower(full_name) like 'angophora costata%');
+SELECT count(*) FROM "name"  WHERE (lower(full_name) like 'angophora costata%');
+create index lower_full_name_for_like_operator on name (lower(full_name) varchar_pattern_ops);
+SELECT count(*) FROM "name"  WHERE (lower(full_name) like 'angophora costata%');
+\d author
+\q
+select * from instance where id = 553619;
+\q
+select * from instance where id = 553619;
+select reference_id from instance where id = 553619;
+SELECT COUNT(count_column) FROM (SELECT  1 AS count_column FROM "instance" INNER JOIN "name" ON "name"."id" = "instance"."name_id" WHERE "instance"."reference_id" = 86418825 AND (exists (select null from instance i2 where i2.reference_id = 744788243 and instance.name_id = i2.name_id)) LIMIT 1) subquery_for_count;
+SELECT COUNT(*) FROM "instance"  WHERE "instance"."reference_id" = 86418825 AND (exists (select null from instance i2 where i2.reference_id = 744788243 and instance.name_id = i2.name_id));
+\d instance
+\d reference
+SELECT 'a fat cat sat on a mat and ate a fat rat'::tsvector @@ 'cat & rat'::tsquery;
+SELECT 'fat & cow'::tsquery @@ 'a fat cat sat on a mat and ate a fat rat'::tsvector;
+SELECT 'fat & rat'::tsquery @@ 'a fat cat sat on a mat and ate a fat rat'::tsvector;
+SELECT 'fat || cow'::tsquery @@ 'a fat cat sat on a mat and ate a fat rat'::tsvector;
+SELECT 'fat or cow'::tsquery @@ 'a fat cat sat on a mat and ate a fat rat'::tsvector;
+SELECT to_tsvector('fat cats ate fat rats');
+select to_tsvector('english',citation) from reference limit 10;
+select citation, to_tsvector('english',citation) from reference limit 10;
+select full_name,simple_name from name where id = 55784;
+select full_name,simple_name from name where id = 55784;
+select full_name,simple_name from name where id = 55784;
+\q
+\dt
+select * from namespace;
+\d name
+select * from name where id = 17422;
+select * from name where id = 174422;
+select * from name where id = 5114431;
+select id,parent_id,full_name FROM "name"  WHERE (id = 89181 or parent_id = 89181)  ORDER BY full_name;
+select id,parent_id,citation FROM "reference"  WHERE ( id = '17568' or parent_id = '17568')  ORDER BY citation;
+select id,parent_id,citation FROM "reference"  WHERE ( id = '17568' or parent_id = '17568')  ORDER BY case when parent_id is null then 'A' else 'B' end, citation;
+\q
+select * from name where id = 310044311;
+SELECT COUNT(count_column) FROM (SELECT  1 AS count_column FROM "name"  WHERE (id = 309749948 or second_parent_id = 309749948 ) AND ( name_type_id in (select id from name_type where not (cultivar or lower(name_type.name) = 'common'))) LIMIT 100) subquery_for_count;
+SELECT COUNT(count_column) FROM (SELECT  1 AS count_column FROM "name"  WHERE (id = 309749948 or second_parent_id = 309749948 ) AND )) LIMIT 100) subquery_for_count;
+SELECT COUNT(count_column) FROM (SELECT  1 AS count_column FROM "name"  WHERE (id = 309749948 or second_parent_id = 309749948 ) AND ) LIMIT 100) subquery_for_count;
+SELECT COUNT(count_column) FROM (SELECT  1 AS count_column FROM "name"  WHERE (id = 309749948 or second_parent_id = 309749948 ) LIMIT 100) subquery_for_count;
+select * from name where id = 729355521;
+select name_element from name where id = 729355521;
+select name_element from name where id = 729355521;
+\d name
+\d author
+SELECT  "reference".* FROM "reference"  WHERE ( id = '1037850641' or parent_id = '1037850641')  ORDER BY case when parent_id is null then 'A' else 'B' end, citation;
+SELECT  id,citation FROM "reference"  WHERE ( id = '1037850641' or parent_id = '1037850641')  ORDER BY case when parent_id is null then 'A' else 'B' end, citation;
+\q
+update pg_database set datallowconn = 'false' where datname = 'nsl';
+SELECT pg_terminate_backend(procpid) FROM pg_stat_activity WHERE datname = 'nsl';
+\d pg_stat_activity
+SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = 'nsl';
+drop database nsl;
+\q
+select id,full_name from name where name_type_id in (select id from name_type where name_type.name in ('formula','hybrid formula')) and second_parent_id is not null;
+select id,full_name from name where name_type_id in (select id from name_type where name_type.name in ('named hybrid')) and second_parent_id is not null;
+select id,full_name from name where name_type_id in (select id from name_type where name_type.name in ('named hybrid')) and second_parent_id is not null order by id;
+select id,name_rank_id,full_name from name where name_type_id in (select id from name_type where name_type.name in ('named hybrid')) and second_parent_id is not null order by id;
+select id,rank.name,full_name from name inner join name_rank rank on name.name_rank_id = rank.id where name_type_id in (select id from name_type where name_type.name in ('named hybrid')) and second_parent_id is not null order by id;
+select name.id,rank.name,full_name from name inner join name_rank rank on name.name_rank_id = rank.id where name_type_id in (select id from name_type where name_type.name in ('named hybrid')) and second_parent_id is not null order by id;
+select name.id,rank.name,full_name from name inner join name_rank rank on name.name_rank_id = rank.id where name_type_id in (select id from name_type where name_type.name in ('named hybrid')) and second_parent_id is not null order by rank.name,name.full_name;
+SELECT     "reference".* 
+FROM       "reference" 
+INNER JOIN 
+           ( 
+                  SELECT "reference"."id" AS pg_search_id, 
+                                citation AS rank 
+                  FROM   "reference" 
+                  WHERE  ((( 
+                                              To_tsvector('english', F_unaccent(COALESCE("reference"."citation"::text, '')))) @@ (to_tsquery('english', ''' '
+                                              || F_unaccent('paxton*mag') 
+                                              || ' ''' 
+                                              || ':*') && to_tsquery('english', ''' ' 
+                                              || f_unaccent('bot') 
+                                              || ' ''' 
+                                              || ':*') && to_tsquery('english', ''' ' 
+                                              || f_unaccent('1840') 
+                                              || ' ''' 
+                                              || ':*'))))) AS pg_search_52367a6622b19f08825e91 
+ON         "reference"."id" = pg_search_52367a6622b19f08825e91.pg_search_id 
+ORDER BY   pg_search_52367a6622b19f08825e91.rank DESC, 
+           "reference"."id" ASC, 
+           citation limit 100;
+SELECT     "reference".* 
+FROM       "reference" 
+INNER JOIN 
+           ( 
+                  SELECT "reference"."id" AS pg_search_id, 
+                                citation AS rank 
+                  FROM   "reference" 
+                  WHERE  ((( 
+                                              To_tsvector('english', F_unaccent(COALESCE("reference"."citation"::text, '')))) @@ (to_tsquery('english', ''' '
+                                              || F_unaccent('paxton*mag') 
+                                              || ' ''' 
+                                              || ':*') && to_tsquery('english', ''' ' 
+                                              || f_unaccent('bot') 
+                                              || ' ''' 
+                                              || ':*') && to_tsquery('english', ''' ' 
+                                              || f_unaccent('1840') 
+                                              || ' ''' 
+                                              || ':*'))))) AS pg_search_52367a6622b19f08825e91 
+ON         "reference"."id" = pg_search_52367a6622b19f08825e91.pg_search_id 
+ORDER BY   pg_search_52367a6622b19f08825e91.rank DESC, 
+           "reference"."id" ASC, 
+           citation limit 100;
+SELECT     "reference".citation 
+FROM       "reference" 
+INNER JOIN 
+           ( 
+                  SELECT "reference"."id" AS pg_search_id, 
+                                citation AS rank 
+                  FROM   "reference" 
+                  WHERE  ((( 
+                                              To_tsvector('english', F_unaccent(COALESCE("reference"."citation"::text, '')))) @@ (to_tsquery('english', ''' '
+                                              || F_unaccent('paxton*mag') 
+                                              || ' ''' 
+                                              || ':*') && to_tsquery('english', ''' ' 
+                                              || f_unaccent('bot') 
+                                              || ' ''' 
+                                              || ':*') && to_tsquery('english', ''' ' 
+                                              || f_unaccent('1840') 
+                                              || ' ''' 
+                                              || ':*'))))) AS pg_search_52367a6622b19f08825e91 
+ON         "reference"."id" = pg_search_52367a6622b19f08825e91.pg_search_id 
+ORDER BY   pg_search_52367a6622b19f08825e91.rank DESC, 
+           "reference"."id" ASC, 
+           citation limit 100;
+SELECT     "reference".citation 
+FROM       "reference" 
+INNER JOIN 
+           ( 
+                  SELECT "reference"."id" AS pg_search_id, 
+                         (Ts_rank((To_tsvector('english', F_unaccent(COALESCE("reference"."citation"::text, '')))), (To_tsquery('english', ''' '
+                                || F_unaccent('paxton*mag') 
+                                || ' ''' 
+                                || ':*') && To_tsquery('english', ''' ' 
+                                || F_unaccent('bot') 
+                                || ' ''' 
+                                || ':*') && To_tsquery('english', ''' ' 
+                                || F_unaccent('1840') 
+                                || ' ''' 
+                                || ':*')), 0)) AS rank 
+                  FROM   "reference" 
+                  WHERE  ((( 
+                                              To_tsvector('english', F_unaccent(COALESCE("reference"."citation"::text, '')))) @@ (to_tsquery('english', ''' '
+                                              || F_unaccent('paxton*mag') 
+                                              || ' ''' 
+                                              || ':*') && to_tsquery('english', ''' ' 
+                                              || f_unaccent('bot') 
+                                              || ' ''' 
+                                              || ':*') && to_tsquery('english', ''' ' 
+                                              || f_unaccent('1840') 
+                                              || ' ''' 
+                                              || ':*'))))) AS pg_search_52367a6622b19f08825e91 
+ON         "reference"."id" = pg_search_52367a6622b19f08825e91.pg_search_id 
+ORDER BY   pg_search_52367a6622b19f08825e91.rank DESC, 
+           "reference"."id" ASC, 
+           citation limit 100;
+SELECT     "reference".citation 
+FROM       "reference" 
+INNER JOIN 
+           ( 
+                  SELECT "reference"."id" AS pg_search_id, 
+                         (Ts_rank((To_tsvector('english', F_unaccent(COALESCE("reference"."citation"::text, '')))), (To_tsquery('english', ''' '
+                                || F_unaccent('paxton*mag') 
+                                || ' ''' 
+                                || ':*') && To_tsquery('english', ''' ' 
+                                || F_unaccent('bot') 
+                                || ' ''' 
+                                || ':*') && To_tsquery('english', ''' ' 
+                                || F_unaccent('1840') 
+                                || ' ''' 
+                                || ':*')), 0)) AS rank 
+                  FROM   "reference" 
+                  WHERE  ((( 
+                                              To_tsvector('english', F_unaccent(COALESCE("reference"."citation"::text, '')))) @@ (to_tsquery('english', ''' '
+                                              || F_unaccent('paxton*mag') 
+                                              || ' ''' 
+                                              || ':*') && to_tsquery('english', ''' ' 
+                                              || f_unaccent('bot') 
+                                              || ' ''' 
+                                              || ':*') && to_tsquery('english', ''' ' 
+                                              || f_unaccent('1840') 
+                                              || ' ''' 
+                                              || ':*'))))) AS pg_search_52367a6622b19f08825e91 
+ON         "reference"."id" = pg_search_52367a6622b19f08825e91.pg_search_id 
+ORDER BY citation limit 100;
+SELECT     "reference".citation 
+FROM       "reference" 
+INNER JOIN 
+           ( 
+                  SELECT "reference"."id" AS pg_search_id, 
+                                citation AS rank 
+                  FROM   "reference" 
+                  WHERE  ((( 
+                                              To_tsvector('english', F_unaccent(COALESCE("reference"."citation"::text, '')))) @@ (to_tsquery('english', ''' '
+                                              || F_unaccent('paxton*mag') 
+                                              || ' ''' 
+                                              || ':*') && to_tsquery('english', ''' ' 
+                                              || f_unaccent('bot') 
+                                              || ' ''' 
+                                              || ':*') && to_tsquery('english', ''' ' 
+                                              || f_unaccent('1840') 
+                                              || ' ''' 
+                                              || ':*'))))) AS pg_search_52367a6622b19f08825e91 
+ON         "reference"."id" = pg_search_52367a6622b19f08825e91.pg_search_id 
+ORDER BY   pg_search_52367a6622b19f08825e91.rank DESC, 
+           "reference"."id" ASC, 
+           citation limit 100
+;
+SELECT     "reference".citation 
+FROM       "reference" 
+INNER JOIN 
+           ( 
+                  SELECT "reference"."id" AS pg_search_id, 
+                                citation AS rank 
+                  FROM   "reference" 
+                  WHERE  ((( 
+                                              To_tsvector('english', F_unaccent(COALESCE("reference"."citation"::text, '')))) @@ (to_tsquery('english', ''' '
+                                              || F_unaccent('paxton*mag') 
+                                              || ' ''' 
+                                              || ':*') && to_tsquery('english', ''' ' 
+                                              || f_unaccent('bot') 
+                                              || ' ''' 
+                                              || ':*') && to_tsquery('english', ''' ' 
+                                              || f_unaccent('1840') 
+                                              || ' ''' 
+                                              || ':*'))))) AS pg_search_52367a6622b19f08825e91 
+ON         "reference"."id" = pg_search_52367a6622b19f08825e91.pg_search_id 
+ORDER BY   pg_search_52367a6622b19f08825e91.rank, 
+           "reference"."id" ASC, 
+           citation limit 100
+;
+\d Name
+select id,citation,duplicate_of_id from reference where id = 30300;
+select count(*) from instance where id =31325;
+select max(id) from instance;
+select min(id) from instance;
+select count(*) from reference where id =31325;
+\q
+\q
+SELECT Count(*) 
+FROM   NAME n 
+       INNER JOIN instance i 
+               ON n.id = i.name_id 
+       INNER JOIN name_status ns 
+               ON n.name_status_id = ns.id 
+       INNER JOIN instance_type it 
+               ON i.instance_type_id = it.id 
+WHERE  ns.NAME = 'orth. var.' 
+       AND it.NAME = 'tax. nov.'; 
+SELECT n.id,n.full_name
+FROM   NAME n 
+       INNER JOIN instance i 
+               ON n.id = i.name_id 
+       INNER JOIN name_status ns 
+               ON n.name_status_id = ns.id 
+       INNER JOIN instance_type it 
+               ON i.instance_type_id = it.id 
+WHERE  ns.NAME = 'orth. var.' 
+       AND it.NAME = 'tax. nov.'
+order by n.full_name
+limit 100; 
+SELECT n.id,n.full_name
+FROM   NAME n 
+       INNER JOIN instance i 
+               ON n.id = i.name_id 
+       INNER JOIN name_status ns 
+               ON n.name_status_id = ns.id 
+       INNER JOIN instance_type it 
+               ON i.instance_type_id = it.id 
+WHERE  ns.NAME = 'orth. var.' 
+       AND it.NAME = 'tax. nov.'
+order by n.full_name;
+  
+\q
+update pg_database set datallowconn = 'false' where datname = 'nsl';
+SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = 'nsl';
+drop database nsl;
+\q
+select count(*) from name n inner join instance i on n.id = i.name_id;
+\dt
+select name from name_status order by 1;
+select count(*) from name n inner join instance i on n.id = i.name_id where n.name_status_id = (select id from name_status ns where ns.name = 'orth. var.';
+);
+select count(*) from name n inner join instance i on n.id = i.name_id where n.name_status_id = (select id from name_status ns where ns.name = 'orth. var.'
+);
+\d instance_type
+select name from instance_type;
+\d instance_type
+select count(*) from name n inner join instance i on n.id = i.name_id where n.name_status_id = (select id from name_status ns where ns.name = 'orth. var.'
+) and i.instance_type_id = (select id from instance_type it where it.name = 'tax. nov.';
+);
+select count(*) from name n inner join instance i on n.id = i.name_id where n.name_status_id = (select id from name_status ns where ns.name = 'orth. var.'
+) and i.instance_type_id = (select id from instance_type it where it.name = 'tax. nov.'
+);
+select count(*) from name n inner join instance i on n.id = i.name_id inner join name_status ns on n.name_status_id = ns.id inner join instance_type it on i.instance_type_id = it.id;
+select count(*) from name n inner join instance i on n.id = i.name_id inner join name_status ns on n.name_status_id = ns.id inner join instance_type it on i.instance_type_id = it.id ;
+select count(*) from name n inner join instance i on n.id = i.name_id inner join name_status ns on n.name_status_id = ns.id inner join instance_type it on i.instance_type_id = it.id  where ns.name = 'orth. var.' and it.name = 'tax. nov.';
+\t
+\t
+\timing
+select count(*) from name n inner join instance i on n.id = i.name_id inner join name_status ns on n.name_status_id = ns.id inner join instance_type it on i.instance_type_id = it.id  where ns.name = 'orth. var.' and it.name = 'tax. nov.';
+select count(*) from name n inner join instance i on n.id = i.name_id inner join name_status ns on n.name_status_id = ns.id inner join instance_type it on i.instance_type_id = it.id  where ns.name = 'orth. var.' and it.name = 'tax. nov.';
+select count(*) from name n inner join instance i on n.id = i.name_id inner join name_status ns on n.name_status_id = ns.id inner join instance_type it on i.instance_type_id = it.id  where ns.name = 'orth. var.' and it.name = 'tax. nov.';
+SELECT Count(*) 
+FROM   NAME n 
+       INNER JOIN instance i 
+               ON n.id = i.name_id 
+       INNER JOIN name_status ns 
+               ON n.name_status_id = ns.id 
+       INNER JOIN instance_type it 
+               ON i.instance_type_id = it.id 
+WHERE  ns.NAME = 'orth. var.' 
+       AND it.NAME = 'tax. nov.'; 
+SELECT "instance".* FROM "instance" INNER JOIN "reference" ON "reference"."id" = "instance"."reference_id" INNER JOIN "name" ON "name"."id" = "instance"."name_id" WHERE "instance"."reference_id" = 225088008  ORDER BY lpad(
+                                       regexp_replace(
+                                         regexp_replace(
+                                           regexp_replace(
+                                             regexp_replace(
+                                               regexp_replace(page,'-.*$',''),
+                                             '[A-z. ]','','g'),
+                                           '^  *',''),
+                                         '^,',''),
+                                       ',.*',''),
+                                     12,'0'),name.full_name;
+SELECT "instance".* FROM "instance" INNER JOIN "reference" ON "reference"."id" = "instance"."reference_id" INNER JOIN "name" ON "name"."id" = "instance"."name_id" WHERE "instance"."reference_id" = 225088008  ORDER BY lpad(
+                                       regexp_replace(
+                                         regexp_replace(
+                                           regexp_replace(
+                                             regexp_replace(
+                                               regexp_replace(page,'-.*$',''),
+                                             '[A-z. ]','','g'),
+                                           '^  *',''),
+                                         '^,',''),
+                                       ',.*',''),
+                                     12,'0'),name.full_name;
+select count(*) from name n inner join instance i on n.id = i.name_id where n.name_status_id = (select id from name_status ns where ns.name = 'orth. var.'
+) and i.instance_type_id = (select id from instance_type it where it.name = 'tax. nov.';
+);
+SELECT name.full_name, instance.page 
+FROM "instance" INNER JOIN "reference" ON "reference"."id" = "instance"."reference_id" INNER JOIN "name" ON "name"."id" = "instance"."name_id" 
+WHERE "instance"."reference_id" = 225088008  
+ORDER BY lpad(
+                                       regexp_replace(
+                                         regexp_replace(
+                                           regexp_replace(
+                                             regexp_replace(
+                                               regexp_replace(page,'-.*$',''),
+                                             '[A-z. ]','','g'),
+                                           '^  *',''),
+                                         '^,',''),
+                                       ',.*',''),
+                                     12,'0'),name.full_name;
+SELECT   n.id,n.full_name
+  FROM   NAME n
+         INNER JOIN instance i
+                 ON n.id = i.name_id
+         INNER JOIN name_status ns
+                 ON n.name_status_id = ns.id
+         INNER JOIN instance_type it
+                 ON i.instance_type_id = it.id
+  WHERE  ns.NAME = 'orth. var.'
+         AND it.NAME = 'tax. nov.'
+  order by n.full_name;
+SELECT   n.id,n.full_name
+  FROM   NAME n
+         INNER JOIN instance i
+                 ON n.id = i.name_id
+         INNER JOIN name_status ns
+                 ON n.name_status_id = ns.id
+         INNER JOIN instance_type it
+                 ON i.instance_type_id = it.id
+  WHERE  ns.NAME = 'orth. var.'
+         AND it.NAME = 'tax. nov.'
+  order by n.full_name;
+SELECT   n.id,n.full_name
+  FROM   NAME n
+         INNER JOIN instance i
+                 ON n.id = i.name_id
+         INNER JOIN name_status ns
+                 ON n.name_status_id = ns.id
+         INNER JOIN instance_type it
+                 ON i.instance_type_id = it.id
+  WHERE  ns.NAME = 'orth. var.'
+         AND it.NAME = 'tax. nov.'
+  order by n.full_name;
+select count(*) from
+(SELECT   i.id
+  FROM   NAME n
+         INNER JOIN instance i
+                 ON n.id = i.name_id
+         INNER JOIN name_status ns
+                 ON n.name_status_id = ns.id
+         INNER JOIN instance_type it
+                 ON i.instance_type_id = it.id
+  WHERE  ns.NAME = 'orth. var.'
+         AND it.NAME = 'tax. nov.'
+  order by n.full_name) join;
+select count(*) from
+(SELECT   i.id
+  FROM   NAME n
+         INNER JOIN instance i
+                 ON n.id = i.name_id
+         INNER JOIN name_status ns
+                 ON n.name_status_id = ns.id
+         INNER JOIN instance_type it
+                 ON i.instance_type_id = it.id
+  WHERE  ns.NAME = 'orth. var.'
+         AND it.NAME = 'tax. nov.') as foo;
+select  count(*) 
+  from instance
+ where id in
+(SELECT   i.id
+  FROM   NAME n
+         INNER JOIN instance i
+                 ON n.id = i.name_id
+         INNER JOIN name_status ns
+                 ON n.name_status_id = ns.id
+         INNER JOIN instance_type it
+                 ON i.instance_type_id = it.id
+  WHERE  ns.NAME = 'orth. var.'
+         AND it.NAME = 'tax. nov.');
+  update instance
+     set instance_type_id = (select id from instance_type where name = 'primary reference')
+ where id in
+(SELECT   i.id
+  FROM   NAME n
+         INNER JOIN instance i
+                 ON n.id = i.name_id
+         INNER JOIN name_status ns
+                 ON n.name_status_id = ns.id
+         INNER JOIN instance_type it
+                 ON i.instance_type_id = it.id
+  WHERE  ns.NAME = 'orth. var.'
+         AND it.NAME = 'tax. nov.');
+select  count(*) 
+  from instance
+ where id in
+(SELECT   i.id
+  FROM   NAME n
+         INNER JOIN instance i
+                 ON n.id = i.name_id
+         INNER JOIN name_status ns
+                 ON n.name_status_id = ns.id
+         INNER JOIN instance_type it
+                 ON i.instance_type_id = it.id
+  WHERE  ns.NAME = 'orth. var.'
+         AND it.NAME = 'tax. nov.');
+begin
+  update instance
+     set instance_type_id = (select id from instance_type where name = 'tax. nov.')
+ where id in
+(SELECT   i.id
+  FROM   NAME n
+         INNER JOIN instance i
+                 ON n.id = i.name_id
+         INNER JOIN name_status ns
+                 ON n.name_status_id = ns.id
+         INNER JOIN instance_type it
+                 ON i.instance_type_id = it.id
+  WHERE  ns.NAME = 'orth. var.'
+         AND it.NAME = 'primary reference');
+rollback;
+begin;
+  update instance
+     set instance_type_id = (select id from instance_type where name = 'tax. nov.')
+ where id in
+(SELECT   i.id
+  FROM   NAME n
+         INNER JOIN instance i
+                 ON n.id = i.name_id
+         INNER JOIN name_status ns
+                 ON n.name_status_id = ns.id
+         INNER JOIN instance_type it
+                 ON i.instance_type_id = it.id
+  WHERE  ns.NAME = 'orth. var.'
+         AND it.NAME = 'primary reference');
+select  count(*) 
+  from instance
+ where id in
+(SELECT   i.id
+  FROM   NAME n
+         INNER JOIN instance i
+                 ON n.id = i.name_id
+         INNER JOIN name_status ns
+                 ON n.name_status_id = ns.id
+         INNER JOIN instance_type it
+                 ON i.instance_type_id = it.id
+  WHERE  ns.NAME = 'orth. var.'
+         AND it.NAME = 'tax. nov.');
+rollback;
+begin;
+update instance
+     set instance_type_id = (select id from instance_type where name = 'primary reference')
+ where id in
+(SELECT   i.id
+  FROM   NAME n
+         INNER JOIN instance i
+                 ON n.id = i.name_id
+         INNER JOIN name_status ns
+                 ON n.name_status_id = ns.id
+         INNER JOIN instance_type it
+                 ON i.instance_type_id = it.id
+  WHERE  ns.NAME = 'orth. var.'
+         AND it.NAME = 'tax. nov.');
+rollback;
+select now;
+\d instance
+select current_timestamp;
+select current_timestamp_with_timezone;
+select max(created_at) from name;
+select max(created_at) from name;
+begin;
+update instance
+     set instance_type_id = (select id from instance_type where name = 'primary reference'),
+         updated_at = current_timestamp,
+         updated_by = 'Admin'
+ where id in
+(SELECT   i.id
+  FROM   NAME n
+         INNER JOIN instance i
+                 ON n.id = i.name_id
+         INNER JOIN name_status ns
+                 ON n.name_status_id = ns.id
+         INNER JOIN instance_type it
+                 ON i.instance_type_id = it.id
+  WHERE  ns.NAME = 'orth. var.'
+         AND it.NAME = 'tax. nov.');
+rollback;
+\q
+select reference_id,count(*) from instance group by reference_id;
+select citation from reference where id = 51507045;
+SELECT "instance".* FROM "instance" INNER JOIN "reference" ON "reference"."id" = "instance"."reference_id" INNER JOIN "name" ON "name"."id" = "instance"."name_id" WHERE "instance"."reference_id" = 225088008  ORDER BY lpad(
+                                       regexp_replace(
+                                         regexp_replace(
+                                           regexp_replace(
+                                             regexp_replace(
+                                               regexp_replace(page,'-.*$',''),
+                                             '[A-z. ]','','g'),
+                                           '^  *',''),
+                                         '^,',''),
+                                       ',.*',''),
+                                     12,'0'),name.full_name;
+SELECT name.full_name, instance.page FROM "instance" INNER JOIN "reference" ON "reference"."id" = "instance"."reference_id" INNER JOIN "name" ON "name"."id" = "instance"."name_id" WHERE "instance"."reference_id" = 225088008  ORDER BY lpad(
+                                       regexp_replace(
+                                         regexp_replace(
+                                           regexp_replace(
+                                             regexp_replace(
+                                               regexp_replace(page,'-.*$',''),
+                                             '[A-z. ]','','g'),
+                                           '^  *',''),
+                                         '^,',''),
+                                       ',.*',''),
+                                     12,'0'),name.full_name;
+SELECT name.full_name, instance.page,
+       lpad(
+                                       regexp_replace(
+                                         regexp_replace(
+                                           regexp_replace(
+                                             regexp_replace(
+                                               regexp_replace(page,'-.*$',''),
+                                             '[A-z. ]','','g'),
+                                           '^  *',''),
+                                         '^,',''),
+                                       ',.*',''),
+                                     12,'0') pseudo_page
+FROM "instance" INNER JOIN "reference" ON "reference"."id" = "instance"."reference_id" INNER JOIN "name" ON "name"."id" = "instance"."name_id" 
+WHERE "instance"."reference_id" = 225088008  
+ORDER BY lpad(
+                                       regexp_replace(
+                                         regexp_replace(
+                                           regexp_replace(
+                                             regexp_replace(
+                                               regexp_replace(page,'-.*$',''),
+                                             '[A-z. ]','','g'),
+                                           '^  *',''),
+                                         '^,',''),
+                                       ',.*',''),
+                                     12,'0'),name.full_name
+;
+SELECT name.full_name, instance.page,
+       lpad(
+                                       regexp_replace(
+                                         regexp_replace(
+                                           regexp_replace(
+                                             regexp_replace(
+                                               regexp_replace(page,'-.*$',''),
+                                             '[A-z. ]','','g'),
+                                           '^  *',''),
+                                         '^,',''),
+                                       ',.*',''),
+                                     12,'0') pseudo_page
+FROM "instance" INNER JOIN "reference" ON "reference"."id" = "instance"."reference_id" INNER JOIN "name" ON "name"."id" = "instance"."name_id" 
+WHERE "instance"."reference_id" = 225088008  
+ORDER BY lpad(
+                                       regexp_replace(
+                                         regexp_replace(
+                                           regexp_replace(
+                                             regexp_replace(
+                                               regexp_replace(page,'-.*$',''),
+                                             '[A-z. ]','','g'),
+                                           '^  *',''),
+                                         '^,',''),
+                                       ',.*',''),
+                                     12,'0'),name.full_name
+;
+SELECT name.full_name, instance.page,
+       lpad(
+                                       regexp_replace(
+                                         regexp_replace(
+                                           regexp_replace(
+                                             regexp_replace(
+                                               regexp_replace(page,'.*$',''),
+                                             '[A-z. ]','','g'),
+                                           '^  *',''),
+                                         '^,',''),
+                                       ',.*',''),
+                                     12,'0') pseudo_page
+FROM "instance" INNER JOIN "reference" ON "reference"."id" = "instance"."reference_id" INNER JOIN "name" ON "name"."id" = "instance"."name_id" 
+WHERE "instance"."reference_id" = 225088008  
+ORDER BY lpad(
+                                       regexp_replace(
+                                         regexp_replace(
+                                           regexp_replace(
+                                             regexp_replace(
+                                               regexp_replace(page,'.*$',''),
+                                             '[A-z. ]','','g'),
+                                           '^  *',''),
+                                         '^,',''),
+                                       ',.*',''),
+                                     12,'0'),name.full_name
+;
+SELECT name.full_name, instance.page,
+       lpad(
+                                       regexp_replace(
+                                         regexp_replace(
+                                           regexp_replace(
+                                             regexp_replace(
+                                               regexp_replace(
+                                                 regexp_replace(page,'x','x')
+                                               '.*$',''),
+                                             '[A-z. ]','','g'),
+                                           '^  *',''),
+                                         '^,',''),
+                                       ',.*',''),
+                                     12,'0') pseudo_page
+FROM "instance" INNER JOIN "reference" ON "reference"."id" = "instance"."reference_id" INNER JOIN "name" ON "name"."id" = "instance"."name_id" 
+WHERE "instance"."reference_id" = 225088008  
+ORDER BY lpad(
+                                       regexp_replace(
+                                         regexp_replace(
+                                           regexp_replace(
+                                             regexp_replace(
+                                               regexp_replace(
+                                                 regexp_replace(page,'x','x')
+                                               '.*$',''),
+                                             '[A-z. ]','','g'),
+                                           '^  *',''),
+                                         '^,',''),
+                                       ',.*',''),
+                                     12,'0'),name.full_name
+;
+SELECT name.full_name, instance.page,
+       lpad(
+                                       regexp_replace(
+                                         regexp_replace(
+                                           regexp_replace(
+                                             regexp_replace(
+                                               regexp_replace(
+                                                 regexp_replace(page,'x','x'),
+                                               '.*$',''),
+                                             '[A-z. ]','','g'),
+                                           '^  *',''),
+                                         '^,',''),
+                                       ',.*',''),
+                                     12,'0') pseudo_page
+FROM "instance" INNER JOIN "reference" ON "reference"."id" = "instance"."reference_id" INNER JOIN "name" ON "name"."id" = "instance"."name_id" 
+WHERE "instance"."reference_id" = 225088008  
+ORDER BY lpad(
+                                       regexp_replace(
+                                         regexp_replace(
+                                           regexp_replace(
+                                             regexp_replace(
+                                               regexp_replace(
+                                                 regexp_replace(page,'x','x'),
+                                               '.*$',''),
+                                             '[A-z. ]','','g'),
+                                           '^  *',''),
+                                         '^,',''),
+                                       ',.*',''),
+                                     12,'0'),name.full_name
+;
+SELECT name.full_name, instance.page,
+       lpad(
+                                       regexp_replace(
+                                         regexp_replace(
+                                           regexp_replace(
+                                             regexp_replace(
+                                               regexp_replace(
+                                                 regexp_replace(page,'x','x'),
+                                               '.*$',''),
+                                             '[A-z. ]','','g'),
+                                           '^  *',''),
+                                         '^,',''),
+                                       ',.*',''),
+                                     12,'0') pseudo_page,
+      regexp_replace(page,'[0-9][0-9]*','') mo
+FROM "instance" INNER JOIN "reference" ON "reference"."id" = "instance"."reference_id" INNER JOIN "name" ON "name"."id" = "instance"."name_id" 
+WHERE "instance"."reference_id" = 225088008  
+ORDER BY lpad(
+                                       regexp_replace(
+                                         regexp_replace(
+                                           regexp_replace(
+                                             regexp_replace(
+                                               regexp_replace(
+                                                 regexp_replace(page,'x','x'),
+                                               '.*$',''),
+                                             '[A-z. ]','','g'),
+                                           '^  *',''),
+                                         '^,',''),
+                                       ',.*',''),
+                                     12,'0'),name.full_name
+;
+SELECT name.full_name, instance.page,
+       lpad(
+                                       regexp_replace(
+                                         regexp_replace(
+                                           regexp_replace(
+                                             regexp_replace(
+                                               regexp_replace(
+                                                 regexp_replace(page,'x','x'),
+                                               '.*$',''),
+                                             '[A-z. ]','','g'),
+                                           '^  *',''),
+                                         '^,',''),
+                                       ',.*',''),
+                                     12,'0') pseudo_page,
+      regexp_replace(page,'[0-9][0-9]*','') mo
+FROM "instance" INNER JOIN "reference" ON "reference"."id" = "instance"."reference_id" INNER JOIN "name" ON "name"."id" = "instance"."name_id" 
+WHERE "instance"."reference_id" = 225088008  
+ORDER BY lpad(
+                                       regexp_replace(
+                                         regexp_replace(
+                                           regexp_replace(
+                                             regexp_replace(
+                                               regexp_replace(
+                                                 regexp_replace(page,'x','x'),
+                                               '.*$',''),
+                                             '[A-z. ]','','g'),
+                                           '^  *',''),
+                                         '^,',''),
+                                       ',.*',''),
+                                     12,'0'),name.full_name
+;
+SELECT name.full_name, instance.page,
+       lpad(
+                                       regexp_replace(
+                                         regexp_replace(
+                                           regexp_replace(
+                                             regexp_replace(
+                                               regexp_replace(
+                                                 regexp_replace(page,'x','x'),
+                                               '.*$',''),
+                                             '[A-z. ]','','g'),
+                                           '^  *',''),
+                                         '^,',''),
+                                       ',.*',''),
+                                     12,'0') pseudo_page,
+      regexp_replace(page,'.*([0-9][0-9]*\)','\1') mo
+FROM "instance" INNER JOIN "reference" ON "reference"."id" = "instance"."reference_id" INNER JOIN "name" ON "name"."id" = "instance"."name_id" 
+WHERE "instance"."reference_id" = 225088008  
+ORDER BY lpad(
+                                       regexp_replace(
+                                         regexp_replace(
+                                           regexp_replace(
+                                             regexp_replace(
+                                               regexp_replace(
+                                                 regexp_replace(page,'x','x'),
+                                               '.*$',''),
+                                             '[A-z. ]','','g'),
+                                           '^  *',''),
+                                         '^,',''),
+                                       ',.*',''),
+                                     12,'0'),name.full_name
+;
+SELECT name.full_name, instance.page,
+       lpad(
+                                       regexp_replace(
+                                         regexp_replace(
+                                           regexp_replace(
+                                             regexp_replace(
+                                               regexp_replace(
+                                                 regexp_replace(page,'x','x'),
+                                               '.*$',''),
+                                             '[A-z. ]','','g'),
+                                           '^  *',''),
+                                         '^,',''),
+                                       ',.*',''),
+                                     12,'0') pseudo_page,
+      regexp_replace(page,'.*\([0-9][0-9]*\)','\1') mo
+FROM "instance" INNER JOIN "reference" ON "reference"."id" = "instance"."reference_id" INNER JOIN "name" ON "name"."id" = "instance"."name_id" 
+WHERE "instance"."reference_id" = 225088008  
+ORDER BY lpad(
+                                       regexp_replace(
+                                         regexp_replace(
+                                           regexp_replace(
+                                             regexp_replace(
+                                               regexp_replace(
+                                                 regexp_replace(page,'x','x'),
+                                               '.*$',''),
+                                             '[A-z. ]','','g'),
+                                           '^  *',''),
+                                         '^,',''),
+                                       ',.*',''),
+                                     12,'0'),name.full_name
+;
+ELECT name.full_name, instance.page,
+       lpad(
+                                       regexp_replace(
+                                         regexp_replace(
+                                           regexp_replace(
+                                             regexp_replace(
+                                               regexp_replace(
+                                                 regexp_replace(page,'x','x'),
+                                               '.*$',''),
+                                             '[A-z. ]','','g'),
+                                           '^  *',''),
+                                         '^,',''),
+                                       ',.*',''),
+                                     12,'0') pseudo_page,
+      regexp_replace(page,'.*([0-9][0-9]*)','\1') mo
+FROM "instance" INNER JOIN "reference" ON "reference"."id" = "instance"."reference_id" INNER JOIN "name" ON "name"."id" = "instance"."name_id" 
+WHERE "instance"."reference_id" = 225088008  
+ORDER BY lpad(
+                                       regexp_replace(
+                                         regexp_replace(
+                                           regexp_replace(
+                                             regexp_replace(
+                                               regexp_replace(
+                                                 regexp_replace(page,'x','x'),
+                                               '.*$',''),
+                                             '[A-z. ]','','g'),
+                                           '^  *',''),
+                                         '^,',''),
+                                       ',.*',''),
+                                     12,'0'),name.full_name
+;
+SELECT name.full_name, instance.page,
+       lpad(
+                                       regexp_replace(
+                                         regexp_replace(
+                                           regexp_replace(
+                                             regexp_replace(
+                                               regexp_replace(
+                                                 regexp_replace(page,'x','x'),
+                                               '.*$',''),
+                                             '[A-z. ]','','g'),
+                                           '^  *',''),
+                                         '^,',''),
+                                       ',.*',''),
+                                     12,'0') pseudo_page,
+      regexp_replace(page,'.*([0-9][0-9]*)','\1') mo
+FROM "instance" INNER JOIN "reference" ON "reference"."id" = "instance"."reference_id" INNER JOIN "name" ON "name"."id" = "instance"."name_id" 
+WHERE "instance"."reference_id" = 225088008  
+ORDER BY lpad(
+                                       regexp_replace(
+                                         regexp_replace(
+                                           regexp_replace(
+                                             regexp_replace(
+                                               regexp_replace(
+                                                 regexp_replace(page,'x','x'),
+                                               '.*$',''),
+                                             '[A-z. ]','','g'),
+                                           '^  *',''),
+                                         '^,',''),
+                                       ',.*',''),
+                                     12,'0'),name.full_name
+;
+SELECT name.full_name, instance.page,
+       lpad(
+                                       regexp_replace(
+                                         regexp_replace(
+                                           regexp_replace(
+                                             regexp_replace(
+                                               regexp_replace(
+                                                 regexp_replace(page,'x','x'),
+                                               '.*$',''),
+                                             '[A-z. ]','','g'),
+                                           '^  *',''),
+                                         '^,',''),
+                                       ',.*',''),
+                                     12,'0') pseudo_page,
+      regexp_replace(page,'.*([0-9][0-9]*)','\1') mo
+FROM "instance" INNER JOIN "reference" ON "reference"."id" = "instance"."reference_id" INNER JOIN "name" ON "name"."id" = "instance"."name_id" 
+WHERE "instance"."reference_id" = 225088008  
+ORDER BY lpad(
+                                       regexp_replace(
+                                         regexp_replace(
+                                           regexp_replace(
+                                             regexp_replace(
+                                               regexp_replace(
+                                                 regexp_replace(page,'x','x'),
+                                               '.*$',''),
+                                             '[A-z. ]','','g'),
+                                           '^  *',''),
+                                         '^,',''),
+                                       ',.*',''),
+                                     12,'0'),name.full_name
+;
+SELECT name.full_name, instance.page,
+       lpad(
+                                       regexp_replace(
+                                         regexp_replace(
+                                           regexp_replace(
+                                             regexp_replace(
+                                               regexp_replace(
+                                                 regexp_replace(page,'x','x'),
+                                               '.*$',''),
+                                             '[A-z. ]','','g'),
+                                           '^  *',''),
+                                         '^,',''),
+                                       ',.*',''),
+                                     12,'0') pseudo_page,
+      regexp_replace(page,'([0-9][0-9]*)','\1') mo
+FROM "instance" INNER JOIN "reference" ON "reference"."id" = "instance"."reference_id" INNER JOIN "name" ON "name"."id" = "instance"."name_id" 
+WHERE "instance"."reference_id" = 225088008  
+ORDER BY lpad(
+                                       regexp_replace(
+                                         regexp_replace(
+                                           regexp_replace(
+                                             regexp_replace(
+                                               regexp_replace(
+                                                 regexp_replace(page,'x','x'),
+                                               '.*$',''),
+                                             '[A-z. ]','','g'),
+                                           '^  *',''),
+                                         '^,',''),
+                                       ',.*',''),
+                                     12,'0'),name.full_name
+;
+SELECT name.full_name, instance.page,
+       lpad(
+                                       regexp_replace(
+                                         regexp_replace(
+                                           regexp_replace(
+                                             regexp_replace(
+                                               regexp_replace(
+                                                 regexp_replace(page,'x','x'),
+                                               '.*$',''),
+                                             '[A-z. ]','','g'),
+                                           '^  *',''),
+                                         '^,',''),
+                                       ',.*',''),
+                                     12,'0') pseudo_page,
+      regexp_replace(page,'.*\([0-9][0-9]*\)','\1') mo
+FROM "instance" INNER JOIN "reference" ON "reference"."id" = "instance"."reference_id" INNER JOIN "name" ON "name"."id" = "instance"."name_id" 
+WHERE "instance"."reference_id" = 225088008  
+ORDER BY lpad(
+                                       regexp_replace(
+                                         regexp_replace(
+                                           regexp_replace(
+                                             regexp_replace(
+                                               regexp_replace(
+                                                 regexp_replace(page,'x','x'),
+                                               '.*$',''),
+                                             '[A-z. ]','','g'),
+                                           '^  *',''),
+                                         '^,',''),
+                                       ',.*',''),
+                                     12,'0'),name.full_name
+;
+SELECT name.full_name, instance.page,
+       lpad(
+                                       regexp_replace(
+                                         regexp_replace(
+                                           regexp_replace(
+                                             regexp_replace(
+                                               regexp_replace(
+                                                 regexp_replace(page,'x','x'),
+                                               '.*$',''),
+                                             '[A-z. ]','','g'),
+                                           '^  *',''),
+                                         '^,',''),
+                                       ',.*',''),
+                                     12,'0') pseudo_page,
+      regexp_replace(page,'\([0-9][0-9]*\)','\1') mo
+FROM "instance" INNER JOIN "reference" ON "reference"."id" = "instance"."reference_id" INNER JOIN "name" ON "name"."id" = "instance"."name_id" 
+WHERE "instance"."reference_id" = 225088008  
+ORDER BY lpad(
+                                       regexp_replace(
+                                         regexp_replace(
+                                           regexp_replace(
+                                             regexp_replace(
+                                               regexp_replace(
+                                                 regexp_replace(page,'x','x'),
+                                               '.*$',''),
+                                             '[A-z. ]','','g'),
+                                           '^  *',''),
+                                         '^,',''),
+                                       ',.*',''),
+                                     12,'0'),name.full_name
+;
+SELECT name.full_name, instance.page,
+       lpad(
+                                       regexp_replace(
+                                         regexp_replace(
+                                           regexp_replace(
+                                             regexp_replace(
+                                               regexp_replace(
+                                                 regexp_replace(page,'x','x'),
+                                               '.*$',''),
+                                             '[A-z. ]','','g'),
+                                           '^  *',''),
+                                         '^,',''),
+                                       ',.*',''),
+                                     12,'0') pseudo_page,
+      regexp_replace(page,'\([0-9][0-9]*\)','\1') mo
+FROM "instance" INNER JOIN "reference" ON "reference"."id" = "instance"."reference_id" INNER JOIN "name" ON "name"."id" = "instance"."name_id" 
+WHERE "instance"."reference_id" = 225088008  
+ORDER BY lpad(
+                                       regexp_replace(
+                                         regexp_replace(
+                                           regexp_replace(
+                                             regexp_replace(
+                                               regexp_replace(
+                                                 regexp_replace(page,'x','x'),
+                                               '.*$',''),
+                                             '[A-z. ]','','g'),
+                                           '^  *',''),
+                                         '^,',''),
+                                       ',.*',''),
+                                     12,'0'),name.full_name;
+SELECT id, name.full_name, instance.page,
+       lpad(
+                                       regexp_replace(
+                                         regexp_replace(
+                                           regexp_replace(
+                                             regexp_replace(
+                                               regexp_replace(
+                                                 regexp_replace(page,'x','x'),
+                                               '.*$',''),
+                                             '[A-z. ]','','g'),
+                                           '^  *',''),
+                                         '^,',''),
+                                       ',.*',''),
+                                     12,'0') pseudo_page,
+      regexp_replace(page,'\([0-9][0-9]*\)','\1') mo
+FROM "instance" INNER JOIN "reference" ON "reference"."id" = "instance"."reference_id" INNER JOIN "name" ON "name"."id" = "instance"."name_id" 
+WHERE "instance"."reference_id" = 225088008  
+ORDER BY lpad(
+                                       regexp_replace(
+                                         regexp_replace(
+                                           regexp_replace(
+                                             regexp_replace(
+                                               regexp_replace(
+                                                 regexp_replace(page,'x','x'),
+                                               '.*$',''),
+                                             '[A-z. ]','','g'),
+                                           '^  *',''),
+                                         '^,',''),
+                                       ',.*',''),
+                                     12,'0'),name.full_name;
+ELECT instance.id, name.full_name, instance.page,
+       lpad(
+                                       regexp_replace(
+                                         regexp_replace(
+                                           regexp_replace(
+                                             regexp_replace(
+                                               regexp_replace(
+                                                 regexp_replace(page,'x','x'),
+                                               '.*$',''),
+                                             '[A-z. ]','','g'),
+                                           '^  *',''),
+                                         '^,',''),
+                                       ',.*',''),
+                                     12,'0') pseudo_page,
+      regexp_replace(page,'\([0-9][0-9]*\)','\1') mo
+FROM "instance" INNER JOIN "reference" ON "reference"."id" = "instance"."reference_id" INNER JOIN "name" ON "name"."id" = "instance"."name_id" 
+WHERE "instance"."reference_id" = 225088008  
+ORDER BY lpad(
+                                       regexp_replace(
+                                         regexp_replace(
+                                           regexp_replace(
+                                             regexp_replace(
+                                               regexp_replace(
+                                                 regexp_replace(page,'x','x'),
+                                               '.*$',''),
+                                             '[A-z. ]','','g'),
+                                           '^  *',''),
+                                         '^,',''),
+                                       ',.*',''),
+;
+);
+SELECT instance.id, name.full_name, instance.page,
+       lpad(
+                                       regexp_replace(
+                                         regexp_replace(
+                                           regexp_replace(
+                                             regexp_replace(
+                                               regexp_replace(
+                                                 regexp_replace(page,'x','x'),
+                                               '.*$',''),
+                                             '[A-z. ]','','g'),
+                                           '^  *',''),
+                                         '^,',''),
+                                       ',.*',''),
+                                     12,'0') pseudo_page,
+      regexp_replace(page,'\([0-9][0-9]*\)','\1') mo
+FROM "instance" INNER JOIN "reference" ON "reference"."id" = "instance"."reference_id" INNER JOIN "name" ON "name"."id" = "instance"."name_id" 
+WHERE "instance"."reference_id" = 225088008  
+ORDER BY lpad(
+                                       regexp_replace(
+                                         regexp_replace(
+                                           regexp_replace(
+                                             regexp_replace(
+                                               regexp_replace(
+                                                 regexp_replace(page,'x','x'),
+                                               '.*$',''),
+                                             '[A-z. ]','','g'),
+                                           '^  *',''),
+                                         '^,',''),
+                                       ',.*',''),
+                                     12,'0'),name.full_name
+;
+select id,page from instance where id in (1000224732,673870325);
+select id,page,regexp_replace(page,'\([0-9][0-9]*\)','\1') mo from instance where id in (1000224732,673870325);
+select id,page,regexp_replace(page,'\([578][578]*\)','\1') mo from instance where id in (1000224732,673870325);
+select id,page,regexp_replace(page,'\([0-9][0-9]*\)','') mo from instance where id in (1000224732,673870325);
+select id,page,regexp_replace(page,'([0-9][0-9]*)','') mo from instance where id in (1000224732,673870325);
+select id,page,regexp_replace(page,'([0-9][0-9]*)','\1') mo from instance where id in (1000224732,673870325);
+select id,page,regexp_replace(page,'.*([0-9][0-9]*).*','\1') mo from instance where id in (1000224732,673870325);
+select id,page,regexp_replace(page,'[^0-9]*([0-9][0-9]*).*','\1') mo from instance where id in (1000224732,673870325);
+select id,page,regexp_replace(page,'[^0-9]*([0-9][0-9]*).*','\1'),regexp_replace(page,'.*-.*','1') mb from instance where id in (1000224732,673870325);
+select id,page,regexp_replace(page,'[^0-9]*([0-9][0-9]*).*','\1'),regexp_replace(page,'.*-.*','-') mb from instance where id in (1000224732,673870325);
+select id,page,regexp_replace(page,'[^0-9]*([0-9][0-9]*).*','\1'),regexp_replace(regexp_replace(page,'.*-.*','-'),'-','1') mb from instance where id in (1000224732,673870325);
+select id,page,regexp_replace(page,'[^0-9]*([0-9][0-9]*).*','\1'),regexp_replace(regexp_replace(page,'[^-]',''),'-','1') mb from instance where id in (1000224732,673870325);
+select id,page,regexp_replace(page,'[^0-9]*([0-9][0-9]*).*','\1'),regexp_replace(page,'.*-.*','-') mb from instance where id in (1000224732,673870325);
+select id,page,regexp_replace(page,'[^0-9]*([0-9][0-9]*).*','\1'),regexp_replace(regexp_replace(page,'.*-.*','-'),'-','1') mb from instance where id in (1000224732,673870325);
+select id,page,regexp_replace(page,'[^0-9]*([0-9][0-9]*).*','\1'),regexp_replace(regexp_replace(page,'.*-.*','-'),'[^-]','0') mb from instance where id in (1000224732,673870325);
+select id,page,regexp_replace(page,'[^0-9]*([0-9][0-9]*).*','\1'),regexp_replace(regexp_replace(page,'.*-.*','-'),'[^-].*','0') mb from instance where id in (1000224732,673870325);
+select id,page,regexp_replace(page,'[^0-9]*([0-9][0-9]*).*','\1'),regexp_replace(regexp_replace(page,'.*-.*','1'),'[^-].*','0') mb from instance where id in (1000224732,673870325);
+select id,page,regexp_replace(page,'[^0-9]*([0-9][0-9]*).*','\1'),regexp_replace(regexp_replace(page,'.*-.*','-'),'[^-].*','0') mb from instance where id in (1000224732,673870325);
+select id,page,regexp_replace(page,'[^0-9]*([0-9][0-9]*).*','\1')||regexp_replace(regexp_replace(page,'.*-.*','-'),'[^-].*','0') mb from instance where id in (1000224732,673870325);
+select id,page,lpad(regexp_replace(page,'[^0-9]*([0-9][0-9]*).*','\1')||regexp_replace(regexp_replace(page,'.*-.*','-'),'[^-].*','0'),12,'0') mb from instance where id in (1000224732,673870325);
+select id,page,lpad(regexp_replace(page,'[^0-9]*([0-9][0-9]*).*','\1')||regexp_replace(regexp_replace(page,'.*-.*','-'),'[^-].*','0'),12,'0') mb from instance where id in (1000224732,673870325) order by lpad(regexp_replace(page,'[^0-9]*([0-9][0-9]*).*','\1')||regexp_replace(regexp_replace(page,'.*-.*','-'),'[^-].*','0'),12,'0');
+select id,page,lpad(regexp_replace(page,'[^0-9]*([0-9][0-9]*).*','\1')||regexp_replace(regexp_replace(page,'.*-.*','-'),'[^-].*','0'),12,'0') mb from instance where id in (1000224732,673870325) order by lpad(regexp_replace(page,'[^0-9]*([0-9][0-9]*).*','\1')||regexp_replace(regexp_replace(page,'.*-.*','-'),'[^-].*','0'),12,'0') desc;
+select id,page,lpad(regexp_replace(page,'[^0-9]*([0-9][0-9]*).*','\1')||regexp_replace(regexp_replace(page,'.*-.*','~'),'[^~].*','0'),12,'0') mb from instance where id in (1000224732,673870325) order by lpad(regexp_replace(page,'[^0-9]*([0-9][0-9]*).*','\1')||regexp_replace(regexp_replace(page,'.*-.*','~'),'[^~].*','0'),12,'0');
+\q
+SELECT "instance".* 
+FROM   "instance" 
+       INNER JOIN "name" 
+               ON "name"."id" = "instance"."name_id" 
+ORDER  BY Lpad(Regexp_replace(page, '[^0-9]*([0-9][0-9]*).*', '') 
+               || Regexp_replace(Regexp_replace(page, '.*-.*', '~'), '[^~].*', 
+                  '0'), 12, 
+                    '0') ;
+SELECT id,page
+FROM   "instance" 
+       INNER JOIN "name" 
+               ON "name"."id" = "instance"."name_id" 
+ORDER  BY Lpad(Regexp_replace(page, '[^0-9]*([0-9][0-9]*).*', '') 
+               || Regexp_replace(Regexp_replace(page, '.*-.*', '~'), '[^~].*', 
+                  '0'), 12, 
+                    '0') 
+;
+SELECT instance.id,instance.page
+FROM   "instance" 
+       INNER JOIN "name" 
+               ON "name"."id" = "instance"."name_id" 
+ORDER  BY Lpad(Regexp_replace(page, '[^0-9]*([0-9][0-9]*).*', '') 
+               || Regexp_replace(Regexp_replace(page, '.*-.*', '~'), '[^~].*', 
+                  '0'), 12, 
+                    '0') 
+;
+SELECT instance.id,instance.page
+FROM   "instance" 
+       INNER JOIN "name" 
+               ON "name"."id" = "instance"."name_id" 
+ORDER  BY Lpad(
+            Regexp_replace(page, '[^0-9]*([0-9][0-9]*).*', '') 
+            || 
+            Regexp_replace(
+              Regexp_replace(page, '.*-.*', '~'), 
+            '[^~].*','0'), 
+          12,'0') 
+;
+SELECT instance.id,instance.page
+FROM   "instance" 
+       INNER JOIN "name" 
+               ON "name"."id" = "instance"."name_id" 
+ORDER  BY Lpad(
+            Regexp_replace(page, '[^0-9]*([0-9][0-9]*).*', '') 
+            || 
+            Regexp_replace(
+              Regexp_replace(
+                Regexp_replace(page, 'x','x'),
+              '.*-.*', '~'), 
+            '[^~].*','0'), 
+          12,'0') 
+;
+SELECT instance.id,instance.page
+FROM   "instance" 
+       INNER JOIN "name" 
+               ON "name"."id" = "instance"."name_id" 
+ORDER  BY Lpad(
+            Regexp_replace(page, '[^0-9]*([0-9][0-9]*).*', '') 
+            || 
+            Regexp_replace(
+              Regexp_replace(
+                Regexp_replace(page,'[A-z. ]','','g'),                 
+              '.*-.*', '~'), 
+            '[^~].*','0'), 
+          12,'0') 
+;
+SELECT instance.id,instance.page
+FROM   "instance" 
+       INNER JOIN "name" 
+               ON "name"."id" = "instance"."name_id" 
+ORDER  BY Lpad(
+            Regexp_replace(page, '[^0-9]*([0-9][0-9]*).*', '') 
+            || 
+            Regexp_replace(
+              Regexp_replace(
+                Regexp_replace(page,'[A-z. ]','','g'),                 
+              '.*-.*', '~'), 
+            '[^~].*','0'), 
+          12,'0') 
+;
+ELECT instance.id,instance.page
+FROM   "instance" 
+       INNER JOIN "name" 
+               ON "name"."id" = "instance"."name_id" 
+ORDER  BY Lpad(
+            Regexp_replace(
+              Regexp_replace(page, 'x','x'),
+            '[^0-9]*([0-9][0-9]*).*', '') 
+            || 
+            Regexp_replace(
+              Regexp_replace(
+                Regexp_replace(page, '.*-.*', '~'), 
+            '[^~].*','0'), 
+          12,'0') 
+);
+SELECT instance.id,instance.page
+FROM   "instance" 
+       INNER JOIN "name" 
+               ON "name"."id" = "instance"."name_id" 
+ORDER  BY Lpad(
+            Regexp_replace(
+              Regexp_replace(page, 'x','x'),
+            '[^0-9]*([0-9][0-9]*).*', '') 
+            || 
+            Regexp_replace(
+                Regexp_replace(page, '.*-.*', '~'), 
+            '[^~].*','0'), 
+          12,'0') 
+;
+SELECT instance.id,instance.page
+FROM   "instance" 
+       INNER JOIN "name" 
+               ON "name"."id" = "instance"."name_id" 
+ORDER  BY Lpad(
+            Regexp_replace(
+              Regexp_replace(page, '[A-z. ]','','g'),                 
+            '[^0-9]*([0-9][0-9]*).*', '') 
+            || 
+            Regexp_replace(
+                Regexp_replace(page, '.*-.*', '~'), 
+            '[^~].*','0'), 
+          12,'0') 
+;
+SELECT instance.id,instance.page,
+       Lpad(
+            Regexp_replace(
+              Regexp_replace(page, '[A-z. ]','','g'),                 
+            '[^0-9]*([0-9][0-9]*).*', '') 
+            || 
+            Regexp_replace(
+                Regexp_replace(page, '.*-.*', '~'), 
+            '[^~].*','0'), 
+          12,'0')  mo
+FROM   "instance" 
+       INNER JOIN "name" 
+               ON "name"."id" = "instance"."name_id" 
+ORDER  BY Lpad(
+            Regexp_replace(
+              Regexp_replace(page, '[A-z. ]','','g'),                 
+            '[^0-9]*([0-9][0-9]*).*', '') 
+            || 
+            Regexp_replace(
+                Regexp_replace(page, '.*-.*', '~'), 
+            '[^~].*','0'), 
+          12,'0') 
+;
+SELECT instance.id,instance.page,
+       Lpad(
+            Regexp_replace(
+              Regexp_replace(page, '[A-z. ]','','g'),                 
+            '[^0-9]*([0-9][0-9]*).*', '\1') 
+            || 
+            Regexp_replace(
+                Regexp_replace(page, '.*-.*', '~'), 
+            '[^~].*','0'), 
+          12,'0')  mo
+FROM   "instance" 
+       INNER JOIN "name" 
+               ON "name"."id" = "instance"."name_id" 
+ORDER  BY Lpad(
+            Regexp_replace(
+              Regexp_replace(page, '[A-z. ]','','g'),                 
+            '[^0-9]*([0-9][0-9]*).*', '\1') 
+            || 
+            Regexp_replace(
+                Regexp_replace(page, '.*-.*', '~'), 
+            '[^~].*','0'), 
+          12,'0') 
+;
+\q
+begin;
+update instance
+     set instance_type_id = (select id from instance_type where name = 'primary reference'),
+         updated_at = current_timestamp,
+         updated_by = 'NSL-1602'
+ where id in
+(SELECT   i.id
+  FROM   NAME n
+         INNER JOIN instance i
+                 ON n.id = i.name_id
+         INNER JOIN name_status ns
+                 ON n.name_status_id = ns.id
+         INNER JOIN instance_type it
+                 ON i.instance_type_id = it.id
+  WHERE  ns.NAME = 'orth. var.'
+         AND it.NAME = 'tax. nov.');
+commit;
+\q
+select id,name from instance_type where primary_instance;
+\dt
+\d comment
+select * from comment;
+/
+;
+select * from comment;
+select * from author where id = 114308997;
+select * from instance where id = 681298069;
+select * from name where id = 427051087;
+select * from reference where id = 1048415215;
+select * from instance where id = 681298069;
+select * from comment;
+select * from instance where page = 'xx 200,300';
+select name_id from instance where page = 'xx 200,300';
+select full_name from name where id in (select name_id from instance where page = 'xx 200,300');
+select * from instance where id = 681298069;
+select * from name where id = 681298069;
+select * from reference where id = 681298069;
+select * from author where id = 681298069;
+select * from comment;
+select * from comment;
+\d comment
+select count(*) from comment where instance_id is not null;
+select count(*) from comment where instance_id is not null and not exists (select null from instance where id = instance_id);
+select count(*) from comment where instance_id is not null and exists (select null from instance where id = instance_id);
+select * from comment;
+select count(*) from comment where instance_id is not null and exists (select null from instance where id = instance_id);
+SELECT COUNT(count_column) FROM (SELECT  1 AS count_column FROM "instance"  WHERE (1=1) AND ( id = '794761215' ) LIMIT 100) subquery_for_count;
+select full_name from name where full_name like 'Triod%';
+SELECT COUNT(count_column) FROM (SELECT  1 AS count_column FROM "instance"  WHERE (1=1) AND ( exists (select null
+                                 from instance_type
+                                 where instance_type_id = instance_type.id
+                                 and instance_type.name = 'tax. nov.') and
+                                         exists (select null from name where name.id = instance.name_id and exists (select null from name_type where name_type.id = name.name_type_id and name_type.name = 'orth. var.'))) LIMIT 100) subquery_for_count;
+select * from instance 
+ned_test=# SELECT COUNT(count_column) FROM (SELECT  1 AS count_column FROM "instance"  WHERE (1=1) AND ( exists (select null
+ned_test(#                                  from instance_type
+ned_test(#                                  where instance_type_id = instance_type.id
+ned_test(#                                  and instance_type.name = 'tax. nov.') and
+ned_test(#                                          exists (select null from name where name.id = instance.name_id and exists (select null from name_type where name_type.id = name.name_type_id and name_type.name = 'orth. var.')
+)
+)
+)
+)
+)
+)
+)
+;
+select * from instance 
+ned_test=# SELECT COUNT(count_column) FROM (SELECT  1 AS count_column FROM "instance"  WHERE (1=1) AND ( exists (select null
+ned_test(#                                  from instance_type
+ned_test(#                                  where instance_type_id = instance_type.id
+ned_test(#                                  and instance_type.name = 'tax. nov.') and
+ned_test(#                                          exists (select null from name where name.id = instance.name_id and exists (select null from name_type where name_type.id = name.name_type_id and name_type.name = 'orth. var.')
+)
+)
+)
+)
+)
+)
+)
+;
+select * from instance
+SELECT COUNT(count_column) FROM (SELECT  1 AS count_column FROM "instance"  WHERE (1=1) AND ( exists (select null
+from instance_type
+where instance_type_id = instance_type.id
+and instance_type.name = 'tax. nov.') and
+exists (select null from name where name.id = instance.name_id and exists (select null from name_type where name_type.id = name.name_type_id and name_type.name = 'orth. var.')
+)
+)
+)
+;
+;
+select 'x';
+select * from instance
+SELECT COUNT(count_column) FROM (SELECT  1 AS count_column FROM "instance"  WHERE (1=1) AND ( exists (select null
+from instance_type
+where instance_type_id = instance_type.id
+and instance_type.name = 'tax. nov.') and
+exists (select null from name where name.id = instance.name_id and exists (select null from name_type where name_type.id = name.name_type_id and name_type.name = 'orth. var.')
+)
+)
+)
+;
+select * from instance WHERE (1=1) AND ( exists (select null
+from instance_type
+where instance_type_id = instance_type.id
+and instance_type.name = 'tax. nov.') and
+exists (select null from name where name.id = instance.name_id and exists (select null from name_type where name_type.id = name.name_type_id and name_type.name = 'orth. var.')
+)
+)
+;
+SELECT * 
+FROM   instance 
+WHERE  ( 1 = 1 ) 
+       AND ( EXISTS (SELECT NULL 
+                     FROM   instance_type 
+                     WHERE  instance_type_id = instance_type.id 
+                            AND instance_type.NAME = 'tax. nov.') 
+             AND EXISTS (SELECT NULL 
+                         FROM   NAME 
+                         WHERE  NAME.id = instance.name_id 
+                                AND EXISTS (SELECT NULL 
+                                            FROM   name_type 
+                                            WHERE  name_type.id = 
+                                                   NAME.name_type_id 
+                                                       )
+                                                       ) 
+           ); 
+select name from name_type;
+select name from name_type order by 1;
+select name from name_status order by 1;
+SELECT * 
+FROM   instance 
+WHERE  ( 1 = 1 ) 
+       AND ( EXISTS (SELECT NULL 
+                     FROM   instance_type 
+                     WHERE  instance_type_id = instance_type.id 
+                            AND instance_type.NAME = 'tax. nov.') 
+             AND EXISTS (SELECT NULL 
+                         FROM   NAME 
+                         WHERE  NAME.id = instance.name_id 
+                                AND EXISTS (SELECT NULL 
+                                            FROM   name_status 
+                                            WHERE  name_status.id = 
+                                                   NAME.name_status_id 
+                                                   AND name_status.NAME = 
+                                                       'orth. var.'
+                                                       )
+                                                       ) 
+           ); 
+SELECT * 
+FROM   instance 
+WHERE  ( 1 = 1 ) 
+       AND ( EXISTS (SELECT NULL 
+                     FROM   instance_type 
+                     WHERE  instance_type_id = instance_type.id )
+             AND EXISTS (SELECT NULL 
+                         FROM   NAME 
+                         WHERE  NAME.id = instance.name_id 
+                                AND EXISTS (SELECT NULL 
+                                            FROM   name_status 
+                                            WHERE  name_status.id = 
+                                                   NAME.name_status_id 
+                                                   AND name_status.NAME = 
+                                                       'orth. var.'
+                                                       )
+                                                       ) 
+           ); 
+SELECT * 
+FROM   instance 
+WHERE  ( 1 = 1 ) 
+       AND ( EXISTS (SELECT NULL 
+                     FROM   instance_type 
+                     WHERE  instance_type_id = instance_type.id 
+                            AND instance_type.NAME = 'tax. nov.') 
+             AND EXISTS (SELECT NULL 
+                         FROM   NAME 
+                         WHERE  NAME.id = instance.name_id 
+                                AND EXISTS (SELECT NULL 
+                                            FROM   name_status 
+                                            WHERE  name_status.id = 
+                                                   NAME.name_status_id 
+                                                       )
+                                                       ) 
+           ); 
+SELECT name_id 
+FROM   instance 
+WHERE  ( 1 = 1 ) 
+       AND ( EXISTS (SELECT NULL 
+                     FROM   instance_type 
+                     WHERE  instance_type_id = instance_type.id 
+                            AND instance_type.NAME = 'tax. nov.') 
+             AND EXISTS (SELECT NULL 
+                         FROM   NAME 
+                         WHERE  NAME.id = instance.name_id 
+                                AND EXISTS (SELECT NULL 
+                                            FROM   name_status 
+                                            WHERE  name_status.id = 
+                                                   NAME.name_status_id 
+                                                       )
+                                                       ) 
+           ); 
+select name_status_id from name where id in (SELECT name_id 
+FROM   instance 
+WHERE  ( 1 = 1 ) 
+       AND ( EXISTS (SELECT NULL 
+                     FROM   instance_type 
+                     WHERE  instance_type_id = instance_type.id 
+                            AND instance_type.NAME = 'tax. nov.') 
+             AND EXISTS (SELECT NULL 
+                         FROM   NAME 
+                         WHERE  NAME.id = instance.name_id 
+                                AND EXISTS (SELECT NULL 
+                                            FROM   name_status 
+                                            WHERE  name_status.id = 
+                                                   NAME.name_status_id 
+                                                       )
+                                                       ) 
+           )); 
+select id,name_status_id from name where id in (SELECT name_id 
+FROM   instance 
+WHERE  ( 1 = 1 ) 
+       AND ( EXISTS (SELECT NULL 
+                     FROM   instance_type 
+                     WHERE  instance_type_id = instance_type.id 
+                            AND instance_type.NAME = 'tax. nov.') 
+             AND EXISTS (SELECT NULL 
+                         FROM   NAME 
+                         WHERE  NAME.id = instance.name_id 
+                                AND EXISTS (SELECT NULL 
+                                            FROM   name_status 
+                                            WHERE  name_status.id = 
+                                                   NAME.name_status_id 
+                                                       )
+                                                       ) 
+           )); 
+select name from name_status where id in (select id,name_status_id from name where id in (SELECT name_id 
+FROM   instance 
+WHERE  ( 1 = 1 ) 
+       AND ( EXISTS (SELECT NULL 
+                     FROM   instance_type 
+                     WHERE  instance_type_id = instance_type.id 
+                            AND instance_type.NAME = 'tax. nov.') 
+             AND EXISTS (SELECT NULL 
+                         FROM   NAME 
+                         WHERE  NAME.id = instance.name_id 
+                                AND EXISTS (SELECT NULL 
+                                            FROM   name_status 
+                                            WHERE  name_status.id = 
+                                                   NAME.name_status_id 
+                                                       )
+                                                       ) 
+           ))); 
+select name from name_status where id in (select name_status_id from name where id in (SELECT name_id 
+FROM   instance 
+WHERE  ( 1 = 1 ) 
+       AND ( EXISTS (SELECT NULL 
+                     FROM   instance_type 
+                     WHERE  instance_type_id = instance_type.id 
+                            AND instance_type.NAME = 'tax. nov.') 
+             AND EXISTS (SELECT NULL 
+                         FROM   NAME 
+                         WHERE  NAME.id = instance.name_id 
+                                AND EXISTS (SELECT NULL 
+                                            FROM   name_status 
+                                            WHERE  name_status.id = 
+                                                   NAME.name_status_id 
+                                                       )
+                                                       ) 
+           ))); 
+select id from name_status where name = 'orth. var.'
+;
+select id,full_name from name where name_status_id in (select id from name_status where name = 'orth. var.')
+;
+select id from instance where name_id in (select id,full_name from name where name_status_id in (select id from name_status where name = 'orth. var.')
+);
+select id from instance where name_id in (select id from name where name_status_id in (select id from name_status where name = 'orth. var.')
+);
+SELECT   i.id
+  FROM   NAME n
+         INNER JOIN instance i
+                 ON n.id = i.name_id
+         INNER JOIN name_status ns
+                 ON n.name_status_id = ns.id
+         INNER JOIN instance_type it
+                 ON i.instance_type_id = it.id
+  WHERE  ns.NAME = 'orth. var.'
+         AND it.NAME = 'tax. nov.');
+SELECT   i.id
+  FROM   NAME n
+         INNER JOIN instance i
+                 ON n.id = i.name_id
+         INNER JOIN name_status ns
+                 ON n.name_status_id = ns.id
+         INNER JOIN instance_type it
+                 ON i.instance_type_id = it.id
+  WHERE  ns.NAME = 'orth. var.'
+         AND it.NAME = 'tax. nov.')
+;
+select id.id
+from name n
+inner join instance i
+on n.id = i.name_id
+inner join name_status ns
+on n.name_status_id = ns.id
+inner join instance_type it
+on i.instance_type_id = it.id
+where ns.name = 'orth. var.'
+and it.name = 'tax. nov.';
+SELECT   i.id
+  FROM   NAME n
+         INNER JOIN instance i
+                 ON n.id = i.name_id
+         INNER JOIN name_status ns
+                 ON n.name_status_id = ns.id
+         INNER JOIN instance_type it
+                 ON i.instance_type_id = it.id
+  WHERE  ns.NAME = 'orth. var.'
+         AND it.NAME = 'tax. nov.'
+;
+SELECT   i.id
+  FROM   NAME n
+         INNER JOIN instance i
+                 ON n.id = i.name_id
+         INNER JOIN name_status ns
+                 ON n.name_status_id = ns.id
+         INNER JOIN instance_type it
+                 ON i.instance_type_id = it.id
+  WHERE  ns.NAME = 'orth. var.'
+;
+SELECT   i.id
+  FROM   NAME n
+         INNER JOIN instance i
+                 ON n.id = i.name_id
+         INNER JOIN name_status ns
+                 ON n.name_status_id = ns.id
+         INNER JOIN instance_type it
+                 ON i.instance_type_id = it.id
+  WHERE  ns.NAME = 'orth. var.'
+;
+select id,full_name,name_status_id from name where full_name like 'orth%';
+select citation from reference where to_tsvector(citation) @@ to_tsquery('hookers,icon,pl');
+SELECT   i.id, ns.name
+  FROM   NAME n
+         INNER JOIN instance i
+                 ON n.id = i.name_id
+         INNER JOIN name_status ns
+                 ON n.name_status_id = ns.id
+         INNER JOIN instance_type it
+                 ON i.instance_type_id = it.id
+  WHERE  ns.NAME = 'orth. var.'
+  or n.full_name like 'orth%'
+;
+SELECT   i.id, ns.name
+  FROM   NAME n
+         INNER JOIN instance i
+                 ON n.id = i.name_id
+         INNER JOIN name_status ns
+                 ON n.name_status_id = ns.id
+         INNER JOIN instance_type it
+                 ON i.instance_type_id = it.id
+;
+  SELECT   i.id, ns.name
+  FROM   NAME n
+         INNER JOIN instance i
+                 ON n.id = i.name_id
+         INNER JOIN name_status ns
+                 ON n.name_status_id = ns.id
+         INNER JOIN instance_type it
+                 ON i.instance_type_id = it.id
+  WHERE  ns.NAME = 'orth. var.'
+  or n.full_name like 'orth%'
+  or ns.name != 'legitimate'
+;
+SELECT   i.id, n.full_name, ns.name
+  FROM   NAME n
+         INNER JOIN instance i
+                 ON n.id = i.name_id
+         INNER JOIN name_status ns
+                 ON n.name_status_id = ns.id
+         INNER JOIN instance_type it
+                 ON i.instance_type_id = it.id
+  WHERE  ns.NAME = 'orth. var.'
+  or n.full_name like 'orth%'
+  or ns.name != 'legitimate'
+;
+SELECT   i.id, n.full_name, n.simple_name, ns.name
+  FROM   NAME n
+         INNER JOIN instance i
+                 ON n.id = i.name_id
+         INNER JOIN name_status ns
+                 ON n.name_status_id = ns.id
+         INNER JOIN instance_type it
+                 ON i.instance_type_id = it.id
+  WHERE  ns.NAME = 'orth. var.'
+  or n.full_name like 'orth%'
+  or ns.name != 'legitimate'
+;
+SELECT   i.id, n.full_name, n.simple_name, ns.name
+  FROM   NAME n
+         INNER JOIN instance i
+                 ON n.id = i.name_id
+         INNER JOIN name_status ns
+                 ON n.name_status_id = ns.id
+         INNER JOIN instance_type it
+                 ON i.instance_type_id = it.id
+  WHERE  ns.NAME = 'orth. var.'
+  or n.full_name like 'orth%'
+  or ns.name = 'legitimate'
+;
+SELECT   i.id, n.full_name, n.simple_name, ns.name
+  FROM   NAME n
+         INNER JOIN instance i
+                 ON n.id = i.name_id
+         INNER JOIN name_status ns
+                 ON n.name_status_id = ns.id
+         INNER JOIN instance_type it
+                 ON i.instance_type_id = it.id
+  WHERE  ns.NAME = 'orth. var.'
+  or n.full_name like 'orth%'
+  or ns.name = 'legitimate'
+;
+select id,full_name from name where full_name like 'orth%';
+select n.id,n.full_name,ns.name from name inner join name_status ns on n.name_status_id = ns.id where n.full_name like 'orth%';
+select n.id,n.full_name,ns.name from name n inner join name_status ns on n.name_status_id = ns.id where n.full_name like 'orth%';
+select n.id,n.full_name,ns.name from name n inner join instance i on n.id = i.name_id inner join name_status ns on n.name_status_id = ns.id where n.full_name like 'orth%';
+select n.id,n.full_name,ns.name from name n inner join instance i on n.id = i.name_id inner join instance_type it on i.instance_type_id = it.id inner join name_status ns on n.name_status_id = ns.id where n.full_name like 'orth%';
+\q
+select max(created_at) from instance;
+select current_timestamp;
+begin;
+update instance
+     set instance_type_id = (select id from instance_type where name = 'primary reference'),
+         updated_at = current_timestamp,
+         updated_by = 'Admin'
+ where id in
+(SELECT   i.id
+  FROM   NAME n
+         INNER JOIN instance i
+                 ON n.id = i.name_id
+         INNER JOIN name_status ns
+                 ON n.name_status_id = ns.id
+         INNER JOIN instance_type it
+                 ON i.instance_type_id = it.id
+  WHERE  ns.NAME = 'orth. var.'
+         AND it.NAME = 'tax. nov.');
+select max(created_at) from instance;
+select max(updated_at) from instance;
+rollback;
+\d instqnce
+\dt
+\d instance
+\dt note
+\dt
+\d instance_note
+d instance
+;
+\d instance
+\d instance
+select id,name from instance_type where primary_instance;
+\d instance_comment
+\d comment
+SELECT * 
+FROM   instance 
+WHERE  ( 1 = 1 ) 
+       AND ( EXISTS (SELECT NULL 
+                     FROM   instance_type 
+                     WHERE  instance_type_id = instance_type.id 
+                            AND instance_type.NAME = 'tax. nov.') 
+             AND EXISTS (SELECT NULL 
+                         FROM   NAME 
+                         WHERE  NAME.id = instance.name_id 
+                                AND EXISTS (SELECT NULL 
+                                            FROM   name_status 
+                                            WHERE  name_status.id = 
+                                                   NAME.name_status_id 
+                                                   AND name_status.NAME = 
+                                                       'orth. var.'
+                                                       )
+                                                       ) 
+           ); 
+       
+\d name_rank
+select id,name,sort_order from name_rank;
+SELECT  "name".* FROM "name"  WHERE "name"."duplicate_of_id" IS NULL AND (lower(full_name) like 'angophor%')  ORDER BY lower(full_name) LIMIT 50;
+      \d name_rank
+select count(*) from author where not exists (select null from reference where author_id = author.id);
+select count(*) from author where not exists (select null from reference where author_id = author.id) and not exists (select null from name where author_id = author.id);
+select count(*) from author where not exists (select null from reference where author_id = author.id) and not exists (select null from name where author_id = author.id) and not exists (select null from name where ex_author_id = author.id);
+select count(*) from author where not exists (select null from reference where author_id = author.id) and not exists (select null from name where author_id = author.id) and not exists (select null from name where ex_author_id = author.id) and not exists (select null from name where base_author_id = author.id);
+select count(*) from author where not exists (select null from reference where author_id = author.id) and not exists (select null from name where author_id = author.id) and not exists (select null from name where ex_author_id = author.id) and not exists (select null from name where base_author_id = author.id) and not exists (select null from name where ex_base_author_id = author.id);
+select count(*) from author where not exists (select null from reference where author_id = author.id) and not exists (select null from name where author_id = author.id) and not exists (select null from name where ex_author_id = author.id) and not exists (select null from name where base_author_id = author.id) and not exists (select null from name where ex_base_author_id = author.id) and not exists (select null from name where sanctioning_author_id = author.id);
+select id from author where not exists (select null from reference where author_id = author.id) and not exists (select null from name where author_id = author.id) and not exists (select null from name where ex_author_id = author.id) and not exists (select null from name where base_author_id = author.id) and not exists (select null from name where ex_base_author_id = author.id) and not exists (select null from name where sanctioning_author_id = author.id);
+\q
+\d comment
+select * from comment;
+\d instance_note
+\d instance_note_key
+select id,name from instance_note_key;
+select id,name from instance_note_key order by name;
+select id,sort_order, name from instance_note_key order by sort_order;
+select id,sort_order, name, deprecated from instance_note_key order by sort_order;
+\dt
+\d instance_note
+\d instance_notes
+\d instance_note
+\d instance_note_key
+select id,sort_order,name from instance_note_key order by sort_order;
+select name from instance_note_key where deprecated;
+\d instance_note
+\q
+\s instance

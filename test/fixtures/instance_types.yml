@@ -528,7 +528,7 @@ secondary_reference:
   citing: false
   deprecated: false
   misapplied: false
-  name: "secondary reference"
+  name: secondary reference
   nomenclatural: false
   primary_instance: false
   relationship: false

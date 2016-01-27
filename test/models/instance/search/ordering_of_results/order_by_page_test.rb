@@ -19,7 +19,10 @@ require "test_helper"
 # Single instance model test.
 class OrderByPage < ActiveSupport::TestCase
   test "approximates numeric sorting" do
-    results = Instance.joins(:name).limit(400).ordered_by_page
+    results = Instance.joins(:name)
+                      .where.not(page: 'exclude-from-ordering-test')
+                      .limit(400)
+                      .ordered_by_page
     # results.each_with_index do |i,ndx|
     #   puts "#{ndx}: #{i.page} - #{i.name.full_name}" if ndx < 30
     # end

@@ -25,7 +25,6 @@
 </table>
 
 
-
 <h5 class="">Assertion queries</h5>
 <table class="example-searches table table-striped">
   <% [
@@ -35,6 +34,10 @@
       {search_target: 'Names', search_string: "acacia is-orth-var-with-no-orth-var-instances:",explanation: %Q(List orth. var. acacias with no orth. var. instance.)},
       {search_target: 'Names', search_string: "*acacia is-orth-var-with-no-orth-var-instances:",explanation: %Q(List orth. var. names containing "acacia" with no orth. var. instance.)},
       {search_target: 'Names', search_string: "acacia status: orth. var. has-no-instances:",explanation: %Q(List orth. var. acacias with no instance.)},
+      {search_target: "Names",
+       search_string: "is-orth-var-with-earliest-instance-secondary-ref:",
+       explanation: %Q(List orth. vars for which the first instance is a \
+       secondary reference.)},
       ].each do |val| %>
   <tr>
     <td class="width-30-percent">

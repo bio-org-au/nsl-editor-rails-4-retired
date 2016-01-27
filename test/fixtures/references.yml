@@ -1941,3 +1941,45 @@ tax_nov_for_an_orth_var_ref:
   ref_type: book
   created_by: tester
   updated_by: tester
+
+ref_for_earliest_inst_sec_ref:
+  title: ref for earliest inst sec ref
+  citation: ref for earliest inst sec ref
+  citation_html: ref for earliest inst sec ref
+  display_title: ref for earliest inst sec ref
+  author: blume_c_l_von
+  language: undetermined
+  namespace: apni
+  ref_author_role: author
+  ref_type: book
+  year: 1700
+  created_by: tester
+  updated_by: tester
+
+ref_for_not_earliest_inst_sec_ref:
+  title: ref for not earliest inst sec ref
+  citation: ref for not earliest inst sec ref
+  citation_html: ref for not earliest inst sec ref
+  display_title: ref for not earliest inst sec ref
+  author: blume_c_l_von
+  language: undetermined
+  namespace: apni
+  ref_author_role: author
+  ref_type: book
+  year: 1700
+  created_by: tester
+  updated_by: tester
+
+ref_for_later_inst_sec_ref:
+  title: ref for inst sec ref
+  citation: ref for later inst sec ref
+  citation_html: ref for later inst sec ref
+  display_title: ref for later inst sec ref
+  author: blume_c_l_von
+  language: undetermined
+  namespace: apni
+  ref_author_role: author
+  ref_type: book
+  year: 1800
+  created_by: tester
+  updated_by: tester

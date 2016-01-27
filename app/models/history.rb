@@ -17,6 +17,10 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "27-Jan-2016",
+      jira_id: "1620",
+      description: "Add Name search for orth. vars whose first instance is a
+      secondary reference. With help and examples" },
     { date: "22-Jan-2016",
       jira_id: "1618",
       description: "Add headings to Instance CSV output." },

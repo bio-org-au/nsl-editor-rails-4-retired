@@ -268,6 +268,7 @@ default_instance_for_a_subgenus:
   namespace: apni
   created_by: tester
   updated_by: tester
+  page: 999
 
 
 # Default instance so name can be offered as parent
@@ -429,6 +430,7 @@ default_instance_for_an_unranked:
   namespace: apni
   created_by: tester
   updated_by: tester
+  page: 999
 
 casuarina_inophloia_by_mueller:
   reference: mueller_1882_section
@@ -671,7 +673,7 @@ has_apc_dist_note:
   reference: dummy_reference_1
   name: dummy_name_1
   instance_type: comb_nov
-  page: zzzzzzzzzzzzz99999999999999
+  page: exclude-from-ordering-test
   namespace: apni
   created_by: tester
   updated_by: tester
@@ -681,7 +683,7 @@ has_apc_comment_note:
   reference: dummy_reference_1
   name: dummy_name_1
   instance_type: comb_nov
-  page: zzzzzzzzzzzzz99999999999999
+  page: exclude-from-ordering-test
   namespace: apni
   created_by: tester
   updated_by: tester
@@ -691,7 +693,34 @@ has_apc_dist_note_2:
   reference: dummy_reference_1
   name: dummy_name_2
   instance_type: comb_nov
-  page: zzzzzzzzzzzzz99999999999999
+  page: zczzzzzzzzzzz99999999999999
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+
+earliest_inst_sec_ref:
+  reference: ref_for_earliest_inst_sec_ref
+  name: orth_var_with_earliest_inst_sec_ref
+  instance_type: secondary_reference
+  page: exclude-from-ordering-test
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+
+not_earliest_inst_sec_ref:
+  reference: ref_for_not_earliest_inst_sec_ref
+  name: orth_var_with_not_earliest_inst_sec_ref
+  instance_type: tax_nov
+  page: exclude-from-ordering-test
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+
+later_inst_sec_ref:
+  reference: ref_for_later_inst_sec_ref
+  name: orth_var_with_not_earliest_inst_sec_ref
+  instance_type: secondary_reference
+  page: exclude-from-ordering-test
   namespace: apni
   created_by: tester
   updated_by: tester

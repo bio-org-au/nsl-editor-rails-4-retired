@@ -69,6 +69,30 @@ class Search::OnName::FieldRule
       from instance_type ity \
       where ity.name = 'orthographic variant'))", },
 
+    "is-orth-var-with-earliest-instance-secondary-ref:" =>
+    { where_clause:
+      "ID IN (SELECT n.id
+                FROM   instance i
+                       INNER JOIN NAME n
+                               ON i.name_id = n.id
+                       INNER JOIN reference r
+                               ON i.reference_id = r.id
+                       INNER JOIN name_status ns
+                               ON n.name_status_id = ns.id
+                       INNER JOIN instance_type it
+                               ON i.instance_type_id = it.id
+                WHERE  it.NAME = 'secondary reference'
+                       AND ns.NAME = 'orth. var.'
+                       AND r.year = (SELECT Min(r2.year)
+                                     FROM   reference r2
+                                            INNER JOIN instance i2
+                                                    ON r2.id = i2.reference_id
+                                            INNER JOIN NAME n2
+                                                    ON i2.name_id = n2.id
+                                     WHERE  n2.id = n.id)
+             ) ",
+      allow_common_and_cultivar: true, },
+
     "comments:" =>
     { trailing_wildcard: true,
       leading_wildcard: true,
@@ -144,7 +168,7 @@ class Search::OnName::FieldRule
       multiple_values: true,
       multiple_values_where_clause:
       "name_status_id in (select id from name_status where lower(name) in (?))", },
- 
+
     "below-rank:" =>
     { where_clause:
       "name_rank_id in \

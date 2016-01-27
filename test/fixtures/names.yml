@@ -1722,3 +1722,31 @@ common_with_second_parent:
   author: bentham
   updated_by: greg
   created_by: greg
+
+orth_var_with_earliest_inst_sec_ref:
+  simple_name: orth var with earliest inst sec ref
+  simple_name_html: orth var with earliest inst sec ref
+  name_element: orth var with earliest inst sec ref
+  full_name: orth var with earliest inst sec ref
+  full_name_html: orth var with earliest inst sec ref
+  name_rank: species
+  name_status: orth_var
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+orth_var_with_not_earliest_inst_sec_ref:
+  simple_name: orth var with not earliest inst sec ref
+  simple_name_html: orth var with not earliest inst sec ref
+  name_element: orth var with not earliest inst sec ref
+  full_name: orth var with not earliest inst sec ref
+  full_name_html: orth var with not earliest inst sec ref
+  name_rank: species
+  name_status: orth_var
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg

@@ -5,8 +5,7 @@
   <tr><th>Field</th><th>Description</th></tr>
   <% [
     {field_name: '', description: "default search is on <span class='purple'>name</span>, see more about name search on the next line"},
-      {field_name: 'name:', description: "full name, with trailing wildcard added automatically and all embedded spaces treated as wildcards;"},
-      {field_name: '', description: "note that for search terms not at the start of the name, you need to supply your own leading wildcard (e.g. #{link_example})"},
+      {field_name: 'name:', description: "full name, with leading and trailing wildcards added, and all embedded spaces treated as wildcards;"},
       {field_name: 'name-exact:', description: "full name"}
       ].each do |val| %>
   <tr>
@@ -140,6 +139,9 @@
       {field_name: 'has-instances:', description: "instances exist for this name"},
       {field_name: 'has-no-instances:', description: "no instances exist for this name"},
       {field_name: 'is-orth-var-with-no-orth-var-instances:', description: "name has status orth. var. but it has no orthographic variant type instance"},
+      {field_name: "is-orth-var-with-earliest-instance-secondary-ref:",
+       description: "name status orth. var. but earliest instance \
+       (by reference year) is a secondary reference"},
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">
