@@ -25,6 +25,30 @@
 </table>
 
 
+<h5 class="">Simple Name and Name Element searches</h5>
+<table class="example-searches table table-striped">
+  <% [{search_target: 'Names',
+       search_string: "simple-name: williams",
+       explanation: %Q(Names with simple name containing "williams".)},
+      {search_target: 'Names',
+       search_string: "name-element: williams",
+       explanation: %Q(List names with name element containing "williams".)},
+     ].each do |val| %>
+  <tr>
+    <td class="width-30-percent">
+      <%= link_to(val[:search_string],
+                  search_path(query_string: val[:search_string],
+                  query_target: val[:search_target]),
+                  class:'blue',
+                  title: "Run the described search.")
+      %>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+
+
 <h5 class="">Assertion queries</h5>
 <table class="example-searches table table-striped">
   <% [

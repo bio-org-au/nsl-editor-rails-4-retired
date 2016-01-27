@@ -4,9 +4,23 @@
 <table class="table table-striped">
   <tr><th>Field</th><th>Description</th></tr>
   <% [
-    {field_name: '', description: "default search is on <span class='purple'>name</span>, see more about name search on the next line"},
-      {field_name: 'name:', description: "full name, with leading and trailing wildcards added, and all embedded spaces treated as wildcards;"},
-      {field_name: 'name-exact:', description: "full name"}
+    {field_name: '',
+     description: "Default search is on the fully qualified <span
+     class='purple'>name</span>, see more about name search below."},
+    {field_name: 'name:',
+     description: "Name refers to the fully qualified name, with authorities.
+     <br>Leading and trailing wildcards are added to your search term."},
+    {field_name: 'name-exact:',
+     description: "This searches the same fully qualified name field as above,
+     but no wildcards are added."},
+    {field_name: 'simple-name:',
+     description: %Q(Simple name is the full name without the authorities. e.g.
+     "Acacia" in "Acacia Mill.", "Banksia paludosa" in "Banksia paludosa R.Br.".
+     <br>Leading and trailing wildcards are added to your search term.)},
+    {field_name: 'name-element:',
+     description: %Q(Name element is the unique part of the name. e.g. \
+     "Acacia" in "Acacia Mill.", "paludosa" in "Banksia paludosa R.Br.".
+     <br>Leading and trailing wildcards are added to your search term.)},
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">

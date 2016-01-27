@@ -17,6 +17,10 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "28-Jan-2016",
+      jira_id: "1636",
+      description: "Add name searches for name-element and simple-name.  With 
+      help and examples." },
     { date: "27-Jan-2016",
       jira_id: "1620",
       description: "Add Name search for orth. vars whose first instance is a

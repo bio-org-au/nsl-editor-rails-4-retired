@@ -146,6 +146,16 @@ class Search::OnName::FieldRule
     "name-exact:" =>
     { where_clause: "lower(f_unaccent(full_name)) like f_unaccent(?) ", },
 
+    "name-element:" =>
+    { where_clause: "lower(f_unaccent(name_element)) like f_unaccent(?) ",
+      leading_wildcard: true,
+      trailing_wildcard: true, },
+
+    "simple-name:" =>
+    { where_clause: "lower(f_unaccent(simple_name)) like f_unaccent(?) ",
+      leading_wildcard: true,
+      trailing_wildcard: true, },
+
     "rank:" =>
     { where_clause:
       "name_rank_id in (select id from name_rank where lower(name) like ?)",
