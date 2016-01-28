@@ -17,55 +17,25 @@
 class Search::ParsedRequest
   attr_reader :canonical_query_string,
               :common_and_cultivar,
-              :include_common_and_cultivar_session,
               :count,
+              :count_allowed,
               :defined_query,
               :defined_query_arg,
               :id,
+              :include_common_and_cultivar_session,
               :limit,
               :limited,
               :list,
               :order,
               :params,
               :query_string,
-              :target_table,
-              :where_arguments,
               :query_target,
+              :target_table,
               :target_button_text,
-              :count_allowed,
-              :user
+              :user,
+              :where_arguments
 
   DEFAULT_LIST_LIMIT = 100
-  DEFINED_QUERIES = {
-    "instance-name-id:" => "instances-for-name-id:",
-    "instances-for-name-id" => "instances-for-name-id:",
-    "instances for name id" => "instances-for-name-id:",
-    "names with instances" => "names-plus-instances:",
-    "names + instances" => "names-plus-instances:",
-    "names plus instances" => "names-plus-instances:",
-    "instance-name:" => "names-plus-instances:",
-    "instances-for-name:" => "names-plus-instances:",
-    "instance-ref-id:" => "instances-for-ref-id:",
-    "instances-for-ref-id:" => "instances-for-ref-id:",
-    "instances for ref id" => "instances-for-ref-id:",
-    "instance-ref-id-sort-by-page:" => "instances-for-ref-id-sort-by-page:",
-    "instances-for-ref-id-sort-by-page:" =>
-    "instances-for-ref-id-sort-by-page:",
-    "instances for ref id sort by page" => "instances-for-ref-id-sort-by-page:",
-    "instances sorted by page for ref id" =>
-    "instances-for-ref-id-sort-by-page:",
-    "references with instances" => "references-name-full-synonymy",
-    "references, names, full synonymy" => "references-name-full-synonymy",
-    "references + instances" => "references-name-full-synonymy",
-    "references with novelties" => "references-with-novelties",
-    "references, accepted names for id" => "references-accepted-names-for-id",
-    "references shared names" => "references-shared-names",
-    "instance is cited" => "instance-is-cited",
-    "instance is cited by" => "instance-is-cited-by",
-    "audit" => "audit",
-    "review" => "audit",
-  }
-
   SIMPLE_QUERY_TARGETS = {
     "author" => "author",
     "authors" => "author",
@@ -79,11 +49,12 @@ class Search::ParsedRequest
     "tree" => "tree",
   }
 
-  DEFAULT_TARGET = "name"
-
   def initialize(params)
     debug("initialize: params: #{params}")
     @params = params
+    @query_string = @params["query_string"].gsub(/  */, " ")
+    @query_target = (@params["query_target"] || "").strip.downcase
+    @user = @params[:current_user]
     parse_request
     @count_allowed = true
   end
@@ -102,97 +73,91 @@ class Search::ParsedRequest
     : #{@include_common_and_cultivar_session};"
   end
 
-  def as_a_list_request
-    @count = false
-    @list = true
-    self
-  end
-
   def parse_request
     debug("parse_request start: @params: #{@params}")
-    @query_string = @params["query_string"].gsub(/  */, " ")
-    @query_target = (@params["query_target"] || "").strip.downcase
-    @user = @params[:current_user]
-    # Before splitting on spaces, make sure every colon has at least
-    # one space after it.
-    remaining_tokens = @query_string
-                       .strip.gsub(/:/, ": ")
-                       .gsub(/:  /, ": ")
-                       .split(/ /)
-    remaining_tokens = parse_query_target(remaining_tokens)
-    remaining_tokens = parse_count_or_list(remaining_tokens)
-    # limit needs to be a delimited field limit: NNN
-    # to avoid confusion with IDs.
-    remaining_tokens = parse_limit(remaining_tokens)
-    remaining_tokens = parse_target(remaining_tokens)
-    remaining_tokens = parse_common_and_cultivar(remaining_tokens)
-    remaining_tokens = parse_order(remaining_tokens)
-    remaining_tokens = gather_where_arguments(remaining_tokens)
+    unused_qs_tokens = normalise_query_string.split(/ /)
+    parsed_defined_query = Search::ParsedDefinedQuery.new(@query_target)
+    @defined_query = parsed_defined_query.defined_query
+    @target_button_text = parsed_defined_query.target_button_text
+    unused_qs_tokens = parse_count_or_list(unused_qs_tokens)
+    unused_qs_tokens = parse_limit(unused_qs_tokens)
+    unused_qs_tokens = parse_target(unused_qs_tokens)
+    unused_qs_tokens = parse_common_and_cultivar(unused_qs_tokens)
+    @where_arguments = unused_qs_tokens.join(" ")
   end
 
-  def parse_query_target(tokens)
-    query_target_downcase = @query_target.downcase
-    if DEFINED_QUERIES.key?(query_target_downcase)
-      debug("parse_query_target - #{query_target_downcase}
-            is recognized as a defined query.")
-      @defined_query = DEFINED_QUERIES[query_target_downcase]
-      # @target_button_text = @params["query_target"].capitalize
-      @target_button_text = @params["query_target"].capitalize
-    else
-      debug("parse_query_target - '#{query_target_downcase}'
-            is NOT recognized as a defined query.")
-      @defined_query = false
-    end
-    tokens
+  # Before splitting on spaces, make sure every colon has at least 1 space
+  # after it.
+  def normalise_query_string
+    @query_string.strip.gsub(/:/, ": ").gsub(/:  /, ": ")
   end
 
   def parse_count_or_list(tokens)
-    if tokens.blank?
-      @list = true
-      @count = !@list
+    if tokens.blank? then default_list_and_count
     elsif tokens.first.match(/\Acount\z/i)
       tokens = tokens.drop(1)
-      @count = true
-      @list = !@count
+      counting
     elsif tokens.first.match(/\Alist\z/i)
       tokens = tokens.drop(1)
-      @list = true
-      @count = !@list
-    else
-      @list = true
-      @count = !@list
+      listing
+    else default_list_and_count
     end
     tokens
   end
 
-  # Need to refactor - to avoid limit being confused with an ID.
-  # Make limit a field limit: 999
+  def default_list_and_count
+    @list = true
+    @count = !@list
+  end
+
+  def counting
+    @count = true
+    @list = !@count
+  end
+
+  def listing
+    @list = true
+    @count = !@list
+  end
+
+  # TODO: Refactor - to avoid limit being confused with an ID.
+  #       Make limit a field limit: 999
   def parse_limit(tokens)
     debug "parse_limit for tokens: #{tokens.join(' ')}"
     @limited = @list
     joined_tokens = tokens.join(" ")
     if @list
-      if joined_tokens.match(/limit: \d{1,}/i)
-        @limit = joined_tokens.match(/limit: (\d{1,})/i)[1].to_i
-        joined_tokens = joined_tokens.gsub(/limit: *\d{1,}/i, "")
-      else
-        @limit = DEFAULT_LIST_LIMIT
-      end
+      joined_tokens = apply_list_limit(joined_tokens)
     else # count
-      # remove any limit:
-      joined_tokens = joined_tokens.gsub(/limit: *\d{1,}/i, "")
-      @limit = 0
+      joined_tokens = remove_limit_for_count(joined_tokens)
     end
+    filter_bad_limit(joined_tokens).split(" ")
+  end
+
+  def apply_list_limit(joined_tokens)
+    if joined_tokens.match(/limit: \d{1,}/i)
+      @limit = joined_tokens.match(/limit: (\d{1,})/i)[1].to_i
+      joined_tokens = joined_tokens.gsub(/limit: *\d{1,}/i, "")
+    else
+      @limit = DEFAULT_LIST_LIMIT
+    end
+    joined_tokens
+  end
+
+  def remove_limit_for_count(joined_tokens)
+    @limit = 0
+    joined_tokens.gsub(/limit: *\d{1,}/i, "")
+  end
+
+  def filter_bad_limit(joined_tokens)
     if joined_tokens.match(/limit: *[^\s\\]{1,}/i).present?
       bad_limit = joined_tokens.match(/limit: *([^\s\\]{1,})/i)[1]
       fail "Invalid limit: #{bad_limit}"
     end
-    tokens = joined_tokens.split(" ")
-    tokens
+    joined_tokens
   end
 
   def parse_target(tokens)
-    debug(" parse_target")
     if @defined_query == false
       if SIMPLE_QUERY_TARGETS.key?(@query_target)
         @target_table = SIMPLE_QUERY_TARGETS[@query_target]
@@ -210,17 +175,6 @@ class Search::ParsedRequest
     @include_common_and_cultivar_session = \
       @params["include_common_and_cultivar_session"] ||
       @params["query_common_and_cultivar"] == "t"
-    tokens
-  end
-
-  def parse_order(tokens)
-    @order = "lower(full_name)"
-    tokens
-  end
-
-  def gather_where_arguments(tokens)
-    debug("gather_where_arguments for tokens: #{tokens}")
-    @where_arguments = tokens.join(" ")
     tokens
   end
 

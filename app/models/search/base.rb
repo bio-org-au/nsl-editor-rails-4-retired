@@ -14,13 +14,15 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
+# Core class for queries.
 class Search::Base
   attr_reader :empty,
               :error,
               :error_message,
               :executed_query,
               :more_allowed,
-              :parsed_request
+              :parsed_request,
+              :specific_search
 
   DEFAULT_PAGE_SIZE = 100
   PAGE_INCREMENT_SIZE = 500
@@ -29,17 +31,16 @@ class Search::Base
   def initialize(params)
     debug("Search::Base start for user #{params[:current_user].username}")
     @params = params
-    @empty = false
-    @error = false
-    @error_message = ""
-    parse_request
-    debug(@parsed_request.inspect)
+    set_defaults
+    run_query
+  end
+
+  def run_query
+    @parsed_request = Search::ParsedRequest.new(@params)
     if @parsed_request.defined_query
-      debug("has a defined query: #{@parsed_request.defined_query}")
       run_defined_query
     else
-      debug("has a plain query")
-      run_query
+      run_plain_query
     end
   end
 
@@ -47,13 +48,14 @@ class Search::Base
     Rails.logger.debug("Search::Base #{s}")
   end
 
-  def parse_request
-    @query_string = @params[:query_string]
-    @parsed_request = Search::ParsedRequest.new(@params)
+  def set_defaults
+    @empty = false
+    @error = false
+    @error_message = ""
   end
 
   def to_history
-    { "query_string" => @query_string,
+    { "query_string" => @params[:query_string],
       "query_target" => @parsed_request.query_target,
       "result_size" => @executed_query.count,
       "time_stamp" => Time.now,
@@ -64,58 +66,16 @@ class Search::Base
     PAGE_INCREMENT_SIZE
   end
 
-  def query_string_for_more
-    query_string_without_limit
-      .sub(/^ *list/i, "")
-      .sub(/^ *\d+/, "")
-      .sub(/^/, "all ")
-    raw_limit = @query_string.sub(/^ *list/i, "").trim.split.first
-
-    current_limit = case raw_limit
-                    when /all/i
-                      "all"
-                    when /\d+/
-                      raw_limit.to_i
-                    else
-                      100
-                    end
-    if current_limit == "all"
-      @more_allowed = false
-      new_limit = current_limit
-    elsif current_limit >= MAX_PAGE_SIZE
-      @more_allowed = false
-      new_limit = current_limit
-    else
-      @more_allowed = true
-      if (current_limit + PAGE_INCREMENT_SIZE) > MAX_PAGE_SIZE
-        new_limit = MAX_PAGE_SIZE
-      else
-        new_limit = current_limit + PAGE_INCREMENT_SIZE
-      end
-    end
-    "#{new_limit} #{query_string_without_limit}"
-  end
-
-  def run_query
-    debug("run_query for
-          @parsed_request.target_table: #{@parsed_request.target_table}")
+  def run_plain_query
     @count_allowed = true
-    case @parsed_request.target_table
-    when /any/
-      fail "cannot run an 'any' search yet"
-    when /author/
-      debug("\nSearching authors\n")
-      @executed_query = Search::OnAuthor::Base.new(@parsed_request)
-    when /instance/
-      debug("\nSearching instances\n")
-      @executed_query = Search::OnInstance::Base.new(@parsed_request)
-    when /reference/
-      debug("\nSearching references\n")
-      @executed_query = Search::OnReference::Base.new(@parsed_request)
-    else
-      debug("\n else, Searching on names\n")
-      @executed_query = Search::OnName::Base.new(@parsed_request)
-    end
+    @executed_query =
+      case @parsed_request.target_table
+      when /any/ then fail "cannot run an 'any' search yet"
+      when /author/ then Search::OnAuthor::Base.new(@parsed_request)
+      when /instance/ then Search::OnInstance::Base.new(@parsed_request)
+      when /reference/ then Search::OnReference::Base.new(@parsed_request)
+      else Search::OnName::Base.new(@parsed_request)
+      end
   end
 
   def run_defined_query
@@ -123,97 +83,41 @@ class Search::Base
     if @parsed_request.defined_query_arg.blank? &&
        @parsed_request.where_arguments.blank?
       fail "Defined queries need an argument."
+    else
+      run_specific_defined_query
     end
-    case @parsed_request.defined_query
-    when /instances-for-name-id:/
-      debug("\nrun_defined_query instances-for-name-id:\n")
-      @executed_query =
+  end
+
+  def run_specific_defined_query
+    @executed_query =
+      case @parsed_request.defined_query
+      when /instances-for-name-id:/
         Name::DefinedQuery::NameIdWithInstances.new(@parsed_request)
-    when /names-plus-instances:/
-      debug("\nrun_defined_query instances-for-name:\n")
-      @executed_query =
+      when /names-plus-instances:/
         Name::DefinedQuery::NamesPlusInstances.new(@parsed_request)
-    when /instances-for-ref-id:/
-      debug("\nrun_defined_query instances-for-ref-id:\n")
-      @executed_query =
+      when /instances-for-ref-id:/
         Reference::DefinedQuery::ReferenceIdWithInstances.new(@parsed_request)
-    when /instances-for-ref-id-sort-by-page:/
-      debug("\nrun_defined_query instances-for-ref-id-sort-by-page:\n")
-      @executed_query =
+      when /instances-for-ref-id-sort-by-page:/
         Reference::DefinedQuery::ReferenceIdWithInstancesSortedByPage
         .new(@parsed_request)
-    when /references-name-full-synonymy/
-      debug("\nrun_defined_query references-name-full-synonymy\n")
-      @executed_query =
+      when /references-name-full-synonymy/
         Reference::DefinedQuery::ReferencesNamesFullSynonymy
         .new(@parsed_request)
-    when /\Ainstance-is-cited\z/
-      debug("\nrun_defined_query instance-id-is-cited\n")
-      @executed_query =
+      when /\Ainstance-is-cited\z/
         Instance::DefinedQuery::IsCited.new(@parsed_request)
-    when /\Ainstance-is-cited-by\z/
-      debug("\nrun_defined_query instance-id-is-cited-by\n")
-      @executed_query =
+      when /\Ainstance-is-cited-by\z/
         Instance::DefinedQuery::IsCitedBy.new(@parsed_request)
-    when /\Aaudit\z/
-      debug("\nrun_defined_query audit\n")
-      @executed_query = Audit::DefinedQuery::Base.new(@parsed_request)
-    when /\Areferences-with-novelties\z/
-      debug("\nrun_defined_query references-with-novelties\n")
-      @executed_query =
+      when /\Aaudit\z/
+        Audit::DefinedQuery::Base.new(@parsed_request)
+      when /\Areferences-with-novelties\z/
         Reference::DefinedQuery::ReferencesWithNovelties.new(@parsed_request)
-    when /\Areferences-accepted-names-for-id\z/i
-      debug("\nrun_defined_query references-accepted-names-for-id\n")
-      @executed_query =
+      when /\Areferences-accepted-names-for-id\z/i
         Reference::DefinedQuery::ReferencesAcceptedNamesForId
         .new(@parsed_request)
-    when /\Areferences-shared-names\z/i
-      debug("\nrun_defined_query references-shared-names\n")
-      @executed_query =
+      when /\Areferences-shared-names\z/i
         Reference::DefinedQuery::ReferencesSharedNames.new(@parsed_request)
-    else
-      fail "Run Defined Query has no match for #{@parsed_request.defined_query}"
-    end
+      else
+        fail "No such defined query: #{@parsed_request.defined_query}"
+      end
   end
-
-  ###########################################################################
-  def search_from_string(params)
-    debug("Search::Base -> search_from_string")
-    @specific_search = Search::FromString.new(params)
-  end
-
-  def search_from_fields(params)
-    debug("Search::Base -> search_from_fields")
-    case search_target(params["search_target"])
-    when /name/
-      debug("Search::Base -> Name::Search")
-      @specific_search = Name::Search.new(params)
-    else
-      fail "not implemented yet"
-    end
-  end
-
-  def empty_search(params)
-    debug("Search::Base -> empty_search")
-    @specific_search = Search::Empty.new(params)
-  end
-
-  def search_target(params_search_target = "")
-    case params_search_target
-    when /any/
-      "any"
-    when /author/
-      "author"
-    when /instance/
-      "instance"
-    when /name/
-      "names"
-    when /reference/
-      "reference"
-    else
-      "name"
-    end
-  end
-
-  attr_reader :specific_search
 end
