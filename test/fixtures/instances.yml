@@ -724,3 +724,35 @@ later_inst_sec_ref:
   namespace: apni
   created_by: tester
   updated_by: tester
+
+# Relationship instance - unpublished citation
+species_or_below_syn_with_genus_or_above:
+  reference: ref_4_species_or_below_to_be_synonymised
+  name: genus_or_above_to_be_synonym
+  this_cites: inst_genus_or_above_to_be_synonym 
+  this_is_cited_by: inst_species_or_below_to_be_synomised
+  instance_type: synonym
+  page: exclude-from-ordering-test
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+
+# standalone
+inst_species_or_below_to_be_synomised:
+  reference: ref_4_species_or_below_to_be_synonymised
+  name: species_or_below_to_be_synonymised
+  instance_type: synonym
+  page: exclude-from-ordering-test
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+
+# standalone
+inst_genus_or_above_to_be_synonym:
+  reference: ref_4_genus_or_above_to_be_synonym
+  name: genus_or_above_to_be_synonym
+  instance_type: synonym
+  page: exclude-from-ordering-test
+  namespace: apni
+  created_by: tester
+  updated_by: tester

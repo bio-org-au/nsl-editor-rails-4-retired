@@ -23,7 +23,7 @@ class Search::OnInstance::Base
               :has_relation,
               :relation,
               :id,
-              :count
+              :count,
               :show_csv
 
   def initialize(parsed_request)
@@ -31,6 +31,7 @@ class Search::OnInstance::Base
   end
 
   def run_query(parsed_request)
+    @has_relation = true
     if parsed_request.count
       run_count_query(parsed_request)
     else
@@ -41,7 +42,6 @@ class Search::OnInstance::Base
   def run_count_query(parsed_request)
     debug('#run_count_query')
     count_query = Search::OnInstance::CountQuery.new(parsed_request)
-    @has_relation = true
     @relation = count_query.sql
     @count = relation.count
     @limited = false
@@ -55,7 +55,6 @@ class Search::OnInstance::Base
   def run_list_query(parsed_request)
     debug('#run_list_query')
     list_query = Search::OnInstance::ListQuery.new(parsed_request)
-    @has_relation = true
     @relation = list_query.sql
     @results = relation.all
     @limited = list_query.limited

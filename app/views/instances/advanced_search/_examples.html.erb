@@ -140,6 +140,15 @@
       {search_target: 'Instances', 
        search_string: "is-tax-nov-for-orth-var-name:",
        explanation: %Q(Tax. nov. instances with an orth. var. name.)},
+      {search_target: 'Instances', 
+       search_string: "species-or-below-syn-with-genus-or-above:",
+       explanation: %Q(Instances that synonomise a name ranked species or below
+       with a name that is genus or above..)},
+      {search_target: 'Instances', 
+       search_string: "name: morna species-or-below-syn-with-genus-or-above:",
+       explanation: %Q(Instances for names containing "morna" that
+       synonomise a name ranked species or below with a name that is genus or
+       above..)},
       ].each do |val| %>
   <tr>
     <td class="width-30-percent">

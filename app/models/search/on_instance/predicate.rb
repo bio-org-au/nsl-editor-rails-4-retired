@@ -28,7 +28,8 @@ class Search::OnInstance::Predicate
               :value,
               :has_scope,
               :scope_,
-              :order
+              :order,
+              :join_name
 
   def initialize(field, value)
     @field = field
@@ -41,6 +42,7 @@ class Search::OnInstance::Predicate
     @order = rule[:order] || "id"
     process_value
     @tokenize = rule[:tokenize] || false
+    @join_name = rule[:join] == :name
   end
 
   def debug(s)

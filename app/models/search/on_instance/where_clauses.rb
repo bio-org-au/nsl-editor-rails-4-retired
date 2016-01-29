@@ -56,6 +56,7 @@ class Search::OnInstance::WhereClauses
                                                value)
       apply_rule(rule)
       apply_order(rule)
+      apply_join(rule)
     end
   end
 
@@ -110,5 +111,10 @@ class Search::OnInstance::WhereClauses
     else
       @sql = @sql.order("id")
     end
+  end
+
+  def apply_join(rule)
+    return unless rule.join_name
+    @sql = @sql.joins(:name)
   end
 end

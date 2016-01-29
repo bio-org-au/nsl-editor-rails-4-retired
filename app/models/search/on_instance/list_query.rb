@@ -26,6 +26,7 @@ class Search::OnInstance::ListQuery
 
   def prepare_query
     Rails.logger.debug("Search::OnInstance::ListQuery#prepare_query")
+    #prepared_query = Instance.joins(:name)
     prepared_query = Instance.where("1=1")
     where_clauses = Search::OnInstance::WhereClauses.new(@parsed_request,
                                                          prepared_query)
@@ -33,7 +34,7 @@ class Search::OnInstance::ListQuery
     if @parsed_request.limited
       prepared_query = prepared_query.limit(@parsed_request.limit)
     end
-    prepared_query = prepared_query.order("id")
+    prepared_query = prepared_query.order("instance.id")
     @sql = prepared_query
   end
 end

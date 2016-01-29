@@ -17,6 +17,10 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "29-Jan-2016",
+      jira_id: "474",
+      description: "Add Instance search for species or below synonymised to a
+      genus or above.  With help and examples." },
     { date: "28-Jan-2016",
       jira_id: "1636",
       description: "Add name searches for name-element and simple-name.  With 

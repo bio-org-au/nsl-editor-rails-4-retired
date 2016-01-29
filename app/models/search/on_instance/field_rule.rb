@@ -133,5 +133,29 @@ class Search::OnInstance::FieldRule
                                  where instance_type_id = instance_type.id
                                  and instance_type.name = 'tax. nov.') and
                                          exists (select null from name where name.id = instance.name_id and exists (select null from name_status where name_status.id = name.name_status_id and name_status.name = 'orth. var.'))" },
+    "species-or-below-syn-with-genus-or-above:" =>
+    { where_clause:
+      " instance.id in
+      (
+     SELECT i.id
+  FROM instance i
+ INNER JOIN instance ia
+    ON i.cited_by_id = ia.id
+ INNER JOIN name na
+    ON ia.name_id = na.id
+ INNER JOIN name_rank ra
+    ON na.name_rank_id = ra.id
+ INNER JOIN instance ib
+    ON i.cites_id = ib.id
+ INNER JOIN name nb
+    ON ib.name_id = nb.id
+ INNER JOIN name_rank rb
+    ON nb.name_rank_id = rb.id
+where ra.sort_order >= (select sort_order from name_rank where name = 'Species')
+  and rb.sort_order <= (select sort_order from name_rank where name = 'Genus')
+      )
+      ",
+      order: "name.full_name",
+      join: :name}
   }
 end
