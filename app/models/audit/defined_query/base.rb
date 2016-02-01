@@ -15,64 +15,55 @@
 #   limitations under the License.
 #
 class Audit::DefinedQuery::Base
-  attr_reader :results, :limited, :common_and_cultivar_included, :has_relation, :relation, :count
+  attr_reader :count,
+              :common_and_cultivar_included,
+              :has_relation,
+              :limited,
+              :relation,
+              :results,
+              :show_csv
 
   def initialize(parsed_request)
     run_query(parsed_request)
   end
 
-  def debug(s)
-    tag = "Audit::DefinedQuery::Base #{s}"
-    # puts("#{tag}: #{s}")
-    Rails.logger.debug("#{tag}: #{s}")
+  def run_query(parsed_request)
+    if parsed_request.count
+      run_count_query(parsed_request)
+    else
+      run_list_query(parsed_request)
+    end
   end
 
-  def run_query(parsed_request)
-    debug("")
-    debug("parsed_request.where_arguments: #{parsed_request.where_arguments}")
-    debug("parsed_request.defined_query_arg: #{parsed_request.defined_query_arg}")
-    debug("parsed_request.count: #{parsed_request.count}")
-    debug("parsed_request.limit: #{parsed_request.limit}")
-    if parsed_request.count
-      debug("run_query counting")
-      debug("run_query counting")
-      debug("run_query counting")
-      debug("run_query counting")
-      debug("run_query counting")
-      debug("run_query counting")
-      debug("run_query counting")
-      debug("run_query counting")
-      debug("run_query counting")
-      debug("run_query counting")
-      debug("run_query counting")
-      debug("run_query counting")
-      list_query = Audit::DefinedQuery::ListQuery.new(parsed_request.as_a_list_request)
-      @has_relation = false
-      @relation = nil
-      @results = list_query.results
-      @limited = list_query.limited
-      @common_and_cultivar_included = list_query.common_and_cultivar_included
-      @count = @results.size
-      debug("@count: #{@count}")
-      debug("@count: #{@count}")
-      debug("@count: #{@count}")
-      debug("@count: #{@count}")
-      debug("@count: #{@count}")
-      debug("@count: #{@count}")
-      debug("@count: #{@count}")
-      debug("@count: #{@count}")
-      debug("@count: #{@count}")
-      debug("@count: #{@count}")
-      @results = []
-    else
-      debug("query listing")
-      list_query = Audit::DefinedQuery::ListQuery.new(parsed_request)
-      @has_relation = false
-      @relation = nil
-      @results = list_query.results
-      @limited = list_query.limited
-      @common_and_cultivar_included = list_query.common_and_cultivar_included
-      @count = @results.size
-    end
+  def run_count_query(parsed_request)
+    query = Audit::DefinedQuery::ListQuery.new(parsed_request.as_a_list_request)
+    @has_relation = false
+    @relation = nil
+    @results = query.results
+    @limited = query.limited
+    @common_and_cultivar_included = query.common_and_cultivar_included
+    @count = @results.size
+    @results = []
+    @show_csv = false
+  end
+
+  def run_list_query(parsed_request)
+    query = Audit::DefinedQuery::ListQuery.new(parsed_request)
+    @has_relation = false
+    @relation = nil
+    @results = query.results
+    @limited = query.limited
+    @common_and_cultivar_included = query.common_and_cultivar_included
+    @count = @results.size
+    @show_csv = false
+  end
+
+  def csv?
+    @show_csv
+  end
+
+  def debug(s)
+    tag = "Audit::DefinedQuery::Base #{s}"
+    Rails.logger.debug("#{tag}: #{s}")
   end
 end
