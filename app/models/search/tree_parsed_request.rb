@@ -34,15 +34,16 @@ class Search::TreeParsedRequest
               :target_button_text
 
   def initialize(params)
-    Rails.logger.debug("Search::EmptyParsedQuery start: params: #{params}")
+    Rails.logger.debug("Search::TreeParsedQuery start: params: #{params}")
     @params = params
     @empty = true
     @defined_query = false
+    @query_string = @params["query_string"].gsub(/  */, " ")
     @target_button_text = "Tree"
     @count = false
     @list = false
     @limited = false
-    @common_and_cultivar = true
+    @common_and_cultivar = false
     @order = ""
   end
 end

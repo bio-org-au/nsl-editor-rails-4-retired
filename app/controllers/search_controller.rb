@@ -76,7 +76,7 @@ class SearchController < ApplicationController
   rescue => e
     logger.error("SearchController::tree exception: #{e}")
     params[:error_message] = e.to_s
-    @search = Search::Error.new(params)
+    @search = Search::TreeError.new(params)
   end
 
   # translate services/search/link
@@ -88,6 +88,7 @@ class SearchController < ApplicationController
   end
 
   def run_tree_search
+    logger.debug('run_tree_search')
     return false unless params[:query_target].present?
     return false unless params[:query_target].match(/\Atrees*/i)
     params[:query] = params[:query_string]
