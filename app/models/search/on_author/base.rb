@@ -32,6 +32,9 @@ class Search::OnAuthor::Base
   end
 
   def run_query(parsed_request)
+    @has_relation = true
+    @show_csv = false
+    @rejected_pairings = []
     if parsed_request.count
       run_count_query(parsed_request)
     else
@@ -40,28 +43,21 @@ class Search::OnAuthor::Base
   end
 
   def run_count_query(parsed_request)
-    debug('#run_count_query')
     count_query = Search::OnAuthor::CountQuery.new(parsed_request)
-    @has_relation = true
     @relation = count_query.sql
     @count = relation.count
     @limited = false
     @info_for_display = count_query.info_for_display
-    @rejected_pairings = []
     @common_and_cultivar_included = count_query.common_and_cultivar_included
     @results = []
-    @show_csv = false
   end
 
   def run_list_query(parsed_request)
-    debug('#run_list_query')
     list_query = Search::OnAuthor::ListQuery.new(parsed_request)
-    @has_relation = true
     @relation = list_query.sql
     @results = relation.all
     @limited = list_query.limited
     @info_for_display = list_query.info_for_display
-    @rejected_pairings = []
     @common_and_cultivar_included = list_query.common_and_cultivar_included
     @count = @results.size
   end
