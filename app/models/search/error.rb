@@ -25,23 +25,27 @@ class Search::Error
               :parsed_request
 
   def initialize(params)
-    Rails.logger.debug("Search::Error start with query string: #{params[:query_string]}")
-    Rails.logger.debug("#{'=' * 40}")
+    debug("start with query string: #{params[:query_string]}")
     @parsed_request = Search::ParsedRequest.new(params)
     @common_and_cultivar_included = true
-    @count = false
-    @empty = false
     @error = true
-    @tree = false
-    @limited = false
+    @limited = @tree = @more_allowed = @count = @empty = false
     @query_string = params[:query_string]
     @query_target = params[:query_target]
-    @more_allowed = false
     @executed_query = Search::EmptyExecutedQuery.new(params)
     @error_message = params[:error_message]
-   end
+  end
 
   def to_history
-    { "query_string" => @query_string, "query_target" => @query_target, "result_size" => 0, "time_stamp" => Time.now, "error" => true, "error_message" => @error_message }
+    { "query_string" => @query_string,
+      "query_target" => @query_target,
+      "result_size" => 0,
+      "time_stamp" => Time.now,
+      "error" => true,
+      "error_message" => @error_message }
+  end
+
+  def debug(s)
+    Rails.logger.debug("Search::Error #{s}")
   end
 end
