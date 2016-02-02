@@ -18,6 +18,10 @@
 class History
   CHANGES_2016 = [
     { date: "02-Feb-2016",
+      jira_id: "1637",
+      description: %Q(Reinstate the Name search feature that replaced embedded
+      spaces with wildcards.  Also reinstate no leading wildcard.) },
+    { date: "02-Feb-2016",
       jira_id: "1644",
       description: %Q(Restore tokenized search function to Author
       name-or-abbrev and default searches.  Tokenized means "in any order".) },

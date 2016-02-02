@@ -56,6 +56,7 @@ class Search::OnName::Predicate
     @scope_ = rule[:scope_] || ""
     @trailing_wildcard = rule[:trailing_wildcard] || false
     @leading_wildcard = rule[:leading_wildcard] || false
+    @wildcard_embedded_spaces = rule[:wildcard_embedded_spaces] || false
     @multiple_values = rule[:multiple_values] || false
     @predicate = build_predicate(rule)
     @allow_common_and_cultivar = rule[:allow_common_and_cultivar] || false
@@ -74,6 +75,7 @@ class Search::OnName::Predicate
     @processed_value = @canon_value
     @processed_value = "%#{@processed_value}" if @leading_wildcard
     @processed_value = "#{@processed_value}%" if @trailing_wildcard
+    @processed_value = "#{@processed_value.gsub(/  */,'%')}" if @wildcard_embedded_spaces
   end
 
   def build_predicate(rule)

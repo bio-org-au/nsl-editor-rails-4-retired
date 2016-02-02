@@ -57,7 +57,7 @@ class Search::OnName::WhereClauses
     else
       field_or_default = field.blank? ? DEFAULT_FIELD : field
       rule = Search::OnName::Predicate.new(field_or_default,
-                                                value)
+                                           value)
       apply_rule(rule)
       apply_common_and_cultivar(rule)
       apply_order(rule)

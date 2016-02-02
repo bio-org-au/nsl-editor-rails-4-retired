@@ -140,7 +140,7 @@ class Search::OnName::FieldRule
 
     "name:" =>
     { where_clause: "lower(f_unaccent(full_name)) like f_unaccent(?) ",
-      leading_wildcard: true,
+      wildcard_embedded_spaces: true,
       trailing_wildcard: true, },
 
     "name-exact:" =>
