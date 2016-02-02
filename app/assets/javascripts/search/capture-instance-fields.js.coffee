@@ -9,7 +9,7 @@ window.captureInstanceFields = (fields) ->
   _.each(assertionMap,clearAssertion)
   _.each(fields.wherePairs,setFieldValue)
   _.each(fields.wherePairs,setAssertion)
- 
+
 clearField = (value,key,list) ->
   $("##{value}").val('')
 
@@ -29,18 +29,18 @@ setAssertion = (pair,key,list) ->
   assertionField = assertionMap[canonicalField]
   console.log("assertionField: #{assertionField}")
   $("##{assertionField}").prop('checked',true)
-  
+
 canonMap =
   'c:': 'citation:'
 
 fieldMap =
-  'type:' : 'instance-advanced-search-type' 
-  'page:' : 'instance-advanced-search-page' 
-  'page-qualifier:' : 'instance-advanced-search-page-qualifier' 
-  'adnot:' : 'instance-advanced-search-comments' 
-  'adnot-by:' : 'instance-advanced-search-comments-by' 
-  'notes:' : 'instance-advanced-search-notes' 
-  'note-key:' : 'instance-advanced-search-note-key' 
+  'type:' : 'instance-advanced-search-type'
+  'page:' : 'instance-advanced-search-page'
+  'page-qualifier:' : 'instance-advanced-search-page-qualifier'
+  'adnot:' : 'instance-advanced-search-comments'
+  'adnot-by:' : 'instance-advanced-search-comments-by'
+  'notes:' : 'instance-advanced-search-notes'
+  'note-key:' : 'instance-advanced-search-note-key'
 
 funMap =
   'xtype:': 'RefTyperize'
@@ -60,20 +60,20 @@ canonicalizeField = (field) ->
 canonicalizeValue = (field,value) ->
   if funMap.hasOwnProperty(field)
     functionName = funMap[field]
-    fun = window[functionName];
+    fun = window[functionName]
     if typeof(fun) == "function"
-      canonicalValue = fun(value);
+      canonicalValue = fun(value)
     else
-      throw "No such function: #{functionName}"
+      throw new Error("No such function: #{functionName}")
   else
     canonicalValue = value
   canonicalValue
- 
+
 xcanonicalizeValue = (field,value) ->
   value
 
 window.refTyperize = (value) ->
   console.log("refTyperize for: #{value}")
   "type: #{value.toLowerCase()}"
- 
+
 

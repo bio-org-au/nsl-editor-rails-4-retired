@@ -10,10 +10,10 @@ window.captureNameFields = (fields) ->
   _.each(fields.wherePairs,setFieldValue)
   _.each(fields.wherePairs,setAssertion)
   setTypeOptions()
- 
+
 clearField = (value,key,list) ->
   $("##{value}").val('')
- 
+
 clearAssertion = (value,key,list) ->
   $("##{value}").prop('checked',false)
 
@@ -29,12 +29,12 @@ setAssertion = (pair,key,list) ->
   canonicalField = canonicalizeField(pair.field)
   assertionField = assertionMap[canonicalField]
   $("##{assertionField}").prop('checked',true)
-  
+
 setTypeOptions = ->
- $("select#name-advanced-search-name-type-options option").prop("selected", false)
- listVal = $("#name-advanced-search-name-type-list").val()
- vals = listVal.split(',')
- _.each(vals,selectTypeOption)
+  $("select#name-advanced-search-name-type-options option").prop("selected", false)
+  listVal = $("#name-advanced-search-name-type-list").val()
+  vals = listVal.split(',')
+  _.each(vals,selectTypeOption)
 
 selectTypeOption = (val,two,three) ->
   $("select#name-advanced-search-name-type-options option[value='#{val.trim()}']").prop("selected", true)
@@ -48,30 +48,30 @@ canonicalizeField = (field) ->
 canonicalizeValue = (field,value) ->
   if assertionMap.hasOwnProperty(field)
     canonicalValue = field
-  else 
+  else
     if funMap.hasOwnProperty(field)
       functionName = funMap[field]
-      fun = window[functionName];
+      fun = window[functionName]
       if typeof(fun) == "function"
-        canonicalValue = fun(value);
+        canonicalValue = fun(value)
       else
-        throw "No such function: #{functionName}"
+        throw new Error("No such function: #{functionName}")
     else
       canonicalValue = value
   canonicalValue
- 
+
 window.rankerize = (value) ->
   "rank: #{value.toLowerCase().trim()}"
- 
+
 window.belowRankerize = (value) ->
   "below-rank: #{value.toLowerCase().trim()}"
- 
+
 window.aboveRankerize = (value) ->
   "above-rank: #{value.toLowerCase().trim()}"
- 
+
 window.staterize = (value) ->
   "status: #{value.toLowerCase().trim()}"
- 
+
 canonMap =
   'nr:': 'rank:'
   'nt:': 'rank:'
