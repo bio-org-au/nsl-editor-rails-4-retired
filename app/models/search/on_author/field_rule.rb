@@ -46,6 +46,7 @@ class Search::OnAuthor::FieldRule
                                like f_unaccent(?) " },
     "name-or-abbrev:"     => { leading_wildcard: true,
                                trailing_wildcard: true,
+                               tokenize: true,
                                where_clause: "lower(f_unaccent(name))
                                like f_unaccent(?) or
                                lower(f_unaccent(abbrev)) like f_unaccent(?) " },

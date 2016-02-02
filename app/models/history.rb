@@ -18,6 +18,10 @@
 class History
   CHANGES_2016 = [
     { date: "02-Feb-2016",
+      jira_id: "1644",
+      description: %Q(Restore tokenized search function to Author
+      name-or-abbrev and default searches.  Tokenized means "in any order".) },
+    { date: "02-Feb-2016",
       jira_id: "1641",
       description: %Q(Clicking Help/Examples/Advanced after an Instance search
       now correctly shows Instance info. 

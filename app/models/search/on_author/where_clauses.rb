@@ -61,47 +61,62 @@ class Search::OnAuthor::WhereClauses
   end
 
   def apply_rule(rule)
+    debug('apply rule')
     if rule.tokenize
-      apply_predicate_to_tokens(rule)
+      tokenize(rule)
     elsif rule.has_scope
       # http://stackoverflow.com/questions/14286207/
       # how-to-remove-ranking-of-query-results
       @sql = @sql.send(rule.scope_, rule.value).reorder("name")
     else
-      apply_predicate(rule)
+      apply_predicate(rule,rule.value_frequency)
     end
   end
 
-  def apply_predicate(rule)
-    case rule.value_frequency
+  def apply_predicate(rule,frequency)
+    debug("apply predicate")
+    case frequency
     when 0 then @sql = @sql.where(rule.predicate)
     when 1 then @sql = @sql.where(rule.predicate, rule.processed_value)
-    when 2 then supply_value_twice(rule)
-    when 3 then supply_value_thrice(rule)
+    when 2 then supply_token_twice(rule,rule.processed_value)
+    when 3 then supply_token_thrice(rule,rule.processed_value)
+    else
+      fail "Where clause value frequency: #{frequency}, is too high."
+    end
+  end
+
+  def supply_token_twice(rule,token)
+    @sql = @sql.where(rule.predicate,
+                      token,
+                      token)
+  end
+
+  def supply_token_thrice(rule,token)
+    @sql = @sql.where(rule.predicate,
+                      token,
+                      token)
+  end
+
+  def apply_predicate_for_token(rule,token)
+    debug("apply predicate for token: #{token}")
+    case rule.value_frequency
+    when 0 then @sql = @sql.where(rule.predicate)
+    when 1 then @sql = @sql.where(rule.predicate, token)
+    when 2 then supply_token_twice(rule, token)
+    when 3 then supply_token_thrice(rule, token)
     else
       fail "Where clause value frequency: #{rule.value_frequency}, is too high."
     end
   end
 
-  def supply_value_thrice(rule)
-    @sql = @sql.where(rule.predicate,
-                      rule.processed_value,
-                      rule.processed_value,
-                      rule.processed_value)
-  end
-
-  def supply_value_twice(rule)
-    @sql = @sql.where(rule.predicate,
-                      rule.processed_value,
-                      rule.processed_value)
-  end
-
-  def apply_predicate_to_tokens(rule)
-    debug("apply_predicate_to_tokens: rule.predicate: #{rule.predicate}")
-    debug("apply_predicate_to_tokens: rule.value: #{rule.value}")
-    predicate = rule.predicate
+  # Author is a more complex tokenizatoin case than dealt with so far: 
+  # for each token you have to add the predicate with a _variable_ 
+  # number of question marks.
+  def tokenize(rule)
+    debug("tokenize: rule.predicate: #{rule.predicate}")
+    debug("tokenize: rule.value: #{rule.value}")
     rule.value.gsub(/\*/, "%").gsub(/%+/, " ").split.each do |term|
-      @sql = @sql.where(predicate, "%#{term}%")
+      @sql = apply_predicate_for_token(rule, "%#{term}%")
     end
   end
 
