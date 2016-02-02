@@ -183,55 +183,116 @@ $( "select#name-advanced-search-list-or-count" )
 
   };
 
-    function showHelpForSearchTarget(helpElement) {
-      debug('showHelpForSearchTarget: ' + helpElement);
-      $('#help-search-tab-container-link').attr('data-load-context',helpElement);
-      debug('HIDING all help');
-      $('.search-help').addClass('hidden');
-      debug('UNHIDING ' + '#' + helpElement);
-      $('#'+helpElement).removeClass('hidden');
-      if ($('#help-search-tab-container-link').closest('li').hasClass('active')) {
-        $('#help-search-tab-container-link').click();
-      };
-    }
 
     function setActiveHelpOnLoad() {
-      debug("setActiveHelpOnLoad search-target-button-text: " + $('#search-target-button-text').text().trim());
-      var helpId = $('ul#search-target-list li a:containsIgnoreCase(' +  $('#search-target-button-text').text().trim()  + ')').first().attr('data-help');
-      showHelpForSearchTarget(helpId);
+        showHelpForSearchTarget(getActiveHelpIdentifier());
+    }
+
+    function showHelpForSearchTarget(helpElement) {
+        debug('showHelpForSearchTarget: ' + helpElement);
+        $('#help-search-tab-container-link').attr('data-load-context',helpElement);
+        $('.search-help').addClass('hidden');
+        $('#'+helpElement).removeClass('hidden');
+        makeCurrentlyVisibleHelpMatchTarget();
+    }
+
+    function makeCurrentlyVisibleHelpMatchTarget() {
+        if (helpTabVisible()) {
+          $('#help-search-tab-container-link').click();
+        };
+    }
+
+    function helpTabVisible() {
+        return $('#help-search-tab-container-link').closest('li').hasClass('active');
+    }
+
+    function getActiveHelpIdentifier() {
+      debug('getActiveHelpIdentifier()');
+      return $('ul#search-target-list li a')
+          .filter(function(index) {
+              return $(this).text().toLowerCase() === $('#search-target-button-text')
+                                        .text()
+                                        .trim()
+                                        .toLowerCase()
+          }).first().attr('data-help');
+    }
+
+    // //////////////////////////////////////////////////////////////
+    // Section                                                     //
+    // //////////////////////////////////////////////////////////////
+
+    function setActiveExamplesOnLoad() {
+      debug("setActiveExamplesOnLoad");
+      showExamplesForSearchTarget(getActiveExamplesIdentifier());
     }
 
     function showExamplesForSearchTarget(examplesElement) {
-      debug('-----   showExamplesForSearchTarget for ' + examplesElement);
       $('#example-search-tab-container-link').attr('data-load-context',examplesElement);
       $('.search-examples').addClass('hidden');
       $('#'+examplesElement).removeClass('hidden');
-      if ($('#example-search-tab-container-link').closest('li').hasClass('active')) {
-        $('#example-search-tab-container-link').click();
-      };
+      makeCurrentlyVisibleExamplesMatchTarget();
     }
 
-    function setActiveExamplesOnLoad() {
-      var id = $('ul#search-target-list li a:containsIgnoreCase(' +  $('#search-target-button-text').text().trim()  + ')').first().attr('data-examples');
-      debug("search-target-button-text: " + $('#search-target-button-text').text().trim());
-      debug("setActiveExamplesOnLoad id: " + id);
-      showExamplesForSearchTarget(id);
+    function makeCurrentlyVisibleExamplesMatchTarget() {
+        if (examplesTabVisible()) {
+          $('#example-search-tab-container-link').click();
+        };
+    }
+
+    function examplesTabVisible() {
+        return $('#example-search-tab-container-link').closest('li').hasClass('active');
+    }
+
+    function getActiveExamplesIdentifier() {
+      return $('ul#search-target-list li a')
+          .filter(function(index) {
+              return $(this).text().toLowerCase() === $('#search-target-button-text')
+                                        .text()
+                                        .trim()
+                                        .toLowerCase()
+          }).first().attr('data-examples');
+    }
+
+    // //////////////////////////////////////////////////////////////
+    // Section                                                     //
+    // //////////////////////////////////////////////////////////////
+
+    function setActiveAdvancedOnLoad() {
+      debug("setActiveAdvancedOnLoad search-target-button-text: " + $('#search-target-button-text').text().trim());
+      showAdvancedForSearchTarget(getActiveAdvancedIdentifier());
     }
 
     function showAdvancedForSearchTarget(advancedElement) {
-      debug('-----   showAdvancedForSearchTarget: ' + advancedElement);
+      debug('showAdvancedForSearchTarget: ' + advancedElement);
       $('#advanced-search-tab-container-link').attr('data-load-context',advancedElement);
       $('.search-advanced').addClass('hidden');
       $('#'+advancedElement).removeClass('hidden');
-      if ($('#advanced-search-tab-container-link').closest('li').hasClass('active')) {
-        $('#advanced-search-tab-container-link').click();
-      };
+      makeCurrentlyVisibleAdvancedMatchTarget();
     }
 
-    function setActiveAdvancedOnLoad() {
-      var id = $('ul#search-target-list li a:containsIgnoreCase(' +  $('#search-target-button-text').text().trim()  + ')').first().attr('data-advanced');
-      showAdvancedForSearchTarget(id);
+    function makeCurrentlyVisibleAdvancedMatchTarget() {
+        if (AdvancedTabVisible()) {
+          $('#advanced-search-tab-container-link').click();
+        };
     }
+
+    function AdvancedTabVisible() {
+        return $('#advanced-search-tab-container-link').closest('li').hasClass('active');
+    }
+
+    function getActiveAdvancedIdentifier() {
+      return $('ul#search-target-list li a')
+          .filter(function(index) {
+              return $(this).text().toLowerCase() === $('#search-target-button-text')
+                                        .text()
+                                        .trim()
+                                        .toLowerCase()
+          }).first().attr('data-advanced');
+    }
+
+    // //////////////////////////////////////////////////////////////
+    // Section                                                     //
+    // //////////////////////////////////////////////////////////////
 
     function loadNameToString() {
       var str = '';

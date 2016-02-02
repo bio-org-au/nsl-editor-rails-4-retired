@@ -17,6 +17,11 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "02-Feb-2016",
+      jira_id: "1641",
+      description: %Q(Clicking Help/Examples/Advanced after an Instance search
+      now correctly shows Instance info. 
+      "Trees" search is now "Tree", avoiding an error.) },
     { date: "29-Jan-2016",
       jira_id: "474",
       description: "Add Instance search for species or below synonymised to a
