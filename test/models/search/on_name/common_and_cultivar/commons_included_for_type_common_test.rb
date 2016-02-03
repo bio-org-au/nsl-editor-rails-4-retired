@@ -32,7 +32,8 @@ class SearchOnNameNameCommonsIncluded4TypeCommonTest < ActiveSupport::TestCase
     assert_equal search.executed_query.results.class,
                  Name::ActiveRecord_Relation,
                  "Results should be a Name::ActiveRecord_Relation."
-    assert_equal 1, search.executed_query.results.size,
+    assert_equal 1,
+                 search.executed_query.results.size,
                  "Expected common name to be included for type common"
   end
 end

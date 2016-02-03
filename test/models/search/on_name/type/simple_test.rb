@@ -23,17 +23,15 @@ load "test/models/search/users.rb"
 # Single Search model test.
 class SearchOnNameTypeSimpleTest < ActiveSupport::TestCase
   test "search on name type simple" do
-    params = ActiveSupport::HashWithIndifferentAccess.new(query_target:
-                                                          "name",
-                                                          query_string:
-                                                          "type: scientific",
-                                                          current_user:
-                                                          build_edit_user)
+    params = ActiveSupport::HashWithIndifferentAccess.new(
+      query_target: "name",
+      query_string: "type: scientific",
+      current_user: build_edit_user)
     search = Search::Base.new(params)
     assert_equal search.executed_query.results.class,
                  Name::ActiveRecord_Relation,
                  "Results should be a Name::ActiveRecord_Relation."
     assert search.executed_query.results.size > 0,
-                 "Expected at least one search result"
+           "Expected at least one search result"
   end
 end

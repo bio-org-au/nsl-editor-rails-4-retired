@@ -19,6 +19,7 @@ require "test_helper"
 # Single Reference model test.
 class ForIdPresentAndStringPresent < ActiveSupport::TestCase
   test "id present string present" do
-    assert_match "id_and_text", Reference::AsEdited.resolve_id_and_text("24", "xyz")
+    assert_match "id_and_text",
+                 Reference::AsEdited.resolve_id_and_text("24", "xyz")
   end
 end

@@ -20,7 +20,10 @@ require "test_helper"
 class ReferenceAsEditedAuthorIdWithMatchingString < ActiveSupport::TestCase
   test "id with matching string" do
     author = authors(:chaplin)
-    result = Reference::AsEdited.author_from_typeahead(author.id.to_s, author.name)
-    assert_equal author.id, result, "Should get a matching id for the author name"
+    result = Reference::AsEdited.author_from_typeahead(
+      author.id.to_s,
+      author.name)
+    assert_equal author.id, result,
+                 "Should get a matching id for the author name"
   end
 end

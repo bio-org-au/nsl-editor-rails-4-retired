@@ -19,7 +19,9 @@ require "test_helper"
 # Single Reference model test.
 class ParentNotSelectedFromTypeahead < ActiveSupport::TestCase
   test "create reference with parent not selected from typeahead" do
-    assert_raise(RuntimeError, "Should raise exception because parent typeahead will not match any acceptable reference.") do
+    assert_raise(RuntimeError,
+                 "Should raise exception because parent typeahead will not \
+                 match any acceptable reference.") do
       Reference::AsEdited.create({ "ref_type_id" => "17266",
                                    "title" => "ss",
                                    "published" => "1",

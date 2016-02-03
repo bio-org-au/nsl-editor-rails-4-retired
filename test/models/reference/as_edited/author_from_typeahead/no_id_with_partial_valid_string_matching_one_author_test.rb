@@ -17,7 +17,7 @@
 require "test_helper"
 
 # Reference model typeahead test.
-class ReferenceAsEditedNoAuthorIdWithPartialValidStringMatchingOneAuthor < ActiveSupport::TestCase
+class RefAsEdNoAuthIdWPartValidStringMatchingOneAuthor < ActiveSupport::TestCase
   test "no id with partial valid string matching one author" do
     author = authors(:chaplin)
     result = Reference::AsEdited.author_from_typeahead("", author.name.chop)

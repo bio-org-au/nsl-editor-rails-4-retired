@@ -21,11 +21,11 @@ load "test/models/search/users.rb"
 class SearchOnNameParentIdSimpleTest < ActiveSupport::TestCase
   test "search on name parent id simple" do
     name = names(:angophora_costata)
-    params =  ActiveSupport::HashWithIndifferentAccess
-              .new(query_target: "name",
-                   query_string: "parent-id: #{name.id}",
-                   include_common_and_cultivar_session: true,
-                   current_user: build_edit_user)
+    params = ActiveSupport::HashWithIndifferentAccess.new(
+      query_target: "name",
+      query_string: "parent-id: #{name.id}",
+      include_common_and_cultivar_session: true,
+      current_user: build_edit_user)
     search = Search::Base.new(params)
     assert_equal search.executed_query.results.class,
                  Name::ActiveRecord_Relation,

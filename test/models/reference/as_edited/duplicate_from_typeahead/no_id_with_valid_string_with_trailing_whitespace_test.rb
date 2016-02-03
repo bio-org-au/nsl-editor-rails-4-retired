@@ -17,10 +17,14 @@
 require "test_helper"
 
 # Reference model typeahead test.
-class ReferenceAsEditedNoDuplicateOfIdWithValidStringWithTrailingWhitespace < ActiveSupport::TestCase
+class RefAsEdNoDupeOfIdWValStrWithTrailingWhitespace < ActiveSupport::TestCase
   test "no id with valid string" do
     reference_1 = references(:origin_of_species)
-    result = Reference::AsEdited.duplicate_of_from_typeahead("", reference_1.citation + " ")
-    assert_equal reference_1.id, result, "Should get a matching id for the citation"
+    result = Reference::AsEdited.duplicate_of_from_typeahead(
+      "",
+      reference_1.citation + " ")
+    assert_equal reference_1.id,
+                 result,
+                 "Should get a matching id for the citation"
   end
 end

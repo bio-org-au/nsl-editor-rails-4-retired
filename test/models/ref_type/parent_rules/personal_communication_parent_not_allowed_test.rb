@@ -19,6 +19,7 @@ require "test_helper"
 # Ref Type parent rule test.
 class PersonalCommunicationParentNotAllowedTest < ActiveSupport::TestCase
   test "personal communication ref type parent is not allowed" do
-    assert ref_types(:personal_communication).parent_id.blank? == true, "Personal communication ref type parent should not be allowed."
+    assert ref_types(:personal_communication).parent_id.blank? == true,
+           "Personal communication ref type parent should not be allowed."
   end
 end

@@ -19,6 +19,7 @@ require "test_helper"
 # Single Reference model test.
 class BookValidWithoutParentTest < ActiveSupport::TestCase
   test "book valid without parent" do
-    assert references(:book_without_parent).valid? == true, "Book without parent should be valid."
+    assert references(:book_without_parent).valid? == true,
+           "Book without parent should be valid."
   end
 end

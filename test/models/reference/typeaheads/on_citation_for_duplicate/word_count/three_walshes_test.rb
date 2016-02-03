@@ -18,9 +18,11 @@
 require "test_helper"
 
 # Reference model typeahead search.
-class TypeaheadsOnCitationForDuplicateWordCountThreeWalshesTest < ActiveSupport::TestCase
+class TAOnCitationForDupeWordCountThreeWalshesTest < ActiveSupport::TestCase
   test "reference typeahead on citation word count three walshes" do
-    results = Reference::AsTypeahead.on_citation_for_duplicate("walsh walsh walsh", references(:book_by_brassard).id)
+    results = Reference::AsTypeahead.on_citation_for_duplicate(
+      "walsh walsh walsh",
+      references(:book_by_brassard).id)
     assert_equal 0, results.size, "Should be no records returned."
   end
 end

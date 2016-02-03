@@ -17,7 +17,7 @@
 require "test_helper"
 
 # Reference model typeahead test.
-class ReferenceAsEditedNoAuthorIdWithValidStringWithTrailingWhitespace < ActiveSupport::TestCase
+class RefAsEdNoAuthIdWValStringWithTrailingWhitespace < ActiveSupport::TestCase
   test "no id with valid string" do
     author = authors(:chaplin)
     result = Reference::AsEdited.author_from_typeahead("", author.name + " ")

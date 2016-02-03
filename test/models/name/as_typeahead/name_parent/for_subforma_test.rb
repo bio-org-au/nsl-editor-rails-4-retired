@@ -21,7 +21,13 @@ require "models/name/as_typeahead/name_parent/name_parent_test_helper"
 class ForSubformaTest < ActiveSupport::TestCase
   test "name parent suggestion for subforma" do
     avoid_id = 1
-    suggestions = Name::AsTypeahead.name_parent_suggestions("%", avoid_id, NameRank.find_by(name: "Subforma").id)
-    suggestions_should_only_include(suggestions, "Subforma", %w(Forma Subvarietas Varietas Nothovarietas Subspecies Species))
+    suggestions = Name::AsTypeahead.name_parent_suggestions(
+      "%",
+      avoid_id,
+      NameRank.find_by(name: "Subforma").id)
+    suggestions_should_only_include(
+      suggestions,
+      "Subforma",
+      %w(Forma Subvarietas Varietas Nothovarietas Subspecies Species))
   end
 end

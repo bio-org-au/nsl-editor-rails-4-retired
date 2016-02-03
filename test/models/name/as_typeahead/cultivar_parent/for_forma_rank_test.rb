@@ -21,6 +21,10 @@ require "models/name/as_typeahead/cultivar_parent/cultivar_parent_test_helper"
 class CultivarParentForFormaRankTest < ActiveSupport::TestCase
   test "cultivar parent suggestion" do
     suggestions = Name::AsTypeahead.cultivar_parent_suggestions("%", -1)
-    cultivar_parent_suggestions_should_only_include(suggestions, "Forma", %w(Genus Subgenus Sectio Subsectio Series Subseries Superspecies Species Subspecies Varietas Nothovarietas Subvarietas Forma Subforma ))
+    cultivar_parent_suggestions_should_only_include(
+      suggestions,
+      "Forma",
+      %w(Genus Subgenus Sectio Subsectio Series Subseries Superspecies Species \
+         Subspecies Varietas Nothovarietas Subvarietas Forma Subforma ))
   end
 end

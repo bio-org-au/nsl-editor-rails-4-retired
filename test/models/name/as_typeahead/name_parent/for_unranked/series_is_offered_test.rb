@@ -21,7 +21,10 @@ require "models/name/as_typeahead/name_parent/name_parent_test_helper"
 class NameParentSeriesIsOfferedForUnrankedTest < ActiveSupport::TestCase
   test "name parent suggestion for unranked include series" do
     avoid_id = 1
-    suggestions = Name::AsTypeahead.name_parent_suggestions("a_series", avoid_id, NameRank.find_by(name: "[unranked]").id)
+    suggestions = Name::AsTypeahead.name_parent_suggestions(
+      "a_series",
+      avoid_id,
+      NameRank.find_by(name: "[unranked]").id)
     expected_ranks = %w(Series)
     suggestions_should_only_include(suggestions, "[unranked]", expected_ranks)
   end

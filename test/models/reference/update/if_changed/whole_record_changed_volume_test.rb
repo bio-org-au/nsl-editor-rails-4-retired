@@ -19,7 +19,8 @@ require "test_helper"
 # Single Reference model test.
 class WholeRecordChangedVolumeTest < ActiveSupport::TestCase
   test "realistic form submission" do
-    reference = Reference::AsEdited.find(references(:for_whole_record_change_detection).id)
+    reference = Reference::AsEdited.find(
+      references(:for_whole_record_change_detection).id)
 
     params = { "title" => reference.title,
                "year" => reference.year,
@@ -37,9 +38,14 @@ class WholeRecordChangedVolumeTest < ActiveSupport::TestCase
                          "author_id" => reference.author_id,
                          "author_typeahead" => reference.author.name }
 
-    assert reference.update_if_changed(params, typeahead_params, "a user"), "The reference has changed so it should be updated."
+    assert reference.update_if_changed(params,
+                                       typeahead_params,
+                                       "a user"),
+           "The reference has changed so it should be updated."
     changed_reference = Reference.find_by(id: reference.id)
-    assert reference.created_at < changed_reference.updated_at, "Reference updated at should have changed."
-    assert reference.updated_by.match("a user"), "Reference updated by should have been set."
+    assert reference.created_at < changed_reference.updated_at,
+           "Reference updated at should have changed."
+    assert reference.updated_by.match("a user"),
+           "Reference updated by should have been set."
   end
 end

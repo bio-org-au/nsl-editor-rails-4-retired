@@ -21,20 +21,19 @@ require "test_helper"
 load "test/models/search/users.rb"
 
 # Single Search model test.
-class SearchOnName2ndParentIdCultivarsIncludedByDefaultTest < ActiveSupport::TestCase
+class SearchOnName2ndParIdCultivarsInclByDefaultTest < ActiveSupport::TestCase
   test "search on name second parent id cultivars included by default" do
     name = names(:a_cultivar_hybrid)
-    params = ActiveSupport::HashWithIndifferentAccess.new(query_target:
-                                                          "name",
-                                                          query_string:
-                                                          "second-parent-id: #{name.id}",
-                                                          current_user:
-                                                          build_edit_user)
+    params = ActiveSupport::HashWithIndifferentAccess.new(
+      query_target: "name",
+      query_string: "second-parent-id: #{name.id}",
+      current_user: build_edit_user)
     search = Search::Base.new(params)
     assert_equal search.executed_query.results.class,
                  Name::ActiveRecord_Relation,
                  "Results should be a Name::ActiveRecord_Relation."
-    assert_equal 1, search.executed_query.results.size,
-                 "Expected cultivar name to be included by default for second parent id query"
+    assert_equal 1,
+                 search.executed_query.results.size,
+                 "Expect cultivar name to be included for 2nd parent id query"
   end
 end

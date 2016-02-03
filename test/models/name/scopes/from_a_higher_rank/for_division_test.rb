@@ -17,12 +17,13 @@
 require "test_helper"
 
 # Single name model scopes test.
-class ForSubclassisTest < ActiveSupport::TestCase
+class ForDivisionTest < ActiveSupport::TestCase
   test "from a higher rank for Subclassis" do
-    ranks = Name.from_a_higher_rank(name_ranks(:subclassis).id).collect { |name| name.name_rank.name }.uniq
+    rank_id = name_ranks(:division).id
+    ranks = Name.from_a_higher_rank(rank_id).collect do |name|
+      name.name_rank.name
+    end.uniq
     assert ranks.include?("Regnum"), "Should include Regnum"
-    assert ranks.include?("Division"), "Should include Division"
-    assert ranks.include?("Classis"), "Should include Classis"
-    assert_equal 3, ranks.size
+    assert_equal 1, ranks.size
   end
 end

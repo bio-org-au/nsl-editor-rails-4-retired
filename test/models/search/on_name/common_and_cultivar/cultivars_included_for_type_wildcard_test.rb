@@ -21,15 +21,13 @@ require "test_helper"
 load "test/models/search/users.rb"
 
 # Single Search model test.
-class SearchOnNameNameCultivarsIncluded4TypeWildcardTest < ActiveSupport::TestCase
+class SearchOnNameNameCultivarsIncl4TypeWildcardTest < ActiveSupport::TestCase
   test "search on name name cultivars included for type wildcard" do
     params =
-      ActiveSupport::HashWithIndifferentAccess.new(query_target:
-                                                   "name",
-                                                   query_string:
-                                                   "name: acultivar type: *",
-                                                   current_user:
-                                                   build_edit_user)
+      ActiveSupport::HashWithIndifferentAccess.new(
+        query_target: "name",
+        query_string: "name: acultivar type: *",
+        current_user: build_edit_user)
     search = Search::Base.new(params)
     assert_equal search.executed_query.results.class,
                  Name::ActiveRecord_Relation,

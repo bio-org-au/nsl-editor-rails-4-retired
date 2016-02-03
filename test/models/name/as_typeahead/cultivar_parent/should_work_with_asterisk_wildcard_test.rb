@@ -20,9 +20,13 @@ require "test_helper"
 class ShouldWorkWithAsteriskWildcardTest < ActiveSupport::TestCase
   test "Cultivar parent suggestion should work with asterisk wildcard" do
     suggestions = Name::AsTypeahead.cultivar_parent_suggestions("*", -1)
-    assert(suggestions.is_a?(Array), "asterisk wildcard search should be an array")
-    assert(suggestions.size > 0, "asterisk wildcard search should not be empty")
-    assert(suggestions.first[:value].present?, "asterisk wildcard search first element should have a value")
-    assert(suggestions.first[:id].present?, "asterisk wildcard search first element should have an id")
+    assert(suggestions.is_a?(Array),
+           "asterisk wildcard search should be an array")
+    assert(suggestions.size > 0,
+           "asterisk wildcard search should not be empty")
+    assert(suggestions.first[:value].present?,
+           "asterisk wildcard search first element should have a value")
+    assert(suggestions.first[:id].present?,
+           "asterisk wildcard search first element should have an id")
   end
 end

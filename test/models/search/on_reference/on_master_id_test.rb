@@ -22,9 +22,16 @@ class SearchOnReferenceOnMasterIdTest < ActiveSupport::TestCase
   test "on master ID" do
     reference = references(:master)
     query_string = "master-id: #{reference.id}"
-    params = ActiveSupport::HashWithIndifferentAccess.new(query_target: "reference", query_string: query_string, current_user: build_edit_user)
+    params = ActiveSupport::HashWithIndifferentAccess.new(
+      query_target: "reference",
+      query_string: query_string,
+      current_user: build_edit_user)
     search = Search::Base.new(params)
-    assert_equal search.executed_query.results.class, Reference::ActiveRecord_Relation, "Results should be a Reference::ActiveRecord_Relation."
-    assert_equal 2, search.executed_query.results.size, "Exactly 2 results are expected."
+    assert_equal search.executed_query.results.class,
+                 Reference::ActiveRecord_Relation,
+                 "Results should be a Reference::ActiveRecord_Relation."
+    assert_equal 2,
+                 search.executed_query.results.size,
+                 "Exactly 2 results are expected."
   end
 end

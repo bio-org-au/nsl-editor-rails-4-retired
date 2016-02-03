@@ -17,10 +17,13 @@
 require "test_helper"
 
 # Single Name typeahead test.
-class CultivarParentSuggestionsShouldNotIncludeDuplicatesTest < ActiveSupport::TestCase
+class CultivarParentSuggestsShldNotIncludeDupesTest < ActiveSupport::TestCase
   test "name parent suggestions should not include duplicates" do
-    suggestions = Name::AsTypeahead.cultivar_parent_suggestions("a duplicate species", -1)
+    suggestions = Name::AsTypeahead.cultivar_parent_suggestions(
+      "a duplicate species",
+      -1)
     assert(suggestions.is_a?(Array), "suggestions should be an array")
-    assert(suggestions.size == 0, 'suggestions for "a duplicate species" should be empty')
+    assert(suggestions.size == 0,
+           'suggestions for "a duplicate species" should be empty')
   end
 end

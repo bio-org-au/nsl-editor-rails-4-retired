@@ -17,10 +17,14 @@
 require "test_helper"
 
 # Reference model typeahead search.
-class TypeaheadsOnCitationForParentRefTypeRestrictionNothingForSeries < ActiveSupport::TestCase
-  test "reference typeahead on citation ref type restriction nothing for series" do
+class THOnCitn4ParRefTypeRestrictionNothingForSeries < ActiveSupport::TestCase
+  test "ref typeahead on citation ref type restriction nothing for series" do
     current_reference = references(:simple)
-    results = Reference::AsTypeahead.on_citation_for_parent("%", current_reference.id, ref_types(:series).id)
-    assert results.size == 0, "Should be no results because series takes no parent."
+    results = Reference::AsTypeahead.on_citation_for_parent(
+      "%",
+      current_reference.id,
+      ref_types(:series).id)
+    assert results.size == 0,
+           "Should be no results because series takes no parent."
   end
 end

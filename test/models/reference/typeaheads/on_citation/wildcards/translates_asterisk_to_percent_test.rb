@@ -17,10 +17,11 @@
 require "test_helper"
 
 # Reference model typeahead search.
-class TypeaheadsOnCitationWildcardsTranslatesAsteriskToPercent < ActiveSupport::TestCase
-  test "reference typeahead on citation wildcards translates asterisk to percent" do
+class TAOnCitnWildcardsTranslatesAsteriskToPercent < ActiveSupport::TestCase
+  test "ref typeahead on citation wildcards translates asterisk to percent" do
     current_reference = references(:ref_type_is_book)
     results = Reference::AsTypeahead.on_citation("*", current_reference.id)
-    assert results.size > 0, "Should be at least one result for asterisk wildcard"
+    assert results.size > 0,
+           "Should be at least one result for asterisk wildcard"
   end
 end

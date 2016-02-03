@@ -39,5 +39,4 @@ class SearchOnAuthorAbbrevExactSimpleTest < ActiveSupport::TestCase
     assert_equal authors(:reveal).abbrev,
                  search.executed_query.results.first[:abbrev]
   end
-
 end

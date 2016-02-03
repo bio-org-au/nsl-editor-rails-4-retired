@@ -20,9 +20,11 @@ load "models/search/users.rb"
 # Single Search model test for Name search.
 class SearchOnNameAssertionChildIsNotTest < ActiveSupport::TestCase
   test "name asertion has no instances" do
-    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_target: "name",
-                                                                           query_string: "has-no-instances:",
-                                                                           current_user: build_edit_user))
-    assert search.executed_query.results.size > 0, "Should find name that has no instances"
+    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(
+                                query_target: "name",
+                                query_string: "has-no-instances:",
+                                current_user: build_edit_user))
+    assert search.executed_query.results.size > 0,
+           "Should find name that has no instances"
   end
 end

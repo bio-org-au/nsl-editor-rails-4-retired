@@ -17,10 +17,12 @@
 require "test_helper"
 
 # Reference model typeahead search.
-class TypeaheadsOnCitationForDuplicateRefTypeRestrictionAnyTypeForUnknown < ActiveSupport::TestCase
-  test "reference typeahead on citation ref type restriction any type for unknown" do
+class TAOnCitnForDupeRefTypeRestrictionAnyType4Unknown < ActiveSupport::TestCase
+  test "ref typeahead on citation ref type restriction any type for unknown" do
     current_reference = references(:ref_type_is_unknown)
-    results = Reference::AsTypeahead.on_citation_for_duplicate("%", current_reference.id)
+    results = Reference::AsTypeahead.on_citation_for_duplicate(
+      "%",
+      current_reference.id)
     assert results.size > 0, "Should be at least one result"
     journals = 0
     unknowns = 0

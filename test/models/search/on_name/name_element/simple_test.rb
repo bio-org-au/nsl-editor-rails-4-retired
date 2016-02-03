@@ -32,6 +32,6 @@ class SearchOnNameNameElementSimpleTest < ActiveSupport::TestCase
                  Name::ActiveRecord_Relation,
                  "Results should be a Name::ActiveRecord_Relation."
     assert search.executed_query.results.size > 0,
-                 "Expected at least one search result for name-element"
+           "Expected at least one search result for name-element"
   end
 end

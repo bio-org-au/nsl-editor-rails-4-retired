@@ -21,20 +21,19 @@ require "test_helper"
 load "test/models/search/users.rb"
 
 # Single Search model test.
-class SearchOnNameParentOr2ndParentIdCommonsIncludedByDefaultTest < ActiveSupport::TestCase
-  test "search on name parent or second parent id commons included by default" do
+class SearchOnNameParOr2ndParIdCommonsIncludedDefTest < ActiveSupport::TestCase
+  test "search on name parent or 2nd parent id commons included by default" do
     name = names(:argyle_apple)
-    params = ActiveSupport::HashWithIndifferentAccess.new(query_target:
-                                                          "name",
-                                                          query_string:
-                                                          "parent-or-second-parent-id: #{name.id}",
-                                                          current_user:
-                                                          build_edit_user)
+    params = ActiveSupport::HashWithIndifferentAccess.new(
+      query_target: "name",
+      query_string: "parent-or-second-parent-id: #{name.id}",
+      current_user: build_edit_user)
     search = Search::Base.new(params)
     assert_equal search.executed_query.results.class,
                  Name::ActiveRecord_Relation,
                  "Results should be a Name::ActiveRecord_Relation."
-    assert_equal 1, search.executed_query.results.size,
-                 "Expected common name to be included by default for parent or second parent id query"
+    assert_equal 1,
+                 search.executed_query.results.size,
+                 "Expected common name for parent or 2nd parent ID query"
   end
 end

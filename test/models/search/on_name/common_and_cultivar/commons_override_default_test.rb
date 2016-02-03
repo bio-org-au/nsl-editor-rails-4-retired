@@ -23,18 +23,17 @@ load "test/models/search/users.rb"
 # Single Search model test.
 class SearchOnNameNameCommonsOverrideDefaultTest < ActiveSupport::TestCase
   test "search on name name override default exclusion of commons" do
-    params = ActiveSupport::HashWithIndifferentAccess.new(query_target:
-                                                          "name",
-                                                          query_string:
-                                                          "name: argyle apple",
-                                                          include_common_and_cultivar_session: true,
-                                                          current_user:
-                                                          build_edit_user)
+    params = ActiveSupport::HashWithIndifferentAccess.new(
+      query_target: "name",
+      query_string: "name: argyle apple",
+      include_common_and_cultivar_session: true,
+      current_user: build_edit_user)
     search = Search::Base.new(params)
     assert_equal search.executed_query.results.class,
                  Name::ActiveRecord_Relation,
                  "Results should be a Name::ActiveRecord_Relation."
-    assert_equal 1, search.executed_query.results.size,
+    assert_equal 1,
+                 search.executed_query.results.size,
                  "Expected common name because default overriden"
   end
 end

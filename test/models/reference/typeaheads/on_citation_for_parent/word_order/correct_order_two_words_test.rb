@@ -18,9 +18,12 @@
 require "test_helper"
 
 # Reference model typeahead search.
-class TypeaheadsOnCitationForParentTwoWordsCorrectOrder < ActiveSupport::TestCase
+class TypeaheadsOnCitationForParent2WordsCorrectOrder < ActiveSupport::TestCase
   test "two words in correct order" do
-    results = Reference::AsTypeahead.on_citation_for_parent("aaaa bbbb", references(:a_book).id, ref_types(:book).id)
+    results = Reference::AsTypeahead.on_citation_for_parent(
+      "aaaa bbbb",
+      references(:a_book).id,
+      ref_types(:book).id)
     assert_equal 1, results.size, "Should be one and just one result"
   end
 end

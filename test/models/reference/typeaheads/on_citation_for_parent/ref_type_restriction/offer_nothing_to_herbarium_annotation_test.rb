@@ -17,10 +17,14 @@
 require "test_helper"
 
 # Reference model typeahead search.
-class TypeaheadsOnCitationForParentRefTypeRestrictionNothingForHerbariumAnnotation < ActiveSupport::TestCase
-  test "reference typeahead on citation ref type restriction nothing for herbarium annotation" do
+class TAOnCitn4ParRefTypeRestrictNilForHerbAnnotation < ActiveSupport::TestCase
+  test "ref typeahead on citation ref type nothing for herbarium annotation" do
     current_reference = references(:simple)
-    results = Reference::AsTypeahead.on_citation_for_parent("%", current_reference.id, ref_types(:herbarium_annotation).id)
-    assert results.size == 0, "Should be no results because herbarium annotation takes no parent."
+    results = Reference::AsTypeahead.on_citation_for_parent(
+      "%",
+      current_reference.id,
+      ref_types(:herbarium_annotation).id)
+    assert results.size == 0,
+           "Should be no results because herbarium annotation takes no parent."
   end
 end

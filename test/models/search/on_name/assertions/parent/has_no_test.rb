@@ -20,9 +20,11 @@ load "models/search/users.rb"
 # Single Search model test for Name search.
 class SearchOnNameeAssertionHasNoParentTest < ActiveSupport::TestCase
   test "name asertion has no parent" do
-    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_target: "name",
-                                                                           query_string: "has-no-parent:",
-                                                                           current_user: build_edit_user))
-    assert search.executed_query.results.size > 0, "Should find name that has no parent."
+    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(
+                                query_target: "name",
+                                query_string: "has-no-parent:",
+                                current_user: build_edit_user))
+    assert search.executed_query.results.size > 0,
+           "Should find name that has no parent."
   end
 end

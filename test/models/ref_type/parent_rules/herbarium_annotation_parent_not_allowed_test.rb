@@ -19,6 +19,7 @@ require "test_helper"
 # Ref Type parent rule test.
 class HerbariumAnnotationParentNotAllowedTest < ActiveSupport::TestCase
   test "herbarium annotation ref type parent is not allowed" do
-    assert ref_types(:herbarium_annotation).parent_id.blank? == true, "herbarium annotation ref type parent should not be allowed."
+    assert ref_types(:herbarium_annotation).parent_id.blank? == true,
+           "herbarium annotation ref type parent should not be allowed."
   end
 end

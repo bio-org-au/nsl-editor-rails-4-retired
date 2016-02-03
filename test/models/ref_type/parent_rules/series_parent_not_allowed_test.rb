@@ -19,6 +19,7 @@ require "test_helper"
 # Ref Type parent rule test.
 class SeriesParentNotAllowedTest < ActiveSupport::TestCase
   test "series ref type parent is not allowed" do
-    assert ref_types(:series).parent_id.blank? == true, "Series ref type parent should not be allowed."
+    assert ref_types(:series).parent_id.blank? == true,
+           "Series ref type parent should not be allowed."
   end
 end

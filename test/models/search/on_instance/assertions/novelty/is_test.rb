@@ -26,6 +26,6 @@ class SearchOnInstanceIsNoveltyTest < ActiveSupport::TestCase
         query_string: "is-novelty:",
         current_user: build_edit_user))
     assert search.executed_query.results.size > 0,
-           'Should find instance that is a novelty.'
+           "Should find instance that is a novelty."
   end
 end

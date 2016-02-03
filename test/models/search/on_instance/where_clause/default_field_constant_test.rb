@@ -20,8 +20,7 @@ load "test/models/search/users.rb"
 # Single Search model test for Instance search.
 class SearchOnInstWhereClauseDefaultFieldConstantTest < ActiveSupport::TestCase
   test "search on instance where clause default field" do
-    assert Search::OnInstance::WhereClauses::DEFAULT_FIELD == 'name:',
+    assert Search::OnInstance::WhereClauses::DEFAULT_FIELD == "name:",
            "Instance needs 'name:' as the default field."
   end
 end
-

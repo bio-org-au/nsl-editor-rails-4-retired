@@ -17,10 +17,13 @@
 require "test_helper"
 
 # Reference model typeahead search.
-class TypeaheadsOnCitationForParentRefTypeRestrictionUnknownsForUnknown < ActiveSupport::TestCase
-  test "reference typeahead on citation ref type restriction any type for unknown" do
+class THOnCit4ParentRefTypeRestrictUnknowns4Unknown < ActiveSupport::TestCase
+  test "ref typeahead on citation ref type restriction any type for unknown" do
     current_reference = references(:simple)
-    results = Reference::AsTypeahead.on_citation_for_parent("%", current_reference.id, ref_types(:unknown).id)
+    results = Reference::AsTypeahead.on_citation_for_parent(
+      "%",
+      current_reference.id,
+      ref_types(:unknown).id)
     assert results.size > 0, "Should be at least one result"
     unknowns = 0
     others = 0

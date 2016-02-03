@@ -20,7 +20,8 @@ require "test_helper"
 class DatabaseRecordShouldHaveDatabaseParentTest < ActiveSupport::TestCase
   test "database record ref type parent is database" do
     ref_type = ref_types(:database_record)
-    # Must have a parent_id to even be in the race with this poor data structure.
-    assert ref_type.parent.name == ref_types(:database).name, "Database record should have database as parent."
+    # Must have a parent_id to even be in the race with this data structure.
+    assert ref_type.parent.name == ref_types(:database).name,
+           "Database record should have database as parent."
   end
 end

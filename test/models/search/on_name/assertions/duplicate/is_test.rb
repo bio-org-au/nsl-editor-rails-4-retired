@@ -20,9 +20,10 @@ load "models/search/users.rb"
 # Single Search model test for Name search.
 class SearchOnNameAssertionDuplicateIsTest < ActiveSupport::TestCase
   test "name asertion is a duplicate" do
-    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_target: "name",
-                                                                           query_string: "is-a-duplicate:",
-                                                                           current_user: build_edit_user))
+    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(
+                                query_target: "name",
+                                query_string: "is-a-duplicate:",
+                                current_user: build_edit_user))
     assert search.executed_query.results.size > 0, "Should find duplicate name."
   end
 end

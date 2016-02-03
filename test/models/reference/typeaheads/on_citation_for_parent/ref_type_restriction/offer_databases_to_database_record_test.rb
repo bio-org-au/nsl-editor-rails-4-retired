@@ -17,11 +17,15 @@
 require "test_helper"
 
 # Reference model typeahead search.
-class TypeaheadsOnCitationForParentRefTypeRestrictionDatabaseForDatabaseRecord < ActiveSupport::TestCase
-  test "reference typeahead on citation ref type restriction database for database record" do
+class TAOnCitn4ParRefTypeRestrictDbase4DatabaseRecord < ActiveSupport::TestCase
+  test "ref typeahead on citation ref type database for database record" do
     current_reference = references(:simple)
-    results = Reference::AsTypeahead.on_citation_for_parent("%", current_reference.id, ref_types(:database_record).id)
-    assert results.size > 0, "Should be at least one result"
+    results = Reference::AsTypeahead.on_citation_for_parent(
+      "%",
+      current_reference.id,
+      ref_types(:database_record).id)
+    assert results.size > 0,
+           "Should be at least one result"
     databases = 0
     others = 0
     results.each do |result|

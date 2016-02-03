@@ -17,12 +17,15 @@
 require "test_helper"
 
 # Reference model parent from typeahead test.
-class ReferenceAsEditedNoParentIdWithStringMatchingTwoReferencesTest < ActiveSupport::TestCase
+class RefAsEdNoParIdWthStringMatchingTwoReferencesTest < ActiveSupport::TestCase
   test "no id with invalid string" do
     reference_1 = references(:has_a_matching_citation_1)
-    assert Reference.where(citation: reference_1.citation).size == 2, "Should be two References with the same citation string."
-    assert_raise(RuntimeError, "Should raise a RuntimeError for invalid reference string.") do
-      result = Reference::AsEdited.parent_from_typeahead("", reference_1.citation)
+    assert_equal 2,
+                 Reference.where(citation: reference_1.citation).size,
+                 "Should be two References with the same citation string."
+    assert_raise(RuntimeError,
+                 "Should raise a RuntimeError for invalid reference string.") do
+      Reference::AsEdited.parent_from_typeahead("", reference_1.citation)
     end
   end
 end

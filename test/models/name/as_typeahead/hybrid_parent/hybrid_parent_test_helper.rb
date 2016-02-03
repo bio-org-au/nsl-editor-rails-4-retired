@@ -25,7 +25,7 @@ def hybrid_parent_suggestions_should_include(suggestions,
     end.sum > 0,
     "suggestions for #{given_rank_name} should
     include #{expected_rank_name} [caller: #{caller[1]}]")
-  end
+end
 
 def hybrid_parent_suggestions_should_not_include(suggestions,
                                                  given_rank_name,

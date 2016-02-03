@@ -19,7 +19,10 @@ require "test_helper"
 # Single name model scope test.
 class ForSubclassisTest < ActiveSupport::TestCase
   test "from a higher rank for subclassis" do
-    ranks = Name.from_a_higher_rank(name_ranks(:subclassis).id).collect { |name| name.name_rank.name }.uniq
+    rank_id = name_ranks(:subclassis).id
+    ranks = Name.from_a_higher_rank(rank_id).collect do |name|
+      name.name_rank.name
+    end.uniq
     assert ranks.include?("Regnum"), "Should include Regnum"
     assert ranks.include?("Division"), "Should include Division"
     assert ranks.include?("Classis"), "Should include Classis"

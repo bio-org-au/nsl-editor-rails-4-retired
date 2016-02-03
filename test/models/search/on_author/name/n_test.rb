@@ -40,5 +40,4 @@ class SearchOnAuthorNameNTest < ActiveSupport::TestCase
                  search.executed_query.results.first[:name],
                  "Author expected."
   end
-
 end

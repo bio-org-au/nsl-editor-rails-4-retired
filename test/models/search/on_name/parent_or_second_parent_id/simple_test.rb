@@ -21,17 +21,17 @@ load "test/models/search/users.rb"
 class SearchOnNameParentOr2ndParentIdSimpleTest < ActiveSupport::TestCase
   test "search on name parent or second parent id simple" do
     name = names(:hybrid_formula)
-    params =  ActiveSupport::HashWithIndifferentAccess
-              .new(query_target: "name",
-                   query_string: "parent-or-second-parent-id: #{name.id}",
-                   include_common_and_cultivar_session: true,
-                   current_user: build_edit_user)
+    params = ActiveSupport::HashWithIndifferentAccess.new(
+      query_target: "name",
+      query_string: "parent-or-second-parent-id: #{name.id}",
+      include_common_and_cultivar_session: true,
+      current_user: build_edit_user)
     search = Search::Base.new(params)
     assert_equal search.executed_query.results.class,
                  Name::ActiveRecord_Relation,
                  "Results should be a Name::ActiveRecord_Relation."
     assert_equal 1,
                  search.executed_query.results.size,
-                 "Exactly 1 result is expected for parent-or-second-parent-id search."
+                 "Exactly 1 result expected for parent-or-2nd-parent-id search."
   end
 end

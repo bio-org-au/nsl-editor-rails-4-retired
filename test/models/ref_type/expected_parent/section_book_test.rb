@@ -20,7 +20,9 @@ require "test_helper"
 class SectionShouldHaveBookParentTest < ActiveSupport::TestCase
   test "section ref type parent is book" do
     ref_type = ref_types(:section)
-    # Must have a parent_id to even be in the race with this poor data structure.
-    assert ref_type.parent.name == ref_types(:book).name, "Section (#{ref_types(:section).name}), should have #{ref_types(:book).name} as parent not #{ref_type.parent.name}."
+    # Must have a parent_id to even be in the race with this data structure.
+    assert ref_type.parent.name == ref_types(:book).name,
+           "Section (#{ref_types(:section).name}), should have \
+           #{ref_types(:book).name} as parent not #{ref_type.parent.name}."
   end
 end

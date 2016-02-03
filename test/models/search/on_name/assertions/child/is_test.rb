@@ -20,9 +20,11 @@ load "models/search/users.rb"
 # Single Search model test for Name search.
 class SearchOnNameAssertionChildIsTest < ActiveSupport::TestCase
   test "name asertion is a child" do
-    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_target: "name",
-                                                                           query_string: "is-a-child:",
-                                                                           current_user: build_edit_user))
-    assert search.executed_query.results.size > 0, "Should find name that is a child."
+    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(
+                                query_target: "name",
+                                query_string: "is-a-child:",
+                                current_user: build_edit_user))
+    assert search.executed_query.results.size > 0,
+           "Should find name that is a child."
   end
 end

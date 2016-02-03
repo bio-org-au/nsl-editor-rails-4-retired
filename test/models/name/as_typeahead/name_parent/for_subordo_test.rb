@@ -21,7 +21,13 @@ require "models/name/as_typeahead/name_parent/name_parent_test_helper"
 class ForSubordoTest < ActiveSupport::TestCase
   test "name parent suggestion for subordo" do
     avoid_id = 1
-    suggestions = Name::AsTypeahead.name_parent_suggestions("%", avoid_id, NameRank.find_by(name: "Subordo").id)
-    suggestions_should_only_include(suggestions, "Subordo", %w(Regnum Division Classis Subclassis Superordo Ordo))
+    suggestions = Name::AsTypeahead.name_parent_suggestions(
+      "%",
+      avoid_id,
+      NameRank.find_by(name: "Subordo").id)
+    suggestions_should_only_include(
+      suggestions,
+      "Subordo",
+      %w(Regnum Division Classis Subclassis Superordo Ordo))
   end
 end

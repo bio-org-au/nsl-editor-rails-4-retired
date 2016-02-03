@@ -19,7 +19,9 @@ require "test_helper"
 # Single Reference model test.
 class AuthorNotSelectedFromTypeahead < ActiveSupport::TestCase
   test "create reference with author not selected from typeahead" do
-    assert_raise(RuntimeError, "Should raise exception because author typeahead has value but author id does not match.") do
+    assert_raise(RuntimeError,
+                 "Should raise exception because author typeahead has value \
+                 but author id does not match.") do
       Reference::AsEdited.create({ "ref_type_id" => "17266",
                                    "title" => "ss",
                                    "published" => "1",

@@ -17,12 +17,16 @@
 require "test_helper"
 
 # Single Name typeahead test.
-class CultivarParentSuggestionsShouldWorkWithPercentWildcardTest < ActiveSupport::TestCase
+class CultivarParSuggestsShldWorkWPercentWildcardTest < ActiveSupport::TestCase
   test "cultivar parent suggestion should work with percent wildcard" do
     suggestions = Name::AsTypeahead.cultivar_parent_suggestions("%", -1)
-    assert(suggestions.is_a?(Array), "percent wildcard search should be an array")
-    assert(suggestions.size > 0, "percent wildcard search should not be empty")
-    assert(suggestions.first[:value].present?, "percent wildcard search first element should have a value")
-    assert(suggestions.first[:id].present?, "percent wildcard search first element should have an id")
+    assert(suggestions.is_a?(Array),
+           "percent wildcard search should be an array")
+    assert(suggestions.size > 0,
+           "percent wildcard search should not be empty")
+    assert(suggestions.first[:value].present?,
+           "percent wildcard search first element should have a value")
+    assert(suggestions.first[:id].present?,
+           "percent wildcard search first element should have an id")
   end
 end

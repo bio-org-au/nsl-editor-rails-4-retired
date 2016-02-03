@@ -18,9 +18,14 @@
 require "test_helper"
 
 # Reference model typeahead search.
-class TypeaheadsOnCitationForParentWordCountTwoChaplinsTest < ActiveSupport::TestCase
+class TypeaheadsOnCitForParWordCountTwoChaplinsTest < ActiveSupport::TestCase
   test "reference typeahead on citation for parent word count two chaplins" do
-    results = Reference::AsTypeahead.on_citation_for_parent("chaplin chaplin", references(:a_paper).id, ref_types(:paper).id)
-    assert_equal 2, results.size, "Should be exactly two records returned."
+    results = Reference::AsTypeahead.on_citation_for_parent(
+      "chaplin chaplin",
+      references(:a_paper).id,
+      ref_types(:paper).id)
+    assert_equal 2,
+                 results.size,
+                 "Should be exactly two records returned."
   end
 end

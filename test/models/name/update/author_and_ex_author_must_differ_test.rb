@@ -20,10 +20,16 @@ require "test_helper"
 class AuthorExAuthorMustDifferOnUpdateTest < ActiveSupport::TestCase
   test "author and ex author are different" do
     name = names(:triodia_basedowii)
-    assert name.author.present?, "Existing name should have an author."
-    assert name.valid?, "Existing name should be valid. Errors: #{name.errors.full_messages.join('; ')}"
+    assert name.author.present?,
+           "Existing name should have an author."
+    assert name.valid?,
+           "Existing name shld be valid. \
+           Errs: #{name.errors.full_messages.join('; ')}"
     name.ex_author = name.author
-    assert_not name.valid?, "Existing name should NOT be valid with matching author/ex-author."
-    assert_equal name.errors.full_messages.first, "The ex-author cannot be the same as the author.", "Wrong error message."
+    assert_not name.valid?,
+               "Existing name shld NOT be valid with matching author/ex-author."
+    assert_equal "The ex-author cannot be the same as the author.",
+                 name.errors.full_messages.first,
+                 "Wrong error message."
   end
 end

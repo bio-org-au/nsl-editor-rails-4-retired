@@ -21,7 +21,10 @@ require "models/name/as_typeahead/name_parent/name_parent_test_helper"
 class ForSubfamiliaTest < ActiveSupport::TestCase
   test "name parent suggestion for subfamilia" do
     avoid_id = 1
-    suggestions = Name::AsTypeahead.name_parent_suggestions("%", avoid_id, NameRank.find_by(name: "Subfamilia").id)
+    suggestions = Name::AsTypeahead.name_parent_suggestions(
+      "%",
+      avoid_id,
+      NameRank.find_by(name: "Subfamilia").id)
     suggestions_should_only_include(suggestions, "Subfamilia", %w(Familia))
   end
 end

@@ -21,7 +21,15 @@ require "models/name/as_typeahead/cultivar_parent/cultivar_parent_test_helper"
 class CultivarParentForUnrankedTest < ActiveSupport::TestCase
   test "name parent suggestion for unranked" do
     avoid_id = 1
-    suggestions = Name::AsTypeahead.cultivar_parent_suggestions("%", avoid_id, NameRank.find_by(name: "[unranked]").id)
-    cultivar_parent_suggestions_should_only_include(suggestions, "[unranked]", %w([unranked] Genus Subgenus Sectio Subsectio Series Subseries Superspecies Species Subspecies Varietas Nothovarietas Subvarietas Forma Subforma ))
+    suggestions = Name::AsTypeahead.cultivar_parent_suggestions(
+      "%",
+      avoid_id,
+      NameRank.find_by(name: "[unranked]").id)
+    cultivar_parent_suggestions_should_only_include(
+      suggestions,
+      "[unranked]",
+      %w([unranked] Genus Subgenus Sectio Subsectio Series Subseries \
+         Superspecies Species Subspecies Varietas Nothovarietas Subvarietas \
+         Forma Subforma ))
   end
 end

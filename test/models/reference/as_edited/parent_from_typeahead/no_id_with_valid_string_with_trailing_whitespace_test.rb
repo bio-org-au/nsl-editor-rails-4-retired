@@ -17,10 +17,14 @@
 require "test_helper"
 
 # Reference model parent from typeahead test.
-class ReferenceAsEditedNoParentIdWithValidStringWithTrailingWhitespace < ActiveSupport::TestCase
+class RefAsEdNoParIdWValidStringWithTrailingWhitespace < ActiveSupport::TestCase
   test "no id with valid string" do
     reference = references(:origin_of_species)
-    result = Reference::AsEdited.parent_from_typeahead("", reference.citation + " ")
-    assert_equal reference.id, result, "Should get a matching id for the reference"
+    result = Reference::AsEdited.parent_from_typeahead(
+      "",
+      reference.citation + " ")
+    assert_equal reference.id,
+                 result,
+                 "Should get a matching id for the reference"
   end
 end

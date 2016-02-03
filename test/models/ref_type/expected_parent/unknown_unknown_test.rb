@@ -20,7 +20,8 @@ require "test_helper"
 class UnknownShouldHaveUnknownParentTest < ActiveSupport::TestCase
   test "unknown ref type parent is unknown" do
     ref_type = ref_types(:unknown)
-    # Must have a parent_id to even be in the race with this poor data structure.
-    assert ref_type.parent.name == ref_types(:unknown).name, "unknown should have unknown as parent."
+    # Must have a parent_id to even be in the race with this data structure.
+    assert ref_type.parent.name == ref_types(:unknown).name,
+           "unknown should have unknown as parent."
   end
 end

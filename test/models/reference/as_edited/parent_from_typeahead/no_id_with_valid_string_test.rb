@@ -21,6 +21,7 @@ class ReferenceAsEditedNoParentIdWithValidString < ActiveSupport::TestCase
   test "no id with valid string" do
     reference = references(:origin_of_species)
     result = Reference::AsEdited.parent_from_typeahead("", reference.citation)
-    assert_equal reference.id, result, "Should get a matching id for the reference"
+    assert_equal reference.id, result,
+                 "Should get a matching id for the reference"
   end
 end

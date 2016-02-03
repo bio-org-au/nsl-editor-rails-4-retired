@@ -19,6 +19,7 @@ require "test_helper"
 # Name type is scientific test.
 class PhraseNameIsScientificTest < ActiveSupport::TestCase
   test "phrase name is a scientific name type" do
-    assert NameType.find_by(name: "phrase name").scientific?, 'Phrase name should be categorised as a "scientific" name type'
+    assert NameType.find_by(name: "phrase name").scientific?,
+           'Phrase name should be categorised as a "scientific" name type'
   end
 end

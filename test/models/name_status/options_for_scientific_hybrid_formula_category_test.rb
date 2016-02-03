@@ -34,8 +34,9 @@ class OptionsForScientificHybridFormulaCategoryTest < ActiveSupport::TestCase
   end
 
   test "should have only two entries" do
-    assert_equal(NameStatus
-      .options_for_category(Name::SCIENTIFIC_HYBRID_FORMULA_CATEGORY).size, 2,
+    assert_equal(2,
+                 NameStatus
+      .options_for_category(Name::SCIENTIFIC_HYBRID_FORMULA_CATEGORY).size,
                  "Wrong number of name status options for scientific
                  hybrid formula category")
   end

@@ -20,10 +20,17 @@ require "test_helper"
 class ShouldWorkWithAsteriskWildcardTest < ActiveSupport::TestCase
   test "name parent suggestion should work with asterisk wildcard" do
     avoid_id = 1
-    suggestions = Name::AsTypeahead.name_parent_suggestions("*", avoid_id, NameRank.species.id)
-    assert(suggestions.is_a?(Array), "asterisk wildcard search should be an array")
-    assert(suggestions.size > 0, "asterisk wildcard search should not be empty")
-    assert(suggestions.first[:value].present?, "asterisk wildcard search first element should have a value")
-    assert(suggestions.first[:id].present?, "asterisk wildcard search first element should have an id")
+    suggestions = Name::AsTypeahead.name_parent_suggestions(
+      "*",
+      avoid_id,
+      NameRank.species.id)
+    assert(suggestions.is_a?(Array),
+           "asterisk wildcard search should be an array")
+    assert(suggestions.size > 0,
+           "asterisk wildcard search should not be empty")
+    assert(suggestions.first[:value].present?,
+           "asterisk wildcard search first element should have a value")
+    assert(suggestions.first[:id].present?,
+           "asterisk wildcard search first element should have an id")
   end
 end

@@ -21,7 +21,13 @@ require "models/name/as_typeahead/name_parent/name_parent_test_helper"
 class ForSubvarietasTest < ActiveSupport::TestCase
   test "name parent suggestion for subvarietas" do
     avoid_id = 1
-    suggestions = Name::AsTypeahead.name_parent_suggestions("%", avoid_id, NameRank.find_by(name: "Subvarietas").id)
-    suggestions_should_only_include(suggestions, "Subvarietas", %w(Varietas Nothovarietas Subspecies Species))
+    suggestions = Name::AsTypeahead.name_parent_suggestions(
+      "%",
+      avoid_id,
+      NameRank.find_by(name: "Subvarietas").id)
+    suggestions_should_only_include(
+      suggestions,
+      "Subvarietas",
+      %w(Varietas Nothovarietas Subspecies Species))
   end
 end

@@ -22,6 +22,8 @@ class NoOthersAreScientificTest < ActiveSupport::TestCase
   # test for the scientific ones and
   # also test for a limited number of scientific name types.
   test "no others are scientific name types" do
-    assert_equal NameType.where(scientific: true).size, 10, 'Expecting exactly 10 "scientific" name types'
+    assert_equal 10,
+                 NameType.where(scientific: true).size,
+                 'Expecting exactly 10 "scientific" name types'
   end
 end

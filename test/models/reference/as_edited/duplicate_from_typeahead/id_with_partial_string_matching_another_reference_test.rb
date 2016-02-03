@@ -17,11 +17,15 @@
 require "test_helper"
 
 # Reference model typeahead test.
-class ReferenceAsEditedDuplicateOfIdWithPartialStringMatchingAnotherReference < ActiveSupport::TestCase
+class RefAsEdDupeOfIdWPartStrMatchingAnotherReference < ActiveSupport::TestCase
   test "id with partial string for another reference" do
     reference_1 = references(:journal_of_botany_british_and_foreign)
     reference_2 = references(:an_herbarium_annotation)
-    result = Reference::AsEdited.duplicate_of_from_typeahead(reference_1.id.to_s, reference_2.citation.chop)
-    assert_equal reference_2.id, result, "Should get a matching id for the reference citation"
+    result = Reference::AsEdited.duplicate_of_from_typeahead(
+      reference_1.id.to_s,
+      reference_2.citation.chop)
+    assert_equal reference_2.id,
+                 result,
+                 "Should get a matching id for the reference citation"
   end
 end

@@ -24,17 +24,15 @@ load "test/models/search/users.rb"
 class SearchOnNameParentIdCommonsIncludedByDefaultTest < ActiveSupport::TestCase
   test "search on name parent id commons included by default" do
     name = names(:argyle_apple)
-    params = ActiveSupport::HashWithIndifferentAccess.new(query_target:
-                                                          "name",
-                                                          query_string:
-                                                          "parent-id: #{name.id}",
-                                                          current_user:
-                                                          build_edit_user)
+    params = ActiveSupport::HashWithIndifferentAccess.new(
+      query_target: "name",
+      query_string: "parent-id: #{name.id}",
+      current_user: build_edit_user)
     search = Search::Base.new(params)
     assert_equal search.executed_query.results.class,
                  Name::ActiveRecord_Relation,
                  "Results should be a Name::ActiveRecord_Relation."
     assert_equal 1, search.executed_query.results.size,
-                 "Expected common name to be included by default for parent id query"
+                 "Expect common name included by default for parent id query"
   end
 end

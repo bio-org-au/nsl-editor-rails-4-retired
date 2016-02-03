@@ -20,7 +20,9 @@ require "test_helper"
 class DuplicateOfNotSelectedFromTypeahead < ActiveSupport::TestCase
   test "update reference with duplicate of not selected from typeahead" do
     reference = Reference::AsEdited.first
-    assert_raise(RuntimeError, "Should raise exception because duplicate of typeahead has value but there is no duplicate of id.") do
+    assert_raise(RuntimeError,
+                 "Expect error - duplicate of typeahead has value but there is \
+                 no duplicate of id.") do
       reference.update_if_changed({ "ref_type_id" => ref_types(:section),
                                     "title" => "ss",
                                     "published" => "1",

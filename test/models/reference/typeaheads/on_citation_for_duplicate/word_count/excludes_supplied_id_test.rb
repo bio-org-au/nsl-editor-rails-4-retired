@@ -17,11 +17,14 @@
 require "test_helper"
 
 # Reference model typeahead search.
-class TypeaheadsOnCitationForDuplicateExcludesSuppliedIdTest < ActiveSupport::TestCase
+class TAOnCitationForDuplicateExcludesSuppliedIdTest < ActiveSupport::TestCase
   test "reference typeahead on citation excludes supplied id" do
     reference_to_exclude = references(:adams_paper_in_walsh_book)
-    results = Reference::AsTypeahead.on_citation_for_duplicate("walsh", reference_to_exclude.id)
+    results = Reference::AsTypeahead.on_citation_for_duplicate(
+      "walsh",
+      reference_to_exclude.id)
     assert_equal 1, results.size, "Should be just one result"
-    assert results.first[:id].to_i == references(:walsh_paper_in_walsh_book).id, "Unexpected typeahead suggestion."
+    assert results.first[:id].to_i == references(:walsh_paper_in_walsh_book).id,
+           "Unexpected typeahead suggestion."
   end
 end

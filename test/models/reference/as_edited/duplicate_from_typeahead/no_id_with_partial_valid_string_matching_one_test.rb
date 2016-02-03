@@ -17,10 +17,14 @@
 require "test_helper"
 
 # Reference model typeahead test.
-class ReferenceAsEditedNoDuplicateOfIdWithPartialValidStringMatchingOne < ActiveSupport::TestCase
+class RefAsEdNoDupeOfIdWPartialValidStringMatchingOne < ActiveSupport::TestCase
   test "no id with patial valid string matching one record" do
     reference = references(:origin_of_species)
-    result = Reference::AsEdited.duplicate_of_from_typeahead("", reference.citation.chop)
-    assert_equal reference.id, result, "Should get a matching id for the citation"
+    result = Reference::AsEdited.duplicate_of_from_typeahead(
+      "",
+      reference.citation.chop)
+    assert_equal reference.id,
+                 result,
+                 "Should get a matching id for the citation"
   end
 end

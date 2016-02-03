@@ -34,6 +34,6 @@ class SearchOnNameExAuthorSimpleTest < ActiveSupport::TestCase
                  Name::ActiveRecord_Relation,
                  "Results should be a Name::ActiveRecord_Relation."
     assert search.executed_query.results.size > 0,
-                 "Expected at least one search result"
+           "Expected at least one search result"
   end
 end

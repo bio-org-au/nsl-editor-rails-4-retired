@@ -20,7 +20,8 @@ require "test_helper"
 class BookInvalidWithNonSeriesParentTest < ActiveSupport::TestCase
   test "book invalid with non series parent" do
     ref = references(:book_without_parent)
-    assert ref.valid?, "Book without parent should be valid - starting condition."
+    assert ref.valid?,
+           "Book without parent should be valid - starting condition."
     ref.parent = references(:a_book)
     assert_not ref.valid?, "Book with book parent should be invalid."
     ref.parent = references(:a_chapter)
@@ -28,9 +29,11 @@ class BookInvalidWithNonSeriesParentTest < ActiveSupport::TestCase
     ref.parent = references(:a_database)
     assert_not ref.valid?, "Book with database parent should be invalid."
     ref.parent = references(:a_database_record)
-    assert_not ref.valid?, "Book with database record parent should be invalid."
+    assert_not ref.valid?,
+               "Book with database record parent should be invalid."
     ref.parent = references(:an_herbarium_annotation)
-    assert_not ref.valid?, "Book with herbarium annotation parent should be invalid."
+    assert_not ref.valid?,
+               "Book with herbarium annotation parent should be invalid."
     ref.parent = references(:an_index)
     assert_not ref.valid?, "Book with index parent should be invalid."
     ref.parent = references(:a_journal)

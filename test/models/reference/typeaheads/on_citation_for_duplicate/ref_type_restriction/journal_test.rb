@@ -17,10 +17,12 @@
 require "test_helper"
 
 # Reference model typeahead search.
-class TypeaheadsOnCitationForDuplicateRefTypeRestrictionJournal < ActiveSupport::TestCase
+class TAOnCitnForDuplicateRefTypeRestrictionJournal < ActiveSupport::TestCase
   test "reference typeahead on citation ref type restriction journal" do
     current_reference = references(:journal_with_papers)
-    results = Reference::AsTypeahead.on_citation_for_duplicate("o", current_reference.id)
+    results = Reference::AsTypeahead.on_citation_for_duplicate(
+      "o",
+      current_reference.id)
     assert results.size > 0, "Should be at least one result"
     journals = 0
     unknowns = 0
@@ -34,7 +36,9 @@ class TypeaheadsOnCitationForDuplicateRefTypeRestrictionJournal < ActiveSupport:
         others += 1
       end
     end
-    assert_equal 0, others, "Only journals and unknown type references expected."
+    assert_equal 0,
+                 others,
+                 "Only journals and unknown type references expected."
     assert journals > 0, "Expecting at least 1 journal."
     assert unknowns > 0, "Expecting at least 1 unknown ref type."
   end

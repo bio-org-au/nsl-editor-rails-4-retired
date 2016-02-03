@@ -34,6 +34,6 @@ class SearchOnInstanceDefaultSimpleTest < ActiveSupport::TestCase
                  Instance::ActiveRecord_Relation,
                  "Results should be an Instance::ActiveRecord_Relation."
     assert search.executed_query.results.size > 0,
-                 "Expecting at least 1 record."
+           "Expecting at least 1 record."
   end
 end

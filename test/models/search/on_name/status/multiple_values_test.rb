@@ -24,7 +24,8 @@ class SearchOnNameStatusMultiTest < ActiveSupport::TestCase
     n2 = names(:nom_cult_name_one_for_eflora)
     params =  ActiveSupport::HashWithIndifferentAccess
               .new(query_target: "name",
-    query_string: "status: #{name.name_status.name}, #{n2.name_status.name}",
+                   query_string:
+                   "status: #{name.name_status.name}, #{n2.name_status.name}",
                    current_user: build_edit_user)
     search = Search::Base.new(params)
     assert_equal search.executed_query.results.class,

@@ -19,8 +19,9 @@ require "test_helper"
 # Reference model typeahead test.
 class ReferenceAsEditedNoAuthorIdWithInvalidString < ActiveSupport::TestCase
   test "no author id with invalid string" do
-    assert_raise(RuntimeError, "Should raise a RuntimeError for invalid reference string.") do
-      result = Reference::AsEdited.author_from_typeahead("", "asdfasfdasd")
+    assert_raise(RuntimeError,
+                 "Should raise a RuntimeError for invalid reference string.") do
+      Reference::AsEdited.author_from_typeahead("", "asdfasfdasd")
     end
   end
 end

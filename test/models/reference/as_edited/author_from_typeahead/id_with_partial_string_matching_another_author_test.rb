@@ -17,11 +17,16 @@
 require "test_helper"
 
 # Reference model typeahead test.
-class ReferenceAsEditedAuthorIdWithPartialStringMatchingAnotherAuthorTest < ActiveSupport::TestCase
+class RefAsEdAuthIdWPartStrMatchingAnotherAuthorTest < ActiveSupport::TestCase
   test "author id with partial string for another author" do
     author_1 = authors(:chaplin)
     author_2 = authors(:moe)
-    result = Reference::AsEdited.author_from_typeahead(author_1.id.to_s, author_2.name.chop)
-    assert_equal author_2.id, result, "Should get a matching id for the name despite mismatched ID and parial name"
+    result = Reference::AsEdited.author_from_typeahead(
+      author_1.id.to_s,
+      author_2.name.chop)
+    assert_equal author_2.id,
+                 result,
+                 "Should get matching ID 4 name despite mismatched ID and \
+                 partial name"
   end
 end

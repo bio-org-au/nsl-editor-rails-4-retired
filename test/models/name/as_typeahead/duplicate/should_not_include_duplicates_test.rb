@@ -20,9 +20,14 @@ require "test_helper"
 class ShouldNotIncludeDuplicatesTest < ActiveSupport::TestCase
   test "name duplicate suggestions should not include duplicates" do
     avoid_id = 1
-    suggestions = Name::AsTypeahead.duplicate_suggestions("a duplicate genus", avoid_id)
-    assert(suggestions.is_a?(Array), "suggestions should be an array")
-    assert(suggestions.size == 1, 'suggestions for "a duplicate genus" should have 1 entry')
-    assert suggestions.first[:value].match(/\Aa duplicate genus not /), "Should match the non-duplicate genus"
+    suggestions = Name::AsTypeahead.duplicate_suggestions(
+      "a duplicate genus",
+      avoid_id)
+    assert(suggestions.is_a?(Array),
+           "suggestions should be an array")
+    assert(suggestions.size == 1,
+           'suggestions for "a duplicate genus" should have 1 entry')
+    assert suggestions.first[:value].match(/\Aa duplicate genus not /),
+           "Should match the non-duplicate genus"
   end
 end

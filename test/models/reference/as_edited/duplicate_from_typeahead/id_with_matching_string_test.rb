@@ -20,7 +20,11 @@ require "test_helper"
 class ReferenceAsEditedDuplicateOfIdWithMatchingString < ActiveSupport::TestCase
   test "id with matching string" do
     reference = references(:journal_of_botany_british_and_foreign)
-    result = Reference::AsEdited.duplicate_of_from_typeahead(reference.id, reference.citation)
-    assert_equal reference.id, result, "The typeahead result should match the ID"
+    result = Reference::AsEdited.duplicate_of_from_typeahead(
+      reference.id,
+      reference.citation)
+    assert_equal reference.id,
+                 result,
+                 "The typeahead result should match the ID"
   end
 end

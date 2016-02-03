@@ -17,10 +17,13 @@
 require "test_helper"
 
 # Reference model typeahead search.
-class TypeaheadsOnCitationForParentRefTypeRestrictionSeriesForBook < ActiveSupport::TestCase
+class TAOnCit4ParentRefTypeRestrictionSeriesForBook < ActiveSupport::TestCase
   test "reference typeahead on citation ref type restriction series for book" do
     current_reference = references(:simple)
-    results = Reference::AsTypeahead.on_citation_for_parent("%", current_reference.id, ref_types(:book).id)
+    results = Reference::AsTypeahead.on_citation_for_parent(
+      "%",
+      current_reference.id,
+      ref_types(:book).id)
     assert results.size > 0, "Should be at least one result"
     series = 0
     others = 0

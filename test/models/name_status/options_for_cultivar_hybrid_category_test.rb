@@ -19,18 +19,34 @@ require "test_helper"
 # Nam status options test.
 class OptionsForCultivarHybridCategoryTest < ActiveSupport::TestCase
   test "should include [deleted]" do
-    assert NameStatus.options_for_category(Name::CULTIVAR_HYBRID_CATEGORY).collect(&:first).include?("[deleted]"), 'Cultivar hybrid category name status options should include "[deleted]"'
+    assert NameStatus
+      .options_for_category(Name::CULTIVAR_HYBRID_CATEGORY)
+      .collect(&:first)
+      .include?("[deleted]"),
+           'Cultivar hybrid name status options should include "[deleted]"'
   end
 
   test "should include [default]" do
-    assert NameStatus.options_for_category(Name::CULTIVAR_HYBRID_CATEGORY).collect(&:first).include?("[default]"), 'Cultivar hybrid category name status options should include "[default]"'
+    assert NameStatus
+      .options_for_category(Name::CULTIVAR_HYBRID_CATEGORY)
+      .collect(&:first)
+      .include?("[default]"),
+           'Cultivar hybrid name status options should include "[default]"'
   end
 
   test "should include  [n/a]" do
-    assert NameStatus.options_for_category(Name::CULTIVAR_HYBRID_CATEGORY).collect(&:first).include?("[n/a]"), 'Cultivar hybrid category name status options should include "[n/a]"'
+    assert NameStatus
+      .options_for_category(Name::CULTIVAR_HYBRID_CATEGORY)
+      .collect(&:first)
+      .include?("[n/a]"),
+           'Cultivar hybrid category name status options should include "[n/a]"'
   end
 
   test "should have only two entries" do
-    assert_equal(NameStatus.options_for_category(Name::CULTIVAR_HYBRID_CATEGORY).size, 3, "Wrong number of name status options for cultivar hybrid category")
+    assert_equal 3,
+                 NameStatus
+      .options_for_category(Name::CULTIVAR_HYBRID_CATEGORY)
+      .size,
+                 "Wrong no of name status options for cultivar hybrid category"
   end
 end

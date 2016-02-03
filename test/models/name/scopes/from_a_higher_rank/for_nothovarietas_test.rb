@@ -19,7 +19,10 @@ require "test_helper"
 # Single name model scope test.
 class ForNothovarietasTest < ActiveSupport::TestCase
   test "from a higher rank for nothovarietas" do
-    ranks = Name.from_a_higher_rank(name_ranks(:nothovarietas).id).collect { |name| name.name_rank.name }.uniq
+    rank_id = name_ranks(:nothovarietas).id
+    ranks = Name.from_a_higher_rank(rank_id).collect do |name|
+      name.name_rank.name
+    end.uniq
     assert ranks.include?("Regnum"), "Should include Regnum"
     assert ranks.include?("Division"), "Should include Division"
     assert ranks.include?("Classis"), "Should include Classis"

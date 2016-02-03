@@ -21,8 +21,10 @@ class PersonalCommunicationCannotHaveParentTest < ActiveSupport::TestCase
   test "personal communication cannot have parent" do
     ref = references(:personal_communication_with_parent)
     assert ref.parent_id.present?, "Expecting a parent."
-    assert_not ref.valid?, "Personal communication with parent should be invalid."
+    assert_not ref.valid?,
+               "Personal communication with parent should be invalid."
     ref.parent_id = nil
-    assert ref.valid?, "Personal communication without parent should be invalid."
+    assert ref.valid?,
+           "Personal communication without parent should be invalid."
   end
 end

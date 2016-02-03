@@ -21,7 +21,8 @@ class PaperInvalidWithNonJournalParentTest < ActiveSupport::TestCase
   test "paper invalid with non journal parent" do
     ref = references(:paper_without_parent)
     assert ref.parent.blank?, "Paper should start test without parent"
-    assert ref.valid?, "paper without parent should be valid - starting condition."
+    assert ref.valid?,
+           "paper without parent should be valid - starting condition."
     ref.parent = references(:a_book)
     assert_not ref.valid?, "Paper with book parent should be invalid."
     ref.parent = references(:a_chapter)
@@ -29,9 +30,11 @@ class PaperInvalidWithNonJournalParentTest < ActiveSupport::TestCase
     ref.parent = references(:a_database)
     assert_not ref.valid?, "Paper with database parent should be invalid."
     ref.parent = references(:a_database_record)
-    assert_not ref.valid?, "Paper with database record parent should be invalid."
+    assert_not ref.valid?,
+               "Paper with database record parent should be invalid."
     ref.parent = references(:an_herbarium_annotation)
-    assert_not ref.valid?, "Paper with herbarium annotation parent should be invalid."
+    assert_not ref.valid?,
+               "Paper with herbarium annotation parent should be invalid."
     ref.parent = references(:an_index)
     assert_not ref.valid?, "Paper with index parent should be invalid."
     ref.parent = references(:a_journal)

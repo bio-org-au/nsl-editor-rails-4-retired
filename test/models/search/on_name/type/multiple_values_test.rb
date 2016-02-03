@@ -24,7 +24,8 @@ class SearchOnNameTypeMultiTest < ActiveSupport::TestCase
     n2 = names(:a_cultivar)
     params =  ActiveSupport::HashWithIndifferentAccess
               .new(query_target: "name",
-    query_string: "type: #{name.name_type.name}, #{n2.name_type.name}",
+                   query_string:
+                   "type: #{name.name_type.name}, #{n2.name_type.name}",
                    current_user: build_edit_user)
     search = Search::Base.new(params)
     assert_equal search.executed_query.results.class,
