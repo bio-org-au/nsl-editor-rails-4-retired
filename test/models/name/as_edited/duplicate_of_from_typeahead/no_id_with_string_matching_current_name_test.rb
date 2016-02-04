@@ -17,13 +17,15 @@
 require "test_helper"
 
 # Single name model test.
-class NameAsEditedNoDuplicateOfIdWithStringMatchingCurrentNameTest < ActiveSupport::TestCase
+class NameAsEdNoDupeOfIdWStrMatchingCurrentNameTest < ActiveSupport::TestCase
   test "no id with string matching current name" do
     skip
     # name_1 = names(:name_matches_another_1)
-    # assert Name.where(full_name: name_1.full_name).size == 2, "Should be two Names with the same full name string."
-    # assert_raise(RuntimeError,"Should raise a RuntimeError for author string.") do
-    # result = Name::AsEdited.duplicate_of_from_typeahead('',name_1.full_name)
+    # assert Name.where(full_name: name_1.full_name).size == 2,
+    # "Should be two Names with the same full name string."
+    # assert_raise(RuntimeError,
+    #              "Should raise a RuntimeError for author string.") do
+    #   Name::AsEdited.duplicate_of_from_typeahead('',name_1.full_name)
     # end
   end
 end

@@ -20,7 +20,10 @@ require "test_helper"
 class AuthorAsEditedDuplicateOfIdWithNoString < ActiveSupport::TestCase
   test "id with no string" do
     current_author_id = 1
-    result = Author::AsEdited.duplicate_of_from_typeahead("1", "", current_author_id)
+    result = Author::AsEdited.duplicate_of_from_typeahead(
+      "1",
+      "",
+      current_author_id)
     assert_match "", result, "Should get nothing - treating as delete."
   end
 end

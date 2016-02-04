@@ -18,22 +18,26 @@ require "test_helper"
 
 # Single name model test.
 class NameCreateScientificHybridFormulaTest < ActiveSupport::TestCase
-  test "simple" do
+  def setup
     name_type = name_types(:hybrid_formula_parents_known)
     name_rank = name_ranks(:species)
     name_status = name_statuses(:na)
-    name_params = { "name_type_id" => "#{name_type.id}",
-                    "name_rank_id" => "#{name_rank.id}",
-                    "name_status_id" => "#{name_status.id}" }
-    parent = names(:a_species)
-    second_parent = names(:another_species)
-    typeahead_params = { "parent_typeahead" => "#{parent.full_name} | Species",
-                         "parent_id" => "#{parent.id}",
-                         "second_parent_typeahead" => "#{second_parent.full_name} | Species",
-                         "second_parent_id" => "#{second_parent.id}",
-                         "verbatim_rank" => "sdfdf" }
+    @name_params = { "name_type_id" => "#{name_type.id}",
+                     "name_rank_id" => "#{name_rank.id}",
+                     "name_status_id" => "#{name_status.id}" }
+    @parent = names(:a_species)
+    @second_parent = names(:another_species)
+  end
 
-    name = Name::AsEdited.create(name_params, typeahead_params, "fred")
-    assert name.valid?, "New name should be valid without authors. Errors: #{name.errors.full_messages.join('; ')}"
+  test "simple" do
+    typeahead_params =
+      { "parent_typeahead" => "#{@parent.full_name} | Species",
+        "parent_id" => "#{@parent.id}",
+        "second_parent_typeahead" => "#{@second_parent.full_name} | Species",
+        "second_parent_id" => "#{@second_parent.id}",
+        "verbatim_rank" => "sdfdf" }
+    name = Name::AsEdited.create(@name_params, typeahead_params, "fred")
+    assert name.valid?,
+           "Name should be valid. Errs: #{name.errors.full_messages.join('; ')}"
   end
 end

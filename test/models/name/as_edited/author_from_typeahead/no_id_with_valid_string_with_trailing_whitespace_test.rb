@@ -17,10 +17,15 @@
 require "test_helper"
 
 # Single name model test.
-class NameAsEditedNoAuthorIdWithValidStringWithTrailingWhitespace < ActiveSupport::TestCase
-  test "no id with valid string" do
+class NameAsEdNoAuthIdWValStrWithTrailingWhitespace < ActiveSupport::TestCase
+  test "no id with valid string with trailing whitespace" do
     author = authors(:dummy_author_1)
-    result = Name::AsEdited.author_from_typeahead("", author.name + " ", "some field")
-    assert_equal author.id, result, "Should get a matching id for the author name"
+    result = Name::AsEdited.author_from_typeahead(
+      "",
+      author.name + " ",
+      "some field")
+    assert_equal author.id,
+                 result,
+                 "Should get a matching id for the author name"
   end
 end

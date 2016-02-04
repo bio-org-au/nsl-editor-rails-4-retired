@@ -20,7 +20,12 @@ require "test_helper"
 class NameAsEditedNoAuthorIdWithValidString < ActiveSupport::TestCase
   test "no id with valid string" do
     author = authors(:dummy_author_1)
-    result = Name::AsEdited.author_from_typeahead("", author.name, "some field")
-    assert_equal author.id, result, "Should get a matching id for the author name"
+    result = Name::AsEdited.author_from_typeahead(
+      "",
+      author.name,
+      "some field")
+    assert_equal author.id,
+                 result,
+                 "Should get a matching id for the author name"
   end
 end

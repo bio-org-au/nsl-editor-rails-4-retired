@@ -17,8 +17,8 @@
 require "test_helper"
 
 # Single name model test.
-class NameAsEditedNoParentIdWithValidStringWithTrailingWhitespace < ActiveSupport::TestCase
-  test "no id with valid string" do
+class NameAsEdNoParIdWValStrWithTrailingWhitespace < ActiveSupport::TestCase
+  test "no id with valid string with trailing whitespace" do
     name = names(:the_regnum)
     result = Name::AsEdited.parent_from_typeahead("", name.full_name + "  ")
     assert_equal name.id, result, "Should get a matching id for the name"

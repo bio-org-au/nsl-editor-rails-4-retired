@@ -19,8 +19,9 @@ require "test_helper"
 # Single name model test.
 class NameAsEditedNoParentIdWithInvalidString < ActiveSupport::TestCase
   test "no parent id with invalid string" do
-    assert_raise(RuntimeError, "Should raise a RuntimeError for invalid author string.") do
-      result = Name::AsEdited.parent_from_typeahead("", "asdfasfdasd")
+    assert_raise(RuntimeError,
+                 "Should raise a RuntimeError for invalid author string.") do
+      Name::AsEdited.parent_from_typeahead("", "asdfasfdasd")
     end
   end
 end

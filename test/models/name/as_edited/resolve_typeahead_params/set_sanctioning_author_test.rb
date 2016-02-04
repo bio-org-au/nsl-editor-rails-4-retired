@@ -17,12 +17,17 @@
 require "test_helper"
 
 # Single name model test.
-class NameAsEditedResolveTypeaheadParamsSetSanctioningAuthorTest < ActiveSupport::TestCase
-  test "name as edited revolve typeahead params set sanctioning author" do
+class NameAsEdResolveTheadParamsSetSanctAuthorTest < ActiveSupport::TestCase
+  test "name as edited resolve typeahead params set sanctioning author" do
     dummy = authors(:dummy_author_1)
     name = Name::AsEdited.find(names(:has_no_authors).id)
-    assert name.sanctioning_author_id.blank?, "Name should be have no sanctioning author to start this test."
-    name.resolve_typeahead_params("sanctioning_author_id" => dummy.id, "sanctioning_author_typeahead" => dummy.abbrev)
-    assert_equal dummy.id, name.sanctioning_author_id, "Should now have an sanctioning author id"
+    assert name.sanctioning_author_id.blank?,
+           "Name should be have no sanctioning author to start this test."
+    name.resolve_typeahead_params(
+      "sanctioning_author_id" => dummy.id,
+      "sanctioning_author_typeahead" => dummy.abbrev)
+    assert_equal dummy.id,
+                 name.sanctioning_author_id,
+                 "Should now have an sanctioning author id"
   end
 end

@@ -21,6 +21,7 @@ class NameAsServicesDeleteSuccessTest < ActiveSupport::TestCase
   test "url" do
     name_id = names(:name_to_delete).id
     name = Name::AsServices.find(name_id)
-    assert name.delete_with_reason("200 this is the reason....."), "Should be true"
+    assert name.delete_with_reason("200 this is the reason....."),
+           "Should be true"
   end
 end

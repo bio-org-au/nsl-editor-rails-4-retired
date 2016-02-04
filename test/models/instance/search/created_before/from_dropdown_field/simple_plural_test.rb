@@ -18,12 +18,15 @@ require "test_helper"
 load "models/search/users.rb"
 
 # Single instance model test.
-class InstanceSearchCreatedBeforeFromDropdownSimplePluralTest < ActiveSupport::TestCase
+class InstSrchCreateBeforeFromDropdownSimplePluralTest < ActiveSupport::TestCase
   # New search for "42993" on instance up to 100 with field: cr-b
   test "instance search on created before from dropdown field simple plural" do
     skip # created before, no such query now
-    # search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_string: "2",query_target: 'Review',current_user: build_edit_user))
-    # assert_equal search.executed_query.results.class, Array, "Results should be an Array"
-    # assert search.executed_query.results.size > 0, "At least 1 record expected."
+    # search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess
+    # .new(query_string: "2",
+    #      query_target: 'Review',current_user: build_edit_user))
+    # assert_equal search.executed_query.results.class, Array,
+    #   "Results should be an Array"
+    # assert search.executed_query.results.size > 0, "Expect at least 1 record."
   end
 end

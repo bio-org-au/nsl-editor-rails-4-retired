@@ -17,10 +17,12 @@
 require "test_helper"
 
 # Single name model test.
-class NameAsEditedNoDuplicateOfIdWithValidStringWithTrailingWhitespace < ActiveSupport::TestCase
-  test "no id with valid string" do
+class NameAsEdNoDupeOfIdWValStrWTrailingWhitespace < ActiveSupport::TestCase
+  test "no dupe of id with valid string with trailing whitespace" do
     name = names(:the_regnum)
-    result = Name::AsEdited.duplicate_of_from_typeahead("", name.full_name + " ")
+    result = Name::AsEdited.duplicate_of_from_typeahead(
+      "",
+      name.full_name + " ")
     assert_equal name.id, result, "Should get a matching id for the name"
   end
 end

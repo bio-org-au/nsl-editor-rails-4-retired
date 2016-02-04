@@ -19,8 +19,12 @@ require "test_helper"
 # Single name model test.
 class NameAsEditedNoAuthorIdWithInvalidString < ActiveSupport::TestCase
   test "no id with invalid string" do
-    assert_raise(RuntimeError, "Should raise a RuntimeError for invalid author string.") do
-      result = Name::AsEdited.author_from_typeahead("", "asdfasfdasd", "some field")
+    assert_raise(RuntimeError,
+                 "Should raise a RuntimeError for invalid author string.") do
+      Name::AsEdited.author_from_typeahead(
+        "",
+        "asdfasfdasd",
+        "some field")
     end
   end
 end

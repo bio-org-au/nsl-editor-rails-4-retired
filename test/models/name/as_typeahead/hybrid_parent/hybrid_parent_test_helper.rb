@@ -38,18 +38,15 @@ def hybrid_parent_suggestions_should_not_include(suggestions,
              include #{unexpected_rank_name}[caller: #{caller[1]}]")
 end
 
-def hybrid_parent_suggestions_should_only_include(suggestions,
-                                                  given_rank_name,
-                                                  expected_rank_names)
+def hybrid_parent_suggestions_should_only_include(
+  suggestions, given_rank_name, expected_rank_names)
   NameRank.all.sort { |a, b| a.sort_order <=> b.sort_order }.each do |rank|
     if expected_rank_names.include?(rank.name)
-      hybrid_parent_suggestions_should_include(suggestions,
-                                               given_rank_name,
-                                               rank.name)
+      hybrid_parent_suggestions_should_include(
+        suggestions, given_rank_name, rank.name)
     else
-      hybrid_parent_suggestions_should_not_include(suggestions,
-                                                   given_rank_name,
-                                                   rank.name)
+      hybrid_parent_suggestions_should_not_include(
+        suggestions, given_rank_name, rank.name)
     end
   end
 end

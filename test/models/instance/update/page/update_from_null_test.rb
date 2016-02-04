@@ -18,15 +18,21 @@ require "test_helper"
 
 # Single instance model test.
 class InstanceUpdatePageFromNullTest < ActiveSupport::TestCase
+  def setup
+    @unchanged = instances(:has_no_page_bhl_url_verbatim_name_string)
+    @instance = Instance::AsEdited.find(@unchanged.id)
+    @new_page = "xzy"
+  end
+
   test "update page from null" do
-    unchanged = instances(:has_no_page_bhl_url_verbatim_name_string)
-    assert unchanged.page.blank?, "Page should be blank for this test."
-    instance = Instance::AsEdited.find(unchanged.id)
-    new_page = "xzy"
-    message = instance.update_if_changed({ "page" => new_page }, "fred")
-    assert_match /#{new_page}/, instance.page, "New page should be: #{new_page}"
-    assert message.match(/\AUpdated/), "Message should be 'Updated' not '#{message}'"
-    assert instance.updated_at > unchanged.updated_at, "Updated date-time should be changed."
-    assert instance.updated_by == "fred", "Updated by should be 'fred'."
+    assert @unchanged.page.blank?, "Page should be blank for this test."
+    message = @instance.update_if_changed({ "page" => @new_page }, "fred")
+    assert_match(/#{@new_page}/, @instance.page,
+                 "New page should be: #{@new_page}")
+    assert message.match(/\AUpdated/),
+           "Message should be 'Updated' not '#{message}'"
+    assert @instance.updated_at > @unchanged.updated_at,
+           "Updated date-time should be changed."
+    assert @instance.updated_by == "fred", "Updated by should be 'fred'."
   end
 end

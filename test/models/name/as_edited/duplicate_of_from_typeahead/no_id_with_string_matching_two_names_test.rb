@@ -17,12 +17,15 @@
 require "test_helper"
 
 # Single name model test.
-class NameAsEditedNoDuplicateOfIdWithStringMatchingTwoNamesTest < ActiveSupport::TestCase
-  test "no id with invalid string" do
+class NameAsEdNoDupeOfIdWStrMatchingTwoNamesTest < ActiveSupport::TestCase
+  test "no dupe of id with string matching 2 names" do
     name_1 = names(:name_matches_another_1)
-    assert Name.where(full_name: name_1.full_name).size == 2, "Should be two Names with the same full name string."
-    assert_raise(RuntimeError, "Should raise a RuntimeError for invalid author string.") do
-      result = Name::AsEdited.duplicate_of_from_typeahead("", name_1.full_name)
+    assert_equal 2,
+                 Name.where(full_name: name_1.full_name).size,
+                 "Should be two Names with the same full name string."
+    assert_raise(RuntimeError,
+                 "Should raise a RuntimeError for invalid author string.") do
+      Name::AsEdited.duplicate_of_from_typeahead("", name_1.full_name)
     end
   end
 end

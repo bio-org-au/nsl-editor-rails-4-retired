@@ -39,23 +39,21 @@ def cultivar_parent_suggestions_should_not_include(suggestions,
              include #{unexpected_rank_name} [caller: #{caller_test}]")
 end
 
-def cultivar_parent_suggestions_should_only_include(suggestions,
-                                                    given_rank_name,
-                                                    expected_rank_names)
-  caller_test = caller.first
-  NameRank.all.sort { |a, b| a.sort_order <=> b.sort_order }.each do |rank|
+def cultivar_parent_suggestions_should_only_include(
+  suggestions, given_rank_name, expected_rank_names)
+  sorted_name_ranks.each do |rank|
     if expected_rank_names.include?(rank.name)
-      cultivar_parent_suggestions_should_include(suggestions,
-                                                 given_rank_name,
-                                                 rank.name,
-                                                 caller_test)
+      cultivar_parent_suggestions_should_include(
+        suggestions, given_rank_name, rank.name, caller.first)
     else
-      cultivar_parent_suggestions_should_not_include(suggestions,
-                                                     given_rank_name,
-                                                     rank.name,
-                                                     caller_test)
+      cultivar_parent_suggestions_should_not_include(
+        suggestions, given_rank_name, rank.name, caller.first)
     end
   end
+end
+
+def sorted_name_ranks
+  NameRank.all.sort { |a, b| a.sort_order <=> b.sort_order }
 end
 
 def show(suggestions)

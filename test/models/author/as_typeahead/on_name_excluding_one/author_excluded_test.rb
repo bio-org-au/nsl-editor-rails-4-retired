@@ -20,7 +20,11 @@ require "test_helper"
 # Single author model test.
 class AuthorAsTypeaheadOnNameDuplicateOfAuthorTest < ActiveSupport::TestCase
   test "haeckel duplicate of" do
-    result = Author::AsTypeahead.on_name_duplicate_of("haeck", authors(:haeckel).id)
-    assert_equal 0, result.size, "Expecting no records because Haeckel should have been excluded."
+    result = Author::AsTypeahead.on_name_duplicate_of(
+      "haeck",
+      authors(:haeckel).id)
+    assert_equal 0,
+                 result.size,
+                 "Expecting no records because Haeckel should be excluded."
   end
 end

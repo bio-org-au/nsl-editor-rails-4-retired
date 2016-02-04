@@ -20,6 +20,10 @@ require "test_helper"
 class NameAsServicesDeleteURLTest < ActiveSupport::TestCase
   test "url" do
     url = Name::AsServices.delete_url(12_345, "this is the reason.....")
-    assert url.match(Regexp.escape(%(#{Rails.configuration.name_services}12345/api/delete?apiKey=#{Rails.configuration.api_key}&reason=this%20is%20the%20reason.....))), "URL is wrong."
+    request = %(#{Rails.configuration.name_services}12345/api/delete)
+    api_key = %(apiKey=#{Rails.configuration.api_key})
+    reason = %(reason=this%20is%20the%20reason.....)
+    re = Regexp.escape(%(#{request}?#{api_key}&#{reason}))
+    assert url.match(re), "URL is wrong."
   end
 end

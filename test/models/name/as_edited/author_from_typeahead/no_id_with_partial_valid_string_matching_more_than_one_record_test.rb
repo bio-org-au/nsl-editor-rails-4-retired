@@ -17,11 +17,15 @@
 require "test_helper"
 
 # Single name model test.
-class NameAsEditedNoAuthorIdWithPartialValidStringMatchingMoreThanOneRecord < ActiveSupport::TestCase
+class NameAsEdNoAuthIdWPartValidStrMatchMoreThan1Rec < ActiveSupport::TestCase
   test "no id with partial valid string matching more than one record" do
     author = authors(:dummy_author_1)
-    assert_raise(RuntimeError, "Should raise exception because multiple matches.") do
-      result = Name::AsEdited.author_from_typeahead("", author.abbrev.chop, "SOME FIELD")
+    assert_raise(RuntimeError,
+                 "Should raise exception because multiple matches.") do
+      Name::AsEdited.author_from_typeahead(
+        "",
+        author.abbrev.chop,
+        "SOME FIELD")
     end
   end
 end

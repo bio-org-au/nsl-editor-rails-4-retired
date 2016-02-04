@@ -17,10 +17,15 @@
 require "test_helper"
 
 # Single name model test.
-class NameAsEditedNoAuthorIdWithPartialValidStringMatchingOneRecord < ActiveSupport::TestCase
+class NameAsEdNoAuthIdWPartValStrMatchingOneRecord < ActiveSupport::TestCase
   test "no id with partial valid string matching one record" do
     author = authors(:chaplin)
-    result = Name::AsEdited.author_from_typeahead("", author.abbrev.chop, "SOME FIELD")
-    assert_equal author.id, result, "Should get a matching id for the author name"
+    result = Name::AsEdited.author_from_typeahead(
+      "",
+      author.abbrev.chop,
+      "SOME FIELD")
+    assert_equal author.id,
+                 result,
+                 "Should get a matching id for the author name"
   end
 end

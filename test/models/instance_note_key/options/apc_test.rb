@@ -30,4 +30,3 @@ class InstanceNoteKeyAPCOptionsTest < ActiveSupport::TestCase
                  "Last APC option should be 'APC Dist.'"
   end
 end
-

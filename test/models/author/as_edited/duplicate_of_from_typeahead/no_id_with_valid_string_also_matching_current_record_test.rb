@@ -17,7 +17,7 @@
 require "test_helper"
 
 # Single author model test.
-class AuthorAsEditedNoDuplicateOfIdWithValidStringAlsoMatchingCurrentRecord < ActiveSupport::TestCase
+class AuthAsEdNoDupeOfIdWValStrAlsoMatchingCurrRec < ActiveSupport::TestCase
   test "no id with valid string also matching current record" do
     skip
     # author = authors(:chaplin)

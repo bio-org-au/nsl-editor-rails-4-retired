@@ -22,7 +22,9 @@ class TwoAuthorsSameNameWithRefCount < ActiveSupport::TestCase
     result = Author::AsTypeahead.on_name("masl")
     assert_equal 2, result.size, "Expecting 2 records for 'masl'."
     values = result.collect { |author| author[:value] }
-    assert values.include?("Maslin, B.R. | 1 ref"), "Expecting Maslin with 1 ref."
-    assert values.include?("Maslin, B.R."), "Expecting Maslin with 0 refs mentioned."
+    assert values.include?("Maslin, B.R. | 1 ref"),
+           "Expecting Maslin with 1 ref."
+    assert values.include?("Maslin, B.R."),
+           "Expecting Maslin with 0 refs mentioned."
   end
 end

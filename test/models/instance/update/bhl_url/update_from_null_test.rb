@@ -18,15 +18,20 @@ require "test_helper"
 
 # Single instance model test.
 class InstanceUpdateBHLURLFromNullTest < ActiveSupport::TestCase
+  def setup
+    @unchanged = instances(:has_no_page_bhl_url_verbatim_name_string)
+    @instance = Instance::AsEdited.find(@unchanged.id)
+    @new_value = "xzy"
+  end
+
   test "update bhl url from null" do
-    unchanged = instances(:has_no_page_bhl_url_verbatim_name_string)
-    instance = Instance::AsEdited.find(unchanged.id)
-    new_value = "xzy"
-    assert unchanged.bhl_url.blank?, "BHL URL should be blank for this test."
-    message = instance.update_if_changed({ "bhl_url" => new_value }, "fred")
+    assert @unchanged.bhl_url.blank?, "BHL URL should be blank for this test."
+    message = @instance.update_if_changed({ "bhl_url" => @new_value }, "fred")
     assert message.match(/\AUpdated/), "Message should be 'Updated'"
-    assert instance.bhl_url.match(/#{new_value}/), "New bhl_url should be: #{new_value}"
-    assert instance.updated_at > unchanged.updated_at, "Updated date-time should be changed."
-    assert instance.updated_by == "fred", "Updated by should be 'fred'."
+    assert @instance.bhl_url.match(/#{@new_value}/),
+           "New bhl_url should be: #{@new_value}"
+    assert @instance.updated_at > @unchanged.updated_at,
+           "Updated date-time should be changed."
+    assert @instance.updated_by == "fred", "Updated by should be 'fred'."
   end
 end

@@ -20,7 +20,11 @@ require "test_helper"
 class NameAsEditedDuplicateOfIdWithMatchingString < ActiveSupport::TestCase
   test "id with matching string" do
     name = names(:the_regnum)
-    result = Name::AsEdited.duplicate_of_from_typeahead(name.id.to_s, name.full_name)
-    assert_equal name.id, result, "Should get a matching id for the duplicate of name"
+    result = Name::AsEdited.duplicate_of_from_typeahead(
+      name.id.to_s,
+      name.full_name)
+    assert_equal name.id,
+                 result,
+                 "Should get a matching id for the duplicate of name"
   end
 end

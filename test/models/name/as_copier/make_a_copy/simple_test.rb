@@ -23,7 +23,9 @@ class NameAsCopierMakeACopySimpleTest < ActiveSupport::TestCase
     master_name = Name::AsCopier.find(names(:a_genus_with_two_instances).id)
     dummy_name_element = "xyz"
     dummy_username = "fred"
-    copied_name = master_name.copy_with_username(dummy_name_element, dummy_username)
+    copied_name = master_name.copy_with_username(
+      dummy_name_element,
+      dummy_username)
     after = Name.count
     assert_equal before + 1, after, "There should be one extra name."
     assert_equal master_name.name_type_id, copied_name.name_type_id
@@ -34,7 +36,8 @@ class NameAsCopierMakeACopySimpleTest < ActiveSupport::TestCase
     assert_equal master_name.base_author_id, copied_name.base_author_id
     assert_equal master_name.ex_author_id, copied_name.ex_author_id
     assert_equal master_name.ex_base_author_id, copied_name.ex_base_author_id
-    assert_equal master_name.sanctioning_author_id, copied_name.sanctioning_author_id
+    assert_equal master_name.sanctioning_author_id,
+                 copied_name.sanctioning_author_id
     assert_equal master_name.orth_var, copied_name.orth_var
     assert_equal master_name.parent_id, copied_name.parent_id
     assert_equal master_name.second_parent_id, copied_name.second_parent_id

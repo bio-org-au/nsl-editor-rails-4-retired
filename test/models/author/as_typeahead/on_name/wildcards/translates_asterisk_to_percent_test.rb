@@ -17,9 +17,10 @@
 require "test_helper"
 
 # Single author model test.
-class AuthorTypeaheadsOnNameWildcardsTranslatesAsteriskToPercent < ActiveSupport::TestCase
+class AuthTAheadsOnNameWildcardsTransAsterisk2Percent < ActiveSupport::TestCase
   test "author typeahead on name wildcards translates asterisk to percent" do
     results = Author::AsTypeahead.on_name("*")
-    assert results.size > 0, "Should be at least one result for asterisk wildcard"
+    assert results.size > 0,
+           "Should be at least one result for asterisk wildcard"
   end
 end

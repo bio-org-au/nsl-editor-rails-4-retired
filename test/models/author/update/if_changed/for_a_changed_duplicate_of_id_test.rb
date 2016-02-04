@@ -18,12 +18,24 @@ require "test_helper"
 
 # Single author model test.
 class ForAChangedDuplicateOfIdTest < ActiveSupport::TestCase
+  def setup
+    @author = Author::AsEdited.find(authors(:haeckel).id)
+    @author.update_if_changed(
+      {},
+      { duplicate_of_id: authors(:brongn).id,
+        duplicate_of_typeahead: authors(:brongn).name },
+      "a user")
+  end
+
   test "changed duplicate of id" do
-    author = Author::AsEdited.find(authors(:haeckel).id)
-    assert author.update_if_changed({}, { duplicate_of_id: authors(:brongn).id, duplicate_of_typeahead: authors(:brongn).name }, "a user")
-    changed_author = Author.find_by(id: author.id)
-    assert_equal authors(:brongn).id, changed_author.duplicate_of_id, "Duplicate of id should have changed to the new value"
-    assert_match "a user", changed_author.updated_by, "Author.updated_by should have changed to the updating user"
-    assert author.created_at < changed_author.updated_at, "Author updated at should have changed."
+    changed_author = Author.find_by(id: @author.id)
+    assert_equal authors(:brongn).id,
+                 changed_author.duplicate_of_id,
+                 "Duplicate of id should have changed to the new value"
+    assert_match "a user",
+                 changed_author.updated_by,
+                 "Author.updated_by should have changed to the updating user"
+    assert @author.created_at < changed_author.updated_at,
+           "Author updated at should have changed."
   end
 end

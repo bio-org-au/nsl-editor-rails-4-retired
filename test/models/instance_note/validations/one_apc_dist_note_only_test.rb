@@ -20,10 +20,11 @@ require "test_helper"
 class InstanceNoteOneApcDistNoteOnlyTest < ActiveSupport::TestCase
   test "instance can have only one apc dist note" do
     assert_raises ActiveRecord::RecordInvalid, "Record should be invalid" do
-      instance_note = InstanceNote.new(instance: instances(:has_apc_dist_note),
-                                       instance_note_key: instance_note_keys(:apc_dist),
-                                       value: 'some string',
-                                       namespace: namespaces(:apni))
+      instance_note = InstanceNote.new(
+        instance: instances(:has_apc_dist_note),
+        instance_note_key: instance_note_keys(:apc_dist),
+        value: "some string",
+        namespace: namespaces(:apni))
       instance_note.save!
     end
   end

@@ -23,6 +23,7 @@ class AuthorAsTypeaheadOnAbbrevAuthorFoundTest < ActiveSupport::TestCase
     results = Author::AsTypeahead.on_abbrev("masl")
     assert_equal 1, results.size, "Expecting 1 record for 'masl'."
     ids = results.collect { |author| author[:id] }
-    assert ids.include?(authors(:maslin_with_abbrev).id.to_s), "Expecting Maslin"
+    assert ids.include?(authors(:maslin_with_abbrev).id.to_s),
+           "Expecting Maslin"
   end
 end

@@ -24,6 +24,10 @@ def test_author_text_field_change_is_detected(field_name)
                                   {},
                                   "a user")
   changed_author = Author.find_by(id: author.id)
+  test_changed_value(author, changed_author, new_column_value, field_name)
+end
+
+def test_changed_value(author, changed_author, new_column_value, field_name)
   assert_match new_column_value,
                changed_author.send(field_name),
                "#{field_name} should have changed to the new value"
@@ -41,6 +45,10 @@ def test_author_text_field_lack_of_change_is_detected(field_name)
                                   {},
                                   "a user")
   changed_author = Author.find_by(id: author.id)
+  test_changed_author(author, changed_author, field_name)
+end
+
+def test_changed_author(author, changed_author, field_name)
   assert_match author.send(field_name) || "isnil",
                changed_author.send(field_name) || "isnil",
                "#{field_name} should not have changed"

@@ -18,16 +18,20 @@ require "test_helper"
 
 # Single instance model test.
 class InstanceUpdateBHLURLNoUpdateForEmptyStringTest < ActiveSupport::TestCase
+  def setup
+    @unchanged = instances(:has_no_page_bhl_url_verbatim_name_string)
+    @instance = Instance::AsEdited.find(@unchanged.id)
+  end
+
   test "bhl url no update for empty string" do
-    unchanged = instances(:has_no_page_bhl_url_verbatim_name_string)
-    assert unchanged.page.blank?, "Page should be blank for this test."
-    instance = Instance::AsEdited.find(unchanged.id)
-    empty_string = ""
-    assert unchanged.bhl_url.blank?, "BHL URL should be blank for this test."
-    message = instance.update_if_changed({ "bhl_url" => empty_string }, "fred")
-    assert message.match(/\ANo change/), "Message should be 'No change' not '#{message}'"
-    assert instance.bhl_url.blank?, "BHL URL should still be blank."
-    assert instance.updated_at == unchanged.updated_at, "Updated date-time should be untouched."
-    assert instance.updated_by != "fred", "Updated by should be untouched."
+    assert @unchanged.page.blank?, "Page should be blank for this test."
+    assert @unchanged.bhl_url.blank?, "BHL URL should be blank for this test."
+    message = @instance.update_if_changed({ "bhl_url" => "" }, "fred")
+    assert message.match(/\ANo change/),
+           "Message should be 'No change' not '#{message}'"
+    assert @instance.bhl_url.blank?, "BHL URL should still be blank."
+    assert @instance.updated_at == @unchanged.updated_at,
+           "Updated date-time should be untouched."
+    assert @instance.updated_by != "fred", "Updated by should be untouched."
   end
 end

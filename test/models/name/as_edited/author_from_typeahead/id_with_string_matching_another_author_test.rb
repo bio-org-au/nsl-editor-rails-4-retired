@@ -17,11 +17,16 @@
 require "test_helper"
 
 # Single name model test.
-class NameAsEditedAuthorIdWithStringMatchingAnotherAuthor < ActiveSupport::TestCase
+class NameAsEdAuthIdWStrMatchingAnotherAuthor < ActiveSupport::TestCase
   test "id with string for anther author" do
     author_1 = authors(:dummy_author_1)
     author_2 = authors(:dummy_author_2)
-    result = Name::AsEdited.author_from_typeahead(author_1.id.to_s, author_2.name, "Some Author Field")
-    assert_equal author_2.id, result, "Should get a matching id for the author name despite mismatched ID"
+    result = Name::AsEdited.author_from_typeahead(
+      author_1.id.to_s,
+      author_2.name,
+      "Some Author Field")
+    assert_equal author_2.id,
+                 result,
+                 "Should get matching ID for author name despite mismatched ID"
   end
 end

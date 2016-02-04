@@ -18,15 +18,22 @@ require "test_helper"
 
 # Single instance model test.
 class InstanceUpdateBHLURLFromNullTest < ActiveSupport::TestCase
+  def setup
+    @unchanged = instances(:has_no_page_bhl_url_verbatim_name_string)
+    @instance = Instance::AsEdited.find(@unchanged.id)
+    @new_value = "xzy"
+  end
+
   test "update verbatim name string from null" do
-    unchanged = instances(:has_no_page_bhl_url_verbatim_name_string)
-    instance = Instance::AsEdited.find(unchanged.id)
-    new_value = "xzy"
-    assert unchanged.verbatim_name_string.blank?, "Verbatim name string should be blank for this test."
-    message = instance.update_if_changed({ "verbatim_name_string" => new_value }, "fred")
+    assert @unchanged.verbatim_name_string.blank?,
+           "Verbatim name string should be blank for this test."
+    message = @instance.update_if_changed(
+      { "verbatim_name_string" => @new_value }, "fred")
     assert message.match(/\AUpdated/), "Message should be 'Updated'"
-    assert instance.verbatim_name_string.match(/#{new_value}/), "New verbatim_name_string should be: #{new_value}"
-    assert instance.updated_at > unchanged.updated_at, "Updated date-time should be changed."
-    assert instance.updated_by == "fred", "Updated by should be 'fred'."
+    assert @instance.verbatim_name_string.match(/#{@new_value}/),
+           "New verbatim_name_string should be: #{@new_value}"
+    assert @instance.updated_at > @unchanged.updated_at,
+           "Updated date-time should be changed."
+    assert @instance.updated_by == "fred", "Updated by should be 'fred'."
   end
 end

@@ -18,11 +18,17 @@ require "test_helper"
 load "models/search/users.rb"
 
 # Single instance model test.
-class InstanceSearchCreatedBeforeFromDropdownSimpleSingularTest < ActiveSupport::TestCase
+class InstSrchCreB4FromDropdownSimpleSingularTest < ActiveSupport::TestCase
   # New search for "42993" on instance up to 100 with field: cr-b
-  test "instance search on created before from dropdown field simple singular" do
-    search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(query_string: "1 instances-only:", query_target: "Review", current_user: build_edit_user))
-    assert_equal search.executed_query.results.class, Array, "Results should be an Array"
-    assert search.executed_query.results.size > 0, "At least 1 record expected."
+  test "inst srch on created before from dropdown field simple singular" do
+    search = Search::Base
+             .new(ActiveSupport::HashWithIndifferentAccess
+                  .new(query_string: "1 instances-only:",
+                       query_target: "Review",
+                       current_user: build_edit_user))
+    assert_equal Array,
+                 search.executed_query.results.class,
+                 "Results should be an Array"
+    assert search.executed_query.results.size > 0, "Expect at least 1 record."
   end
 end

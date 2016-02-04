@@ -21,7 +21,8 @@ class NameAsServicesDeleteError404Test < ActiveSupport::TestCase
   test "url" do
     name_id = names(:name_to_delete).id
     name = Name::AsServices.find(name_id)
-    assert_raise(RestClient::ResourceNotFound, "Should raise exception for resource not found") do
+    assert_raise(RestClient::ResourceNotFound,
+                 "Should raise exception for resource not found") do
       name.delete_with_reason("404 this is the reason.....")
     end
   end

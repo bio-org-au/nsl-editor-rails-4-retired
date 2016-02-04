@@ -17,7 +17,7 @@
 require "test_helper"
 
 # Single name model test.
-class NameAsEditedNoParentIdWithPartialValidStringMatchingOneRecord < ActiveSupport::TestCase
+class NameAsEdNoParIdWPartValStrMatchingOneRecord < ActiveSupport::TestCase
   test "no id with partial valid string matching one record" do
     name = names(:the_regnum)
     result = Name::AsEdited.parent_from_typeahead("", name.full_name.chop)

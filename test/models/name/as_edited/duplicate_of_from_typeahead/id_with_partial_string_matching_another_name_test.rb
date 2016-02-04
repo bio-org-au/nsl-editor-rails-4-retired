@@ -17,11 +17,15 @@
 require "test_helper"
 
 # Single name model test.
-class NameAsEditedDuplicateOfIdWithParialStringMatchingAnotherName < ActiveSupport::TestCase
-  test "id with partial string for another name" do
+class NameAsEdDupeOfIdWPartStrMatchingAnotherName < ActiveSupport::TestCase
+  test "dupe of id with partial string matching another name" do
     name_1 = names(:the_regnum)
     name_2 = names(:a_division)
-    result = Name::AsEdited.duplicate_of_from_typeahead(name_1.id.to_s, name_2.full_name.chop)
-    assert_equal name_2.id, result, "Should get a matching id for the name with matching partial string despite mismatched ID"
+    result = Name::AsEdited.duplicate_of_from_typeahead(
+      name_1.id.to_s,
+      name_2.full_name.chop)
+    assert_equal name_2.id,
+                 result,
+                 "Should get matching ID for name despite mismatched ID"
   end
 end

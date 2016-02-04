@@ -20,7 +20,7 @@ require "test_helper"
 class NameAsEditedNoParentIdWithNoString < ActiveSupport::TestCase
   test "no id with no string" do
     assert_raise(RuntimeError, "Should raise a RuntimeError for no parent.") do
-      result = Name::AsEdited.parent_from_typeahead("", "")
+      Name::AsEdited.parent_from_typeahead("", "")
     end
   end
 end

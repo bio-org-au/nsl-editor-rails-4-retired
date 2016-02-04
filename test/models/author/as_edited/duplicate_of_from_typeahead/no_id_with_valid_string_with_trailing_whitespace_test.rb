@@ -17,11 +17,12 @@
 require "test_helper"
 
 # Single author model test.
-class AuthorAsEditedNoDuplicateOfIdWithValidStringWithTrailingWhitespace < ActiveSupport::TestCase
+class AuthAsEdNoDupeOfIdWValStrWTrailingWhite < ActiveSupport::TestCase
   test "no id with valid string" do
     current_author_id = 1
     author = authors(:chaplin)
-    result = Author::AsEdited.duplicate_of_from_typeahead("", author.name + " ", current_author_id)
+    result = Author::AsEdited.duplicate_of_from_typeahead(
+      "", author.name + " ", current_author_id)
     assert_equal author.id, result, "Should get a matching id for the author"
   end
 end

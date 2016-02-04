@@ -17,12 +17,17 @@
 require "test_helper"
 
 # Single name model test.
-class NameAsEditedDuplicateOfIdWithStringMatching2Names < ActiveSupport::TestCase
+class NameAsEdDupeOfIdWithStringMatching2Names < ActiveSupport::TestCase
   test "id with string matching 2 names" do
     name_1 = names(:name_matches_another_1)
     name_2 = names(:name_matches_another_2)
-    assert name_1.full_name.match(name_2.full_name), "Should be two names with the same full name."
-    result = Name::AsEdited.duplicate_of_from_typeahead(name_2.id.to_s, name_2.full_name)
-    assert_equal name_2.id, result, "Should get a match for the correct id"
+    assert name_1.full_name.match(name_2.full_name),
+           "Should be two names with the same full name."
+    result = Name::AsEdited.duplicate_of_from_typeahead(
+      name_2.id.to_s,
+      name_2.full_name)
+    assert_equal name_2.id,
+                 result,
+                 "Should get a match for the correct id"
   end
 end

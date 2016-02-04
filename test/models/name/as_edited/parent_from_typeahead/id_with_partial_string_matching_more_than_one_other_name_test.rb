@@ -17,12 +17,13 @@
 require "test_helper"
 
 # Single name model test.
-class NameAsEditedParentIdWithPartialStringMatchingMatchingMoreThanOneOtherName < ActiveSupport::TestCase
+class NameAsEdParIdWPartStrMatchMoreThanOneOtherName < ActiveSupport::TestCase
   test "parent id with partial string matching more than one other name" do
     name_1 = names(:name_matches_another_1)
     name_2 = names(:name_matches_another_1)
-    assert_raise(RuntimeError, "Should raise error because partial string does not identify just one name") do
-      result = Name::AsEdited.parent_from_typeahead(name_1.id.to_s, name_2.full_name[0])
+    assert_raise(RuntimeError,
+                 "Should fail - string does not identify just one name") do
+      Name::AsEdited.parent_from_typeahead(name_1.id.to_s, name_2.full_name[0])
     end
   end
 end

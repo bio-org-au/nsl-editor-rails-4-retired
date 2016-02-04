@@ -24,6 +24,9 @@ class ForNameAndReferenceYearTest < ActiveSupport::TestCase
     results = Instance::AsTypeahead.for_synonymy("angophora costata")
     assert results.class == Array, "Results should be an array."
     assert results.size >= 1, "Results should include at least one record."
-    assert results.collect { |r| r[:value] }.include?(Angophora_Costata_De_Fruct_1788_string), Angophora_Costata_De_Fruct_1788_error
+    assert results
+      .collect { |r| r[:value] }
+      .include?(ANGOPHORA_COSTATA_DE_FRUCT_1788_STRING),
+           ANGOPHORA_COSTATA_DE_FRUCT_1788_ERROR
   end
 end

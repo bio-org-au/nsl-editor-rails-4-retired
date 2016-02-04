@@ -17,12 +17,16 @@
 require "test_helper"
 
 # Single name model test.
-class NameAsEditedAuthorIdWithPartialStringMatchingMatchingMoreThanOneOtherAuthor < ActiveSupport::TestCase
+class NameAsEdAuthIdWPartStrMatchMoreThan1OtherAuthor < ActiveSupport::TestCase
   test "id with partial string matching more than one other author" do
     author_1 = authors(:dummy_author_1)
     author_2 = authors(:dummy_author_2)
-    assert_raise(RuntimeError, "Should raise error because partial string does not identify just one author") do
-      result = Name::AsEdited.author_from_typeahead(author_1.id.to_s, author_2.name.chop, "Some Author Field")
+    assert_raise(RuntimeError,
+                 "Should fail part string does not identify just 1 author") do
+      Name::AsEdited.author_from_typeahead(
+        author_1.id.to_s,
+        author_2.name.chop,
+        "Some Author Field")
     end
   end
 end

@@ -26,7 +26,7 @@ class InNestedSimpleInstanceOrderTest < ActiveSupport::TestCase
 
   test "instances in nested simple instance order" do
     results = Instance.joins(:instance_type, :reference, :name)
-              .where.not(page: 'exclude-from-ordering-test')
+              .where.not(page: "exclude-from-ordering-test")
               .in_nested_instance_type_order
               .order("reference.year,lower(name.full_name)")
               .order("instance_type.name") # make test results definitive

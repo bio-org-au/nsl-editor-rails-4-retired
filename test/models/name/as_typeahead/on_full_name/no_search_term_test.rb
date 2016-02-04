@@ -23,6 +23,6 @@ class NoSearchTermTest < ActiveSupport::TestCase
     assert(suggestions.is_a?(Array), "suggestions should be an array")
     assert_equal suggestions.size,
                  0,
-                 'suggestions for no search term should be empty'
+                 "suggestions for no search term should be empty"
   end
 end

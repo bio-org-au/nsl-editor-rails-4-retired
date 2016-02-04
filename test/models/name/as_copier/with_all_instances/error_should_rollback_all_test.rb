@@ -17,15 +17,19 @@
 require "test_helper"
 
 # Single name model test.
-class NameAsCopierWithAllInstancesErrorShouldRollbackAllTest < ActiveSupport::TestCase
-  test "copy name with all instances with two identical instances so should fail" do
+class NameAsCopWAllInstancesErrorShouldRollbackAllTest < ActiveSupport::TestCase
+  test "copy name with all instances for 2 identical instances should fail" do
     before = Name.count
     master_name = Name::AsCopier.find(names(:has_two_instances_the_same).id)
     dummy_name_element = "xyz"
     dummy_username = "fred"
-    assert_equal 2, master_name.instances.size, "Master should have two instances."
+    assert_equal 2,
+                 master_name.instances.size,
+                 "Master should have two instances."
     assert_raises(ActiveRecord::RecordInvalid) do
-      copied_name = master_name.copy_with_all_instances(dummy_name_element, dummy_username)
+      master_name.copy_with_all_instances(
+        dummy_name_element,
+        dummy_username)
     end
     after = Name.count
     assert_equal before, after, "There should be no extra names."

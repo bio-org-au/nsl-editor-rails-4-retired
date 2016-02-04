@@ -19,10 +19,10 @@ require "test_helper"
 # Single instance model test.
 class CannotDeleteSynonymIfDependentsTest < ActiveSupport::TestCase
   test "cannot delete synonym with dependents" do
-    before = Instance.count
     instance = instances(:angophora_costata_in_stanley)
     dependents = Instance.where(cited_by_id: instance.id).count
     assert dependents > 0, "The test fixture should have dependents."
-    assert_not instance.allow_delete?, "Should not be allowed to delete synonym with dependents."
+    assert_not instance.allow_delete?,
+               "Should not be allowed to delete synonym with dependents."
   end
 end

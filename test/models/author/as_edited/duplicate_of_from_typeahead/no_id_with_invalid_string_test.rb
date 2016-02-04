@@ -20,8 +20,12 @@ require "test_helper"
 class AuthorAsEditedNoDuplicateOfIdWithInvalidString < ActiveSupport::TestCase
   test "no duplicate of id with invalid string" do
     current_author_id = 1
-    assert_raise(RuntimeError, "Should raise a RuntimeError for invalid author string.") do
-      result = Author::AsEdited.duplicate_of_from_typeahead("", "asdfasfdasd", current_author_id)
+    assert_raise(RuntimeError,
+                 "Should raise a RuntimeError for invalid author string.") do
+      Author::AsEdited.duplicate_of_from_typeahead(
+        "",
+        "asdfasfdasd",
+        current_author_id)
     end
   end
 end
