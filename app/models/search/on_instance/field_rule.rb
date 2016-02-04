@@ -151,8 +151,8 @@ class Search::OnInstance::FieldRule
     ON ib.name_id = nb.id
  INNER JOIN name_rank rb
     ON nb.name_rank_id = rb.id
-where ra.sort_order >= (select sort_order from name_rank where name = 'Species')
-  and rb.sort_order <= (select sort_order from name_rank where name = 'Genus')
+where rb.sort_order >= (select sort_order from name_rank where name = 'Species')
+  and ra.sort_order <= (select sort_order from name_rank where name = 'Genus')
       )
       ",
       order: "name.full_name",
