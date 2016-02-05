@@ -45,10 +45,11 @@ Capybara.default_driver = :selenium
 class ActiveSupport::TestCase
   ActiveRecord::Migration.check_pending!
 
-  # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
+  # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in
+  # alphabetical order.
   #
-  # Note: You'll currently still have to declare fixtures explicitly in integration tests
-  # -- they do not yet inherit this setting
+  # Note: You'll currently still have to declare fixtures explicitly in
+  # integration tests -- they do not yet inherit this setting
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
@@ -62,9 +63,10 @@ def standard_page_assertions
   assert page.has_selector?('#query-on'), "No query-on field"
   assert page.has_selector?('#search-field'), "No search-field"
   assert page.has_content?("© NSL"), message: "Page needs copyright notice."
-  assert page.has_selector?('#search-button'), 'Page does not have #search-button'
-  assert page.has_selector?('input#search-field'), 'Page does not have #search-field element'
-  assert page.has_field?("query"), 'Page does not have field with id, label or name of "query"'
+  assert page.has_selector?('#search-button'), 'Page has no #search-button'
+  assert page.has_selector?('input#search-field'),
+         "Page has no #search-field element"
+  assert page.has_field?("query"), 'Page has no "query" field'
 end
 
 def sign_in
@@ -141,9 +143,12 @@ def make_sure_details_are_showing
     debug "looking"
     tries += 1
     fill_in "search-field", with: tries.to_s if tries > 1
-    if page.has_selector?("tr.search-result.fresh td.takes-focus.main-content a.show-details-link")
-      unless page.has_selector?("tr.search-result.fresh.showing-details td.takes-focus.main-content a.show-details-link")
-        all("tr.search-result.fresh td.takes-focus.main-content a.show-details-link").first.click
+    if page.has_selector?("tr.search-result.fresh "\
+                          "td.takes-focus.main-content a.show-details-link")
+      unless page.has_selector?("tr.search-result.fresh.showing-details td.ta"\
+                                "kes-focus.main-content a.show-details-link")
+        all("tr.search-result.fresh td.takes-focus.main-content "\
+            "a.show-details-link").first.click
         debug "sleeping...."
         sleep(inspection_time = 0.01)
       else
