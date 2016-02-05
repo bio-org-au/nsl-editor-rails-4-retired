@@ -1751,13 +1751,13 @@ orth_var_with_not_earliest_inst_sec_ref:
   updated_by: greg
   created_by: greg
 
-species_or_below_to_be_synonymised:
-  simple_name: species or below to be synonymised
-  simple_name_html: species or below to be synonymised
-  name_element: species or below to be synonymised
-  full_name: species or below to be synonymised
-  full_name_html: species or below to be synonymised
-  name_rank: species
+genus_or_above_to_be_synonymised:
+  simple_name: genus or above to be synonymised
+  simple_name_html: genus or above to be synonymised
+  name_element: genus or above to be synonymised
+  full_name: genus or above to be synonymised
+  full_name_html: genus or above to be synonymised
+  name_rank: genus
   name_status: orth_var
   name_type: scientific
   namespace: apni
@@ -1765,13 +1765,13 @@ species_or_below_to_be_synonymised:
   updated_by: greg
   created_by: greg
 
-genus_or_above_to_be_synonym:
-  simple_name: genus or above to be synonymised
-  simple_name_html: genus or above to be synonymised
-  name_element: genus or above to be synonymised
-  full_name: genus or above to be synonymised
-  full_name_html: genus or above to be synonymised
-  name_rank: genus
+species_or_below_to_be_synonym:
+  simple_name: species or below to be synonym
+  simple_name_html: species or below to be synonym
+  name_element: species or below to be synonym
+  full_name: species or below to be synonym
+  full_name_html: species or below to be synonym
+  name_rank: species
   name_status: legitimate
   name_type: scientific
   namespace: apni

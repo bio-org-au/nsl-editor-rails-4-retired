@@ -728,9 +728,9 @@ later_inst_sec_ref:
 # Relationship instance - unpublished citation
 species_or_below_syn_with_genus_or_above:
   reference: ref_4_species_or_below_to_be_synonymised
-  name: genus_or_above_to_be_synonym
-  this_cites: inst_genus_or_above_to_be_synonym 
-  this_is_cited_by: inst_species_or_below_to_be_synomised
+  name: species_or_below_to_be_synonym
+  this_cites: inst_species_or_below_to_be_synonym
+  this_is_cited_by: inst_genus_or_above_to_be_synomised
   instance_type: synonym
   page: exclude-from-ordering-test
   namespace: apni
@@ -738,9 +738,9 @@ species_or_below_syn_with_genus_or_above:
   updated_by: tester
 
 # standalone
-inst_species_or_below_to_be_synomised:
+inst_genus_or_above_to_be_synomised:
   reference: ref_4_species_or_below_to_be_synonymised
-  name: species_or_below_to_be_synonymised
+  name: genus_or_above_to_be_synonymised
   instance_type: synonym
   page: exclude-from-ordering-test
   namespace: apni
@@ -748,9 +748,9 @@ inst_species_or_below_to_be_synomised:
   updated_by: tester
 
 # standalone
-inst_genus_or_above_to_be_synonym:
+inst_species_or_below_to_be_synonym:
   reference: ref_4_genus_or_above_to_be_synonym
-  name: genus_or_above_to_be_synonym
+  name: species_or_below_to_be_synonym
   instance_type: synonym
   page: exclude-from-ordering-test
   namespace: apni
