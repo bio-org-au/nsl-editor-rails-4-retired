@@ -37,7 +37,7 @@ class AuthorsEditCommentsTest < ActionDispatch::IntegrationTest
       within('#search-result-details') do
         find('#comment-create-btn').click
       end
-      sleep(inspection_time = 0.5)
+      sleep(0.5)
       assert page.has_content?("- gclarke"), "No new comment by gclarke."
       assert page.has_button?("Save"), "No new comment."
     end

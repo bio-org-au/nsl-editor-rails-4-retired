@@ -29,7 +29,7 @@ class TNuytsiaRcJournalTest < ActionDispatch::IntegrationTest
     select "Reference", from: "query-on"
     fill_in "search-field", with: "t:Nuytsia rt:journal"
     click_button "Search"
-    sleep(inspection_time = 0.1)
+    sleep(0.1)
     search_result_must_include_content("Nuytsia")
   end
 end

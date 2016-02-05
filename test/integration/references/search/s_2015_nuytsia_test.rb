@@ -30,7 +30,7 @@ class S2015NuytsiaTest < ActionDispatch::IntegrationTest
     select "Reference", from: "query-on"
     fill_in "search-field", with: "2015 Nuytsia"
     click_button "Search"
-    sleep(inspection_time = 0.1)
+    sleep(0.1)
     search_result_must_include_content("Telford")
     # search_result_must_include('Telford, I.R.H. & Naaykens, J.,')
     # search_result_must_include('(2015) Synostemon hamersleyensis

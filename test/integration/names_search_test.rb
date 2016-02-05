@@ -35,7 +35,7 @@ class NamesSearchTest < ActionDispatch::IntegrationTest
     select "Names", from: "query-on"
     fill_in "search-field", with: "acacia"
     click_button "Search"
-    sleep(inspection_time = 1.1)
+    sleep(1.1)
     search_result_summary_must_include_content(
       "1 record",
       "Bad summary for simple name search on 'acacia' - missing: 1 record.")

@@ -31,7 +31,7 @@ class QueryFieldWithCitnSearchNuytsia2015Test < ActionDispatch::IntegrationTest
     select "with citation", from: "query-field"
     fill_in "search-field", with: "Nuytsia 2015"
     click_button "Search"
-    sleep(inspection_time = 0.1)
+    sleep(0.1)
     search_result_must_include_content("Telford")
     search_result_must_include_content("Telford, I.R.H. & Naaykens, J.,")
     string = "(2015) Synostemon hamersleyensis (Phyllanthaceae), "

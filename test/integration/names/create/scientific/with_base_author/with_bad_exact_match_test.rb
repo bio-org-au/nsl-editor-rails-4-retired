@@ -37,7 +37,7 @@ class CrScientNameWBaseAuthBadMatchAuthAbbrev < ActionDispatch::IntegrationTest
       fill_in("base-author-by-abbrev", with: "BXnth.")
     end
     save_new_record
-    sleep(inspection_time = 1)
+    sleep(1)
     assert page.has_content?("error"), "No error message."
     assert page.has_content?("1 error prohibited this name from being saved"),
                              "Incorrect error message."

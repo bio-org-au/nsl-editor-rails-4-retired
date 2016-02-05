@@ -56,11 +56,6 @@ class NamesCreateScientific2Test < ActionDispatch::IntegrationTest
     page.execute_script(script)
   end
 
-  def makeHiddenFieldAvailable(id)
-    script = "document.getElementById('" + id + "').setAttribute('type','text')"
-    execute_script(script)
-  end
-
   def assert_successful_create_for(expected_contents, prohibited_contents = [])
     # default = Capybara.default_wait_time
     Capybara.default_wait_time = 5
@@ -196,7 +191,7 @@ class NamesCreateScientific2Test < ActionDispatch::IntegrationTest
                              "name_base_author_id", authors(:burbidge))
     fill_in("ex-base-author-by-abbrev", with: "MISMATCHED TEXT")
     save_name
-    sleep(inspection_time = 1)
+    sleep(1)
     assert page.has_content?("error"),
            "No error message. Mismatch of ex-base-author not detected"
     assert page.has_content?("1 error prohibited this name from being saved"),
@@ -259,7 +254,7 @@ class NamesCreateScientific2Test < ActionDispatch::IntegrationTest
       fill_in("ex-base-author-by-abbrev", with: "Bxnth.")
     end
     save_name
-    sleep(inspection_time = 1)
+    sleep(1)
     assert page.has_content?("error"), "No error message."
     assert page.has_content?("1 error prohibited this name from being saved"),
            "Incorrect error message."
@@ -308,7 +303,7 @@ class NamesCreateScientific2Test < ActionDispatch::IntegrationTest
                              "name_sanctioning_author_id")
     fill_in("sanctioning-author-by-abbrev", with: "MISMATCHED TEXT")
     save_name
-    sleep(inspection_time = 1)
+    sleep(1)
     assert page.has_content?("error"), "No error message."
     assert page.has_content?("1 error prohibited this name from being saved"),
            "Incorrect error message."
@@ -356,7 +351,7 @@ class NamesCreateScientific2Test < ActionDispatch::IntegrationTest
       fill_in("sanctioning-author-by-abbrev", with: "BXnth.")
     end
     save_name
-    sleep(inspection_time = 1)
+    sleep(1)
     assert page.has_content?("error"), "No error message."
     assert page.has_content?("1 error prohibited this name from being saved"),
            "Incorrect error message."

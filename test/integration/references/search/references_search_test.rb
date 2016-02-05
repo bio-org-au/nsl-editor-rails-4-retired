@@ -37,7 +37,7 @@ class ReferencesSearchTest < ActionDispatch::IntegrationTest
     sign_in
     visit "/search?query=simple&query_on=reference&query_limit=1"
     standard_page_assertions
-    sleep(inspection_time = 0.1)
+    sleep(0.1)
     # page.should have_content('1 record')
     assert page.has_content?("1 record"), "Simple reference search failed."
     # assert page.has_content?('1 record (limited) for "simple"'),

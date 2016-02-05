@@ -42,7 +42,7 @@ class ReferencesDeleteTest < ActionDispatch::IntegrationTest
                                'Reference search should have
                                returned a record for "Book by Blume".')
     click_link "Edit..."
-    sleep(inspection_time = 1)
+    sleep(1)
     assert find('#search-result-details').has_content?(/DOI/),
            "Edit... tab not visible."
     assert find('#search-result-details')
@@ -62,7 +62,7 @@ class ReferencesDeleteTest < ActionDispatch::IntegrationTest
                                record for "Journal by Blume,
                                C.L. [von] (Editor)".')
     click_link "Edit..."
-    sleep(inspection_time = 1)
+    sleep(1)
     assert find('#search-result-details').has_content?(/DOI/),
            "Edit... tab not visible."
     assert_not find('#search-result-details')

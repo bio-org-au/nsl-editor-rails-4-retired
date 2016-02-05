@@ -27,7 +27,7 @@ class SimpleTest < ActionDispatch::IntegrationTest
     visit_home_page
     standard_page_assertions
     select "Instance", from: "query-on"
-    sleep(inspection_time = 0.1)
+    sleep(0.1)
     select "for name", from: "query-field"
     fill_in "search-field", with: "agenus"
     click_button "Search"

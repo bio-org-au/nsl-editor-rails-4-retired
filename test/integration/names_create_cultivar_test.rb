@@ -76,11 +76,6 @@ class NamesCreateCultivarTest < ActionDispatch::IntegrationTest
     end
   end
 
-  def makeHiddenFieldAvailable(id)
-    script = "document.getElementById('" + id + "').setAttribute('type','text')"
-    execute_script(script)
-  end
-
   def assert_successful_create_for(expected_contents, prohibited_contents = [])
     assert page.has_link?("Summary"), "Record not created."
     assert page.has_field?("search-field"), "No search field."

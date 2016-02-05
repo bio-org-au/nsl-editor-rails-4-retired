@@ -33,7 +33,7 @@ class MustHaveSecondParentTest < ActionDispatch::IntegrationTest
     fill_in("name_name_element", with: "Fred")
 
     save_new_record
-    sleep(inspection_time = 1)
+    sleep(1)
     # Do not know how to test for the HTML5 required field test.
     Name.count.must_equal names_count
   end

@@ -33,7 +33,7 @@ class NamesSearchNameRankSimple < ActionDispatch::IntegrationTest
            "nr should be selected for name rank search"
     fill_in "search-field", with: "varietas"
     click_button "Search"
-    sleep(inspection_time = 0.1)
+    sleep(0.1)
     search_result_must_include("tuberosus",
                                "Search should have returned tuberosus.")
   end
