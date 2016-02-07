@@ -25,7 +25,8 @@ class Search::OnAuthor::Base
               :relation,
               :id,
               :count,
-              :show_csv
+              :show_csv,
+              :results_array
 
   def initialize(parsed_request)
     run_query(parsed_request)
@@ -60,6 +61,7 @@ class Search::OnAuthor::Base
     @info_for_display = list_query.info_for_display
     @common_and_cultivar_included = list_query.common_and_cultivar_included
     @count = @results.size
+    @results_array = @results
   end
 
   def debug(s)

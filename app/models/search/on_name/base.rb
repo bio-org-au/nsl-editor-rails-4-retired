@@ -14,8 +14,13 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-#
+
 # Core search class for Name search
+#
+# You can run this in the console, once you have a parsed request:
+#
+# search = Search::OnName::Base.new(parsed_request)
+#
 class Search::OnName::Base
   attr_reader :results,
               :limited,
@@ -26,7 +31,8 @@ class Search::OnName::Base
               :relation,
               :id,
               :count,
-              :show_csv
+              :show_csv,
+              :results_array
 
   def initialize(parsed_request)
     run_query(parsed_request)
@@ -64,8 +70,25 @@ class Search::OnName::Base
     @info_for_display = list_query.info_for_display
     @rejected_pairings = []
     @common_and_cultivar_included = list_query.common_and_cultivar_included
-    @count = @results.size
     @show_csv = false
+    show_instances(parsed_request)
+    @count = @results_array.size
+  end
+
+  def show_instances(parsed_request)
+    debug('show_instances')
+    if parsed_request.show_instances
+      @results_array = []
+      i = Instance.first
+      i.display_as = 'Instance'
+      @results.each do |name|
+        Instance::AsSearchEngine.name_usages(name.id).each do |usage_rec|
+          @results_array << usage_rec
+        end
+      end
+    else
+      @results_array = @results.to_a
+    end
   end
 
   def debug(s)

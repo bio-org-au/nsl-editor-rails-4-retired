@@ -21,7 +21,8 @@ class Name::DefinedQuery::NamesPlusInstances
               :has_relation,
               :relation,
               :count,
-              :show_csv
+              :show_csv,
+              :results_array
 
   def initialize(parsed_request)
     run_query(parsed_request)
@@ -76,6 +77,7 @@ class Name::DefinedQuery::NamesPlusInstances
       @limited = query.limited
       @common_and_cultivar_included = query.common_and_cultivar_included
       @results = results
+      @results_array = @results
       @count = results.size
       @has_relation = false
       @relation = nil

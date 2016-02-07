@@ -37,14 +37,8 @@ Rails.application.routes.draw do
   match "sign_out", as: "sign_out_get_for_firefox_bug", to: "sessions#destroy", via: :get
   match "throw_invalid_authenticity_token", to: "sessions#throw_invalid_authenticity_token", via: :get
 
-  # match 'search/name/with/instances/:name_id',
-  # as: 'search_name_with_instances',
-  # to: 'new_search#search_name_with_instances',
-  # via: :get
-
   match "/search", as: "search", to: "search#search", via: :get
   match "/search/index", as: "search_index", to: "search#search", via: :get
-  # match '/search', as: "search", to: "search#search", via: :get
   match "/search/tree", as: "tree", to: "search#tree", via: :get
   match "/search/preview", as: "search_preview", to: "search#preview", via: :get
   match "/search/extras/:extras_id", as: "search_extras", to: "search#extras", via: :get

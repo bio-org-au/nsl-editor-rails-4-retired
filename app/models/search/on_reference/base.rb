@@ -24,7 +24,8 @@ class Search::OnReference::Base
               :relation,
               :id,
               :count,
-              :show_csv
+              :show_csv,
+              :results_array
 
   def initialize(parsed_request)
     run_query(parsed_request)
@@ -64,6 +65,7 @@ class Search::OnReference::Base
     @common_and_cultivar_included = list_query.common_and_cultivar_included
     @count = @results.size
     @show_csv = false
+    @results_array = @results
   end
 
   def debug(s)

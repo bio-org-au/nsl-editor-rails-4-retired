@@ -15,7 +15,8 @@
 #   limitations under the License.
 #
 class Search::EmptyExecutedQuery
-  attr_reader :results, :limited, :common_and_cultivar_included, :has_relation, :relation, :count
+  attr_reader :results, :limited, :common_and_cultivar_included, :has_relation, :relation, :count,
+              :results_array
 
   def initialize(params)
     Rails.logger.debug("Search::EmptyExecutedQuery start")
@@ -23,6 +24,7 @@ class Search::EmptyExecutedQuery
     @params = params
     @limited = false
     @results = []
+    @results_array = @results
     @count = -1
     @common_and_cultivar_included = true
     @has_relation = false

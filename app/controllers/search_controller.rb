@@ -18,6 +18,7 @@ class SearchController < ApplicationController
   before_filter :hide_details
 
   def search
+    logger.debug('GOING THROUGH SEARCH')
     handle_old_style_params
     run_tree_search || run_local_search || run_empty_search
     respond_to do |format|
@@ -31,6 +32,7 @@ class SearchController < ApplicationController
   end
 
   def tree
+    logger.debug('GOING THROUGH TREE!!!!')
     set_tree_defaults
     @search = Search::Tree.new(params)
     @ng_template_path = tree_ng_path("dummy").gsub(/dummy/, "")
@@ -82,7 +84,9 @@ class SearchController < ApplicationController
   # translate services/search/link
   def handle_old_style_params
     return unless params[:query].present?
-    return unless params[:query_field] == "name-instances"
+    unless params[:query_field] == "name-instances"
+      fail "Cannot handle this query-field: #{params[:query_field]}"
+    end
     params[:query_target] = "instances-for-name-id"
     params[:query_string] = params[:query].sub(/id:/, "")
   end

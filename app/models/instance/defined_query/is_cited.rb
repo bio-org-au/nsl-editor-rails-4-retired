@@ -16,7 +16,8 @@
 #   
 class Instance::DefinedQuery::IsCited
 
-  attr_reader :results, :limited, :common_and_cultivar_included, :has_relation, :relation, :count
+  attr_reader :results, :limited, :common_and_cultivar_included, :has_relation, :relation, :count,
+              :results_array
 
   def initialize(parsed_request)
     run_query(parsed_request)
@@ -61,6 +62,7 @@ class Instance::DefinedQuery::IsCited
       @count = @results.size
       @has_relation = false
       @relation = nil
+      @results_array = @results
     end
   end
 end

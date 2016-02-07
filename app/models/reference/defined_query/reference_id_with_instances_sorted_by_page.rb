@@ -21,7 +21,8 @@ class Reference::DefinedQuery::ReferenceIdWithInstancesSortedByPage
               :has_relation,
               :relation,
               :count,
-              :show_csv
+              :show_csv,
+              :results_array
 
   def initialize(parsed_request)
     run_query(parsed_request)
@@ -67,6 +68,7 @@ class Reference::DefinedQuery::ReferenceIdWithInstancesSortedByPage
       @count = @results.size
       @has_relation = false
       @relation = nil
+      @results_array = @results
     end
   end
 
