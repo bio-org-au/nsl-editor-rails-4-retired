@@ -17,6 +17,11 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "08-Feb-2016", release: true },
+    { date: "08-Feb-2016",
+      jira_id: "1647",
+      description: %Q(Fix link to APC tree search on Name details tab.) },
+    { date: "05-Feb-2016", release: true },
     { date: "02-Feb-2016",
       jira_id: "1637",
       description: %Q(Reinstate the Name search feature that replaced embedded
