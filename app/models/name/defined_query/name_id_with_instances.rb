@@ -14,6 +14,8 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
+#   A defined query is one that the Search class knows about and may
+#   instantiate.
 class Name::DefinedQuery::NameIdWithInstances
   attr_reader :results,
               :limited,

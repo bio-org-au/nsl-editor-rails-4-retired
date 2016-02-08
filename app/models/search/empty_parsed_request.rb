@@ -31,7 +31,8 @@ class Search::EmptyParsedRequest
               :target_table,
               :where_arguments,
               :query_target,
-              :target_button_text
+              :target_button_text,
+              :show_instances
 
   def initialize(params)
     Rails.logger.debug("Search::EmptyParsedQuery start: params: #{params}")
