@@ -1778,3 +1778,31 @@ species_or_below_to_be_synonym:
   parent: a_family
   updated_by: greg
   created_by: greg
+
+for_simple_name_test:
+  simple_name: this is simple name
+  simple_name_html: this is simple name html
+  name_element: xyz
+  full_name: fn
+  full_name_html: fnh
+  name_rank: species
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+for_name_element_test:
+  simple_name: sn
+  simple_name_html: snh
+  name_element: this is name element
+  full_name: fn
+  full_name_html: fnh
+  name_rank: species
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg

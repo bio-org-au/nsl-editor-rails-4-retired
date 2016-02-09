@@ -151,10 +151,16 @@ class Search::OnName::FieldRule
       leading_wildcard: true,
       trailing_wildcard: true, },
 
+    "name-element-exact:" =>
+    { where_clause: "lower(f_unaccent(name_element)) like f_unaccent(?) ", },
+
     "simple-name:" =>
     { where_clause: "lower(f_unaccent(simple_name)) like f_unaccent(?) ",
       leading_wildcard: true,
       trailing_wildcard: true, },
+
+    "simple-name-exact:" =>
+    { where_clause: "lower(f_unaccent(simple_name)) like f_unaccent(?) ", },
 
     "rank:" =>
     { where_clause:

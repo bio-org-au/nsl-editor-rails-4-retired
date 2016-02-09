@@ -21,17 +21,17 @@ require "test_helper"
 load "test/models/search/users.rb"
 
 # Single Search model test.
-class SearchOnNameSimpleNameSimpleTest < ActiveSupport::TestCase
-  test "search on name simple name simple" do
+class SearchOnNameNameElementExactAltSimpleTest < ActiveSupport::TestCase
+  test "search on name name element exact alt simple" do
     params = ActiveSupport::HashWithIndifferentAccess.new(
       query_target: "name",
-      query_string: "simple-name: this is simple",
+      query_string: "exact-name-element: this is name elemen%",
       current_user: build_edit_user)
     search = Search::Base.new(params)
     assert_equal search.executed_query.results.class,
                  Name::ActiveRecord_Relation,
                  "Results should be a Name::ActiveRecord_Relation."
     assert search.executed_query.results.size > 0,
-           "Expected at least one search result for simple name"
+           "Expected at least one search result for exact-name-element"
   end
 end

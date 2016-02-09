@@ -17,6 +17,10 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "10-Feb-2016",
+      jira_id: "1636",
+      description: %Q(Add name-element-exact: and simple-name-exact: \
+      searches.) },
     { date: "09-Feb-2016",
       jira_id: "1620",
       description: %Q(Reports tab for easier access to queries like \

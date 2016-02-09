@@ -14,20 +14,19 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-class Search::OnName::FieldAbbrev
-  ABBREVS = {
-    "nr:" => "rank:",
-    "r:" => "rank:",
-    "name-rank:" => "rank:",
-    "t:" => "type:",
-    "nt:" => "type:",
-    "name-type:" => "type:",
-    "ids:" => "id:",
-    "exact-simple-name:" => "simple-name-exact:",
-    "exact-name:" => "name-exact:",
-    "exact-comments:" => "comments-exact:",
-    "exact-comment:" => "comments-exact:",
-    "comment:" => "comments:",
-    "exact-name-element:" => "name-element-exact:",
-  }
+require "test_helper"
+load "test/models/search/users.rb"
+
+# Single Search model test for Name target.
+class SearchOneNameCommentsExactAltSimpleTest < ActiveSupport::TestCase
+  test "search on name comments exact alt simple" do
+    params =  ActiveSupport::HashWithIndifferentAccess
+              .new(query_target: "name",
+                   query_string: "exact-comments: *",
+                   include_common_and_cultivar_session: true,
+                   current_user: build_edit_user)
+    search = Search::Base.new(params)
+    assert search.executed_query.results.size > 0,
+           "Results expected for exact-comments."
+  end
 end

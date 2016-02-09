@@ -11,16 +11,22 @@
      description: "Name refers to the fully qualified name, with authorities.
      <br>Leading and trailing wildcards are added to your search term."},
     {field_name: 'name-exact:',
-     description: "This searches the same fully qualified name field as above,
-     but no wildcards are added."},
+     description: "This searches the same fully qualified name field as name: \
+     (above), but no wildcards are added."},
     {field_name: 'simple-name:',
      description: %Q(Simple name is the full name without the authorities. e.g.
      "Acacia" in "Acacia Mill.", "Banksia paludosa" in "Banksia paludosa R.Br.".
      <br>Leading and trailing wildcards are added to your search term.)},
+    {field_name: 'simple-name-exact:',
+     description: "This searches the same fully qualified name field as \
+     simple-name: (above), but no wildcards are added."},
     {field_name: 'name-element:',
      description: %Q(Name element is the unique part of the name. e.g. \
      "Acacia" in "Acacia Mill.", "paludosa" in "Banksia paludosa R.Br.".
      <br>Leading and trailing wildcards are added to your search term.)},
+    {field_name: 'name-element-exact:',
+     description: "This searches the same fully qualified name field as \
+     name-element: (above), but no wildcards are added."},
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">
