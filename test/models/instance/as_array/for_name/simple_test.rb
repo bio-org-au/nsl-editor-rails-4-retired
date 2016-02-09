@@ -21,6 +21,5 @@ class InstanceAsArrayForNameTest < ActiveSupport::TestCase
   test "instance as array for name simple" do
     name = names(:triodia_basedowii)
     i = Instance::AsArray::ForName.new(name)
-    puts i.results.size
   end
 end
