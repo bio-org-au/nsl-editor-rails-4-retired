@@ -19,7 +19,7 @@
 # Try this from the console:
 #   parsed_request = Search::ParsedRequest.new({ "query_target"=>"name",
 #   "query_string"=>
-#   "is-orth-var-with-earliest-instance-secondary-ref: limit: 2" })
+#   "is-orth-var-and-sec-ref-first: limit: 2" })
 class Search::ParsedRequest
   attr_reader :show_instances,
               :canonical_query_string,

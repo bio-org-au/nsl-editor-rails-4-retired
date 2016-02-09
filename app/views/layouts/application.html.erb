@@ -71,25 +71,30 @@ input[type="checkbox"]:not([title]) {
 
 
       <div class="row">
-        <div id="search-result-container" class="no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 sidebar" >
+        <div id="search-result-container" 
+             class="main-body-container no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 sidebar" >
           <%= yield %>
         </div>
         <div id="help-search-container" 
-             class="search-tab no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 sidebar hidden">
+             class="main-body-container search-tab no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 sidebar hidden">
             <%= render partial: 'search/help_search_inner' %>
         </div>
         <div id="example-search-container" 
-             class="search-tab no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 sidebar hidden">
+             class="main-body-container search-tab no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 sidebar hidden">
             <%= render partial: 'search/example_search_inner' %>
         </div>
         <% unless @no_advanced_search %>
           <div id="advanced-search-container" 
-          class="search-tab no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 sidebar hidden">
+          class="main-body-container search-tab no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 sidebar hidden">
             <%= render partial: 'search/advanced_search_inner' %>
           </div>
         <% end %>
+        <div id="search-reports-container" 
+             class="main-body-container no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 sidebar hidden">
+            <%= render partial: 'search/tab_inners/reports_inner' %>
+        </div>
         <div id="search-history-container" 
-             class="no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 sidebar hidden">
+             class="main-body-container no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 sidebar hidden">
             <%= render partial: 'search/search_history_inner' %>
         </div>
       </div>

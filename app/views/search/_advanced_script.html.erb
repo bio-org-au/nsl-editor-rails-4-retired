@@ -19,90 +19,24 @@ console.log('document ready');
       $('#advanced-search').addClass('hidden');
     });
 
-    $('ul#search-results-tabset li a#advanced-search-tab-container-link').on('click',function(e) {
-      debug('advanced-search-tab-container-link clicked; non-advanced containers will be HIDDEN.')
+    $('ul#search-results-tabset li a.main-body-tab-link').on('click',function(e) {
+      debug('.main-body-tab-link clicked; non-advanced containers will be HIDDEN.')
       $('ul#search-results-tabset li').removeClass('active');
       $(this).parent('li').addClass('active');
-      $('#advanced-search-container').removeClass('hidden');
-      $('#search-result-container').addClass('hidden');
-      $('#example-search-container').addClass('hidden');
-      $('#search-history-container').addClass('hidden');
-      $('#help-search-container').addClass('hidden');
-    });
-
-    $('ul#search-results-tabset li a#search-results-tab-container-link').on('click',function(e) {
-      debug('search-results-tab-container-link clicked; non-search-result containers will be HIDDEN.')
-      $('ul#search-results-tabset li').removeClass('active');
-      $(this).parent('li').addClass('active');
-      $('#search-result-container').removeClass('hidden');
-      $('#advanced-search-container').addClass('hidden');
-      $('#example-search-container').addClass('hidden');
-      $('#search-history-container').addClass('hidden');
-      $('#help-search-container').addClass('hidden');
-    });
-
-    $('ul#search-results-tabset li a#example-search-tab-container-link').on('click',function(e) {
-      debug('example-search-tab-container-link clicked; non-example containers will be HIDDEN.')
-      $('ul#search-results-tabset li').removeClass('active');
-      $(this).parent('li').addClass('active');
-      $('#search-result-container').addClass('hidden');
-      $('#search-result-details').addClass('hidden');
-      $('#advanced-search-container').addClass('hidden');
-      $('#example-search-container').removeClass('hidden');
-      $('#search-history-container').addClass('hidden');
-      $('#help-search-container').addClass('hidden');
-    });
-
-    $('ul#search-results-tabset li a#search-history-tab-container-link').on('click',function(e) {
-      debug('search-history-tab-container-link clicked; non-history containers will be HIDDEN.')
-      $('ul#search-results-tabset li').removeClass('active');
-      $(this).parent('li').addClass('active');
-      $('#search-result-container').addClass('hidden');
-      $('#search-result-details').addClass('hidden');
-      $('#advanced-search-container').addClass('hidden');
-      $('#example-search-container').addClass('hidden');
-      $('#search-history-container').removeClass('hidden');
-      $('#help-search-container').addClass('hidden');
-    });
-
-    $('ul#search-results-tabset li a#help-search-tab-container-link').on('click',function(e) {
-      debug('help-search-tab-container-link clicked; non-help containers will be HIDDEN.')
-      $('ul#search-results-tabset li').removeClass('active');
-      $(this).parent('li').addClass('active');
-      $('#search-result-container').addClass('hidden');
-      $('#search-result-details').addClass('hidden');
-      $('#advanced-search-container').addClass('hidden');
-      $('#example-search-container').addClass('hidden');
-      $('#search-history-container').addClass('hidden');
-      $('#help-search-container').removeClass('hidden');
-    });
-
-    $('ul#advanced-search-tabset li a').on('click',function(e) {
-      debug('ul#advanced-search-tabset li a clicked; .advanced-search-tab s will be HIDDEN.')
-      $('.advanced-search-tab').addClass('hidden');
-      $('ul#advanced-search-tabset li').removeClass('active');
-      $('#'+$(this).attr('data-show-id')).removeClass('hidden');
-      $(this).parent('li').addClass('active');
-    });
-
-    $('ul#example-search-tabset li a').on('click',function(e) {
-      debug('ul#example-search-tabset li a clicked; .example-search-tab s will be HIDDEN.')
-      $('.example-search-tab').addClass('hidden');
-      $('ul#example-search-tabset li').removeClass('active');
-      $('#'+$(this).attr('data-show-id')).removeClass('hidden');
-      $(this).parent('li').addClass('active');
-    });
-
-
-    $('#search-results-tab-container-link').on('click',function(e) {
-      $('div#search-result-details').removeClass('hidden');
-    });
-
-    $('#advanced-search-tab-container-link').on('click',function(e) {
-      debug('#advanced-search-container-link clicked; search-result-details will be HIDDEN.')
+      $('.main-body-container').addClass('hidden');
       $('div#search-result-details').addClass('hidden');
+      $.each($(this).attr('data-target-element').split(","), function( index, value ) {
+        $(value).removeClass('hidden');
+      });
     });
 
+    // Show search result details when search results are displayed
+    // but only if there are details to show.
+    $('#search-results-tab-container-link').on('click',function(e) {
+      if ($('#search-result-details .focus-details').length>0) {
+        $('div#search-result-details').removeClass('hidden');
+      }
+    });
 
 $( "select#name-advanced-search-name-type-options" )
   .change(function () {
@@ -162,7 +96,7 @@ $( "select#name-advanced-search-list-or-count" )
 
 -->
     </script>
-
+ 
     <script>
 <!--
   function getContentOnDemand(theThis) {

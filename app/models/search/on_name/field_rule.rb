@@ -69,7 +69,7 @@ class Search::OnName::FieldRule
       from instance_type ity \
       where ity.name = 'orthographic variant'))", },
 
-    "is-orth-var-with-earliest-instance-secondary-ref:" =>
+    "is-orth-var-and-sec-ref-first:" =>
     { where_clause:
       "ID IN (SELECT n.id
                 FROM   instance i

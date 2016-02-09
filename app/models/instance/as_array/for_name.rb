@@ -14,14 +14,25 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-#
 
-# Instance as a search engine.
+# Instances are associated with a Name as:
+# - standalone instances for the Name, or as
+# - relationship instances that cite or are cited by those standalones.
+#
+# This class collects the instances associated with a single name
+# in the accepted order and sets the display attributes for each record.
+#
+# The collection is in the results attribute.
+#
+# e.g.
+# name = [find some name]
+# instances = Instance::AsArray::ForName.new(name)
+# puts instances.results.size
+#
 class Instance::AsArray::ForName < Array
   attr_reader :results
 
   def initialize(name)
-    debug("Instance::AsArray::ForName: #{name.id} #{name.full_name}")
     @results = []
     @already_shown = []
     sorted_instances(name.instances).each do |instance|
