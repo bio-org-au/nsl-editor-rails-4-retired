@@ -17,6 +17,19 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "09-Feb-2016",
+      jira_id: "1620",
+      description: %Q(Reports tab for easier access to queries like \
+      <q>is-orth-var-and-sec-ref-first: show-instances: \
+      limit: 10</q>) },
+    { date: "08-Feb-2016",
+      jira_id: "1620",
+      description: %Q(Option to <q>show-instances:</q> with the original \
+      search for NSL-1620) },
+    { date: "08-Feb-2016",
+      jira_id: "1620",
+      description: %Q(Add <q>show-instances:</q> directive for Name \
+      searches.) },
     { date: "08-Feb-2016", release: true },
     { date: "08-Feb-2016",
       jira_id: "1647",
