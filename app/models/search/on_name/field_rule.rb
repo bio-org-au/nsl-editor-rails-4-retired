@@ -69,7 +69,7 @@ class Search::OnName::FieldRule
       from instance_type ity \
       where ity.name = 'orthographic variant'))", },
 
-    "is-orth-var-with-earliest-instance-secondary-ref:" =>
+    "is-orth-var-and-sec-ref-first:" =>
     { where_clause:
       "ID IN (SELECT n.id
                 FROM   instance i
@@ -135,7 +135,7 @@ class Search::OnName::FieldRule
 
     "parent-or-second-parent-id:" =>
     { where_clause: "id = ? or parent_id = ? or second_parent_id = ? ",
-      order: "case when parent_id is null then 'A' else 'B' end, citation",
+      order: "case when parent_id is null then 'A' else 'B' end, full_name",
       allow_common_and_cultivar: true, },
 
     "name:" =>

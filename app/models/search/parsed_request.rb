@@ -14,8 +14,15 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
+# Every search starts with a parsed request.
+# You can also create a parsed request in the console.
+# Try this from the console:
+#   parsed_request = Search::ParsedRequest.new({ "query_target"=>"name",
+#   "query_string"=>
+#   "is-orth-var-and-sec-ref-first: limit: 2" })
 class Search::ParsedRequest
-  attr_reader :canonical_query_string,
+  attr_reader :show_instances,
+              :canonical_query_string,
               :common_and_cultivar,
               :count,
               :count_allowed,
@@ -83,6 +90,7 @@ class Search::ParsedRequest
     unused_qs_tokens = parse_limit(unused_qs_tokens)
     unused_qs_tokens = parse_target(unused_qs_tokens)
     unused_qs_tokens = parse_common_and_cultivar(unused_qs_tokens)
+    unused_qs_tokens = parse_show_instances(unused_qs_tokens)
     @where_arguments = unused_qs_tokens.join(" ")
   end
 
@@ -175,6 +183,16 @@ class Search::ParsedRequest
     @include_common_and_cultivar_session = \
       @params["include_common_and_cultivar_session"] ||
       @params["query_common_and_cultivar"] == "t"
+    tokens
+  end
+
+  def parse_show_instances(tokens)
+    if tokens.include?('show-instances:')
+      @show_instances = true
+      tokens.delete_if{|x| x.match(/show-instances:/)}
+    else
+      @show_instances = false
+    end
     tokens
   end
 

@@ -14,6 +14,8 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
+#   A defined query is one that the Search class knows about and may
+#   instantiate.
 class Reference::DefinedQuery::ReferencesNamesFullSynonymy
   attr_reader :results,
               :limited,
@@ -21,7 +23,8 @@ class Reference::DefinedQuery::ReferencesNamesFullSynonymy
               :has_relation,
               :relation,
               :count,
-              :show_csv
+              :show_csv,
+              :results_array
 
   def initialize(parsed_request)
     run_query(parsed_request)
@@ -74,6 +77,7 @@ class Reference::DefinedQuery::ReferencesNamesFullSynonymy
       @count = results.size
       @has_relation = false
       @relation = nil
+      @results_array = @results
     end
   end
 

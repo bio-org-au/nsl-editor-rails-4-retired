@@ -14,8 +14,13 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-#
+
 # Core search class for Name search
+#
+# You can run this in the console, once you have a parsed request:
+#
+# search = Search::OnName::Base.new(parsed_request)
+#
 class Search::OnName::Base
   attr_reader :results,
               :limited,
@@ -26,46 +31,66 @@ class Search::OnName::Base
               :relation,
               :id,
               :count,
-              :show_csv
+              :show_csv,
+              :results_array
 
   def initialize(parsed_request)
-    run_query(parsed_request)
+    @parsed_request = parsed_request
+    run_query
   end
 
-  def run_query(parsed_request)
-    if parsed_request.count
-      run_count_query(parsed_request)
+  def run_query
+    @has_relation = true
+    @rejected_pairings = []
+    if @parsed_request.count
+      run_count_query
     else
-      run_list_query(parsed_request)
+      run_list_query
     end
   end
 
-  def run_count_query(parsed_request)
+  def run_count_query
     debug('#run_count_query')
-    count_query = Search::OnName::CountQuery.new(parsed_request)
-    @has_relation = true
+    count_query = Search::OnName::CountQuery.new(@parsed_request)
     @relation = count_query.sql
     @count = relation.count
     @limited = false
     @info_for_display = count_query.info_for_display
-    @rejected_pairings = []
     @common_and_cultivar_included = count_query.common_and_cultivar_included
     @results = []
     @show_csv = false
   end
 
-  def run_list_query(parsed_request)
+  def run_list_query
     debug('#run_list_query')
-    list_query = Search::OnName::ListQuery.new(parsed_request)
-    @has_relation = true
+    list_query = Search::OnName::ListQuery.new(@parsed_request)
     @relation = list_query.sql
     @results = relation.all
     @limited = list_query.limited
     @info_for_display = list_query.info_for_display
-    @rejected_pairings = []
     @common_and_cultivar_included = list_query.common_and_cultivar_included
-    @count = @results.size
     @show_csv = false
+    consider_instances
+    @count = @results_array.size
+  end
+
+  def consider_instances
+    if @parsed_request.show_instances
+      show_instances
+    else
+      @results_array = @results.to_a
+    end
+  end
+
+  def show_instances
+    @results_array = []
+    @results.each do |name|
+      name.display_as_part_of_concept
+      @results_array << name
+      Instance::AsArray::ForName.new(name).results.each do |usage_rec|
+        @results_array << usage_rec
+      end
+    end
   end
 
   def debug(s)

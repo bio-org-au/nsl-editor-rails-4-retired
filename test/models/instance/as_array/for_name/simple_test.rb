@@ -14,24 +14,13 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-class Search::EmptyExecutedQuery
-  attr_reader :results, :limited, :common_and_cultivar_included, :has_relation, :relation, :count,
-              :results_array
+require "test_helper"
 
-  def initialize(params)
-    Rails.logger.debug("Search::EmptyExecutedQuery start")
-    Rails.logger.debug("#{'=' * 40}")
-    @params = params
-    @limited = false
-    @results = []
-    @results_array = @results
-    @count = -1
-    @common_and_cultivar_included = true
-    @has_relation = false
-    @relation = nil
-  end
-
-  def to_history
-    ""
+# Single instance model test.
+class InstanceAsArrayForNameTest < ActiveSupport::TestCase
+  test "instance as array for name simple" do
+    name = names(:triodia_basedowii)
+    i = Instance::AsArray::ForName.new(name)
+    puts i.results.size
   end
 end
