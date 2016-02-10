@@ -17,6 +17,7 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "11-Feb-2016", release: true },
     { date: "10-Feb-2016",
       jira_id: "1650",
       description: %Q(Correctly show reference edit error.) },
