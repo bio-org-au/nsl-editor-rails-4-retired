@@ -18,6 +18,9 @@
 class History
   CHANGES_2016 = [
     { date: "10-Feb-2016",
+      jira_id: "1650",
+      description: %Q(Correctly show reference edit error.) },
+    { date: "10-Feb-2016",
       jira_id: "1420",
       description: %Q(Report to find autonyms whose parent's epithet \
       is not at the end of the autonym's name.) },
