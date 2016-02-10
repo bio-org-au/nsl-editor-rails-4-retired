@@ -16,7 +16,9 @@
 #
 require "test_helper"
 
-class NameShowCopyTabForReadOnlyTest < ActionController::TestCase
+# Single controller test.
+# Tests permission to show copy tabs to editor.
+class NameShowCopyTabForEditorTest < ActionController::TestCase
   tests NamesController
   setup do
     @name = names(:a_species)

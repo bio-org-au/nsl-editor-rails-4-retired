@@ -21,8 +21,6 @@ class InstancesCreateCitesAndCitedByForReaderTest < ActionController::TestCase
   tests InstancesController
 
   test "reader should not be able to create cites and cited by instance" do
-    name = names(:a_species)
-    reference = references(:a_book)
     instance_1 = instances(:triodia_in_brassard)
     instance_2 = instances(:britten_created_angophora_costata)
     instance_type = instance_types(:nomenclatural_synonym)

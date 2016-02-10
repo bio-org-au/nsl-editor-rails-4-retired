@@ -24,9 +24,9 @@ class SearchInstListSpeciesSynGenusTest < ActionController::TestCase
     get(:search,
         { query_target: "instance",
           query_string: "species-or-below-syn-with-genus-or-above:" },
-          username: "fred",
-          user_full_name: "Fred Jones",
-          groups: [])
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: [])
     assert_response :success
     assert_select '#search-results-summary',
                   /[0-9] record\b/,

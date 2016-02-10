@@ -23,7 +23,8 @@ class InstancesDeleteForReaderTest < ActionController::TestCase
   test "reader should not be able to delete instance" do
     instance = instances(:triodia_in_brassard)
     @request.headers["Accept"] = "application/javascript"
-    # This calls a service (but only if authorized), so in Test, no record is actually deleted, even if authorized!
+    # This calls a service (but only if authorized), so in Test,
+    # no record is actually deleted, even if authorized!
     delete(:destroy,
            { id: instance.id },
            username: "fred",
