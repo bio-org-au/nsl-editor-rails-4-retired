@@ -16,6 +16,25 @@
 #
 class Search::OnName::FieldRule
   RULES = {
+    "autonym-name-mismatch:" => 
+    { where_clause: 
+      "id in (select name.id
+  from name
+ inner join name parent
+    on name.parent_id = parent.id
+ where name.full_name not like concat('%',parent.name_element)
+   and name.id in
+       (
+    select id
+      from name
+    where name_type_id in (
+        select id
+          from name_type
+    where autonym
+       )
+       )
+      )"
+    },
     "is-a-duplicate:" => { where_clause: " duplicate_of_id is not null", },
     "is-not-a-duplicate:" => { where_clause: " duplicate_of_id is null", },
     "is-a-parent:" =>

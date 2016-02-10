@@ -18,6 +18,10 @@
 class History
   CHANGES_2016 = [
     { date: "10-Feb-2016",
+      jira_id: "1420",
+      description: %Q(Report to find autonyms whose parent's epithet \
+      is not at the end of the autonym's name.) },
+    { date: "10-Feb-2016",
       jira_id: "1636",
       description: %Q(Add name-element-exact: and simple-name-exact: \
       searches.) },

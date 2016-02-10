@@ -1806,3 +1806,87 @@ for_name_element_test:
   parent: a_family
   updated_by: greg
   created_by: greg
+
+autonym_with_mismatched_name:
+  simple_name: autonym with mismatched name
+  simple_name_html: autonym with mismatched name
+  name_element: autonym with mismatched name
+  full_name: autonym with mismatched name
+  full_name_html: autonym with mismatched name
+  name_rank: species
+  name_status: legitimate
+  name_type: autonym
+  namespace: apni
+  parent: parent_of_autonym_with_mismatched_name
+  updated_by: greg
+  created_by: greg
+
+parent_of_autonym_with_mismatched_name:
+  simple_name: parent of autonym with mismatched name
+  simple_name_html: parent of autonym with mismatched name
+  name_element: parent of autonym with mismatched name
+  full_name: parent of autonym with mismatched name
+  full_name_html: parent of autonym with mismatched name
+  name_rank: genus
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+hybrid_autonym_with_mismatched_name:
+  simple_name: hybrid autonym with mismatched name
+  simple_name_html: hybrid autonym with mismatched name
+  name_element: hybrid autonym with mismatched name
+  full_name: hybrid autonym with mismatched name
+  full_name_html: hybrid autonym with mismatched name
+  name_rank: species
+  name_status: legitimate
+  name_type: hybrid_autonym
+  namespace: apni
+  parent: parent_of_hybrid_autonym_with_mismatched_name
+  updated_by: greg
+  created_by: greg
+
+parent_of_hybrid_autonym_with_mismatched_name:
+  simple_name: parent of hybrid autonym with mismatched name
+  simple_name_html: parent of hybrid autonym with mismatched name
+  name_element: parent of hybrid autonym with mismatched name
+  full_name: parent of hybrid autonym with mismatched name
+  full_name_html: parent of hybrid autonym with mismatched name
+  name_rank: genus
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+named_hybrid_autonym_with_mismatched_name:
+  simple_name: named hybrid autonym with mismatched name
+  simple_name_html: named hybrid autonym with mismatched name
+  name_element: named hybrid autonym with mismatched name
+  full_name: named hybrid autonym with mismatched name
+  full_name_html: named hybrid autonym with mismatched name
+  name_rank: species
+  name_status: legitimate
+  name_type: named_hybrid_autonym
+  namespace: apni
+  parent: parent_of_named_hybrid_autonym_with_mismatched_name
+  updated_by: greg
+  created_by: greg
+
+parent_of_named_hybrid_autonym_with_mismatched_name:
+  simple_name: parent of named hybrid autonym with mismatched name
+  simple_name_html: parent of named hybrid autonym with mismatched name
+  name_element: parent of named hybrid autonym with mismatched name
+  full_name: parent of named hybrid autonym with mismatched name
+  full_name_html: parent of named hybrid autonym with mismatched name
+  name_rank: genus
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
