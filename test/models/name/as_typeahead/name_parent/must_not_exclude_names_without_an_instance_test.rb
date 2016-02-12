@@ -19,19 +19,18 @@ require "test_helper"
 # Single Name typeahead test.
 class MustNotExcludeNamesWithoutAnInstanceTest < ActiveSupport::TestCase
   test "name parent suggestions should not exclude names without an instance" do
-    avoid_id = 1
     name = Name.find_by(full_name: "a genus without an instance")
     assert name.present?,
            'The name "a genus without an instance" should be found.'
     assert name.instances.size == 0,
            "The name 'a genus without an instance' should have no instances."
-    suggestions = Name::AsTypeahead.name_parent_suggestions(
-      "a genus without an instance",
-      avoid_id,
-      NameRank.species.id)
-    assert(suggestions.is_a?(Array),
+    typeahead = Name::AsTypeahead::ForParent.new(
+      term: "a genus without an instance",
+      avoid_id: 1,
+      rank_id: NameRank.species.id)
+    assert(typeahead.suggestions.is_a?(Array),
            "suggestions should be an array")
-    assert(suggestions.size == 1,
+    assert(typeahead.suggestions.size == 1,
            'suggestions for "a genus without an instance" should have a record')
   end
 end

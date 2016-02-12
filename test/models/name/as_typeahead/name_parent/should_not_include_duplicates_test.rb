@@ -19,15 +19,15 @@ require "test_helper"
 # Single Name typeahead test.
 class ShouldNotIncludeDuplicatesTest < ActiveSupport::TestCase
   test "name parent suggestions should not include duplicates" do
-    avoid_id = 1
-    suggestions = Name::AsTypeahead.name_parent_suggestions(
-      "a duplicate genus",
-      avoid_id,
-      NameRank.species.id)
-    assert(suggestions.is_a?(Array), "suggestions should be an array")
-    assert(suggestions.size == 1,
+    typeahead = Name::AsTypeahead::ForParent.new(
+      term: "a duplicate genus",
+      avoid_id: 1,
+      rank_id: NameRank.species.id)
+    assert(typeahead.suggestions.is_a?(Array), "suggestions should be an array")
+    assert(typeahead.suggestions.size == 1,
            'suggestions for "a duplicate genus" should have 1 entry')
-    assert suggestions.first[:value].match(/\Aa duplicate genus not /),
+    assert typeahead.suggestions.first[:value]
+      .match(/\Aa duplicate genus not /),
            "Should match the non-duplicate genus"
   end
 end

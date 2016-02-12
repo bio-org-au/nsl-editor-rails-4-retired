@@ -17,6 +17,10 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "12-Feb-2016",
+      jira_id: "1657",
+      description: %Q(Adjust query for parents suggestions for unranked
+      names. Should be faster.) },
     { date: "11-Feb-2016", release: true },
     { date: "10-Feb-2016",
       jira_id: "1650",

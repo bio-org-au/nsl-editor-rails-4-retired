@@ -20,13 +20,12 @@ require "models/name/as_typeahead/name_parent/name_parent_test_helper"
 # Single Name typeahead test.
 class ForSectioTest < ActiveSupport::TestCase
   test "name parent suggestion for sectio" do
-    avoid_id = 1
-    suggestions = Name::AsTypeahead.name_parent_suggestions(
-      "%",
-      avoid_id,
-      NameRank.find_by(name: "Sectio").id)
+    typeahead = Name::AsTypeahead::ForParent.new(
+      term: "%",
+      avoid_id: 1,
+      rank_id: NameRank.find_by(name: "Sectio").id)
     suggestions_should_only_include(
-      suggestions,
+      typeahead.suggestions,
       "Sectio",
       %w(Subgenus Genus))
   end

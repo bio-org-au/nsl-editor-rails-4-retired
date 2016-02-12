@@ -108,6 +108,10 @@ get "/nsl/services/name/apni/:id/api/apc.json" do |id|
   result.to_json
 end
 
+get '/nsl/services/reference/apni/:id/api/citation-strings' do
+  "Hello World"
+end
+
 # http://localhost:9090/nsl/services/instance/apni/666/api/delete?apiKey=test-api-key&reason=Edit
 # http://localhost:8080/nsl/services/instance/apni/514039/api/delete?apiKey=d0d1e81d-181c-4ac6-ad75-ddd172594793&reason=Ixxxx
 delete "/nsl/services/instance/apni/:id/api/delete" do |id|

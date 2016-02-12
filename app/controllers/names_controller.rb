@@ -52,7 +52,8 @@ class NamesController < ApplicationController
 
   # For the typeahead search.
   def name_parent_suggestions
-    render json: name_parent_suggestions_typeahead
+    typeahead = Name::AsTypeahead::ForParent.new(params)
+    render json: typeahead.suggestions
   end
 
   # Columns such as parent and duplicate_of_id use a typeahead search.
@@ -194,20 +195,6 @@ class NamesController < ApplicationController
     return [] if params[:name_id].blank?
     Name::AsTypeahead.duplicate_suggestions(params[:term],
                                             params[:name_id])
-  end
-
-  def name_parent_suggestions_typeahead
-    return [] if name_parent_suggestions_missing_params
-    Name::AsTypeahead\
-      .name_parent_suggestions(params[:term],
-                               params[:name_id],
-                               params[:rank_id])
-  end
-
-  def name_parent_suggestions_missing_params
-    params[:term].blank? ||
-      params[:rank_id].blank? ||
-      params[:rank_id] == "undefined"
   end
 
   def new_name_for_category

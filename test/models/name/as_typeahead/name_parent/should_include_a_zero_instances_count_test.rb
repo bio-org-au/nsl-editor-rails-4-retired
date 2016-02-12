@@ -25,15 +25,15 @@ class ShouldIncludeAZeroInstancesCount < ActiveSupport::TestCase
            'The name "a genus without an instance" should be found.'
     assert name.instances.size == 0,
            "The name 'a genus without an instance' should have no instances."
-    suggestions =
-    Name::AsTypeahead.name_parent_suggestions("a genus without an instance",
-                                              dummy_avoid_id,
-                                              NameRank.species.id)
-    assert(suggestions.is_a?(Array), "suggestions should be an array")
-    assert(suggestions.size == 1,
+    typeahead =
+      Name::AsTypeahead::ForParent.new(term: "a genus without an instance",
+                                       avoid_id: dummy_avoid_id,
+                                       rank_id: NameRank.species.id)
+    assert(typeahead.suggestions.is_a?(Array), "suggestions should be an array")
+    assert(typeahead.suggestions.size == 1,
            'suggestions for "a genus without an instance" should have a record')
     assert_match "genus without an instance | Genus | legitimate | 0 instances",
-                 suggestions.first[:value],
+                 typeahead.suggestions.first[:value],
                  "Name par typeahead needs right val with a 0 instances count"
   end
 end

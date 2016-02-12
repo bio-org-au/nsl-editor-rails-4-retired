@@ -25,14 +25,16 @@ class ShouldIncludeAOneInstanceCount < ActiveSupport::TestCase
            'The name "a genus with one instance" should be found.'
     assert name.instances.size == 1,
            "The name 'a genus with one instance' should have one instance."
-    suggestions =
-      Name::AsTypeahead.name_parent_suggestions("a genus with one instance",
-                                                dummy_avoid_id,
-                                                NameRank.species.id)
-    assert(suggestions.is_a?(Array), "suggestions should be an array")
-    assert(suggestions.size == 1,
+    typeahead =
+      Name::AsTypeahead::ForParent.new(term: "a genus with one instance",
+                                       avoid_id: dummy_avoid_id,
+                                       rank_id: NameRank.species.id)
+    assert(typeahead.suggestions.is_a?(Array),
+           "suggestions should be an array")
+    assert(typeahead.suggestions.size == 1,
            'suggestions for "a genus with one instance" should have a record')
-    instances_count_part = suggestions.first[:value].split("|").last.strip
+    instances_count_part = typeahead
+                           .suggestions.first[:value].split("|").last.strip
     assert_match(/\A1 instance\z/,
                  instances_count_part,
                  "Name par thead needs right val with 1 instance")

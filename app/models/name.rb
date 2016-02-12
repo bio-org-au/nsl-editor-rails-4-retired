@@ -48,7 +48,13 @@ class Name < ActiveRecord::Base
   scope :select_fields_for_typeahead, -> { select(" name.id, name.full_name, name_rank.name name_rank_name, name_status.name name_status_name") }
   scope :select_fields_for_parent_typeahead, -> { select(" name.id, name.full_name, name_rank.name name_rank_name, name_status.name name_status_name, count(instance.id) instance_count") }
   scope :from_a_higher_rank, ->(rank_id) { joins(:name_rank).where("name_rank.sort_order < (select sort_order from name_rank where id = ?)", rank_id) } # tested
-  scope :ranks_for_unranked, -> { joins(:name_rank).where("name_rank.sort_order <= (select sort_order from name_rank where name = 'Subforma') or name_rank.name = '[unranked]' ") }
+
+  query = "name_rank.id in "\
+          "(select id from name_rank where sort_order <= "\
+          "(select sort_order from name_rank where name = 'Subforma') "\
+          "or name_rank.name = '[unranked]') "
+  scope :ranks_for_unranked, -> { joins(:name_rank).where(query) }
+
   scope :ranks_for_unranked_assumes_join, -> { where("name_rank.sort_order <= (select sort_order from name_rank where name = 'Subforma') or name_rank.name = '[unranked]' ") }
   scope :but_rank_not_too_high, lambda { |rank_id|
     where("name_rank.id in (select id from name_rank where sort_order >= " \

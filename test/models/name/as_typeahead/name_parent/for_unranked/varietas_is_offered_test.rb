@@ -20,12 +20,12 @@ require "models/name/as_typeahead/name_parent/name_parent_test_helper"
 # Single Name typeahead test.
 class NameParentVarietasIsOfferedForUnrankedTest < ActiveSupport::TestCase
   test "name parent suggestion for unranked include varietas" do
-    avoid_id = 1
-    suggestions = Name::AsTypeahead.name_parent_suggestions(
-      "unranked",
-      avoid_id,
-      NameRank.find_by(name: "[unranked]").id)
+    typeahead = Name::AsTypeahead::ForParent.new(
+      term: "unranked",
+      avoid_id: 1,
+      rank_id: NameRank.find_by(name: "[unranked]").id)
     expected_ranks = %w([unranked])
-    suggestions_should_only_include(suggestions, "[unranked]", expected_ranks)
+    suggestions_should_only_include(
+      typeahead.suggestions, "[unranked]", expected_ranks)
   end
 end

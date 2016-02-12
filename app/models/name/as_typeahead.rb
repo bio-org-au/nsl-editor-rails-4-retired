@@ -15,45 +15,6 @@
 #   limitations under the License.
 #
 class Name::AsTypeahead < Name
-  # Offer parents of the appropriate rank:
-  # - infra-species (below species)   : rank must be above the name's rank
-  #                                     and equal to or below species rank
-  # - species                         : any rank above species and equal to
-  #                                     or below genus
-  # - genus, above genus, below family: rank must be above the name's rank
-  #                                     and equal to or below family
-  # - family and above                : any rank above the name's rank
-  # - [unranked]                      : [unranked] and any non-deprecated
-  #                                     rank above [unranked]
-  #
-  # Exclude names marked as duplicates.
-  # Show an instance count for each result.
-  def self.name_parent_suggestions(term, avoid_id, rank_id)
-    if term.blank? || rank_id.blank?
-      results = []
-    elsif
-      query = Name.not_a_duplicate
-              .full_name_like(term)
-              .avoids_id(avoid_id.try("to_i") || -1)
-              .joins(:name_status)
-              .joins("left outer join instance on instance.name_id = name.id")
-              .order_by_full_name
-              .limit(SEARCH_LIMIT)
-      if rank_id != "undefined" && NameRank.id_is_unranked?(rank_id.to_i)
-        query = query.ranks_for_unranked
-      else
-        query = query.from_a_higher_rank(rank_id)
-        query = query.but_rank_not_too_high(rank_id)
-      end
-      query = query.select_fields_for_parent_typeahead
-              .group("name.id,name.full_name,name_rank.name,name_status.name")
-              .collect do |n|
-                { value: "#{n.full_name} | #{n.name_rank_name} | #{n.name_status_name} | #{ActionController::Base.helpers.pluralize(n.instance_count, 'instance')} ", id: n.id }
-              end
-      results = query
-    end
-    results
-  end
 
   # Rule is to offer species and below, but above the name's rank.
   # If unranked, also offer unranked.
