@@ -93,7 +93,9 @@ class Search::OnInstance::FieldRule
                                  " exists (select null
                                  from instance_type
                                  where instance_type_id = instance_type.id
-                                 and instance_type.name in (?))" },
+                                 and instance_type.name in (?))",
+                                 order: "name.full_name",
+                                 join: :name },
 
     "ref-type:"             => { where_clause: " exists (select null
                                  from reference ref

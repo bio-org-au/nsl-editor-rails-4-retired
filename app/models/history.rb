@@ -18,6 +18,9 @@
 class History
   CHANGES_2016 = [
     { date: "12-Feb-2016",
+      jira_id: "1662",
+      description: %Q(Order instance-type: search results by name.) },
+    { date: "12-Feb-2016",
       jira_id: "1657",
       description: %Q(Adjust query for parent suggestions for unranked
       names. Should be faster.) },
