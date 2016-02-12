@@ -158,6 +158,6 @@ where rb.sort_order >= (select sort_order from name_rank where name = 'Species')
       )
       ",
       order: "name.full_name",
-      join: :name}
+      join: :name }
   }
 end
