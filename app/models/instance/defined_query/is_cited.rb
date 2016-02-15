@@ -22,7 +22,9 @@ class Instance::DefinedQuery::IsCited
               :has_relation,
               :limited,
               :relation,
-              :results
+              :results,
+              :show_csv,
+              :total
 
   def initialize(parsed_request)
     run_query(parsed_request)
@@ -34,6 +36,8 @@ class Instance::DefinedQuery::IsCited
   end
 
   def run_query(parsed_request)
+    @show_csv = false
+    @total = nil
     if parsed_request.count
       debug("run_query counting")
       query = Search::OnReference::ListQuery.new(parsed_request)
@@ -63,5 +67,9 @@ class Instance::DefinedQuery::IsCited
       @has_relation = false
       @relation = nil
     end
+  end
+
+  def csv?
+    @show_csv
   end
 end

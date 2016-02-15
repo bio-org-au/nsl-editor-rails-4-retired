@@ -17,54 +17,58 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "15-Feb-2016",
+      jira_id: "1661",
+      description:
+      %(Fix "cited" and "cited by" links on the Instance edit tab.) },
     { date: "12-Feb-2016",
       jira_id: "1662",
-      description: %Q(Order instance-type: search results by name.) },
+      description: %(Order instance-type: search results by name.) },
     { date: "12-Feb-2016",
       jira_id: "1657",
-      description: %Q(Adjust query for parent suggestions for unranked
+      description: %(Adjust query for parent suggestions for unranked
       names. Should be faster.) },
     { date: "11-Feb-2016", release: true },
     { date: "10-Feb-2016",
       jira_id: "1650",
-      description: %Q(Correctly show reference edit error.) },
+      description: %(Correctly show reference edit error.) },
     { date: "10-Feb-2016",
       jira_id: "1420",
-      description: %Q(Report to find autonyms whose parent's epithet \
+      description: %(Report to find autonyms whose parent's epithet \
       is not at the end of the autonym's name.) },
     { date: "10-Feb-2016",
       jira_id: "1636",
-      description: %Q(Add name-element-exact: and simple-name-exact: \
+      description: %(Add name-element-exact: and simple-name-exact: \
       searches.) },
     { date: "09-Feb-2016",
       jira_id: "1620",
-      description: %Q(Reports tab for easier access to queries like \
+      description: %(Reports tab for easier access to queries like \
       <q>is-orth-var-and-sec-ref-first: show-instances: \
       limit: 10</q>) },
     { date: "08-Feb-2016",
       jira_id: "1620",
-      description: %Q(Option to <q>show-instances:</q> with the original \
+      description: %(Option to <q>show-instances:</q> with the original \
       search for NSL-1620) },
     { date: "08-Feb-2016",
       jira_id: "1620",
-      description: %Q(Add <q>show-instances:</q> directive for Name \
+      description: %(Add <q>show-instances:</q> directive for Name \
       searches.) },
     { date: "08-Feb-2016", release: true },
     { date: "08-Feb-2016",
       jira_id: "1647",
-      description: %Q(Fix link to APC tree search on Name details tab.) },
+      description: %(Fix link to APC tree search on Name details tab.) },
     { date: "05-Feb-2016", release: true },
     { date: "02-Feb-2016",
       jira_id: "1637",
-      description: %Q(Reinstate the Name search feature that replaced embedded
+      description: %(Reinstate the Name search feature that replaced embedded
       spaces with wildcards.  Also reinstate no leading wildcard.) },
     { date: "02-Feb-2016",
       jira_id: "1644",
-      description: %Q(Restore tokenized search function to Author
+      description: %(Restore tokenized search function to Author
       name-or-abbrev and default searches.  Tokenized means "in any order".) },
     { date: "02-Feb-2016",
       jira_id: "1641",
-      description: %Q(Clicking Help/Examples/Advanced after an Instance search
+      description: %(Clicking Help/Examples/Advanced after an Instance search
       now correctly shows Instance info.
       "Trees" search is now "Tree", avoiding an error.) },
     { date: "29-Jan-2016",
