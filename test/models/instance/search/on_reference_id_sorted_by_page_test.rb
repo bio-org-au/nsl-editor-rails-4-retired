@@ -15,23 +15,21 @@
 #   limitations under the License.
 #
 require "test_helper"
-load "test/models/search/users.rb"
+load "models/search/users.rb"
 
-# Single Search model test for Name search.
-class SearchOnNameOnDuplicateOfIdTest < ActiveSupport::TestCase
-  test "on duplicate of ID" do
-    name = names(:name_three_for_eflora)
-    query_string = "duplicate-of-id: #{name.id}"
-    params = ActiveSupport::HashWithIndifferentAccess.new(
-      query_target: "name",
-      query_string: query_string,
-      current_user: build_edit_user)
-    search = Search::Base.new(params)
+# Single instance model test.
+class OnReferenceIdTest < ActiveSupport::TestCase
+  test "instance search on Reference ID sort by page" do
+    search = Search::Base
+             .new(ActiveSupport::HashWithIndifferentAccess
+             .new(query_string:
+                  "#{references(:paper_by_britten_on_angophora).id}",
+                  query_target: "Instances-for-ref-id-sort-by-page:",
+                  current_user: build_edit_user))
     assert_equal Array,
                  search.executed_query.results.class,
                  "Results should be an Array"
-    assert_equal 1,
-                 search.executed_query.results.size,
-                 "Exactly 1 result is expected."
+    assert search.executed_query.results.size >= 4,
+           "At least four results expected."
   end
 end

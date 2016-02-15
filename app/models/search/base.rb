@@ -91,10 +91,6 @@ class Search::Base
   def run_specific_defined_query
     @executed_query =
       case @parsed_request.defined_query
-      when /instances-for-name-id:/
-        Name::DefinedQuery::NameIdWithInstances.new(@parsed_request)
-      when /names-plus-instances:/
-        Name::DefinedQuery::NamesPlusInstances.new(@parsed_request)
       when /instances-for-ref-id:/
         Reference::DefinedQuery::ReferenceIdWithInstances.new(@parsed_request)
       when /instances-for-ref-id-sort-by-page:/

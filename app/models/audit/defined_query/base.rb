@@ -21,7 +21,6 @@ class Audit::DefinedQuery::Base
               :limited,
               :relation,
               :results,
-              :results_array,
               :show_csv
 
   def initialize(parsed_request)
@@ -53,7 +52,6 @@ class Audit::DefinedQuery::Base
     @has_relation = false
     @relation = nil
     @results = query.results
-    @results_array = @results.to_a
     @limited = query.limited
     @common_and_cultivar_included = query.common_and_cultivar_included
     @count = @results.size

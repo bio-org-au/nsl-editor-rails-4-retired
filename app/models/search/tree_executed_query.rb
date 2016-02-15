@@ -15,8 +15,7 @@
 #   limitations under the License.
 #
 class Search::TreeExecutedQuery
-  attr_reader :results, :limited, :common_and_cultivar_included, :has_relation, :relation, :count,
-    :results_array
+  attr_reader :results, :limited, :common_and_cultivar_included, :has_relation, :relation, :count
 
   def initialize(params)
     Rails.logger.debug("Search::TreeExecutedQuery start")
@@ -30,7 +29,6 @@ class Search::TreeExecutedQuery
     @target_table = "tree"
     @has_relation = false
     @relation = nil
-    @results_array = @results
   end
 
   def to_history

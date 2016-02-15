@@ -16,6 +16,7 @@
 #
 require "test_helper"
 load "test/models/search/users.rb"
+load "test/models/search/on_name/test_helper.rb"
 
 # Single Search model test for Name target.
 class SearchOnNameIdMultiTest < ActiveSupport::TestCase
@@ -28,9 +29,7 @@ class SearchOnNameIdMultiTest < ActiveSupport::TestCase
                    include_common_and_cultivar_session: true,
                    current_user: build_edit_user)
     search = Search::Base.new(params)
-    assert_equal search.executed_query.results.class,
-                 Name::ActiveRecord_Relation,
-                 "Results should be a Name::ActiveRecord_Relation."
+    confirm_results_class(search.executed_query.results)
     assert_equal 2,
                  search.executed_query.results.size,
                  "Exactly 2 results are expected."

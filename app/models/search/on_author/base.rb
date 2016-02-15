@@ -26,7 +26,7 @@ class Search::OnAuthor::Base
               :id,
               :count,
               :show_csv,
-              :results_array
+              :total
 
   def initialize(parsed_request)
     run_query(parsed_request)
@@ -51,6 +51,7 @@ class Search::OnAuthor::Base
     @info_for_display = count_query.info_for_display
     @common_and_cultivar_included = count_query.common_and_cultivar_included
     @results = []
+    @total = nil
   end
 
   def run_list_query(parsed_request)
@@ -61,7 +62,7 @@ class Search::OnAuthor::Base
     @info_for_display = list_query.info_for_display
     @common_and_cultivar_included = list_query.common_and_cultivar_included
     @count = @results.size
-    @results_array = @results
+    calculate_total
   end
 
   def debug(s)
@@ -70,5 +71,9 @@ class Search::OnAuthor::Base
 
   def csv?
     @show_csv
+  end
+
+  def calculate_total
+    @total = @relation.except(:offset, :limit, :order).count
   end
 end

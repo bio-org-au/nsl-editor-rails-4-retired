@@ -24,7 +24,7 @@ class Reference::DefinedQuery::ReferencesSharedNames
               :relation,
               :count,
               :show_csv,
-              :results_array
+              :total
 
   def initialize(parsed_request)
     run_query(parsed_request)
@@ -65,8 +65,8 @@ class Reference::DefinedQuery::ReferencesSharedNames
       @count = @results.size
       @has_relation = false
       @relation = nil
-      @results_array = @results
     end
+    @total = nil
   end
 
   def csv?

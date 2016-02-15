@@ -24,7 +24,7 @@ class Reference::DefinedQuery::ReferencesWithNovelties
               :relation,
               :count,
               :show_csv,
-              :results_array
+              :total
 
   def initialize(parsed_request)
     run_query(parsed_request)
@@ -72,8 +72,8 @@ class Reference::DefinedQuery::ReferencesWithNovelties
       @count = results.size
       @has_relation = false
       @relation = nil
-      @results_array = @results
     end
+    @total = nil
   end
 
   def list_novelties(reference, limit = 100, order_by = "name")

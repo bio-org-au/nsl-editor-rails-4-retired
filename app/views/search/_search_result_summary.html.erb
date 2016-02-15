@@ -26,13 +26,10 @@
             <strong title="Limited.  To see more records add larger limit to the search e.g. ' limit: 999'." >(limited)</strong>
           <% end %>
         <% else %>
-          <%# if @search.executed_query.results.size == @search.parsed_request.limit %>
-          <% if @search.executed_query.results.size == @search.parsed_request.limit %>
-            <% total = @search.executed_query.results.except(:offset,:limit,:order).count %>
-            <%= "#{pluralize(@search.executed_query.results.size,"of #{total} record")}" %>
+          <% if @search.executed_query.limited %>
+            <%= "#{pluralize(@search.executed_query.results.size,"of #{@search.executed_query.total} record")}" %>
           <% else %>
-            <% total = @search.executed_query.results.size %>
-            <%= "#{pluralize(@search.executed_query.results.size,"record")}" %>
+            <%= "#{pluralize(@search.executed_query.total,"record")}" %>
           <% end %>
         <% end %>
       <% end %>
@@ -50,12 +47,12 @@
                           title: 'Get the results as comma-separated variable-length fields (CSV).') %>
   <% end %>
 
-    <% if !@search.parsed_request.count && total.present? && total > @search.parsed_request.limit %>
+    <% if !@search.parsed_request.count && @search.executed_query.total.present? && @search.executed_query.total > @search.parsed_request.limit %>
       <span id="search-results-limited-notice">
         <% next_limit_max = (@search.executed_query.results.size + @search.page_increment_size) %>
-        <% if total <= next_limit_max %>
+        <% if @search.executed_query.total <= next_limit_max %>
           &nbsp; | &nbsp;
-          <%= link_to("All", search_path(query_string: "#{@search.parsed_request.query_string.sub(/limit: *\d+/i,'').sub(/$/,%Q( limit: #{total} ))}",query_target: "#{params[:query_target]}"), title: "List all.") %>
+          <%= link_to("All", search_path(query_string: "#{@search.parsed_request.query_string.sub(/limit: *\d+/i,'').sub(/$/,%Q( limit: #{@search.executed_query.total} ))}",query_target: "#{params[:query_target]}"), title: "List all.") %>
         <% else %>
           &nbsp; | &nbsp;
           <%= link_to("List #{next_limit_max}", search_path(query_string: "#{@search.parsed_request.query_string.sub(/limit: *\d{1,}/,'').sub(/$/,%Q(limit: #{next_limit_max} ))}",query_target: "#{params[:query_target]}"), title: "List #{@search.page_increment_size} more.") %>

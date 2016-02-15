@@ -106,8 +106,6 @@ class Name < ActiveRecord::Base
   has_many :instances,
            foreign_key: "name_id",
            dependent: :restrict_with_error
-  # has_many   :instances_for_name_usages, -> { includes :instance_type},
-  # class: Instance, foreign_key: 'name_id', dependent: :restrict_with_error
 
   belongs_to :parent, class_name: "Name", foreign_key: "parent_id"
   has_many :children,

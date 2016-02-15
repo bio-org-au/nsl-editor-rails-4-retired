@@ -1,0 +1,17 @@
+vi models/audit/defined_query/base.rb
+vi models/audit/defined_query/list_query.rb
+vi models/instance/defined_query/is_cited.rb
+vi models/instance/defined_query/is_cited_by.rb
+vi models/name/defined_query/name_id_with_instances.rb
+vi models/name/defined_query/names_plus_instances.rb
+vi models/reference/defined_query/reference_id_with_instances.rb
+vi models/reference/defined_query/reference_id_with_instances_sorted_by_page.rb
+vi models/reference/defined_query/references_names_full_synonymy.rb
+vi models/reference/defined_query/references_shared_names.rb
+vi models/reference/defined_query/references_with_novelties.rb
+vi models/search/empty_executed_query.rb
+vi models/search/on_author/base.rb
+vi models/search/on_instance/base.rb
+vi models/search/on_reference/base.rb
+vi models/search/tree_executed_query.rb
+vi views/search/_results.html.erb

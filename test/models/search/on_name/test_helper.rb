@@ -1,3 +1,5 @@
+#   encoding: utf-8
+
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -14,13 +16,10 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require "test_helper"
 
-# Single instance model test.
-class NameUsagesSimpleTest < ActiveSupport::TestCase
-  test "name usages simple for casuarina inophloia" do
-    # name = names(:casuarina_inophloia) # triodia_basedowii:
-    name = names(:triodia_basedowii)
-    Instance::AsSearchEngine.name_usages(name.id)
-  end
+def confirm_results_class(results)
+  assert_equal Array,
+               results.class,
+               "Results should be an Array"
 end
+

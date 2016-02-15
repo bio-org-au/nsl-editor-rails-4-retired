@@ -23,11 +23,14 @@ class Instance < ActiveRecord::Base
   extend SearchTools
   include ActionView::Helpers::TextHelper
   strip_attributes
-
   self.table_name = "instance"
   self.primary_key = "id"
   self.sequence_name = "nsl_global_seq"
-
+  attr_accessor :expanded_instance_type, :display_as, :relationship_flag,
+                :give_me_focus,
+                :show_primary_instance_type, :data_fix_in_process,
+                :consider_apc
+  SEARCH_LIMIT = 50
   scope :ordered_by_name, -> { joins(:name).order("simple_name asc") }
   scope :ordered_by_page, lambda {
     order("Lpad(
@@ -63,14 +66,15 @@ class Instance < ActiveRecord::Base
         ->(n) { where("current_date - created_at::date = ?", n) }
   scope :updated_n_days_ago,
         ->(n) { where("current_date - updated_at::date = ?", n) }
+  query = "current_date - created_at::date = ? "\
+          "or current_date - updated_at::date = ?"
   scope :changed_n_days_ago,
-        ->(n) { where("current_date - created_at::date = ? or current_date - updated_at::date = ?", n, n) }
+        ->(n) { where(query, n, n) }
 
   scope :created_in_the_last_n_days,
         ->(n) { where("current_date - created_at::date < ?", n) }
   scope :updated_in_the_last_n_days,
         ->(n) { where("current_date - updated_at::date < ?", n) }
-  scope :changed_in_the_last_n_days, ->(n) { where("current_date - created_at::date < ?  or current_date - updated_at::date < ?", n, n) }
 
   scope :for_ref, ->(ref_id) { where(reference_id: ref_id) }
   scope :for_ref_and_correlated_on_name_id, lambda \
@@ -82,10 +86,6 @@ class Instance < ActiveRecord::Base
   # scope :order_by_name_full_name, -> { joins(:name).order(name: [:full_name])}
   scope :order_by_name_full_name, -> { joins(:name).order(" name.full_name ") }
 
-  attr_accessor :expanded_instance_type, :display_as, :relationship_flag,
-                :give_me_focus, :legal_to_order_by,
-                :show_primary_instance_type, :data_fix_in_process,
-                :consider_apc
   belongs_to :namespace, class_name: "Namespace", foreign_key: "namespace_id"
   belongs_to :reference
   belongs_to :name
@@ -150,11 +150,6 @@ class Instance < ActiveRecord::Base
   validate :name_id_must_not_change, on: :update
   validate :standalone_reference_id_can_change_if_no_dependents, on: :update
 
-  SEARCH_LIMIT = 50
-  DEFAULT_DESCRIPTOR = "n" # for name
-  DEFAULT_ORDER_BY = "verbatim_name_string asc "
-  LEGAL_TO_ORDER_BY = { "n" => "verbatim_name_string" }
-
   before_validation :set_defaults
   before_create :set_defaults
   # before_update :update_allowed?
@@ -167,18 +162,23 @@ class Instance < ActiveRecord::Base
     instance_notes.non_apc
   end
 
+  def self.changed_in_the_last_n_days(n)
+    Instance.where("current_date - created_at::date < ? "\
+                   "or current_date - updated_at::date < ?",
+                   n, n)
+  end
+
   def name_id_must_not_change
     errors[:base] << "You cannot use a different name." if name_id_changed?
   end
 
   # A standalone instance with no dependents can change reference.
   def standalone_reference_id_can_change_if_no_dependents
-    if reference_id_changed? &&
-       standalone? &&
-       reverse_of_this_is_cited_by.present?
-      errors[:base] << "this instance has relationships, "
-      errors[:base] << "so you cannot alter the reference."
-    end
+    return unless reference_id_changed? &&
+                  standalone? &&
+                  reverse_of_this_is_cited_by.present?
+    errors[:base] << "this instance has relationships, "
+    errors[:base] << "so you cannot alter the reference."
   end
 
   # Update of name_id is not allowed.
@@ -196,10 +196,10 @@ class Instance < ActiveRecord::Base
   end
 
   def relationship_ref_must_match_cited_by_instance_ref
-    if self.relationship? && !(reference.id == this_is_cited_by.reference.id)
-      errors.add(:reference_id,
-                 "must match cited by instance reference")
-    end
+    return unless self.relationship? &&
+                  !(reference.id == this_is_cited_by.reference.id)
+    errors.add(:reference_id,
+               "must match cited by instance reference")
   end
 
   def to_s
@@ -235,18 +235,6 @@ class Instance < ActiveRecord::Base
     return if cites_id.present?
     return if Instance.find(id).cites_id.nil? || data_fix_in_process
     errors.add(:cites_id, "cannot be removed once saved")
-  end
-
-  def default_descriptor
-    DEFAULT_DESCRIPTOR
-  end
-
-  def default_order_by
-    DEFAULT_ORDER_BY
-  end
-
-  def legal_to_order_by
-    LEGAL_TO_ORDER_BY
   end
 
   def relationship_flag
@@ -291,12 +279,11 @@ class Instance < ActiveRecord::Base
   end
 
   def cites_this
-    unless cited_by_id.nil?
-      instance = Instance.find_by_id(cited_by_id)
-      instance.expanded_instance_type = instance_type.name + " of"
-      instance.display_as = "cites-this-instance"
-      instance
-    end
+    return if cited_by_id.nil?
+    instance = Instance.find_by_id(cited_by_id)
+    instance.expanded_instance_type = instance_type.name + " of"
+    instance.display_as = "cites-this-instance"
+    instance
   end
 
   def save_with_username(username)
@@ -311,7 +298,6 @@ class Instance < ActiveRecord::Base
 
   def fresh?
     created_at > 1.hour.ago
-    # || (created_at == updated_at && created_at > 1.day.ago)
   end
 
   def allow_delete?
@@ -333,7 +319,6 @@ class Instance < ActiveRecord::Base
   end
 
   def set_defaults
-    # self.instance_type_id = InstanceType.unknown.id if instance_type.blank?
     self.namespace_id = Namespace.apni.id if namespace_id.blank?
   end
 
@@ -360,7 +345,7 @@ class Instance < ActiveRecord::Base
   end
 
   def self.find_names
-    ->(simple_name) { Name.where(" lower(simple_name) = ?", simple_name.downcase) }
+    ->(term) { Name.where(" lower(simple_name) = ?", term.downcase) }
   end
 
   def self.expansion(search_string)
@@ -387,10 +372,7 @@ class Instance < ActiveRecord::Base
   end
 
   def self.instance_context(instance_id)
-    logger.debug("#{'=' * 66} instance_context")
     results = []
-    rejected_pairings = []
-
     instance = find(instance_id)
     instance.name.display_as_part_of_concept
     results.push(instance.name)
@@ -401,18 +383,6 @@ class Instance < ActiveRecord::Base
       results.push(cited_by)
     end
     results.push(instance.cites_this) unless instance.cites_this.nil?
-    results
-  end
-
-  def self.ref_instances(search_string, limit = 100)
-    logger.debug(%(ref_instances search for "#{search_string}"
-                 with limit: #{limit}))
-    results = []
-    Reference.where([" lower(citation) like ? ",
-                     "%" + search_string.downcase + "%"])
-      .order("citation").limit(limit).each do |ref|
-      results.concat(Instance.ref_usages(ref.id))
-    end
     results
   end
 
@@ -475,55 +445,35 @@ class Instance < ActiveRecord::Base
     results
   end
 
-  # Instances of a name algorithm starts here.
-  def self.name_instances(name_search_string, limit = 100, apply_limit = true)
-    logger.debug(%(-- Name.name_instances search for "#{name_search_string}"
-                 with limit: #{limit}))
-    results = []
-    names,
-        rejected_pairings,
-        limited,
-        focus_anchor_id,
-        info = Name::AsSearchEngine.search(name_search_string,
-                                           limit, false, true, apply_limit)
-    names.each do |name|
-      if name.instances.size > 0
-        results.concat(Instance::AsSearchEngine.name_usages(name.id))
-      end
-    end
-    results
-  end
-
   # Instances targetted in nsl-720
   def self.nsl_720
     logger.debug("nsl_720")
-    results = Instance
-              .where("id in (?) ",
-                     [3_593_450, 3_455_690, 3_455_747, 3_587_295, 3_534_663,
-                      3_454_920, 3_454_936, 3_536_329, 3_456_370, 3_454_931,
-                      3_454_850, 3_454_945, 3_498_251, 3_454_966, 3_456_380,
-                      3_480_899, 3_524_687, 3_456_385, 3_458_910, 3_454_921,
-                      3_454_961, 3_526_347, 3_456_333, 3_506_487, 3_455_711,
-                      3_508_136, 3_454_956, 3_455_757, 3_454_975, 3_456_353,
-                      3_454_976, 3_545_422, 3_489_094, 3_456_371, 3_456_350,
-                      3_509_786, 3_463_066, 3_547_132, 3_511_437, 3_516_396,
-                      3_503_189, 3_479_256, 3_480_890, 3_548_842, 3_504_839,
-                      3_454_926, 3_513_089, 3_455_691, 3_514_742, 3_480_894,
-                      3_480_902, 3_484_174, 3_454_950, 3_552_262, 3_484_176,
-                      3_454_910, 3_454_896, 3_518_051, 3_484_178, 3_455_692,
-                      3_585_418, 3_454_869, 3_559_102, 3_455_752, 3_485_815,
-                      3_456_351, 3_454_901, 3_482_538, 3_454_895, 3_487_453,
-                      3_503_192, 3_553_972, 3_455_732, 3_555_682, 3_456_373,
-                      3_454_951, 3_529_670, 3_455_742, 3_563_245, 3_490_734,
-                      3_562_028, 3_455_699, 3_519_710, 3_454_911, 3_455_766,
-                      3_492_375, 3_492_378, 3_454_870, 3_518_054, 3_455_729,
-                      3_586_356, 3_455_767, 3_455_702, 3_499_895, 3_455_712,
-                      3_550_552, 3_501_540, 3_519_713, 3_454_867, 3_460_541,
-                      3_531_333, 3_501_543, 3_588_277, 3_454_830, 3_455_730,
-                      3_560_812, 3_456_352, 3_456_372, 3_480_893, 3_557_392,
-                      3_521_370, 3_456_328, 3_523_028, 3_454_868, 3_528_008,
-                      3_454_885, 3_455_731, 3_460_547, 3_455_741, 3_455_689,
-                      3_454_886])
+    Instance.where("id in (?) ",
+                   [3_593_450, 3_455_690, 3_455_747, 3_587_295, 3_534_663,
+                    3_454_920, 3_454_936, 3_536_329, 3_456_370, 3_454_931,
+                    3_454_850, 3_454_945, 3_498_251, 3_454_966, 3_456_380,
+                    3_480_899, 3_524_687, 3_456_385, 3_458_910, 3_454_921,
+                    3_454_961, 3_526_347, 3_456_333, 3_506_487, 3_455_711,
+                    3_508_136, 3_454_956, 3_455_757, 3_454_975, 3_456_353,
+                    3_454_976, 3_545_422, 3_489_094, 3_456_371, 3_456_350,
+                    3_509_786, 3_463_066, 3_547_132, 3_511_437, 3_516_396,
+                    3_503_189, 3_479_256, 3_480_890, 3_548_842, 3_504_839,
+                    3_454_926, 3_513_089, 3_455_691, 3_514_742, 3_480_894,
+                    3_480_902, 3_484_174, 3_454_950, 3_552_262, 3_484_176,
+                    3_454_910, 3_454_896, 3_518_051, 3_484_178, 3_455_692,
+                    3_585_418, 3_454_869, 3_559_102, 3_455_752, 3_485_815,
+                    3_456_351, 3_454_901, 3_482_538, 3_454_895, 3_487_453,
+                    3_503_192, 3_553_972, 3_455_732, 3_555_682, 3_456_373,
+                    3_454_951, 3_529_670, 3_455_742, 3_563_245, 3_490_734,
+                    3_562_028, 3_455_699, 3_519_710, 3_454_911, 3_455_766,
+                    3_492_375, 3_492_378, 3_454_870, 3_518_054, 3_455_729,
+                    3_586_356, 3_455_767, 3_455_702, 3_499_895, 3_455_712,
+                    3_550_552, 3_501_540, 3_519_713, 3_454_867, 3_460_541,
+                    3_531_333, 3_501_543, 3_588_277, 3_454_830, 3_455_730,
+                    3_560_812, 3_456_352, 3_456_372, 3_480_893, 3_557_392,
+                    3_521_370, 3_456_328, 3_523_028, 3_454_868, 3_528_008,
+                    3_454_885, 3_455_731, 3_460_547, 3_455_741, 3_455_689,
+                    3_454_886])
   end
 
   def self.reverse_of_cites_id_query(instance_id)
@@ -534,68 +484,6 @@ class Instance < ActiveRecord::Base
   def self.reverse_of_cited_by_id_query(instance_id)
     instance = Instance.find_by(id: instance_id.to_i)
     results = instance.present? ? instance.reverse_of_this_is_cited_by : []
-  end
-
-  def self.show_simple_instance_within_all_synonyms(starting_point_name,
-                                                    instance)
-    results = []
-    instance.name.display_as_part_of_concept
-    results.push(instance.name)
-    instance.display_as_part_of_concept
-    results.push(instance)
-    Instance.where(cited_by_id: instance.id).each do |cited_by_orig_instance|
-      next unless cited_by_orig_instance.name == starting_point_name
-      cited_by_orig_instance.expanded_instance_type =
-        cited_by_orig_instance.instance_type.name_as_a_noun
-      cited_by_orig_instance.display_as = "cited-by-instance"
-      results.push(cited_by_orig_instance)
-    end
-    results
-  end
-
-  def self.name_synonymy(name_id)
-    results = []
-    rejected_pairings = []
-    already_shown = []
-    name = Name.find(name_id)
-    name.display_as_part_of_concept
-    name.instances.sort do |i1, i2|
-      [i1.reference.year, i1.reference.author.name] <=>
-        [i2.reference.year, i2.reference.author.name]
-    end.each do |instance|
-      if instance.simple?
-        Instance.show_simple_instance_within_all_unfiltered_synonyms(name,
-                                                                     instance)
-          .each { |element| results.push(element) }
-      else # relationship instance
-        unless already_shown.include?(instance.id)
-          Instance.show_simple_instance_within_all_unfiltered_synonyms(name,
-                                                                       instance
-            .this_is_cited_by).each { |element| results.push(element) }
-          already_shown.push(instance.this_is_cited_by.id)
-        end
-      end
-    end
-    results
-  end
-
-  def self.show_simple_instance_within_all_unfiltered_synonyms(
-    _starting_point_name,
-    instance)
-    results = []
-    instance.name.display_as_part_of_concept
-    results.push(instance.name)
-    instance.display_as_part_of_concept
-    results.push(instance)
-    Instance.where(cited_by_id: instance.id).each do |cited_by_orig_instance|
-      cited_by_orig_instance.expanded_instance_type =
-        cited_by_orig_instance.instance_type.name_as_a_noun
-      cited_by_orig_instance.display_as =
-        "cited-by-instance-within-full-synonymy"
-      results.push(cited_by_orig_instance)
-    end
-    logger.debug(results.size)
-    results
   end
 
   def display_as_part_of_concept
@@ -611,114 +499,6 @@ class Instance < ActiveRecord::Base
   def display_as_citing_instance_within_name_search
     self.display_as = :citing_instance_within_name_search
     self
-  end
-
-  # This turns field descriptors into parts of a where clause.
-  # It is for "specific" field descriptors.
-  # The "generic" field descriptors should have been consumed beforehand.
-  def self.bindings_to_where(search_terms_array, where, binds)
-    logger.debug("Instance#bindings_to_where: search terms
-                 array: #{search_terms_array.join(',')}; where: #{where};
-                 binds: {binds}")
-    rejected_pairings = []
-    search_terms_array.each do |pairing|
-      logger.debug "pairing: #{pairing}"
-      logger.debug "pairing class: #{pairing.class}"
-      logger.debug "pairing size: #{pairing.size}"
-      if pairing.class == String
-        case pairing.downcase
-        when "with-comments"
-          where += " and exists (select null from comment
-                   where comment.reference_id = reference.id) "
-        end
-      elsif pairing.size == 2
-        case pairing[0].downcase
-        when "id"
-          where += " and id = ? "
-          binds.push(prepare_search_term_string(pairing[1]))
-        when "instance-type"
-          where += " and instance_type_id =
-          (select id from instance_type where instance_type.name = ?) "
-          binds.push(pairing[1])
-        when /^verbatim-name-string$/
-          where += " and lower(verbatim_name_string) like ? "
-          binds.push(prepare_search_term_string(pairing[1]))
-        when "name-id"
-          where += " and name_id = ? "
-          binds.push(pairing[1])
-        when "reference-id"
-          where += " and reference_id = ? "
-          binds.push(pairing[1])
-        when "ref"
-          where += " and reference_id = ? "
-          binds.push(pairing[1])
-        when "instance-note-key"
-          where += " and exists (select null from instance_note
-                   where instance_note.instance_id = instance.id
-                   and exists (select null from instance_note_key
-                   where instance_note.instance_note_key_id in
-                   (select id from instance_note_key
-                   where lower(name) like '%'||lower(?)||'%'))) "
-          binds.push(pairing[1])
-        when /\Anote\z/
-          where += " and exists (select null from instance_note
-                   where instance_note.instance_id = instance.id
-                   and lower(instance_note.value) like ?)"
-          binds.push(prepare_search_term_string(pairing[1]))
-        when "with-comments"
-          where += " and exists (select null from comment
-                   where comment.instance_id = instance.id
-                   and comment.text like ?) "
-          binds.push(prepare_search_term_string(pairing[1]))
-        when "with-comments-by"
-          where += " and exists (select null from comment
-                   where comment.instance_id = instance.id
-                   and (lower(comment.created_by) like ?
-                   or lower(comment.updated_by) like ?)) "
-          binds.push(prepare_search_term_string(pairing[1]))
-          binds.push(prepare_search_term_string(pairing[1]))
-        else
-          rejected_pairings.push(pairing.join(":"))
-          logger.error "Rejected pairing: #{pairing}"
-        end
-      else
-        # don't treat it as an array even
-        # to avoid errors with criteria like: "x:"
-        logger.debug("pairing size: #{pairing}")
-        rejected_pairings.push(pairing)
-        logger.error "Rejected pairing: #{pairing}"
-      end
-    end
-    where.sub!(/\A *and/, "")
-    [where, binds, rejected_pairings]
-  end
-
-  # Return the set of stand-alone instances associated with a name.
-  # Used in synonymy typeahead.
-  def self.for_a_name(query)
-    Instance.joins(reference: :author)
-      .joins(:name)
-      .joins(:instance_type)
-      .select("instance.id, reference.year, reference.citation,
-               reference.pages, reference.source_system,
-               instance_type.name instance_type_name, name.full_name ")
-      .where(["cited_by_id is null and cites_id is null
-               and lower(name.full_name) like lower(?)",
-              "%#{query}%"])
-      .order("reference.year, author.name").limit(20)
-      .collect do |i|
-      # # value = "#{i.full_name} in #{i.citation}:#{i.year} #{'[' + i.pages
-      # + ']' unless i.pages.blank? || i.pages.match(/null - null/)}"
-      value = "#{i.full_name} in #{i.citation}:#{i.year} "
-      unless i.pages.blank? || i.pages.match(/null - null/)
-        value = "[#{i.pages}] "
-      end
-      value += "[#{i.instance_type_name}]" unless i.instance_type_name ==
-                                                  "secondary reference"
-      value += "[#{i.source_system.downcase}]" unless i.source_system.blank?
-      id = i.id
-      { value: value, id: id }
-    end
   end
 
   # For NSL-720

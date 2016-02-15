@@ -25,7 +25,7 @@ class Search::OnInstance::Base
               :id,
               :count,
               :show_csv,
-              :results_array
+              :total
 
   def initialize(parsed_request)
     run_query(parsed_request)
@@ -33,6 +33,7 @@ class Search::OnInstance::Base
 
   def run_query(parsed_request)
     @has_relation = true
+    @rejected_pairings = []
     if parsed_request.count
       run_count_query(parsed_request)
     else
@@ -44,13 +45,13 @@ class Search::OnInstance::Base
     debug('#run_count_query')
     count_query = Search::OnInstance::CountQuery.new(parsed_request)
     @relation = count_query.sql
-    @count = relation.count
+    @total = @count = relation.count
     @limited = false
     @info_for_display = count_query.info_for_display
-    @rejected_pairings = []
     @common_and_cultivar_included = count_query.common_and_cultivar_included
     @results = []
     @show_csv = false
+    @total = nil
   end
 
   def run_list_query(parsed_request)
@@ -60,11 +61,10 @@ class Search::OnInstance::Base
     @results = relation.all
     @limited = list_query.limited
     @info_for_display = list_query.info_for_display
-    @rejected_pairings = []
     @common_and_cultivar_included = list_query.common_and_cultivar_included
     @count = @results.size
     @show_csv = @results.size > 0
-    @results_array = @results
+    calculate_total
   end
 
   def debug(s)
@@ -73,5 +73,9 @@ class Search::OnInstance::Base
 
   def csv?
     @show_csv
+  end
+
+  def calculate_total
+    @total = @relation.except(:offset, :limit, :order).count
   end
 end

@@ -19,6 +19,7 @@
 
 require "test_helper"
 load "test/models/search/users.rb"
+load "test/models/search/on_name/test_helper.rb"
 
 # Single Search model test.
 class SearchOnNameReportsAutonymNameMismatchSimpleTest < ActiveSupport::TestCase
@@ -28,9 +29,7 @@ class SearchOnNameReportsAutonymNameMismatchSimpleTest < ActiveSupport::TestCase
       query_string: "autonym-name-mismatch:",
       current_user: build_edit_user)
     search = Search::Base.new(params)
-    assert_equal search.executed_query.results.class,
-                 Name::ActiveRecord_Relation,
-                 "Results should be a Name::ActiveRecord_Relation."
+    confirm_results_class(search.executed_query.results)
     assert search.executed_query.results.size > 2,
            "Expected at least three search result for autonym-name-mismatch:"
   end

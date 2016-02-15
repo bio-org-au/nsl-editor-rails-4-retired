@@ -24,7 +24,7 @@ class Reference::DefinedQuery::ReferenceIdWithInstances
               :relation,
               :count,
               :show_csv,
-              :results_array
+              :total
 
   def initialize(parsed_request)
     run_query(parsed_request)
@@ -54,14 +54,16 @@ class Reference::DefinedQuery::ReferenceIdWithInstances
       @relation = nil
     else
       debug("listing with limit: #{parsed_request.limit}")
-      @results = Instance::AsSearchEngine.for_ref_id(parsed_request.where_arguments, parsed_request.limit.to_i, "name")
+      @results = Instance.ref_usages(parsed_request.where_arguments,
+                                     parsed_request.limit.to_i,
+                                     "name")
       @limited = false; # name_query.limited
       @common_and_cultivar_included = true
       @count = @results.size
       @has_relation = false
       @relation = nil
-      @results_array = @results
     end
+    @total = nil
   end
 
   def csv?

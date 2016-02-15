@@ -24,17 +24,15 @@ class SearchNameInstancesTest < ActiveSupport::TestCase
   test "search" do
     name = names(:the_regnum)
     search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(
-                                query_string: "#{name.id}",
-                                query_target: "instances-for-name-id",
+                                query_string: "id: #{name.id} show-instances:",
+                                query_target: "name",
                                 current_user: build_edit_user))
     assert_equal search.class,
                  Search::Base,
-                 "Results should be a Search."
-    assert_equal search.executed_query.results.class,
-                 Array,
-                 "Results should be an Array."
+                 "The search should be a Search."
     assert_equal 2,
                  search.executed_query.results.size,
-                 "Expect 2 recs for name-instances search on Plantae Haeckel."
+                 "Expect 2 recs for name search on Plantae Haeckel "\
+                 "showing instances."
   end
 end

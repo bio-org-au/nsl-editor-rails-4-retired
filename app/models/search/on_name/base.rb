@@ -22,7 +22,7 @@
 # search = Search::OnName::Base.new(parsed_request)
 #
 class Search::OnName::Base
-  attr_reader :results,
+  attr_reader :names,
               :limited,
               :info_for_display,
               :rejected_pairings,
@@ -32,7 +32,8 @@ class Search::OnName::Base
               :id,
               :count,
               :show_csv,
-              :results_array
+              :results,
+              :total
 
   def initialize(parsed_request)
     @parsed_request = parsed_request
@@ -57,38 +58,39 @@ class Search::OnName::Base
     @limited = false
     @info_for_display = count_query.info_for_display
     @common_and_cultivar_included = count_query.common_and_cultivar_included
-    @results = []
+    @names = @results = []
     @show_csv = false
+    @total = nil
   end
 
   def run_list_query
-    debug('#run_list_query')
     list_query = Search::OnName::ListQuery.new(@parsed_request)
     @relation = list_query.sql
-    @results = relation.all
+    @names = relation.all
     @limited = list_query.limited
     @info_for_display = list_query.info_for_display
     @common_and_cultivar_included = list_query.common_and_cultivar_included
     @show_csv = false
     consider_instances
-    @count = @results_array.size
+    @count = @results.size
+    calculate_total
   end
 
   def consider_instances
     if @parsed_request.show_instances
       show_instances
     else
-      @results_array = @results.to_a
+      @results = @names.to_a
     end
   end
 
   def show_instances
-    @results_array = []
-    @results.each do |name|
+    @results = []
+    @names.each do |name|
       name.display_as_part_of_concept
-      @results_array << name
+      @results << name
       Instance::AsArray::ForName.new(name).results.each do |usage_rec|
-        @results_array << usage_rec
+        @results << usage_rec
       end
     end
   end
@@ -99,5 +101,9 @@ class Search::OnName::Base
 
   def csv?
     @show_csv
+  end
+
+  def calculate_total
+    @total = @relation.except(:offset, :limit, :order).count
   end
 end

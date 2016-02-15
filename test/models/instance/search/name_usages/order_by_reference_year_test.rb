@@ -25,8 +25,8 @@ class NameUsagesOrderByReferenceYear < ActiveSupport::TestCase
     second_ref = references(:mueller_1882_section)
     third_ref = references(:bailey_catalogue_qld_plants)
     params =  ActiveSupport::HashWithIndifferentAccess.new(
-      query_string: "#{name.id}",
-      query_target: "Instances-for-name-id",
+      query_string: "id:#{name.id} show-instances:",
+      query_target: "Name",
       current_user: build_edit_user)
     search = Search::Base.new(params)
     assert_equal search.executed_query.results.class,

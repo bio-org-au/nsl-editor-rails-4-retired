@@ -15,8 +15,7 @@
 #   limitations under the License.
 #
 class Audit::DefinedQuery::ListQuery
-  attr_reader :sql, :limited, :info_for_display, :common_and_cultivar_included, :results,
-              :results_array
+  attr_reader :sql, :limited, :info_for_display, :common_and_cultivar_included, :results
 
   def initialize(parsed_request)
     @parsed_request = parsed_request
@@ -59,7 +58,6 @@ class Audit::DefinedQuery::ListQuery
       @limited = true
     end
     debug("@limited: #{@limited}")
-    @results_array = @results.to_a
   end
 
   def bigger(first, second)

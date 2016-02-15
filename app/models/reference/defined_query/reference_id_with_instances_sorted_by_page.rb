@@ -24,7 +24,7 @@ class Reference::DefinedQuery::ReferenceIdWithInstancesSortedByPage
               :relation,
               :count,
               :show_csv,
-              :results_array
+              :total
 
   def initialize(parsed_request)
     run_query(parsed_request)
@@ -62,16 +62,16 @@ class Reference::DefinedQuery::ReferenceIdWithInstancesSortedByPage
       @common_and_cultivar_included = query.common_and_cultivar_included
       @count = tally
     else
-      debug("run_query listing")
-      # @results = Instance::AsSearchEngine.name_usages(parsed_request.where_arguments)
-      @results = Instance::AsSearchEngine.for_ref_id(parsed_request.where_arguments, parsed_request.limit.to_i - 1, "page")
+      @results = Instance.ref_usages(parsed_request.where_arguments,
+                                     parsed_request.limit.to_i,
+                                     "page")
       @limited = false; # name_query.limited
       @common_and_cultivar_included = true
       @count = @results.size
       @has_relation = false
       @relation = nil
-      @results_array = @results
     end
+    @total = nil
   end
 
   def csv?
