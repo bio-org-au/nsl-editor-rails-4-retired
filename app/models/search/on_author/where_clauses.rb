@@ -61,7 +61,6 @@ class Search::OnAuthor::WhereClauses
   end
 
   def apply_rule(rule)
-    debug('apply rule')
     if rule.tokenize
       tokenize(rule)
     elsif rule.has_scope
@@ -69,35 +68,35 @@ class Search::OnAuthor::WhereClauses
       # how-to-remove-ranking-of-query-results
       @sql = @sql.send(rule.scope_, rule.value).reorder("name")
     else
-      apply_predicate(rule,rule.value_frequency)
+      apply_predicate(rule, rule.value_frequency)
     end
   end
 
-  def apply_predicate(rule,frequency)
+  def apply_predicate(rule, frequency)
     debug("apply predicate")
     case frequency
     when 0 then @sql = @sql.where(rule.predicate)
     when 1 then @sql = @sql.where(rule.predicate, rule.processed_value)
-    when 2 then supply_token_twice(rule,rule.processed_value)
-    when 3 then supply_token_thrice(rule,rule.processed_value)
+    when 2 then supply_token_twice(rule, rule.processed_value)
+    when 3 then supply_token_thrice(rule, rule.processed_value)
     else
       fail "Where clause value frequency: #{frequency}, is too high."
     end
   end
 
-  def supply_token_twice(rule,token)
+  def supply_token_twice(rule, token)
     @sql = @sql.where(rule.predicate,
                       token,
                       token)
   end
 
-  def supply_token_thrice(rule,token)
+  def supply_token_thrice(rule, token)
     @sql = @sql.where(rule.predicate,
                       token,
                       token)
   end
 
-  def apply_predicate_for_token(rule,token)
+  def apply_predicate_for_token(rule, token)
     debug("apply predicate for token: #{token}")
     case rule.value_frequency
     when 0 then @sql = @sql.where(rule.predicate)
@@ -109,8 +108,8 @@ class Search::OnAuthor::WhereClauses
     end
   end
 
-  # Author is a more complex tokenizatoin case than dealt with so far: 
-  # for each token you have to add the predicate with a _variable_ 
+  # Author is a more complex tokenizatoin case than dealt with so far:
+  # for each token you have to add the predicate with a _variable_
   # number of question marks.
   def tokenize(rule)
     debug("tokenize: rule.predicate: #{rule.predicate}")

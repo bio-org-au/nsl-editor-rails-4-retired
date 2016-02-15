@@ -13,39 +13,38 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#   
+#
 #   A defined query is one that the Search class knows about and may
 #   instantiate.
 class Instance::DefinedQuery::IsCited
-
-  attr_reader :results, :limited, :common_and_cultivar_included, :has_relation, :relation, :count
+  attr_reader :common_and_cultivar_included,
+              :count,
+              :has_relation,
+              :limited,
+              :relation,
+              :results
 
   def initialize(parsed_request)
     run_query(parsed_request)
   end
 
   def debug(s)
-    tag = "Instance::DefinedQuery::IsCited
-    #puts("#{tag}: #{s}")
+    tag = "Instance::DefinedQuery::IsCited"
     Rails.logger.debug("#{tag}: #{s}")
   end
- 
+
   def run_query(parsed_request)
-    debug("")
-    debug("parsed_request.where_arguments: #{parsed_request.where_arguments}")
-    debug("parsed_request.defined_query_arg: #{parsed_request.defined_query_arg}")
-    debug("parsed_request.count: #{parsed_request.count}")
-    debug("parsed_request.limit: #{parsed_request.limit}")
     if parsed_request.count
       debug("run_query counting")
       query = Search::OnReference::ListQuery.new(parsed_request)
-      @relation = query.sql  # TODO: work out how to provide the relation and sql
+      # TODO: work out how to provide the relation and sql
+      @relation = query.sql
       results = relation.all
       limited = query.limited
 
       debug(results.size)
       tally = results.size
-      results.each  do | ref |
+      results.each do |ref|
         debug(ref.id)
         tally += ref.instances.size
       end
@@ -58,7 +57,7 @@ class Instance::DefinedQuery::IsCited
       debug("query listing")
       instance = Instance.find_by(id: parsed_request.where_arguments)
       @results = instance.present? ? instance.reverse_of_this_cites : []
-      @limited = false; #name_query.limited
+      @limited = false; # name_query.limited
       @common_and_cultivar_included = true
       @count = @results.size
       @has_relation = false
@@ -66,7 +65,3 @@ class Instance::DefinedQuery::IsCited
     end
   end
 end
-
-
-
-

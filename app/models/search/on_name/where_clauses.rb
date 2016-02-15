@@ -75,7 +75,7 @@ class Search::OnName::WhereClauses
       apply_predicate(rule)
     end
   end
-  
+
   def apply_predicate(rule)
     case rule.value_frequency
     when 0 then @sql = @sql.where(rule.predicate)
@@ -127,5 +127,4 @@ class Search::OnName::WhereClauses
       @sql = @sql.order("full_name")
     end
   end
-
 end

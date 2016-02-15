@@ -25,11 +25,16 @@ class InstanceNoteKey < ActiveRecord::Base
   scope :non_apc, -> { where.not(name: ["APC Comment", "APC Dist."]) }
 
   def self.options
-    all.where(deprecated: false).order(:sort_order).collect { |n| [n.name, n.id] }
+    all.where(deprecated: false)
+      .order(:sort_order)
+      .collect { |n| [n.name, n.id] }
   end
 
   def self.apc_options
-    all.where(deprecated: false).apc.order(:sort_order).collect { |n| [n.name, n.id] }
+    all.where(deprecated: false)
+      .apc
+      .order(:sort_order)
+      .collect { |n| [n.name, n.id] }
   end
 
   def self.apc_options_for_instance(instance)
@@ -44,15 +49,18 @@ class InstanceNoteKey < ActiveRecord::Base
   end
 
   def self.non_apc_options
-    all.where(deprecated: false).non_apc.order(:sort_order).collect { |n| [n.name, n.id] }
+    all.where(deprecated: false)
+      .non_apc.order(:sort_order)
+      .collect { |n| [n.name, n.id] }
   end
 
   def self.query_form_options
-    all.where(deprecated: false).sort { |x, y| x.name <=> y.name }.collect { |n| [n.name, n.name.downcase, class: ""] }
+    all.where(deprecated: false)
+      .sort { |x, y| x.name <=> y.name }
+      .collect { |n| [n.name, n.name.downcase, class: ""] }
   end
 
   def apc_dist?
     name == APC_DIST
   end
-  
 end

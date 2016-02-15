@@ -16,8 +16,8 @@
 #
 class Search::OnName::FieldRule
   RULES = {
-    "autonym-name-mismatch:" => 
-    { where_clause: 
+    "autonym-name-mismatch:" =>
+    { where_clause:
       "id in (select name.id
   from name
  inner join name parent

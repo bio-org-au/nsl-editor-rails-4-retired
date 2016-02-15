@@ -65,7 +65,7 @@ class History
     { date: "02-Feb-2016",
       jira_id: "1641",
       description: %Q(Clicking Help/Examples/Advanced after an Instance search
-      now correctly shows Instance info. 
+      now correctly shows Instance info.
       "Trees" search is now "Tree", avoiding an error.) },
     { date: "29-Jan-2016",
       jira_id: "474",
@@ -73,7 +73,7 @@ class History
       genus or above.  With help and examples." },
     { date: "28-Jan-2016",
       jira_id: "1636",
-      description: "Add name searches for name-element and simple-name.  With 
+      description: "Add name searches for name-element and simple-name.  With
       help and examples." },
     { date: "27-Jan-2016",
       jira_id: "1620",

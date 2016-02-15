@@ -18,8 +18,8 @@ class Instance
   # Instance as CSV.
   class AsCsv < Instance
     def self.heading
-      ["Instance ID","Name ID","Full Name","Reference ID",
-      "Reference Citation","Instance Note Key","Instance Note"]
+      ["Instance ID", "Name ID", "Full Name", "Reference ID",
+       "Reference Citation", "Instance Note Key", "Instance Note"]
     end
   end
 end
