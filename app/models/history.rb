@@ -17,6 +17,10 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "17-Feb-2016",
+      jira_id: "1666",
+      description:
+      %(Fix Review list search and make Review count searches work.) },
     { date: "16-Feb-2016",
       jira_id: "1655",
       description:
@@ -26,14 +30,13 @@ class History
     { date: "16-Feb-2016",
       jira_id: "1651",
       description:
-      %(Also added query report for parent-ref-wrong-child-type:.
-      Links on Reports tab.) },
+      %(Also added query report for
+      <strong>parent-ref-wrong-child-type:</strong>. Links on Reports tab.) },
     { date: "16-Feb-2016",
       jira_id: "1651",
       description:
       %(Warn of conflicts when changing type of parent reference -
-      the type field dropdown now shows unacceptable options in red with a
-      comment.) },
+      dropdown now shows unacceptable options in red with a comment.) },
     { date: "15-Feb-2016",
       jira_id: "1661",
       description:

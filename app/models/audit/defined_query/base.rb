@@ -21,7 +21,8 @@ class Audit::DefinedQuery::Base
               :limited,
               :relation,
               :results,
-              :show_csv
+              :show_csv,
+              :total
 
   def initialize(parsed_request)
     run_query(parsed_request)
@@ -36,7 +37,7 @@ class Audit::DefinedQuery::Base
   end
 
   def run_count_query(parsed_request)
-    query = Audit::DefinedQuery::ListQuery.new(parsed_request.as_a_list_request)
+    query = Audit::DefinedQuery::CountQuery.new(parsed_request)
     @has_relation = false
     @relation = nil
     @results = query.results
@@ -45,6 +46,7 @@ class Audit::DefinedQuery::Base
     @count = @results.size
     @results = []
     @show_csv = false
+    @total = nil
   end
 
   def run_list_query(parsed_request)
@@ -56,6 +58,7 @@ class Audit::DefinedQuery::Base
     @common_and_cultivar_included = query.common_and_cultivar_included
     @count = @results.size
     @show_csv = false
+    @total = nil
   end
 
   def csv?

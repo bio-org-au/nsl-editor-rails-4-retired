@@ -14,7 +14,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-class Audit::DefinedQuery::ListQuery
+class Audit::DefinedQuery::CountQuery
   attr_reader :common_and_cultivar_included,
               :info_for_display,
               :limited,
@@ -23,38 +23,18 @@ class Audit::DefinedQuery::ListQuery
 
   def initialize(parsed_request)
     @parsed_request = parsed_request
-    assemble_results
+    @limited = false
+    run_query
     @common_and_cultivar_included = true
     @info_for_display = ""
   end
 
   def debug(s)
-    Rails.logger.debug("Audit::DefinedQuery::ListQuery - #{s}")
-  end
-
-  def assemble_results
-    Rails.logger.debug("Audit::DefinedQuery::ListQuery#assemble_results")
-    results = query_results
-    results = sort_results(results)
-    @results = results[0..@parsed_request.limit - 1]
-    @limited = results.size > @results.size
-  end
-
-  def query_results
-    author_query.to_a +
-      name_query.to_a +
-      reference_query.to_a +
-      instance_query.to_a
-  end
-
-  def sort_results(results)
-    results.sort do |x, y|
-      bigger(y.created_at, y.updated_at) <=> bigger(x.created_at, x.updated_at)
-    end
+    Rails.logger.debug("Audit::DefinedQuery::CountQuery - #{s}")
   end
 
   def author_query
-    start_author_query = Author.limit(@parsed_request.limit)
+    start_author_query = Author.all
     author_where_clauses =
       Audit::DefinedQuery::WhereClause::ForAuthor.new(@parsed_request,
                                                       start_author_query)
@@ -62,7 +42,7 @@ class Audit::DefinedQuery::ListQuery
   end
 
   def name_query
-    start_name_query = Name.limit(@parsed_request.limit)
+    start_name_query = Name.all
     name_where_clauses =
       Audit::DefinedQuery::WhereClause::ForName.new(@parsed_request,
                                                     start_name_query)
@@ -70,7 +50,7 @@ class Audit::DefinedQuery::ListQuery
   end
 
   def reference_query
-    start_reference_query = Reference.limit(@parsed_request.limit)
+    start_reference_query = Reference.all
     reference_where_clauses =
       Audit::DefinedQuery::WhereClause::ForReference.new(@parsed_request,
                                                          start_reference_query)
@@ -78,14 +58,17 @@ class Audit::DefinedQuery::ListQuery
   end
 
   def instance_query
-    start_instance_query = Instance.limit(@parsed_request.limit)
+    start_instance_query = Instance.all
     instance_where_clauses =
       Audit::DefinedQuery::WhereClause::ForInstance.new(@parsed_request,
                                                         start_instance_query)
     instance_where_clauses.sql
   end
 
-  def bigger(first, second)
-    first > second ? first : second
+  def run_query
+    @results = author_query.to_a +
+               name_query.to_a +
+               reference_query.to_a +
+               instance_query.to_a
   end
 end

@@ -17,6 +17,27 @@
   <% end %>
 </table>
 <br>
+<h5>Count records</h5>
+<table class="example-searches table table-striped">
+  <% [
+      {search_target: 'Review', search_string: "count 5",explanation: %Q(Count records created or updated in the last 5 days.)},
+      {search_target: 'Review', search_string: "count 5 names-only:",explanation: %Q(Count names created or updated in the last 5 days.)},
+      {search_target: 'Review', search_string: "count date-created: 2015-09-07",explanation: %Q(Count records created on 7 Sept 2015.)},
+      {search_target: 'Review', search_string: "count date-last-updated: 2015-09-07",explanation: %Q(Count records last updated on 7 Sept 2015.)},
+      {search_target: 'Review', search_string: "count date-created-or-last-updated: 2015-09-07",explanation: %Q(Count records created or last updated on 7 Sept 2015.)},
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent">
+      <%= link_to(val[:search_string], search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue', title: "Run the described search.") %>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+<br>
+
+
+
 
 
 

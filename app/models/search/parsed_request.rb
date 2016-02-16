@@ -76,12 +76,13 @@ class Search::ParsedRequest
     defined_query_args: #{@defined_query_args};
     query_target: #{@query_target};
     common_and_cultivar: #{@common_and_cultivar};
+    limited: #{@limited};
+    limit: #{@limit};
     include_common_and_cultivar_session
     : #{@include_common_and_cultivar_session};"
   end
 
   def parse_request
-    debug("parse_request start: @params: #{@params}")
     unused_qs_tokens = normalise_query_string.split(/ /)
     parsed_defined_query = Search::ParsedDefinedQuery.new(@query_target)
     @defined_query = parsed_defined_query.defined_query
@@ -131,7 +132,6 @@ class Search::ParsedRequest
   # TODO: Refactor - to avoid limit being confused with an ID.
   #       Make limit a field limit: 999
   def parse_limit(tokens)
-    debug "parse_limit for tokens: #{tokens.join(' ')}"
     @limited = @list
     joined_tokens = tokens.join(" ")
     if @list
