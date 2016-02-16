@@ -18,6 +18,12 @@
 class History
   CHANGES_2016 = [
     { date: "16-Feb-2016",
+      jira_id: "1655",
+      description:
+      %(Added queries <strong>is-orth-var-and-non-primary-ref-first:</strong>
+      and <strong>is-orth-var-and-non-primary-sec-ref-first:</strong>. Links
+      on Reports tab.) },
+    { date: "16-Feb-2016",
       jira_id: "1651",
       description:
       %(Also added query report for parent-ref-wrong-child-type:.
@@ -25,7 +31,9 @@ class History
     { date: "16-Feb-2016",
       jira_id: "1651",
       description:
-      %(Warn of conflicts when changing type of parent reference - the type field dropdown now shows unacceptable options in red with a comment.) },
+      %(Warn of conflicts when changing type of parent reference -
+      the type field dropdown now shows unacceptable options in red with a
+      comment.) },
     { date: "15-Feb-2016",
       jira_id: "1661",
       description:

@@ -67,7 +67,10 @@ class SearchController < ApplicationController
   def save_search(_search)
     session[:searches] ||= []
     session[:searches].push(@search.to_history)
-    session[:searches].shift if session[:searches].size > 5
+    session[:searches].shift if session[:searches].size > 2
+  rescue => e
+    logger.debug("Error saving search: #{e.to_s}")
+    session[:searches] = []
   end
 
   def tree_search

@@ -532,7 +532,7 @@ secondary_reference:
   nomenclatural: false
   primary_instance: false
   relationship: false
-  secondary_instance: false
+  secondary_instance: true
   sort_order: 100
   standalone: true
   synonym: false

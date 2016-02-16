@@ -100,7 +100,7 @@ class Search::OnName::FieldRule
                                ON n.name_status_id = ns.id
                        INNER JOIN instance_type it
                                ON i.instance_type_id = it.id
-                WHERE  it.NAME = 'secondary reference'
+                WHERE  it.secondary_instance
                        AND ns.NAME = 'orth. var.'
                        AND r.year = (SELECT Min(r2.year)
                                      FROM   reference r2
@@ -242,5 +242,54 @@ class Search::OnName::FieldRule
       "exists (select null from comment where comment.name_id = name.id \
       and comment.text like ?) and not exists \
       (select null from instance where name_id = name.id)", },
+
+    "is-orth-var-and-non-primary-ref-first:" =>
+    { where_clause:
+      "ID IN (SELECT n.id
+                FROM   instance i
+                       INNER JOIN NAME n
+                               ON i.name_id = n.id
+                       INNER JOIN reference r
+                               ON i.reference_id = r.id
+                       INNER JOIN name_status ns
+                               ON n.name_status_id = ns.id
+                       INNER JOIN instance_type it
+                               ON i.instance_type_id = it.id
+                WHERE  not it.primary_instance
+                       AND ns.NAME = 'orth. var.'
+                       AND r.year = (SELECT Min(r2.year)
+                                     FROM   reference r2
+                                            INNER JOIN instance i2
+                                                    ON r2.id = i2.reference_id
+                                            INNER JOIN NAME n2
+                                                    ON i2.name_id = n2.id
+                                     WHERE  n2.id = n.id)
+             ) ",
+      allow_common_and_cultivar: true, },
+
+    "is-orth-var-and-non-primary-sec-ref-first:" =>
+    { where_clause:
+      "ID IN (SELECT n.id
+                FROM   instance i
+                       INNER JOIN NAME n
+                               ON i.name_id = n.id
+                       INNER JOIN reference r
+                               ON i.reference_id = r.id
+                       INNER JOIN name_status ns
+                               ON n.name_status_id = ns.id
+                       INNER JOIN instance_type it
+                               ON i.instance_type_id = it.id
+                WHERE      NOT it.primary_instance 
+                       AND NOT it.secondary_instance
+                       AND ns.NAME = 'orth. var.'
+                       AND r.year = (SELECT Min(r2.year)
+                                     FROM   reference r2
+                                            INNER JOIN instance i2
+                                                    ON r2.id = i2.reference_id
+                                            INNER JOIN NAME n2
+                                                    ON i2.name_id = n2.id
+                                     WHERE  n2.id = n.id)
+             ) ",
+      allow_common_and_cultivar: true, },
   }
 end
