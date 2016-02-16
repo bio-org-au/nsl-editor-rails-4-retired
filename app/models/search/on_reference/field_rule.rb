@@ -113,5 +113,24 @@ class Search::OnReference::FieldRule
 
     "title:"                => { trailing_wildcard: true,
                                  where_clause: " lower(title) like ? " },
+
+    "parent-ref-wrong-child-type:" => { where_clause: "reference.id in (
+select r.id
+from reference r
+inner join
+ref_type rt
+on r.ref_type_id = rt.id
+inner join
+reference child
+on r.id = child.parent_id
+inner join
+ref_type child_rt
+on child.ref_type_id = child_rt.id
+where (rt.name,child_rt.name) not in
+(select xrt.name, xcrt.name
+from ref_type xrt
+inner join
+ref_type xcrt
+on xrt.id = xcrt.parent_id))" },
   }
 end

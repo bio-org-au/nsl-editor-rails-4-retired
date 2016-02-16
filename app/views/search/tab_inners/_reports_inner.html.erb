@@ -4,15 +4,36 @@
 <table class="example-searches table table-striped">
   <% [
       {search_target: 'Names',
-       search_string: "is-a-parent: has-no-instances:",
-       explanation: %Q(Names that have children but no instances.)},
-      {search_target: 'Names',
        search_string: "acacia is-orth-var-with-no-orth-var-instances:",
        explanation: %Q(Orth. var. acacias with no orth. var. instance.)},
       {search_target: 'Names',
        search_string: "*acacia is-orth-var-with-no-orth-var-instances:",
        explanation:
        %Q(Orth. var. names containing "acacia" with no orth. var. instance.)},
+      {search_target: "Names",
+       search_string: "autonym-name-mismatch:",
+       explanation:
+       %Q(Autonyms for which the final epithet is not identical to the final \
+       epithet of the parent name.)},
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent">
+      <%= link_to(val[:search_string],
+                  search_path(query_string: val[:search_string],
+                              query_target: val[:search_target]),
+                  class:'blue',
+                  title: "Run the report.") %>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+
+<table class="example-searches table table-striped">
+  <% [
+      {search_target: 'Names',
+       search_string: "is-a-parent: has-no-instances:",
+       explanation: %Q(Names that have children but no instances.)},
       {search_target: "Names",
        search_string: "is-orth-var-and-sec-ref-first:",
        explanation:
@@ -23,11 +44,29 @@
        explanation:
        %Q(Orth. var. names with their first instance a secondary reference \
        also shows instances. (Limited here to 10 names for speed.))},
-      {search_target: "Names",
-       search_string: "autonym-name-mismatch:",
-       explanation:
-       %Q(Autonyms for which the final epithet is not identical to the final \
-       epithet of the parent name.)},
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent">
+      <%= link_to(val[:search_string],
+                  search_path(query_string: val[:search_string],
+                              query_target: val[:search_target]),
+                  class:'blue',
+                  title: "Run the report.") %>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+
+<table class="example-searches table table-striped">
+  <% [
+      {search_target: 'References',
+       search_string: "parent-ref-wrong-child-type:",
+       explanation: %Q(References that contain other reference of the
+       wrong type. e.g. Book containing paper)},
+      {search_target: 'References',
+       search_string: "rt: journal parent-ref-wrong-child-type:",
+       explanation: %Q(Journals that contain a reference that is not a paper.)},
       ].each do |val| %>
   <tr>
     <td class="width-30-percent">

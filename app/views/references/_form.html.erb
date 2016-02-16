@@ -33,7 +33,7 @@
   <div class="form-group">
     <label for="reference_ref_type_id">Type*</label>
     <%= f.select("ref_type_id",
-                 RefType.options,
+                 @reference.ref_type_options,
                  { include_blank: true },
                  { class:'form-control give-me-focus', 
                    required: true, 

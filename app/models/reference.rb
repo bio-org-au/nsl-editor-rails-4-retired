@@ -334,4 +334,12 @@ class Reference < ActiveRecord::Base
     logger.debug(count)
     count
   end
+
+  def ref_type_options
+    if children.size == 0
+      RefType.options
+    else
+      RefType.options_for_parent_of(children.collect{ |child| child.ref_type })
+    end
+  end
 end
