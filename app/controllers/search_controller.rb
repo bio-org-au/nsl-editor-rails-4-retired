@@ -90,8 +90,8 @@ class SearchController < ApplicationController
     unless params[:query_field] == "name-instances"
       fail "Cannot handle this query-field: #{params[:query_field]}"
     end
-    params[:query_target] = "instances-for-name-id"
-    params[:query_string] = params[:query].sub(/id:/, "")
+    params[:query_target] = "name"
+    params[:query_string] = params[:query].sub(/\z/, " show-instances:")
   end
 
   def run_tree_search
