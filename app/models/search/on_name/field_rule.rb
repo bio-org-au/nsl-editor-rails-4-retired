@@ -257,6 +257,8 @@ class Search::OnName::FieldRule
                                ON i.instance_type_id = it.id
                 WHERE  not it.primary_instance
                        AND ns.NAME = 'orth. var.'
+                       AND i.cites_id IS NULL
+                       AND i.cited_by_id IS NULL
                        AND r.year = (SELECT Min(r2.year)
                                      FROM   reference r2
                                             INNER JOIN instance i2

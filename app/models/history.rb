@@ -18,6 +18,16 @@
 class History
   CHANGES_2016 = [
     { date: "18-Feb-2016",
+      jira_id: "1652",
+      description:
+      %(Modify is-orth-var-and-non-primary-ref-first: report query to
+      include standalone instances only.) },
+    { date: "18-Feb-2016",
+      jira_id: "1666",
+      description:
+      %(Modify Help and Examples for Audit/Review to clarify created-at:,
+      updated-at:, and by: queries.) },
+    { date: "18-Feb-2016",
       jira_id: "1666",
       description:
       %(Modify Report page description for
