@@ -4,7 +4,9 @@
 <table class="table table-striped">
   <% [
       {field_name: 'by:', description: "created or updated by username"},
+      {field_name: 'created-by:', description: "created username"},
       {field_name: 'not-by:', description: "not created or updated by username"},
+      {field_name: 'updated-by:', description: "updated username"},
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">
