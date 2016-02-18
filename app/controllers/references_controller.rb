@@ -100,9 +100,10 @@ class ReferencesController < ApplicationController
   # Columns such as parent and duplicate_of_id use a typeahead search.
   def typeahead_on_citation_for_parent
     render json: [] if params[:term].blank?
-    render json: Reference::AsTypeahead.on_citation_for_parent(params[:term],
-                                                               params[:id],
-                                                               params[:ref_type_id])
+    render json: Reference::AsTypeahead.on_citation_for_parent(
+      params[:term],
+      params[:id],
+      params[:ref_type_id])
   end
 
   # Columns such as parent and duplicate_of_id use a typeahead search.
@@ -122,29 +123,13 @@ class ReferencesController < ApplicationController
   end
 
   def reference_params
-    params.require(:reference).permit(:abbrev_title,
-                                      :bhl_url,
-                                      :display_title,
-                                      :doi,
-                                      :edition,
-                                      :isbn,
-                                      :issn,
-                                      :language_id,
-                                      :notes,
-                                      :pages,
-                                      :publication_date,
-                                      :published,
-                                      :published_location,
-                                      :publisher,
-                                      :ref_author_role_id,
-                                      :ref_type_id,
-                                      :title,
-                                      :tl2,
-                                      :verbatim_author,
-                                      :verbatim_citation,
-                                      :verbatim_reference,
-                                      :volume,
-                                      :year)
+    params.require(:reference)
+      .permit(
+        :abbrev_title, :bhl_url, :display_title, :doi, :edition, :isbn, :issn,
+        :language_id, :notes, :pages, :publication_date, :published,
+        :published_location, :publisher, :ref_author_role_id, :ref_type_id,
+        :title, :tl2, :verbatim_author, :verbatim_citation, :verbatim_reference,
+        :volume, :year)
   end
 
   def typeahead_params

@@ -18,21 +18,19 @@ class SearchController < ApplicationController
   before_filter :hide_details
 
   def search
-    logger.debug('GOING THROUGH SEARCH')
     handle_old_style_params
     run_tree_search || run_local_search || run_empty_search
     respond_to do |format|
       format.html
-      format.csv     
+      format.csv
     end
   rescue => e
     params[:error_message] = e.to_s
     @search = Search::Error.new(params) unless @search.present?
-    save_search(@search)
+    save_search
   end
 
   def tree
-    logger.debug('GOING THROUGH TREE!!!!')
     set_tree_defaults
     @search = Search::Tree.new(params)
     @ng_template_path = tree_ng_path("dummy").gsub(/dummy/, "")
@@ -64,13 +62,17 @@ class SearchController < ApplicationController
 
   private
 
-  def save_search(_search)
+  def save_search
     session[:searches] ||= []
     session[:searches].push(@search.to_history)
-    session[:searches].shift if session[:searches].size > 2
+    trim_session_searches
   rescue => e
-    logger.debug("Error saving search: #{e.to_s}")
+    logger.error("Error saving search: #{e}")
     session[:searches] = []
+  end
+
+  def trim_session_searches
+    session[:searches].shift if session[:searches].size > 2
   end
 
   def tree_search
@@ -95,7 +97,7 @@ class SearchController < ApplicationController
   end
 
   def run_tree_search
-    logger.debug('run_tree_search')
+    logger.debug("run_tree_search")
     return false unless params[:query_target].present?
     return false unless params[:query_target].match(/\Atrees*/i)
     params[:query] = params[:query_string]
@@ -109,7 +111,7 @@ class SearchController < ApplicationController
     params[:include_common_and_cultivar_session] = \
       session[:include_common_and_cultivar]
     @search = Search::Base.new(params)
-    save_search(@search)
+    save_search
     true
   end
 
