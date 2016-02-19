@@ -1,27 +1,3 @@
-    <style>
-      /* hide existing cancel button */
-      /*
-      input[type="search"]::-webkit-search-decoration,
-      input[type="search"]::-webkit-search-cancel-button {
-          -webkit-appearance: none;
-      }*/
-      /* hide added cancel button */
-      /*span.clear {
-          display: none;
-      }*/
-      /* Only show cancel button when focused */
-      /*.focused span.clear {
-          position: relative;
-          left: -18px;
-          display: inline-block;
-          font-weight: bold;
-          cursor: pointer;
-      }*/
-      /* Add a hover color */
-      /*.focused span.clear:hover {
-          color: red;
-      }*/
-
       ul#search-results-tabset {
         position: fixed;
         top: 112px;
@@ -30,11 +6,11 @@
       }
 
       ul#search-results-tabset li a {
-        line-height: 7px; 
+        line-height: 7px;
         color: white;
       }
 
-      ul#search-results-tabset li a:focus, 
+      ul#search-results-tabset li a:focus,
       ul#search-results-tabset li a:hover {
         color: black;
       }
@@ -44,7 +20,7 @@
       }
 
       ul#search-results-tabset li.active a {
-        line-height: 7px; 
+        line-height: 7px;
         color: black;
       }
 
@@ -59,10 +35,10 @@
         position: fixed;
         top: 200px;
         left: 12px;
-        overflow: auto; 
-        min-height: 300px; 
-        height: 80%; 
-        margin-bottom: 1em; 
+        overflow: auto;
+        min-height: 300px;
+        height: 80%;
+        margin-bottom: 1em;
         padding-bottom: 1em;
       }
 
@@ -74,7 +50,7 @@
       }
 
       ul#advanced-search-tabset li a {
-        line-height: 7px; 
+        line-height: 7px;
       }
 
       div#advanced-search-container {
@@ -90,11 +66,11 @@
       }
 
       div.scrollable-container {
-        overflow: hidden; 
-        padding-right: 1em; 
-        margin-right: 1em; 
-        padding-bottom: 2em; 
-        margin-bottom: 2em; 
+        overflow: hidden;
+        padding-right: 1em;
+        margin-right: 1em;
+        padding-bottom: 2em;
+        margin-bottom: 2em;
       }
 
       div#example-search-container {
@@ -106,10 +82,10 @@
         position: fixed;
         top: 160px;
         left: 12px;
-        overflow: auto; 
-        min-height: 300px; 
-        height: 80%; 
-        margin-bottom: 1em; 
+        overflow: auto;
+        min-height: 300px;
+        height: 80%;
+        margin-bottom: 1em;
       }
 
       div#search-reports-inner,
@@ -121,42 +97,24 @@
         position: fixed;
         top: 160px;
         left: 12px;
-        overflow: auto; 
-        min-height: 300px; 
-        height: 80%; 
-        margin-bottom: 1em; 
-        margin-right: 1em; 
+        overflow: auto;
+        min-height: 300px;
+        height: 80%;
+        margin-bottom: 1em;
+        margin-right: 1em;
       }
 
-    </style>
-    <style>
        #new-search-field {
       }
       .closer:hover {
         cursor: pointer;
       }
-    </style>
 
-    <style>
-       #new-search-field {
+      #new-search-field {
       }
       .closer:hover {
         cursor: pointer;
       }
-    </style>
-
-    <style>
-div#broadcast {
-  position: fixed;
-  top: 86px;
-  left: 15px;
-  background: orange;
-  color: white;
-  height: 1.5em;
-  min-height: 1.5em;
-  width: 90%;
-  padding-left: 8px;
-}
 
 div#search-summary-row {
   max-height: 40px;
@@ -184,21 +142,16 @@ form.advanced input[type="text"] {
 }
 
 .search-tab {
-  height: 100%; 
-  min-height: 800px; 
-  overflow-y: scroll; 
-  height: 900px; 
-  min-height: 900px; 
-  padding-bottom: 4em; 
-  margin-bottom: 8em;" 
+  height: 100%;
+  min-height: 800px;
+  overflow-y: scroll;
+  height: 900px;
+  min-height: 900px;
+  padding-bottom: 4em;
+  margin-bottom: 8em;
 }
-
-   </style>
-<style>
 
 .full-name-within-instance {
   color: rgb(2, 60, 110);
   font-weight: normal;
 }
-
-</style>
