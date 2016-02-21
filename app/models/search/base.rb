@@ -113,6 +113,8 @@ class Search::Base
       when /\Areferences-shared-names\z/i
         Reference::DefinedQuery::ReferencesSharedNames.new(@parsed_request)
       else
+        Rails.logger.error("Search::Base failed to run defined query: "\
+                           "#{@parsed_request.defined_query}")
         fail "No such defined query: #{@parsed_request.defined_query}"
       end
   end

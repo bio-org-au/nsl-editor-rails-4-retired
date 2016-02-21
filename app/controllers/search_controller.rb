@@ -18,7 +18,7 @@ class SearchController < ApplicationController
   before_filter :hide_details
 
   def search
-    handle_old_style_params
+    handle_old
     run_tree_search || run_local_search || run_empty_search
     respond_to do |format|
       format.html
@@ -86,6 +86,11 @@ class SearchController < ApplicationController
     @search = Search::TreeError.new(params)
   end
 
+  def handle_old
+    handle_old_style_params
+    handle_old_targets
+  end
+
   # translate services/search/link
   def handle_old_style_params
     return unless params[:query].present?
@@ -94,6 +99,14 @@ class SearchController < ApplicationController
     end
     params[:query_target] = "name"
     params[:query_string] = params[:query].sub(/\z/, " show-instances:")
+  end
+
+  def handle_old_targets
+    return unless params[:query_target].present?
+    return unless params[:query_target].match(/Names plus instances/i)
+    params[:query_target] = "name"
+    return if params[:query_string].match(/show-instances:/)
+    params[:query_string] = params[:query_string].sub(/\z/, " show-instances:")
   end
 
   def run_tree_search

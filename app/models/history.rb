@@ -17,6 +17,11 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "22-Feb-2016",
+      jira_id: "1675",
+      description:
+      %(Convert Names plus instances search to Names search with 
+      show-instances: directive.) },
     { date: "18-Feb-2016",
       jira_id: "1652",
       description:
