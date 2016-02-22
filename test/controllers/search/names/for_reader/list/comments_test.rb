@@ -28,7 +28,7 @@ class ReaderSearchControllerNamesCommentsListTest < ActionController::TestCase
         groups: [])
     assert_response :success
     assert_select '#search-results-summary',
-                  /\b1 record\b/,
-                  "Should find at least a couple of records"
+                  /\b1 name\b/,
+                  "Should find at least a couple of names"
   end
 end

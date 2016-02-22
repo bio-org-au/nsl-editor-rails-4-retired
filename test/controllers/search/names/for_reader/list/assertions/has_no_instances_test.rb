@@ -28,7 +28,7 @@ class SearchNamesAsReaderListAssertionHasNoInstTest < ActionController::TestCase
         groups: [])
     assert_response :success
     assert_select '#search-results-summary',
-                  /[0-9][0-9] records\b/,
-                  "Should find some records"
+                  /[0-9][0-9] names\b/,
+                  "Should find some names"
   end
 end

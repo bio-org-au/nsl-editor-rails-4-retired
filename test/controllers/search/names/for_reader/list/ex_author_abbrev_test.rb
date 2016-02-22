@@ -28,7 +28,7 @@ class ReaderSearchControllerNamesExAuthAbbrevListT < ActionController::TestCase
         groups: [])
     assert_response :success
     assert_select '#search-results-summary',
-                  /1 record\b/,
-                  "Should find one record"
+                  /1 name\b/,
+                  "Should find one name"
   end
 end

@@ -28,7 +28,7 @@ class ReaderSearchControllerNamesCommentsByListTest < ActionController::TestCase
         groups: [])
     assert_response :success
     assert_select '#search-results-summary',
-                  /\b1 record\b/,
-                  "Should find at least 1 record for comments-by:*"
+                  /\b1 name\b/,
+                  "Should find at least 1 name for comments-by:*"
   end
 end

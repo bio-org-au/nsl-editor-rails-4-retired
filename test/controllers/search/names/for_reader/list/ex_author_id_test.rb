@@ -29,7 +29,7 @@ class ReaderSearchControllerNamesExAuthorIdListTest < ActionController::TestCase
         groups: [])
     assert_response :success
     assert_select '#search-results-summary',
-                  /\b1 record\b/,
-                  "Should find 1 record for ex author ID using #{author.abbrev}"
+                  /\b1 name\b/,
+                  "Should find 1 name for ex author ID using #{author.abbrev}"
   end
 end

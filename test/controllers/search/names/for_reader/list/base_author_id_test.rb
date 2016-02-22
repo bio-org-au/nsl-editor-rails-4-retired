@@ -29,7 +29,7 @@ class ReaderSearchControllerNamesBaseAuthorIdListT < ActionController::TestCase
         groups: [])
     assert_response :success
     assert_select '#search-results-summary',
-                  /\b1 record\b/,
+                  /\b1 name\b/,
                   "Should find 1 record for base author ID: #{author.id}"
   end
 end

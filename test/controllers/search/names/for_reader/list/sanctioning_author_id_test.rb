@@ -30,7 +30,7 @@ class ReaderSearchContrNamesSanctioningAuthIdListT < ActionController::TestCase
         groups: [])
     assert_response :success
     assert_select '#search-results-summary',
-                  /\b1 record\b/,
+                  /\b1 name\b/,
                   "Should find sanctioning author from ID: #{author.id}"
   end
 end
