@@ -32,7 +32,6 @@ class Reference::DefinedQuery::ReferenceIdWithInstances
 
   def debug(s)
     tag = "Reference::DefinedQuery::ReferenceIdWithInstances"
-    # puts("#{tag}: #{s}")
     Rails.logger.debug("#{tag}: #{s}")
   end
 

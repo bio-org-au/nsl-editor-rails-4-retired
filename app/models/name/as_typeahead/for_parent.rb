@@ -15,7 +15,6 @@
 #   limitations under the License.
 #
 
-
 # Provide typeahead suggestions based on a search term.
 #
 # Offer parents of the appropriate rank:
