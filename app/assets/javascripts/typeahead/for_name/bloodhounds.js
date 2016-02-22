@@ -5,7 +5,7 @@ nameDuplicateSuggestions = new Bloodhound({
     remote: {url: window.relative_url_root + '/suggestions/name/duplicate?term=%QUERY',
         replace: function(url,query) {
             return window.relative_url_root + '/suggestions/name/duplicate?' +
-                'name_id=' + $('#duplicate-of-id-typeahead').attr('data-name-id') + '&' +
+                'name_id=' + $('#duplicate-of-typeahead').attr('data-name-id') + '&' +
                 'term=' + encodeURIComponent(query.replace(/\|.*/,''))
         }
     },

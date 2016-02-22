@@ -18,6 +18,10 @@
 class History
   CHANGES_2016 = [
     { date: "22-Feb-2016",
+      jira_id: "1676",
+      description:
+      %(Name duplicate typeahead does not offer current name.) },
+    { date: "22-Feb-2016",
       jira_id: "1679",
       description:
       %(Fix summary of totals for Name search.) },
