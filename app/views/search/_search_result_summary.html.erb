@@ -14,7 +14,9 @@
     <% if @search.parsed_request.count %> 
       <%= "#{pluralize(@search.executed_query.count,@search.parsed_request.target_table||'record')}" %>
     <% else %>
-      <% if @search.executed_query.count == 0 %>
+      <% if @search.executed_query.try('summary').present? %>
+        <%= @search.executed_query.summary %>
+      <% elsif @search.executed_query.count == 0 %>
         <% records_found = false %>
         No records found. 
       <% else %>

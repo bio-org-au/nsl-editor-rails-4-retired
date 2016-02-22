@@ -33,6 +33,7 @@ class Search::OnName::Base
               :count,
               :show_csv,
               :results,
+              :summary,
               :total
 
   def initialize(parsed_request)
@@ -61,6 +62,7 @@ class Search::OnName::Base
     @names = @results = []
     @show_csv = false
     @total = nil
+    @summary = "#{@names.size} names"
   end
 
   def run_list_query
@@ -74,6 +76,7 @@ class Search::OnName::Base
     consider_instances
     @count = @results.size
     calculate_total
+    @summary = build_summary
   end
 
   def consider_instances
@@ -105,5 +108,11 @@ class Search::OnName::Base
 
   def calculate_total
     @total = @relation.except(:offset, :limit, :order).count
+  end
+
+  def build_summary
+    return "No names found" if @names.size == 0
+    return "1 name of #{@total}" if @names.size == 1
+    "#{@names.size} names of #{@total}"
   end
 end

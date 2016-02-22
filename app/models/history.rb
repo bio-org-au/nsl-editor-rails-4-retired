@@ -17,6 +17,10 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "22-Feb-2016",
+      jira_id: "1679",
+      description:
+      %(Fix summary of totals for Name search.) },
     { date: "22-Feb-2016", release: true },
     { date: "22-Feb-2016",
       jira_id: "1675",
