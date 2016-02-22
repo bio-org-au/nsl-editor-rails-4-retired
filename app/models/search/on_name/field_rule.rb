@@ -293,5 +293,11 @@ class Search::OnName::FieldRule
                                      WHERE  n2.id = n.id)
              ) ",
       allow_common_and_cultivar: true, },
+
+    "with-exactly-one-instance:" =>
+    { where_clause:
+      "id in \
+      (select name_id from instance group by name_id having count(*) = 1)", },
+
   }
 end

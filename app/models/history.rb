@@ -18,6 +18,11 @@
 class History
   CHANGES_2016 = [
     { date: "22-Feb-2016",
+      jira_id: "1673",
+      description:
+      %(Add search for name with-exactly-one-instance. Examples on Reports
+      tab) },
+    { date: "22-Feb-2016",
       jira_id: "1674",
       description:
       %(Add return before Reference notes on Details tab.) },

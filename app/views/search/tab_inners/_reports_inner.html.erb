@@ -83,6 +83,13 @@
        explanation:
        %Q(Autonyms for which the final epithet is not identical to the final \
        epithet of the parent name.)},
+      {search_target: 'Names',
+       search_string: "with-exactly-one-instance:",
+       explanation: %Q(Names that have exactly one instance. Note: can be slow
+       if not combined with other directives.  See below.)},
+      {search_target: 'Names',
+       search_string: "nt: common with-exactly-one-instance:",
+       explanation: %Q(Common names that have exactly one instance.)},
       ].each do |val| %>
   <tr>
     <td class="width-30-percent">
