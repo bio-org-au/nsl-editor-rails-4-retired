@@ -58,6 +58,15 @@ class Search::OnReference::FieldRule
                                  multiple_values_where_clause: " ref_type_id
                                  in (select id from ref_type where lower(name)
                                  in (?))" },
+    "parent-type:"          => { multiple_values: true,
+                                 where_clause:
+                                 " exists (select null from reference parent
+                                  where parent.id = reference.parent_id
+                                  and parent.ref_type_id in (select id
+                                 from ref_type where lower(name) like ?) )", },
+    "not-type:"             => { where_clause: " ref_type_id not in (select id
+                                 from ref_type where lower(name) like ?)" },
+
     "author-role:"          => { where_clause: " ref_author_role_id in
                                  (select id from ref_author_role where
                                  lower(name) like ?)" },

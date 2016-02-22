@@ -32,7 +32,9 @@
 <h5>Type code field</h5>
 <table class="table table-striped">
   <% [
-      {field_name: 'type:', description: "reference type, allows comma-separated multiple values",partial: "ref_types/list_for_search_help"}
+      {field_name: 'type:', description: "reference type, allows comma-separated multiple values",partial: "ref_types/list_for_search_help"},
+      {field_name: 'not-type:', description: "not reference type",partial: "ref_types/list_for_search_help"},
+      {field_name: 'parent-type:', description: "reference type ",partial: "ref_types/list_for_search_help"},
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">

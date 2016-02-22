@@ -49,6 +49,15 @@
       {search_target: 'References',
        search_string: "rt: journal parent-ref-wrong-child-type:",
        explanation: %Q(Journals that contain a reference that is not a paper.)},
+      {search_target: 'References',
+       search_string: "not-type: paper parent-type: journal",
+       explanation: %Q(Non-papers that are children of Journals.)},
+      {search_target: 'References',
+       search_string: "type: unknown parent-type: journal",
+       explanation: %Q(Unknowns that are children of Journals.)},
+      {search_target: 'References',
+       search_string: "not-type: paper not-type: unknown parent-type: journal",
+       explanation: %Q(Neither paper nor unknown but child of Journal.)},
       ].each do |val| %>
   <tr>
     <td class="width-30-percent">
