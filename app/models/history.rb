@@ -18,6 +18,10 @@
 class History
   CHANGES_2016 = [
     { date: "22-Feb-2016",
+      jira_id: "1674",
+      description:
+      %(Add return before Reference notes on Details tab.) },
+    { date: "22-Feb-2016",
       jira_id: "1680",
       description:
       %(New Reference searches for not-type: and parent-type:.) },

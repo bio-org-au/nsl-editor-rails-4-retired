@@ -30,7 +30,7 @@
 <% else %>
   Unpublished.
 <% end %>
-
+<%= '<br>'.html_safe unless @reference.notes.blank? %>
 <%= @reference.notes %>
 <% if @reference.children && @reference.children.size != 0 %>
   <br>
