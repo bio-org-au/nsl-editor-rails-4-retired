@@ -50,3 +50,24 @@ def suggestions_should_only_include(suggestions,
     end
   end
 end
+
+# A single suggestion, like this:
+#
+# a_subgenus | Subgenus | legitimate | 1 instance
+#
+# has rank embedded in the string, as the second pipe-separated component.
+#
+# This method extracts that rank name and retrieves the
+# matching NameRank
+#
+def rank_from_suggestion(suggestion)
+  rank_name = suggestion[:value].sub(/^[^|]* \| /, "").sub(/ .*/, "")
+  NameRank.find_by(name: rank_name)
+end
+
+def suggestion_rank_should_be_at_or_below(suggestion,
+                                          upper_rank)
+  rank = rank_from_suggestion(suggestion)
+  assert rank.sort_order >= upper_rank.sort_order,
+         "#{rank.name} is higher than #{upper_rank.name}"
+end

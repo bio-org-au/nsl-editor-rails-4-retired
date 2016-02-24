@@ -34,6 +34,8 @@ class Name::AsTypeahead::ForParent
   attr_reader :suggestions,
               :params
   SEARCH_LIMIT = 50
+  GROUP_BY = "name.id,name.full_name,name_rank.name,name_status.name,"\
+             "name_rank.sort_order"
 
   def initialize(params)
     @params = params
@@ -54,7 +56,7 @@ class Name::AsTypeahead::ForParent
       .avoids_id(@params[:avoid_id].try("to_i") || -1)
       .joins(:name_status)
       .joins("left outer join instance on instance.name_id = name.id")
-      .order_by_full_name
+      .order_by_rank_and_full_name
       .limit(SEARCH_LIMIT)
   end
 
@@ -76,7 +78,7 @@ class Name::AsTypeahead::ForParent
     @qry = core_query
     @qry = rank_query
     @qry = @qry.select_fields_for_parent_typeahead
-           .group("name.id,name.full_name,name_rank.name,name_status.name")
+           .group(GROUP_BY)
            .collect do |n|
              { value: "#{n.full_name} | #{n.name_rank_name} | "\
                       "#{n.name_status_name} | "\

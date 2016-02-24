@@ -17,6 +17,10 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "24-Feb-2016",
+      jira_id: "1672",
+      description:
+      %(Offer typehead name parents in descending taxonomic rank) },
     { date: "22-Feb-2016",
       jira_id: "1673",
       description:

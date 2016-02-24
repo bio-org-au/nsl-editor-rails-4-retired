@@ -24,9 +24,9 @@ class ForSubformaTest < ActiveSupport::TestCase
       term: "%",
       avoid_id: 1,
       rank_id: NameRank.find_by(name: "Subforma").id)
-    suggestions_should_only_include(
-      typeahead.suggestions,
-      "Subforma",
-      %w(Forma Subvarietas Varietas Nothovarietas Subspecies Species))
+    typeahead.suggestions.each do |suggestion|
+      suggestion_rank_should_be_at_or_below(suggestion,
+                                            NameRank.find_by(name: "Species"))
+    end
   end
 end
