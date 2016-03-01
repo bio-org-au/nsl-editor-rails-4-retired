@@ -17,6 +17,12 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "01-Mar-2016",
+      jira_id: "1690",
+      description:
+      %(Add exact search examples for Author showing how to find embedded
+      substrings with spaces e.g. ' in ' etc.) },
+    { date: "25-Feb-2016", release: true },
     { date: "24-Feb-2016",
       jira_id: "1672",
       description:

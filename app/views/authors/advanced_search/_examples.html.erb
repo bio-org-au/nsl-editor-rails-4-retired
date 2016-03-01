@@ -17,7 +17,7 @@
       {search_target: 'Authors', search_string: "full-name: bald*greg", explanation: %Q(Authors with full or extra name text that include "bald" and "greg" in that order.)},
       {search_target: 'Authors', search_string: "comments:*", explanation: %Q(Count commented authors by turning a text field into an assertion.)},
       {search_target: 'Authors', search_string: "comments-by:*", explanation: %Q(Count authors with a comment by someone.)},
-      {search_target: 'Authors', search_string: "", explanation: %Q(Currently no authors with comments, so difficult to give more examples.)},
+      {search_target: 'Authors', search_string: "...", explanation: %Q(Currently no authors with comments, so difficult to give more examples.)},
       ].each do |val| %>
   <tr>
     <td class="width-30-percent">
@@ -36,6 +36,23 @@
       {search_target: 'Authors', search_string: "abbrev: muLl",explanation: %Q(Authors with abbreviation containing 'müLl' or 'mull'.)},
       {search_target: 'Authors', search_string: "name: müLl",explanation: %Q(Authors with name containing 'müLl' or 'mull'.)},
       {search_target: 'Authors', search_string: "name: muLl",explanation: %Q(Authors with name containing 'müLl' or 'mull'.)},
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent">
+      <%= link_to(val[:search_string], search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue', title: "Run the described search.") %>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+<h5 class="">Exact search</h5>
+<table class="example-searches table table-striped">
+  <% [
+      {search_target: 'Authors', search_string: "name-exact: * in *",explanation: %Q(Authors with name containing ' in '.)},
+      {search_target: 'Authors', search_string: "name-exact: * D. *",explanation: %Q(Authors with name containing ' D. '.)},
+      {search_target: 'Authors', search_string: "name-exact: * D.",explanation: %Q(Authors with name ending ' D.'.)},
+      {search_target: 'Authors', search_string: "name-exact: D*s",explanation: %Q(Authors with name starting 'D' and ending with 's'.)},
+      {search_target: 'Authors', search_string: "name-exact: De *",explanation: %Q(Authors with name starting 'De ' or 'DE ' or 'de '.)},
       ].each do |val| %>
   <tr>
     <td class="width-30-percent">
@@ -67,8 +84,6 @@
   </tr>
   <% end %>
 </table>
-<br>
-
 
 <h5 class="">Count authors</h5>
 <table class="example-searches table table-striped">
