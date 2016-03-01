@@ -18,6 +18,11 @@
 class History
   CHANGES_2016 = [
     { date: "01-Mar-2016",
+      jira_id: "1691",
+      description:
+      %(Fix Instance Synonymy tab link which appears after a new synonym is
+      created. Once again correctly queries all instances for the Name.) },
+    { date: "01-Mar-2016",
       jira_id: "1690",
       description:
       %(Add exact search examples for Author showing how to find embedded

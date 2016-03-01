@@ -1,13 +1,19 @@
 <h5>Create a synonym</h5>
 
 <%= render partial: 'form_create_synonymy' %>
-<div id="search-result-details-info-message-container" class="message-container"></div>
-<div id="search-result-details-error-message-container" class="message-container"></div>
+<div id="search-result-details-info-message-container"
+     class="message-container">
+</div>
+<div id="search-result-details-error-message-container"
+     class="message-container">
+</div>
 <br>
 <br>
 <div class="hidden instance-form-success-message">
   <%= link_to("Query instances for #{@instance.name.full_name}",
-              search_path(query_target: 'instances for name id', query_string: @instance.name_id), 
+              search_path(query_target: 'Name',
+                          query_string:
+                          "id: #{@instance.name_id} show-instances:"), 
               class: 'btn btn-primary',
               title: "Query instances for #{@instance.name.full_name}") %>
 </div>
