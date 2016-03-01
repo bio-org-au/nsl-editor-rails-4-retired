@@ -189,7 +189,7 @@ class Search::ParsedRequest
   def parse_show_instances(tokens)
     if tokens.include?('show-instances:')
       @show_instances = true
-      tokens.delete_if{|x| x.match(/show-instances:/)}
+      tokens.delete_if { |x| x.match(/show-instances:/) }
     else
       @show_instances = false
     end

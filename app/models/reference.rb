@@ -339,7 +339,7 @@ class Reference < ActiveRecord::Base
     if children.size == 0
       RefType.options
     else
-      RefType.options_for_parent_of(children.collect{ |child| child.ref_type })
+      RefType.options_for_parent_of(children.collect { |child| child.ref_type })
     end
   end
 end

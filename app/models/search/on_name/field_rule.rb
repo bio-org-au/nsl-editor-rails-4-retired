@@ -281,7 +281,7 @@ class Search::OnName::FieldRule
                                ON n.name_status_id = ns.id
                        INNER JOIN instance_type it
                                ON i.instance_type_id = it.id
-                WHERE      NOT it.primary_instance 
+                WHERE      NOT it.primary_instance
                        AND NOT it.secondary_instance
                        AND ns.NAME = 'orth. var.'
                        AND r.year = (SELECT Min(r2.year)
