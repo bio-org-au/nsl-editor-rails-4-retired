@@ -42,13 +42,6 @@ class SearchController < ApplicationController
     @search = Search::Error.new(params)
   end
 
-  def search_name_with_instances
-    @search = Search::Base.new(
-      "query_string" => "instances-for-name-id: #{params[:name_id]}"
-    )
-    render "search"
-  end
-
   def set_include_common_and_cultivar
     logger.debug("set_include_common_and_cultivar")
     session[:include_common_and_cultivar] = \

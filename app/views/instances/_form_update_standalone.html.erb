@@ -9,7 +9,11 @@
             </ul>
         </div>
     <% end %>
-    <%= link_to(@instance.name.try('full_name'),search_path(query_string:@instance.name_id,query_target: 'instances for name id'), title: 'Name search for instances') %>
+    <%= link_to(@instance.name.try('full_name'),
+                search_path(query_string:
+                            "id: #{@instance.name_id} show-instances:",
+                            query_target: "name"),
+                title: "Name search for instances") %>
     <br>
     appears in*
     <% if  @instance.update_reference_allowed? %>

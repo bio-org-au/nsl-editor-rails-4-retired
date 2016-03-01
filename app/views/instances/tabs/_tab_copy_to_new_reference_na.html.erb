@@ -1,3 +1,8 @@
-[You can copy this instance from the query results for <%= link_to("#{@instance.name.try('full_name')} #{search_icon_on_tab}".html_safe,search_name_with_instances_path(@instance.name_id), title: 'Search for the name with its instances') %>]
+[You can copy this instance in the context of this query: <br>
+<%= link_to("#{@instance.name.try('full_name')} #{search_icon_on_tab}".html_safe,
+            search_path(query_target: "Name",
+                        query_string:
+                        "id: #{@instance.name_id} show-instances:"),
+            title: 'Search for the name with its instances') %>]
 
 

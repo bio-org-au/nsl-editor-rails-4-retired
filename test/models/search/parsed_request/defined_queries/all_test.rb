@@ -20,14 +20,6 @@ load "test/models/search/parsed_request/defined_queries/test_runner.rb"
 # Single Search model test.
 class SearchParsedRequestDefinedQueriesAllTest < ActiveSupport::TestCase
   DEFINED_QUERIES = {
-    "instance-name-id:" => "instances-for-name-id:",
-    "instances-for-name-id" => "instances-for-name-id:",
-    "instances for name id" => "instances-for-name-id:",
-    "names with instances" => "names-plus-instances:",
-    "names + instances" => "names-plus-instances:",
-    "names plus instances" => "names-plus-instances:",
-    "instance-name:" => "names-plus-instances:",
-    "instances-for-name:" => "names-plus-instances:",
     "instance-ref-id:" => "instances-for-ref-id:",
     "instances-for-ref-id:" => "instances-for-ref-id:",
     "instances for ref id" => "instances-for-ref-id:",
