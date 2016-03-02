@@ -158,6 +158,11 @@ where rb.sort_order >= (select sort_order from name_rank where name = 'Species')
       )
       ",
       order: "name.full_name",
-      join: :name }
+      join: :name },
+    "rank:"  => { where_clause: " exists (select null from
+                  name n inner join name_rank nr
+                  on n.name_rank_id = nr.id where instance.name_id =
+                  n.id and lower(nr.name) like lower(?))",
+                  order: "name.full_name" },
   }
 end

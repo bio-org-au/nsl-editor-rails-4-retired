@@ -39,7 +39,7 @@ class Search::OnInstance::Predicate
     apply_rule(rule)
     @canon_value = build_canon_value(value)
     apply_scope
-    @order = rule[:order] || "id"
+    @order = rule[:order] || nil
     process_value
     @tokenize = rule[:tokenize] || false
     @join_name = rule[:join] == :name

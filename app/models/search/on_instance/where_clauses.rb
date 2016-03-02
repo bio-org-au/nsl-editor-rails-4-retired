@@ -47,13 +47,11 @@ class Search::OnInstance::WhereClauses
   end
 
   def add_clause(field, value)
-    debug("add_clause for field: #{field}; value: #{value}")
     if field.blank? && value.blank?
       @sql
     else
       field_or_default = field.blank? ? DEFAULT_FIELD : field
-      rule = Search::OnInstance::Predicate.new(field_or_default,
-                                               value)
+      rule = Search::OnInstance::Predicate.new(field_or_default, value)
       apply_rule(rule)
       apply_order(rule)
       apply_join(rule)
@@ -106,11 +104,8 @@ class Search::OnInstance::WhereClauses
   end
 
   def apply_order(rule)
-    if rule.order
-      @sql = @sql.order(rule.order)
-    else
-      @sql = @sql.order("id")
-    end
+    return unless rule.order
+    @sql = @sql.order(rule.order)
   end
 
   def apply_join(rule)

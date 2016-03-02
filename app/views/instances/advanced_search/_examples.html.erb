@@ -89,11 +89,32 @@
 <br>
 
 
-<h5 class="">Reference year queries</h5>
+<h5 class="">Reference queries</h5>
 <table class="example-searches table table-striped">
   <% [
     {search_target: 'Instances', search_string: "is-novelty: y:2015",explanation: %Q(Find instances with a "primary instance" type attached to a refererence published in the year 2015.)},
     {search_target: 'Instances', search_string: "desmocladus is-novelty: y:2014",explanation: %Q(Find instances for any names containing "desmocladus", with a "primary instance" type that are in a refererence published in the year 2014.)},
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent">
+      <a href="javascript:void(0)" 
+         class="example-search width-100-percent" 
+         title="Link to search">
+         <span class="blue"><%= link_to(val[:search_string], search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue', title: "Run the described search.") %></span>
+      </a>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+<br>
+
+<h5 class="">Name queries</h5>
+<table class="example-searches table table-striped">
+  <% [
+    {search_target: 'Instances',
+     search_string: "y:2015 type: tax. nov. rank: species",
+     explanation: %Q(Find tax. nov. instances published in 2015 for species.)},
       ].each do |val| %>
   <tr>
     <td class="width-30-percent">

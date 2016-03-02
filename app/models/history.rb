@@ -17,6 +17,14 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "02-Mar-2016",
+      jira_id: "1687",
+      description:
+      %(Long Author names are now allowed.) },
+    { date: "01-Mar-2016",
+      jira_id: "1693",
+      description:
+      %(Add "rank:" as a query field for Instances.  See help and examples.) },
     { date: "01-Mar-2016",
       jira_id: "1691",
       description:
