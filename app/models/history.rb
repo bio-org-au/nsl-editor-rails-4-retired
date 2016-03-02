@@ -17,6 +17,11 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "03-Mar-2016",
+      jira_id: "1697",
+      description:
+      %(Prevent duplicate Author abbreviations.) },
+    { date: "03-Mar-2016", release: true },
     { date: "02-Mar-2016",
       jira_id: "1687",
       description:

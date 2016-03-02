@@ -63,6 +63,10 @@ class Author < ActiveRecord::Base
   validates :abbrev,
             presence: { if: "name.blank?",
                         message: "can't be blank if name is blank." }
+
+  validates :abbrev,
+            uniqueness: { unless: "abbrev.blank?", case_sensitive: false }
+
   validates_exclusion_of :duplicate_of_id,
                          in: ->(author) { [author.id] },
                          allow_blank: true,
