@@ -32,6 +32,7 @@ class Search::Mapper::Extras
   MAP = {
     "reference-search-help" => "references/advanced_search/help",
     "name-search-help" => "names/advanced_search/help",
+    "name-plus-instances-search-help" => "names/advanced_search/help",
     "author-search-help" => "authors/advanced_search/help",
     "instance-search-help" => "instances/advanced_search/help",
     "instances-for-ref-id-search-help" =>
@@ -46,6 +47,7 @@ class Search::Mapper::Extras
     "references/advanced_search/names_full_synonymy/help",
     "reference-search-examples" => "references/advanced_search/examples",
     "name-search-examples" => "names/advanced_search/examples",
+    "name-plus-instances-search-examples" => "names/advanced_search/examples",
     "author-search-examples" => "authors/advanced_search/examples",
     "instance-search-examples" => "instances/advanced_search/examples",
     "instances-for-ref-id-search-examples" =>
