@@ -23,7 +23,7 @@ class Author::AsTypeahead < Author
   def self.on_abbrev(term)
     if term.blank?
       results = []
-    elsif
+    else
       results = Author.lower_abbrev_like(term + "%")\
                 .where("duplicate_of_id is null")\
                 .order("abbrev").limit(SEARCH_LIMIT)\
@@ -49,31 +49,41 @@ class Author::AsTypeahead < Author
       binds.push "%#{search_term}"
     end
     where += " 1=1 "
-    results = Author
-              .not_duplicate
-              .where(binds.unshift(where))
-              .joins("left outer join reference on reference.author_id = author.id")
-              .select("author.name as name, author.id as id, count(reference.id) as ref_count")
-              .group("lower(author.name),author.id")
-              .order("author.name")
-              .limit(SEARCH_LIMIT)
-              .collect { |n| { value: n.ref_count == 0 ? "#{n.name}" : "#{n.name} | #{n.ref_count} #{'ref'.pluralize(n.ref_count)}", id: "#{n.id}" } }
+    Author.not_duplicate
+      .where(binds.unshift(where))
+      .joins("left outer join reference on reference.author_id = author.id")
+      .select("author.name as name, author.id as id, "\
+              "count(reference.id) as ref_count")
+      .group("lower(author.name),author.id")
+      .order("author.name")
+      .limit(SEARCH_LIMIT)
+      .collect { |n| { value: formatted_search_result(n), id: "#{n.id}" } }
+  end
+
+  def self.formatted_search_result(auth)
+    if auth.ref_count == 0
+      auth.name
+    else
+      "#{auth.name} | #{auth.ref_count} #{'ref'.pluralize(auth.ref_count)}"
+    end
   end
 
   # Based on the on_name method, but also excludes :id passed in.
   # Used for offering duplicates_of records.
-  def self.on_name_duplicate_of(term, excluded_id)
+  def self.on_name_duplicate_of(term, excluded_id = -1)
     if term.blank?
-      results = []
-    elsif
-      results = Author.lower_name_like(term + "%")\
-                .where([" author.id <> ?", excluded_id])\
-                .joins("left outer join reference on reference.author_id = author.id")\
-                .select("author.name as name, author.id as id, count(reference.id) as ref_count")\
-                .group("lower(author.name),author.id")\
-                .order("author.name").limit(SEARCH_LIMIT)\
-                .collect { |n| { value: n.ref_count == 0 ? "#{n.name}" : "#{n.name} | #{n.ref_count} #{'ref'.pluralize(n.ref_count)}", id: "#{n.id}" } }
+      []
+    else
+      Author.lower_name_like(term + "%")
+        .not_duplicate
+        .where([" author.id <> ?", excluded_id])
+        .joins("left outer join reference on "\
+               "reference.author_id = author.id")
+        .select("author.name as name, author.id as id, "\
+                "count(reference.id) as ref_count")
+        .group("lower(author.name),author.id")
+        .order("author.name").limit(SEARCH_LIMIT)
+        .collect { |n| { value: formatted_search_result(n), id: "#{n.id}" } }
     end
-    results
   end
 end

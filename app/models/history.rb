@@ -18,6 +18,11 @@
 class History
   CHANGES_2016 = [
     { date: "03-Mar-2016",
+      jira_id: "1698",
+      description:
+      %(Author duplicate typeahead now excludes duplicates - all duplicate-of
+      typeaheads now exclude duplicates.) },
+    { date: "03-Mar-2016",
       jira_id: "1697",
       description:
       %(Prevent duplicate Author abbreviations.) },
