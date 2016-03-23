@@ -10,13 +10,13 @@ create table bulk_name_raw (
   page_extra varchar
 );
 
-export spreadsheet to csv
-edit spreadsheet to remove heading, empty line
+--export spreadsheet to csv
+--edit spreadsheet to remove heading, empty line
 
 
 select count(*) from bulk_name_raw;
 
-\copy bulk_name_raw from '~/Downloads/orchid-checklist-16-march-2016.csv' delimiter ',' csv;
+\copy bulk_name_raw from '~/Downloads/orchid-checklist.csv' delimiter ',' csv;
 
 select count(*) from bulk_name_raw;
 

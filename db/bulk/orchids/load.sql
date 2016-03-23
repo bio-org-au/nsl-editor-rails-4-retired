@@ -1,44 +1,39 @@
-
 drop table bulk_name_processed;
 
 create table
        bulk_name_processed (
         id bigint not null default nextval('nsl_global_seq'::regclass) primary key,
-        genus varchar,
-        species varchar,
-        subsp_var varchar,
-        authority varchar,
-        preferred_authority varchar,
-        page varchar,
-        page_extra varchar,
-        constructed_name varchar,
-        matched_name_id bigint,
-        matched_name_count bigint,
-        inferred_rank varchar not null default 'unknown'
+        genus varchar,species varchar,subsp_var varchar,authority varchar, preferred_authority varchar,
+        page varchar, page_extra varchar, constructed_name varchar,
+        matched_name_id bigint, matched_name_count bigint,
+       inferred_rank varchar not null default 'unknown', 
+      autonym boolean not null default false,
+      phrase_name boolean not null default false
        );
 
-\ echo load data into processing table
+\echo load data into processing table
 
-insert into bulk_name_processed(
-  genus,
-  species,
-  subsp_var,
-  authority,
-  preferred_authority,
-  page,
-  page_extra
-)
-select
-  genus,
-  species,
-  subsp_var,
-  authority,
-  preferred_authority,
-  page,
-  page_extra
-from bulk_name_raw;
-
-select count(*) from bulk_name_processed;
+insert into bulk_name_processed(genus,
+       species,subsp_var,authority, preferred_authority, page,page_extra
+     )
+select trim(
+        both
+  from genus
+       ), trim(
+        both
+  from species
+       ), trim(
+        both
+  from subsp_var
+       ),trim(
+        both
+  from authority
+       ),
+			 trim(
+			         both
+			   from preferred_authority
+			        ),page,page_extra
+  from bulk_name_raw;
 
 
 \echo set inferred rank
@@ -61,27 +56,54 @@ update bulk_name_processed
 update bulk_name_processed
    set constructed_name = genus || ' ' || species || ' ' || coalesce(preferred_authority, authority)
  where constructed_name is null
-   and (authority is not null or preferred_authority is not null)
+   and authority is not null
    and subsp_var is null;
 
-\echo construct variety names
+\echo construct non-autonym variety names
 
 update bulk_name_processed
    set constructed_name = genus || ' ' || species || ' ' || subsp_var || ' ' || coalesce(preferred_authority, authority)
  where constructed_name is null
    and subsp_var like 'var. %'
-   and (authority is not null or preferred_authority is not null);
+   and authority is not null
+   and subsp_var != concat('var. ',species);
 
-\echo construct subspecies names
+\echo construct autonym variety names
 
 update bulk_name_processed
-   set constructed_name = genus || ' ' || species || ' ' || ' ' || subsp_var || ' ' || coalesce(preferred_authority, authority)
+   set constructed_name = genus || ' ' || species || ' ' || coalesce(preferred_authority, authority) || ' ' || subsp_var
+ where constructed_name is null
+   and subsp_var like 'var. %'
+   and authority is not null
+   and subsp_var = concat('var. ', species);
+
+\echo construct non-autonym subspecies variety names - e.g. subsp. x var. y
+
+update bulk_name_processed
+   set constructed_name = genus || ' ' || species || ' ' || substring(subsp_var,position('var. ' in subsp_var)) || ' ' || coalesce(preferred_authority, authority)
+ where constructed_name is null
+   and subsp_var like 'subsp. % var. %'
+	 and authority is not null
+	 and subsp_var != concat('var. ',species);
+
+
+\echo construct non-autonym subspecies names
+
+update bulk_name_processed
+   set constructed_name = genus || ' ' || species || ' ' || subsp_var || ' ' || coalesce(preferred_authority, authority)
  where constructed_name is null
    and subsp_var like 'subsp. %'
-   and (authority is not null or preferred_authority is not null);
+   and authority is not null
+   and subsp_var != concat('subsp. ', species);
 
+\echo construct autonym subspecies names
 
-
+update bulk_name_processed
+   set constructed_name = genus || ' ' || species || ' ' || coalesce(preferred_authority, authority) || ' ' || subsp_var
+ where constructed_name is null
+   and subsp_var like 'subsp. %'
+   and authority is not null
+   and subsp_var = concat('subsp. ', species);
 
 \echo construct names without authority
 
@@ -89,11 +111,6 @@ update bulk_name_processed
    set constructed_name = genus || ' ' || species || ' ' || subsp_var
  where constructed_name is null
    and subsp_var is not null
-   and authority is null;
-
-update bulk_name_processed
-   set constructed_name = genus || ' ' || species
- where constructed_name is null
    and authority is null;
 
 \echo all records should now have constructed names
@@ -169,8 +186,74 @@ select inferred_rank, matched_name_count, count(*)
  order by 1,2;
 
 
-select genus, species, subsp_var,constructed_name
+select genus, species, subsp_var, authority, preferred_authority,constructed_name
   from bulk_name_processed
  where subsp_var like 'var.%';
 
-\echo New step: create names for mismatches.
+select genus, species, subsp_var, authority, preferred_authority, constructed_name
+  from bulk_name_processed 
+ where matched_name_count = 0
+   and subsp_var is null;
+
+select genus, species, subsp_var, authority, preferred_authority, constructed_name
+  from bulk_name_processed 
+ where matched_name_count = 0
+   and subsp_var is not null;
+
+select inferred_rank, matched_name_count, count(*)
+  from bulk_name_processed
+ where constructed_name is not null
+ group by inferred_rank, matched_name_count
+ order by 1,2;
+
+\echo Non-matched names with a matching legitimate simple name
+\echo
+
+select genus, species, authority, preferred_authority, full_name
+  from bulk_name_processed bnp
+       inner join
+       name on
+       bnp.genus || ' ' || bnp.species = name.simple_name
+       inner join 
+       name_status ns
+       on name.name_status_id = ns.id
+ where matched_name_count = 0
+   and ns.name = 'legitimate'
+ order by genus, species;
+
+\echo Review results
+\echo
+
+ select inferred_rank, matched_name_count, count(*)
+   from bulk_name_processed
+  where constructed_name is not null
+  group by inferred_rank, matched_name_count
+  order by 1,2;
+
+
+\echo Non-matched names
+\echo
+
+select genus, species, subsp_var, authority, preferred_authority, constructed_name
+  from bulk_name_processed bnp
+ where matched_name_count = 0
+ order by genus, species;
+
+\echo Multi-matched names
+\echo
+
+select genus, species, subsp_var, authority, preferred_authority, constructed_name
+  from bulk_name_processed bnp
+ where matched_name_count > 1
+order by genus, species;
+
+
+\echo Remaining problems
+\echo
+
+	select inferred_rank, matched_name_count, count(*)
+	  from bulk_name_processed
+	 where constructed_name is not null
+	 group by inferred_rank, matched_name_count
+	 having matched_name_count != 1
+	 order by 1,2;
