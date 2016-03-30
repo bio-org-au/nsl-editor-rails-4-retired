@@ -18,6 +18,10 @@
 class History
   CHANGES_2016 = [
     { date: "30-Mar-2016",
+      jira_id: "1737",
+      description:
+      %(Adjust layout for laptop screen - to show bottom of pages.) },
+    { date: "30-Mar-2016",
       jira_id: "945",
       description:
       %(Typeahead on full name (e.g. for adding instance to reference) now
