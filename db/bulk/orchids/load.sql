@@ -238,6 +238,22 @@ select genus, species, subsp_var, authority, preferred_authority, constructed_na
   from bulk_name_processed bnp
  where matched_name_count = 0
  order by genus, species;
+ 
+\echo Non-matched names - just the raw data
+\echo
+
+select genus, species, subsp_var, authority, preferred_authority
+   from bulk_name_processed bnp
+  where matched_name_count = 0
+  order by genus, species;
+ 
+\echo Non-matched names - just the constructed names
+\echo
+
+	select constructed_name
+	  from bulk_name_processed bnp
+	 where matched_name_count = 0
+	 order by genus, species;
 
 \echo Multi-matched names
 \echo
