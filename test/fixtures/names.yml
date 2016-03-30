@@ -1890,3 +1890,16 @@ parent_of_named_hybrid_autonym_with_mismatched_name:
   parent: a_family
   updated_by: greg
   created_by: greg
+
+a_name_without_instances: 
+  simple_name: 'a name without instances'
+  name_element: 'a name without instances'
+  full_name: 'a name without instances'
+  name_rank: species
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+

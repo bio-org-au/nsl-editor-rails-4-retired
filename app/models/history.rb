@@ -17,7 +17,12 @@
 #
 class History
   CHANGES_2016 = [
-    { date: "29-Mar-2016",
+    { date: "30-Mar-2016",
+      jira_id: "945",
+      description:
+      %(Typeahead on full name (e.g. for adding instance to reference) now
+      excludes names without instances.) },
+    { date: "30-Mar-2016",
       jira_id: "1730",
       description:
       %(Fix validation error when editing APC distribution Instance Note.) },
