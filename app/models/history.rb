@@ -17,6 +17,10 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "29-Mar-2016",
+      jira_id: "1730",
+      description:
+      %(Fix validation error when editing APC distribution Instance Note.) },
     { date: "24-Mar-2016", release: true },
     { date: "17-Mar-2016",
       jira_id: "1712",

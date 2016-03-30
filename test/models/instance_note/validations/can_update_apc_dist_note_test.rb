@@ -17,17 +17,14 @@
 require "test_helper"
 
 # Single instance note model test.
-class InstanceNoteOneApcDistNoteOnlyTest < ActiveSupport::TestCase
-  test "instance can have only one apc dist note" do
-    assert_raises ActiveRecord::RecordInvalid, "Record should be invalid" do
-      instance_note = InstanceNote.new(
-        instance: instances(:has_apc_dist_note),
-        instance_note_key: instance_note_keys(:apc_dist),
-        value: "some string",
-        created_by: "test",
-        updated_by: "test",
-        namespace: namespaces(:apni))
-      instance_note.save!
+class InstanceNoteCanUpdateApcDistNoteTest < ActiveSupport::TestCase
+  test "can update instance apc dist note" do
+    assert_nothing_raised("Should not raise exception if everything is ok") do
+      apc_dist_note_key = InstanceNoteKey.find_by_name("APC Dist.")
+      note = InstanceNote.where(instance_note_key_id: apc_dist_note_key.id).first
+      note.value = note.value + 'x'
+      assert note.valid?, "Updated APC Dist. instance note should still be valid"
+      note.save!
     end
   end
 end
