@@ -299,5 +299,45 @@ class Search::OnName::FieldRule
       "id in \
       (select name_id from instance group by name_id having count(*) = 1)", },
 
+    "earliest-instance-not-primary:" =>
+    { where_clause:
+      "id in  (select n.id
+  from name n
+ inner join instance i
+    on n.id = i.name_id
+ inner join instance_type it
+    on i.instance_type_id = it.id
+ inner join reference r
+    on i.reference_id = r.id
+ inner join name_type nt
+    on n.name_type_id = nt.id
+ inner join name_status ns
+    on n.name_status_id = ns.id
+ where not (it.primary_instance or it.name in ('autonym','implicit autonym'))
+   and nt.scientific
+   and not ns.nom_inval
+   and ns.name != 'isonym'
+   and r.year = (select min(year)
+                   from name n2
+                  inner join instance i2
+                     on n2.id = i2.name_id
+                  inner join instance_type it2
+                     on i2.instance_type_id = it2.id
+                  inner join reference r2
+                     on i2.reference_id = r2.id
+                  where n2.id = n.id)
+   and not exists (select null 
+                     from name n3
+                    inner join instance i3
+                       on n3.id = i3.name_id
+                    inner join instance_type it3
+                       on i3.instance_type_id = it3.id
+                    inner join reference r3
+                       on i3.reference_id = r3.id
+                    where n3.id = n.id
+                      and (it3.primary_instance or it3.name = 'autonym')
+                      and r3.year = r.year) 
+      )", },
+
   }
 end

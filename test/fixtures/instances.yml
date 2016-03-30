@@ -756,3 +756,14 @@ inst_species_or_below_to_be_synonym:
   namespace: apni
   created_by: tester
   updated_by: tester
+
+# standalone for name earliest_instance_not_primary: 
+inst_for_name_earliest_instance_not_primary:
+  reference: ref_4_genus_or_above_to_be_synonym
+  name: earliest_instance_not_primary
+  instance_type: secondary_reference
+  page: exclude-from-ordering-test
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+
