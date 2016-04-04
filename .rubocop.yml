@@ -1,7 +1,7 @@
 AllCops:
   Exclude:
     - 'db/**/*'
-Style/TrailingComma:
+Style/TrailingCommaInLiteral:
   Enabled: false
 StringLiterals:
   EnforcedStyle: double_quotes
