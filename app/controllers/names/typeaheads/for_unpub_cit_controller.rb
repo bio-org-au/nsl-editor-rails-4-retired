@@ -14,15 +14,17 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require "test_helper"
+#   Names are central to the NSL.
+class Names::Typeaheads::ForUnpubCitController < ApplicationController
 
-# Single Name typeahead test.
-class NoSearchTermTest < ActiveSupport::TestCase
-  test "name typeahead full name no search term test" do
-    suggestions = Name::AsTypeahead::OnFullName.new({}).suggestions
-    assert(suggestions.is_a?(Array), "suggestions should be an array")
-    assert_equal suggestions.size,
-                 0,
-                 "suggestions for no search term should be empty"
+  def index
+    typeahead = Name::AsTypeahead::ForUnpubCit.new(params)
+    render json: typeahead.suggestions
+  end
+
+  private
+
+  def typeahead_params
+    params.permit(:term)
   end
 end

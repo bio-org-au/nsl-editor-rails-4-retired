@@ -17,6 +17,12 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "04-Apr-2016",
+      jira_id: "1745",
+      description:
+      %(Include names without instances in the Name typeahead for unpublished
+      citation - problem arose after NSL-945.) }, 
+    { date: "31-Mar-2016", release: true },
     { date: "30-Mar-2016",
       jira_id: "1157",
       description:

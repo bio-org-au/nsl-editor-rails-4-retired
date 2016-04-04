@@ -95,3 +95,4 @@ gem "underscore-rails"
 
 gem "pg_search"
 gem "acts_as_tree"
+gem "font-awesome-rails"

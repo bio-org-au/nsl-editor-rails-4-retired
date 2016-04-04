@@ -46,6 +46,7 @@
 //= require typeahead/for_instance/for_name_showing_reference.js
 //= require typeahead/for_instance/for_name_showing_reference_update.js
 //= require typeahead/for_instance/name.js
+//= require typeahead/for_instance/name_for_unpub_citation.js
 //= require typeahead/for_instance/reference.js
 //= require typeahead/for_instance/reference_excluding_current.js
 //= require typeahead/for_instance/synonymy.js

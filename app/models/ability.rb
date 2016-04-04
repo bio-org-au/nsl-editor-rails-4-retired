@@ -84,6 +84,7 @@ class Ability
     can "names",              :all
     can "names_deletes",      :all
     can "references",         :all
+    can "names/typeaheads/for_unpub_cit", :all
   end
 
   def qa_auth

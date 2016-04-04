@@ -26,7 +26,7 @@
                value=""/>
       </section>
     </div>
-    <script> setUpInstanceName(); </script>
+    <script> setUpInstanceNameForUnpubCitation(); </script>
     is used as a type*
     <%= render partial: 'detail_line', locals: {
             info: f.select(:instance_type_id, InstanceType.unpublished_citation_options,{include_blank: true},

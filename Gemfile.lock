@@ -95,6 +95,8 @@ GEM
     ffi (1.9.6-java)
     figaro (1.1.0)
       thor (~> 0.14)
+    font-awesome-rails (4.5.0.1)
+      railties (>= 3.2, < 5.1)
     formatador (0.2.5)
     guard (2.12.1)
       formatador (>= 0.2.4)
@@ -323,6 +325,7 @@ DEPENDENCIES
   delayed_job_active_record
   exception_notification
   figaro
+  font-awesome-rails
   guard-bundler
   guard-rails
   guard-test

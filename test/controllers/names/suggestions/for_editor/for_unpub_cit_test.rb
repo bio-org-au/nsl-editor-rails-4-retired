@@ -16,13 +16,20 @@
 #
 require "test_helper"
 
-# Single Name typeahead test.
-class NoSearchTermTest < ActiveSupport::TestCase
-  test "name typeahead full name no search term test" do
-    suggestions = Name::AsTypeahead::OnFullName.new({}).suggestions
-    assert(suggestions.is_a?(Array), "suggestions should be an array")
-    assert_equal suggestions.size,
-                 0,
-                 "suggestions for no search term should be empty"
+# Single controller test.
+class NameSuggsForUnpubCitTest < ActionController::TestCase
+  tests Names::Typeaheads::ForUnpubCitController
+  setup do
+    @name = names(:a_species)
+  end
+
+  test "name for unpub cit suggestions for editor" do
+    @request.headers["Accept"] = "application/javascript"
+    get(:index,
+        { rank_id: name_ranks(:unranked).id, term: "search for this" },
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: ["edit"])
+    assert_response :success
   end
 end

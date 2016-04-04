@@ -5,7 +5,7 @@ create table
         id bigint not null default nextval('nsl_global_seq'::regclass) primary key,
         genus varchar,species varchar,subsp_var varchar,authority varchar, preferred_authority varchar,
         page varchar, page_extra varchar, constructed_name varchar,
-        matched_name_id bigint, matched_name_count bigint,
+        matched_name_id bigint, matched_name_count bigint not null default 0,
        inferred_rank varchar not null default 'unknown', 
       autonym boolean not null default false,
       phrase_name boolean not null default false
@@ -54,6 +54,15 @@ update bulk_name_processed
 \echo construct species names
 
 update bulk_name_processed
+   set constructed_name = genus || ' ' || species 
+ where constructed_name is null
+   and authority is null
+   and preferred_authority is null
+   and subsp_var is null;
+
+\echo construct species names with a preferred authority
+
+update bulk_name_processed
    set constructed_name = genus || ' ' || species || ' ' || coalesce(preferred_authority, authority)
  where constructed_name is null
    and authority is not null
@@ -84,7 +93,16 @@ update bulk_name_processed
  where constructed_name is null
    and subsp_var like 'subsp. % var. %'
 	 and authority is not null
-	 and subsp_var != concat('var. ',species);
+	 and subsp_var != ('subsp. '||species||' var. '||species);
+
+\echo construct autonymic subspecies variety names - e.g. subsp. x var. y
+
+update bulk_name_processed
+   set constructed_name = genus || ' ' || species || ' ' || coalesce(preferred_authority, authority) || ' ' || substring(subsp_var,position('var. ' in subsp_var))
+ where constructed_name is null
+   and subsp_var like 'subsp. % var. %'
+	 and authority is not null
+	 and subsp_var = ('subsp. '||species||' var. '||species);
 
 
 \echo construct non-autonym subspecies names
@@ -117,7 +135,7 @@ update bulk_name_processed
 
 select count(*) from bulk_name_processed where constructed_name is null;
 
-\echo run a match
+\echo run a simple match
 
 update bulk_name_processed
    set matched_name_id = (
@@ -125,80 +143,155 @@ update bulk_name_processed
       from name
     where full_name = bulk_name_processed.constructed_name
       and duplicate_of_id is null
-       )
- where constructed_name is not null
-   and matched_name_id is null;
-
-\echo record mulitple matches count
-
-update bulk_name_processed
-   set matched_name_count = (
+    group by full_name
+    having count(*) = 1
+       ),
+    matched_name_count = 
+    (
     select count(*)
       from name
     where full_name = bulk_name_processed.constructed_name
       and duplicate_of_id is null
-       )
- where constructed_name is not null
-   and matched_name_count is null;
+    group by full_name
+    having count(*) = 1
+    )
+  where exists ( select null
+                   from name
+                  where full_name = bulk_name_processed.constructed_name
+                    and duplicate_of_id is null 
+                  group by full_name
+                  having count(*) = 1)
+   and constructed_name is not null
+   and matched_name_id is null;
 
-\echo review results
-
-select inferred_rank, matched_name_count, count(*)
-  from bulk_name_processed
- where constructed_name is not null
- group by inferred_rank, matched_name_count
- order by 1,2;
-
-\echo now deal with multiple matches
+\echo run a match on unmatched that excludes non-instance names
 
 update bulk_name_processed
    set matched_name_id = (
-    select min(name.id)
+    select min(id)
       from name
-           inner join
-           name_status ns
-           on name.name_status_id = ns.id
     where full_name = bulk_name_processed.constructed_name
       and duplicate_of_id is null
-      and ns.name = 'legitimate'
-       )
- where constructed_name is not null
-   and matched_name_count > 1;
+      and exists (select null from instance where name_id = name.id)
+    group by full_name
+    having count(*) = 1
+       ),
+    matched_name_count = (select count(*)
+      from name
+    where full_name = bulk_name_processed.constructed_name
+      and duplicate_of_id is null
+      and exists (select null from instance where name_id = name.id)
+    group by full_name
+    having count(*) = 1)
+  where exists ( select null
+                   from name
+                  where full_name = bulk_name_processed.constructed_name
+                    and duplicate_of_id is null 
+                    and exists (select null from instance where name_id = name.id)
+                  group by full_name
+                  having count(*) = 1 )
+   and constructed_name is not null
+   and matched_name_id is null;
+
+\echo run a match on unmatched that excludes nom_inval names
+\echo
 
 update bulk_name_processed
-   set matched_name_count = (
-    select count(*)
+   set matched_name_id = (
+    select min(id)
       from name
-           inner join
-           name_status ns
-           on name.name_status_id = ns.id
     where full_name = bulk_name_processed.constructed_name
       and duplicate_of_id is null
-      and ns.name = 'legitimate'
-       )
- where constructed_name is not null
-   and matched_name_count > 1;
+      and not exists (select null from name_status where name.name_status_id = name_status.id and nom_inval)
+    group by full_name
+    having count(*) = 1
+       ),
+    matched_name_count = (select count(*)
+      from name
+    where full_name = bulk_name_processed.constructed_name
+      and duplicate_of_id is null
+      and not exists (select null from name_status where name.name_status_id = name_status.id and nom_inval)
+    group by full_name
+    having count(*) = 1)
+  where exists ( select null
+                   from name
+                  where full_name = bulk_name_processed.constructed_name
+                    and duplicate_of_id is null 
+                    and not exists (select null from name_status where name.name_status_id = name_status.id and nom_inval) 
+                    group by full_name
+                    having count(*) = 1)
+   and constructed_name is not null
+   and matched_name_id is null;
 
+
+\echo run a match on unmatched that excludes nom_inval and no-instance names
+\echo
+
+update bulk_name_processed
+   set matched_name_id = (
+    select min(id)
+      from name
+    where full_name = bulk_name_processed.constructed_name
+      and duplicate_of_id is null
+      and not exists (select null from name_status where name.name_status_id = name_status.id and nom_inval)
+      and exists (select null from instance i where i.name_id = name.id)
+    group by full_name
+    having count(*) = 1
+       ),
+    matched_name_count = (select count(*)
+      from name
+    where full_name = bulk_name_processed.constructed_name
+      and duplicate_of_id is null
+      and not exists (select null from name_status where name.name_status_id = name_status.id and nom_inval)
+      and exists (select null from instance i where i.name_id = name.id)
+    group by full_name
+    having count(*) = 1)
+  where exists ( select null
+                   from name
+                  where full_name = bulk_name_processed.constructed_name
+                    and duplicate_of_id is null 
+                    and not exists (select null from name_status where name.name_status_id = name_status.id and nom_inval) 
+                    and exists (select null from instance i where i.name_id = name.id)
+                    group by full_name
+                    having count(*) = 1)
+   and constructed_name is not null
+   and matched_name_id is null;
+
+
+
+\echo run a min(id) match on leftovers
+\echo
+
+update bulk_name_processed
+   set matched_name_id = (
+    select min(id)
+      from name
+    where full_name = bulk_name_processed.constructed_name
+      and duplicate_of_id is null
+    group by full_name
+       ),
+       matched_name_count = (
+    select coalesce(count(*),0)
+      from name
+    where full_name = bulk_name_processed.constructed_name
+      and duplicate_of_id is null
+    group by full_name
+       )
+  where exists ( select null
+                   from name
+                  where full_name = bulk_name_processed.constructed_name
+                    and duplicate_of_id is null )
+    and constructed_name is not null
+    and matched_name_id is null;
+
+\echo summary
+\echo
 select inferred_rank, matched_name_count, count(*)
   from bulk_name_processed
  where constructed_name is not null
  group by inferred_rank, matched_name_count
  order by 1,2;
 
-
-select genus, species, subsp_var, authority, preferred_authority,constructed_name
-  from bulk_name_processed
- where subsp_var like 'var.%';
-
-select genus, species, subsp_var, authority, preferred_authority, constructed_name
-  from bulk_name_processed 
- where matched_name_count = 0
-   and subsp_var is null;
-
-select genus, species, subsp_var, authority, preferred_authority, constructed_name
-  from bulk_name_processed 
- where matched_name_count = 0
-   and subsp_var is not null;
 
 select inferred_rank, matched_name_count, count(*)
   from bulk_name_processed
@@ -221,6 +314,36 @@ select genus, species, authority, preferred_authority, full_name
    and ns.name = 'legitimate'
  order by genus, species;
 
+\echo match leftovers on simple name
+\echo
+
+update bulk_name_processed
+   set matched_name_id = (
+    select min(id)
+      from name
+    where simple_name = bulk_name_processed.constructed_name
+      and duplicate_of_id is null
+    group by full_name
+    having count(*) = 1
+       ),
+    matched_name_count = 
+    (
+    select count(*)
+      from name
+    where simple_name = bulk_name_processed.constructed_name
+      and duplicate_of_id is null
+    group by full_name
+    having count(*) = 1
+    )
+  where exists ( select null
+                   from name
+                  where simple_name = bulk_name_processed.constructed_name
+                    and duplicate_of_id is null 
+                  group by full_name
+                  having count(*) = 1)
+   and constructed_name is not null
+   and matched_name_id is null;
+
 \echo Review results
 \echo
 
@@ -231,13 +354,14 @@ select genus, species, authority, preferred_authority, full_name
   order by 1,2;
 
 
-\echo Non-matched names
+\echo Non-matched names (first 20)
 \echo
 
 select genus, species, subsp_var, authority, preferred_authority, constructed_name
   from bulk_name_processed bnp
  where matched_name_count = 0
- order by genus, species;
+ order by genus, species
+ limit 20;
  
 \echo Non-matched names - just the raw data
 \echo
@@ -245,7 +369,8 @@ select genus, species, subsp_var, authority, preferred_authority, constructed_na
 select genus, species, subsp_var, authority, preferred_authority
    from bulk_name_processed bnp
   where matched_name_count = 0
-  order by genus, species;
+  order by genus, species
+   limit 20;
  
 \echo Non-matched names - just the constructed names
 \echo
@@ -253,7 +378,8 @@ select genus, species, subsp_var, authority, preferred_authority
 	select constructed_name
 	  from bulk_name_processed bnp
 	 where matched_name_count = 0
-	 order by genus, species;
+	 order by genus, species
+   limit 20;
 
 \echo Multi-matched names
 \echo
@@ -264,12 +390,31 @@ select genus, species, subsp_var, authority, preferred_authority, constructed_na
 order by genus, species;
 
 
-\echo Remaining problems
+\echo Remaining unmatched or multi-matched
 \echo
 
 	select inferred_rank, matched_name_count, count(*)
 	  from bulk_name_processed
-	 where constructed_name is not null
 	 group by inferred_rank, matched_name_count
-	 having matched_name_count != 1
+	 having matched_name_count != 1 
 	 order by 1,2;
+
+
+\echo Count all raw records
+select count(*) from bulk_name_raw;
+
+\echo Count all processing records: should equal previous
+select count(*) from bulk_name_processed;
+
+\echo Count records with no constructed name: 0 is a good result
+select count(*) from bulk_name_processed where constructed_name is null;
+
+\echo count records with no matched name (count is 0): these will be created
+select count(*) from bulk_name_processed where matched_name_count = 0;
+
+\echo count records with no matched name (matched_id is null): this should equal the previous count
+select count(*) from bulk_name_processed where matched_name_id is null;
+
+\echo big picture
+\echo
+select matched_name_count, count(*) from bulk_name_processed group by matched_name_count order by 1;

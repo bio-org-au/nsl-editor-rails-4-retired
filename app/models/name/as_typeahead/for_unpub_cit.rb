@@ -14,15 +14,30 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require "test_helper"
+#   A list of names.
+class Name::AsTypeahead::ForUnpubCit
+  attr_reader :suggestions,
+              :params
+  SEARCH_LIMIT = 50
 
-# Single Name typeahead test.
-class NoSearchTermTest < ActiveSupport::TestCase
-  test "name typeahead full name no search term test" do
-    suggestions = Name::AsTypeahead::OnFullName.new({}).suggestions
-    assert(suggestions.is_a?(Array), "suggestions should be an array")
-    assert_equal suggestions.size,
-                 0,
-                 "suggestions for no search term should be empty"
+  def initialize(params)
+    @params = params
+    @suggestions = @params[:term].blank? ? [] : query
+  end
+
+  def prepared_search_term
+    @params[:term].tr("*", "%").downcase + "%"
+  end
+
+  def query
+    Name.not_a_duplicate
+        .where(["lower(full_name) like ?", prepared_search_term])
+        .includes(:name_status)
+        .joins(:name_rank)
+        .order("name_rank.sort_order, lower(full_name)")
+        .limit(SEARCH_LIMIT)
+        .collect do |n|
+      { value: "#{n.full_name} - #{n.name_status.name}", id: n.id }
+    end
   end
 end

@@ -17,9 +17,9 @@
 require "test_helper"
 
 # Single Name typeahead test.
-class NoSearchTermTest < ActiveSupport::TestCase
-  test "name typeahead full name no search term test" do
-    suggestions = Name::AsTypeahead::OnFullName.new({}).suggestions
+class NameTAForUCitNoSearchTermTest < ActiveSupport::TestCase
+  test "name typeahead for unput cit no search term" do
+    suggestions = Name::AsTypeahead::ForUnpubCit.new({}).suggestions
     assert(suggestions.is_a?(Array), "suggestions should be an array")
     assert_equal suggestions.size,
                  0,

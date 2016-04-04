@@ -17,12 +17,12 @@
 require "test_helper"
 
 # Single Name typeahead test.
-class NoSearchTermTest < ActiveSupport::TestCase
-  test "name typeahead full name no search term test" do
-    suggestions = Name::AsTypeahead::OnFullName.new({}).suggestions
+class NameTAForUCitOrderedByRankTest < ActiveSupport::TestCase
+  test "name typeahead for unpub cit ordered by rank" do
+    suggestions = Name::AsTypeahead::ForUnpubCit.new(term: "**").suggestions
+    # suggestions.each {|e| puts e }
     assert(suggestions.is_a?(Array), "suggestions should be an array")
-    assert_equal suggestions.size,
-                 0,
-                 "suggestions for no search term should be empty"
+    assert suggestions.first[:value].match(/Plantae Haeckel/),
+           "Kingdom should be first"
   end
 end

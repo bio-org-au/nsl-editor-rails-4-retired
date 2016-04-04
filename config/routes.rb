@@ -70,6 +70,11 @@ Rails.application.routes.draw do
 
   match "name/refresh/:id", as: "refresh_name", to: "names#refresh", via: :get
   match "name/refresh/children/:id", as: "refresh_children_name", to: "names#refresh_children", via: :get
+  match "names/typeaheads/for_unpub_cit/index",
+        as: "names_typeahead_for_unpub_cit",
+        to: "names/typeaheads/for_unpub_cit#index",
+        via: :get
+
   match "names/typeahead_on_full_name",
         as: "names_typeahead_on_full_name",
         to: "names#typeahead_on_full_name",
