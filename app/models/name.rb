@@ -504,7 +504,6 @@ class Name < ActiveRecord::Base
   end
 
   def apc?
-    logger.debug("apc?")
     json = get_apc_json
     if json["inAPC"] == true
       self.apc_instance_id = json["taxonId"].to_i

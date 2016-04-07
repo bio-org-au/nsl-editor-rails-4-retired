@@ -95,4 +95,6 @@ gem "underscore-rails"
 
 gem "pg_search"
 gem "acts_as_tree"
-gem "font-awesome-rails"
+
+# Removed because it seems to stop icons Angular part of the app.
+# gem "font-awesome-rails"

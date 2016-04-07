@@ -33,6 +33,7 @@ class Instance::AsArray::ForName < Array
   attr_reader :results
 
   def initialize(name)
+    debug("init #{name.full_name}")
     @results = []
     @already_shown = []
     sorted_instances(name.instances).each do |instance|
@@ -44,19 +45,27 @@ class Instance::AsArray::ForName < Array
     end
   end
 
+  def debug(s)
+    #Rails.logger.debug("====================================================")
+    #Rails.logger.debug("Instance::AsArray::ForName: #{s}")
+  end
+
   def sorted_instances(instances)
+    debug("sorted_instances")
     instances.sort do |i1, i2|
       sort_fields(i1) <=> sort_fields(i2)
     end
   end
 
   def sort_fields(instance)
+    debug("sort_fields")
     [instance.reference.year || 9999,
      instance.instance_type.primaries_first,
      instance.reference.author.try("name") || "x"]
   end
 
   def show_standalone_instance(instance)
+    debug("show_standalone_instance #{instance.id}")
     standalone_instance_records(instance).each do |one_instance|
       one_instance.show_primary_instance_type = true
       one_instance.consider_apc = true
@@ -70,6 +79,7 @@ class Instance::AsArray::ForName < Array
   #   (all instances that say they are cited by the standalone instance)
   #   - display these relationship instances as cited_by the standalone instance
   def standalone_instance_records(instance)
+    debug("show_standalone_instance_records #{instance.id}")
     results = [instance.display_as_part_of_concept]
     records_cited_by_standalone(instance)
       .each do |cited_by_original_instance|
@@ -82,6 +92,7 @@ class Instance::AsArray::ForName < Array
   end
 
   def records_cited_by_standalone(instance)
+    debug("records_cited_by_standalone for instance #{instance.id}")
     Instance.joins(:instance_type, :name, :reference)
       .where(cited_by_id: instance.id)
       .in_nested_instance_type_order
@@ -89,6 +100,7 @@ class Instance::AsArray::ForName < Array
   end
 
   def show_relationship_instance(name, instance)
+    debug("show_relationship_instance_records #{name.full_name} instance: #{instance.id}")
     citing_instance = instance.this_is_cited_by
     return if @already_shown.include?(citing_instance.id)
     relationship_instance_records(name, citing_instance).each do |element|
@@ -101,6 +113,7 @@ class Instance::AsArray::ForName < Array
   # NSL-536: If instance name is not the subject name then
   # do not show the instance type.
   def relationship_instance_records(name, instance)
+    debug("relationship_instance_records for name #{name.full_name} and instance #{instance.id}")
     results = [instance.display_as_citing_instance_within_name_search]
     records_cited_by_relationship(instance)
       .each do |cited_by_original_instance|
@@ -113,6 +126,7 @@ class Instance::AsArray::ForName < Array
   end
 
   def with_display_as(instance)
+    debug("with_display_as for instance #{instance.id}")
     if instance.misapplied?
       instance.display_as = "cited-by-relationship-instance"
     else
@@ -122,12 +136,9 @@ class Instance::AsArray::ForName < Array
   end
 
   def records_cited_by_relationship(instance)
+    debug("records_cited_by_relationship for instance #{instance.id}")
     Instance.joins(:instance_type)
       .where(cited_by_id: instance.id)
       .in_nested_instance_type_order
-  end
-
-  def debug(s)
-    Rails.logger.debug("Instance::AsArray::ForName: #{s}")
   end
 end
