@@ -17,6 +17,11 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "13-Apr-2016",
+      jira_id: "1756",
+      description:
+      %(Remove stray text on synonym instance details tab.) },
+    { date: "12-Apr-2016", release: true },
     { date: "04-Apr-2016",
       jira_id: "1745",
       description:
