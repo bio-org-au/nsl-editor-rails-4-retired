@@ -17,6 +17,7 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "14-Apr-2016", release: true },
     { date: "13-Apr-2016",
       jira_id: "1756",
       description:
