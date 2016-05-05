@@ -48,7 +48,7 @@ class Search::ParsedDefinedQuery
   end
 
   def debug(s)
-    Rails.logger.debug("Search::ParsedQueryTarget: #{s}")
+    Rails.logger.debug("Search::ParsedDefinedQuery: #{s}")
   end
 
   def parse_query_target
