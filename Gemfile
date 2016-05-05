@@ -50,7 +50,12 @@ end
 group :development, :test do
   gem "pry-rails"
   gem "pry-rescue"
-  gem "schema_plus"
+  # See https://github.com/SchemaPlus/schema_plus/issues/214
+  #gem "schema_plus" # causes ArgumentError: wrong number of arguments (7 for 4)
+                     # from /Users/gregc/.rbenv/versions/jruby-9.0.5.0/
+                     # lib/ruby/gems/shared/gems/schema_plus-1.8.9/
+                     # lib/schema_plus/active_record/connection_adapters/
+                     # postgresql_adapter.rb:1248:in `initialize'
 end
 
 group :test do
