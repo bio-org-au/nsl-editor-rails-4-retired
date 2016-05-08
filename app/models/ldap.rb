@@ -72,7 +72,7 @@ class Ldap < ActiveType::Object
   private
 
   def admin_connection
-    Rails.logger.info("Connecting to LDAP")
+    Rails.logger.info("Connecting to LDAP (admin_connection)")
     ldap = Net::LDAP.new
     ldap.host = Rails.configuration.ldap_host
     ldap.port = Rails.configuration.ldap_port
@@ -84,6 +84,7 @@ class Ldap < ActiveType::Object
       Rails.logger.error("ldap.port: #{ldap.port}")
       Rails.logger.error("user: #{Rails.configuration.ldap_admin_username}")
       Rails.logger.error("error: #{ldap.get_operation_result.error_message}")
+      throw "LDAP admin connection failed"
     end
     ldap
   end
