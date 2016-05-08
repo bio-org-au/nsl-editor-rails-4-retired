@@ -79,8 +79,11 @@ class Ldap < ActiveType::Object
     ldap.auth Rails.configuration.ldap_admin_username,
               Rails.configuration.ldap_admin_password
     unless ldap.bind
-      Rails.logger.error("LDAP error")
-      Rails.logger.error(ldap.get_operation_result.error_message)
+      Rails.logger.error("Could not connect to LDAP server")
+      Rails.logger.error("ldap.host: #{ldap.host}")
+      Rails.logger.error("ldap.port: #{ldap.port}")
+      Rails.logger.error("user: #{Rails.configuration.ldap_admin_username}")
+      Rails.logger.error("error: #{ldap.get_operation_result.error_message}")
     end
     ldap
   end
