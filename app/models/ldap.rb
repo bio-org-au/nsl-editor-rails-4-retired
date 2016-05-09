@@ -99,9 +99,9 @@ class Ldap < ActiveType::Object
       errors.add(:connection, "failed")
       Rails.logger.error("Validating user credentials failed.")
     end
-  rescue => e
-    Rails.logger.error("Exception in validate_user_credentials")
-    Rails.logger.error(e.to_s)
-    errors.add(:connection, "connection failed with exception")
+  #rescue => e
+    #Rails.logger.error("Exception in validate_user_credentials")
+    #Rails.logger.error(e.to_s)
+    #errors.add(:connection, "connection failed with exception")
   end
 end
