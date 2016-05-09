@@ -99,9 +99,14 @@ class Ldap < ActiveType::Object
       errors.add(:connection, "failed")
       Rails.logger.error("Validating user credentials failed.")
     end
-  #rescue => e
-    #Rails.logger.error("Exception in validate_user_credentials")
-    #Rails.logger.error(e.to_s)
-    #errors.add(:connection, "connection failed with exception")
+  rescue => e
+    Rails.logger.error("Exception in validate_user_credentials")
+    Rails.logger.error(e.to_s)
+      Rails.logger.error("Could not connect to LDAP server")
+      Rails.logger.error("ldap.host: #{Rails.configuration.ldap_host}")
+      Rails.logger.error("ldap.port: #{Rails.configuration.ldap_port}")
+      Rails.logger.error("user: #{Rails.configuration.ldap_admin_username}")
+      Rails.logger.error("error: #{result.get_operation_result.error_message}")
+    errors.add(:connection, "connection failed with exception")
   end
 end
