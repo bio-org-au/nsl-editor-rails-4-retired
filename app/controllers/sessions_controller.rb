@@ -35,9 +35,9 @@ class SessionsController < ApplicationController
     else
       render "new"
     end
-  rescue => e
-    logger.error("Exception signing in: #{e}")
-    redirect_to :retry_start_sign_in
+  #rescue => e
+    #logger.error("Exception signing in: #{e}")
+    #redirect_to :retry_start_sign_in
   end
 
   def destroy
