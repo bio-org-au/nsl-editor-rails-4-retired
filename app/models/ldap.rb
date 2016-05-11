@@ -106,7 +106,8 @@ class Ldap < ActiveType::Object
     Rails.logger.error("Could not connect to LDAP server")
     Rails.logger.error("ldap.host: #{Rails.configuration.ldap_host}")
     Rails.logger.error("ldap.port: #{Rails.configuration.ldap_port}")
-    Rails.logger.error("user: #{Rails.configuration.ldap_username}")
+    Rails.logger.error("username: #{username}")
+    Rails.logger.error("Op result:- ")
     Rails.logger.error(admin_connection.try("get_operation_result").try("error_message"))
     errors.add(:connection, "connection failed with exception")
   end
