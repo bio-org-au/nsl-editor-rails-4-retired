@@ -79,11 +79,10 @@ class Ldap < ActiveType::Object
     ldap.auth Rails.configuration.ldap_admin_username,
               Rails.configuration.ldap_admin_password
     unless ldap.bind
-      Rails.logger.error("Could not connect to LDAP server")
+      Rails.logger.error("Could not ldap.bind as admin user to LDAP server")
       Rails.logger.error("ldap.host: #{ldap.host}")
       Rails.logger.error("ldap.port: #{ldap.port}")
       Rails.logger.error("user: #{Rails.configuration.ldap_admin_username}")
-      Rails.logger.error("error: #{ldap.get_operation_result.error_message}")
       throw "LDAP admin connection failed"
     end
     ldap
@@ -102,11 +101,10 @@ class Ldap < ActiveType::Object
   rescue => e
     Rails.logger.error("Exception in validate_user_credentials")
     Rails.logger.error(e.to_s)
-      Rails.logger.error("Could not connect to LDAP server")
-      Rails.logger.error("ldap.host: #{Rails.configuration.ldap_host}")
-      Rails.logger.error("ldap.port: #{Rails.configuration.ldap_port}")
-      Rails.logger.error("user: #{Rails.configuration.ldap_admin_username}")
-      Rails.logger.error("error: #{result.get_operation_result.error_message}")
+    Rails.logger.error("Could not connect to LDAP server")
+    Rails.logger.error("ldap.host: #{Rails.configuration.ldap_host}")
+    Rails.logger.error("ldap.port: #{Rails.configuration.ldap_port}")
+    Rails.logger.error("user: #{Rails.configuration.ldap_admin_username}")
     errors.add(:connection, "connection failed with exception")
   end
 end
