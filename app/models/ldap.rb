@@ -120,5 +120,5 @@ class Ldap < ActiveType::Object
     #Rails.logger.error("Op result:- ")
     #Rails.logger.error(admin_connection.try("get_operation_result").try("error_message"))
     #errors.add(:connection, "connection failed with exception")
-  #end
+  end
 end
