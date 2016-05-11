@@ -52,11 +52,11 @@ class Reference::AsEdited < Reference::AsTypeahead
     else
       "No change."
     end
-  rescue => e
-    logger.error("#{LABEL} with params: #{params},
-                 typeahead_params: #{typeahead_params}")
-    logger.error("#{LABEL} with params: #{e}")
-    raise
+  #rescue => e
+    #logger.error("#{LABEL} with params: #{params},
+                 #typeahead_params: #{typeahead_params}")
+    #logger.error("#{LABEL} with params: #{e}")
+    #raise
   end
 
   def just_setting_duplicate_of_id

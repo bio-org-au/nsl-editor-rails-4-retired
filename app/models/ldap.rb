@@ -74,10 +74,15 @@ class Ldap < ActiveType::Object
   def admin_connection
     Rails.logger.info("Connecting to LDAP (admin_connection)")
     ldap = Net::LDAP.new
+    Rails.logger.info("got object")
     ldap.host = Rails.configuration.ldap_host
+    Rails.logger.info("set host: #{ldap.host}")
     ldap.port = Rails.configuration.ldap_port
+    Rails.logger.info("set port: #{ldap.port}")
     ldap.auth Rails.configuration.ldap_admin_username,
               Rails.configuration.ldap_admin_password
+    Rails.logger.info("set ldap.auth")
+    Rails.logger.info("about to ldap.bind")
     unless ldap.bind
       Rails.logger.error("Could not ldap.bind as admin user to LDAP server")
       Rails.logger.error("ldap.host: #{ldap.host}")
