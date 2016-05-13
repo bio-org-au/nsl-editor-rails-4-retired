@@ -17,6 +17,10 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "13-May-2016",
+      jira_id: "1778",
+      description:
+      %(Assume first namespace record is the default namespace for the database.) },
     { date: "14-Apr-2016", release: true },
     { date: "13-Apr-2016",
       jira_id: "1756",
