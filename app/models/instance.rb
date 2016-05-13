@@ -319,7 +319,7 @@ class Instance < ActiveRecord::Base
   end
 
   def set_defaults
-    self.namespace_id = Namespace.apni.id if namespace_id.blank?
+    self.namespace_id = Namespace.default.id if namespace_id.blank?
   end
 
   # simple i.e. not a relationship instance

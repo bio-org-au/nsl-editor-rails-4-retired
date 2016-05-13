@@ -147,7 +147,7 @@ class Author < ActiveRecord::Base
   end
 
   def set_defaults
-    self.namespace_id = Namespace.apni.id if namespace_id.blank?
+    self.namespace_id = Namespace.default.id if namespace_id.blank?
   end
 
   def citation

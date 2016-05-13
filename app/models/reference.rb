@@ -273,7 +273,7 @@ class Reference < ActiveRecord::Base
   def set_defaults
     self.language_id = Language.default.id if language_id.blank?
     self.display_title = title if display_title.blank?
-    self.namespace_id = Namespace.apni.id
+    self.namespace_id = Namespace.default.id
   end
 
   def set_citation!

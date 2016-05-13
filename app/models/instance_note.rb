@@ -29,7 +29,7 @@ class InstanceNote < ActiveRecord::Base
   scope :non_apc, -> { joins(:instance_note_key).where.not('instance_note_key.name' => ["APC Comment", "APC Dist."]) }
 
   def set_defaults
-    self.namespace_id = Namespace.apni.id if namespace_id.blank?
+    self.namespace_id = Namespace.default.id if namespace_id.blank?
   end
 
   def save_with_username(username)

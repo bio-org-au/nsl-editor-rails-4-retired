@@ -23,7 +23,7 @@ class Namespace < ActiveRecord::Base
   has_many :names, foreign_key: "namespace_id"
   has_many :instances, foreign_key: "namespace_id"
 
-  def self.apni
-    find_by(name: "APNI")
+  def self.default
+    Namespace.first
   end
 end
