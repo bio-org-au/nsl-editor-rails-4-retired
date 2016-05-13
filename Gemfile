@@ -53,8 +53,10 @@ group :development, :test do
   gem "schema_plus"
 end
 
+platform :ruby do
 group :test do
   gem "capybara"
+  gem "capybara-rails"
   gem "minitest"
   gem "minitest-rails"
   gem "minitest-capybara"
@@ -63,6 +65,7 @@ group :test do
   gem "selenium-webdriver", "~> 2.45", require: false
   gem "launchy"
   gem "mocha", "~> 1.1.0"
+end
 end
 
 platform :ruby do
