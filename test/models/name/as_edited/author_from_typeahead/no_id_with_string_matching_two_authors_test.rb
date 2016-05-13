@@ -19,6 +19,12 @@ require "test_helper"
 # Single name model test.
 class NameAsEdNoAuthIdWithStringMatchingTwoAbbrevsTest < ActiveSupport::TestCase
   test "no author id with string matching 2 abbrevs" do
+    skip
+    # This test became redundant in its present form when a 
+    # database constraint was added to prevent duplicate author names.
+    # I'm leaving it here so when we clean it out we review the code
+    # than handles this case in the typeahead - needs refactoring, 
+    # possibly different type of testing.
     author_1 = authors(:has_matching_abbrev_1)
     assert Author.where(abbrev: author_1.abbrev).size == 2,
            "Should be two Authors with the same abbrev."

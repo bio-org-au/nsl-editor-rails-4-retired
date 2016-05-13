@@ -19,6 +19,12 @@ require "test_helper"
 # Reference model typeahead test.
 class RefAsEdAuthorIdWithStringMatching2Authors < ActiveSupport::TestCase
   test "id with string matching 2 authors" do
+    skip
+    # This test became redundant in its present form when a 
+    # database constraint was added to prevent duplicate author names.
+    # I'm leaving it here so when we clean it out we review the code
+    # than handles this case in the typeahead - needs refactoring, 
+    # possibly different type of testing.
     author_1 = authors(:has_matching_name_1)
     author_2 = authors(:has_matching_name_2)
     result = Reference::AsEdited.author_from_typeahead(

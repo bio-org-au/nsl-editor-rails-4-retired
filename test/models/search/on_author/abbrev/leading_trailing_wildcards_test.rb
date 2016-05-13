@@ -31,8 +31,8 @@ class SearchOnAuthorAbbrevLeadingTrailingWildCardsTest < ActiveSupport::TestCase
     assert_equal search.executed_query.results.class,
                  Author::ActiveRecord_Relation,
                  "Results should be a Author::ActiveRecord_Relation."
-    assert_equal 2,
+    assert_equal 3,
                  search.executed_query.results.size,
-                 "Exactly 2 results are expected."
+                 "Exactly 3 results are expected."
   end
 end

@@ -34,14 +34,14 @@ unknown:
 
 brassard: 
   name: " Brassard [x] "
-  abbrev: "x"
+  abbrev: "brassardx"
   namespace_id: namespace.apni
   created_by: greg
   updated_by: greg
 
 heyland: 
   name: "   Heyland [y]  "
-  abbrev: "x"
+  abbrev: "heylandx"
   namespace_id: namespace.apni
   created_by: greg
   updated_by: greg
@@ -129,18 +129,6 @@ britten:
 
 beadle_evans_carolin:
   name: "Beadle, N.C.W., Evans, O.D. & Carolin, R.C."
-  namespace_id: namespace.apni
-  created_by: greg
-  updated_by: greg
-
-duplicate_abbrev_1:
-  abbrev: "Dupe."
-  namespace_id: namespace.apni
-  created_by: greg
-  updated_by: greg
-
-duplicate_abbrev_2:
-  abbrev: "Dupe."
   namespace_id: namespace.apni
   created_by: greg
   updated_by: greg
@@ -376,7 +364,7 @@ has_matching_abbrev_1:
 
 has_matching_abbrev_2:
   name: has matching abbrev
-  abbrev: has matching abbrev
+  abbrev: does not have matching abbrev
   namespace_id: namespace.apni
   created_by: tester
   updated_by: tester
@@ -389,8 +377,8 @@ has_matching_name_1:
   updated_by: tester
 
 has_matching_name_2:
-  name: has matching name
-  abbrev: has matching name
+  name: not has matching name
+  abbrev: not has matching name
   namespace_id: namespace.apni
   created_by: tester
   updated_by: tester
@@ -429,8 +417,8 @@ schlechter_not_a_duplicate:
   updated_by: greg
 
 schlechter_a_duplicate:
-  name: schlechter
-  abbrev: schl
+  name: xschlechter
+  abbrev: xschl
   duplicate_of: schlechter_a
   namespace_id: namespace.apni
   created_by: greg
