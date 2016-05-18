@@ -17,6 +17,10 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "18-May-2016",
+      jira_id: "1803",
+      description:
+      %(Set Name.sort_name on save using service data.) },
     { date: "13-May-2016",
       jira_id: "1778",
       description:

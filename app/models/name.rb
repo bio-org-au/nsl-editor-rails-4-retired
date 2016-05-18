@@ -629,7 +629,8 @@ class Name < ActiveRecord::Base
                      full_name_html: names_json["result"]["fullMarkedUpName"],
                      simple_name: names_json["result"]["simpleName"],
                      simple_name_html:
-                     names_json["result"]["simpleMarkedUpName"])
+                     names_json["result"]["simpleMarkedUpName"],
+                     sort_name: names_json["result"]["sortName"])
       1
     else
       0
@@ -640,14 +641,13 @@ class Name < ActiveRecord::Base
   end
 
   def set_names!
-    logger.debug("set_names!")
     names_json = get_names_json
     self.full_name = names_json["result"]["fullName"]
     self.full_name_html = names_json["result"]["fullMarkedUpName"]
     self.simple_name = names_json["result"]["simpleName"]
     self.simple_name_html = names_json["result"]["simpleMarkedUpName"]
+    self.sort_name = names_json["result"]["sortName"]
     self.save!
-    logger.debug("end of set_names!")
   rescue => e
     logger.error("set_names! exception: #{e}")
     raise
