@@ -18,6 +18,9 @@
     <div class="form-group">
       <label for="name">Name</label>
       <%= f.text_field :name, class: 'form-control give-me-focus', title: "Enter author name", tabindex: increment_tab_index, autofocus: true %>
+      <% if @author.new_record? %>
+        <p class="help-block">e.g. Fischer, F.E.L. von, Meyer, C.A.A. von &amp; Ave-Lallelant, J.L.E.</p>
+      <% end %>
     </div>
 
     <div class="form-group">
