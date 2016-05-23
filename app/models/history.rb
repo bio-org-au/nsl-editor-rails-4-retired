@@ -17,6 +17,12 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "23-May-2016",
+      jira_id: "1810",
+      description: %(Stop special characters (e.g. &amp;, &#39;) appearing
+      with raw encoding (e.g. &amp;amp;, &amp;#39; ) in some typeahead fields
+      immediately after update. Fixed for Author.duplicate-of field and
+      Reference.parent field.) },
     { date: "20-May-2016",
       jira_id: "1807",
       description:
