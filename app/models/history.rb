@@ -17,6 +17,7 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "02-Jun-2016", release: true },
     { date: "23-May-2016",
       jira_id: "1810",
       description: %(Stop special characters (e.g. &amp;, &#39;) appearing
