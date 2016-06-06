@@ -17,6 +17,11 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "07-Jun-2016",
+      jira_id: "1834",
+      description:
+      %(Add <q>offset:</q> as a search token for name searches so that work
+      using the is-orth-var-with-no-orth-var-instances report can continue.) },
     { date: "02-Jun-2016", release: true },
     { date: "23-May-2016",
       jira_id: "1810",
