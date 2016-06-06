@@ -41,6 +41,9 @@ class Search::OnName::ListQuery
     if @parsed_request.limited
       prepared_query = prepared_query.limit(@parsed_request.limit)
     end
+    if @parsed_request.offsetted
+      prepared_query = prepared_query.offset(@parsed_request.offset)
+    end
     @sql = prepared_query
   end
 end

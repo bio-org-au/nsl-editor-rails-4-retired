@@ -32,6 +32,8 @@ class Search::ParsedRequest
               :include_common_and_cultivar_session,
               :limit,
               :limited,
+              :offset,
+              :offsetted,
               :list,
               :order,
               :params,
@@ -78,6 +80,8 @@ class Search::ParsedRequest
     common_and_cultivar: #{@common_and_cultivar};
     limited: #{@limited};
     limit: #{@limit};
+    offsetted: #{@offsetted};
+    offset: #{@offset};
     include_common_and_cultivar_session
     : #{@include_common_and_cultivar_session};"
   end
@@ -89,6 +93,7 @@ class Search::ParsedRequest
     @target_button_text = parsed_defined_query.target_button_text
     unused_qs_tokens = parse_count_or_list(unused_qs_tokens)
     unused_qs_tokens = parse_limit(unused_qs_tokens)
+    unused_qs_tokens = parse_offset(unused_qs_tokens)
     unused_qs_tokens = parse_target(unused_qs_tokens)
     unused_qs_tokens = parse_common_and_cultivar(unused_qs_tokens)
     unused_qs_tokens = parse_show_instances(unused_qs_tokens)
@@ -161,6 +166,36 @@ class Search::ParsedRequest
     if joined_tokens.match(/limit: *[^\s\\]{1,}/i).present?
       bad_limit = joined_tokens.match(/limit: *([^\s\\]{1,})/i)[1]
       fail "Invalid limit: #{bad_limit}"
+    end
+    joined_tokens
+  end
+
+  # TODO: Refactor - to avoid limit being confused with an ID.
+  #       Make limit a field limit: 999
+  def parse_offset(tokens)
+    @offsetted = @list
+    joined_tokens = tokens.join(" ")
+    if @list
+      joined_tokens = apply_list_offset(joined_tokens)
+    end
+    filter_bad_offset(joined_tokens).split(" ")
+  end
+
+  def apply_list_offset(joined_tokens)
+    if joined_tokens.match(/offset: \d{1,}/i)
+      @offset = joined_tokens.match(/offset: (\d{1,})/i)[1].to_i
+      joined_tokens = joined_tokens.gsub(/offset: *\d{1,}/i, "")
+    else
+      @offset = nil
+      @offsetted = false
+    end
+    joined_tokens
+  end
+
+  def filter_bad_offset(joined_tokens)
+    if joined_tokens.match(/offset: *[^\s\\]{1,}/i).present?
+      bad_offset = joined_tokens.match(/offset: *([^\s\\]{1,})/i)[1]
+      fail "Invalid offset: #{bad_offset}"
     end
     joined_tokens
   end
