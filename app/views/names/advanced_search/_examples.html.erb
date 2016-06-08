@@ -9,7 +9,8 @@
 <table class="example-searches table table-striped">
   <% [
       {search_target: 'Names', search_string: "acacia",explanation: %Q(List names starting with "acacia".  Bare search is on names. 100 records is the default.)},
-      {search_target: 'Names', search_string: "acacia offset: 99 limit: 1",explanation: %Q(List the 100th name starting with "acacia".)},
+      {search_target: 'Names', search_string: "acacia limit: 1 offset: 99",explanation: %Q(List the 100th name starting with "acacia".)},
+      {search_target: 'Names', search_string: "acacia limit: 100 offset: 200",explanation: %Q(List the 201st - 300th names starting with "acacia".)},
       {search_target: 'Names', search_string: "acacia type:*", 
        explanation: %Q(Also include common and cultivar names which are normally excluded (i.e. #{excc.sub(/\./,'')}).)},
       {search_target: 'Names', search_string: "*cacia", explanation: %Q(Find names containing "cacia". A trailing wildcard is added automatically. #{excc})},
