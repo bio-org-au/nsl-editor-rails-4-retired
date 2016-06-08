@@ -17,6 +17,11 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "08-Jun-2016",
+      jira_id: "1840",
+      description:
+      %(Duplicate of authors now include those with diacritics.
+      e.g. "Thumen" also retrieves "Thümen".) },
     { date: "07-Jun-2016",
       jira_id: "1834",
       description:

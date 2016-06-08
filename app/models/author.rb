@@ -26,11 +26,11 @@ class Author < ActiveRecord::Base
   attr_accessor :display_as, :give_me_focus, :message
 
   scope :lower_name_equals,
-        ->(string) { where("lower(name) = ? ", string.downcase) }
+        ->(string) { where("lower(f_unaccent(name)) = ? ", string.downcase) }
   scope :lower_name_like,
-        ->(string) { where("lower(name) like ? ", string.gsub(/\*/, "%").downcase) }
+        ->(string) { where("lower(f_unaccent(name)) like ? ", string.gsub(/\*/, "%").downcase) }
   scope :lower_abbrev_like,
-        ->(string) { where("lower(abbrev) like ? ", string.gsub(/\*/, "%").downcase) }
+        ->(string) { where("lower(f_unaccent(abbrev)) like ? ", string.gsub(/\*/, "%").downcase) }
   scope :not_this_id,
         ->(this_id) { where.not(id: this_id) }
   scope :not_duplicate,
