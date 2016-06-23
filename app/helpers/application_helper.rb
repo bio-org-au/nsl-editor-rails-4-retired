@@ -427,6 +427,12 @@ module ApplicationHelper
         record.updated_at)})
     end
   end
+
+
+  def mapper_link(type, id)
+    # we want to replace this with data pulled from the shard config table
+    %(<a href="#{Rails.configuration.mapper_root_url}#{type}/#{Rails.configuration.mapper_shard}/#{id}" title="#{type.capitalize()} #{id}"><i class="fa fa-link"></i></a>).html_safe
+  end
 end
 
 # Some specific string methods.

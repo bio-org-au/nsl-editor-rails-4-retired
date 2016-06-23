@@ -22,6 +22,7 @@
     <span class="full-name-within-instance">#{search_result.this_is_cited_by.name.full_name_html}</span>).html_safe %>
     <%= render(partial: 'record_debug', locals: {search_result: search_result}) if @debug %>
  </a> </td>
+  <td><%= mapper_link('instance', search_result.id)%></td>
   <td class="takes-focus width-10-percent filler">&nbsp;</td>
 </tr>
 
