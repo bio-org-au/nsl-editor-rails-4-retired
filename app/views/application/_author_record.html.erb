@@ -16,6 +16,7 @@
       title="Author record. Select to show details."
       id="<%= %Q(#{search_result.class}-#{search_result.id}) %>">
       <%= render partial: 'author_name_link_text', locals: {search_result: search_result} %>
+    </a>
   </td>
   <td 
     id="<%= %Q(#{search_result.class}-#{search_result.id}-abbrev) %>" 

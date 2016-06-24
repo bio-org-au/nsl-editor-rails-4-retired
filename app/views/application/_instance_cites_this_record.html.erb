@@ -23,6 +23,7 @@
     <%= "#{ search_result.expanded_instance_type || search_result.instance_type.name} <b>#{search_result.name.full_name}</b>".html_safe %>
     <%= "[#{search_result.name.name_status.name}]" unless search_result.name.name_status.blank? %>
     <%= "#{search_result.page}" %>
+    </a>
     <%= "</td><td>[#{search_result.type}]::#{ search_result.try('display_as') || search_result.class.to_s};#{search_result.id }cites---- #{Pathname.new(__FILE__).basename}".html_safe if @debug %>
   </td>
   <td><%= mapper_link('instance', search_result.id)%></td>
