@@ -27,7 +27,7 @@ class AuthorsController < ApplicationController
     render "show", layout: false
   end
 
-  alias_method :tab, :show
+  alias tab show
 
   # GET /authors/new_row
   def new_row
@@ -129,11 +129,11 @@ class AuthorsController < ApplicationController
   end
 
   def set_tab
-    if params[:tab].present? && params[:tab] != "undefined"
-      @tab = params[:tab]
-    else
-      @tab = "tab_show_1"
-    end
+    @tab = if params[:tab].present? && params[:tab] != "undefined"
+             params[:tab]
+           else
+             "tab_show_1"
+           end
   end
 
   def set_tab_index
