@@ -21,6 +21,7 @@ class History
       jira_id: "",
       description:
       %(You can drag search result records into the tree editor.) },
+    { date: "09-Jun-2016", release: true },
     { date: "08-Jun-2016",
       jira_id: "1840",
       description:
