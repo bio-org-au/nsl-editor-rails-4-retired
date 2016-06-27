@@ -17,6 +17,10 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "24-Jun-2016",
+      jira_id: "",
+      description:
+      %(You can drag search result records into the tree editor.) },
     { date: "08-Jun-2016",
       jira_id: "1840",
       description:

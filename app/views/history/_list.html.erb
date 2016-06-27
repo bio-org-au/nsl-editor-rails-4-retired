@@ -26,16 +26,20 @@
        <li class="list-group-item">
         <%= val[:date] %>
         &mdash;
-        NSL-<%= val[:jira_id] %>:&nbsp;
+        <% if val[:jira_id].present? %>
+          NSL-<%= val[:jira_id] %>:&nbsp;
+        <% end %>
         <%= (val[:description]).html_safe %>
-        <span class="badge">
-          <%= link_to "(NSL-#{val[:jira_id]}) 
-            #{icon('external-link fa-lg')}".html_safe, 
-            "https://www.anbg.gov.au/25jira/browse/NSL-#{val[:jira_id]}",
-            class:"white hover-white",
-            title: "#{title_text}",
-            target: "other" %>
-        </span>
+          <% if val[:jira_id].present? %>
+           <span class="badge">
+             <%= link_to "(NSL-#{val[:jira_id]}) 
+               #{icon('external-link fa-lg')}".html_safe, 
+               "https://www.anbg.gov.au/25jira/browse/NSL-#{val[:jira_id]}",
+               class:"white hover-white",
+               title: "#{title_text}",
+               target: "other" %>
+           </span>
+         <% end %>
        <% end %>
        </li>
      <% end %>
