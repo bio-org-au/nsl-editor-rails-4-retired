@@ -11,6 +11,7 @@
                               query_string: "id:#{@author.id}"),
                   id: 'tab-heading',
                   title: "Query this author record") %>
+      <span class="pull-right"><%= mapper_link('author', @author.id)%></span>
     </h3>
     <%= render partial: 'tabs' %>
     <%= render partial: "#{@tab}" %>

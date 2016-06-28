@@ -17,6 +17,10 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "28-Jun-2016",
+      jira_id: "",
+      description:
+      %(Move the record-level drag-icons onto the details tabs.) },
     { date: "24-Jun-2016",
       jira_id: "",
       description:

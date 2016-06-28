@@ -27,7 +27,6 @@
     <% end %>
     <%= render(partial: 'record_debug', locals: {search_result: search_result}) if @debug %>
   </a></td>
-  <td><%= mapper_link('instance', search_result.id)%></td>
   <td class="takes-focus width-20-percent filler">&nbsp;</td>
 </tr>
 
@@ -52,7 +51,6 @@
     <%= "#{search_result.instance_type.name.downcase} of #{search_result.this_is_cited_by.name.simple_name}" %>
     <%= "</td><td>this is cited by: #{ search_result.try('display_as') || search_result.this_is_cited_by.class.to_s};#{search_result.this_is_cited_by.id }-2nd part --- #{Pathname.new(__FILE__).basename}".html_safe if true %>
   </td>
-    <td><%= mapper_link('instance', search_result.this_is_cited_by.id)%></td>
   <td class="takes-focus width-10-percent filler">&nbsp;</td>
   
 </tr>

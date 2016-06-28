@@ -28,7 +28,6 @@
     <%= "[#{search_result.instance_type.name}]" if search_result.instance_type %></a>
     <%= %Q(</td><td class="min-width-1-percent max-width-30-percent">[#{search_result.type}]::#{ search_result['display_as'] || search_result.class.to_s};#{search_result.id }cites #{Pathname.new(__FILE__).basename}).html_safe if @debug %>
   </td>
-  <td><%= mapper_link('instance', search_result.id)%></td>
   <td class="takes-focus width-10-percent filler">&nbsp;</td>
 </tr>
 

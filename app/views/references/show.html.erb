@@ -11,9 +11,10 @@
                   id: 'tab-heading', 
                   title: "Query this reference.",
                   tabindex: increment_tab_index )%>
+                <span class="pull-right"><%= mapper_link('reference', @reference.id)%></span>
     </h3>
-      <%= render partial: 'tabs' %>
-      <%= render @tab %>
+    <%= render partial: 'tabs' %>
+    <%= render @tab %>
     <br>
     <span class='server-response-time'><%= "(#{(Time.now - @start_time).round(2)}s)" if @start_time %></span>
 
