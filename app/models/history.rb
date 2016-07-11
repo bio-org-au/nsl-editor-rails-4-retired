@@ -17,6 +17,11 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "11-Jul-2016",
+      jira_id: "1882",
+      description:
+      %(Accept author names with accented characters in reference typeahead.
+      (Remove f_unaccent call in sql that checks authors.) ) },
     { date: "28-Jun-2016",
       jira_id: "",
       description:

@@ -25,8 +25,9 @@ class Author < ActiveRecord::Base
 
   attr_accessor :display_as, :give_me_focus, :message
 
+  # Only used for typeahead confirmation, so DO NOT use f_unaccent.
   scope :lower_name_equals,
-        ->(string) { where("lower(f_unaccent(name)) = ? ", string.downcase) }
+        ->(string) { where("lower(name) = ? ", string.downcase) }
   scope :lower_name_like,
         ->(string) { where("lower(f_unaccent(name)) like ? ", string.gsub(/\*/, "%").downcase) }
   scope :lower_abbrev_like,
