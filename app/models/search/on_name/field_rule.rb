@@ -339,5 +339,15 @@ class Search::OnName::FieldRule
                       and r3.year = r.year) 
       )", },
 
+
+    "ref-title:" =>
+    { where_clause:
+      "exists (select null
+                 from instance
+                where instance.name_id = name.id
+                  and exists (select null
+                                from reference
+                               where reference.id = instance.reference_id
+                                 and lower(reference.title) like ?))", },
   }
 end

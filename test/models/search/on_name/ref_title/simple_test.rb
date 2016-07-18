@@ -22,15 +22,15 @@ load "test/models/search/users.rb"
 load "test/models/search/on_name/test_helper.rb"
 
 # Single Search model test.
-class SearchOnNameReportsWithExactly1InstSimpleTest < ActiveSupport::TestCase
-  test "search on name reports with exactly one instance simple" do
+class SearchOnNameRefTitleSimpleTest < ActiveSupport::TestCase
+  test "search names with associated ref title" do
     params = ActiveSupport::HashWithIndifferentAccess.new(
       query_target: "name",
-      query_string: "with-exactly-one-instance:",
+      query_string: "ref-title: *default* ",
       current_user: build_edit_user)
     search = Search::Base.new(params)
     confirm_results_class(search.executed_query.results)
-    assert search.executed_query.results.size > 2,
-           "Expected at least 3 records for name-with-exactly-one-instance:"
+    assert search.executed_query.results.size > 0,
+           "Expected > 0 search result for ref-title: match"
   end
 end

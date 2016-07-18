@@ -17,6 +17,11 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "18-Jul-2016",
+      jira_id: "1889",
+      description:
+      %(Define a new name query argument "ref-title:" that can be used to find
+      names associated with a matching reference title.) },
     { date: "11-Jul-2016",
       jira_id: "1882",
       description:

@@ -175,6 +175,24 @@
 </table>
 <br>
 
+
+<h5>Associated Reference Search</h5>
+<table class="table table-striped">
+  <% [
+      {field_name: 'ref-title:', description: "exact search on refence title associated with the name (supply your own wildcards)"},
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+        <a href="javascript:void(0)" class="searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
+          <span class="blue"><%= val[:field_name] %></span>
+        </a>
+    </td>
+    <td><%= val[:description].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+<br>
+
 <%= render partial: 'comments/advanced_search/help' %>
 <%= render partial: 'help/id_search_help' %>
 <%= render partial: 'help/case_and_wildcards_search' %>
