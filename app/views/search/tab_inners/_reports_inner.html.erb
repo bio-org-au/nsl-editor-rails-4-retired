@@ -105,6 +105,16 @@
        explanation: %Q(Combine name report with ref-title: query across to 
        associated references.)},
       {search_target: 'Names',
+       search_string: "ref-title: *new guinea* with-exactly-one-instance: in-accepted-tree:",
+       explanation: %Q(Combine name report with ref-title: query on associated
+       reference title and return only names either accepted in or
+       excluded from the accepted tree.)},
+      {search_target: 'Names',
+       search_string: "ref-title: *new guinea* with-exactly-one-instance: not-in-accepted-tree:",
+       explanation: %Q(Combine name report with ref-title: query on
+       associated reference title and return only names not either accepted in or
+       excluded from the accepted tree.)},
+      {search_target: 'Names',
        search_string: "earliest-instance-not-primary:",
        explanation: %Q(Names whose first instance is not a primary reference)},
       ].each do |val| %>

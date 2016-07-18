@@ -339,7 +339,6 @@ class Search::OnName::FieldRule
                       and r3.year = r.year) 
       )", },
 
-
     "ref-title:" =>
     { where_clause:
       "exists (select null
@@ -349,5 +348,14 @@ class Search::OnName::FieldRule
                                 from reference
                                where reference.id = instance.reference_id
                                  and lower(reference.title) like ?))", },
+
+    "in-accepted-tree:" =>
+    { where_clause:
+      " exists (select null from accepted_name_vw where accepted_name_vw.id = name.id)" },
+
+    "not-in-accepted-tree:" =>
+    { where_clause:
+      " not exists (select null from accepted_name_vw where accepted_name_vw.id = name.id)" },
+
   }
 end

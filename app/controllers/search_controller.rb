@@ -56,9 +56,9 @@ class SearchController < ApplicationController
   private
 
   def save_search
-    session[:searches] ||= []
-    session[:searches].push(@search.to_history)
-    trim_session_searches
+    #session[:searches] ||= []
+    #session[:searches].push(@search.to_history)
+    #trim_session_searches
   rescue => e
     logger.error("Error saving search: #{e}")
     session[:searches] = []
