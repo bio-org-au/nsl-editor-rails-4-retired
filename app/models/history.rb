@@ -29,6 +29,7 @@ class History
       description:
       %(Define a new name query argument "ref-title:" that can be used to find
       names associated with a matching reference title.) },
+    { date: "12-Jun-2016", release: true },
     { date: "11-Jul-2016",
       jira_id: "1882",
       description:
