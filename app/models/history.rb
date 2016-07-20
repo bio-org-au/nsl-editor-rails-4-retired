@@ -17,6 +17,10 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "20-Jul-2016",
+      jira_id: "1892",
+      description:
+      %(Add search on reference notes.  Includes field help and an example.) },
     { date: "18-Jul-2016",
       jira_id: "1889",
       description:

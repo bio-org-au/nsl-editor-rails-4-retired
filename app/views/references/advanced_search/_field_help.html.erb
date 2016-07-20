@@ -29,12 +29,33 @@
   </tr>
   <% end %>
 </table>
+
 <h5>Type code field</h5>
 <table class="table table-striped">
   <% [
       {field_name: 'type:', description: "reference type, allows comma-separated multiple values",partial: "ref_types/list_for_search_help"},
       {field_name: 'not-type:', description: "not reference type",partial: "ref_types/list_for_search_help"},
       {field_name: 'parent-type:', description: "reference type ",partial: "ref_types/list_for_search_help"},
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+      <a href="javascript:void(0)" class="searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
+        <span class="blue"><%= val[:field_name] %></span>
+      </a>
+    </td>
+    <td><%= val[:description].html_safe %>
+    <% if val[:partial].present? %>
+        <%= render partial: val[:partial] %>
+    <% end %>
+    </td>
+  </tr>
+  <% end %>
+</table>
+
+<h5>Notes field</h5>
+<table class="table table-striped">
+  <% [
+      {field_name: 'notes:', description: "reference notes exact search"},
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">

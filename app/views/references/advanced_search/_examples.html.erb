@@ -1,5 +1,6 @@
 <div id="example-search-reference" class="example-search-tab">
 <h4>Reference search examples</h4>
+
 <h5 class="">List references</h5>
 <table class="example-searches table table-striped">
   <% [{search_target: 'References', search_string: "cw:*",explanation: %Q(Start with "ref" for references. 100 listed by default.)},
@@ -11,6 +12,20 @@
       {search_target: 'References', search_string: "citation: maslin 1985", explanation: %Q(More than one search fragment for a citation search - order does not matter.)},
       {search_target: 'References', search_string: "nuytsia type:journal", explanation: %Q(Restrict by type.)},
       {search_target: 'References', search_string: "nuytsia ty:journal ti:nuytsia", explanation: %Q(Use field abbreviations.)}
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent">
+      <%= link_to(val[:search_string], search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue', title: "Run the described search.") %>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+<br>
+
+<h5 class="">Notes</h5>
+<table class="example-searches table table-striped">
+  <% [{search_target: 'References', search_string: "notes: *mathematica*", explanation: %Q(Search for references with "mathematica" somewhere in the notes field.)},
       ].each do |val| %>
   <tr>
     <td class="width-30-percent">

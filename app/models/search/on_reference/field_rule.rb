@@ -123,6 +123,9 @@ class Search::OnReference::FieldRule
     "title:"                => { trailing_wildcard: true,
                                  where_clause: " lower(title) like ? " },
 
+    "notes:"             => {   where_clause: " lower(notes) like ? " },
+
+
     "parent-ref-wrong-child-type:" => { where_clause: "reference.id in (
 select r.id
 from reference r
