@@ -1,7 +1,7 @@
     <ul class="nav nav-tabs">
       <% this_tab = 'tab_show_1' %>
   
-      <%= render partial: 'tab', locals: {first: true,
+      <%= render partial: 'references/tabs/tab', locals: {first: true,
                                           last: false,
                                           this_tab: 'tab_show_1', 
                                           link_text: 'Details', 
@@ -13,7 +13,7 @@
   
       <% if can? 'references', 'edit' %>
   
-        <%= render partial: 'tab', locals: {first: false,
+        <%= render partial: 'references/tabs/tab', locals: {first: false,
                                             last: false,
                                             this_tab: 'tab_edit_1', 
                                             link_text: 'Edit.'.html_safe,
@@ -23,7 +23,7 @@
                                             prev_tab: '', 
                                             next_tab: ''} %> 
   
-        <%= render partial: 'tab', locals: {first: false,
+        <%= render partial: 'references/tabs/tab', locals: {first: false,
                                             last: false,
                                             this_tab: 'tab_edit_2',
                                             link_text: 'Edit..'.html_safe,
@@ -33,7 +33,7 @@
                                             prev_tab: '', 
                                             next_tab: ''} %> 
   
-        <%= render partial: 'tab', locals: {first: false,
+        <%= render partial: 'references/tabs/tab', locals: {first: false,
                                             last: false,
                                             this_tab: 'tab_edit_3',
                                             link_text: 'Edit...'.html_safe,
@@ -47,7 +47,7 @@
 
       <% if can? 'comments', 'create' %>
 
-        <%= render partial: 'tab', locals: {first: false,
+        <%= render partial: 'references/tabs/tab', locals: {first: false,
                                             last: false,
                                             this_tab: 'tab_comments',
                                             link_text: 'Comments'.html_safe,
@@ -61,7 +61,7 @@
 
       <% if can? 'instances', 'create' %>
   
-        <%= render partial: 'tab', locals: {first: false,
+        <%= render partial: 'references/tabs/tab', locals: {first: false,
                                             last: true,
                                             this_tab: 'tab_new_instance',
                                             link_text: 'New instance'.html_safe,

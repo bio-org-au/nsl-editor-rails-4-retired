@@ -18,7 +18,7 @@
   <%  if @reference.publication_date.present? %>
     (<%= @reference.publication_date %>)
   <% else %>
-    (<%= @reference.year %>)
+    (<%= @reference.parent.year %>)
   <% end %>
 	<%= "(#{@reference.language.name})" if @reference.language && @reference.language.determined? %>
 	<%= " in #{@reference.published_location}" if @reference.published_location.present? %>
