@@ -53,3 +53,9 @@ unknown:
   parent_optional: Y 
   parent: unknown
 
+part: 
+  name: Part 
+  parent_optional: N 
+  parent: paper
+
+

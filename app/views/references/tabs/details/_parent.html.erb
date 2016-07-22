@@ -1,0 +1,14 @@
+<% if @reference.ref_type.name == 'Part' %>
+  in<br/>
+  <%= link_to("#{@reference.parent.citation_html} #{search_icon_on_tab}".html_safe, 
+                          search_path(query_string: "parent-id:#{@reference.parent_id}",query_target: "reference"),
+                          title: 'Search for the containing reference',
+                          tabindex: increment_tab_index,
+                          class: 'ref') %>
+<% else %>
+  <%= link_to("#{@reference.parent.title} #{search_icon_on_tab}".html_safe, 
+                          search_path(query_string: "parent-id:#{@reference.parent_id}",query_target: "reference"),
+                          title: 'Search for the containing reference',
+                          tabindex: increment_tab_index,
+                          class: 'ref') %>
+<% end %>

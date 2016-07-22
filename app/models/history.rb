@@ -17,6 +17,12 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "22-Jul-2016",
+      jira_id: "1828",
+      description:
+      %(Display reference parts correctly. Prevent entry of edition, volume,
+      publication date and year for reference parts.) },
+    { date: "22-Jul-2016", release: true },
     { date: "20-Jul-2016",
       jira_id: "1892",
       description:
@@ -33,7 +39,7 @@ class History
       description:
       %(Define a new name query argument "ref-title:" that can be used to find
       names associated with a matching reference title.) },
-    { date: "12-Jun-2016", release: true },
+    { date: "12-Jul-2016", release: true },
     { date: "11-Jul-2016",
       jira_id: "1882",
       description:

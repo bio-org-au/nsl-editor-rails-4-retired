@@ -140,6 +140,7 @@ class Reference < ActiveRecord::Base
                          message: "and master cannot be the same record"
   validates :language_id, presence: true
   validate :validate_parent
+  validate :validate_fields_for_part
 
   ID_AND_AUDIT_FIELDS = %w(id
                            created_at
@@ -226,6 +227,15 @@ class Reference < ActiveRecord::Base
       logger.debug("Error because parent is not allowed.")
       errors.add(:parent_id, "is not allowed for a #{ref_type.name}")
     end
+  end
+
+  # Reference that is a "part" of a paper has restricted fields
+  def validate_fields_for_part
+    return unless ref_type.part?
+    errors.add(:volume, "is not allowed for a Part") if volume.present?
+    errors.add(:edition, "is not allowed for a Part") if edition.present?
+    errors.add(:year, "is not allowed for a Part") if year.present?
+    errors.add(:publication_date, "is not allowed for a Part") if publication_date.present?
   end
 
   def save_with_username(username)

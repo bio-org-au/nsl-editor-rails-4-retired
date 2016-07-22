@@ -98,4 +98,8 @@ class RefType < ActiveRecord::Base
   def parent_allowed?
     parent_id.present?
   end
+
+  def part?
+    name.match(/\APart\z/)
+  end
 end
