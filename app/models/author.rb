@@ -18,7 +18,6 @@
 # groups of individuals who have authored a reference or authorised a name.
 class Author < ActiveRecord::Base
   strip_attributes
-
   self.table_name = "author"
   self.primary_key = "id"
   self.sequence_name = "nsl_global_seq"
@@ -60,9 +59,11 @@ class Author < ActiveRecord::Base
 
   validates :name,
             presence: { if: "abbrev.blank?",
+                        unless: "duplicate_of_id.present?",
                         message: "can't be blank if abbrev is blank." }
   validates :abbrev,
             presence: { if: "name.blank?",
+                        unless: "duplicate_of_id.present?",
                         message: "can't be blank if name is blank." }
 
   validates :abbrev,

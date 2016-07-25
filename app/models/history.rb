@@ -17,6 +17,11 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "25-Jul-2016",
+      jira_id: "1872",
+      description:
+      %(Allow authors marked as duplicates to have no name and/or
+      abbreviation.) },
     { date: "22-Jul-2016",
       jira_id: "1828",
       description:
