@@ -61,10 +61,33 @@ class Author < ActiveRecord::Base
             presence: { if: "abbrev.blank?",
                         unless: "duplicate_of_id.present?",
                         message: "can't be blank if abbrev is blank." }
+
   validates :abbrev,
             presence: { if: "name.blank?",
                         unless: "duplicate_of_id.present?",
                         message: "can't be blank if name is blank." }
+
+  validates :abbrev,
+            presence: { if: "names.size > 0",
+                        message: "can't be blank if names are attached." }
+
+  validates :abbrev,
+            presence: { if: "base_names.size > 0",
+                        message:
+                        "can't be blank if base authored names are attached." }
+
+  validates :abbrev,
+            presence: { if: "ex_base_names.size > 0",
+                        message:
+                        "can't be blank if ex-base authored names are attached." }
+
+  validates :abbrev,
+            presence: { if: "ex_names.size > 0",
+                        message: "can't be blank if ex-authored names are attached." }
+
+  validates :abbrev,
+            presence: { if: "sanctioned_names.size > 0",
+                        message: "can't be blank if sanctioned names are attached." }
 
   validates :abbrev,
             uniqueness: { unless: "abbrev.blank?",

@@ -22,6 +22,30 @@ class Search::OnAuthor::FieldRule
     "has-no-abbrev:"      => { where_clause: " abbrev is null" },
     "has-name:"           => { where_clause: " name is not null" },
     "has-no-name:"        => { where_clause: " name is null" },
+    "has-authored-name:"  => { where_clause: " exists (select null from
+                               name where name.author_id = author.id) " },
+    "has-ex-authored-name:" \
+                          => { where_clause: " exists (select null from
+                               name where name.ex_author_id = author.id) " },
+    "has-ex-base-authored-name:" \
+                          => { where_clause: " exists (select null from
+                               name where name.ex_base_author_id = author.id) "
+                             },
+    "has-base-authored-name:" \
+                          => { where_clause: " exists (select null from
+                               name where name.base_author_id = author.id) "
+                             },
+    "has-sanctioned-name:" \
+                          => { where_clause: " exists (select null from
+                               name where name.sanctioning_author_id = author.id) " },
+    "has-any-authored-name:" \
+                          => { where_clause: " exists (select null from
+                               name where name.author_id = author.id 
+                               or name.base_author_id = author.id 
+                               or name.ex_author_id = author.id 
+                               or name.ex_base_author_id = author.id 
+                               or name.sanctioning_author_id = author.id) "
+                             },
     "comments:"           => { trailing_wildcard: true,
                                leading_wildcard: true,
                                where_clause: " exists (select null from

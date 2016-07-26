@@ -49,6 +49,27 @@
   <% end %>
 </table>
 
+<h5>Authoring Assertions</h5>
+<table class="table table-striped">
+  <% [
+      {field_name: 'has-authored-name:', description: "is linked to a name as the author"},
+      {field_name: 'has-base-authored-name:', description: "is linked to a name as the base author"},
+      {field_name: 'has-ex-authored-name:', description: "is linked to a name as the ex-author"},
+      {field_name: 'has-ex-base-authored-name:', description: "is linked to a name as the ex-base author"},
+      {field_name: 'has-sanctioned-name:', description: "is linked to a name as the sanctioning author"},
+      {field_name: 'has-any-authored-name:', description: "is linked to a name as any type of author"},
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+        <a href="javascript:void(0)" class="searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
+          <span class="blue"><%= val[:field_name] %></span>
+        </a>
+    </td>
+    <td><%= val[:description].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+
 <%= render partial: 'comments/advanced_search/help' %>
 <%= render partial: 'help/id_search_help' %>
 <%= render partial: 'help/case_and_wildcards_search' %>

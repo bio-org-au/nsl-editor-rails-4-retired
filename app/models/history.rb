@@ -17,6 +17,14 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "26-Jul-2016",
+      jira_id: "1872",
+      description:
+      %(Add new assertion searches for whether an author has authored names.) },
+    { date: "26-Jul-2016",
+      jira_id: "1872",
+      description:
+      %(Stop removal of abbreviation from authors who have authored a name.) },
     { date: "25-Jul-2016",
       jira_id: "1872",
       description:
