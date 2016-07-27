@@ -90,4 +90,8 @@ class InstanceType < ActiveRecord::Base
   def self.query_form_options
     all.sort { |x, y| x.name <=> y.name }.collect { |n| [n.name, n.name.downcase, class: ""] }
   end
+
+  def self.secondary_reference
+    InstanceType.find_by(name: "secondary reference")
+  end
 end
