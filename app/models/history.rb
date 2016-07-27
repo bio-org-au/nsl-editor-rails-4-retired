@@ -17,6 +17,10 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "27-Jul-2016",
+      jira_id: "1860",
+      description:
+      %(Force choice of instance type when copying standalone instance.) },
     { date: "26-Jul-2016",
       jira_id: "1872",
       description:

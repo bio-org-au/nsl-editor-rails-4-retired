@@ -33,10 +33,12 @@ class Instance::AsCopier < Instance
     fail "No such reference" if Reference.find(params[:reference_id].to_i).blank?
     new_reference_id_string = params[:reference_id]
     new_page = params[:page]
+    new_instance_type_id = params[:instance_type_id]
     ActiveRecord::Base.transaction do
       new = dup
       new_reference_id = new_reference_id_string.to_i
       new.reference_id = new_reference_id
+      new.instance_type_id = new_instance_type_id
       new.page = new_page
       new.created_by = new.updated_by = as_username
       new.save!

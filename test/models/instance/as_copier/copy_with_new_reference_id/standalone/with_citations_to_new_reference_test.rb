@@ -22,14 +22,16 @@ class InstanceAsCopierWNewRefSAloneWithCitationsTest < ActiveSupport::TestCase
     before = Instance.count
     master_instance = Instance::AsCopier.find(
       instances(:gaertner_created_metrosideros_costata).id)
-    assert master_instance.citations.size > 0,
+    assert_not master_instance.citations.empty?,
            "Master instance should have at least 1 citation."
     target_reference = references(:never_used)
+    target_instance_type = instance_types(:secondary_reference)
     instances_attached_to_new_ref_b4 = target_reference.instances.count
     instances_attached_to_name_b4 = master_instance.name.instances.count
     dummy_username = "fred"
     params = ActionController::Parameters.new(
-      reference_id: target_reference.id.to_s)
+      reference_id: target_reference.id.to_s,
+      instance_type_id: target_instance_type.id)
     copied_instance = master_instance.copy_with_citations_to_new_reference(
       params, dummy_username)
 
@@ -46,6 +48,12 @@ class InstanceAsCopierWNewRefSAloneWithCitationsTest < ActiveSupport::TestCase
     assert_equal copied_instance.reference_id,
                  target_reference.id,
                  "Copied instance should link to the new (i.e. target) ref."
+    assert_equal copied_instance.instance_type_id,
+                 target_instance_type.id,
+                 "Copied instance type is not correct."
+    assert_equal dummy_username,
+                 copied_instance.created_by,
+                 "Create audit should record the expected username."
     assert_equal copied_instance.name_id,
                  master_instance.name_id,
                  "Copied instance should link to same name as orig. instance."
