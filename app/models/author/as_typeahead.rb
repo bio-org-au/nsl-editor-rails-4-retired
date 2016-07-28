@@ -44,7 +44,7 @@ class Author::AsTypeahead < Author
     terms_uniq.collect do |uniq_term|
       { value: uniq_term, freq: terms_array.count(uniq_term) }
     end.each do |hash|
-      where += " lower(f_unaccent(name)) like lower(?) and "
+      where += " lower(f_unaccent(name)) like lower(f_unaccent(?)) and "
       search_term = "#{hash[:value]}%" * hash[:freq]
       binds.push "%#{search_term}"
     end

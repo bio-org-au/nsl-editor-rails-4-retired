@@ -435,3 +435,17 @@ for_name_or_abbrev_test_b:
   namespace_id: namespace.apni
   created_by: greg
   updated_by: greg
+
+doll_no_umlaut:
+  abbrev: doll
+  name: Doll, J.C.
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+doll_with_umlaut:
+  abbrev: döll
+  name: Döll, J.C.
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg

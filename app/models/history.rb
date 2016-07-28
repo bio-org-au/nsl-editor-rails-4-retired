@@ -18,6 +18,12 @@
 class History
   CHANGES_2016 = [
     { date: "28-Jul-2016",
+      jira_id: "1900",
+      description:
+      %(You can now use letters with and without diacritics in author 
+      typeaheads and they will match authors with and without diacritics.
+      E.g. "Doll" finds "Doll" and "Döll", "Döll" finds "Doll" and "Döll".) },
+    { date: "28-Jul-2016",
       jira_id: "974",
       description:
       %(Report of synonymy instances and the instances that cite them matching
