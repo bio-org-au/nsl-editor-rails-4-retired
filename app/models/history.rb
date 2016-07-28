@@ -17,6 +17,13 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "28-Jul-2016",
+      jira_id: "974",
+      description:
+      %(Report of synonymy instances and the instances that cite them matching
+      the requirements in jira 974. Also a report that retrieves the names
+      for those instances.) },
+    { date: "28-Jul-2016", release: true },
     { date: "27-Jul-2016",
       jira_id: "1860",
       description:

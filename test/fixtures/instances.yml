@@ -767,3 +767,24 @@ inst_for_name_earliest_instance_not_primary:
   created_by: tester
   updated_by: tester
 
+# Relationship instance - synonymy
+name_in_secondary_ref_marked_as_basionym_synonym:
+  reference: dummy_reference_2
+  name: name_in_secondary_ref
+  this_is_cited_by: secondary_ref_citation
+  instance_type: basionym
+  page: exclude-from-ordering-test
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+
+# standalone 
+secondary_ref_citation:
+  reference: dummy_reference_for_eflora_service
+  name: name_in_secondary_ref
+  instance_type: secondary_reference
+  page: exclude-from-ordering-test
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+

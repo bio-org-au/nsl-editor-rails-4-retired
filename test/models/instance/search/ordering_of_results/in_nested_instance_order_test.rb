@@ -44,18 +44,20 @@ class InNestedInstanceOrderTest < ActiveSupport::TestCase
               # repeatable ordering for these tests
               in_nested_instance_type_order.order("instance_type.name")
 
-    # results.each_with_index {|i,ndx| puts "#{ndx}:
-    # #{i.instance_type.name}" if ndx < 30};
+    # results.each_with_index do |i,ndx|
+    #   puts "#{ndx}: #{i.instance_type.name}" if ndx < 30
+    # end
     assert_with_args(results, 0, "basionym")
-    assert_with_args(results, 1, "doubtful nomenclatural synonym")
-    assert_with_args(results, 2, "doubtful pro parte taxonomic synonym")
-    assert_with_args(results, 3, "doubtful taxonomic synonym")
-    assert_with_args(results, 4, "nomenclatural synonym")
+    assert_with_args(results, 1, "basionym")
+    assert_with_args(results, 2, "doubtful nomenclatural synonym")
+    assert_with_args(results, 3, "doubtful pro parte taxonomic synonym")
+    assert_with_args(results, 4, "doubtful taxonomic synonym")
     assert_with_args(results, 5, "nomenclatural synonym")
-    assert_with_args(results, 6, "pro parte nomenclatural synonym")
-    assert_with_args(results, 7, "taxonomic synonym")
-    assert_with_args(results, 8, "common name")
+    assert_with_args(results, 6, "nomenclatural synonym")
+    assert_with_args(results, 7, "pro parte nomenclatural synonym")
+    assert_with_args(results, 8, "taxonomic synonym")
     assert_with_args(results, 9, "common name")
-    assert_with_args(results, 10, "vernacular name")
+    assert_with_args(results, 10, "common name")
+    assert_with_args(results, 11, "vernacular name")
   end
 end

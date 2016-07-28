@@ -131,6 +131,39 @@
   <% end %>
 </table>
 
+<h5>Bad relationships NSL-974</h5>
+<table class="example-searches table table-striped">
+  <% [
+      {search_target: 'Instances',
+       search_string: "bad-relationships-974: limit: 10",
+       explanation: %Q(Basionym or replaced synonym synonymy instances cited by 
+       instances that are not comb. nov., comb. et stat. nov., nom. nov., 
+       or nom. et stat. nov. limited to the first 10 instances) },
+      {search_target: 'Names',
+       search_string: "bad-relationships-974: limit: 10",
+       explanation: %Q(Names containing the instances for NSL-974 limited to the first 10 names.) },
+      {search_target: 'Names',
+       search_string: "bad-relationships-974: show-instances: limit: 10",
+       explanation: %Q(Names as above for NSL-974 showing instances limited to the first 10 names.) },
+      {search_target: 'Names',
+       search_string: "bad-relationships-974: name: eucalyptus show-instances:",
+       explanation: %Q(Names as above for NSL-974 matching "%eucalyptus%" showing instances.) },
+      {search_target: 'Instances',
+       search_string: "count bad-relationships-974:",
+       explanation: %Q(Count of instances for NSL-974.) },
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent">
+      <%= link_to(val[:search_string],
+                  search_path(query_string: val[:search_string],
+                              query_target: val[:search_target]),
+                  class:'blue',
+                  title: "Run the report.") %>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
 
   </div>
 </div>

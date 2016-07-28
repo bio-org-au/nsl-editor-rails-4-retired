@@ -357,5 +357,24 @@ class Search::OnName::FieldRule
     { where_clause:
       " not exists (select null from accepted_name_vw where accepted_name_vw.id = name.id)" },
 
+    "bad-relationships-974:"    => { where_clause: " name.id in
+    (select name_id from instance where id in (select syn.cited_by_id
+  from instance syn
+ inner join instance standalone
+    on syn.cited_by_id = standalone.id
+ where syn.instance_type_id in (
+    select id
+      from instance_type
+ where name in ('replaced synonym', 'basionym')
+       )
+   and standalone.instance_type_id not in (
+    select id
+      from instance_type
+    where name in ('comb. nov.',
+                   'comb. et stat. nov.',
+                   'nom. nov.',
+                   'nom. et stat. nov.')
+       ) ) )", order: "name.full_name" },
   }
+
 end
