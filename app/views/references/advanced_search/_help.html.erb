@@ -63,7 +63,7 @@ Münchhausen, Otto, Freiherr von (1765-1773), Der Hausvater
 <p/>For example, it is word-oriented and prefix-oriented, so a search for <%= link_to('"hookers icon ant"',search_path(query_string: 'hookers icon ant', query_target: 'reference'),title:"Run the query.",class:'blue') %> returns no records because "ant", although part of the word "Plantarum", is not a prefix.  That is, it is not preceded by a space nor is it at the start of the citation.
 
 <p/>For pure wildcarded fragments use the "citation:" field name, or "c:" for short.  
-<p/>For example, a search for <%= link_to('"cw:hook icon ant"',search_path(query_string: 'cw:hook icon ant', query_target: 'reference'),title:"Run the query.",class:'blue') %> does return records.  But note "hook" instead of "hookers" in the search.
+<p/>For example, a search for <%= link_to('"citation:hook icon ant"',search_path(query_string: 'citation:hook icon ant', query_target: 'reference'),title:"Run the query.",class:'blue') %> does return records.  But note "hook" instead of "hookers" in the search.
 <br>
 <br>
 <h5>Other Reference searches</h5>

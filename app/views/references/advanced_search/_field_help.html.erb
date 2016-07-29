@@ -9,9 +9,8 @@
       {field_name: '', description: %Q(enter citation search terms in any order e.g. "#{link_to_maslin_1985}" gives the same results as "#{link_to_1985_maslin}";)},
       {field_name: '', description: %Q(this works for citation because the editor "tokenizes" citation search terms, making the strict format of the citation less important)},
       {field_name: '', description: %Q(tokenizing search terms makes for slightly slower searches - but is worth it for citation searches.)},
-      {field_name: 'citation-text:', description: "citation word and word-prefix text search; <span class='purple'>New!</span>"},
+      {field_name: 'citation-text:', description: "citation word and word-prefix text search"},
       {field_name: 'citation-exact:', description: "search citation with no tokenization, and no wildcards unless you supply them"},
-      {field_name: 'cw:', description: "abbreviation for citation-wildcard:"},
       {field_name: 'title:', description: "title, with trailing wildcard added automatically"},
       {field_name: 'title-exact:', description: "title"},
       ].each do |val| %>

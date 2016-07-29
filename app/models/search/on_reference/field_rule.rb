@@ -36,7 +36,6 @@ class Search::OnReference::FieldRule
 
     "author-exact:"         => { where_clause: " author_id in (select id from
                                  author where lower(name) like ?)" },
-    "citation-exact:"       => { where_clause: " lower(citation) like ?" },
 
     "comments:"             => { trailing_wildcard: true,
                                  leading_wildcard: true,
@@ -106,6 +105,8 @@ class Search::OnReference::FieldRule
 
     "master-id:"            => { where_clause: " id = ? or
                                  duplicate_of_id = ?" },
+
+    "citation-exact:"       => { where_clause: " lower(citation) like ?" },
 
     "citation-text:"        => { scope_: "search_citation_text_for" },
 

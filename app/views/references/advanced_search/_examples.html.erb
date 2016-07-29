@@ -3,11 +3,14 @@
 
 <h5 class="">List references</h5>
 <table class="example-searches table table-striped">
-  <% [{search_target: 'References', search_string: "cw:*",explanation: %Q(Start with "ref" for references. 100 listed by default.)},
-      {search_target: 'References', search_string: "limit:10",explanation: %Q(Control the number of references listed.)},
+  <% [
+      {search_target: 'References', search_string: "citation: * limit:10",explanation: %Q(First 10 references sorted by citation.)},
       {search_target: 'References', search_string: "nuytsia", explanation: %Q(Reference searches match on citation by default.  Leading and trailing wildcards are added automatically.)},
+      {search_target: 'References', search_string: "nuytsia limit: 5", explanation: %Q(Limit the search results.)},
       {search_target: 'References', search_string: "title:nuytsia", explanation: %Q(Search on title.  A trailing wildcard is added automatically.)},
       {search_target: 'References', search_string: "citation: nuytsia", explanation: %Q(Refer explicitly to the citation field.)},
+      {search_target: 'References', search_string: "citation: nuytsia limit: 15", explanation: %Q(Search explicitly on citation field and limit the results.)},
+      {search_target: 'References', search_string: "citation: nuytsia 1985 limit: 15", explanation: %Q(Search explicitly on citation field with text and a date and limit the results.)},
       {search_target: 'References', search_string: "citation: 1985 maslin", explanation: %Q(More than one search fragment for a citation search - order does not matter.)},
       {search_target: 'References', search_string: "citation: maslin 1985", explanation: %Q(More than one search fragment for a citation search - order does not matter.)},
       {search_target: 'References', search_string: "nuytsia type:journal", explanation: %Q(Restrict by type.)},
