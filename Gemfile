@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem "rails", "~> 4.1.15"
+gem "rails", "~> 4.2.5.1"
 
 platform :jruby do
   gem "activerecord-jdbcpostgresql-adapter"
@@ -50,7 +50,7 @@ end
 group :development, :test do
   gem "pry-rails"
   gem "pry-rescue"
-  gem "schema_plus"
+  #gem "schema_plus"
 end
 
 platform :ruby do
@@ -89,7 +89,7 @@ gem "net-ldap"
 gem "strip_attributes"
 gem "exception_notification"
 
-gem "composite_primary_keys", "=7.0.13" # for Rails 4.1
+gem "composite_primary_keys"
 gem "cancancan", "~> 1.10"
 
 gem "sucker_punch", "~> 1.0"

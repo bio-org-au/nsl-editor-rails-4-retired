@@ -59,6 +59,20 @@ COMMENT ON EXTENSION hstore IS 'data type for storing sets of (key, value) pairs
 
 
 --
+-- Name: pg_trgm; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS pg_trgm WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION pg_trgm; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION pg_trgm IS 'text similarity measurement and index searching based on trigrams';
+
+
+--
 -- Name: unaccent; Type: EXTENSION; Schema: -; Owner: -
 --
 
@@ -362,6 +376,47 @@ END;
 $$;
 
 
+--
+-- Name: reference_notification(); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION reference_notification() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+  IF (TG_OP = 'DELETE')
+  THEN
+    INSERT INTO notification (id, version, message, object_id)
+      SELECT
+        nextval('hibernate_sequence'),
+        0,
+        'reference deleted',
+        OLD.id;
+    RETURN OLD;
+  ELSIF (TG_OP = 'UPDATE')
+    THEN
+      INSERT INTO notification (id, version, message, object_id)
+        SELECT
+          nextval('hibernate_sequence'),
+          0,
+          'reference updated',
+          NEW.id;
+      RETURN NEW;
+  ELSIF (TG_OP = 'INSERT')
+    THEN
+      INSERT INTO notification (id, version, message, object_id)
+        SELECT
+          nextval('hibernate_sequence'),
+          0,
+          'reference created',
+          NEW.id;
+      RETURN NEW;
+  END IF;
+  RETURN NULL;
+END;
+$$;
+
+
 SET search_path = audit, pg_catalog;
 
 SET default_tablespace = '';
@@ -565,7 +620,8 @@ CREATE TABLE identifier (
     deleted boolean DEFAULT false NOT NULL,
     reason_deleted character varying(255),
     updated_at timestamp with time zone,
-    updated_by character varying(255)
+    updated_by character varying(255),
+    preferred_uri_id bigint
 );
 
 
@@ -602,8 +658,562 @@ CREATE SEQUENCE nsl_global_seq
     START WITH 1000
     INCREMENT BY 1
     MINVALUE 1000
-    MAXVALUE 10000000
+    MAXVALUE 9999999999999
     CACHE 1;
+
+
+--
+-- Name: instance; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE instance (
+    id bigint DEFAULT nextval('nsl_global_seq'::regclass) NOT NULL,
+    lock_version bigint DEFAULT 0 NOT NULL,
+    bhl_url character varying(4000),
+    cited_by_id bigint,
+    cites_id bigint,
+    created_at timestamp with time zone NOT NULL,
+    created_by character varying(50) NOT NULL,
+    draft boolean DEFAULT false NOT NULL,
+    instance_type_id bigint NOT NULL,
+    name_id bigint NOT NULL,
+    namespace_id bigint NOT NULL,
+    nomenclatural_status character varying(50),
+    page character varying(255),
+    page_qualifier character varying(255),
+    parent_id bigint,
+    reference_id bigint NOT NULL,
+    source_id bigint,
+    source_id_string character varying(100),
+    source_system character varying(50),
+    trash boolean DEFAULT false NOT NULL,
+    updated_at timestamp with time zone NOT NULL,
+    updated_by character varying(1000) NOT NULL,
+    valid_record boolean DEFAULT false NOT NULL,
+    verbatim_name_string character varying(255)
+);
+
+
+--
+-- Name: name; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE name (
+    id bigint DEFAULT nextval('nsl_global_seq'::regclass) NOT NULL,
+    lock_version bigint DEFAULT 0 NOT NULL,
+    author_id bigint,
+    base_author_id bigint,
+    created_at timestamp with time zone NOT NULL,
+    created_by character varying(50) NOT NULL,
+    duplicate_of_id bigint,
+    ex_author_id bigint,
+    ex_base_author_id bigint,
+    full_name character varying(512),
+    full_name_html character varying(2048),
+    name_element character varying(255),
+    name_rank_id bigint NOT NULL,
+    name_status_id bigint NOT NULL,
+    name_type_id bigint NOT NULL,
+    namespace_id bigint NOT NULL,
+    orth_var boolean DEFAULT false NOT NULL,
+    parent_id bigint,
+    sanctioning_author_id bigint,
+    second_parent_id bigint,
+    simple_name character varying(250),
+    simple_name_html character varying(2048),
+    source_dup_of_id bigint,
+    source_id bigint,
+    source_id_string character varying(100),
+    source_system character varying(50),
+    status_summary character varying(50),
+    trash boolean DEFAULT false NOT NULL,
+    updated_at timestamp with time zone NOT NULL,
+    updated_by character varying(50) NOT NULL,
+    valid_record boolean DEFAULT false NOT NULL,
+    why_is_this_here_id bigint,
+    verbatim_rank character varying(50),
+    sort_name character varying(250)
+);
+
+
+--
+-- Name: tree_arrangement; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE tree_arrangement (
+    id bigint DEFAULT nextval('nsl_global_seq'::regclass) NOT NULL,
+    lock_version bigint DEFAULT 0 NOT NULL,
+    tree_type bpchar NOT NULL,
+    description character varying(255),
+    label character varying(50),
+    node_id bigint,
+    is_synthetic bpchar NOT NULL,
+    title character varying(50),
+    namespace_id bigint,
+    owner character varying(255),
+    CONSTRAINT chk_classification_has_label CHECK (((tree_type <> ALL (ARRAY['E'::bpchar, 'P'::bpchar])) OR (label IS NOT NULL))),
+    CONSTRAINT chk_tree_arrangement_type CHECK ((tree_type = ANY (ARRAY['E'::bpchar, 'P'::bpchar, 'U'::bpchar, 'Z'::bpchar])))
+);
+
+
+--
+-- Name: tree_node; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE tree_node (
+    id bigint DEFAULT nextval('nsl_global_seq'::regclass) NOT NULL,
+    lock_version bigint DEFAULT 0 NOT NULL,
+    checked_in_at_id bigint,
+    internal_type character varying(255) NOT NULL,
+    literal character varying(4096),
+    name_uri_id_part character varying(255),
+    name_uri_ns_part_id bigint,
+    next_node_id bigint,
+    prev_node_id bigint,
+    replaced_at_id bigint,
+    resource_uri_id_part character varying(255),
+    resource_uri_ns_part_id bigint,
+    tree_arrangement_id bigint,
+    is_synthetic bpchar NOT NULL,
+    taxon_uri_id_part character varying(255),
+    taxon_uri_ns_part_id bigint,
+    type_uri_id_part character varying(255),
+    type_uri_ns_part_id bigint NOT NULL,
+    name_id bigint,
+    instance_id bigint,
+    CONSTRAINT chk_arrangement_synthetic_yn CHECK ((is_synthetic = ANY (ARRAY['N'::bpchar, 'Y'::bpchar]))),
+    CONSTRAINT chk_internal_type_d CHECK ((((internal_type)::text <> 'D'::text) OR (((name_uri_ns_part_id IS NULL) AND (taxon_uri_ns_part_id IS NULL)) AND (literal IS NULL)))),
+    CONSTRAINT chk_internal_type_enum CHECK (((internal_type)::text = ANY (ARRAY[('S'::character varying)::text, ('Z'::character varying)::text, ('T'::character varying)::text, ('D'::character varying)::text, ('V'::character varying)::text]))),
+    CONSTRAINT chk_internal_type_s CHECK ((((internal_type)::text <> 'S'::text) OR ((((name_uri_ns_part_id IS NULL) AND (taxon_uri_ns_part_id IS NULL)) AND (resource_uri_ns_part_id IS NULL)) AND (literal IS NULL)))),
+    CONSTRAINT chk_internal_type_t CHECK ((((internal_type)::text <> 'T'::text) OR (literal IS NULL))),
+    CONSTRAINT chk_internal_type_v CHECK ((((internal_type)::text <> 'V'::text) OR (((name_uri_ns_part_id IS NULL) AND (taxon_uri_ns_part_id IS NULL)) AND (((resource_uri_ns_part_id IS NOT NULL) AND (literal IS NULL)) OR ((resource_uri_ns_part_id IS NULL) AND (literal IS NOT NULL)))))),
+    CONSTRAINT chk_tree_node_instance_matches CHECK (((instance_id IS NULL) OR (((instance_id)::character varying)::text = (taxon_uri_id_part)::text))),
+    CONSTRAINT chk_tree_node_name_matches CHECK (((name_id IS NULL) OR (((name_id)::character varying)::text = (name_uri_id_part)::text))),
+    CONSTRAINT chk_tree_node_synthetic_yn CHECK ((is_synthetic = ANY (ARRAY['N'::bpchar, 'Y'::bpchar])))
+);
+
+
+--
+-- Name: accepted_name_vw; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW accepted_name_vw AS
+ SELECT accepted.id,
+    accepted.simple_name,
+    accepted.full_name,
+    accepted.full_name_html,
+    tree_node.type_uri_id_part AS type_code,
+    instance.id AS instance_id,
+    tree_node.id AS tree_node_id,
+    0 AS accepted_id,
+    ''::character varying AS accepted_full_name,
+    accepted.name_status_id,
+    instance.reference_id,
+    accepted.name_rank_id,
+    accepted.sort_name,
+    0 AS synonym_type_id,
+    0 AS synonym_ref_id,
+    0 AS citer_instance_id,
+    0 AS cites_instance_id
+   FROM (((name accepted
+     JOIN instance ON ((accepted.id = instance.name_id)))
+     JOIN tree_node ON ((accepted.id = tree_node.name_id)))
+     JOIN tree_arrangement ta ON ((tree_node.tree_arrangement_id = ta.id)))
+  WHERE (((((ta.label)::text = 'APC'::text) AND (tree_node.next_node_id IS NULL)) AND (tree_node.checked_in_at_id IS NOT NULL)) AND (instance.id = tree_node.instance_id));
+
+
+--
+-- Name: reference; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE reference (
+    id bigint DEFAULT nextval('nsl_global_seq'::regclass) NOT NULL,
+    lock_version bigint DEFAULT 0 NOT NULL,
+    abbrev_title character varying(2000),
+    author_id bigint NOT NULL,
+    bhl_url character varying(4000),
+    citation character varying(4000),
+    citation_html character varying(4000),
+    created_at timestamp with time zone NOT NULL,
+    created_by character varying(255) NOT NULL,
+    display_title character varying(2000) NOT NULL,
+    doi character varying(255),
+    duplicate_of_id bigint,
+    edition character varying(100),
+    isbn character varying(16),
+    issn character varying(16),
+    language_id bigint NOT NULL,
+    namespace_id bigint NOT NULL,
+    notes character varying(1000),
+    pages character varying(1000),
+    parent_id bigint,
+    publication_date character varying(50),
+    published boolean DEFAULT false NOT NULL,
+    published_location character varying(1000),
+    publisher character varying(1000),
+    ref_author_role_id bigint NOT NULL,
+    ref_type_id bigint NOT NULL,
+    source_id bigint,
+    source_id_string character varying(100),
+    source_system character varying(50),
+    title character varying(2000) NOT NULL,
+    tl2 character varying(30),
+    trash boolean DEFAULT false NOT NULL,
+    updated_at timestamp with time zone NOT NULL,
+    updated_by character varying(1000) NOT NULL,
+    valid_record boolean DEFAULT false NOT NULL,
+    verbatim_author character varying(1000),
+    verbatim_citation character varying(2000),
+    verbatim_reference character varying(1000),
+    volume character varying(100),
+    year integer
+);
+
+
+--
+-- Name: accepted_synonym_vw; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW accepted_synonym_vw AS
+ SELECT name_as_syn.id,
+    name_as_syn.simple_name,
+    name_as_syn.full_name,
+    name_as_syn.full_name_html,
+    'synonym'::character varying AS type_code,
+    citer.id AS instance_id,
+    tree_node.id AS tree_node_id,
+    citer_name.id AS accepted_id,
+    citer_name.full_name AS accepted_full_name,
+    name_as_syn.name_status_id,
+    0 AS reference_id,
+    name_as_syn.name_rank_id,
+    name_as_syn.sort_name,
+    cites.instance_type_id AS synonym_type_id,
+    cites.reference_id AS synonym_ref_id,
+    citer.id AS citer_instance_id,
+    cites.id AS cites_instance_id
+   FROM (((((((name name_as_syn
+     JOIN instance cites ON ((name_as_syn.id = cites.name_id)))
+     JOIN reference cites_ref ON ((cites.reference_id = cites_ref.id)))
+     JOIN instance citer ON ((cites.cited_by_id = citer.id)))
+     JOIN reference citer_ref ON ((citer.reference_id = citer_ref.id)))
+     JOIN name citer_name ON ((citer.name_id = citer_name.id)))
+     JOIN tree_node ON ((citer_name.id = tree_node.name_id)))
+     JOIN tree_arrangement ta ON ((tree_node.tree_arrangement_id = ta.id)))
+  WHERE (((((ta.label)::text = 'APC'::text) AND (tree_node.next_node_id IS NULL)) AND (tree_node.checked_in_at_id IS NOT NULL)) AND (tree_node.instance_id = citer.id));
+
+
+--
+-- Name: hibernate_sequence; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE hibernate_sequence
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: instance_note; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE instance_note (
+    id bigint DEFAULT nextval('nsl_global_seq'::regclass) NOT NULL,
+    lock_version bigint DEFAULT 0 NOT NULL,
+    created_at timestamp with time zone NOT NULL,
+    created_by character varying(50) NOT NULL,
+    instance_id bigint NOT NULL,
+    instance_note_key_id bigint NOT NULL,
+    namespace_id bigint NOT NULL,
+    source_id bigint,
+    source_id_string character varying(100),
+    source_system character varying(50),
+    trash boolean DEFAULT false NOT NULL,
+    updated_at timestamp with time zone NOT NULL,
+    updated_by character varying(50) NOT NULL,
+    value character varying(4000) NOT NULL
+);
+
+
+--
+-- Name: instance_note_key; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE instance_note_key (
+    id bigint DEFAULT nextval('nsl_global_seq'::regclass) NOT NULL,
+    lock_version bigint DEFAULT 0 NOT NULL,
+    deprecated boolean DEFAULT false NOT NULL,
+    name character varying(255) NOT NULL,
+    sort_order integer DEFAULT 0 NOT NULL,
+    description_html text,
+    rdf_id character varying(50)
+);
+
+
+--
+-- Name: instance_type; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE instance_type (
+    id bigint DEFAULT nextval('nsl_global_seq'::regclass) NOT NULL,
+    lock_version bigint DEFAULT 0 NOT NULL,
+    citing boolean DEFAULT false NOT NULL,
+    deprecated boolean DEFAULT false NOT NULL,
+    doubtful boolean DEFAULT false NOT NULL,
+    misapplied boolean DEFAULT false NOT NULL,
+    name character varying(255) NOT NULL,
+    nomenclatural boolean DEFAULT false NOT NULL,
+    primary_instance boolean DEFAULT false NOT NULL,
+    pro_parte boolean DEFAULT false NOT NULL,
+    protologue boolean DEFAULT false NOT NULL,
+    relationship boolean DEFAULT false NOT NULL,
+    secondary_instance boolean DEFAULT false NOT NULL,
+    sort_order integer DEFAULT 0 NOT NULL,
+    standalone boolean DEFAULT false NOT NULL,
+    synonym boolean DEFAULT false NOT NULL,
+    taxonomic boolean DEFAULT false NOT NULL,
+    unsourced boolean DEFAULT false NOT NULL,
+    description_html text,
+    rdf_id character varying(50),
+    has_label character varying(255) DEFAULT 'not set'::character varying NOT NULL,
+    of_label character varying(255) DEFAULT 'not set'::character varying NOT NULL,
+    bidirectional boolean DEFAULT false NOT NULL
+);
+
+
+--
+-- Name: name_rank; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE name_rank (
+    id bigint DEFAULT nextval('nsl_global_seq'::regclass) NOT NULL,
+    lock_version bigint DEFAULT 0 NOT NULL,
+    abbrev character varying(20) NOT NULL,
+    deprecated boolean DEFAULT false NOT NULL,
+    has_parent boolean DEFAULT false NOT NULL,
+    italicize boolean DEFAULT false NOT NULL,
+    major boolean DEFAULT false NOT NULL,
+    name character varying(50) NOT NULL,
+    name_group_id bigint NOT NULL,
+    parent_rank_id bigint,
+    sort_order integer DEFAULT 0 NOT NULL,
+    visible_in_name boolean DEFAULT true NOT NULL,
+    description_html text,
+    rdf_id character varying(50)
+);
+
+
+--
+-- Name: name_status; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE name_status (
+    id bigint DEFAULT nextval('nsl_global_seq'::regclass) NOT NULL,
+    lock_version bigint DEFAULT 0 NOT NULL,
+    display boolean DEFAULT true NOT NULL,
+    name character varying(50),
+    name_group_id bigint NOT NULL,
+    name_status_id bigint,
+    nom_illeg boolean DEFAULT false NOT NULL,
+    nom_inval boolean DEFAULT false NOT NULL,
+    description_html text,
+    rdf_id character varying(50)
+);
+
+
+--
+-- Name: name_tree_path; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE name_tree_path (
+    id bigint DEFAULT nextval('hibernate_sequence'::regclass) NOT NULL,
+    version bigint NOT NULL,
+    inserted bigint NOT NULL,
+    name_id bigint NOT NULL,
+    name_id_path text NOT NULL,
+    name_path text NOT NULL,
+    next_id bigint,
+    parent_id bigint,
+    rank_path text NOT NULL,
+    tree_id bigint NOT NULL,
+    family_id bigint
+);
+
+
+--
+-- Name: name_type; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE name_type (
+    id bigint DEFAULT nextval('nsl_global_seq'::regclass) NOT NULL,
+    lock_version bigint DEFAULT 0 NOT NULL,
+    autonym boolean DEFAULT false NOT NULL,
+    connector character varying(1),
+    cultivar boolean DEFAULT false NOT NULL,
+    formula boolean DEFAULT false NOT NULL,
+    hybrid boolean DEFAULT false NOT NULL,
+    name character varying(255) NOT NULL,
+    name_category_id bigint NOT NULL,
+    name_group_id bigint NOT NULL,
+    scientific boolean DEFAULT false NOT NULL,
+    sort_order integer DEFAULT 0 NOT NULL,
+    description_html text,
+    rdf_id character varying(50),
+    deprecated boolean DEFAULT false NOT NULL
+);
+
+
+--
+-- Name: tree_link; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE tree_link (
+    id bigint DEFAULT nextval('nsl_global_seq'::regclass) NOT NULL,
+    lock_version bigint DEFAULT 0 NOT NULL,
+    link_seq integer NOT NULL,
+    subnode_id bigint NOT NULL,
+    supernode_id bigint NOT NULL,
+    is_synthetic bpchar NOT NULL,
+    type_uri_id_part character varying(255),
+    type_uri_ns_part_id bigint NOT NULL,
+    versioning_method bpchar NOT NULL,
+    CONSTRAINT chk_tree_link_seq_positive CHECK ((link_seq >= 1)),
+    CONSTRAINT chk_tree_link_sub_not_end CHECK ((subnode_id <> 0)),
+    CONSTRAINT chk_tree_link_sup_not_end CHECK ((supernode_id <> 0)),
+    CONSTRAINT chk_tree_link_synthetic_yn CHECK ((is_synthetic = ANY (ARRAY['N'::bpchar, 'Y'::bpchar]))),
+    CONSTRAINT chk_tree_link_vmethod CHECK ((versioning_method = ANY (ARRAY['F'::bpchar, 'V'::bpchar, 'T'::bpchar])))
+);
+
+
+--
+-- Name: apc_taxon_view; Type: MATERIALIZED VIEW; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE MATERIALIZED VIEW apc_taxon_view AS
+ SELECT 'ICNAFP'::text AS "nomenclaturalCode",
+        CASE
+            WHEN (apcn.id IS NOT NULL) THEN
+            CASE
+                WHEN (apc_cited_inst.id IS NOT NULL) THEN ('http://id.biodiversity.org.au/instance/apni/'::text || apc_inst.id)
+                ELSE ('http://id.biodiversity.org.au/node/apni/'::text || apcn.id)
+            END
+            ELSE NULL::text
+        END AS "taxonID",
+    nt.name AS "nameType",
+    ('http://id.biodiversity.org.au/name/apni/'::text || n.id) AS "scientificNameID",
+    n.full_name AS "scientificName",
+        CASE
+            WHEN ((ns.name)::text <> ALL (ARRAY[('legitimate'::character varying)::text, ('[default]'::character varying)::text])) THEN ns.name
+            ELSE NULL::character varying
+        END AS "nomenclaturalStatus",
+        CASE
+            WHEN (apc_inst.id = apcn.instance_id) THEN apcn.type_uri_id_part
+            ELSE apc_inst_type.name
+        END AS "taxonomicStatus",
+    apc_inst_type.pro_parte AS "proParte",
+        CASE
+            WHEN (apc_inst.id <> apcn.instance_id) THEN accepted_name.full_name
+            ELSE NULL::character varying
+        END AS "acceptedNameUsage",
+        CASE
+            WHEN (apcn.instance_id IS NOT NULL) THEN ('http://id.biodiversity.org.au/node/apni/'::text || apcn.id)
+            ELSE NULL::text
+        END AS "acceptedNameUsageID",
+        CASE
+            WHEN ((apc_inst.id = apcn.instance_id) AND (apcp.id IS NOT NULL)) THEN
+            CASE
+                WHEN ((apcp.type_uri_id_part)::text = 'classification-root'::text) THEN '[APC]'::text
+                ELSE ('http://id.biodiversity.org.au/node/apni/'::text || apcp.id)
+            END
+            ELSE NULL::text
+        END AS "parentNameUsageID",
+    rank.name AS "taxonRank",
+    rank.sort_order AS "taxonRankSortOrder",
+    "substring"(ntp.rank_path, 'Regnum:([^>]*)'::text) AS kingdom,
+    "substring"(ntp.rank_path, 'Classis:([^>]*)'::text) AS class,
+    "substring"(ntp.rank_path, 'Subclassis:([^>]*)'::text) AS subclass,
+    "substring"(ntp.rank_path, 'Familia:([^>]*)'::text) AS family,
+    n.created_at AS created,
+    n.updated_at AS modified,
+    ARRAY( SELECT t2.label
+           FROM (name_tree_path ntp2
+             JOIN tree_arrangement t2 ON ((ntp2.tree_id = t2.id)))
+          WHERE (ntp2.name_id = n.id)
+          ORDER BY t2.label) AS "datasetName",
+        CASE
+            WHEN (apc_cited_inst.id IS NOT NULL) THEN ('http://id.biodiversity.org.au/instance/apni/'::text || apc_inst.cites_id)
+            ELSE ('http://id.biodiversity.org.au/instance/apni/'::text || apc_inst.id)
+        END AS "taxonConceptID",
+        CASE
+            WHEN (apcr.citation IS NOT NULL) THEN ('http://id.biodiversity.org.au/reference/apni/'::text || apcr.id)
+            ELSE ('http://id.biodiversity.org.au/reference/apni/'::text || apc_inst.reference_id)
+        END AS "nameAccordingToID",
+        CASE
+            WHEN (apcr.citation IS NOT NULL) THEN apcr.citation
+            ELSE apc_ref.citation
+        END AS "nameAccordingTo",
+    ( SELECT string_agg(regexp_replace((nt_1.value)::text, '[\n\r\u2028]+'::text, ' '::text, 'g'::text), ' '::text) AS string_agg
+           FROM (instance_note nt_1
+             JOIN instance_note_key key1 ON (((key1.id = nt_1.instance_note_key_id) AND ((key1.name)::text = 'APC Comment'::text))))
+          WHERE (nt_1.instance_id = apcn.instance_id)) AS "taxonRemarks",
+    ( SELECT string_agg(regexp_replace((nt_1.value)::text, '[\n\r\u2028]+'::text, ' '::text, 'g'::text), ' '::text) AS string_agg
+           FROM (instance_note nt_1
+             JOIN instance_note_key key1 ON (((key1.id = nt_1.instance_note_key_id) AND ((key1.name)::text = 'APC Dist.'::text))))
+          WHERE (nt_1.instance_id = apcn.instance_id)) AS "taxonDistribution",
+        CASE
+            WHEN (apc_inst.id = apcn.instance_id) THEN regexp_replace(ntp.name_path, '\>'::text, '|'::text, 'g'::text)
+            ELSE NULL::text
+        END AS "higherClassification",
+    'http://creativecommons.org/licenses/by/3.0/'::text AS "ccLicense",
+        CASE
+            WHEN (apcn.id IS NOT NULL) THEN
+            CASE
+                WHEN (apc_cited_inst.id IS NOT NULL) THEN ('http://id.biodiversity.org.au/instance/apni/'::text || apc_inst.id)
+                ELSE ('http://id.biodiversity.org.au/node/apni/'::text || apcn.id)
+            END
+            ELSE NULL::text
+        END AS "ccAttributionIRI ",
+    n.simple_name AS "canonicalName",
+        CASE
+            WHEN nt.autonym THEN NULL::text
+            ELSE regexp_replace("substring"((n.full_name_html)::text, '<authors>(.*)</authors>'::text), '<[^>]*>'::text, ''::text, 'g'::text)
+        END AS "scientificNameAuthorship",
+        CASE
+            WHEN (firsthybridparent.id IS NOT NULL) THEN firsthybridparent.full_name
+            ELSE NULL::character varying
+        END AS "firstHybridParentName",
+        CASE
+            WHEN (firsthybridparent.id IS NOT NULL) THEN ('http://id.biodiversity.org.au/name/apni/'::text || firsthybridparent.id)
+            ELSE NULL::text
+        END AS "firstHybridParentNameID",
+        CASE
+            WHEN (secondhybridparent.id IS NOT NULL) THEN secondhybridparent.full_name
+            ELSE NULL::character varying
+        END AS "secondHybridParentName",
+        CASE
+            WHEN (secondhybridparent.id IS NOT NULL) THEN ('http://id.biodiversity.org.au/name/apni/'::text || secondhybridparent.id)
+            ELSE NULL::text
+        END AS "secondHybridParentNameID"
+   FROM ((((((((((((((instance apc_inst
+     JOIN instance_type apc_inst_type ON ((apc_inst.instance_type_id = apc_inst_type.id)))
+     JOIN reference apc_ref ON ((apc_ref.id = apc_inst.reference_id)))
+     JOIN (tree_node apcn
+     JOIN tree_arrangement tree ON (((tree.id = apcn.tree_arrangement_id) AND ((tree.label)::text = 'APC'::text)))) ON (((((apcn.instance_id = apc_inst.id) OR (apcn.instance_id = apc_inst.cited_by_id)) AND (apcn.checked_in_at_id IS NOT NULL)) AND (apcn.next_node_id IS NULL))))
+     LEFT JOIN (tree_link
+     JOIN tree_node apcp ON ((((apcp.id = tree_link.supernode_id) AND (apcp.checked_in_at_id IS NOT NULL)) AND (apcp.next_node_id IS NULL)))) ON ((apcn.id = tree_link.subnode_id)))
+     LEFT JOIN instance apc_cited_inst ON ((apc_inst.cites_id = apc_cited_inst.id)))
+     LEFT JOIN reference apcr ON ((apc_cited_inst.reference_id = apcr.id)))
+     LEFT JOIN name_tree_path ntp ON (((ntp.name_id = apcn.name_id) AND (ntp.tree_id = tree.id))))
+     LEFT JOIN name accepted_name ON ((accepted_name.id = apcn.name_id)))
+     JOIN name n ON ((n.id = apc_inst.name_id)))
+     JOIN name_type nt ON ((n.name_type_id = nt.id)))
+     JOIN name_status ns ON ((n.name_status_id = ns.id)))
+     JOIN name_rank rank ON ((n.name_rank_id = rank.id)))
+     LEFT JOIN name firsthybridparent ON (((n.parent_id = firsthybridparent.id) AND nt.hybrid)))
+     LEFT JOIN name secondhybridparent ON (((n.second_parent_id = secondhybridparent.id) AND nt.hybrid)))
+  WITH NO DATA;
 
 
 --
@@ -620,7 +1230,7 @@ CREATE TABLE author (
     duplicate_of_id bigint,
     full_name character varying(255),
     ipni_id character varying(50),
-    name character varying(255),
+    name character varying(1000),
     namespace_id bigint NOT NULL,
     notes character varying(1000),
     source_id bigint,
@@ -631,18 +1241,6 @@ CREATE TABLE author (
     updated_by character varying(255) NOT NULL,
     valid_record boolean DEFAULT false NOT NULL
 );
-
-
---
--- Name: hibernate_sequence; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE hibernate_sequence
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
 
 
 --
@@ -744,104 +1342,6 @@ CREATE TABLE id_mapper (
 
 
 --
--- Name: instance; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE instance (
-    id bigint DEFAULT nextval('nsl_global_seq'::regclass) NOT NULL,
-    lock_version bigint DEFAULT 0 NOT NULL,
-    bhl_url character varying(4000),
-    cited_by_id bigint,
-    cites_id bigint,
-    created_at timestamp with time zone NOT NULL,
-    created_by character varying(50) NOT NULL,
-    draft boolean DEFAULT false NOT NULL,
-    instance_type_id bigint NOT NULL,
-    name_id bigint NOT NULL,
-    namespace_id bigint NOT NULL,
-    nomenclatural_status character varying(50),
-    page character varying(255),
-    page_qualifier character varying(255),
-    parent_id bigint,
-    reference_id bigint NOT NULL,
-    source_id bigint,
-    source_id_string character varying(100),
-    source_system character varying(50),
-    trash boolean DEFAULT false NOT NULL,
-    updated_at timestamp with time zone NOT NULL,
-    updated_by character varying(1000) NOT NULL,
-    valid_record boolean DEFAULT false NOT NULL,
-    verbatim_name_string character varying(255),
-    CONSTRAINT citescheck CHECK (((cites_id IS NULL) OR (cited_by_id IS NOT NULL)))
-);
-
-
---
--- Name: instance_note; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE instance_note (
-    id bigint DEFAULT nextval('nsl_global_seq'::regclass) NOT NULL,
-    lock_version bigint DEFAULT 0 NOT NULL,
-    created_at timestamp with time zone NOT NULL,
-    created_by character varying(50) NOT NULL,
-    instance_id bigint NOT NULL,
-    instance_note_key_id bigint NOT NULL,
-    namespace_id bigint NOT NULL,
-    source_id bigint,
-    source_id_string character varying(100),
-    source_system character varying(50),
-    trash boolean DEFAULT false NOT NULL,
-    updated_at timestamp with time zone NOT NULL,
-    updated_by character varying(50) NOT NULL,
-    value character varying(4000) NOT NULL
-);
-
-
---
--- Name: instance_note_key; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE instance_note_key (
-    id bigint DEFAULT nextval('nsl_global_seq'::regclass) NOT NULL,
-    lock_version bigint DEFAULT 0 NOT NULL,
-    deprecated boolean DEFAULT false NOT NULL,
-    name character varying(255) NOT NULL,
-    sort_order integer DEFAULT 0 NOT NULL,
-    description_html text,
-    rdf_id character varying(50)
-);
-
-
---
--- Name: instance_type; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE instance_type (
-    id bigint DEFAULT nextval('nsl_global_seq'::regclass) NOT NULL,
-    lock_version bigint DEFAULT 0 NOT NULL,
-    citing boolean DEFAULT false NOT NULL,
-    deprecated boolean DEFAULT false NOT NULL,
-    doubtful boolean DEFAULT false NOT NULL,
-    misapplied boolean DEFAULT false NOT NULL,
-    name character varying(255) NOT NULL,
-    nomenclatural boolean DEFAULT false NOT NULL,
-    primary_instance boolean DEFAULT false NOT NULL,
-    pro_parte boolean DEFAULT false NOT NULL,
-    protologue boolean DEFAULT false NOT NULL,
-    relationship boolean DEFAULT false NOT NULL,
-    secondary_instance boolean DEFAULT false NOT NULL,
-    sort_order integer DEFAULT 0 NOT NULL,
-    standalone boolean DEFAULT false NOT NULL,
-    synonym boolean DEFAULT false NOT NULL,
-    taxonomic boolean DEFAULT false NOT NULL,
-    unsourced boolean DEFAULT false NOT NULL,
-    description_html text,
-    rdf_id character varying(50)
-);
-
-
---
 -- Name: language; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -866,47 +1366,6 @@ CREATE TABLE locale (
 
 
 --
--- Name: name; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE name (
-    id bigint DEFAULT nextval('nsl_global_seq'::regclass) NOT NULL,
-    lock_version bigint DEFAULT 0 NOT NULL,
-    author_id bigint,
-    base_author_id bigint,
-    created_at timestamp with time zone NOT NULL,
-    created_by character varying(50) NOT NULL,
-    duplicate_of_id bigint,
-    ex_author_id bigint,
-    ex_base_author_id bigint,
-    full_name character varying(512),
-    full_name_html character varying(2048),
-    name_element character varying(255),
-    name_rank_id bigint NOT NULL,
-    name_status_id bigint NOT NULL,
-    name_type_id bigint NOT NULL,
-    namespace_id bigint NOT NULL,
-    orth_var boolean DEFAULT false NOT NULL,
-    parent_id bigint,
-    sanctioning_author_id bigint,
-    second_parent_id bigint,
-    simple_name character varying(250),
-    simple_name_html character varying(2048),
-    source_dup_of_id bigint,
-    source_id bigint,
-    source_id_string character varying(100),
-    source_system character varying(50),
-    status_summary character varying(50),
-    trash boolean DEFAULT false NOT NULL,
-    updated_at timestamp with time zone NOT NULL,
-    updated_by character varying(50) NOT NULL,
-    valid_record boolean DEFAULT false NOT NULL,
-    why_is_this_here_id bigint,
-    verbatim_rank character varying(50)
-);
-
-
---
 -- Name: name_category; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -918,6 +1377,120 @@ CREATE TABLE name_category (
     description_html text,
     rdf_id character varying(50)
 );
+
+
+--
+-- Name: name_detail_commons_vw; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW name_detail_commons_vw AS
+ SELECT instance.cited_by_id,
+    ((((ity.name)::text || ':'::text) || (name.full_name_html)::text) || (
+        CASE
+            WHEN (ns.nom_illeg OR ns.nom_inval) THEN ns.name
+            ELSE ''::character varying
+        END)::text) AS entry,
+    instance.id,
+    instance.cites_id,
+    ity.name AS instance_type_name,
+    ity.sort_order AS instance_type_sort_order,
+    name.full_name,
+    name.full_name_html,
+    ns.name,
+    instance.name_id,
+    instance.id AS instance_id,
+    instance.cited_by_id AS name_detail_id
+   FROM (((instance
+     JOIN name ON ((instance.name_id = name.id)))
+     JOIN instance_type ity ON ((ity.id = instance.instance_type_id)))
+     JOIN name_status ns ON ((ns.id = name.name_status_id)))
+  WHERE ((ity.name)::text = ANY (ARRAY[('common name'::character varying)::text, ('vernacular name'::character varying)::text]));
+
+
+--
+-- Name: name_detail_synonyms_vw; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW name_detail_synonyms_vw AS
+ SELECT instance.cited_by_id,
+    ((((ity.name)::text || ':'::text) || (name.full_name_html)::text) || (
+        CASE
+            WHEN (ns.nom_illeg OR ns.nom_inval) THEN ns.name
+            ELSE ''::character varying
+        END)::text) AS entry,
+    instance.id,
+    instance.cites_id,
+    ity.name AS instance_type_name,
+    ity.sort_order AS instance_type_sort_order,
+    name.full_name,
+    name.full_name_html,
+    ns.name,
+    instance.name_id,
+    instance.id AS instance_id,
+    instance.cited_by_id AS name_detail_id,
+    instance.reference_id
+   FROM (((instance
+     JOIN name ON ((instance.name_id = name.id)))
+     JOIN instance_type ity ON ((ity.id = instance.instance_type_id)))
+     JOIN name_status ns ON ((ns.id = name.name_status_id)))
+  WHERE ((ity.name)::text <> ALL (ARRAY[('common name'::character varying)::text, ('vernacular name'::character varying)::text]));
+
+
+--
+-- Name: name_details_vw; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW name_details_vw AS
+ SELECT n.id,
+    n.full_name,
+    n.simple_name,
+    s.name AS status_name,
+    r.name AS rank_name,
+    r.visible_in_name AS rank_visible_in_name,
+    r.sort_order AS rank_sort_order,
+    t.name AS type_name,
+    t.scientific AS type_scientific,
+    t.cultivar AS type_cultivar,
+    i.id AS instance_id,
+    ref.year AS reference_year,
+    ref.id AS reference_id,
+    ref.citation_html AS reference_citation_html,
+    ity.name AS instance_type_name,
+    ity.id AS instance_type_id,
+    ity.primary_instance,
+    ity.standalone AS instance_standalone,
+    sty.standalone AS synonym_standalone,
+    sty.name AS synonym_type_name,
+    i.page,
+    i.page_qualifier,
+    i.cited_by_id,
+    i.cites_id,
+    i.bhl_url,
+        CASE ity.primary_instance
+            WHEN true THEN 'A'::text
+            ELSE 'B'::text
+        END AS primary_instance_first,
+    sname.full_name AS synonym_full_name,
+    author.name AS author_name,
+    n.id AS name_id,
+    n.sort_name,
+    ((((ref.citation_html)::text || ': '::text) || (COALESCE(i.page, ''::character varying))::text) ||
+        CASE ity.primary_instance
+            WHEN true THEN ((' ['::text || (ity.name)::text) || ']'::text)
+            ELSE ''::text
+        END) AS entry
+   FROM ((((((((((name n
+     JOIN name_status s ON ((n.name_status_id = s.id)))
+     JOIN name_rank r ON ((n.name_rank_id = r.id)))
+     JOIN name_type t ON ((n.name_type_id = t.id)))
+     JOIN instance i ON ((n.id = i.name_id)))
+     JOIN instance_type ity ON ((i.instance_type_id = ity.id)))
+     JOIN reference ref ON ((i.reference_id = ref.id)))
+     LEFT JOIN author ON ((ref.author_id = author.id)))
+     LEFT JOIN instance syn ON ((syn.cited_by_id = i.id)))
+     LEFT JOIN instance_type sty ON ((syn.instance_type_id = sty.id)))
+     LEFT JOIN name sname ON ((syn.name_id = sname.id)))
+  WHERE (n.duplicate_of_id IS NULL);
 
 
 --
@@ -934,6 +1507,27 @@ CREATE TABLE name_group (
 
 
 --
+-- Name: name_or_synonym_vw; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW name_or_synonym_vw AS
+ SELECT 0 AS id,
+    ''::character varying AS simple_name,
+    ''::character varying AS full_name,
+    ''::character varying AS type_code,
+    0 AS instance_id,
+    0 AS tree_node_id,
+    0 AS accepted_id,
+    ''::character varying AS accepted_full_name,
+    0 AS name_status_id,
+    0 AS reference_id,
+    0 AS name_rank_id,
+    ''::character varying AS sort_name
+   FROM name
+  WHERE (1 = 0);
+
+
+--
 -- Name: name_part; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -943,46 +1537,6 @@ CREATE TABLE name_part (
     name_id bigint NOT NULL,
     preceding_name_id bigint NOT NULL,
     preceding_name_type character varying(50) NOT NULL
-);
-
-
---
--- Name: name_rank; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE name_rank (
-    id bigint DEFAULT nextval('nsl_global_seq'::regclass) NOT NULL,
-    lock_version bigint DEFAULT 0 NOT NULL,
-    abbrev character varying(20) NOT NULL,
-    deprecated boolean DEFAULT false NOT NULL,
-    has_parent boolean DEFAULT false NOT NULL,
-    italicize boolean DEFAULT false NOT NULL,
-    major boolean DEFAULT false NOT NULL,
-    name character varying(50) NOT NULL,
-    name_group_id bigint NOT NULL,
-    parent_rank_id bigint,
-    sort_order integer DEFAULT 0 NOT NULL,
-    visible_in_name boolean DEFAULT true NOT NULL,
-    description_html text,
-    rdf_id character varying(50)
-);
-
-
---
--- Name: name_status; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE name_status (
-    id bigint DEFAULT nextval('nsl_global_seq'::regclass) NOT NULL,
-    lock_version bigint DEFAULT 0 NOT NULL,
-    display boolean DEFAULT true NOT NULL,
-    name character varying(50),
-    name_group_id bigint NOT NULL,
-    name_status_id bigint,
-    nom_illeg boolean DEFAULT false NOT NULL,
-    nom_inval boolean DEFAULT false NOT NULL,
-    description_html text,
-    rdf_id character varying(50)
 );
 
 
@@ -1012,43 +1566,128 @@ CREATE TABLE name_tag_name (
 
 
 --
--- Name: name_tree_path; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: name_view; Type: MATERIALIZED VIEW; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE TABLE name_tree_path (
-    id bigint NOT NULL,
-    version bigint NOT NULL,
-    inserted bigint NOT NULL,
-    name_id bigint NOT NULL,
-    next_id bigint,
-    parent_id bigint,
-    path character varying(4000) NOT NULL,
-    tree_id bigint NOT NULL,
-    tree_path character varying(4000) NOT NULL
-);
-
-
---
--- Name: name_type; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE name_type (
-    id bigint DEFAULT nextval('nsl_global_seq'::regclass) NOT NULL,
-    lock_version bigint DEFAULT 0 NOT NULL,
-    autonym boolean DEFAULT false NOT NULL,
-    connector character varying(1),
-    cultivar boolean DEFAULT false NOT NULL,
-    formula boolean DEFAULT false NOT NULL,
-    hybrid boolean DEFAULT false NOT NULL,
-    name character varying(255) NOT NULL,
-    name_category_id bigint NOT NULL,
-    name_group_id bigint NOT NULL,
-    scientific boolean DEFAULT false NOT NULL,
-    sort_order integer DEFAULT 0 NOT NULL,
-    description_html text,
-    rdf_id character varying(50),
-    deprecated boolean DEFAULT false NOT NULL
-);
+CREATE MATERIALIZED VIEW name_view AS
+ SELECT 'ICNAFP'::text AS "nomenclaturalCode",
+    'APNI'::text AS "datasetName",
+    nt.name AS "nameType",
+        CASE
+            WHEN (apc_inst.id IS NULL) THEN (( SELECT (('[unplaced '::text ||
+                    CASE
+                        WHEN (i.cited_by_id IS NULL) THEN 'name'::text
+                        ELSE 'relationship'::text
+                    END) || '?]'::text)
+               FROM (instance i
+                 JOIN reference r ON ((r.id = i.reference_id)))
+              WHERE (i.name_id = n.id)
+              ORDER BY r.year DESC
+             LIMIT 1))::character varying
+            ELSE
+            CASE
+                WHEN (apc_inst.id = apcn.instance_id) THEN apcn.type_uri_id_part
+                ELSE apc_inst_type.name
+            END
+        END AS "taxonomicStatus",
+    ('http://id.biodiversity.org.au/name/apni/'::text || n.id) AS "scientificNameID",
+    n.full_name AS "scientificName",
+        CASE
+            WHEN ((ns.name)::text <> ALL (ARRAY[('legitimate'::character varying)::text, ('[default]'::character varying)::text])) THEN ns.name
+            ELSE NULL::character varying
+        END AS "nomenclaturalStatus",
+    n.simple_name AS "canonicalName",
+        CASE
+            WHEN nt.autonym THEN NULL::text
+            ELSE regexp_replace("substring"((n.full_name_html)::text, '<authors>(.*)</authors>'::text), '<[^>]*>'::text, ''::text, 'g'::text)
+        END AS "scientificNameAuthorship",
+    'http://creativecommons.org/licenses/by/3.0/'::text AS "ccLicense",
+    ('http://id.biodiversity.org.au/name/apni/'::text || n.id) AS "ccAttributionIRI",
+        CASE
+            WHEN (nt.cultivar = true) THEN n.name_element
+            ELSE NULL::character varying
+        END AS "cultivarEpithet",
+    n.simple_name_html AS "canonicalNameHTML",
+    n.full_name_html AS "scientificNameHTML",
+    nt.autonym,
+    nt.hybrid,
+    nt.cultivar,
+    nt.formula,
+    nt.scientific,
+    ns.nom_inval AS "nomInval",
+    ns.nom_illeg AS "nomIlleg",
+    pro_ref.citation AS "namePublishedIn",
+    pro_ref.year AS "namePublishedInYear",
+    pit.name AS "nameInstanceType",
+    bnm.full_name AS "originalNameUsage",
+        CASE
+            WHEN (bin.id IS NOT NULL) THEN ('http://id.biodiversity.org.au/instance/apni/'::text || bin.id)
+            ELSE
+            CASE
+                WHEN (pro.id IS NOT NULL) THEN ('http://id.biodiversity.org.au/instance/apni/'::text || pro.id)
+                ELSE NULL::text
+            END
+        END AS "originalNameUsageID",
+    ( SELECT string_agg(regexp_replace((nt_1.value)::text, '[\n\r\u2028]+'::text, ' '::text, 'g'::text), ' '::text) AS string_agg
+           FROM (instance_note nt_1
+             JOIN instance_note_key key1 ON (((key1.id = nt_1.instance_note_key_id) AND ((key1.name)::text = 'Type'::text))))
+          WHERE (nt_1.instance_id = apcn.instance_id)) AS "typeCitation",
+    rank.name AS "taxonRank",
+    rank.sort_order AS "taxonRankSortOrder",
+    rank.abbrev AS "taxonRankAbbreviation",
+    "substring"(ntp.rank_path, 'Regnum:([^>]*)'::text) AS kingdom,
+    "substring"(ntp.rank_path, 'Classis:([^>]*)'::text) AS class,
+    "substring"(ntp.rank_path, 'Subclassis:([^>]*)'::text) AS subclass,
+    "substring"(ntp.rank_path, 'Familia:([^>]*)'::text) AS family,
+    "substring"(ntp.rank_path, 'Genus:([^>]*)'::text) AS "genericName",
+    "substring"(ntp.rank_path, 'Species:([^>]*)'::text) AS "specificEpithet",
+    "substring"(ntp.rank_path, 'Species:[^>]*>.*:(.*)\\$'::text) AS "infraspecificEpithet",
+    n.created_at AS created,
+    n.updated_at AS modified,
+    n.name_element AS "nameElement",
+        CASE
+            WHEN (firsthybridparent.id IS NOT NULL) THEN firsthybridparent.full_name
+            ELSE NULL::character varying
+        END AS "firstHybridParentName",
+        CASE
+            WHEN (firsthybridparent.id IS NOT NULL) THEN ('http://id.biodiversity.org.au/name/apni/'::text || firsthybridparent.id)
+            ELSE NULL::text
+        END AS "firstHybridParentNameID",
+        CASE
+            WHEN (secondhybridparent.id IS NOT NULL) THEN secondhybridparent.full_name
+            ELSE NULL::character varying
+        END AS "secondHybridParentName",
+        CASE
+            WHEN (secondhybridparent.id IS NOT NULL) THEN ('http://id.biodiversity.org.au/name/apni/'::text || secondhybridparent.id)
+            ELSE NULL::text
+        END AS "secondHybridParentNameID"
+   FROM (((((((((((((name n
+     JOIN name_type nt ON ((n.name_type_id = nt.id)))
+     JOIN name_status ns ON ((n.name_status_id = ns.id)))
+     JOIN name_rank rank ON ((n.name_rank_id = rank.id)))
+     LEFT JOIN author combination_author ON ((combination_author.id = n.author_id)))
+     LEFT JOIN author basionym_author ON ((n.base_author_id = basionym_author.id)))
+     LEFT JOIN author ex_basionym_author ON ((n.ex_base_author_id = ex_basionym_author.id)))
+     LEFT JOIN author ex_combination_author ON ((n.ex_author_id = ex_combination_author.id)))
+     LEFT JOIN author sanctioning_work ON ((n.sanctioning_author_id = sanctioning_work.id)))
+     LEFT JOIN ((instance pro
+     JOIN instance_type pit ON (((pit.id = pro.instance_type_id) AND (pit.primary_instance = true))))
+     JOIN reference pro_ref ON ((pro.reference_id = pro_ref.id))) ON ((pro.name_id = n.id)))
+     LEFT JOIN ((instance bin
+     JOIN instance_type "bit" ON ((("bit".id = bin.instance_type_id) AND (("bit".name)::text = 'basionym'::text))))
+     JOIN name bnm ON ((bnm.id = bin.name_id))) ON ((bin.id = pro.cites_id)))
+     LEFT JOIN (((instance apc_inst
+     JOIN instance_type apc_inst_type ON ((apc_inst.instance_type_id = apc_inst_type.id)))
+     JOIN reference apc_ref ON ((apc_ref.id = apc_inst.reference_id)))
+     JOIN ((tree_node apcn
+     JOIN tree_arrangement tree ON (((tree.id = apcn.tree_arrangement_id) AND ((tree.label)::text = 'APC'::text))))
+     JOIN name_tree_path ntp ON (((ntp.name_id = apcn.name_id) AND (ntp.tree_id = tree.id)))) ON ((((((apcn.instance_id = apc_inst.id) OR (apcn.instance_id = apc_inst.cited_by_id)) AND (apcn.checked_in_at_id IS NOT NULL)) AND (apcn.next_node_id IS NULL)) AND ((apcn.type_uri_id_part)::text <> 'DeclaredBt'::text)))) ON ((apc_inst.name_id = n.id)))
+     LEFT JOIN name firsthybridparent ON (((n.parent_id = firsthybridparent.id) AND nt.hybrid)))
+     LEFT JOIN name secondhybridparent ON (((n.second_parent_id = secondhybridparent.id) AND nt.hybrid)))
+  WHERE ((EXISTS ( SELECT 1
+           FROM instance
+          WHERE (instance.name_id = n.id))) AND (n.duplicate_of_id IS NULL))
+  WITH NO DATA;
 
 
 --
@@ -1087,74 +1726,6 @@ CREATE TABLE notification (
     version bigint NOT NULL,
     message character varying(255) NOT NULL,
     object_id bigint
-);
-
-
---
--- Name: nsl_simple_name; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE nsl_simple_name (
-    id bigint NOT NULL,
-    apc_comment character varying(4000),
-    apc_distribution character varying(4000),
-    apc_excluded boolean DEFAULT false NOT NULL,
-    apc_familia character varying(255),
-    apc_instance_id bigint,
-    apc_name character varying(512),
-    apc_proparte boolean DEFAULT false NOT NULL,
-    apc_relationship_type character varying(255),
-    apni boolean DEFAULT false,
-    author character varying(255),
-    authority character varying(255),
-    autonym boolean DEFAULT false,
-    base_name_author character varying(255),
-    classifications character varying(255),
-    classis character varying(255),
-    created_at timestamp without time zone,
-    created_by character varying(255),
-    cultivar boolean DEFAULT false NOT NULL,
-    cultivar_name character varying(255),
-    dup_of_id bigint,
-    ex_author character varying(255),
-    ex_base_name_author character varying(255),
-    familia character varying(255),
-    family_nsl_id bigint,
-    formula boolean DEFAULT false NOT NULL,
-    full_name_html character varying(2048),
-    genus character varying(255),
-    genus_nsl_id bigint,
-    homonym boolean DEFAULT false,
-    hybrid boolean DEFAULT false,
-    infraspecies character varying(255),
-    name character varying(255) NOT NULL,
-    name_element character varying(255),
-    name_rank_id bigint NOT NULL,
-    name_status_id bigint NOT NULL,
-    name_type_id bigint NOT NULL,
-    name_type_name character varying(255) NOT NULL,
-    nom_illeg boolean DEFAULT false,
-    nom_inval boolean DEFAULT false,
-    nom_stat character varying(255) NOT NULL,
-    parent_nsl_id bigint,
-    proto_year smallint,
-    rank character varying(255) NOT NULL,
-    rank_abbrev character varying(255),
-    rank_sort_order integer,
-    sanctioning_author character varying(255),
-    scientific boolean DEFAULT false,
-    second_parent_nsl_id bigint,
-    simple_name_html character varying(2048),
-    species character varying(255),
-    species_nsl_id bigint,
-    subclassis character varying(255),
-    taxon_name character varying(512) NOT NULL,
-    updated_at timestamp without time zone,
-    updated_by character varying(255),
-    basionym character varying(512),
-    proto_citation character varying(512),
-    proto_instance_id bigint,
-    replaced_synonym character varying(512)
 );
 
 
@@ -1246,104 +1817,19 @@ CREATE TABLE ref_type (
     parent_id bigint,
     parent_optional boolean DEFAULT false NOT NULL,
     description_html text,
-    rdf_id character varying(50)
+    rdf_id character varying(50),
+    use_parent_details boolean DEFAULT false NOT NULL
 );
 
 
 --
--- Name: reference; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: shard_config; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE TABLE reference (
-    id bigint DEFAULT nextval('nsl_global_seq'::regclass) NOT NULL,
-    lock_version bigint DEFAULT 0 NOT NULL,
-    abbrev_title character varying(2000),
-    author_id bigint NOT NULL,
-    bhl_url character varying(4000),
-    citation character varying(512),
-    citation_html character varying(512),
-    created_at timestamp with time zone NOT NULL,
-    created_by character varying(255) NOT NULL,
-    display_title character varying(2000) NOT NULL,
-    doi character varying(255),
-    duplicate_of_id bigint,
-    edition character varying(50),
-    isbn character varying(16),
-    issn character varying(16),
-    language_id bigint NOT NULL,
-    namespace_id bigint NOT NULL,
-    notes character varying(1000),
-    pages character varying(255),
-    parent_id bigint,
-    publication_date character varying(50),
-    published boolean DEFAULT false NOT NULL,
-    published_location character varying(50),
-    publisher character varying(100),
-    ref_author_role_id bigint NOT NULL,
-    ref_type_id bigint NOT NULL,
-    source_id bigint,
-    source_id_string character varying(100),
-    source_system character varying(50),
-    title character varying(2000) NOT NULL,
-    tl2 character varying(30),
-    trash boolean DEFAULT false NOT NULL,
-    updated_at timestamp with time zone NOT NULL,
-    updated_by character varying(1000) NOT NULL,
-    valid_record boolean DEFAULT false NOT NULL,
-    verbatim_author character varying(1000),
-    verbatim_citation character varying(2000),
-    verbatim_reference character varying(1000),
-    volume character varying(50),
-    year integer
-);
-
-
---
--- Name: trashed_item; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE trashed_item (
-    id bigint DEFAULT nextval('nsl_global_seq'::regclass) NOT NULL,
-    lock_version bigint DEFAULT 0 NOT NULL,
-    created_at timestamp with time zone NOT NULL,
-    created_by character varying(4000) NOT NULL,
-    trashable_id numeric(19,2) NOT NULL,
-    trashable_type character varying(4000) NOT NULL,
-    trashing_event_id bigint,
-    updated_at timestamp with time zone NOT NULL,
-    updated_by character varying(4000) NOT NULL
-);
-
-
---
--- Name: trashing_event; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE trashing_event (
-    id bigint DEFAULT nextval('nsl_global_seq'::regclass) NOT NULL,
-    lock_version bigint DEFAULT 0 NOT NULL,
-    created_at timestamp with time zone NOT NULL,
-    created_by character varying(4000) NOT NULL,
-    updated_at timestamp with time zone NOT NULL,
-    updated_by character varying(4000) NOT NULL
-);
-
-
---
--- Name: tree_arrangement; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE tree_arrangement (
-    id bigint DEFAULT nextval('nsl_global_seq'::regclass) NOT NULL,
-    lock_version bigint DEFAULT 0 NOT NULL,
-    tree_type bpchar NOT NULL,
-    description character varying(255),
-    label character varying(50),
-    node_id bigint,
-    is_synthetic bpchar NOT NULL,
-    title character varying(50),
-    CONSTRAINT chk_classification_has_label CHECK (((tree_type <> ALL (ARRAY['E'::bpchar, 'P'::bpchar])) OR (label IS NOT NULL))),
-    CONSTRAINT chk_tree_arrangement_type CHECK ((tree_type = ANY (ARRAY['E'::bpchar, 'P'::bpchar, 'U'::bpchar, 'Z'::bpchar])))
+CREATE TABLE shard_config (
+    id bigint NOT NULL,
+    name character varying(255) NOT NULL,
+    value character varying(255) NOT NULL
 );
 
 
@@ -1356,66 +1842,8 @@ CREATE TABLE tree_event (
     lock_version bigint DEFAULT 0 NOT NULL,
     auth_user character varying(255) NOT NULL,
     note character varying(255),
-    time_stamp timestamp with time zone NOT NULL
-);
-
-
---
--- Name: tree_link; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE tree_link (
-    id bigint DEFAULT nextval('nsl_global_seq'::regclass) NOT NULL,
-    lock_version bigint DEFAULT 0 NOT NULL,
-    link_seq integer NOT NULL,
-    subnode_id bigint NOT NULL,
-    supernode_id bigint NOT NULL,
-    is_synthetic bpchar NOT NULL,
-    type_uri_id_part character varying(255),
-    type_uri_ns_part_id bigint NOT NULL,
-    versioning_method bpchar NOT NULL,
-    CONSTRAINT chk_tree_link_seq_positive CHECK ((link_seq >= 1)),
-    CONSTRAINT chk_tree_link_sub_not_end CHECK ((subnode_id <> 0)),
-    CONSTRAINT chk_tree_link_sup_not_end CHECK ((supernode_id <> 0)),
-    CONSTRAINT chk_tree_link_synthetic_yn CHECK ((is_synthetic = ANY (ARRAY['N'::bpchar, 'Y'::bpchar]))),
-    CONSTRAINT chk_tree_link_vmethod CHECK ((versioning_method = ANY (ARRAY['F'::bpchar, 'V'::bpchar, 'T'::bpchar])))
-);
-
-
---
--- Name: tree_node; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE tree_node (
-    id bigint DEFAULT nextval('nsl_global_seq'::regclass) NOT NULL,
-    lock_version bigint DEFAULT 0 NOT NULL,
-    checked_in_at_id bigint,
-    internal_type character varying(255) NOT NULL,
-    literal character varying(4096),
-    name_uri_id_part character varying(255),
-    name_uri_ns_part_id bigint,
-    next_node_id bigint,
-    prev_node_id bigint,
-    replaced_at_id bigint,
-    resource_uri_id_part character varying(255),
-    resource_uri_ns_part_id bigint,
-    tree_arrangement_id bigint,
-    is_synthetic bpchar NOT NULL,
-    taxon_uri_id_part character varying(255),
-    taxon_uri_ns_part_id bigint,
-    type_uri_id_part character varying(255),
-    type_uri_ns_part_id bigint NOT NULL,
-    name_id bigint,
-    instance_id bigint,
-    CONSTRAINT chk_arrangement_synthetic_yn CHECK ((is_synthetic = ANY (ARRAY['N'::bpchar, 'Y'::bpchar]))),
-    CONSTRAINT chk_internal_type_d CHECK ((((internal_type)::text <> 'D'::text) OR (((name_uri_ns_part_id IS NULL) AND (taxon_uri_ns_part_id IS NULL)) AND (literal IS NULL)))),
-    CONSTRAINT chk_internal_type_enum CHECK (((internal_type)::text = ANY (ARRAY[('S'::character varying)::text, ('Z'::character varying)::text, ('T'::character varying)::text, ('D'::character varying)::text, ('V'::character varying)::text]))),
-    CONSTRAINT chk_internal_type_s CHECK ((((internal_type)::text <> 'S'::text) OR ((((name_uri_ns_part_id IS NULL) AND (taxon_uri_ns_part_id IS NULL)) AND (resource_uri_ns_part_id IS NULL)) AND (literal IS NULL)))),
-    CONSTRAINT chk_internal_type_t CHECK ((((internal_type)::text <> 'T'::text) OR (literal IS NULL))),
-    CONSTRAINT chk_internal_type_v CHECK ((((internal_type)::text <> 'V'::text) OR (((name_uri_ns_part_id IS NULL) AND (taxon_uri_ns_part_id IS NULL)) AND (((resource_uri_ns_part_id IS NOT NULL) AND (literal IS NULL)) OR ((resource_uri_ns_part_id IS NULL) AND (literal IS NOT NULL)))))),
-    CONSTRAINT chk_tree_node_instance_matches CHECK (((instance_id IS NULL) OR (((instance_id)::character varying)::text = (taxon_uri_id_part)::text))),
-    CONSTRAINT chk_tree_node_name_matches CHECK (((name_id IS NULL) OR (((name_id)::character varying)::text = (name_uri_id_part)::text))),
-    CONSTRAINT chk_tree_node_synthetic_yn CHECK ((is_synthetic = ANY (ARRAY['N'::bpchar, 'Y'::bpchar])))
+    time_stamp timestamp with time zone NOT NULL,
+    namespace_id bigint
 );
 
 
@@ -1741,14 +2169,6 @@ ALTER TABLE ONLY notification
 
 
 --
--- Name: nsl_simple_name_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY nsl_simple_name
-    ADD CONSTRAINT nsl_simple_name_pkey PRIMARY KEY (id);
-
-
---
 -- Name: ref_author_role_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1773,19 +2193,11 @@ ALTER TABLE ONLY reference
 
 
 --
--- Name: trashed_item_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: shard_config_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
-ALTER TABLE ONLY trashed_item
-    ADD CONSTRAINT trashed_item_pkey PRIMARY KEY (id);
-
-
---
--- Name: trashing_event_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY trashing_event
-    ADD CONSTRAINT trashing_event_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY shard_config
+    ADD CONSTRAINT shard_config_pkey PRIMARY KEY (id);
 
 
 --
@@ -1869,11 +2281,27 @@ ALTER TABLE ONLY tree_uri_ns
 
 
 --
+-- Name: uk_9kovg6nyb11658j2tv2yv4bsi; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY author
+    ADD CONSTRAINT uk_9kovg6nyb11658j2tv2yv4bsi UNIQUE (abbrev);
+
+
+--
 -- Name: uk_a0justk7c77bb64o6u1riyrlh; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY instance_note_key
     ADD CONSTRAINT uk_a0justk7c77bb64o6u1riyrlh UNIQUE (name);
+
+
+--
+-- Name: uk_e6nvv3knohggqpdn247bodpxy; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY shard_config
+    ADD CONSTRAINT uk_e6nvv3knohggqpdn247bodpxy UNIQUE (name);
 
 
 --
@@ -2333,6 +2761,13 @@ CREATE INDEX name_category_rdfid ON name_category USING btree (rdf_id);
 
 
 --
+-- Name: name_duplicate_of_id_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX name_duplicate_of_id_index ON name USING btree (duplicate_of_id);
+
+
+--
 -- Name: name_exauthor_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -2368,10 +2803,45 @@ CREATE INDEX name_lower_f_unaccent_full_name_like ON name USING btree (lower(f_u
 
 
 --
+-- Name: name_lower_full_name_gin_trgm; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX name_lower_full_name_gin_trgm ON name USING gin (lower((full_name)::text) gin_trgm_ops);
+
+
+--
+-- Name: name_lower_simple_name_gin_trgm; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX name_lower_simple_name_gin_trgm ON name USING gin (lower((simple_name)::text) gin_trgm_ops);
+
+
+--
+-- Name: name_lower_unacent_full_name_gin_trgm; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX name_lower_unacent_full_name_gin_trgm ON name USING gin (lower(f_unaccent((full_name)::text)) gin_trgm_ops);
+
+
+--
+-- Name: name_lower_unacent_simple_name_gin_trgm; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX name_lower_unacent_simple_name_gin_trgm ON name USING gin (lower(f_unaccent((simple_name)::text)) gin_trgm_ops);
+
+
+--
 -- Name: name_name_element_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX name_name_element_index ON name USING btree (name_element);
+
+
+--
+-- Name: name_parent_id_ndx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX name_parent_id_ndx ON name USING btree (parent_id);
 
 
 --
@@ -2400,6 +2870,13 @@ CREATE INDEX name_rank_rdfid ON name_rank USING btree (rdf_id);
 --
 
 CREATE INDEX name_sanctioningauthor_index ON name USING btree (sanctioning_author_id);
+
+
+--
+-- Name: name_second_parent_id_ndx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX name_second_parent_id_ndx ON name USING btree (second_parent_id);
 
 
 --
@@ -2459,24 +2936,17 @@ CREATE INDEX name_tag_tag_index ON name_tag_name USING btree (tag_id);
 
 
 --
--- Name: name_tree_path_name_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: name_tree_path_family_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX name_tree_path_name_index ON name_tree_path USING btree (name_id);
-
-
---
--- Name: name_tree_path_path_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX name_tree_path_path_index ON name_tree_path USING btree (path);
+CREATE INDEX name_tree_path_family_index ON name_tree_path USING btree (family_id);
 
 
 --
--- Name: name_tree_path_treepath_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: name_tree_path_treename_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX name_tree_path_treepath_index ON name_tree_path USING btree (tree_path);
+CREATE INDEX name_tree_path_treename_index ON name_tree_path USING btree (name_id, tree_id);
 
 
 --
@@ -2561,6 +3031,13 @@ CREATE INDEX preceding_name_type_index ON name_part USING btree (preceding_name_
 --
 
 CREATE INDEX ref_author_role_rdfid ON ref_author_role USING btree (rdf_id);
+
+
+--
+-- Name: ref_citation_text_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX ref_citation_text_index ON reference USING gin (to_tsvector('english'::regconfig, f_unaccent(COALESCE((citation)::text, ''::text))));
 
 
 --
@@ -2759,7 +3236,22 @@ CREATE TRIGGER author_update AFTER INSERT OR DELETE OR UPDATE ON author FOR EACH
 CREATE TRIGGER name_update AFTER INSERT OR DELETE OR UPDATE ON name FOR EACH ROW EXECUTE PROCEDURE name_notification();
 
 
+--
+-- Name: reference_update; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER reference_update AFTER INSERT OR DELETE OR UPDATE ON author FOR EACH ROW EXECUTE PROCEDURE reference_notification();
+
+
 SET search_path = mapper, pg_catalog;
+
+--
+-- Name: fk_k2o53uoslf9gwqrd80cu2al4s; Type: FK CONSTRAINT; Schema: mapper; Owner: -
+--
+
+ALTER TABLE ONLY identifier
+    ADD CONSTRAINT fk_k2o53uoslf9gwqrd80cu2al4s FOREIGN KEY (preferred_uri_id) REFERENCES match(id);
+
 
 --
 -- Name: fk_mf2dsc2dxvsa9mlximsct7uau; Type: FK CONSTRAINT; Schema: mapper; Owner: -
@@ -2876,19 +3368,19 @@ ALTER TABLE ONLY comment
 
 
 --
--- Name: fk_3xnmxe5p6ed258euacrfflwrj; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY name_tree_path
-    ADD CONSTRAINT fk_3xnmxe5p6ed258euacrfflwrj FOREIGN KEY (tree_id) REFERENCES tree_arrangement(id);
-
-
---
 -- Name: fk_4g2i2qry4941xmqijgeo8ns2h; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY external_ref
     ADD CONSTRAINT fk_4g2i2qry4941xmqijgeo8ns2h FOREIGN KEY (instance_id) REFERENCES instance(id);
+
+
+--
+-- Name: fk_4kc2kv5choyybkaetmshegbet; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY name_tree_path
+    ADD CONSTRAINT fk_4kc2kv5choyybkaetmshegbet FOREIGN KEY (family_id) REFERENCES name(id);
 
 
 --
@@ -2905,14 +3397,6 @@ ALTER TABLE ONLY tree_node
 
 ALTER TABLE ONLY ref_type
     ADD CONSTRAINT fk_51alfoe7eobwh60yfx45y22ay FOREIGN KEY (parent_id) REFERENCES ref_type(id);
-
-
---
--- Name: fk_59i6is32bt6v19i51ql9n2r9i; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY nsl_simple_name
-    ADD CONSTRAINT fk_59i6is32bt6v19i51ql9n2r9i FOREIGN KEY (proto_instance_id) REFERENCES instance(id);
 
 
 --
@@ -3004,22 +3488,6 @@ ALTER TABLE ONLY name
 
 
 --
--- Name: fk_bd6arfjuj28nolsc58i345ybg; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY trashed_item
-    ADD CONSTRAINT fk_bd6arfjuj28nolsc58i345ybg FOREIGN KEY (trashing_event_id) REFERENCES trashing_event(id);
-
-
---
--- Name: fk_bexlla3pvlm2x8err16puv16f; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY nsl_simple_name
-    ADD CONSTRAINT fk_bexlla3pvlm2x8err16puv16f FOREIGN KEY (name_status_id) REFERENCES name_status(id);
-
-
---
 -- Name: fk_bu7q5itmt7w7q1bex049xvac7; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3057,14 +3525,6 @@ ALTER TABLE ONLY name
 
 ALTER TABLE ONLY reference
     ADD CONSTRAINT fk_cr9avt4miqikx4kk53aflnnkd FOREIGN KEY (parent_id) REFERENCES reference(id);
-
-
---
--- Name: fk_ctg301hhg3x41rjl09d7noti1; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY nsl_simple_name
-    ADD CONSTRAINT fk_ctg301hhg3x41rjl09d7noti1 FOREIGN KEY (genus_nsl_id) REFERENCES name(id);
 
 
 --
@@ -3132,14 +3592,6 @@ ALTER TABLE ONLY name_status
 
 
 --
--- Name: fk_gbcxpwubk8cdlh5fxnd3ln4up; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY nsl_simple_name
-    ADD CONSTRAINT fk_gbcxpwubk8cdlh5fxnd3ln4up FOREIGN KEY (name_type_id) REFERENCES name_type(id);
-
-
---
 -- Name: fk_gc6f9ykh7eaflvty9tr6n4cb6; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3188,22 +3640,6 @@ ALTER TABLE ONLY instance_note
 
 
 --
--- Name: fk_j4j0kq9duod9gm019pl1xec7c; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY name_tree_path
-    ADD CONSTRAINT fk_j4j0kq9duod9gm019pl1xec7c FOREIGN KEY (name_id) REFERENCES name(id);
-
-
---
--- Name: fk_k4ryd8xarm9hhk1aitqtfg0tb; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY nsl_simple_name
-    ADD CONSTRAINT fk_k4ryd8xarm9hhk1aitqtfg0tb FOREIGN KEY (name_rank_id) REFERENCES name_rank(id);
-
-
---
 -- Name: fk_kqshktm171nwvk38ot4d12w6b; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3212,35 +3648,11 @@ ALTER TABLE ONLY tree_link
 
 
 --
--- Name: fk_kquvd2hkcl7aj2vhylvp1k7vb; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY nsl_simple_name
-    ADD CONSTRAINT fk_kquvd2hkcl7aj2vhylvp1k7vb FOREIGN KEY (parent_nsl_id) REFERENCES name(id);
-
-
---
--- Name: fk_lgtnu32ysbg6l2ys5d6bhfgmq; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY nsl_simple_name
-    ADD CONSTRAINT fk_lgtnu32ysbg6l2ys5d6bhfgmq FOREIGN KEY (apc_instance_id) REFERENCES instance(id);
-
-
---
 -- Name: fk_lumlr5avj305pmc4hkjwaqk45; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY instance
     ADD CONSTRAINT fk_lumlr5avj305pmc4hkjwaqk45 FOREIGN KEY (reference_id) REFERENCES reference(id);
-
-
---
--- Name: fk_mvjeehgt584v9ep11ixe1iyok; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY nsl_simple_name
-    ADD CONSTRAINT fk_mvjeehgt584v9ep11ixe1iyok FOREIGN KEY (second_parent_nsl_id) REFERENCES name(id);
 
 
 --
@@ -3265,14 +3677,6 @@ ALTER TABLE ONLY instance
 
 ALTER TABLE ONLY tree_node
     ADD CONSTRAINT fk_oge4ibjd3ff3oyshexl6set2u FOREIGN KEY (type_uri_ns_part_id) REFERENCES tree_uri_ns(id);
-
-
---
--- Name: fk_on28vygd1e7aqn9owbhv3u23h; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY nsl_simple_name
-    ADD CONSTRAINT fk_on28vygd1e7aqn9owbhv3u23h FOREIGN KEY (family_nsl_id) REFERENCES name(id);
 
 
 --
@@ -3364,14 +3768,6 @@ ALTER TABLE ONLY name
 
 
 --
--- Name: fk_rpqdbhi21sdix5tmmj5ul61su; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY nsl_simple_name
-    ADD CONSTRAINT fk_rpqdbhi21sdix5tmmj5ul61su FOREIGN KEY (species_nsl_id) REFERENCES name(id);
-
-
---
 -- Name: fk_s13ituehdpf6uh859umme7g1j; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3385,14 +3781,6 @@ ALTER TABLE ONLY name_part
 
 ALTER TABLE ONLY tree_node
     ADD CONSTRAINT fk_sbuntfo4jfai44yjh9o09vu6s FOREIGN KEY (next_node_id) REFERENCES tree_node(id);
-
-
---
--- Name: fk_sfj3hoevcuni3ak7no6byjp3; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY name_tree_path
-    ADD CONSTRAINT fk_sfj3hoevcuni3ak7no6byjp3 FOREIGN KEY (parent_id) REFERENCES name_tree_path(id);
 
 
 --
@@ -3436,11 +3824,19 @@ ALTER TABLE ONLY tree_link
 
 
 --
--- Name: fk_try5dwb6jcy5fngk09bf7f7on; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: tree_arrangement_namespace_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY name_tree_path
-    ADD CONSTRAINT fk_try5dwb6jcy5fngk09bf7f7on FOREIGN KEY (next_id) REFERENCES name_tree_path(id);
+ALTER TABLE ONLY tree_arrangement
+    ADD CONSTRAINT tree_arrangement_namespace_id_fkey FOREIGN KEY (namespace_id) REFERENCES namespace(id);
+
+
+--
+-- Name: tree_event_namespace_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY tree_event
+    ADD CONSTRAINT tree_event_namespace_id_fkey FOREIGN KEY (namespace_id) REFERENCES namespace(id);
 
 
 --
