@@ -3233,7 +3233,7 @@ CREATE TRIGGER author_update AFTER INSERT OR DELETE OR UPDATE ON author FOR EACH
 -- Name: name_update; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER name_update AFTER INSERT OR DELETE OR UPDATE ON name FOR EACH ROW EXECUTE PROCEDURE name_notification();
+--CREATE TRIGGER name_update AFTER INSERT OR DELETE OR UPDATE ON name FOR EACH ROW EXECUTE PROCEDURE name_notification();
 
 
 --
