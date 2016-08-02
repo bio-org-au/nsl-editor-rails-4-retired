@@ -23,9 +23,9 @@ class GenusNameChangeAffects2ndChildSpAndSubspTest < ActionController::TestCase
   test "genus name change affects second child species and subspecies" do
     skip "Problem with suckerpunch job in test."
     genus = names(:acacia)
-    puts genus.id
+    # puts genus.id
     species = names(:another_species)
-    puts species.full_name
+    # puts species.full_name
     subspecies = names(:hybrid_formula)
     @request.headers["Accept"] = "application/javascript"
     # post(:update, { name: { 'name_element' => genus.name_element+'XYZ'},
@@ -36,7 +36,7 @@ class GenusNameChangeAffects2ndChildSpAndSubspTest < ActionController::TestCase
     assert_response :success
     sleep(2) # to allow for the asynch job
     species_afterwards = Name.find(species.id)
-    puts species_afterwards.full_name
+    # puts species_afterwards.full_name
     assert species.full_name != species_afterwards.full_name,
            "The genus's name has changed and this should affect the
            species's name."

@@ -536,15 +536,11 @@ class Instance < ActiveRecord::Base
 
   # Call with argument :commit to commit; any other argument will rollback.
   def change_synonymy_to_unpublished_citation(commit_or_not = :or_not)
-    puts "Start change_synonymy_to_unpublished_citation for instance #{id}"
     fail "Expected synonymy but this is not synonymy!" unless synonymy?
     redundant_instance = Instance.find(cites_id)
     same_reference = this_is_cited_by.reference.id == reference.id
     fail "Expected same reference but that is not true!" unless same_reference
-    puts "id: #{id}; cited_by_id: #{cited_by_id}; cites: #{cites_id};
     to be removed: #{redundant_instance.id}; same reference: #{same_reference} "
-    puts "synonymy?: #{synonymy?}"
-    puts "type of instance: #{type_of_instance}"
     Instance.transaction do
       # bypass a validation that would prevent this change
       self.data_fix_in_process = true
@@ -552,19 +548,8 @@ class Instance < ActiveRecord::Base
       self.cites_id = nil
       self.save!
       redundant_instance.destroy!
-      if unpublished_citation?
-        puts "As expected, the record is now an unpublished citation instance."
-      else
-        puts "Unexpected result: record has not become an unpublished citation!"
-        puts "Rolling back."
-        fail ActiveRecord::Rollback
-      end
-      if commit_or_not == :commit
-        puts("Committing...(commit_or_not: #{commit_or_not})")
-      else
-        puts("Not committing...(commit_or_not: #{commit_or_not})")
-        fail(ActiveRecord::Rollback)
-      end
+      fail ActiveRecord::Rollback unless unpublished_citation?
+      fail ActiveRecord::Rollback unless commit_or_not == :commit
     end
     self
   end

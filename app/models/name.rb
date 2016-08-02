@@ -663,7 +663,6 @@ class Name < ActiveRecord::Base
 
   def sub_tree_size(level = 0)
     if level == 0
-      puts "level 0"
       @size_ = 0
     end
     @size_ ||= 0
@@ -672,7 +671,6 @@ class Name < ActiveRecord::Base
     children.each do |child|
       @size_ += child.sub_tree_size(level)
     end
-    puts "level: #{level}; @size: #{@size_}"
     @size_
   end
 
