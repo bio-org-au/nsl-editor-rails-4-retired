@@ -17,6 +17,10 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "03-Aug-2016",
+      jira_id: "775",
+      description:
+      %(Upgrade to Rails 4.2, requiring JRuby 9.1.2.0) },
     { date: "28-Jul-2016",
       jira_id: "1900",
       description:
