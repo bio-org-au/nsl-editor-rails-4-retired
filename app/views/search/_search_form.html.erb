@@ -121,7 +121,7 @@
       <input id="query-string-field" 
              name="query_string" 
              type="search" 
-             class="form-control width-100-percent" 
+             class="form-control <%= session[:old_ffox] ? 'old-ffox' : '' %> "
              aria-label="search field"
              tabindex = "8"
              placeholder = "Search terms"
@@ -131,11 +131,12 @@
              required
              >
     </div><!-- /input-group -->
-    <input id="query-submit"name="query_submit" value="Search" type="submit" class="btn search-btn" tabindex="9" title="Run the query">
+    <input id="query-submit" name="query_submit" value="Search" type="submit" class="btn search-btn" tabindex="9" title="Run the query">
   </div><!-- /.col-lg-9 -->
 </div><!-- /row -->
 
   <input id="query-target" name="query_target" value="<%= @search.parsed_request.target_button_text %>" type="hidden" >
+  <input id="old-ffox" name="old_ffox" type="hidden">
 
 <% end %>
 

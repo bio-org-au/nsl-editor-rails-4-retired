@@ -17,6 +17,12 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "08-Aug-2016",
+      jira_id: "478",
+      description:
+      %(Work-around formatting problem for search field in old Firefox
+      versions) },
+    { date: "04-Aug-2016", release: true },
     { date: "03-Aug-2016",
       jira_id: "775",
       description:

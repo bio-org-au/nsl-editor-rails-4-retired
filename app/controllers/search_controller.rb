@@ -19,6 +19,7 @@ class SearchController < ApplicationController
 
   def search
     handle_old
+    handle_old_ffox
     run_tree_search || run_local_search || run_empty_search
     respond_to do |format|
       format.html
@@ -100,6 +101,11 @@ class SearchController < ApplicationController
     params[:query_target] = "name"
     return if params[:query_string].match(/show-instances:/)
     params[:query_string] = params[:query_string].sub(/\z/, " show-instances:")
+  end
+
+  def handle_old_ffox
+    session[:old_ffox] = params[:old_ffox].present? &&
+                         params[:old_ffox].match(/true/i)
   end
 
   def run_tree_search
