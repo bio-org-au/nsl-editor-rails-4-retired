@@ -114,6 +114,7 @@ input[type="checkbox"]:not([title]) {
       if (ver < 29) {
         $('#query-string-field').addClass('old-ffox');
         $('#old-ffox').val('true');
+        $('#search-result-container').removeClass('sidebar');
       } else {
         $('#query-string-field').removeClass('old-ffox');
         $('#old-ffox').val('false');

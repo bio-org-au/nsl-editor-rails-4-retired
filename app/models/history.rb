@@ -20,6 +20,11 @@ class History
     { date: "08-Aug-2016",
       jira_id: "478",
       description:
+      %(Show a scrollbar for large search results in old versions of
+      Firefox.) },
+    { date: "08-Aug-2016",
+      jira_id: "478",
+      description:
       %(Work-around formatting problem for search field in old Firefox
       versions) },
     { date: "04-Aug-2016", release: true },
