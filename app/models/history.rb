@@ -17,6 +17,10 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "09-Aug-2016",
+      jira_id: "1918",
+      description:
+      %(Restore timezone setting lost on Rails upgrade.) },
     { date: "08-Aug-2016",
       jira_id: "478",
       description:
