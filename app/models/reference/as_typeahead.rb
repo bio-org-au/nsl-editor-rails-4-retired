@@ -86,12 +86,17 @@ class Reference::AsTypeahead < Reference
   # Expect an ID to exclude.
   # Restricts to references to legal types based on rules in ref_type i.e. which parent ref types are allowed, if any.
   # Accepts a ref type id param - the one on screen - rather than looking at the saved record.
-  def self.on_citation_for_parent(terms, current_id, p_ref_type_id)
-    Rails.logger.debug("on_citation_for_parent with ref_type_id: #{p_ref_type_id}; #{p_ref_type_id.to_i}")
-    if p_ref_type_id.present?
-      best_ref_type_id = p_ref_type_id
+  def self.on_citation_for_parent(terms, current_id, param_ref_type_id)
+    Rails.logger.debug("on_citation_for_parent with curent_id: #{current_id}, ref_type_id: #{param_ref_type_id}; #{param_ref_type_id.to_i}")
+    best_ref_type_id = nil
+    if param_ref_type_id.present?
+      best_ref_type_id = param_ref_type_id
     else
-      best_ref_type_id = Reference.find(current_id).ref_type_id
+      if current_id.present?
+        best_ref_type_id = Reference.find(current_id).ref_type_id
+      else
+        return []
+      end
     end
     where = ""
     binds = []
@@ -107,7 +112,7 @@ class Reference::AsTypeahead < Reference
     end
     where += " 1=1 "
     results = Reference.joins(:ref_type).includes(:ref_type)
-              .where.not(reference: { id: current_id })
+              .where.not(reference: { id: current_id.blank? ? 0 : current_id })
               .not_duplicate
               .where(binds.unshift(where))
               .where(ref_type_id: RefType.find(best_ref_type_id).parent_id)
