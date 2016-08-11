@@ -17,6 +17,13 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "11-Aug-2016",
+      jira_id: "1924",
+      description:
+      %(Enter key no longer bypasses confirmation dialog when changing the
+      reference for an instance with synonyms. Also, escape key cancels
+      the dialog.) },
+    { date: "11-Aug-2016", release: true },
     { date: "09-Aug-2016",
       jira_id: "1918",
       description:

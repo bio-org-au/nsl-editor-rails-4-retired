@@ -55,6 +55,7 @@ jQuery ->
   $('body').on('click','.tree-row div.head', (event) ->                    treeRowClicked(event,$(this)))
   $('body').on('click','#confirm-delete-name-button', (event) ->           confirmDeleteNameButtonClick(event,$(this)))
   $('body').on('click','#confirm-name-refresh-children-button', (event) -> confirmNameRefreshChildrenButtonClick(event,$(this)))
+  $('body').on('keypress','#change-reference-form', (event) ->             changeReferenceFormKeypress(event,$(this)))
   debug("on load - search-target-button-text: " + $('#search-target-button-text').text().trim())
 
   # When tabbing to search-result record, need to click to trigger retrieval of details.
@@ -76,6 +77,21 @@ window.cancelNewRecord = (event,$element) ->
   $("#search-result-details").addClass('hidden')
   $("##{$element.attr('data-element-id')}").addClass('hidden')
   return false
+
+# Press Enter - you should still see confirmation dialog
+# Escape should cancel dialog
+changeReferenceFormKeypress = (event,$this) ->
+  debug('changeReferenceFormKeypress')
+  if event.keyCode == 13  # enter
+    unless $('#confirm-or-cancel-change-reference-id-container').is(":visible")
+      $('#update-reference-id-link').click()
+      event.preventDefault()
+      event.stopPropagation()
+  else if event.keyCode == 27  # escape
+    if $('#confirm-or-cancel-change-reference-id-container').is(":visible")
+      $('#cancel-delete-link').click()
+      event.preventDefault()
+      event.stopPropagation()
 
 confirmNameRefreshChildrenButtonClick = (event,$the_button) ->
   debug('confirmNameRefreshChildrenButtonClick')
