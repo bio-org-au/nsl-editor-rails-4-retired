@@ -18,6 +18,11 @@
 class History
   CHANGES_2016 = [
     { date: "12-Aug-2016",
+      jira_id: "1926",
+      description:
+      %(Fix error that prevents details tab displaying for references which
+      are published but have no parent, no year and no publication date) },
+    { date: "12-Aug-2016",
       jira_id: "1925",
       description:
       %(When creating a new reference you can once again add a parent from the

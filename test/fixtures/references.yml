@@ -2029,3 +2029,17 @@ dummy_reference_2:
   created_at: 2015-01-12 11:02:57
   created_by: tester
   updated_by: tester
+
+published_with_no_parent_no_year_no_pub_date:
+  title: "No parent no year no publication date"
+  citation: "No parent no year no publication date"
+  citation_html: "No parent no year no publication date"
+  display_title: "No parent no year no publication date"
+  author: brassard
+  language: undetermined
+  namespace: apni
+  ref_author_role: editor
+  ref_type: book
+  published: true
+  created_by: tester
+  updated_by: tester
