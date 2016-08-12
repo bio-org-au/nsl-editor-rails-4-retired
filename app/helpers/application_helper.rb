@@ -357,11 +357,17 @@ module ApplicationHelper
   end
 
   def icon(icon, text = "", html_options = {})
-    content_class = "fa fa-#{icon}"
-    content_class << " #{html_options[:class]}" if html_options.key?(:class)
+    if html_options.key?(:class)
+      content_class = "fa fa-#{icon} #{html_options[:class]}" 
+    else
+      content_class = "fa fa-#{icon}"
+    end
     html_options[:class] = content_class
-    html = content_tag(:i, nil, html_options)
-    html << " #{text}" unless text.blank?
+    if text.blank?
+      html = content_tag(:i, nil, html_options)
+    else
+      html = "content_tag(:i, nil, html_options) #{text}"
+    end
     html.html_safe
   end
 
