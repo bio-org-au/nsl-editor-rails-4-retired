@@ -23,8 +23,9 @@ class TAOnCitn4ParRefTypeRestrictNilForHerbAnnotation < ActiveSupport::TestCase
     results = Reference::AsTypeahead.on_citation_for_parent(
       "%",
       current_reference.id,
-      ref_types(:herbarium_annotation).id)
-    assert results.size == 0,
+      ref_types(:herbarium_annotation).id
+    )
+    assert results.size.zero?,
            "Should be no results because herbarium annotation takes no parent."
   end
 end

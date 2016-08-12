@@ -24,7 +24,8 @@ class ForAChangedDuplicateOfIdTest < ActiveSupport::TestCase
       {},
       { duplicate_of_id: authors(:brongn).id,
         duplicate_of_typeahead: authors(:brongn).name },
-      "a user")
+      "a user"
+    )
   end
 
   test "changed duplicate of id" do

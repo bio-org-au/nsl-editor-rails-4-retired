@@ -22,4 +22,3 @@ def confirm_results_class(results)
                results.class,
                "Results should be an Array"
 end
-

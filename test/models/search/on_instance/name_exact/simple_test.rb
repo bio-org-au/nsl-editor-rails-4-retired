@@ -24,9 +24,10 @@ class SearchOnInstanceNameExactSimpleTest < ActiveSupport::TestCase
       query_target: "instance",
       query_string: "name-exact: Triodia basedowii E.Pritz",
       include_common_and_cultivar_session: true,
-      current_user: build_edit_user)
+      current_user: build_edit_user
+    )
     search = Search::Base.new(params)
-    assert search.executed_query.results.size > 0,
+    assert !search.executed_query.results.empty?,
            "Instances with exact matching names expected."
   end
 end

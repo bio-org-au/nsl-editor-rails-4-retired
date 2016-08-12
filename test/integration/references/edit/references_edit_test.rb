@@ -39,10 +39,10 @@ class ReferencesEditTest < ActionDispatch::IntegrationTest
     fill_in "reference_pages", with: "test-pages-xyz"
     save_edits
     assert page.has_content?("Updated"), 'No "Updated" message.'
-    assert find('#search-result-container')
+    assert find("#search-result-container")
       .has_content?("test-pages-xyz"),
            "Reference pages not displayed in search results after edit."
-    assert find('#search-result-container')
+    assert find("#search-result-container")
       .has_content?("citation for id 156436017"),
            "Reference citation was not reset after edit. (Are the test mock
            services running and configured?)"

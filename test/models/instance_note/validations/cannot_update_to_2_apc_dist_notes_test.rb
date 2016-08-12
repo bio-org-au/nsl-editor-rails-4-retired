@@ -25,11 +25,12 @@ class InstanceNoteCannotUpdateto2ApcDistNoteTest < ActiveSupport::TestCase
       value: "some string",
       created_by: "test",
       updated_by: "test",
-      namespace: namespaces(:apni))
+      namespace: namespaces(:apni)
+    )
     instance_note.save!
-    #assert_raises ActiveRecord::RecordInvalid, "Record should be invalid" do
-      instance_note.instance_note_key_id = instance_note_keys(:apc_dist).id
-      assert_not instance_note.valid?, "Should now be invalid"
-    #end
+    # assert_raises ActiveRecord::RecordInvalid, "Record should be invalid" do
+    instance_note.instance_note_key_id = instance_note_keys(:apc_dist).id
+    assert_not instance_note.valid?, "Should now be invalid"
+    # end
   end
 end

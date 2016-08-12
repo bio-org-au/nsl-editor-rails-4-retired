@@ -31,25 +31,25 @@ class ReferenceEditorShowAllTabsTest < ActionController::TestCase
         user_full_name: "Fred Jones",
         groups: ["edit"])
     assert_response :success
-    assert_select 'li.active a#reference-edit-show-1-tab',
+    assert_select "li.active a#reference-edit-show-1-tab",
                   /Details/,
                   "Does not show 'Details' tab link."
-    assert_select 'a#reference-edit-1-tab',
+    assert_select "a#reference-edit-1-tab",
                   /Edit\./,
                   "Does not show 'Edit.' tab link."
-    assert_select 'a#reference-edit-2-tab',
+    assert_select "a#reference-edit-2-tab",
                   /Edit\.\./,
                   "Does not show 'Edit..' tab link."
-    assert_select 'a#reference-edit-3-tab',
+    assert_select "a#reference-edit-3-tab",
                   /Edit\.\.\./,
                   "Does not show 'Edit...' tab link."
-    assert_select 'a#reference-comments-tab',
+    assert_select "a#reference-comments-tab",
                   "Comments",
                   "Should show 'Comments' tab link."
-    assert_select 'a#reference-new-instance-tab',
+    assert_select "a#reference-new-instance-tab",
                   /New instance/,
                   "Should show 'New instance' tab link."
-    assert_select 'a#tab-heading',
+    assert_select "a#tab-heading",
                   /A Book/,
                   "Should have tab heading showing 'A Book'."
   end

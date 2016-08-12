@@ -25,14 +25,14 @@ class CategoryTest < ActiveSupport::TestCase
 
   test "scientific hybrid formula category" do
     assert Name::SCIENTIFIC_HYBRID_FORMULA_CATEGORY ==
-      "scientific hybrid formula",
+           "scientific hybrid formula",
            "Name::SCIENTIFIC_HYBRID_FORMULA_CATEGORY should
            equal 'scientific hybrid formula'"
   end
 
   test "scientific hybrid formula unknown 2nd parent category" do
     assert Name::SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY ==
-      "scientific hybrid formula unknown 2nd parent",
+           "scientific hybrid formula unknown 2nd parent",
            "Name::SCIENTIFIC_HYBRID_FORMULA_unknown 2nd parent CATEGORY
            should equal 'scientific hybrid formula unknown 2nd parent'"
   end

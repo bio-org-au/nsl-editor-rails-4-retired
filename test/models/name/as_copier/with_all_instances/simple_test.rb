@@ -26,7 +26,8 @@ class NameAsCopierWithAllInstancesSimpleTest < ActiveSupport::TestCase
     master_instances_before = master_name.instances.size
     copied_name = master_name.copy_with_all_instances(
       dummy_name_element,
-      dummy_username)
+      dummy_username
+    )
     after = Name.count
     copied_instances_after = copied_name.instances.size
     assert_equal before + 1, after, "There should be one extra name."

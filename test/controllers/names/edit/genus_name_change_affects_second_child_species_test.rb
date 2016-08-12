@@ -30,8 +30,7 @@ class GenusNameChangeAffects2ndChildSpAndSubspTest < ActionController::TestCase
     @request.headers["Accept"] = "application/javascript"
     # post(:update, { name: { 'name_element' => genus.name_element+'XYZ'},
     post(:update, { name: { "name_element" => "XYZ" },
-                    id: genus.id
-                  },
+                    id: genus.id },
          username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
     assert_response :success
     sleep(2) # to allow for the asynch job

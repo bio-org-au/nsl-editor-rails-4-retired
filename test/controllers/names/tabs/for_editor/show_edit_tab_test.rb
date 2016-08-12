@@ -31,15 +31,15 @@ class ShowEditTest < ActionController::TestCase
         user_full_name: "Fred Jones",
         groups: ["edit"])
     assert_response :success
-    assert_select 'li.active a#name-edit-tab', "Edit", "Should show 'Edit' tab."
+    assert_select "li.active a#name-edit-tab", "Edit", "Should show 'Edit' tab."
     assert_select "form", true
-    assert_select 'select#name_name_type_id', true
-    assert_select 'select#name_name_status_id', true
-    assert_select 'select#name_name_rank_id', true
-    assert_select 'input#name_author_id', true
-    assert_select 'input#name_base_author_id', true
-    assert_select 'input#name_ex_base_author_id', true
-    assert_select 'input#name_ex_author_id', true
-    assert_select 'input#name_sanctioning_author_id', true
+    assert_select "select#name_name_type_id", true
+    assert_select "select#name_name_status_id", true
+    assert_select "select#name_name_rank_id", true
+    assert_select "input#name_author_id", true
+    assert_select "input#name_base_author_id", true
+    assert_select "input#name_ex_base_author_id", true
+    assert_select "input#name_ex_author_id", true
+    assert_select "input#name_sanctioning_author_id", true
   end
 end

@@ -27,11 +27,11 @@ class RequiredFieldsTest < ActionDispatch::IntegrationTest
     visit_home_page
     fill_in "search-field", with: "test: hybrid 1 parent required fields"
     load_new_hybrid_formula_unknown_2nd_parent_form
-    assert(page.has_selector?('#name_name_type_id[required]'),
+    assert(page.has_selector?("#name_name_type_id[required]"),
            "Name type should be a required field")
-    assert(page.has_selector?('#name_name_status_id[required]'),
+    assert(page.has_selector?("#name_name_status_id[required]"),
            "Name status should be a required field")
-    assert(page.has_selector?('#name-parent-typeahead[required]'),
+    assert(page.has_selector?("#name-parent-typeahead[required]"),
            "Name parent should be a required field")
   end
 end

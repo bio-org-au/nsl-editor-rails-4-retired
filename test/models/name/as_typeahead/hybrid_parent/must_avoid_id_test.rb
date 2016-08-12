@@ -32,7 +32,7 @@ class NameHybridParentSuggestionsMustAvoidIdTest < ActiveSupport::TestCase
       Name::AsTypeahead.hybrid_parent_suggestions("angophora costata",
                                                   name.id)
     assert(suggestions.is_a?(Array), "suggestions should be an array")
-    assert(suggestions.size == 0,
+    assert(suggestions.size.zero?,
            'suggestions for "angophora costata" should have no
            elements to avoid the id')
   end

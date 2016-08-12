@@ -22,18 +22,19 @@ class TAOnCitnForDupeRefTypeRestrictionAnyType4Unknown < ActiveSupport::TestCase
     current_reference = references(:ref_type_is_unknown)
     results = Reference::AsTypeahead.on_citation_for_duplicate(
       "%",
-      current_reference.id)
-    assert results.size > 0, "Should be at least one result"
+      current_reference.id
+    )
+    assert !results.empty?, "Should be at least one result"
     journals = 0
     unknowns = 0
     papers = 0
     others = 0
     results.each do |result|
-      if result[:value].match(/\[journal\]/)
+      if result[:value] =~ /\[journal\]/
         journals += 1
-      elsif result[:value].match(/\[paper\]/)
+      elsif result[:value] =~ /\[paper\]/
         papers += 1
-      elsif result[:value].match(/\[unknown\]/)
+      elsif result[:value] =~ /\[unknown\]/
         unknowns += 1
       else
         others += 1

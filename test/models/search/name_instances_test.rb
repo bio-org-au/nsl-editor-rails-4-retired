@@ -26,7 +26,8 @@ class SearchNameInstancesTest < ActiveSupport::TestCase
     search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(
                                 query_string: "id: #{name.id} show-instances:",
                                 query_target: "name",
-                                current_user: build_edit_user))
+                                current_user: build_edit_user
+    ))
     assert_equal search.class,
                  Search::Base,
                  "The search should be a Search."

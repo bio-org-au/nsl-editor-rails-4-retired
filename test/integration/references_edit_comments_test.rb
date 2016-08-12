@@ -37,7 +37,7 @@ class ReferencesEditCommentsTest < ActionDispatch::IntegrationTest
     assert_difference("Comment.count") do
       click_on "Create"
       assert page.has_content?("- gclarke"), "No new comment by gclarke."
-      assert page.has_css?('input#comment-save-btn'),
+      assert page.has_css?("input#comment-save-btn"),
              "No new comment by gclarke."
       assert page.has_button?("Save"),
              "No new comment Save button, so no new comment available for edit."

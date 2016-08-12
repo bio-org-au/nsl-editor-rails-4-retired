@@ -24,7 +24,7 @@ class TheadsOnCit4ParWks4NewRecAlsoWNoParRefTypeTest < ActiveSupport::TestCase
               .on_citation_for_parent("*",
                                       curr.id,
                                       curr.ref_type_id)
-    assert results.size == 0,
-      "Should be no results for new record with missing ref type"
+    assert results.size.zero?,
+           "Should be no results for new record with missing ref type"
   end
 end

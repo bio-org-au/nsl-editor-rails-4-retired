@@ -24,7 +24,8 @@ class NameAsEdAuthIdWStrMatchingAnotherAuthor < ActiveSupport::TestCase
     result = Name::AsEdited.author_from_typeahead(
       author_1.id.to_s,
       author_2.name,
-      "Some Author Field")
+      "Some Author Field"
+    )
     assert_equal author_2.id,
                  result,
                  "Should get matching ID for author name despite mismatched ID"

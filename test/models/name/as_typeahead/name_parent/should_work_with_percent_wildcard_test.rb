@@ -22,10 +22,11 @@ class ShouldWorkWithPercentWildcardTest < ActiveSupport::TestCase
     typeahead = Name::AsTypeahead::ForParent.new(
       term: "%",
       avoid_id: 1,
-      rank_id: NameRank.species.id)
+      rank_id: NameRank.species.id
+    )
     assert(typeahead.suggestions.is_a?(Array),
            "percent wildcard search should be an array")
-    assert(typeahead.suggestions.size > 0,
+    assert(!typeahead.suggestions.empty?,
            "percent wildcard search should not be empty")
     assert(typeahead.suggestions.first[:value].present?,
            "percent wildcard search first element should have a value")

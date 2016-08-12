@@ -22,7 +22,8 @@ class TAOnCitationForDuplicateTwoWordsCorrectOrder < ActiveSupport::TestCase
   test "two words in correct order" do
     results = Reference::AsTypeahead.on_citation_for_duplicate(
       "maslin wattle",
-      references(:book_by_brassard).id)
+      references(:book_by_brassard).id
+    )
     assert_equal 1, results.size, "Should be one and just one result"
   end
 end

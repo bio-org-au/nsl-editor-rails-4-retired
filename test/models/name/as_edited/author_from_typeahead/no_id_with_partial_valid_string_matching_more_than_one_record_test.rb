@@ -25,7 +25,8 @@ class NameAsEdNoAuthIdWPartValidStrMatchMoreThan1Rec < ActiveSupport::TestCase
       Name::AsEdited.author_from_typeahead(
         "",
         author.abbrev.chop,
-        "SOME FIELD")
+        "SOME FIELD"
+      )
     end
   end
 end

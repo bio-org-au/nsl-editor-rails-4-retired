@@ -23,8 +23,9 @@ class TAOnCitn4ParRefTypeRestrictNil4PersCommun < ActiveSupport::TestCase
     results = Reference::AsTypeahead.on_citation_for_parent(
       "%",
       current_reference.id,
-      ref_types(:personal_communication).id)
-    assert results.size == 0,
+      ref_types(:personal_communication).id
+    )
+    assert results.size.zero?,
            "Should be no results because personal comm. takes no parent."
   end
 end

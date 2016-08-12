@@ -27,7 +27,7 @@ class SearchAuditCountSimpleTest < ActionController::TestCase
         user_full_name: "Fred Jones",
         groups: [])
     assert_response :success
-    assert_select '#search-results-summary',
+    assert_select "#search-results-summary",
                   /[0-9][0-9] records\b/,
                   "Should give count of records created or updated by greg"
   end

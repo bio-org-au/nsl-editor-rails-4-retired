@@ -60,11 +60,11 @@ def debug(string)
 end
 
 def standard_page_assertions
-  assert page.has_selector?('#query-on'), "No query-on field"
-  assert page.has_selector?('#search-field'), "No search-field"
+  assert page.has_selector?("#query-on"), "No query-on field"
+  assert page.has_selector?("#search-field"), "No search-field"
   assert page.has_content?("© NSL"), message: "Page needs copyright notice."
-  assert page.has_selector?('#search-button'), 'Page has no #search-button'
-  assert page.has_selector?('input#search-field'),
+  assert page.has_selector?("#search-button"), "Page has no #search-button"
+  assert page.has_selector?("input#search-field"),
          "Page has no #search-field element"
   assert page.has_field?("query"), 'Page has no "query" field'
 end
@@ -145,15 +145,15 @@ def make_sure_details_are_showing
     fill_in "search-field", with: tries.to_s if tries > 1
     if page.has_selector?("tr.search-result.fresh "\
                           "td.takes-focus.main-content a.show-details-link")
-      unless page.has_selector?("tr.search-result.fresh.showing-details td.ta"\
+      if page.has_selector?("tr.search-result.fresh.showing-details td.ta"\
                                 "kes-focus.main-content a.show-details-link")
+        debug "found."
+        found = true
+      else
         all("tr.search-result.fresh td.takes-focus.main-content "\
             "a.show-details-link").first.click
         debug "sleeping...."
         sleep(inspection_time = 0.01)
-      else
-        debug "found."
-        found = true
       end
     end
     if tries > 8 # give up
@@ -169,10 +169,10 @@ def wait_for(selector, max_tries = 5)
   tries = 0
   until found
     tries += 1
-    unless page.has_selector?(selector)
-      sleep(inspection_time = 1)
-    else
+    if page.has_selector?(selector)
       found = true
+    else
+      sleep(inspection_time = 1)
     end
     found = true if tries > max_tries
   end
@@ -180,27 +180,27 @@ end
 
 def set_name_parent
   fill_in_typeahead("name-parent-typeahead", "name_parent_id", "Agenus", names(:a_genus).id)
-  find('#search-result-details h4').click
+  find("#search-result-details h4").click
 end
 
 def set_name_parent_using(parent)
   fill_in_typeahead("name-parent-typeahead", "name_parent_id", names(parent).full_name, names(parent).id)
-  find('#search-result-details h4').click
+  find("#search-result-details h4").click
 end
 
 def set_name_second_parent_to_a_species
   fill_in_typeahead("name-second-parent-typeahead", "name_second_parent_id", "Aspecies", names(:a_species).id)
-  find('#search-result-details h4').click
+  find("#search-result-details h4").click
 end
 
 def set_name_parent_to_a_species
   fill_in_typeahead("name-parent-typeahead", "name_parent_id", "Aspecies", names(:a_species).id)
-  find('#search-result-details h4').click
+  find("#search-result-details h4").click
 end
 
 def set_name_parent_to_a_genus
   fill_in_typeahead("name-parent-typeahead", "name_parent_id", "Agenus", names(:a_genus).id)
-  find('#search-result-details h4').click
+  find("#search-result-details h4").click
 end
 
 def configure_for_webkit
@@ -324,7 +324,7 @@ def assert_successful_create_for(expected_contents, prohibited_contents = [])
   Capybara.default_wait_time = 2
   assert page.has_field?("search-field"), "No search field."
   make_sure_details_are_showing
-  find('#search-result-details')
+  find("#search-result-details")
   expected_contents.each do |expected_content|
     assert page.has_content?(expected_content), "assert_successful_create_for says: Missing expected content: #{expected_content}"
   end
@@ -356,69 +356,69 @@ end
 
 def search_result_must_include_content(content, msg = "Search result content not found: '#{content}'")
   after_javascript_finishes
-  assert find('div#search-result-container').has_content?(content), msg
+  assert find("div#search-result-container").has_content?(content), msg
 end
 
 def search_result_must_include(link_text, msg = "Search result not found!")
   after_javascript_finishes
-  assert find('div#search-result-container').has_link?(link_text), msg
+  assert find("div#search-result-container").has_link?(link_text), msg
 end
 
 def search_result_must_not_include(link_text, msg = "Search result found!")
   after_javascript_finishes
-  assert find('div#search-result-container').has_no_link?(link_text), msg
+  assert find("div#search-result-container").has_no_link?(link_text), msg
 end
 
 def search_result_details_must_include_link(link_text, msg = "Expected details link not found!: #{link_text}")
   after_javascript_finishes
-  assert find('div#search-result-details').has_link?(link_text), msg
+  assert find("div#search-result-details").has_link?(link_text), msg
 end
 
 def search_result_details_must_include_button(button_text, msg = "Expected details button not found!: #{button_text}")
   after_javascript_finishes
-  assert find('div#search-result-details').has_button?(button_text), msg
+  assert find("div#search-result-details").has_button?(button_text), msg
 end
 
 def search_result_details_must_include_field(field_id, msg = "Expected details field not found!: #{link_text}")
   after_javascript_finishes
-  assert find('div#search-result-details').has_field?(field_id), msg
+  assert find("div#search-result-details").has_field?(field_id), msg
 end
 
 def search_result_details_must_not_include_field(field_id, msg = "Found field that should not be there!: #{link_text}")
   after_javascript_finishes
-  assert find('div#search-result-details').has_no_field?(field_id), msg
+  assert find("div#search-result-details").has_no_field?(field_id), msg
 end
 
 def search_result_details_must_not_include_link(link_text, msg = "Prohibited details link found!: #{link_text}")
   after_javascript_finishes
-  assert find('div#search-result-details').has_no_link?(link_text), msg
+  assert find("div#search-result-details").has_no_link?(link_text), msg
 end
 
 def search_result_details_must_not_include_button(button_text, msg = "Prohibited details button found!: #{button_text}")
   after_javascript_finishes
-  assert find('div#search-result-details').has_no_button?(button_text), msg
+  assert find("div#search-result-details").has_no_button?(button_text), msg
 end
 
 def search_result_summary_must_include_content(content, msg = "Search result summary content not found!")
   after_javascript_finishes
-  assert find('div#search-results-summary-container').has_content?(content), msg
+  assert find("div#search-results-summary-container").has_content?(content), msg
 end
 
 def search_result_details_must_include_content(text, msg = "Expected details content not found!: #{text}")
   after_javascript_finishes
-  assert find('div#search-result-details').has_content?(text), msg
+  assert find("div#search-result-details").has_content?(text), msg
 end
 
 def search_result_must_include_link(link, msg = "Search result content not found: '#{link}'")
   after_javascript_finishes
-  assert find('div#search-result-container').has_link?(link), msg
+  assert find("div#search-result-container").has_link?(link), msg
 end
 
 def try_typeahead_multi(field_id, input_text, expected_suggestion, which_suggestion = "first")
   # See www.rubytutorial.io/how-to-test-an-autocomplete-with-rails
   fill_in(field_id, with: input_text)
   page.execute_script %{ $('##{field_id}').trigger("focus") }
-  suggestion = find('#' + field_id).find(:xpath, ".//..").all("div.tt-suggestion").send(which_suggestion)
+  suggestion = find("#" + field_id).find(:xpath, ".//..").all("div.tt-suggestion").send(which_suggestion)
   assert_not_nil suggestion, "Should have found a suggestion."
   assert_equal expected_suggestion, suggestion.text, "Suggestion text should have #{expected_suggestion}."
 end
@@ -429,7 +429,7 @@ def try_typeahead_single(field_id, input_text, expected_suggestion)
   page.execute_script %{ $('##{field_id}').trigger("focus") }
   suggestion = nil
   begin
-    suggestion = find('#' + field_id).find(:xpath, ".//..").find("div.tt-suggestion")
+    suggestion = find("#" + field_id).find(:xpath, ".//..").find("div.tt-suggestion")
   rescue => e
   end
   assert_not_nil suggestion, "Did not find suggestion for '#{expected_suggestion}'"

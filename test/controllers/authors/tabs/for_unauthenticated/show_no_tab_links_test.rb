@@ -29,12 +29,12 @@ class AuthorUnauthenticatedShowNoTabLinkTest < ActionController::TestCase
         { id: @author.id, tab: "tab_edit" },
         {})
     # assert_response :redirect, 'Should be redirected.'
-    assert_select 'a#author-show-tab', false, "Should not show 'Detail' tab."
-    assert_select 'a#author-edit-tab', false, "Should not show 'Edit' tab."
-    assert_select 'a#author-comments-tab',
+    assert_select "a#author-show-tab", false, "Should not show 'Detail' tab."
+    assert_select "a#author-edit-tab", false, "Should not show 'Edit' tab."
+    assert_select "a#author-comments-tab",
                   false,
                   "Should not show 'Comments' tab."
-    assert_select 'a#tab-heading',
+    assert_select "a#tab-heading",
                   false,
                   "Should not have tab heading showing Bentham."
   end

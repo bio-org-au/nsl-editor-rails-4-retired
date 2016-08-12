@@ -20,7 +20,7 @@ require "test_helper"
 class RefTypeExpectedValuesPart < ActiveSupport::TestCase
   test "ref type expected value is part" do
     ref_type = ref_types(:part)
-    assert ref_type.name == 'Part'
-           "there should be a ref type called 'Part'"
+    assert ref_type.name == "Part"
+    "there should be a ref type called 'Part'"
   end
 end

@@ -29,27 +29,27 @@ class RequiredFieldsTest < ActionDispatch::IntegrationTest
     select_from_menu(%w(New Reference))
     search_result_must_include_content("New reference")
     search_result_details_must_include_content("New Reference")
-    assert(page.has_selector?('#reference_ref_type_id[required]'),
+    assert(page.has_selector?("#reference_ref_type_id[required]"),
            "Reference type should be a required field.")
-    assert(page.has_no_selector?('#reference-parent-typeahead[required]'),
+    assert(page.has_no_selector?("#reference-parent-typeahead[required]"),
            "reference-parent-typeahead should not be a required field.")
-    assert(page.has_selector?('#reference_title[required]'),
+    assert(page.has_selector?("#reference_title[required]"),
            "Reference title should be a required field.")
-    assert(page.has_selector?('#reference-author-typeahead[required]'),
+    assert(page.has_selector?("#reference-author-typeahead[required]"),
            "Reference author (typeahead) should be a required field.")
-    assert(page.has_selector?('#reference_ref_author_role_id[required]'),
+    assert(page.has_selector?("#reference_ref_author_role_id[required]"),
            "Reference author role should be a required field.")
-    assert(page.has_no_selector?('#reference_pages[required]'),
+    assert(page.has_no_selector?("#reference_pages[required]"),
            "reference pages should not be a required field.")
-    assert(page.has_no_selector?('#reference_edition[required]'),
+    assert(page.has_no_selector?("#reference_edition[required]"),
            "reference edition should not be a required field.")
-    assert(page.has_no_selector?('#reference_volume[required]'),
+    assert(page.has_no_selector?("#reference_volume[required]"),
            "reference volume should not be a required field.")
-    assert(page.has_no_selector?('#reference_year[required]'),
+    assert(page.has_no_selector?("#reference_year[required]"),
            "reference year should not be a required field.")
-    assert(page.has_no_selector?('#reference_publication_date[required]'),
+    assert(page.has_no_selector?("#reference_publication_date[required]"),
            "reference publication date should not be a required field.")
-    assert(page.has_no_selector?('#reference_notes[required]'),
+    assert(page.has_no_selector?("#reference_notes[required]"),
            "reference notes should not be a required field.")
   end
 end

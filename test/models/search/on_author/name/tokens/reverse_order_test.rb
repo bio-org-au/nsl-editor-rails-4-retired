@@ -26,7 +26,8 @@ class SearchOnAuthorNameTokensReverseOrderTest < ActiveSupport::TestCase
     params = ActiveSupport::HashWithIndifferentAccess.new(
       query_target: "author",
       query_string: "name: tak ron",
-      current_user: build_edit_user)
+      current_user: build_edit_user
+    )
     search = Search::Base.new(params)
     assert_equal search.executed_query.results.class,
                  Author::ActiveRecord_Relation,

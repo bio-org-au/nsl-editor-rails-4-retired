@@ -27,7 +27,7 @@ class ReaderSearchControNamesExBaseAuthorAbbrevList < ActionController::TestCase
         user_full_name: "Fred Jones",
         groups: [])
     assert_response :success
-    assert_select '#search-results-summary',
+    assert_select "#search-results-summary",
                   /[2-9] names\b/,
                   "Should find at least a couple of names"
   end

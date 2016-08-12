@@ -26,7 +26,8 @@ class InstanceNoteOneApcDistNoteOnlyTest < ActiveSupport::TestCase
         value: "some string",
         created_by: "test",
         updated_by: "test",
-        namespace: namespaces(:apni))
+        namespace: namespaces(:apni)
+      )
       instance_note.save!
     end
   end

@@ -25,7 +25,8 @@ class RefAsEdDupeOfIdWithStringMatching2References < ActiveSupport::TestCase
            "Should be two references with the same ciation."
     result = Reference::AsEdited.duplicate_of_from_typeahead(
       reference_2.id.to_s,
-      reference_2.citation)
+      reference_2.citation
+    )
     assert_equal reference_2.id, result, "Should get a match for the correct id"
   end
 end

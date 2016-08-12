@@ -22,6 +22,6 @@ class ForNameAndReferenceYearTest < ActiveSupport::TestCase
   test "name out of order search" do
     results = Instance::AsTypeahead.for_synonymy("costata angophora")
     assert results.class == Array, "Results should be an array."
-    assert results.size == 0, "Results should include no records."
+    assert results.size.zero?, "Results should include no records."
   end
 end

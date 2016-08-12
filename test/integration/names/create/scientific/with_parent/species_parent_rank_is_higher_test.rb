@@ -33,7 +33,8 @@ class SpeciesParentRankIsHigher < ActionDispatch::IntegrationTest
     set_name_parent_to_a_genus
     save_new_record
     assert_successful_create_for(
-      ["with parent of higher rank name not constructed"])
+      ["with parent of higher rank name not constructed"]
+    )
     assert_equal(Name.count, names_count + 1, "Wrong name count")
   end
 end

@@ -24,8 +24,9 @@ class SearchOnAuthorAssertionNameHasTest < ActiveSupport::TestCase
       ActiveSupport::HashWithIndifferentAccess.new(query_string: "has-name:",
                                                    query_target: "Author",
                                                    current_user:
-                                                   build_edit_user))
-    assert 0 < search.executed_query.results.size,
+                                                   build_edit_user)
+    )
+    assert !search.executed_query.results.empty?,
            "Should find authors with name."
   end
 end

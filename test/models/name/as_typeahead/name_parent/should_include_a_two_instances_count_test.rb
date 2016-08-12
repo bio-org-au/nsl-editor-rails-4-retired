@@ -35,6 +35,7 @@ class ShouldIncludeATwoInstancesCount < ActiveSupport::TestCase
     assert_match(
       "a genus with two instances | Genus | legitimate | 2 instances",
       typeahead.suggestions.first[:value],
-      "Name parent typeahead needs correct value with a 2 instances count")
+      "Name parent typeahead needs correct value with a 2 instances count"
+    )
   end
 end

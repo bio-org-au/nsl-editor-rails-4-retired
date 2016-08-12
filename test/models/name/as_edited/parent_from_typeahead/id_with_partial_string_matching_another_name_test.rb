@@ -23,7 +23,8 @@ class NameAsEdParIdWPartStringMatchingAnotherNameTest < ActiveSupport::TestCase
     name_2 = names(:a_division)
     result = Name::AsEdited.parent_from_typeahead(
       name_1.id.to_s,
-      name_2.full_name.chop)
+      name_2.full_name.chop
+    )
     assert_equal name_2.id,
                  result,
                  "Should get matching ID for the name partial string"

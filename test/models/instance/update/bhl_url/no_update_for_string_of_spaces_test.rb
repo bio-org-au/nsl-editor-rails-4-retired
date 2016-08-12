@@ -27,7 +27,7 @@ class InstanceUpdBHLUrlNoUpdateForStringOfSpacesTest < ActiveSupport::TestCase
   test "instance BHL url no update for string of spaces" do
     assert @unchanged.bhl_url.blank?, "BHL Url should be blank for this test."
     message = @instance.update_if_changed({ "bhl_url" => @spaces }, "fred")
-    assert message.match(/\ANo change/),
+    assert message.start_with?("No change"),
            "Message should be 'No change' not '#{message}'"
     assert @instance.bhl_url.blank?, "BHL Url should still be blank."
     assert @instance.updated_at == @unchanged.updated_at,

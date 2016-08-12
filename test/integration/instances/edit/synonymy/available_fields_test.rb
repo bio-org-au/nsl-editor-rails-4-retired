@@ -45,6 +45,7 @@ class AvailableFieldsTest < ActionDispatch::IntegrationTest
            "Instance verbatim name string field should be there"
     search_result_details_must_include_field(
       "instance_bhl_url",
-      "Instance BHL URL string field should be there")
+      "Instance BHL URL string field should be there"
+    )
   end
 end

@@ -26,7 +26,8 @@ class NameAsEdAuthIdWPartStrMatchMoreThan1OtherAuthor < ActiveSupport::TestCase
       Name::AsEdited.author_from_typeahead(
         author_1.id.to_s,
         author_2.name.chop,
-        "Some Author Field")
+        "Some Author Field"
+      )
     end
   end
 end

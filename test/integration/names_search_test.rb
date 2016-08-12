@@ -38,13 +38,16 @@ class NamesSearchTest < ActionDispatch::IntegrationTest
     sleep(1.1)
     search_result_summary_must_include_content(
       "1 record",
-      "Bad summary for simple name search on 'acacia' - missing: 1 record.")
+      "Bad summary for simple name search on 'acacia' - missing: 1 record."
+    )
     search_result_must_include_content(
       "Acacia",
-      "Bad result for simple name search on 'acacia' - missing: 'Acacia'.")
+      "Bad result for simple name search on 'acacia' - missing: 'Acacia'."
+    )
     search_result_summary_must_include_content(
       "excluding common and cultivar",
-      "Bad summary for simple name search - missing: excl common and cultivar.")
+      "Bad summary for simple name search - missing: excl common and cultivar."
+    )
   end
 
   # "acacia a:bentham"
@@ -97,21 +100,21 @@ class NamesSearchTest < ActionDispatch::IntegrationTest
   test "query on name is available" do
     visit_home_page
     select "Name", from: "query-on"
-    assert find('#query-on').value == "name",
+    assert find("#query-on").value == "name",
            "Name query should be available and selected."
   end
 
   test "query on reference is available" do
     visit_home_page
     select "Reference", from: "query-on"
-    assert find('#query-on').value == "reference",
+    assert find("#query-on").value == "reference",
            "Reference query should be available and selected."
   end
 
   test "query on instance is available" do
     visit_home_page
     select "Instance", from: "query-on"
-    assert find('#query-on').value == "instance",
+    assert find("#query-on").value == "instance",
            "Instance query should be available and selected."
   end
 
@@ -119,7 +122,7 @@ class NamesSearchTest < ActionDispatch::IntegrationTest
     visit_home_page
     select "Name", from: "query-on"
     select "with author", from: "query-field"
-    assert find('#query-field').value == "a",
+    assert find("#query-field").value == "a",
            "Author query should be available and selected."
   end
 
@@ -127,7 +130,7 @@ class NamesSearchTest < ActionDispatch::IntegrationTest
     visit_home_page
     select "Name", from: "query-on"
     select "with base author", from: "query-field"
-    assert find('#query-field').value == "ba",
+    assert find("#query-field").value == "ba",
            "with base author query should be available and selected."
   end
 
@@ -135,7 +138,7 @@ class NamesSearchTest < ActionDispatch::IntegrationTest
     visit_home_page
     select "Name", from: "query-on"
     select "with ex author", from: "query-field"
-    assert find('#query-field').value == "ea",
+    assert find("#query-field").value == "ea",
            "with ex author query should be available and selected."
   end
 
@@ -143,7 +146,7 @@ class NamesSearchTest < ActionDispatch::IntegrationTest
     visit_home_page
     select "Name", from: "query-on"
     select "with ex base author", from: "query-field"
-    assert find('#query-field').value == "eba",
+    assert find("#query-field").value == "eba",
            "ex base author query should be available and selected."
   end
 
@@ -151,7 +154,7 @@ class NamesSearchTest < ActionDispatch::IntegrationTest
     visit_home_page
     select "Name", from: "query-on"
     select "with full name", from: "query-field"
-    assert find('#query-field').value == "fn",
+    assert find("#query-field").value == "fn",
            "with full name query should be available and selected."
   end
 
@@ -159,7 +162,7 @@ class NamesSearchTest < ActionDispatch::IntegrationTest
     visit_home_page
     select "Name", from: "query-on"
     select "with simple name", from: "query-field"
-    assert find('#query-field').value == "sn",
+    assert find("#query-field").value == "sn",
            "with simple name query should be available and selected."
   end
 
@@ -167,7 +170,7 @@ class NamesSearchTest < ActionDispatch::IntegrationTest
     visit_home_page
     select "Name", from: "query-on"
     select "with name element", from: "query-field"
-    assert find('#query-field').value == "ne",
+    assert find("#query-field").value == "ne",
            "with name element query should be available and selected."
   end
 
@@ -175,7 +178,7 @@ class NamesSearchTest < ActionDispatch::IntegrationTest
     visit_home_page
     select "Name", from: "query-on"
     select "with name type", from: "query-field"
-    assert find('#query-field').value == "nt",
+    assert find("#query-field").value == "nt",
            "with name type query should be available and selected."
   end
 
@@ -183,7 +186,7 @@ class NamesSearchTest < ActionDispatch::IntegrationTest
     visit_home_page
     select "Name", from: "query-on"
     select "with not name type", from: "query-field"
-    assert find('#query-field').value == "not-nt",
+    assert find("#query-field").value == "not-nt",
            "with not name type query should be available and selected."
   end
 
@@ -191,7 +194,7 @@ class NamesSearchTest < ActionDispatch::IntegrationTest
     visit_home_page
     select "Name", from: "query-on"
     select "with name rank", from: "query-field"
-    assert find('#query-field').value == "nr",
+    assert find("#query-field").value == "nr",
            "with name rank query should be available and selected."
   end
 
@@ -199,7 +202,7 @@ class NamesSearchTest < ActionDispatch::IntegrationTest
     visit_home_page
     select "Name", from: "query-on"
     select "with sanctioning auth", from: "query-field"
-    assert find('#query-field').value == "sa",
+    assert find("#query-field").value == "sa",
            "with sanctioning auth query should be available and selected."
   end
 
@@ -207,7 +210,7 @@ class NamesSearchTest < ActionDispatch::IntegrationTest
     visit_home_page
     select "Name", from: "query-on"
     select "with id", from: "query-field"
-    assert find('#query-field').value == "id",
+    assert find("#query-field").value == "id",
            "with id query should be available and selected."
   end
 
@@ -215,7 +218,7 @@ class NamesSearchTest < ActionDispatch::IntegrationTest
     visit_home_page
     select "Name", from: "query-on"
     select "duplicate of", from: "query-field"
-    assert find('#query-field').value == "duplicate-of",
+    assert find("#query-field").value == "duplicate-of",
            "duplicate of query should be available and selected."
   end
 
@@ -223,7 +226,7 @@ class NamesSearchTest < ActionDispatch::IntegrationTest
     visit_home_page
     select "Name", from: "query-on"
     select "with ids", from: "query-field"
-    assert find('#query-field').value == "ids",
+    assert find("#query-field").value == "ids",
            "with ids query should be available and selected."
   end
 
@@ -231,7 +234,7 @@ class NamesSearchTest < ActionDispatch::IntegrationTest
     visit_home_page
     select "Name", from: "query-on"
     select "for reference", from: "query-field"
-    assert find('#query-field').value == "for-reference",
+    assert find("#query-field").value == "for-reference",
            "for reference query should be available and selected."
   end
 
@@ -239,7 +242,7 @@ class NamesSearchTest < ActionDispatch::IntegrationTest
     visit_home_page
     select "Name", from: "query-on"
     select "hours since created", from: "query-field"
-    assert find('#query-field').value == "hours-since-created",
+    assert find("#query-field").value == "hours-since-created",
            "hours since created query should be available and selected."
   end
 
@@ -247,7 +250,7 @@ class NamesSearchTest < ActionDispatch::IntegrationTest
     visit_home_page
     select "Name", from: "query-on"
     select "hours since updated", from: "query-field"
-    assert find('#query-field').value == "hours-since-updated",
+    assert find("#query-field").value == "hours-since-updated",
            "hours since updated query should be available and selected."
   end
 
@@ -255,7 +258,7 @@ class NamesSearchTest < ActionDispatch::IntegrationTest
     visit_home_page
     select "Name", from: "query-on"
     select "created since", from: "query-field"
-    assert find('#query-field').value == "cr-a",
+    assert find("#query-field").value == "cr-a",
            "created since query should be available and selected."
   end
 
@@ -263,7 +266,7 @@ class NamesSearchTest < ActionDispatch::IntegrationTest
     visit_home_page
     select "Name", from: "query-on"
     select "created before", from: "query-field"
-    assert find('#query-field').value == "cr-b",
+    assert find("#query-field").value == "cr-b",
            "created before query should be available and selected."
   end
 
@@ -271,7 +274,7 @@ class NamesSearchTest < ActionDispatch::IntegrationTest
     visit_home_page
     select "Name", from: "query-on"
     select "updated since", from: "query-field"
-    assert find('#query-field').value == "upd-a",
+    assert find("#query-field").value == "upd-a",
            "updated since query should be available and selected."
   end
 
@@ -279,7 +282,7 @@ class NamesSearchTest < ActionDispatch::IntegrationTest
     visit_home_page
     select "Name", from: "query-on"
     select "updated before", from: "query-field"
-    assert find('#query-field').value == "upd-b",
+    assert find("#query-field").value == "upd-b",
            "updated before query should be available and selected."
   end
 
@@ -287,7 +290,7 @@ class NamesSearchTest < ActionDispatch::IntegrationTest
     visit_home_page
     select "Name", from: "query-on"
     select "with name rank", from: "query-field"
-    assert find('#query-field').value == "nr",
+    assert find("#query-field").value == "nr",
            "Name rank query should be available and selected."
   end
 
@@ -295,15 +298,15 @@ class NamesSearchTest < ActionDispatch::IntegrationTest
     visit_home_page
     select "Name", from: "query-on"
     select "with name status", from: "query-field"
-    assert find('#query-field').value == "ns",
+    assert find("#query-field").value == "ns",
            "Name status query should be available and selected."
   end
 
   def search_result_must_include(link_text, msg)
-    assert find('div#search-result-container').has_link?(link_text), msg
+    assert find("div#search-result-container").has_link?(link_text), msg
   end
 
   def search_result_must_not_include(link_text, msg)
-    assert_not find('div#search-result-container').has_link?(link_text), msg
+    assert_not find("div#search-result-container").has_link?(link_text), msg
   end
 end

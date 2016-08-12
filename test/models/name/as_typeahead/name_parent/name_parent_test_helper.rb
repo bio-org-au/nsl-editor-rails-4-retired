@@ -19,7 +19,7 @@ def suggestions_should_include(suggestions, given_rank_name, expected_rank_name)
   # rank is the second field in the pipe-separated string
   assert(suggestions.collect do |h|
     re = Regexp.quote(expected_rank_name)
-    if h[:value].split("|")[1].strip.match(/\A#{re}\z/)
+    if h[:value].split("|")[1].strip =~ /\A#{re}\z/
       1
     else
       0
@@ -34,7 +34,7 @@ def suggestions_should_not_include(suggestions,
   assert_not(suggestions.collect do |h|
     # rank is the second field in the pipe-separated string
     rank = h[:value].split("|")[1].strip
-    rank.match(/\A#{Regexp.quote(unexpected_rank_name)}\z/) ? 1 : 0
+    rank =~ /\A#{Regexp.quote(unexpected_rank_name)}\z/ ? 1 : 0
   end.sum > 0,
              "#{given_rank_name} shld not suggest #{unexpected_rank_name}")
 end

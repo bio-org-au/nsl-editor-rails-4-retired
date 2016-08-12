@@ -22,7 +22,8 @@ class TAOnCitationForDuplicateExcludesSuppliedIdTest < ActiveSupport::TestCase
     reference_to_exclude = references(:adams_paper_in_walsh_book)
     results = Reference::AsTypeahead.on_citation_for_duplicate(
       "walsh",
-      reference_to_exclude.id)
+      reference_to_exclude.id
+    )
     assert_equal 1, results.size, "Should be just one result"
     assert results.first[:id].to_i == references(:walsh_paper_in_walsh_book).id,
            "Unexpected typeahead suggestion."

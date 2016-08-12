@@ -25,7 +25,8 @@ class AuthAsEdDupeOfIdWPartStrMatchingAnotherAuthor < ActiveSupport::TestCase
     result = Author::AsEdited.duplicate_of_from_typeahead(
       author_1.id.to_s,
       "chap",
-      current_author_id)
+      current_author_id
+    )
     assert_equal author_2.id,
                  result,
                  "Should get a matching id for the first author with "\

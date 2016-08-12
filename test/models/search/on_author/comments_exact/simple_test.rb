@@ -24,9 +24,10 @@ class SearchOnAuthorCommentsExactSimpleTest < ActiveSupport::TestCase
       query_target: "author",
       query_string: "comments-exact: MyText",
       include_common_and_cultivar_session: true,
-      current_user: build_edit_user)
+      current_user: build_edit_user
+    )
     search = Search::Base.new(params)
-    assert search.executed_query.results.size > 0,
+    assert !search.executed_query.results.empty?,
            "Authors with comments for comments-exact search expected."
   end
 end

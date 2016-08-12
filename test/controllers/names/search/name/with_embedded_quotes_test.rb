@@ -29,7 +29,7 @@ class NameSearchOnNameWithEmbeddedQuotesTest < ActionController::TestCase
         user_full_name: "Fred Jones",
         groups: [])
     assert_response :success
-    assert_select 'span#search-results-summary',
+    assert_select "span#search-results-summary",
                   /\b1 name\b/,
                   "Should find 1 name"
     assert_select "tr#search-result-#{name.id}", true, "Should find the name."

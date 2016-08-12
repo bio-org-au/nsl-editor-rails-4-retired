@@ -24,7 +24,7 @@ class GenusNameChangeAffectsSpAndSubspeciesTest < ActionController::TestCase
   test "genus name change affects species and subspecies" do
     skip "Problem with verifying the results of the job in test."
     # By examining logs I can see the correct behaviour is occurring,
-    # but the results in the test session do not show the database 
+    # but the results in the test session do not show the database
     # changes which makes me think there is some sort of database session
     # separation occurring.
 

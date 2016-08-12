@@ -32,7 +32,7 @@ class NameCultivarParentSuggestionsMustAvoidIdTest < ActiveSupport::TestCase
       Name::AsTypeahead.cultivar_parent_suggestions("angophora costata",
                                                     name.id)
     assert(suggestions.is_a?(Array), "suggestions should be an array")
-    assert(suggestions.size == 0,
+    assert(suggestions.size.zero?,
            'Should be no suggestions for "angophora costata" to avoid the id')
   end
 end

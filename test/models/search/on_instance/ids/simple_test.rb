@@ -25,7 +25,8 @@ class SearchOnInstanceIdsSimpleTest < ActiveSupport::TestCase
       query_target: "instance",
       query_string: "ids: #{instance.id}",
       include_common_and_cultivar_session: true,
-      current_user: build_edit_user)
+      current_user: build_edit_user
+    )
     search = Search::Base.new(params)
     assert_equal 1,
                  search.executed_query.results.size,

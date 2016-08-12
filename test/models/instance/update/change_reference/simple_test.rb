@@ -29,7 +29,8 @@ class InstanceUpdateChangeReferenceSimpleTest < ActiveSupport::TestCase
     before
     @instance_back_door.change_reference(
       { "reference_id" => @new_reference.id },
-      "ref-changer")
+      "ref-changer"
+    )
     after
   end
 
@@ -38,7 +39,7 @@ class InstanceUpdateChangeReferenceSimpleTest < ActiveSupport::TestCase
            "Reference IDs should start out different."
     assert @instance_back_door.updated_by != @username,
            "Usernames should start out different."
-    assert @instance.citations.size > 0, "Need citations for this test."
+    assert !@instance.citations.empty?, "Need citations for this test."
     check_citations_before
   end
 

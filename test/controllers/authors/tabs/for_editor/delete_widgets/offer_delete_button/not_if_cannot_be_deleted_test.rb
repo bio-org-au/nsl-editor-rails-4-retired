@@ -33,7 +33,7 @@ class AuthorEditorDoNotOfferDelButtonIfNoDeleteTest < ActionController::TestCase
     assert_select "li.active a#author-edit-tab",
                   "Edit",
                   "Should show 'Edit' tab."
-    assert_select 'a#author-delete-link',
+    assert_select "a#author-delete-link",
                   false,
                   "Should be no delete button because author cannot be deleted."
   end

@@ -27,7 +27,8 @@ class SearchOnNameAcceptedTreeInTest < ActiveSupport::TestCase
     params = ActiveSupport::HashWithIndifferentAccess.new(
       query_target: "name",
       query_string: "angophora in-accepted-tree:",
-      current_user: build_edit_user)
+      current_user: build_edit_user
+    )
     search = Search::Base.new(params)
     confirm_results_class(search.executed_query.results)
     # Just make sure the search runs i.e. view exists, rule exists

@@ -30,7 +30,7 @@ class SearchNamesCommNCultivarParamList2ndParentId < ActionController::TestCase
         user_full_name: "Fred Jones",
         groups: [])
     assert_response :success
-    assert_select '#search-results-summary',
+    assert_select "#search-results-summary",
                   /7 names\b/,
                   "Should find 7 names, including common/cultivars"
   end

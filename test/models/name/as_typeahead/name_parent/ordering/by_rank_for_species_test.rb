@@ -23,7 +23,8 @@ class NameSuggestionsParentOrderingForSpeciesTest < ActiveSupport::TestCase
     @typeahead = Name::AsTypeahead::ForParent.new(
       term: "%",
       avoid_id: 1,
-      rank_id: NameRank.species.id)
+      rank_id: NameRank.species.id
+    )
     check_order
   end
 

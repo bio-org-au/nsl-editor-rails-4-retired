@@ -23,19 +23,20 @@ class TAOnCitn4ParRefTypeRestrictDbase4DatabaseRecord < ActiveSupport::TestCase
     results = Reference::AsTypeahead.on_citation_for_parent(
       "%",
       current_reference.id,
-      ref_types(:database_record).id)
-    assert results.size > 0,
+      ref_types(:database_record).id
+    )
+    assert !results.empty?,
            "Should be at least one result"
     databases = 0
     others = 0
     results.each do |result|
-      if result[:value].match(/\[database\]/)
+      if result[:value] =~ /\[database\]/
         databases += 1
       else
         others += 1
       end
     end
-    assert others == 0, "Expecting no other ref types."
+    assert others.zero?, "Expecting no other ref types."
     assert databases > 0, "Expecting at least 1 database ref type."
   end
 end

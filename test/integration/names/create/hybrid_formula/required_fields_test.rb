@@ -27,19 +27,19 @@ class RequiredFieldsTest < ActionDispatch::IntegrationTest
     visit_home_page
     fill_in "search-field", with: "test: hybrid formula name required fields"
     load_new_hybrid_formula_form
-    assert_equal(page.find('#name_name_type_id')[:required],
+    assert_equal(page.find("#name_name_type_id")[:required],
                  "true",
                  "Name type should be a required field.")
-    assert_equal(page.find('#name_name_rank_id')[:required],
+    assert_equal(page.find("#name_name_rank_id")[:required],
                  "true",
                  "Name rank should be a required field.")
-    assert_equal(page.find('#name_name_status_id')[:required],
+    assert_equal(page.find("#name_name_status_id")[:required],
                  "true",
                  "Name status should be a required field.")
-    assert_equal(page.find('#name-parent-typeahead')[:required],
+    assert_equal(page.find("#name-parent-typeahead")[:required],
                  "true",
                  "Name parent should be a required field.")
-    assert_equal(page.find('#name-second-parent-typeahead')[:required],
+    assert_equal(page.find("#name-second-parent-typeahead")[:required],
                  "true",
                  "Name second parent should be a required field.")
   end

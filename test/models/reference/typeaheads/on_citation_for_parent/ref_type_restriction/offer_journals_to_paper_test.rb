@@ -23,19 +23,20 @@ class TAOnCitn4ParRefTypeRestrictionJournalsForPaper < ActiveSupport::TestCase
     results = Reference::AsTypeahead.on_citation_for_parent(
       "%",
       current_reference.id,
-      ref_types(:paper).id)
-    assert results.size > 0,
+      ref_types(:paper).id
+    )
+    assert !results.empty?,
            "Should be at least one result"
     journals = 0
     others = 0
     results.each do |result|
-      if result[:value].match(/\[journal\]/)
+      if result[:value] =~ /\[journal\]/
         journals += 1
       else
         others += 1
       end
     end
-    assert others == 0, "Expecting no other ref types."
+    assert others.zero?, "Expecting no other ref types."
     assert journals > 0, "Expecting at least 1 journal ref type."
   end
 end

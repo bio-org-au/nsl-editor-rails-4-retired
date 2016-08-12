@@ -32,7 +32,7 @@ class SearchOnNameExAuthorSimpleTest < ActiveSupport::TestCase
                                                           build_edit_user)
     search = Search::Base.new(params)
     confirm_results_class(search.executed_query.results)
-    assert search.executed_query.results.size > 0,
+    assert !search.executed_query.results.empty?,
            "Expected at least one search result"
   end
 end

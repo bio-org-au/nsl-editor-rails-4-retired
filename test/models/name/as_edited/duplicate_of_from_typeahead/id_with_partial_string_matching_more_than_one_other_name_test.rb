@@ -25,7 +25,8 @@ class NameAsEdDupeOfIdWPartStrMatchMoreThan1OtherName < ActiveSupport::TestCase
                  "Should fail - string does not identify just one name") do
       Name::AsEdited.duplicate_of_from_typeahead(
         name_1.id.to_s,
-        name_2.full_name[0])
+        name_2.full_name[0]
+      )
     end
   end
 end

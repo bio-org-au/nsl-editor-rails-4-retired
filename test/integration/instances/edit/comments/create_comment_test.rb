@@ -43,8 +43,8 @@ class InstancesEditCommentsTest < ActionDispatch::IntegrationTest
     click_on "Adnot."
     fill_in "comment_text", with: "this is a test comment"
     assert_difference("Comment.count") do
-      within('#search-result-details') do
-        find('#comment-create-btn').click
+      within("#search-result-details") do
+        find("#comment-create-btn").click
       end
       assert page.has_content?("- gclarke"), "No new comment by gclarke."
       assert page.has_button?("Save"), "No new comment."

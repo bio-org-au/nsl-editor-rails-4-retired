@@ -23,9 +23,9 @@ class TypeaheadsOnCit4ParWorks4NewRecWNoIdTest < ActiveSupport::TestCase
     curr.ref_type_id = ref_types(:paper).id
     results = Reference::AsTypeahead
               .on_citation_for_parent("*",
-                                      '',
+                                      "",
                                       curr.ref_type_id)
-    assert results.size > 0,
+    assert !results.empty?,
            "Should be at least one result for asterisk wildcard"
   end
 end

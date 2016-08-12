@@ -27,7 +27,7 @@ class InstanceUpdateBHLURLNoUpdateForEmptyStringTest < ActiveSupport::TestCase
     assert @unchanged.page.blank?, "Page should be blank for this test."
     assert @unchanged.bhl_url.blank?, "BHL URL should be blank for this test."
     message = @instance.update_if_changed({ "bhl_url" => "" }, "fred")
-    assert message.match(/\ANo change/),
+    assert message.start_with?("No change"),
            "Message should be 'No change' not '#{message}'"
     assert @instance.bhl_url.blank?, "BHL URL should still be blank."
     assert @instance.updated_at == @unchanged.updated_at,

@@ -30,8 +30,8 @@ class SessionTest < ActionDispatch::IntegrationTest
     visit "#{string_1}#{string_2}"
     # should be redirected to sign in
     sleep(0.2)
-    wait_for('#sign-in-form-container', 3)
-    if page.has_selector?('#sign-in-form-container')
+    wait_for("#sign-in-form-container", 3)
+    if page.has_selector?("#sign-in-form-container")
       assert page.has_content?("Username*"), "No Username field."
       fill_in("sign_in_username", with: "gclarke")
       fill_in("sign_in_password", with: "fred")

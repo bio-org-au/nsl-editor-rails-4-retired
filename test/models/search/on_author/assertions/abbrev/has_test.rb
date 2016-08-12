@@ -24,8 +24,9 @@ class SearchOnAuthorAssertionAbbrevHasTest < ActiveSupport::TestCase
       ActiveSupport::HashWithIndifferentAccess.new(query_string: "has-abbrev:",
                                                    query_target: "Author",
                                                    current_user:
-                                                   build_edit_user))
-    assert 0 < search.executed_query.results.size,
+                                                   build_edit_user)
+    )
+    assert !search.executed_query.results.empty?,
            "Should find authors with abbrev."
   end
 end

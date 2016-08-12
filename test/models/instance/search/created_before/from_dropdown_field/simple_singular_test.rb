@@ -29,6 +29,6 @@ class InstSrchCreB4FromDropdownSimpleSingularTest < ActiveSupport::TestCase
     assert_equal Array,
                  search.executed_query.results.class,
                  "Results should be an Array"
-    assert search.executed_query.results.size > 0, "Expect at least 1 record."
+    assert !search.executed_query.results.empty?, "Expect at least 1 record."
   end
 end

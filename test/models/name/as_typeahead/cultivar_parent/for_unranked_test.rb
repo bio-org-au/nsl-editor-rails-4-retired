@@ -24,12 +24,14 @@ class CultivarParentForUnrankedTest < ActiveSupport::TestCase
     suggestions = Name::AsTypeahead.cultivar_parent_suggestions(
       "%",
       avoid_id,
-      NameRank.find_by(name: "[unranked]").id)
+      NameRank.find_by(name: "[unranked]").id
+    )
     cultivar_parent_suggestions_should_only_include(
       suggestions,
       "[unranked]",
       %w([unranked] Genus Subgenus Sectio Subsectio Series Subseries \
          Superspecies Species Subspecies Varietas Nothovarietas Subvarietas \
-         Forma Subforma ))
+         Forma Subforma )
+    )
   end
 end

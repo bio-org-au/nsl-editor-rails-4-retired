@@ -23,18 +23,19 @@ class TAOnCit4ParentRefTypeRestrictionSeriesForBook < ActiveSupport::TestCase
     results = Reference::AsTypeahead.on_citation_for_parent(
       "%",
       current_reference.id,
-      ref_types(:book).id)
-    assert results.size > 0, "Should be at least one result"
+      ref_types(:book).id
+    )
+    assert !results.empty?, "Should be at least one result"
     series = 0
     others = 0
     results.each do |result|
-      if result[:value].match(/\[series\]/)
+      if result[:value] =~ /\[series\]/
         series += 1
       else
         others += 1
       end
     end
-    assert others == 0, "Expecting no other ref types."
+    assert others.zero?, "Expecting no other ref types."
     assert series > 0, "Expecting at least 1 series ref type."
   end
 end

@@ -23,7 +23,8 @@ class TypeaheadsOnCitForParWordCountTwoChaplinsTest < ActiveSupport::TestCase
     results = Reference::AsTypeahead.on_citation_for_parent(
       "chaplin chaplin",
       references(:a_paper).id,
-      ref_types(:paper).id)
+      ref_types(:paper).id
+    )
     assert_equal 2,
                  results.size,
                  "Should be exactly two records returned."

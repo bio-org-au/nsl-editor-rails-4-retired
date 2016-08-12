@@ -26,7 +26,8 @@ class SearchOnInstanceIdMultipleTest < ActiveSupport::TestCase
       query_target: "instance",
       query_string: "id: #{instance.id},#{i2.id}",
       include_common_and_cultivar_session: true,
-      current_user: build_edit_user)
+      current_user: build_edit_user
+    )
     search = Search::Base.new(params)
     assert_equal 2,
                  search.executed_query.results.size,

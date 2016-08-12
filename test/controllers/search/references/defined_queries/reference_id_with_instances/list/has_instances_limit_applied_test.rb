@@ -29,19 +29,19 @@ class SrchRefsDefQueriesRefIdWInstListHasInstWLimit < ActionController::TestCase
         user_full_name: "Fred Jones",
         groups: [])
     assert_response :success
-    assert_select '#search-results-summary',
+    assert_select "#search-results-summary",
                   /[0-9][0-9] records\b/,
                   "Should find some records"
-    assert_select '#search-results-summary',
+    assert_select "#search-results-summary",
                   /\blimited\b/,
                   "Should say result is limited"
-    assert_select '#search-results-summary',
+    assert_select "#search-results-summary",
                   /\b10 records\b/,
                   "Should say 10 records"
-    assert_select '#search-results-summary',
+    assert_select "#search-results-summary",
                   /of an unknown total\b/,
                   "Should say of an unknown total"
-    assert_select '#search-results-summary',
+    assert_select "#search-results-summary",
                   /10 records.*of an unknown total/m,
                   "Should say 10 records of an unknown total"
   end

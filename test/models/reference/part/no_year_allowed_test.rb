@@ -29,7 +29,7 @@ class ReferencePartNoYearAllowedTest < ActiveSupport::TestCase
     assert_raises ActiveRecord::RecordInvalid, "A reference part with a year should be invalid" do
       reference.save!
     end
-    assert_equal("year",reference.errors.first.first.to_s, "Error should be on 'year'")
-    assert_equal("is not allowed for a Part",reference.errors.first.last.to_s, "Incorrect error message")
+    assert_equal("year", reference.errors.first.first.to_s, "Error should be on 'year'")
+    assert_equal("is not allowed for a Part", reference.errors.first.last.to_s, "Incorrect error message")
   end
 end

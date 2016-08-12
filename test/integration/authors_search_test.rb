@@ -50,7 +50,8 @@ class AuthorsSearchTest < ActionDispatch::IntegrationTest
     search_result_summary_must_include_content(
       'Author search: "bentham cr-b:4"',
       'Bad summary for author search on "bentham cr-b:4" -
-      missing: Author search: "bentham cr-b:4".')
+      missing: Author search: "bentham cr-b:4".'
+    )
   end
 
   # "bentham cr-b:"
@@ -63,9 +64,11 @@ class AuthorsSearchTest < ActionDispatch::IntegrationTest
     sleep(2)
     search_result_summary_must_include_content(
       "0 records",
-      'Bad summary for simple name search on "acacia" - missing: 0 records.')
+      'Bad summary for simple name search on "acacia" - missing: 0 records.'
+    )
     search_result_summary_must_include_content(
       '0 records Author search: "bentham cr-b:"(Ignored criteria: cr-b)',
-      "Incorrect summary for author search with empty criterion.")
+      "Incorrect summary for author search with empty criterion."
+    )
   end
 end

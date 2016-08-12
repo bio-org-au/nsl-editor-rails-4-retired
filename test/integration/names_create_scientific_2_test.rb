@@ -59,9 +59,9 @@ class NamesCreateScientific2Test < ActionDispatch::IntegrationTest
   def assert_successful_create_for(expected_contents, prohibited_contents = [])
     # default = Capybara.default_wait_time
     Capybara.default_wait_time = 5
-    find('#search-field')
+    find("#search-field")
     make_sure_details_are_showing
-    find('#search-result-details')
+    find("#search-result-details")
     expected_contents.each do |expected_content|
       assert page.has_content?(expected_content),
              "Missing expected content: #{expected_content}"
@@ -82,7 +82,7 @@ class NamesCreateScientific2Test < ActionDispatch::IntegrationTest
                       "name_parent_id",
                       "Agenus",
                       names(:a_genus).id)
-    find('#search-result-details h4').click
+    find("#search-result-details h4").click
   end
 
   ########

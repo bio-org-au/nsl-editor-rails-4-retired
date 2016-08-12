@@ -36,11 +36,11 @@ class InstanceCreateTabTest < ActionController::TestCase
     assert_select ".focus-details" do
       assert_select "span.message", count: 0
       assert_select "form"
-      assert_select 'input#instance-reference-typeahead'
-      assert_select 'select#instance_instance_type_id'
-      assert_select 'input#instance_page'
-      assert_select 'input#instance_verbatim_name_string'
-      assert_select 'input#instance_bhl_url'
+      assert_select "input#instance-reference-typeahead"
+      assert_select "select#instance_instance_type_id"
+      assert_select "input#instance_page"
+      assert_select "input#instance_verbatim_name_string"
+      assert_select "input#instance_bhl_url"
     end
     assert_template partial: "instances/_form_create_from_name"
   end

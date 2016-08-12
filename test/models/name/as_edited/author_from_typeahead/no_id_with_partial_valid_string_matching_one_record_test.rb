@@ -23,7 +23,8 @@ class NameAsEdNoAuthIdWPartValStrMatchingOneRecord < ActiveSupport::TestCase
     result = Name::AsEdited.author_from_typeahead(
       "",
       author.abbrev.chop,
-      "SOME FIELD")
+      "SOME FIELD"
+    )
     assert_equal author.id,
                  result,
                  "Should get a matching id for the author name"

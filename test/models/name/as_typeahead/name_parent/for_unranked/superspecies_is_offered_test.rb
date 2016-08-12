@@ -23,9 +23,11 @@ class NameParentSuperspeciesIsOfferedForUnrankedTest < ActiveSupport::TestCase
     typeahead = Name::AsTypeahead::ForParent.new(
       term: "a_superspecies",
       avoid_id: 1,
-      rank_id: NameRank.find_by(name: "[unranked]").id)
+      rank_id: NameRank.find_by(name: "[unranked]").id
+    )
     expected_ranks = %w(Superspecies)
     suggestions_should_only_include(
-      typeahead.suggestions, "[unranked]", expected_ranks)
+      typeahead.suggestions, "[unranked]", expected_ranks
+    )
   end
 end

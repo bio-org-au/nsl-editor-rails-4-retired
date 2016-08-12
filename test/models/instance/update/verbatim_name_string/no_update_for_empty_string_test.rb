@@ -26,8 +26,9 @@ class InstUpdVerbNameStrNoUpdateForEmptyStringTest < ActiveSupport::TestCase
     assert unchanged.verbatim_name_string.blank?,
            "Verbatim name string should be blank for this test."
     message = instance.update_if_changed(
-      { "verbatim_name_string" => empty_string }, "fred")
-    assert message.match(/\ANo change/),
+      { "verbatim_name_string" => empty_string }, "fred"
+    )
+    assert message.start_with?("No change"),
            "Message should be 'No change' not '#{message}'"
     assert instance.verbatim_name_string.blank?,
            "Verbatim name string should still be blank."

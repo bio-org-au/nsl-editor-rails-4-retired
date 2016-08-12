@@ -77,7 +77,7 @@ class InstanceATest < ActiveSupport::TestCase
     relationship_instance =
       instances(:metrosideros_costata_is_basionym_of_angophora_costata)
     assert_not relationship_instance.reference_id ==
-      references(:handbook_of_the_vascular_plants_of_sydney)
+               references(:handbook_of_the_vascular_plants_of_sydney)
     relationship_instance.reference_id =
       references(:handbook_of_the_vascular_plants_of_sydney).id
     assert_not relationship_instance.valid?,

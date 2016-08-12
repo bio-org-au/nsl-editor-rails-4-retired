@@ -22,7 +22,8 @@ class NameAsEdNoDupeOfIdWValStrWTrailingWhitespace < ActiveSupport::TestCase
     name = names(:the_regnum)
     result = Name::AsEdited.duplicate_of_from_typeahead(
       "",
-      name.full_name + " ")
+      name.full_name + " "
+    )
     assert_equal name.id, result, "Should get a matching id for the name"
   end
 end

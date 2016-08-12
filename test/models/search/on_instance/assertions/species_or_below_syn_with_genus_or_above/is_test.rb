@@ -24,10 +24,12 @@ class SpeciesOrBelowSynWithGenusOrAboveTest < ActiveSupport::TestCase
       ActiveSupport::HashWithIndifferentAccess.new(
         query_target: "instance",
         query_string: "species-or-below-syn-with-genus-or-above:",
-        current_user: build_edit_user))
+        current_user: build_edit_user
+      )
+    )
     # puts search.executed_query.results.size
     # puts search.executed_query.results.first
-    assert search.executed_query.results.size > 0,
+    assert !search.executed_query.results.empty?,
            "Should find species or below synonymised with genus or above."
   end
 end

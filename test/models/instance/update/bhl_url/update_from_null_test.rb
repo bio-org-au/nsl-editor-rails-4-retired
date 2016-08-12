@@ -27,7 +27,7 @@ class InstanceUpdateBHLURLFromNullTest < ActiveSupport::TestCase
   test "update bhl url from null" do
     assert @unchanged.bhl_url.blank?, "BHL URL should be blank for this test."
     message = @instance.update_if_changed({ "bhl_url" => @new_value }, "fred")
-    assert message.match(/\AUpdated/), "Message should be 'Updated'"
+    assert message.start_with?("Updated"), "Message should be 'Updated'"
     assert @instance.bhl_url.match(/#{@new_value}/),
            "New bhl_url should be: #{@new_value}"
     assert @instance.updated_at > @unchanged.updated_at,

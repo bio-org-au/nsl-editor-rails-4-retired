@@ -23,7 +23,7 @@ class ShouldIncludeAZeroInstancesCount < ActiveSupport::TestCase
     name = Name.find_by(full_name: "a genus without an instance")
     assert name.present?,
            'The name "a genus without an instance" should be found.'
-    assert name.instances.size == 0,
+    assert name.instances.size.zero?,
            "The name 'a genus without an instance' should have no instances."
     typeahead =
       Name::AsTypeahead::ForParent.new(term: "a genus without an instance",

@@ -29,7 +29,8 @@ class SimpleTest < ActiveSupport::TestCase
     params = ActiveSupport::HashWithIndifferentAccess.new(
       query_target: "name",
       query_string: "name: angophora costata show-instances:",
-      current_user: build_edit_user)
+      current_user: build_edit_user
+    )
     search = Search::Base.new(params)
     check_results_1(search)
     check_results_2(search)

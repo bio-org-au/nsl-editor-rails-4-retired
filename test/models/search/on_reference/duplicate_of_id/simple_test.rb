@@ -30,6 +30,6 @@ class SearchOnReferenceDuplicateOfIdSimpleTest < ActiveSupport::TestCase
     assert_equal search.executed_query.results.class,
                  Reference::ActiveRecord_Relation,
                  "Results should be a Reference::ActiveRecord_Relation."
-    assert search.executed_query.results.size > 0, "Results expected."
+    assert !search.executed_query.results.empty?, "Results expected."
   end
 end

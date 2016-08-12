@@ -22,7 +22,8 @@ class RefAsEdNoDupeOfIdWPartialValidStringMatchingOne < ActiveSupport::TestCase
     reference = references(:origin_of_species)
     result = Reference::AsEdited.duplicate_of_from_typeahead(
       "",
-      reference.citation.chop)
+      reference.citation.chop
+    )
     assert_equal reference.id,
                  result,
                  "Should get a matching id for the citation"

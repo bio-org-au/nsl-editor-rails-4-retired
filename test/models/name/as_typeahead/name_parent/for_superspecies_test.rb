@@ -23,10 +23,12 @@ class ForSuperspeciesTest < ActiveSupport::TestCase
     typeahead = Name::AsTypeahead::ForParent.new(
       term: "%",
       avoid_id: 1,
-      rank_id: NameRank.find_by(name: "Superspecies").id)
+      rank_id: NameRank.find_by(name: "Superspecies").id
+    )
     suggestions_should_only_include(
       typeahead.suggestions,
       "Superspecies",
-      %w(Subseries Series Subsectio Sectio Subgenus Genus))
+      %w(Subseries Series Subsectio Sectio Subgenus Genus)
+    )
   end
 end

@@ -30,8 +30,8 @@ class Search4NameTypeNRankWildcardTypeThenRankTest < ActionController::TestCase
         user_full_name: "Fred Jones",
         groups: ["edit"])
     assert_response :success
-    assert_select 'span#search-results-summary', true, "Should have summary "
-    assert_select 'span#search-results-summary',
+    assert_select "span#search-results-summary", true, "Should have summary "
+    assert_select "span#search-results-summary",
                   /100 names of [0-9]+/,
                   "Summary should say names found"
   end

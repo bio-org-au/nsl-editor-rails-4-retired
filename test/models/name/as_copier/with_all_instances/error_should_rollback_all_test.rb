@@ -29,7 +29,8 @@ class NameAsCopWAllInstancesErrorShouldRollbackAllTest < ActiveSupport::TestCase
     assert_raises(ActiveRecord::RecordInvalid) do
       master_name.copy_with_all_instances(
         dummy_name_element,
-        dummy_username)
+        dummy_username
+      )
     end
     after = Name.count
     assert_equal before, after, "There should be no extra names."

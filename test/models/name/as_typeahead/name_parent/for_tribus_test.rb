@@ -23,10 +23,12 @@ class ForTribusTest < ActiveSupport::TestCase
     typeahead = Name::AsTypeahead::ForParent.new(
       term: "%",
       avoid_id: 1,
-      rank_id: NameRank.find_by(name: "Tribus").id)
+      rank_id: NameRank.find_by(name: "Tribus").id
+    )
     suggestions_should_only_include(
       typeahead.suggestions,
       "Tribus",
-      %w(Familia Subfamilia))
+      %w(Familia Subfamilia)
+    )
   end
 end

@@ -24,7 +24,7 @@ class SearchOnReferenceAssertionIsPublishedTest < ActiveSupport::TestCase
              .new(query_target: "reference",
                   query_string: "is-published:",
                   current_user: build_edit_user))
-    assert search.executed_query.results.size > 0,
+    assert !search.executed_query.results.empty?,
            "Should find reference that is published."
   end
 end

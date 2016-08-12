@@ -33,7 +33,7 @@ class OrderByPage < ActiveSupport::TestCase
            "Wrong order at 4th value: #{results[3].page}."
     assert results[4].page == "19-20",
            "Wrong order at 5th value: #{results[4].page}."
-    assert results[5].page.match(/\Axx,20,/),
+    assert results[5].page.start_with?("xx,20,"),
            "Wrong order at 6th value: #{results[5].page}."
     assert results[9].page == "40",
            "Wrong order at 10th value: #{results[9].page}."

@@ -27,7 +27,7 @@ class ReferencesDeleteTest < ActionDispatch::IntegrationTest
   def search_result_must_include(link_text, msg)
     # assert find('div#search-result-container').has_link?(/#{link_text}/i),
     #        msg                # Does not work with has_link?
-    assert find('div#search-result-container').has_content?(/#{link_text}/i),
+    assert find("div#search-result-container").has_content?(/#{link_text}/i),
            msg # Does not work with has_link?
   end
 
@@ -43,10 +43,10 @@ class ReferencesDeleteTest < ActionDispatch::IntegrationTest
                                returned a record for "Book by Blume".')
     click_link "Edit..."
     sleep(1)
-    assert find('#search-result-details').has_content?(/DOI/),
+    assert find("#search-result-details").has_content?(/DOI/),
            "Edit... tab not visible."
-    assert find('#search-result-details')
-           .has_content?(/Delete the reference.../),
+    assert find("#search-result-details")
+      .has_content?(/Delete the reference.../),
            "Delete button should be visible."
   end
 
@@ -63,10 +63,10 @@ class ReferencesDeleteTest < ActionDispatch::IntegrationTest
                                C.L. [von] (Editor)".')
     click_link "Edit..."
     sleep(1)
-    assert find('#search-result-details').has_content?(/DOI/),
+    assert find("#search-result-details").has_content?(/DOI/),
            "Edit... tab not visible."
-    assert_not find('#search-result-details')
-               .has_content?(/Delete the reference.../),
+    assert_not find("#search-result-details")
+      .has_content?(/Delete the reference.../),
                "Delete button should not be visible."
   end
 end

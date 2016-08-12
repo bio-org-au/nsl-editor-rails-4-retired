@@ -23,7 +23,7 @@ class TypeaheadsOnCit4ParHandlesMissingParamRefType < ActiveSupport::TestCase
     results = Reference::AsTypeahead
               .on_citation_for_parent("simple",
                                       curr.id,
-                                      '')
-    assert results.size == 0, "Should be no results for missing reference type"
+                                      "")
+    assert results.size.zero?, "Should be no results for missing reference type"
   end
 end

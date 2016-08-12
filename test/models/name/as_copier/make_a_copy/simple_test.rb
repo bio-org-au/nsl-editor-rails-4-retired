@@ -25,7 +25,8 @@ class NameAsCopierMakeACopySimpleTest < ActiveSupport::TestCase
     dummy_username = "fred"
     copied_name = master_name.copy_with_username(
       dummy_name_element,
-      dummy_username)
+      dummy_username
+    )
     after = Name.count
     assert_equal before + 1, after, "There should be one extra name."
     assert_equal master_name.name_type_id, copied_name.name_type_id

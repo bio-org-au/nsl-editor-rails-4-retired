@@ -21,9 +21,10 @@ class InstanceAsCopierWNewRefSAloneWithCitationsTest < ActiveSupport::TestCase
   test "copy a standalone instance with its citers to a new reference" do
     before = Instance.count
     master_instance = Instance::AsCopier.find(
-      instances(:gaertner_created_metrosideros_costata).id)
+      instances(:gaertner_created_metrosideros_costata).id
+    )
     assert_not master_instance.citations.empty?,
-           "Master instance should have at least 1 citation."
+               "Master instance should have at least 1 citation."
     target_reference = references(:never_used)
     target_instance_type = instance_types(:secondary_reference)
     instances_attached_to_new_ref_b4 = target_reference.instances.count
@@ -31,15 +32,17 @@ class InstanceAsCopierWNewRefSAloneWithCitationsTest < ActiveSupport::TestCase
     dummy_username = "fred"
     params = ActionController::Parameters.new(
       reference_id: target_reference.id.to_s,
-      instance_type_id: target_instance_type.id)
+      instance_type_id: target_instance_type.id
+    )
     copied_instance = master_instance.copy_with_citations_to_new_reference(
-      params, dummy_username)
+      params, dummy_username
+    )
 
     after = Instance.count
     instances_attached_to_new_ref_after = target_reference.instances.count
     instances_attached_to_name_after = master_instance.name.instances.count
     assert_equal instances_attached_to_new_ref_b4 +
-      1 + master_instance.reverse_of_this_is_cited_by.size,
+                 1 + master_instance.reverse_of_this_is_cited_by.size,
                  instances_attached_to_new_ref_after,
                  "Unexpected number of instances attached to the target ref"
     assert_equal instances_attached_to_name_b4 + 1,

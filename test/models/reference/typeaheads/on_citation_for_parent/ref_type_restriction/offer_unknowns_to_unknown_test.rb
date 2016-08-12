@@ -23,18 +23,19 @@ class THOnCit4ParentRefTypeRestrictUnknowns4Unknown < ActiveSupport::TestCase
     results = Reference::AsTypeahead.on_citation_for_parent(
       "%",
       current_reference.id,
-      ref_types(:unknown).id)
-    assert results.size > 0, "Should be at least one result"
+      ref_types(:unknown).id
+    )
+    assert !results.empty?, "Should be at least one result"
     unknowns = 0
     others = 0
     results.each do |result|
-      if result[:value].match(/\[unknown\]/)
+      if result[:value] =~ /\[unknown\]/
         unknowns += 1
       else
         others += 1
       end
     end
-    assert others == 0, "Expecting no other ref types."
+    assert others.zero?, "Expecting no other ref types."
     assert unknowns > 0, "Expecting at least 1 unknown ref type."
   end
 end

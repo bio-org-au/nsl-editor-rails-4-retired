@@ -24,7 +24,8 @@ class AuthorAsEditedDuplicateOfIdWithMatchingString < ActiveSupport::TestCase
     result = Author::AsEdited.duplicate_of_from_typeahead(
       author.id.to_s,
       author.name,
-      current_author_id)
+      current_author_id
+    )
     assert_equal author.id,
                  result,
                  "Should get a matching id for the duplicate of author"

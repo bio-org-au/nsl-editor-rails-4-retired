@@ -24,7 +24,8 @@ class SearchOnRefCitationSuffixFragmentSearchTest < ActiveSupport::TestCase
       query_target: "reference",
       query_string: "uplicate",
       include_common_and_cultivar_session: true,
-      current_user: build_edit_user)
+      current_user: build_edit_user
+    )
     search = Search::Base.new(params)
     assert_equal search.executed_query.results.class,
                  Reference::ActiveRecord_Relation,

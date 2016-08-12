@@ -23,18 +23,19 @@ class TAOnCitn4ParRefTypeRestrictionBooksForSection < ActiveSupport::TestCase
     results = Reference::AsTypeahead.on_citation_for_parent(
       "%",
       current_reference.id,
-      ref_types(:section).id)
-    assert results.size > 0, "Should be at least one result"
+      ref_types(:section).id
+    )
+    assert !results.empty?, "Should be at least one result"
     books = 0
     others = 0
     results.each do |result|
-      if result[:value].match(/\[book\]/)
+      if result[:value] =~ /\[book\]/
         books += 1
       else
         others += 1
       end
     end
-    assert others == 0, "Expecting no other ref types."
+    assert others.zero?, "Expecting no other ref types."
     assert books > 0, "Expecting at least 1 book ref type."
   end
 end

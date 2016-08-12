@@ -30,21 +30,21 @@ class ReferenceEditorShowEdit1TabTest < ActionController::TestCase
         username: "fred",
         user_full_name: "Fred Jones",
         groups: ["edit"])
-    assert_select 'li.active a#reference-edit-1-tab',
+    assert_select "li.active a#reference-edit-1-tab",
                   /Edit\./,
                   "Should show 'Edit 1' tab."
     assert_select "form", true
-    assert_select 'select#reference_ref_type_id', true
-    assert_select 'input#reference-parent-typeahead', true
-    assert_select 'input#reference_title', true
-    assert_select 'input#reference_published', true
-    assert_select 'input#reference-author-typeahead', true
-    assert_select 'select#reference_ref_author_role_id', true
-    assert_select 'input#reference_edition', true
-    assert_select 'input#reference_volume', true
-    assert_select 'input#reference_pages', true
-    assert_select 'input#reference_year', true
-    assert_select 'input#reference_publication_date', true
-    assert_select 'textarea#reference_notes', true
+    assert_select "select#reference_ref_type_id", true
+    assert_select "input#reference-parent-typeahead", true
+    assert_select "input#reference_title", true
+    assert_select "input#reference_published", true
+    assert_select "input#reference-author-typeahead", true
+    assert_select "select#reference_ref_author_role_id", true
+    assert_select "input#reference_edition", true
+    assert_select "input#reference_volume", true
+    assert_select "input#reference_pages", true
+    assert_select "input#reference_year", true
+    assert_select "input#reference_publication_date", true
+    assert_select "textarea#reference_notes", true
   end
 end

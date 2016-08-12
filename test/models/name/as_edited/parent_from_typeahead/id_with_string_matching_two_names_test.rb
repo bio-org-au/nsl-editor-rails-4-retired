@@ -22,7 +22,8 @@ class NameAsEditedParentIdWithStringMatching2Names < ActiveSupport::TestCase
     name_2 = names(:name_matches_another_2)
     result = Name::AsEdited.parent_from_typeahead(
       name_2.id.to_s,
-      name_2.full_name)
+      name_2.full_name
+    )
     assert_equal name_2.id, result, "Should get a match for the correct id"
   end
 end

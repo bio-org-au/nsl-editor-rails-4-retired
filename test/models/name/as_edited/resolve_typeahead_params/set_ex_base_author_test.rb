@@ -25,7 +25,8 @@ class NameAsEdResolveTheadParamsSetExBaseAuthorTest < ActiveSupport::TestCase
            "Name should be have no ex base author to start this test."
     name.resolve_typeahead_params(
       "ex_base_author_id" => dummy.id,
-      "ex_base_author_typeahead" => dummy.abbrev)
+      "ex_base_author_typeahead" => dummy.abbrev
+    )
     assert_equal dummy.id,
                  name.ex_base_author_id,
                  "Should now have an ex base author id"

@@ -24,7 +24,9 @@ class DefaultSearchNameTest < ActiveSupport::TestCase
       ActiveSupport::HashWithIndifferentAccess.new(
         query_string: "hasnameonly",
         query_target: "Author",
-        current_user: build_edit_user))
+        current_user: build_edit_user
+      )
+    )
     assert_equal 1,
                  search.executed_query.results.size,
                  "Default author search should find author with name only."

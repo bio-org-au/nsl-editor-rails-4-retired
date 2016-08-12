@@ -21,7 +21,7 @@ def cultivar_parent_suggestions_should_include(suggestions,
                                                caller_test)
   re = Regexp.quote(expected_rank_name)
   assert(suggestions.collect do |h|
-    h[:value].match(/\s#{re}/) ? 1 : 0
+    h[:value] =~ /\s#{re}/ ? 1 : 0
   end.sum > 0,
          "suggestions for #{given_rank_name} should
          include #{expected_rank_name} [caller: #{caller_test}]")
@@ -33,21 +33,24 @@ def cultivar_parent_suggestions_should_not_include(suggestions,
                                                    caller_test)
   re = Regexp.quote(unexpected_rank_name)
   assert_not(suggestions.collect do |h|
-    h[:value].match(/\s#{re}/) ? 1 : 0
+    h[:value] =~ /\s#{re}/ ? 1 : 0
   end.sum > 0,
              "suggestions for #{given_rank_name} should not
              include #{unexpected_rank_name} [caller: #{caller_test}]")
 end
 
 def cultivar_parent_suggestions_should_only_include(
-  suggestions, given_rank_name, expected_rank_names)
+  suggestions, given_rank_name, expected_rank_names
+)
   sorted_name_ranks.each do |rank|
     if expected_rank_names.include?(rank.name)
       cultivar_parent_suggestions_should_include(
-        suggestions, given_rank_name, rank.name, caller.first)
+        suggestions, given_rank_name, rank.name, caller.first
+      )
     else
       cultivar_parent_suggestions_should_not_include(
-        suggestions, given_rank_name, rank.name, caller.first)
+        suggestions, given_rank_name, rank.name, caller.first
+      )
     end
   end
 end

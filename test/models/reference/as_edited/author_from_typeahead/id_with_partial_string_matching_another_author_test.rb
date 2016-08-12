@@ -23,7 +23,8 @@ class RefAsEdAuthIdWPartStrMatchingAnotherAuthorTest < ActiveSupport::TestCase
     author_2 = authors(:moe)
     result = Reference::AsEdited.author_from_typeahead(
       author_1.id.to_s,
-      author_2.name.chop)
+      author_2.name.chop
+    )
     assert_equal author_2.id,
                  result,
                  "Should get matching ID 4 name despite mismatched ID and \

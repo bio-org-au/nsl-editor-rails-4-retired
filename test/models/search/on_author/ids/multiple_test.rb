@@ -26,7 +26,8 @@ class SearchOnAuthorIdsMultipleTest < ActiveSupport::TestCase
       query_target: "author",
       query_string: "ids: #{author.id}, #{a2.id}",
       include_common_and_cultivar_session: true,
-      current_user: build_edit_user)
+      current_user: build_edit_user
+    )
     search = Search::Base.new(params)
     assert_equal 2,
                  search.executed_query.results.size,

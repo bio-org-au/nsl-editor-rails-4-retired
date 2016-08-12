@@ -22,7 +22,8 @@ class ReferenceAsEditedDuplicateOfIdWithNoString < ActiveSupport::TestCase
     reference = references(:journal_of_botany_british_and_foreign)
     result = Reference::AsEdited.duplicate_of_from_typeahead(
       reference.id.to_s,
-      "")
+      ""
+    )
     assert_match "",
                  result,
                  "Should get nothing - treating as delete."

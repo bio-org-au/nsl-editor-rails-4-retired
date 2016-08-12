@@ -40,7 +40,7 @@ class NamesEditCommentsTest < ActionDispatch::IntegrationTest
       click_on "Create"
       big_sleep
       assert page.has_content?("- gclarke"), "No new comment by gclarke."
-      assert page.has_css?('input#comment-save-btn'),
+      assert page.has_css?("input#comment-save-btn"),
              "No 'Save' button so no new comment by gclarke."
       assert page.has_button?("Save"), "No save button so no new comment."
     end

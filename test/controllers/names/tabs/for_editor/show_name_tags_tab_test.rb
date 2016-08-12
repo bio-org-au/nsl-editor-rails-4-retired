@@ -31,6 +31,6 @@ class NameShowTagTabForReadOnlyTest < ActionController::TestCase
         user_full_name: "Fred Jones",
         groups: ["edit"])
     assert_response :success
-    assert_select 'li.active a#name-tags-tab', "Tag", "Should show 'Tag' tab."
+    assert_select "li.active a#name-tags-tab", "Tag", "Should show 'Tag' tab."
   end
 end

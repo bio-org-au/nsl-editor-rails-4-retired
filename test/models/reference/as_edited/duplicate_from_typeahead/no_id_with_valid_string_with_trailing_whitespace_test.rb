@@ -22,7 +22,8 @@ class RefAsEdNoDupeOfIdWValStrWithTrailingWhitespace < ActiveSupport::TestCase
     reference_1 = references(:origin_of_species)
     result = Reference::AsEdited.duplicate_of_from_typeahead(
       "",
-      reference_1.citation + " ")
+      reference_1.citation + " "
+    )
     assert_equal reference_1.id,
                  result,
                  "Should get a matching id for the citation"

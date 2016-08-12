@@ -27,7 +27,8 @@ class NameUsagesOrderByReferenceYear < ActiveSupport::TestCase
     params =  ActiveSupport::HashWithIndifferentAccess.new(
       query_string: "id:#{name.id} show-instances:",
       query_target: "Name",
-      current_user: build_edit_user)
+      current_user: build_edit_user
+    )
     search = Search::Base.new(params)
     assert_equal search.executed_query.results.class,
                  Array, "Results should be an Array"

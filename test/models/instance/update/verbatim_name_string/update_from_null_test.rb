@@ -28,8 +28,9 @@ class InstanceUpdateBHLURLFromNullTest < ActiveSupport::TestCase
     assert @unchanged.verbatim_name_string.blank?,
            "Verbatim name string should be blank for this test."
     message = @instance.update_if_changed(
-      { "verbatim_name_string" => @new_value }, "fred")
-    assert message.match(/\AUpdated/), "Message should be 'Updated'"
+      { "verbatim_name_string" => @new_value }, "fred"
+    )
+    assert message.start_with?("Updated"), "Message should be 'Updated'"
     assert @instance.verbatim_name_string.match(/#{@new_value}/),
            "New verbatim_name_string should be: #{@new_value}"
     assert @instance.updated_at > @unchanged.updated_at,

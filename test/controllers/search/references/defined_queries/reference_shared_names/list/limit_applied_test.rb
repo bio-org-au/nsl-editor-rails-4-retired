@@ -30,13 +30,13 @@ class SearchRefsDefdQueryRefSharedNamesListLimit < ActionController::TestCase
         user_full_name: "Fred Jones",
         groups: [])
     assert_response :success
-    assert_select '#search-results-summary',
+    assert_select "#search-results-summary",
                   /\b1 record\b/,
                   "Should find one record"
-    assert_select '#search-results-summary',
+    assert_select "#search-results-summary",
                   /\blimited\b/,
                   "Should say result is limited"
-    assert_select '#search-results-summary',
+    assert_select "#search-results-summary",
                   /of an unknown total\b/,
                   "Should say of an unknown total"
   end

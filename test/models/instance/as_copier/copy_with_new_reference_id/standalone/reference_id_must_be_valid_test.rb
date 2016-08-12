@@ -20,8 +20,9 @@ require "test_helper"
 class InstAsCopierWNewRefSAloneRefMustBeValidTest < ActiveSupport::TestCase
   test "copy a standalone instance with citations reference must be valid" do
     master_instance = Instance::AsCopier.find(
-      instances(:gaertner_created_metrosideros_costata).id)
-    assert master_instance.citations.size > 0,
+      instances(:gaertner_created_metrosideros_costata).id
+    )
+    assert !master_instance.citations.empty?,
            "Master instance should have at least 1 citation."
     dummy_username = "fred"
     params = ActionController::Parameters.new(reference_id: Name.first.id.to_s)

@@ -103,12 +103,11 @@ get "/nsl/services/name/apni/:id/api/apc.json" do |id|
                      1,
                      "nsl-instance for id: #{id}",
                      "999999",
-                     "ApcConcept"
-                    )
+                     "ApcConcept")
   result.to_json
 end
 
-get '/nsl/services/reference/apni/:id/api/citation-strings' do
+get "/nsl/services/reference/apni/:id/api/citation-strings" do
   "Hello World"
 end
 
@@ -126,8 +125,7 @@ delete "/nsl/services/instance/apni/:id/api/delete" do |id|
                   { "link" =>
                     "http://localhost:8080/nsl/mapper/boa/instance/apni/514039",
                     "preferred" => true,
-                    "resources" => 1 }
-                },
+                    "resources" => 1 } },
               "instanceType" => "comb. nov.",
               "protologue" => true,
               "citation" =>
@@ -138,8 +136,7 @@ delete "/nsl/services/instance/apni/:id/api/delete" do |id|
             "action" => "delete",
             "ok" => false,
             "errors" => ["There are 1 instances that cite this.",
-                         "There are 1 instances that say this cites it."]
-          }.to_json]
+                         "There are 1 instances that say this cites it."] }.to_json]
   elsif id == "5"
     [500]
   else
@@ -152,16 +149,14 @@ delete "/nsl/services/instance/apni/:id/api/delete" do |id|
              { "link" =>
                  "http://localhost:8080/nsl/mapper/boa/instance/apni/819227",
                "preferred" => true,
-               "resources" => 1 }
-           },
+               "resources" => 1 } },
          "instanceType" => "taxonomic synonym",
          "protologue" => false,
          "citation" =>
            "Leach, G.J. (1986), A Revision of the Genus Angophora (Myrtaceae).\
            Telopea 2(6)",
          "citationHtml" => "Leach, G.J. (1986), A Revision of the Genus \
-         Angophora (Myrtaceae). <i>Telopea</i> 2(6)"
-       },
+         Angophora (Myrtaceae). <i>Telopea</i> 2(6)"},
        "action" => "delete",
        "ok" => true }.to_json]
   end

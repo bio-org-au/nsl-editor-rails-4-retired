@@ -22,15 +22,16 @@ class TAOnCitnForDuplicateRefTypeRestrictionJournal < ActiveSupport::TestCase
     current_reference = references(:journal_with_papers)
     results = Reference::AsTypeahead.on_citation_for_duplicate(
       "o",
-      current_reference.id)
-    assert results.size > 0, "Should be at least one result"
+      current_reference.id
+    )
+    assert !results.empty?, "Should be at least one result"
     journals = 0
     unknowns = 0
     others = 0
     results.each do |result|
-      if result[:value].match(/\[journal\]/)
+      if result[:value] =~ /\[journal\]/
         journals += 1
-      elsif result[:value].match(/\[unknown\]/)
+      elsif result[:value] =~ /\[unknown\]/
         unknowns += 1
       else
         others += 1

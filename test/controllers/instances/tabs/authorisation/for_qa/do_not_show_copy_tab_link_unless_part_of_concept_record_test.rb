@@ -32,28 +32,28 @@ class InstQADontShowCopyTabLinksUnlessConceptTest < ActionController::TestCase
         user_full_name: "Fred Jones",
         groups: ["qa"])
     assert_response :success
-    assert_select 'li.active a#instance-show-tab',
+    assert_select "li.active a#instance-show-tab",
                   /Details/,
                   "Should show 'Details' tab link."
-    assert_select 'a#instance-edit-tab',
+    assert_select "a#instance-edit-tab",
                   false,
                   "Should not show 'Edit' tab link."
-    assert_select 'a#instance-edit-notes-tab',
+    assert_select "a#instance-edit-notes-tab",
                   false,
                   "Should not show 'Notes' tab link."
-    assert_select 'a#instance-cite-this-instance-tab',
+    assert_select "a#instance-cite-this-instance-tab",
                   false,
                   "Should not show 'Syn' tab link."
-    assert_select 'a#unpublished-citation-tab',
+    assert_select "a#unpublished-citation-tab",
                   false,
                   "Should not show 'Unpub' tab link."
-    assert_select 'a#instance-apc-placement-tab',
+    assert_select "a#instance-apc-placement-tab",
                   false,
                   "Should not show 'APC' tab link."
-    assert_select 'a#instance-comments-tab',
+    assert_select "a#instance-comments-tab",
                   false,
                   "Should not show 'Adnot' tab link."
-    assert_select 'a#instance-copy-to-new-reference-tab',
+    assert_select "a#instance-copy-to-new-reference-tab",
                   false,
                   "Should not show 'Copy' tab link because not part of
                   concept record."

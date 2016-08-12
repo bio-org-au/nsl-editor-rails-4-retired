@@ -24,7 +24,8 @@ class NameAsEditedNoAuthorIdWithInvalidString < ActiveSupport::TestCase
       Name::AsEdited.author_from_typeahead(
         "",
         "asdfasfdasd",
-        "some field")
+        "some field"
+      )
     end
   end
 end

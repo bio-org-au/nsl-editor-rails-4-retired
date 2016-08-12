@@ -31,7 +31,7 @@ class TypeaheadsOnCitForDuplicateExcludesCurrentIdTest < ActiveSupport::TestCase
                  "The current ref should be found because it is not excluded."
     results_2 = Reference::AsTypeahead
                 .on_citation_for_duplicate("simple", current_reference.id)
-    assert results_2.size == 0,
+    assert results_2.size.zero?,
            "Should be no records found if current reference is excluded."
   end
 end

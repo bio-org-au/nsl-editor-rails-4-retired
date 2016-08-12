@@ -23,8 +23,9 @@ class TypeaheadsOnCitForParWildcardsTransAsteriskToPC < ActiveSupport::TestCase
     results = Reference::AsTypeahead.on_citation_for_parent(
       "*",
       current_reference.id,
-      ref_types(:book).id)
-    assert results.size > 0,
+      ref_types(:book).id
+    )
+    assert !results.empty?,
            "Should be at least one result for asterisk wildcard"
   end
 end

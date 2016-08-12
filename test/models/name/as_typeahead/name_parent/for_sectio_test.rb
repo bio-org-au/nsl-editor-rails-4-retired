@@ -23,10 +23,12 @@ class ForSectioTest < ActiveSupport::TestCase
     typeahead = Name::AsTypeahead::ForParent.new(
       term: "%",
       avoid_id: 1,
-      rank_id: NameRank.find_by(name: "Sectio").id)
+      rank_id: NameRank.find_by(name: "Sectio").id
+    )
     suggestions_should_only_include(
       typeahead.suggestions,
       "Sectio",
-      %w(Subgenus Genus))
+      %w(Subgenus Genus)
+    )
   end
 end

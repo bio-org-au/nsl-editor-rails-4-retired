@@ -27,6 +27,6 @@ class SearchOnReferenceCitationExactSimpleNegativeTest < ActiveSupport::TestCase
                    include_common_and_cultivar_session: true,
                    current_user: build_edit_user)
     search = Search::Base.new(params)
-    assert search.executed_query.results.size == 0, "No results expected."
+    assert search.executed_query.results.size.zero?, "No results expected."
   end
 end

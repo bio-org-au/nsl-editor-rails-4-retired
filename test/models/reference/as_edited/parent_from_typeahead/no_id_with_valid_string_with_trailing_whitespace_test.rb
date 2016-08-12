@@ -22,7 +22,8 @@ class RefAsEdNoParIdWValidStringWithTrailingWhitespace < ActiveSupport::TestCase
     reference = references(:origin_of_species)
     result = Reference::AsEdited.parent_from_typeahead(
       "",
-      reference.citation + " ")
+      reference.citation + " "
+    )
     assert_equal reference.id,
                  result,
                  "Should get a matching id for the reference"

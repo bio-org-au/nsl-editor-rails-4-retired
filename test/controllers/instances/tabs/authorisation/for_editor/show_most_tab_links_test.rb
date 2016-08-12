@@ -33,28 +33,28 @@ class InstanceForEditorShowMostTabsTest < ActionController::TestCase
         user_full_name: "Fred Jones",
         groups: ["edit"])
     assert_response :success
-    assert_select 'li.active a#instance-show-tab',
+    assert_select "li.active a#instance-show-tab",
                   /Details/,
                   "Does not show 'Details' tab link."
-    assert_select 'a#instance-edit-tab',
+    assert_select "a#instance-edit-tab",
                   /Edit/,
                   "Does not show 'Edit' tab link."
-    assert_select 'a#instance-edit-notes-tab',
+    assert_select "a#instance-edit-notes-tab",
                   /Notes/,
                   "Does not show 'Notes' tab link."
-    assert_select 'a#instance-cite-this-instance-tab',
+    assert_select "a#instance-cite-this-instance-tab",
                   /Syn/,
                   "Does not show 'Syn' tab link."
-    assert_select 'a#unpublished-citation-tab',
+    assert_select "a#unpublished-citation-tab",
                   /Unpub/,
                   "Does not show 'Unpub' tab link."
-    assert_select 'a#instance-apc-placement-tab',
+    assert_select "a#instance-apc-placement-tab",
                   false,
                   "Should not show 'APC' tab link."
-    assert_select 'a#instance-comments-tab',
+    assert_select "a#instance-comments-tab",
                   /Adnot/,
                   "Does not show 'Adnot' tab link."
-    assert_select 'a#instance-copy-to-new-reference-tab',
+    assert_select "a#instance-copy-to-new-reference-tab",
                   false,
                   "Should not show 'Copy' tab link."
   end

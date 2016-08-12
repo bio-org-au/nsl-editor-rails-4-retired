@@ -23,7 +23,8 @@ class TypeaheadsOnCitationForParWordCount3ChaplinsTest < ActiveSupport::TestCase
     results = Reference::AsTypeahead.on_citation_for_parent(
       "chaplin chaplin chaplin",
       references(:simple).id,
-      ref_types(:paper).id)
+      ref_types(:paper).id
+    )
     assert_equal 1, results.size, "Should be exactly one record returned."
   end
 end

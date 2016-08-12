@@ -22,7 +22,8 @@ class AuthorAsEditedNoDuplicateOfIdWithValidString < ActiveSupport::TestCase
     current_author_id = 1
     author = authors(:chaplin)
     result = Author::AsEdited.duplicate_of_from_typeahead(
-      "", author.name, current_author_id)
+      "", author.name, current_author_id
+    )
     assert_equal author.id, result, "Should get a matching id for the author"
   end
 end

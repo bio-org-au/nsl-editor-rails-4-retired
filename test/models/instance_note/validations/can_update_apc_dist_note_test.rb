@@ -22,7 +22,7 @@ class InstanceNoteCanUpdateApcDistNoteTest < ActiveSupport::TestCase
     assert_nothing_raised("Should not raise exception if everything is ok") do
       apc_dist_note_key = InstanceNoteKey.find_by_name("APC Dist.")
       note = InstanceNote.where(instance_note_key_id: apc_dist_note_key.id).first
-      note.value = note.value + 'x'
+      note.value = note.value + "x"
       assert note.valid?, "Updated APC Dist. instance note should still be valid"
       note.save!
     end

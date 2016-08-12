@@ -44,7 +44,7 @@ class FromHybridFormulaToHybridFormulaUnkn2ndParTest < ActiveSupport::TestCase
            "Hybrid Name sh now be valid as hybrid name with unknown 2nd parent"
     name.save!
     assert name.raw_category ==
-      Name::SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY,
+           Name::SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY,
            "name should now be a scientific hybrid with unknown 2nd parent"
   end
 end

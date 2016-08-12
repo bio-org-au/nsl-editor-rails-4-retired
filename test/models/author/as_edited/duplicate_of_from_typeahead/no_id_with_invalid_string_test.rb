@@ -25,7 +25,8 @@ class AuthorAsEditedNoDuplicateOfIdWithInvalidString < ActiveSupport::TestCase
       Author::AsEdited.duplicate_of_from_typeahead(
         "",
         "asdfasfdasd",
-        current_author_id)
+        current_author_id
+      )
     end
   end
 end

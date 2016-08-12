@@ -25,8 +25,10 @@ class SearchOnInstanceVerbatimNameDoesNotMatchFullNameTest <
       ActiveSupport::HashWithIndifferentAccess.new(
         query_target: "instance",
         query_string: "verbatim-name-does-not-match-full-name:",
-        current_user: build_edit_user))
-    assert search.executed_query.results.size > 0, 'Should find instance with
+        current_user: build_edit_user
+      )
+    )
+    assert !search.executed_query.results.empty?, 'Should find instance with
     verbatim name that does not match full name.'
   end
 end

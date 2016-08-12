@@ -30,8 +30,7 @@ class InstanceTabsNotesTest < ActionController::TestCase
           "row-type" => "instance_as_part_of_concept_record" },
         username: "fred",
         user_full_name: "Fred Jones",
-        groups: %w(APC, edit)
-       )
+        groups: %w(APC edit))
     assert_response :success
     assert_select "h5", "Add Instance Note", "Needs correct heading."
     assert_select "form#new_instance_note", true, "Needs insert form."

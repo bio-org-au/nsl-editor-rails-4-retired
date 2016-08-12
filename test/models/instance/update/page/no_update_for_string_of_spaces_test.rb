@@ -27,7 +27,7 @@ class InstanceUpdatePageNoUpdateForStringOfSpacesTest < ActiveSupport::TestCase
   test "instance page no update for string of spaces" do
     assert @unchanged.page.blank?, "Page should be blank for this test."
     message = @instance.update_if_changed({ "page" => @spaces }, "fred")
-    assert message.match(/\ANo change/),
+    assert message.start_with?("No change"),
            "Message should be 'No change' not '#{message}'"
     assert @instance.page.blank?, "Page should still be blank."
     assert @instance.updated_at == @unchanged.updated_at,

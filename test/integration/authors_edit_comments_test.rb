@@ -34,8 +34,8 @@ class AuthorsEditCommentsTest < ActionDispatch::IntegrationTest
     click_on "Comments"
     fill_in "comment_text", with: "this is a test comment"
     assert_difference("Comment.count") do
-      within('#search-result-details') do
-        find('#comment-create-btn').click
+      within("#search-result-details") do
+        find("#comment-create-btn").click
       end
       sleep(0.5)
       assert page.has_content?("- gclarke"), "No new comment by gclarke."

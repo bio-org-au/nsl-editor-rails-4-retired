@@ -17,12 +17,12 @@
 
 ANGOPHORA_COSTATA_DE_FRUCT_1788_STRING =
   "Angophora costata (Gaertn.) Britten in Gaertner, J, (1788) De Fructibus "\
-  "et Seminibus Plantarum. 1:1788 [invalid publication]"
+  "et Seminibus Plantarum. 1:1788 [invalid publication]".freeze
 ANGOPHORA_COSTATA_DE_FRUCT_1788_ERROR  =
-  "Results should include the Angophora constata De Fructibus... instance."
+  "Results should include the Angophora constata De Fructibus... instance.".freeze
 ANGOPHORA_COSTATA_JOURNAL_1916_STRING  =
   "Angophora costata (Gaertn.) Britten in Britten, J., (1916) Journal of "\
-  "Botany, British and Foreign. 54:1916 [comb. nov.]"
+  "Botany, British and Foreign. 54:1916 [comb. nov.]".freeze
 ANGOPHORA_COSTATA_JOURNAL_1916_ERROR   =
   "Results should include the Angophora constata Journal of Botany 1916 \
-  instance."
+  instance.".freeze

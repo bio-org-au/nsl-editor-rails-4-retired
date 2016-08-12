@@ -25,9 +25,10 @@ class SearchOnAuthorIdSimpleTest < ActiveSupport::TestCase
       query_target: "author",
       query_string: "id: #{author.id}",
       include_common_and_cultivar_session: true,
-      current_user: build_edit_user)
+      current_user: build_edit_user
+    )
     search = Search::Base.new(params)
-    assert search.executed_query.results.size > 0,
+    assert !search.executed_query.results.empty?,
            "Author with id expected."
   end
 end

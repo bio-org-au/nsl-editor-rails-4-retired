@@ -23,7 +23,7 @@ class OnReferenceIdTest < ActiveSupport::TestCase
     search = Search::Base
              .new(ActiveSupport::HashWithIndifferentAccess
              .new(query_string:
-                  "#{references(:paper_by_britten_on_angophora).id}",
+                  references(:paper_by_britten_on_angophora).id.to_s,
                   query_target: "Instances-for-ref-id-sort-by-page:",
                   current_user: build_edit_user))
     assert_equal Array,

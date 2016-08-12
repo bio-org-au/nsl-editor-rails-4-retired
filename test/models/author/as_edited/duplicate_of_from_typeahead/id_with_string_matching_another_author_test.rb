@@ -25,7 +25,8 @@ class AuthAsEdDupeOfIdWStrMatchingAnotherAuthor < ActiveSupport::TestCase
     result = Author::AsEdited.duplicate_of_from_typeahead(
       author_1.id.to_s,
       author_2.name,
-      current_author_id)
+      current_author_id
+    )
     assert_equal author_2.id, result,
                  "Should get a matching ID for the first author with "\
                  "matching name despite mismatched ID"

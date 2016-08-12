@@ -69,7 +69,7 @@ class NamesCreateCultivarTest < ActionDispatch::IntegrationTest
       fill_in(text_field, with: abbrev)
     end
     script =
-    "document.getElementById('" + id_field + "').setAttribute('type','text')"
+      "document.getElementById('" + id_field + "').setAttribute('type','text')"
     execute_script(script)
     using_wait_time 20 do
       fill_in(id_field, with: author.id)

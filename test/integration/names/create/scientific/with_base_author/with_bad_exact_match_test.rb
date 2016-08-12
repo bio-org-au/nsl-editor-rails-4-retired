@@ -40,9 +40,9 @@ class CrScientNameWBaseAuthBadMatchAuthAbbrev < ActionDispatch::IntegrationTest
     sleep(1)
     assert page.has_content?("error"), "No error message."
     assert page.has_content?("1 error prohibited this name from being saved"),
-                             "Incorrect error message."
+           "Incorrect error message."
     assert page.has_content?("Base Author not specified correctly"),
-                             "Incorrect error message."
+           "Incorrect error message."
     Name.count.must_equal names_count
   end
 end

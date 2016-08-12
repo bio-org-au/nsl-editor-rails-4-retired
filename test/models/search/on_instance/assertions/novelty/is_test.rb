@@ -24,8 +24,10 @@ class SearchOnInstanceIsNoveltyTest < ActiveSupport::TestCase
       ActiveSupport::HashWithIndifferentAccess.new(
         query_target: "instance",
         query_string: "is-novelty:",
-        current_user: build_edit_user))
-    assert search.executed_query.results.size > 0,
+        current_user: build_edit_user
+      )
+    )
+    assert !search.executed_query.results.empty?,
            "Should find instance that is a novelty."
   end
 end

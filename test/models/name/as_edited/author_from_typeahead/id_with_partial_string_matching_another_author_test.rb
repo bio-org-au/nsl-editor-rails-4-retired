@@ -24,7 +24,8 @@ class NameAsEdAuthIdWPartStringMatchingAnotherAuthor < ActiveSupport::TestCase
     result = Name::AsEdited.author_from_typeahead(
       author_1.id.to_s,
       author_2.name.chop,
-      "Some Author Field")
+      "Some Author Field"
+    )
     assert_equal author_2.id,
                  result,
                  "Should get matching ID for part string despite mismatched ID"

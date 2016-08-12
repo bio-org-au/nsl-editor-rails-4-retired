@@ -29,7 +29,7 @@ class ReaderSearchContrNamesSanctioningAuthIdListT < ActionController::TestCase
         user_full_name: "Fred Jones",
         groups: [])
     assert_response :success
-    assert_select '#search-results-summary',
+    assert_select "#search-results-summary",
                   /\b1 name\b/,
                   "Should find sanctioning author from ID: #{author.id}"
   end

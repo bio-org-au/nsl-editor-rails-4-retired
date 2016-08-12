@@ -22,9 +22,9 @@ class NameCreateScientificHybridFormulaTest < ActiveSupport::TestCase
     name_type = name_types(:hybrid_formula_parents_known)
     name_rank = name_ranks(:species)
     name_status = name_statuses(:na)
-    @name_params = { "name_type_id" => "#{name_type.id}",
-                     "name_rank_id" => "#{name_rank.id}",
-                     "name_status_id" => "#{name_status.id}" }
+    @name_params = { "name_type_id" => name_type.id.to_s,
+                     "name_rank_id" => name_rank.id.to_s,
+                     "name_status_id" => name_status.id.to_s }
     @parent = names(:a_species)
     @second_parent = names(:another_species)
   end
@@ -32,9 +32,9 @@ class NameCreateScientificHybridFormulaTest < ActiveSupport::TestCase
   test "simple" do
     typeahead_params =
       { "parent_typeahead" => "#{@parent.full_name} | Species",
-        "parent_id" => "#{@parent.id}",
+        "parent_id" => @parent.id.to_s,
         "second_parent_typeahead" => "#{@second_parent.full_name} | Species",
-        "second_parent_id" => "#{@second_parent.id}",
+        "second_parent_id" => @second_parent.id.to_s,
         "verbatim_rank" => "sdfdf" }
     name = Name::AsEdited.create(@name_params, typeahead_params, "fred")
     assert name.valid?,

@@ -23,7 +23,7 @@ class NameTAForUCSuggsShldNotInclNamesWOInstancesTest < ActiveSupport::TestCase
                   .new(term: "a name without instances")
                   .suggestions
     assert(suggestions.is_a?(Array), "suggestions should be an array")
-    assert(suggestions.size > 0,
+    assert(!suggestions.empty?,
            'suggestions for "a name without instances" should not be empty')
   end
 end

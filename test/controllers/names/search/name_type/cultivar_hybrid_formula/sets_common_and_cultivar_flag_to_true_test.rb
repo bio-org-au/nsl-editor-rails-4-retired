@@ -27,7 +27,8 @@ class NameTypeSrchCultHybFormSetsCommCultFlagAutoT < ActionController::TestCase
     get(:search,
         ActiveSupport::HashWithIndifferentAccess.new(
           query_string: "nt:cultivar hybrid formula",
-          query_target: "name"),
+          query_target: "name"
+        ),
         username: "fred",
         user_full_name: "Fred Jones",
         groups: ["edit"])

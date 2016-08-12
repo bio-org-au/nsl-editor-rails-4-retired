@@ -24,7 +24,7 @@ class SearchOnReferenceAssertionChildIsNotTest < ActiveSupport::TestCase
              .new(query_target: "reference",
                   query_string: "is-not-a-child:",
                   current_user: build_edit_user))
-    assert search.executed_query.results.size > 0,
+    assert !search.executed_query.results.empty?,
            "Should find reference that is not a child."
   end
 end

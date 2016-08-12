@@ -27,10 +27,11 @@ class SearchOnNameTypeSimpleTest < ActiveSupport::TestCase
     params = ActiveSupport::HashWithIndifferentAccess.new(
       query_target: "name",
       query_string: "type: scientific",
-      current_user: build_edit_user)
+      current_user: build_edit_user
+    )
     search = Search::Base.new(params)
     confirm_results_class(search.executed_query.results)
-    assert search.executed_query.results.size > 0,
+    assert !search.executed_query.results.empty?,
            "Expected at least one search result"
   end
 end

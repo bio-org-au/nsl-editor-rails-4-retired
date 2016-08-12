@@ -30,7 +30,7 @@ class ReferenceEditorShowNewInstanceTabTest < ActionController::TestCase
         username: "fred",
         user_full_name: "Fred Jones",
         groups: ["edit"])
-    assert_select 'li.active a#reference-new-instance-tab',
+    assert_select "li.active a#reference-new-instance-tab",
                   /New instance/,
                   "Should show 'New instance' tab."
     assert_select "form", true

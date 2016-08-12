@@ -27,7 +27,7 @@ class ExAuthorIdTest < ActionDispatch::IntegrationTest
     visit_home_page
     select "Name", from: "query-on"
     select "ex author id", from: "query-field"
-    assert find('#query-field').value == "ea-id",
+    assert find("#query-field").value == "ea-id",
            "Ex Author ID query should be available and selected."
   end
 end

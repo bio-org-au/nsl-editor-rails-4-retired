@@ -20,7 +20,8 @@ require "test_helper"
 class WholeRecordChangedVolumeTest < ActiveSupport::TestCase
   test "realistic form submission" do
     reference = Reference::AsEdited.find(
-      references(:for_whole_record_change_detection).id)
+      references(:for_whole_record_change_detection).id
+    )
 
     params = { "title" => reference.title,
                "year" => reference.year,

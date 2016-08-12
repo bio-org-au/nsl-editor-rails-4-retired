@@ -58,7 +58,8 @@ class GenusNameChangeHandlesDoubleParentTest < ActionController::TestCase
                        "duplicate_of_id" => "",
                        "verbatim_rank" => "" },
            "commit" => "Save",
-           "id" => grevillea.id },
+           "id" => grevillea.id
+         },
          username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
     assert_response :success
     # sleep(2) # to allow for the asynch job

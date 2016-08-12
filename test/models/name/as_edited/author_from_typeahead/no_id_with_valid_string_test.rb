@@ -23,7 +23,8 @@ class NameAsEditedNoAuthorIdWithValidString < ActiveSupport::TestCase
     result = Name::AsEdited.author_from_typeahead(
       "",
       author.name,
-      "some field")
+      "some field"
+    )
     assert_equal author.id,
                  result,
                  "Should get a matching id for the author name"

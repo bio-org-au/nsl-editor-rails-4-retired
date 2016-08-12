@@ -24,8 +24,10 @@ class SearchOnNameeAssertionHasASecondParentTest < ActiveSupport::TestCase
       ActiveSupport::HashWithIndifferentAccess.new(
         query_target: "name",
         query_string: "has-a-second-parent:",
-        current_user: build_edit_user))
-    assert search.executed_query.results.size > 0,
+        current_user: build_edit_user
+      )
+    )
+    assert !search.executed_query.results.empty?,
            "Should find name that has second parent."
   end
 end

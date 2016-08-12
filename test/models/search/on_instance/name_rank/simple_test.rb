@@ -24,9 +24,10 @@ class SearchOnInstanceNameRankSimpleTest < ActiveSupport::TestCase
       query_target: "instance",
       query_string: "rank: species",
       include_common_and_cultivar_session: true,
-      current_user: build_edit_user)
+      current_user: build_edit_user
+    )
     search = Search::Base.new(params)
-    assert search.executed_query.results.size > 0,
+    assert !search.executed_query.results.empty?,
            "Instances for names with rank species expected."
   end
 end

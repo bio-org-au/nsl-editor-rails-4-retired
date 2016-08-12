@@ -25,8 +25,9 @@ class SearchOnAuthorAssertionDuplicateIsATest < ActiveSupport::TestCase
                                                    "is-a-duplicate:",
                                                    query_target: "Author",
                                                    current_user:
-                                                   build_edit_user))
-    assert 0 < search.executed_query.results.size,
+                                                   build_edit_user)
+    )
+    assert !search.executed_query.results.empty?,
            "Should find duplicate authors."
   end
 end

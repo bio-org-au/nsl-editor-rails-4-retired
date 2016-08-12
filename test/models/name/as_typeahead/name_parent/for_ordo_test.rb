@@ -23,10 +23,12 @@ class ForOrdoTest < ActiveSupport::TestCase
     typeahead = Name::AsTypeahead::ForParent.new(
       term: "%",
       avoid_id: 1,
-      rank_id: NameRank.find_by(name: "Ordo").id)
+      rank_id: NameRank.find_by(name: "Ordo").id
+    )
     suggestions_should_only_include(
       typeahead.suggestions,
       "Ordo",
-      %w(Regnum Division Classis Subclassis Superordo))
+      %w(Regnum Division Classis Subclassis Superordo)
+    )
   end
 end

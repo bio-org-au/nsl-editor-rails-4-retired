@@ -19,7 +19,7 @@ require "test_helper"
 # Single author model test.
 class AuthTypeOnNameDOTwoAuthorsSameNameWithRefCount < ActiveSupport::TestCase
   test "author typeahead on name dup of two authors same name" do
-    result = Author::AsTypeahead.on_name_duplicate_of("masl",-1)
+    result = Author::AsTypeahead.on_name_duplicate_of("masl", -1)
     assert_equal 2, result.size, "Expecting 2 records for 'masl'."
     values = result.collect { |author| author[:value] }
     assert values.include?("Maslin, B.R. | 1 ref"),

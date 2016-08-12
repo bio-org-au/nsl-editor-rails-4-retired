@@ -20,10 +20,10 @@ require "test_helper"
 class AuthAsEdNoDupeOfIdWStrMatching2NamesTest < ActiveSupport::TestCase
   test "no id with invalid string" do
     skip
-    # This test became redundant in its present form when a 
+    # This test became redundant in its present form when a
     # database constraint was added to prevent duplicate author names.
     # I'm leaving it here so when we clean it out we review the code
-    # than handles this case in the typeahead - needs refactoring, 
+    # than handles this case in the typeahead - needs refactoring,
     # possibly different type of testing.
     current_author_id = 1
     author_1 = authors(:has_matching_name_1)
@@ -32,8 +32,8 @@ class AuthAsEdNoDupeOfIdWStrMatching2NamesTest < ActiveSupport::TestCase
     assert_raise(RuntimeError,
                  "Should raise a RuntimeError for invalid author string.") do
       Author::AsEdited.duplicate_of_from_typeahead(
-        "", author_1.name, current_author_id)
+        "", author_1.name, current_author_id
+      )
     end
   end
 end
-

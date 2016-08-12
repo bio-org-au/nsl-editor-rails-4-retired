@@ -23,8 +23,9 @@ class TAOnCitn4ParRefTypeRestrictionNothingForDatabase < ActiveSupport::TestCase
     results = Reference::AsTypeahead.on_citation_for_parent(
       "%",
       current_reference.id,
-      ref_types(:database).id)
-    assert results.size == 0,
+      ref_types(:database).id
+    )
+    assert results.size.zero?,
            "Should be no results because database takes no parent."
   end
 end

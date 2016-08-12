@@ -23,7 +23,8 @@ class TypeaheadsOnCitationForParent2WordsReverseOrder < ActiveSupport::TestCase
     results = Reference::AsTypeahead.on_citation_for_parent(
       "bbbb aaaa",
       references(:a_book).id,
-      ref_types(:book).id)
+      ref_types(:book).id
+    )
     assert_equal 1, results.size, "Should be one and just one result"
   end
 end

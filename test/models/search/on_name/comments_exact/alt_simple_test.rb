@@ -26,7 +26,7 @@ class SearchOneNameCommentsExactAltSimpleTest < ActiveSupport::TestCase
                    include_common_and_cultivar_session: true,
                    current_user: build_edit_user)
     search = Search::Base.new(params)
-    assert search.executed_query.results.size > 0,
+    assert !search.executed_query.results.empty?,
            "Results expected for exact-comments."
   end
 end

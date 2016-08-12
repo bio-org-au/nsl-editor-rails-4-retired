@@ -27,8 +27,7 @@ class GenusNameUpdateWithNoNameChangeTest < ActionController::TestCase
     @request.headers["Accept"] = "application/javascript"
     post(:update,
          { name: { "name_element" => "Acacia", "verbatim_name" => "fred" },
-           id: genus.id
-         },
+           id: genus.id },
          username: "fred",
          user_full_name: "Fred Jones",
          groups: ["edit"])

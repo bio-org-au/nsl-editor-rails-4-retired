@@ -23,7 +23,8 @@ class AuthorAsEditedDuplicateOfIdWithNoString < ActiveSupport::TestCase
     result = Author::AsEdited.duplicate_of_from_typeahead(
       "1",
       "",
-      current_author_id)
+      current_author_id
+    )
     assert_match "", result, "Should get nothing - treating as delete."
   end
 end

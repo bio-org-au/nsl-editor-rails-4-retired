@@ -22,8 +22,9 @@ class TAOnCitnForDupleWildcardsTransAsteriskToPercent < ActiveSupport::TestCase
     current_reference = references(:ref_type_is_book)
     results = Reference::AsTypeahead.on_citation_for_duplicate(
       "*",
-      current_reference.id)
-    assert results.size > 0,
+      current_reference.id
+    )
+    assert !results.empty?,
            "Should be at least one result for asterisk wildcard"
   end
 end

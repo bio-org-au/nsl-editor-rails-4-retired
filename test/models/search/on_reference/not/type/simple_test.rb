@@ -26,6 +26,6 @@ class SearchOnReferenceNotTypeSimpleTest < ActiveSupport::TestCase
                    include_common_and_cultivar_session: true,
                    current_user: build_edit_user)
     search = Search::Base.new(params)
-    assert search.executed_query.results.size > 0, "Results expected."
+    assert !search.executed_query.results.empty?, "Results expected."
   end
 end

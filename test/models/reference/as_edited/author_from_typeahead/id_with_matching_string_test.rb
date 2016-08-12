@@ -22,7 +22,8 @@ class ReferenceAsEditedAuthorIdWithMatchingString < ActiveSupport::TestCase
     author = authors(:chaplin)
     result = Reference::AsEdited.author_from_typeahead(
       author.id.to_s,
-      author.name)
+      author.name
+    )
     assert_equal author.id, result,
                  "Should get a matching id for the author name"
   end

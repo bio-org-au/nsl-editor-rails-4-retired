@@ -23,8 +23,9 @@ class SearchOnNameAssertionParentIsTest < ActiveSupport::TestCase
     search = Search::Base.new(ActiveSupport::HashWithIndifferentAccess.new(
                                 query_target: "name",
                                 query_string: "is-a-parent:",
-                                current_user: build_edit_user))
-    assert search.executed_query.results.size > 0,
+                                current_user: build_edit_user
+    ))
+    assert !search.executed_query.results.empty?,
            "Should find name that is a parent."
   end
 end

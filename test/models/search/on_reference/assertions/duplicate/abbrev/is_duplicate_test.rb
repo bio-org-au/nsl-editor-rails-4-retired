@@ -25,7 +25,7 @@ class SearchOnRefAssertionDupAbbrevIsDuplicateTest < ActiveSupport::TestCase
                   .new(query_target: "reference",
                        query_string: "is-duplicate:",
                        current_user: build_edit_user))
-    assert search.executed_query.results.size > 0,
+    assert !search.executed_query.results.empty?,
            "Should find duplicate reference."
   end
 end

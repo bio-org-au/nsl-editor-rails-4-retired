@@ -25,7 +25,8 @@ class NameAsEdDupeOfIdWithStringMatching2Names < ActiveSupport::TestCase
            "Should be two names with the same full name."
     result = Name::AsEdited.duplicate_of_from_typeahead(
       name_2.id.to_s,
-      name_2.full_name)
+      name_2.full_name
+    )
     assert_equal name_2.id,
                  result,
                  "Should get a match for the correct id"
