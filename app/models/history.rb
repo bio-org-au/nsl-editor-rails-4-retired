@@ -18,6 +18,10 @@
 class History
   CHANGES_2016 = [
     { date: "12-Aug-2016",
+      jira_id: "1929",
+      description:
+      %(Name > More > Refresh > Refresh Descendant names... works again.) },
+    { date: "12-Aug-2016",
       jira_id: "1926",
       description:
       %(Fix error that prevents details tab displaying for references which

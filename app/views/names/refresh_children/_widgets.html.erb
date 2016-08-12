@@ -16,6 +16,8 @@
       refresh_children_name_path(@name.id), 
       id: 'confirm-name-refresh-children-button', 
       remote: true, 
+      method: :post,
+      tabindex: increment_tab_index,
       class: 'btn btn-warning', 
       title: "Confirm refresh." %>
 
@@ -24,6 +26,7 @@
                id: "cancel-refresh-children-link",
                class: "btn btn-default cancel-action-link",
                tabindex: increment_tab_index,
+               title: "Cancel the refresh",
                data: {enable_this_id: 'name-refresh-children-link',
                hide_this_id: 'confirm-or-cancel-refresh-children-link-container'}) %>
 

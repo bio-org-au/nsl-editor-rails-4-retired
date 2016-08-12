@@ -19,8 +19,9 @@ require "open-uri"
 #   Names are central to the NSL.
 class NamesController < ApplicationController
   include OpenURI
+  protect_from_forgery except: :refresh_children
   # All text/html requests should go to the search page, except for rules.
-  before_filter :javascript_only, except: [:rules]
+  before_filter :javascript_only, except: [:rules, :refresh_children]
   before_filter :find_name,
                 only: [:show, :tab, :edit_as_category,
                        :refresh, :refresh_children]
