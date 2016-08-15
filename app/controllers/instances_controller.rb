@@ -69,6 +69,14 @@ class InstancesController < ApplicationController
     else
       render "create_error"
     end
+  rescue ActiveRecord::RecordNotUnique
+    logger.error("Rescuing duplicate instance")
+    @message = "Error: duplicate record"
+    render "create_error.js", status: :unprocessable_entity
+  rescue => e
+    logger.error("Rescuing insert problem: #{e.class}")
+    @message = "#{e.cause}"
+    render "create_error.js", status: :unprocessable_entity
   end
 
   # PUT /instances/1
