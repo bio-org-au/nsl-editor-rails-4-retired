@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -19,7 +20,7 @@ class Search::EmptyExecutedQuery
 
   def initialize(params)
     Rails.logger.debug("Search::EmptyExecutedQuery start")
-    Rails.logger.debug("#{'=' * 40}")
+    Rails.logger.debug(("=" * 40).to_s)
     @params = params
     @limited = false
     @results = []

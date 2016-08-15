@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -40,10 +41,10 @@ class Name < ActiveRecord::Base
         -> { where([" name_type_id in (select id from name_type where not (cultivar or lower(name_type.name) = 'common'))"]) }
   scope :not_a_duplicate, -> { where(duplicate_of_id: nil) }
   scope :with_an_instance, -> { where(["exists (select null from instance where name.id = instance.name_id)"]) }
-  scope :full_name_like, ->(string) { where("lower(f_unaccent(full_name)) like f_unaccent(?) ", string.gsub(/\*/, "%").downcase + "%") }
+  scope :full_name_like, ->(string) { where("lower(f_unaccent(full_name)) like f_unaccent(?) ", string.tr("*", "%").downcase + "%") }
   scope :lower_full_name_equals, ->(string) { where("lower(f_unaccent(full_name)) = f_unaccent(?) ", string.downcase) }
-  scope :lower_full_name_like, ->(string) { where("lower(f_unaccent(full_name)) like f_unaccent(?) ", string.gsub(/\*/, "%").downcase) }
-  scope :lower_rank_like, ->(string) { where("name_rank_id in (select id from name_rank where lower(name) like ?)", string.gsub(/\*/, "%").downcase) }
+  scope :lower_full_name_like, ->(string) { where("lower(f_unaccent(full_name)) like f_unaccent(?) ", string.tr("*", "%").downcase) }
+  scope :lower_rank_like, ->(string) { where("name_rank_id in (select id from name_rank where lower(name) like ?)", string.tr("*", "%").downcase) }
   scope :order_by_full_name, -> { order("lower(full_name)") }
   scope :order_by_rank_and_full_name, -> { order("name_rank.sort_order, lower(full_name)") }
   scope :select_fields_for_typeahead, -> { select(" name.id, name.full_name, name_rank.name name_rank_name, name_status.name name_status_name") }
@@ -64,7 +65,7 @@ class Name < ActiveRecord::Base
   }
   scope :name_rank_not_deprecated, -> { where("not name_rank.deprecated") }
   scope :name_rank_not_infra,
-         -> { where("name_rank.name not in ('[infrafamily]','[infragenus]','[infrasp.]') ") }
+        -> { where("name_rank.name not in ('[infrafamily]','[infragenus]','[infrasp.]') ") }
   scope :name_rank_not_na, -> { where("name_rank.name != '[n/a]' ") }
   scope :name_rank_not_unknown, -> { where("name_rank.name != '[unknown]' ") }
   scope :name_rank_not_unranked, -> { where("name_rank.name != '[unranked]' ") }
@@ -183,7 +184,7 @@ class Name < ActiveRecord::Base
   LEGAL_TO_ORDER_BY = { "fn" => "full_name",
                         "sn" => "simple_name",
                         "ne" => "name_element",
-                        "r" => "name_rank_id" }
+                        "r" => "name_rank_id" }.freeze
 
   # Category constants
   SCIENTIFIC_CATEGORY = "scientific"
@@ -248,8 +249,7 @@ class Name < ActiveRecord::Base
     if requires_parent? && requires_higher_ranked_parent?
       unless parent.blank? || parent_rank_above? || both_unranked?
         errors.add(:parent_id, "rank (#{parent.try('name_rank').try('name')})
-                   must be higher than the name rank (#{name_rank.try('name')})"
-                  )
+                   must be higher than the name rank (#{name_rank.try('name')})")
       end
     end
   end
@@ -266,7 +266,7 @@ class Name < ActiveRecord::Base
 
   def validate
     logger.debug("before save validate - errors: #{errors[:base].size}")
-    errors[:base].size == 0
+    errors[:base].size.zero?
   end
 
   def self.exclude_common_and_cultivar_if_requested(exclude)
@@ -569,11 +569,11 @@ class Name < ActiveRecord::Base
   end
 
   def without_parent?
-    !self.has_parent?
+    !has_parent?
   end
 
   def needs_second_parent?
-    self.hybrid? && !self.has_second_parent?
+    hybrid? && !has_second_parent?
   end
 
   def hybrid?
@@ -647,7 +647,7 @@ class Name < ActiveRecord::Base
     self.simple_name = names_json["result"]["simpleName"]
     self.simple_name_html = names_json["result"]["simpleMarkedUpName"]
     self.sort_name = names_json["result"]["sortName"]
-    self.save!
+    save!
   rescue => e
     logger.error("set_names! exception: #{e}")
     raise
@@ -662,9 +662,7 @@ class Name < ActiveRecord::Base
   end
 
   def sub_tree_size(level = 0)
-    if level == 0
-      @size_ = 0
-    end
+    @size_ = 0 if level.zero?
     @size_ ||= 0
     @size_ += 1
     level += 1

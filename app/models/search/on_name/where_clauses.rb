@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -35,9 +36,7 @@ class Search::OnName::WhereClauses
     debug("build_sql, before apply_args_to_sql; @common_and_cultivar_included: #{@common_and_cultivar_included}")
     apply_args_to_sql(args)
     debug("build_sql, after apply_args_to_sql; @common_and_cultivar_included: #{@common_and_cultivar_included}")
-    unless @common_and_cultivar_included
-      @sql = @sql.not_common_or_cultivar
-    end
+    @sql = @sql.not_common_or_cultivar unless @common_and_cultivar_included
   end
 
   def apply_args_to_sql(args)
@@ -46,7 +45,7 @@ class Search::OnName::WhereClauses
       field, value, args = Search::NextCriterion.new(args).get
       add_clause(field, value)
       x += 1
-      fail "endless loop #{x}" if x > 50
+      raise "endless loop #{x}" if x > 50
     end
   end
 
@@ -83,7 +82,7 @@ class Search::OnName::WhereClauses
     when 2 then supply_value_twice(rule)
     when 3 then supply_value_thrice(rule)
     else
-      fail "Where clause value frequency: #{rule.value_frequency}, is too high."
+      raise "Where clause value frequency: #{rule.value_frequency}, is too high."
     end
   end
 
@@ -104,13 +103,13 @@ class Search::OnName::WhereClauses
     debug("apply_predicate_to_tokens: rule.predicate: #{rule.predicate}")
     debug("apply_predicate_to_tokens: rule.value: #{rule.value}")
     predicate = rule.predicate
-    rule.value.gsub(/\*/, "%").gsub(/%+/, " ").split.each do |term|
+    rule.value.tr("*", "%").gsub(/%+/, " ").split.each do |term|
       @sql = @sql.where(predicate, "%#{term}%")
     end
   end
 
   def apply_common_and_cultivar(rule)
-    debug("apply_common_and_cultivar: #{rule.try("where_clause")}")
+    debug("apply_common_and_cultivar: #{rule.try('where_clause')}")
     return if @common_and_cultivar_included
     if rule.allow_common_and_cultivar
       @common_and_cultivar_included = true
@@ -121,10 +120,10 @@ class Search::OnName::WhereClauses
   end
 
   def apply_order(rule)
-    if rule.order
-      @sql = @sql.order(rule.order)
-    else
-      @sql = @sql.order("full_name")
-    end
+    @sql = if rule.order
+             @sql.order(rule.order)
+           else
+             @sql.order("full_name")
+           end
   end
 end

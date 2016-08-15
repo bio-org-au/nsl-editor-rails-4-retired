@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -25,7 +26,7 @@ class InstanceType < ActiveRecord::Base
   end
 
   def matching_preposition
-    if name.downcase.match(/misapplied/)
+    if name.downcase =~ /misapplied/
       "to"
     else
       "of"

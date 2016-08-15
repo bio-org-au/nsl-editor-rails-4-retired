@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -29,7 +30,7 @@ class Instance::AsTypeahead::ForNameShowingReferences
                                           "   and lower(r.citation) like lower('%'||?||'%') " \
                                           " order by r.year,a.name",
                                            params[:instance_id].to_i, params[:instance_id].to_i, params[:term]])
-                    .collect { |ref| { value: "#{ref.citation}:#{ref.year} #{'[' + ref.pages + ']' unless ref.pages_useless?} #{'[' + ref.instance_type + ']' unless ref.instance_type == 'secondary reference'} #{'[' + ref.source_system.downcase + ']' unless ref.source_system.blank?}", id: ref.id } }
+                             .collect { |ref| { value: "#{ref.citation}:#{ref.year} #{'[' + ref.pages + ']' unless ref.pages_useless?} #{'[' + ref.instance_type + ']' unless ref.instance_type == 'secondary reference'} #{'[' + ref.source_system.downcase + ']' unless ref.source_system.blank?}", id: ref.id } }
     end
   end
 end

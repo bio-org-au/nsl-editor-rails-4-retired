@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -59,7 +60,8 @@ class Instance < ActiveRecord::Base
       "          else 2 end, " \
       "          case taxonomic " \
       "          when true then 2 " \
-      "          else 1 end ")
+      "          else 1 end "
+    )
   }
 
   scope :created_n_days_ago,
@@ -196,7 +198,7 @@ class Instance < ActiveRecord::Base
   end
 
   def relationship_ref_must_match_cited_by_instance_ref
-    return unless self.relationship? &&
+    return unless relationship? &&
                   !(reference.id == this_is_cited_by.reference.id)
     errors.add(:reference_id,
                "must match cited by instance reference")
@@ -212,7 +214,7 @@ class Instance < ActiveRecord::Base
   end
 
   def synonymy_name_must_match_cites_instance_name
-    return if !self.synonymy? || name.id == this_cites.name.id
+    return if !synonymy? || name.id == this_cites.name.id
     errors.add(:name_id, "must match cites instance name")
   end
 
@@ -222,12 +224,12 @@ class Instance < ActiveRecord::Base
   end
 
   def cannot_cite_itself
-    return if !self.synonymy? || id != cites_id
+    return if !synonymy? || id != cites_id
     errors[:base] << "cannot cite itself"
   end
 
   def cannot_be_cited_by_itself
-    return if !self.relationship? || id != cited_by_id
+    return if !relationship? || id != cited_by_id
     errors.add(:name_id, "cannot be cited by itself")
   end
 
@@ -262,10 +264,9 @@ class Instance < ActiveRecord::Base
   end
 
   def type_of_instance
-    case
-    when standalone? then "Standalone"
-    when synonymy? then "Synonymy"
-    when unpublished_citation? then "Unpublished citation"
+    if standalone? then "Standalone"
+    elsif synonymy? then "Synonymy"
+    elsif unpublished_citation? then "Unpublished citation"
     else
       "Unknown - unrecognised type"
     end
@@ -536,20 +537,20 @@ class Instance < ActiveRecord::Base
 
   # Call with argument :commit to commit; any other argument will rollback.
   def change_synonymy_to_unpublished_citation(commit_or_not = :or_not)
-    fail "Expected synonymy but this is not synonymy!" unless synonymy?
+    raise "Expected synonymy but this is not synonymy!" unless synonymy?
     redundant_instance = Instance.find(cites_id)
     same_reference = this_is_cited_by.reference.id == reference.id
-    fail "Expected same reference but that is not true!" unless same_reference
-    to be removed: #{redundant_instance.id}; same reference: #{same_reference} "
+    raise "Expected same reference but that is not true!" unless same_reference
+    to be removed: # {redundant_instance.id}; same reference: #{same_reference} "
     Instance.transaction do
       # bypass a validation that would prevent this change
       self.data_fix_in_process = true
       # remove the foreign key then delete the record
       self.cites_id = nil
-      self.save!
+      save!
       redundant_instance.destroy!
-      fail ActiveRecord::Rollback unless unpublished_citation?
-      fail ActiveRecord::Rollback unless commit_or_not == :commit
+      raise ActiveRecord::Rollback unless unpublished_citation?
+      raise ActiveRecord::Rollback unless commit_or_not == :commit
     end
     self
   end
@@ -602,6 +603,6 @@ class Instance < ActiveRecord::Base
   end
 
   def can_have_apc_dist?
-    instance_notes.to_a.keep_if { |n| n.instance_note_key.apc_dist? }.size == 0
+    instance_notes.to_a.keep_if { |n| n.instance_note_key.apc_dist? }.size.zero?
   end
 end

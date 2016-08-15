@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -46,14 +47,14 @@ class Instance::AsTypeahead < Instance
     end
     if terms_without_year.present?
       name_binds.push(" lower(full_name) like lower(?) ")
-      name_binds.push(terms_without_year.gsub(/\*/, "%") + "%")
+      name_binds.push(terms_without_year.tr("*", "%") + "%")
       results = Instance.select(" name.full_name, reference.citation, reference.year, reference.pages, " \
                                     " instance.id, instance.source_system, instance_type.name as instance_type_name")
-                .joins(:name).where(name_binds)\
-                .joins(:reference).where(reference_binds)\
-                .joins(:instance_type)\
-                .order("full_name, year").limit(SEARCH_LIMIT)\
-                .collect do |i|
+                        .joins(:name).where(name_binds)\
+                        .joins(:reference).where(reference_binds)\
+                        .joins(:instance_type)\
+                        .order("full_name, year").limit(SEARCH_LIMIT)\
+                        .collect do |i|
         value = "#{i.full_name} in #{i.citation}:#{i.year} #{'[' + i.pages + ']' unless i.pages.blank? || i.pages.match(/null - null/)}"
         value += "[#{i.instance_type_name}]" unless i.instance_type_name == "secondary reference"
         id = i.id

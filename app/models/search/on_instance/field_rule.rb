@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -116,7 +117,7 @@ class Search::OnInstance::FieldRule
     "is-cited-by-an-instance:" => { where_clause: " cited_by_id is not null" },
     "does-not-cite-an-instance:" => { where_clause: " cites_id is null" },
     "is-not-cited-by-an-instance:" => { where_clause: " cited_by_id is null" },
-    "verbatim-name-matches-full-name:"  => { where_clause:
+    "verbatim-name-matches-full-name:" => { where_clause:
                                              " lower(verbatim_name_string) =
                                              (select lower(full_name)
                                              from name
@@ -159,13 +160,13 @@ where rb.sort_order >= (select sort_order from name_rank where name = 'Species')
       ",
       order: "name.full_name",
       join: :name },
-    "rank:"  => { where_clause: " exists (select null from
+    "rank:" => { where_clause: " exists (select null from
                   name n inner join name_rank nr
                   on n.name_rank_id = nr.id where instance.name_id =
                   n.id and lower(nr.name) like lower(?))",
-                  order: "name.full_name" },
+                 order: "name.full_name" },
 
-    "bad-relationships-974:"    => { where_clause: " instance.id in (select syn.id
+    "bad-relationships-974:" => { where_clause: " instance.id in (select syn.id
   from instance syn
  inner join instance standalone
     on syn.cited_by_id = standalone.id
@@ -182,5 +183,5 @@ where rb.sort_order >= (select sort_order from name_rank where name = 'Species')
      )
        )
 )", order: "instance.id" },
-  }
+  }.freeze
 end

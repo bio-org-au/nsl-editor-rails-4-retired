@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -42,7 +43,7 @@ class Search::OnInstance::Base
   end
 
   def run_count_query(parsed_request)
-    debug('#run_count_query')
+    debug("#run_count_query")
     count_query = Search::OnInstance::CountQuery.new(parsed_request)
     @relation = count_query.sql
     @total = @count = relation.count
@@ -55,7 +56,7 @@ class Search::OnInstance::Base
   end
 
   def run_list_query(parsed_request)
-    debug('#run_list_query')
+    debug("#run_list_query")
     list_query = Search::OnInstance::ListQuery.new(parsed_request)
     @relation = list_query.sql
     @results = relation.all
@@ -63,7 +64,7 @@ class Search::OnInstance::Base
     @info_for_display = list_query.info_for_display
     @common_and_cultivar_included = list_query.common_and_cultivar_included
     @count = @results.size
-    @show_csv = @results.size > 0
+    @show_csv = @results.size.positive?
     calculate_total
   end
 

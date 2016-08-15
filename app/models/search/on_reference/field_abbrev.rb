@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -29,5 +30,5 @@ class Search::OnReference::FieldAbbrev
     "pd:" => "publication-date:",
     "is-duplicate:" => "is-a-duplicate:",
     "duplicate:" => "is-a-duplicate:",
-  }
+  }.freeze
 end

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -16,12 +17,12 @@
 #
 # For operation of copying names
 class Name::AsCopier < Name
-  NAC = 'Name::AsCopier'
+  NAC = "Name::AsCopier"
   def copy_with_username(new_name_element, as_username)
     Rails.logger.debug("#{NAC}#copy with username
                        new_name_element: #{new_name_element}")
     if new_name_element.eql?(name_element)
-      fail "Copied record would have the same name."
+      raise "Copied record would have the same name."
     end
     new = dup
     new.name_element = new_name_element
@@ -70,7 +71,7 @@ class Name::AsCopier < Name
       Rails.logger.debug("All ok in copy_with_all_instances.")
     else
       Rails.logger.error("There was a problem in copy_with_all_instances.")
-      fail("Name not copied")
+      raise("Name not copied")
     end
     copied_name
   end

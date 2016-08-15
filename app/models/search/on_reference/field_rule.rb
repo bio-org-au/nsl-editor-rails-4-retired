@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -124,8 +125,7 @@ class Search::OnReference::FieldRule
     "title:"                => { trailing_wildcard: true,
                                  where_clause: " lower(title) like ? " },
 
-    "notes:"             => {   where_clause: " lower(notes) like ? " },
-
+    "notes:" => { where_clause: " lower(notes) like ? " },
 
     "parent-ref-wrong-child-type:" => { where_clause: "reference.id in (
 select r.id
@@ -145,5 +145,5 @@ from ref_type xrt
 inner join
 ref_type xcrt
 on xrt.id = xcrt.parent_id))" },
-  }
+  }.freeze
 end

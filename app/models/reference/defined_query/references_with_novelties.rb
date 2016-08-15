@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -94,7 +95,7 @@ class Reference::DefinedQuery::ReferencesWithNovelties
       end
       results.push(instance)
     end
-    results.unshift(reference) if novelties_count > 0
+    results.unshift(reference) if novelties_count.positive?
     results
   end
 

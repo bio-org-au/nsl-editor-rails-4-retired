@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -36,6 +37,6 @@ class TAOnCit4ParentRefTypeRestrictionSeriesForBook < ActiveSupport::TestCase
       end
     end
     assert others.zero?, "Expecting no other ref types."
-    assert series > 0, "Expecting at least 1 series ref type."
+    assert series.positive?, "Expecting at least 1 series ref type."
   end
 end

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -29,23 +30,20 @@ class Search::OnAuthor::FieldRule
                                name where name.ex_author_id = author.id) " },
     "has-ex-base-authored-name:" \
                           => { where_clause: " exists (select null from
-                               name where name.ex_base_author_id = author.id) "
-                             },
+                               name where name.ex_base_author_id = author.id) " },
     "has-base-authored-name:" \
                           => { where_clause: " exists (select null from
-                               name where name.base_author_id = author.id) "
-                             },
+                               name where name.base_author_id = author.id) " },
     "has-sanctioned-name:" \
                           => { where_clause: " exists (select null from
                                name where name.sanctioning_author_id = author.id) " },
     "has-any-authored-name:" \
                           => { where_clause: " exists (select null from
-                               name where name.author_id = author.id 
-                               or name.base_author_id = author.id 
-                               or name.ex_author_id = author.id 
-                               or name.ex_base_author_id = author.id 
-                               or name.sanctioning_author_id = author.id) "
-                             },
+                               name where name.author_id = author.id
+                               or name.base_author_id = author.id
+                               or name.ex_author_id = author.id
+                               or name.ex_base_author_id = author.id
+                               or name.sanctioning_author_id = author.id) " },
     "comments:"           => { trailing_wildcard: true,
                                leading_wildcard: true,
                                where_clause: " exists (select null from
@@ -90,5 +88,5 @@ class Search::OnAuthor::FieldRule
                                multiple_values_where_clause: " id in (?)" },
     "duplicate-of-id:"    => { where_clause: "duplicate_of_id = ? " },
 
-  }
+  }.freeze
 end

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -42,7 +43,7 @@ class Search::OnInstance::WhereClauses
       field, value, args = Search::NextCriterion.new(args).get
       add_clause(field, value)
       x += 1
-      fail "endless loop #{x}" if x > 50
+      raise "endless loop #{x}" if x > 50
     end
   end
 
@@ -77,7 +78,7 @@ class Search::OnInstance::WhereClauses
     when 2 then supply_value_twice(rule)
     when 3 then supply_value_thrice(rule)
     else
-      fail "Where clause value frequency: #{rule.value_frequency}, is too high."
+      raise "Where clause value frequency: #{rule.value_frequency}, is too high."
     end
   end
 
@@ -98,7 +99,7 @@ class Search::OnInstance::WhereClauses
     debug("apply_predicate_to_tokens: rule.predicate: #{rule.predicate}")
     debug("apply_predicate_to_tokens: rule.value: #{rule.value}")
     predicate = rule.predicate
-    rule.value.gsub(/\*/, "%").gsub(/%+/, " ").split.each do |term|
+    rule.value.tr("*", "%").gsub(/%+/, " ").split.each do |term|
       @sql = @sql.where(predicate, "%#{term}%")
     end
   end

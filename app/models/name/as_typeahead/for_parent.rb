@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -39,25 +40,25 @@ class Name::AsTypeahead::ForParent
 
   def initialize(params)
     @params = params
-    if @params[:term].blank?
-      @suggestions = []
-    else
-      @suggestions = query
-    end
+    @suggestions = if @params[:term].blank?
+                     []
+                   else
+                     query
+                   end
   end
 
   def prepared_search_term
-    @params[:term].gsub(/\*/, "%").downcase + "%"
+    @params[:term].tr("*", "%").downcase + "%"
   end
 
   def core_query
     Name.not_a_duplicate
-      .full_name_like(prepared_search_term)
-      .avoids_id(@params[:avoid_id].try("to_i") || -1)
-      .joins(:name_status)
-      .joins("left outer join instance on instance.name_id = name.id")
-      .order_by_rank_and_full_name
-      .limit(SEARCH_LIMIT)
+        .full_name_like(prepared_search_term)
+        .avoids_id(@params[:avoid_id].try("to_i") || -1)
+        .joins(:name_status)
+        .joins("left outer join instance on instance.name_id = name.id")
+        .order_by_rank_and_full_name
+        .limit(SEARCH_LIMIT)
   end
 
   def rank_query
@@ -78,12 +79,12 @@ class Name::AsTypeahead::ForParent
     @qry = core_query
     @qry = rank_query
     @qry = @qry.select_fields_for_parent_typeahead
-           .group(GROUP_BY)
-           .collect do |n|
-             { value: "#{n.full_name} | #{n.name_rank_name} | "\
-                      "#{n.name_status_name} | "\
-                      "#{instance_phrase(n.instance_count)} ",
-               id: n.id }
-           end
+               .group(GROUP_BY)
+               .collect do |n|
+      { value: "#{n.full_name} | #{n.name_rank_name} | "\
+               "#{n.name_status_name} | "\
+               "#{instance_phrase(n.instance_count)} ",
+        id: n.id }
+    end
   end
 end

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -43,7 +44,7 @@ class RefType < ActiveRecord::Base
 
   def self.unknown
     RefType.where(name: "Unknown")
-      .push(RefType.order("name").limit(1).first).first
+           .push(RefType.order("name").limit(1).first).first
   end
 
   def self.options
@@ -62,28 +63,28 @@ class RefType < ActiveRecord::Base
 
   def self.options_with_preference(pref)
     all.order(:name)
-      .collect do |r|
-        if r.name.match(/#{pref}/)
-          [r.name, r.id, { class: "none" }]
-        else
-          ["#{r.name} - may be incompatible with child", r.id, { class: "red" }]
-        end
+       .collect do |r|
+      if r.name =~ /#{pref}/
+        [r.name, r.id, { class: "none" }]
+      else
+        ["#{r.name} - may be incompatible with child", r.id, { class: "red" }]
       end
+    end
   end
 
   def self.query_form_options
     all.sort { |x, y| x.name <=> y.name }
-      .collect { |n| [n.name, n.name.downcase, class: ""] }
+       .collect { |n| [n.name, n.name.downcase, class: ""] }
   end
 
   def rule
-    if parent_id.blank?
-      rule = "cannot be within another reference"
-    elsif parent_optional == true
-      rule = optional_parent_rule(parent)
-    else
-      rule = required_parent_rule(parent)
-    end
+    rule = if parent_id.blank?
+             "cannot be within another reference"
+           elsif parent_optional == true
+             optional_parent_rule(parent)
+           else
+             required_parent_rule(parent)
+           end
     "#{indefinite_article.capitalize} #{name.downcase} #{rule}."
   end
 

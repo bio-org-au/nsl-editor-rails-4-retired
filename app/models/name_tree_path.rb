@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -25,7 +26,7 @@ class NameTreePath < ActiveRecord::Base
   before_destroy :prevent_operation
 
   def prevent_operation
-    fail "No create, update or destroy allowed for name_tree_path"
+    raise "No create, update or destroy allowed for name_tree_path"
   end
 
   # Retain for comparison.

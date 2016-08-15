@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -61,11 +62,11 @@ class Search::OnAuthor::Predicate
 
   def apply_scope
     @has_scope = @scope_.present?
-    if @has_scope
-      @value_frequency = 1
-    else
-      @value_frequency = @predicate.count("?")
-    end
+    @value_frequency = if @has_scope
+                         1
+                       else
+                         @predicate.count("?")
+                       end
   end
 
   def process_value
@@ -87,7 +88,7 @@ class Search::OnAuthor::Predicate
     if @multiple_values && @value.split(/,/).size > 1
       val.split(",").collect(&:strip)
     else
-      val.gsub(/\*/, "%")
+      val.tr("*", "%")
     end
   end
 
@@ -95,10 +96,11 @@ class Search::OnAuthor::Predicate
     if Search::OnAuthor::FieldRule::RULES.key?(field)
       field
     elsif Search::OnAuthor::FieldRule::RULES.key?(
-      Search::OnAuthor::FieldAbbrev::ABBREVS[field])
+      Search::OnAuthor::FieldAbbrev::ABBREVS[field]
+    )
       Search::OnAuthor::FieldAbbrev::ABBREVS[field]
     else
-      fail "Cannot search authors for: #{field}."
+      raise "Cannot search authors for: #{field}."
     end
   end
 end

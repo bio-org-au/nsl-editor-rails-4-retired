@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -37,6 +38,6 @@ class TAOnCitn4ParRefTypeRestrictDbase4DatabaseRecord < ActiveSupport::TestCase
       end
     end
     assert others.zero?, "Expecting no other ref types."
-    assert databases > 0, "Expecting at least 1 database ref type."
+    assert databases.positive?, "Expecting at least 1 database ref type."
   end
 end

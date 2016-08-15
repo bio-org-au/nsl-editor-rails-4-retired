@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -52,7 +53,7 @@ class Search::OnName::Base
   end
 
   def run_count_query
-    debug('#run_count_query')
+    debug("#run_count_query")
     count_query = Search::OnName::CountQuery.new(@parsed_request)
     @relation = count_query.sql
     @count = relation.count
@@ -111,7 +112,7 @@ class Search::OnName::Base
   end
 
   def build_summary
-    return "No names found" if @names.size == 0
+    return "No names found" if @names.size.zero?
     return "1 name of #{@total}" if @names.size == 1
     "#{@names.size} names of #{@total}"
   end

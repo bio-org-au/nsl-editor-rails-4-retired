@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -40,7 +41,7 @@ class TAOnCitnForDuplicateRefTypeRestrictionJournal < ActiveSupport::TestCase
     assert_equal 0,
                  others,
                  "Only journals and unknown type references expected."
-    assert journals > 0, "Expecting at least 1 journal."
-    assert unknowns > 0, "Expecting at least 1 unknown ref type."
+    assert journals.positive?, "Expecting at least 1 journal."
+    assert unknowns.positive?, "Expecting at least 1 unknown ref type."
   end
 end

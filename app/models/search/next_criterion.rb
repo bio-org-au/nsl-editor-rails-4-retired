@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -49,7 +50,7 @@ class Search::NextCriterion
     found_field = false
     num = 0
     @tokens.each do |x|
-      found_field = true if x.match(/:/)
+      found_field = true if x =~ /:/
       unless found_field
         num += 1
         value = value += " #{x}" unless found_field

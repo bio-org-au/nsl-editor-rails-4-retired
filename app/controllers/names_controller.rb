@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -36,14 +37,14 @@ class NamesController < ApplicationController
     if params[:change_category_to].present?
       @name.change_category_to = "scientific"
     end
-    if params[:tab].match(/\Atab_instances\z/)
-      @instance = Instance.new if params[:tab].match(/\Atab_instances\z/)
+    if params[:tab] =~ /\Atab_instances\z/
+      @instance = Instance.new if params[:tab] =~ /\Atab_instances\z/
       @instance.name = @name
     end
     render "show", layout: false
   end
 
-  alias_method :tab, :show
+  alias tab show
 
   # Used on references - new instance tab
   def typeahead_on_full_name

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -36,6 +37,6 @@ class TAOnCitn4ParRefTypeRestrictionBooksForSection < ActiveSupport::TestCase
       end
     end
     assert others.zero?, "Expecting no other ref types."
-    assert books > 0, "Expecting at least 1 book ref type."
+    assert books.positive?, "Expecting at least 1 book ref type."
   end
 end

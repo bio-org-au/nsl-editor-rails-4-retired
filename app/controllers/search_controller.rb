@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -57,9 +58,9 @@ class SearchController < ApplicationController
   private
 
   def save_search
-    #session[:searches] ||= []
-    #session[:searches].push(@search.to_history)
-    #trim_session_searches
+    # session[:searches] ||= []
+    # session[:searches].push(@search.to_history)
+    # trim_session_searches
   rescue => e
     logger.error("Error saving search: #{e}")
     session[:searches] = []
@@ -89,7 +90,7 @@ class SearchController < ApplicationController
   def handle_old_style_params
     return unless params[:query].present?
     unless params[:query_field] == "name-instances"
-      fail "Cannot handle this query-field: #{params[:query_field]}"
+      raise "Cannot handle this query-field: #{params[:query_field]}"
     end
     params[:query_target] = "name"
     params[:query_string] = params[:query].sub(/\z/, " show-instances:")
@@ -97,9 +98,9 @@ class SearchController < ApplicationController
 
   def handle_old_targets
     return unless params[:query_target].present?
-    return unless params[:query_target].match(/Names plus instances/i)
+    return unless params[:query_target] =~ /Names plus instances/i
     params[:query_target] = "name"
-    return if params[:query_string].match(/show-instances:/)
+    return if params[:query_string] =~ /show-instances:/
     params[:query_string] = params[:query_string].sub(/\z/, " show-instances:")
   end
 
@@ -111,7 +112,7 @@ class SearchController < ApplicationController
   def run_tree_search
     logger.debug("run_tree_search")
     return false unless params[:query_target].present?
-    return false unless params[:query_target].match(/\Atrees*/i)
+    return false unless params[:query_target] =~ /\Atrees*/i
     params[:query] = params[:query_string]
     tree_search
     true

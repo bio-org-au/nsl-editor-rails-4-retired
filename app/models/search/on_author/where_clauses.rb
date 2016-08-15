@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -43,7 +44,7 @@ class Search::OnAuthor::WhereClauses
       field, value, args = Search::NextCriterion.new(args).get
       add_clause(field, value)
       x += 1
-      fail "endless loop #{x}" if x > 50
+      raise "endless loop #{x}" if x > 50
     end
   end
 
@@ -80,7 +81,7 @@ class Search::OnAuthor::WhereClauses
     when 2 then supply_token_twice(rule, rule.processed_value)
     when 3 then supply_token_thrice(rule, rule.processed_value)
     else
-      fail "Where clause value frequency: #{frequency}, is too high."
+      raise "Where clause value frequency: #{frequency}, is too high."
     end
   end
 
@@ -104,7 +105,7 @@ class Search::OnAuthor::WhereClauses
     when 2 then supply_token_twice(rule, token)
     when 3 then supply_token_thrice(rule, token)
     else
-      fail "Where clause value frequency: #{rule.value_frequency}, is too high."
+      raise "Where clause value frequency: #{rule.value_frequency}, is too high."
     end
   end
 
@@ -114,16 +115,16 @@ class Search::OnAuthor::WhereClauses
   def tokenize(rule)
     debug("tokenize: rule.predicate: #{rule.predicate}")
     debug("tokenize: rule.value: #{rule.value}")
-    rule.value.gsub(/\*/, "%").gsub(/%+/, " ").split.each do |term|
+    rule.value.tr("*", "%").gsub(/%+/, " ").split.each do |term|
       @sql = apply_predicate_for_token(rule, "%#{term}%")
     end
   end
 
   def apply_order(rule)
-    if rule.order
-      @sql = @sql.order(rule.order)
-    else
-      @sql = @sql.order("name")
-    end
+    @sql = if rule.order
+             @sql.order(rule.order)
+           else
+             @sql.order("name")
+           end
   end
 end

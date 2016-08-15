@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -23,7 +24,7 @@ class Author::AsEdited < Author::AsTypeahead
     if author.save_with_username(username)
       author
     else
-      fail "#{author.errors.full_messages.first}"
+      raise author.errors.full_messages.first.to_s
     end
   rescue => e
     logger.error("#{AED}rescuing: #{e}")
@@ -70,7 +71,8 @@ class Author::AsEdited < Author::AsTypeahead
       Author::AsEdited.duplicate_of_from_typeahead(
         params[:duplicate_of_id],
         params[:duplicate_of_typeahead],
-        id)
+        id
+      )
   rescue => e
     logger.error("#{AED}resolve_typeahead_params:found error: #{e}")
     raise
@@ -100,12 +102,12 @@ class Author::AsEdited < Author::AsTypeahead
         when 1
           value = possibles.first.id
         else
-          fail "please choose duplicate of from suggestions"
+          raise "please choose duplicate of from suggestions"
         end
       when 1
         value = possibles.first.id
       else
-        fail "please choose duplicate of from suggestions (more than 1 match)"
+        raise "please choose duplicate of from suggestions (more than 1 match)"
       end
     when :id_and_text
       logger.debug("#{AED}duplicate_of_from_typeahead: id and text")
@@ -113,12 +115,12 @@ class Author::AsEdited < Author::AsTypeahead
       case possibles.size
       when 0
         possibles =
-        Author.lower_name_like(name_text + "%").not_this_id(current_id)
+          Author.lower_name_like(name_text + "%").not_this_id(current_id)
         case possibles.size
         when 1
           value = possibles.first.id
         else
-          fail "please choose duplicate of from suggestions"
+          raise "please choose duplicate of from suggestions"
         end
       when 1
         value = possibles.first.id
@@ -130,12 +132,12 @@ class Author::AsEdited < Author::AsTypeahead
         if possibles_with_id.size == 1
           value = possibles_with_id.first.id
         else
-          fail "please choose duplicate of from suggestions (more than 1 match)"
+          raise "please choose duplicate of from suggestions (more than 1 match)"
         end
       end
     else
       logger.debug("#{AED}duplicate_of_from_typeahead: strange data")
-      fail "unrecognized information"
+      raise "unrecognized information"
     end
     logger.debug("#{AED}duplicate_of_from_typeahead: returning value: #{value}")
     value
@@ -151,7 +153,7 @@ class Author::AsEdited < Author::AsTypeahead
     elsif id_string.present? && text.present?
       return :id_and_text
     else
-      fail "please check your data"
+      raise "please check your data"
     end
   end
 end

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -42,7 +43,7 @@ class Audit::DefinedQuery::WhereClause::Predicate
       canonical_field = canon_field(field)
       canonical_value = value.blank? ? "" : canon_value(value)
       if ALLOWS_MULTIPLE_VALUES.key?(canonical_field) &&
-          canonical_value.split(/,/).size > 1
+         canonical_value.split(/,/).size > 1
       elsif RECORD_TYPE_ASSERTIONS.key?("#{@record_type}-#{canonical_field}")
         @sql = @sql.where(RECORD_TYPE_ASSERTIONS["#{@record_type}-#{canonical_field}"])
       elsif WHERE_ASSERTION_HASH.key?(canonical_field)
@@ -53,14 +54,14 @@ class Audit::DefinedQuery::WhereClause::Predicate
       elsif WHERE_VALUE_HASH_2_VALUES.key?(canonical_field)
         @sql = @sql.where(WHERE_VALUE_HASH_2_VALUES[canonical_field], canonical_value.downcase, canonical_value.downcase)
       else
-        fail "No way to handle field: '#{canonical_field}' in an author search." unless WHERE_VALUE_HASH.key?(canonical_field)
+        raise "No way to handle field: '#{canonical_field}' in an author search." unless WHERE_VALUE_HASH.key?(canonical_field)
         @sql = @sql.where(WHERE_VALUE_HASH[canonical_field], canonical_value)
       end
     end
   end
 
   def canon_value(value)
-    value.gsub(/\*/, "%")
+    value.tr("*", "%")
   end
 
   def canon_field(field)
@@ -79,15 +80,15 @@ class Audit::DefinedQuery::WhereClause::Predicate
     elsif CANONICAL_FIELD_NAMES.key?(field)
       CANONICAL_FIELD_NAMES[field]
     else
-      fail "Cannot audit authors for: #{field}" unless CANONICAL_FIELD_NAMES.key?(field)
+      raise "Cannot audit authors for: #{field}" unless CANONICAL_FIELD_NAMES.key?(field)
     end
   end
 
   WHERE_INTEGER_VALUE_HASH = {
     "limit:" => "limit = ?"
-  }
+  }.freeze
 
-  WHERE_ASSERTION_HASH = {}
+  WHERE_ASSERTION_HASH = {}.freeze
 
   RECORD_TYPE_ASSERTIONS = {
     "author-instances-only:" => "1 = 2",
@@ -106,7 +107,7 @@ class Audit::DefinedQuery::WhereClause::Predicate
     "name-references-only:" => "1 = 2",
     "instance-references-only:" => "1 = 2",
     "reference-references-only:" => "1 = 1",
-  }
+  }.freeze
 
   WHERE_VALUE_HASH = {
     "created-by:" => "lower(created_by) like ?",
@@ -121,20 +122,20 @@ class Audit::DefinedQuery::WhereClause::Predicate
     "updated-before:" => "updated_at::date < ?",
     "date-created:" => "date_trunc('day',created_at) = ?",
     "date-last-updated:" => "date_trunc('day',updated_at) = ?",
-  }
+  }.freeze
 
   WHERE_VALUE_HASH_2_VALUES = {
     "created-or-updated-by:" => "(lower(created_by) like ? or lower(updated_by) like ?)",
     "created-or-updated-at:" => "(created_at::date = ? or updated_at = ?)",
     "not-created-or-updated-by:" => "(lower(created_by) not like ? and lower(updated_by) not like ?)",
     "date-created-or-last-updated:" => "date_trunc('day',updated_at) = ? or date_trunc('day',updated_at) = ?",
-  }
+  }.freeze
 
   CANONICAL_FIELD_NAMES = {
     "by:" => "created-or-updated-by:",
     "not-by:" => "not-created-or-updated-by:",
-  }
+  }.freeze
 
   ALLOWS_MULTIPLE_VALUES = {
-  }
+  }.freeze
 end

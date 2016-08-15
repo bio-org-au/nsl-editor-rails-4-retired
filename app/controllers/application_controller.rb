@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -47,20 +48,20 @@ class ApplicationController < ActionController::Base
   protected
 
   def check_authorization
-    if params[:tab].present?
-      pseudo_action = params[:tab]
-    else
-      pseudo_action = params[:action]
-    end
+    pseudo_action = if params[:tab].present?
+                      params[:tab]
+                    else
+                      params[:action]
+                    end
     logger.info("check_authorization: pseudo_action: #{pseudo_action}")
     authorize!(params[:controller], pseudo_action)
   end
 
   def show_request_info
-    logger.debug("#{'=' * 40}")
+    logger.debug(("=" * 40).to_s)
     logger.debug("request.format: #{request.format}")
     logger.debug("request.content_type: #{request.content_type}")
-    logger.debug("#{'=' * 40}")
+    logger.debug(("=" * 40).to_s)
   end
 
   def authenticate
@@ -136,11 +137,11 @@ class ApplicationController < ActionController::Base
   end
 
   def pick_a_tab(default_tab = "tab_show_1")
-    if params[:tab].present? && params[:tab] != "undefined"
-      @tab = params[:tab]
-    else
-      @tab = default_tab
-    end
+    @tab = if params[:tab].present? && params[:tab] != "undefined"
+             params[:tab]
+           else
+             default_tab
+           end
   end
 
   def pick_a_tab_index

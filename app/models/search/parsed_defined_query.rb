@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -40,7 +41,7 @@ class Search::ParsedDefinedQuery
     "instance is cited by" => "instance-is-cited-by",
     "audit" => "audit",
     "review" => "audit",
-  }
+  }.freeze
 
   def initialize(query_target)
     @query_target = query_target

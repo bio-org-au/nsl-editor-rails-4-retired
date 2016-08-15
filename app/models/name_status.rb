@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -46,11 +47,11 @@ class NameStatus < ActiveRecord::Base
   end
 
   def name_without_brackets
-    name.gsub(/\[/, "").gsub(/]/, "")
+    name.delete("[").gsub(/]/, "")
   end
 
   def name_for_instance_display
-    (legitimate? || na?) ? "" : name
+    legitimate? || na? ? "" : name
   end
 
   def self.not_applicable

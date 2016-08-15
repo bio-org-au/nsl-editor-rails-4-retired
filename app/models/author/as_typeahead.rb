@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -25,9 +26,9 @@ class Author::AsTypeahead < Author
       results = []
     else
       results = Author.lower_abbrev_like(term + "%")\
-                .where("duplicate_of_id is null")\
-                .order("abbrev").limit(SEARCH_LIMIT)\
-                .collect { |n| { value: "#{n.abbrev}", id: "#{n.id}" } }
+                      .where("duplicate_of_id is null")\
+                      .order("abbrev").limit(SEARCH_LIMIT)\
+                      .collect { |n| { value: n.abbrev.to_s, id: n.id.to_s } }
     end
     results
   end
@@ -38,7 +39,7 @@ class Author::AsTypeahead < Author
   def self.on_name(terms)
     where = ""
     binds = []
-    terms = terms.gsub(/\*/, "%")
+    terms = terms.tr("*", "%")
     terms_array = terms.split
     terms_uniq = terms_array.uniq
     terms_uniq.collect do |uniq_term|
@@ -50,18 +51,18 @@ class Author::AsTypeahead < Author
     end
     where += " 1=1 "
     Author.not_duplicate
-      .where(binds.unshift(where))
-      .joins("left outer join reference on reference.author_id = author.id")
-      .select("author.name as name, author.id as id, "\
+          .where(binds.unshift(where))
+          .joins("left outer join reference on reference.author_id = author.id")
+          .select("author.name as name, author.id as id, "\
               "count(reference.id) as ref_count")
-      .group("lower(author.name),author.id")
-      .order("author.name")
-      .limit(SEARCH_LIMIT)
-      .collect { |n| { value: formatted_search_result(n), id: "#{n.id}" } }
+          .group("lower(author.name),author.id")
+          .order("author.name")
+          .limit(SEARCH_LIMIT)
+          .collect { |n| { value: formatted_search_result(n), id: n.id.to_s } }
   end
 
   def self.formatted_search_result(auth)
-    if auth.ref_count == 0
+    if auth.ref_count.zero?
       auth.name
     else
       "#{auth.name} | #{auth.ref_count} #{'ref'.pluralize(auth.ref_count)}"
@@ -75,15 +76,15 @@ class Author::AsTypeahead < Author
       []
     else
       Author.lower_name_like(term + "%")
-        .not_duplicate
-        .where([" author.id <> ?", excluded_id])
-        .joins("left outer join reference on "\
+            .not_duplicate
+            .where([" author.id <> ?", excluded_id])
+            .joins("left outer join reference on "\
                "reference.author_id = author.id")
-        .select("author.name as name, author.id as id, "\
+            .select("author.name as name, author.id as id, "\
                 "count(reference.id) as ref_count")
-        .group("lower(author.name),author.id")
-        .order("author.name").limit(SEARCH_LIMIT)
-        .collect { |n| { value: formatted_search_result(n), id: "#{n.id}" } }
+            .group("lower(author.name),author.id")
+            .order("author.name").limit(SEARCH_LIMIT)
+            .collect { |n| { value: formatted_search_result(n), id: n.id.to_s } }
     end
   end
 end

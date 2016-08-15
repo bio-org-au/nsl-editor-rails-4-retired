@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -22,7 +23,7 @@ def cultivar_parent_suggestions_should_include(suggestions,
   re = Regexp.quote(expected_rank_name)
   assert(suggestions.collect do |h|
     h[:value] =~ /\s#{re}/ ? 1 : 0
-  end.sum > 0,
+  end.sum.positive?,
          "suggestions for #{given_rank_name} should
          include #{expected_rank_name} [caller: #{caller_test}]")
 end
@@ -34,7 +35,7 @@ def cultivar_parent_suggestions_should_not_include(suggestions,
   re = Regexp.quote(unexpected_rank_name)
   assert_not(suggestions.collect do |h|
     h[:value] =~ /\s#{re}/ ? 1 : 0
-  end.sum > 0,
+  end.sum.positive?,
              "suggestions for #{given_rank_name} should not
              include #{unexpected_rank_name} [caller: #{caller_test}]")
 end

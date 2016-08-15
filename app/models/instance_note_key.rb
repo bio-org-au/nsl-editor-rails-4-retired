@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -26,23 +27,23 @@ class InstanceNoteKey < ActiveRecord::Base
 
   def self.options
     all.where(deprecated: false)
-      .order(:sort_order)
-      .collect { |n| [n.name, n.id] }
+       .order(:sort_order)
+       .collect { |n| [n.name, n.id] }
   end
 
   def self.apc_options
     all.where(deprecated: false)
-      .apc
-      .order(:sort_order)
-      .collect { |n| [n.name, n.id] }
+       .apc
+       .order(:sort_order)
+       .collect { |n| [n.name, n.id] }
   end
 
   def self.apc_options_for_instance(instance)
     if instance.apc_dist_note?
       all.where(deprecated: false)
-        .apc_comment
-        .order(:sort_order)
-        .collect { |n| [n.name, n.id] }
+         .apc_comment
+         .order(:sort_order)
+         .collect { |n| [n.name, n.id] }
     else
       apc_options
     end
@@ -50,14 +51,14 @@ class InstanceNoteKey < ActiveRecord::Base
 
   def self.non_apc_options
     all.where(deprecated: false)
-      .non_apc.order(:sort_order)
-      .collect { |n| [n.name, n.id] }
+       .non_apc.order(:sort_order)
+       .collect { |n| [n.name, n.id] }
   end
 
   def self.query_form_options
     all.where(deprecated: false)
-      .sort { |x, y| x.name <=> y.name }
-      .collect { |n| [n.name, n.name.downcase, class: ""] }
+       .sort { |x, y| x.name <=> y.name }
+       .collect { |n| [n.name, n.name.downcase, class: ""] }
   end
 
   def apc_dist?

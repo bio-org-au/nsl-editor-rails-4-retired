@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -56,7 +57,7 @@ class Search::ParsedRequest
     "references" => "reference",
     "ref" => "reference",
     "tree" => "tree",
-  }
+  }.freeze
 
   def initialize(params)
     debug("initialize: params: #{params}")
@@ -108,10 +109,10 @@ class Search::ParsedRequest
 
   def parse_count_or_list(tokens)
     if tokens.blank? then default_list_and_count
-    elsif tokens.first.match(/\Acount\z/i)
+    elsif tokens.first =~ /\Acount\z/i
       tokens = tokens.drop(1)
       counting
-    elsif tokens.first.match(/\Alist\z/i)
+    elsif tokens.first =~ /\Alist\z/i
       tokens = tokens.drop(1)
       listing
     else default_list_and_count
@@ -139,16 +140,16 @@ class Search::ParsedRequest
   def parse_limit(tokens)
     @limited = @list
     joined_tokens = tokens.join(" ")
-    if @list
-      joined_tokens = apply_list_limit(joined_tokens)
-    else # count
-      joined_tokens = remove_limit_for_count(joined_tokens)
-    end
+    joined_tokens = if @list
+                      apply_list_limit(joined_tokens)
+                    else # count
+                      remove_limit_for_count(joined_tokens)
+                    end
     filter_bad_limit(joined_tokens).split(" ")
   end
 
   def apply_list_limit(joined_tokens)
-    if joined_tokens.match(/limit: \d{1,}/i)
+    if joined_tokens =~ /limit: \d{1,}/i
       @limit = joined_tokens.match(/limit: (\d{1,})/i)[1].to_i
       joined_tokens = joined_tokens.gsub(/limit: *\d{1,}/i, "")
     else
@@ -165,7 +166,7 @@ class Search::ParsedRequest
   def filter_bad_limit(joined_tokens)
     if joined_tokens.match(/limit: *[^\s\\]{1,}/i).present?
       bad_limit = joined_tokens.match(/limit: *([^\s\\]{1,})/i)[1]
-      fail "Invalid limit: #{bad_limit}"
+      raise "Invalid limit: #{bad_limit}"
     end
     joined_tokens
   end
@@ -175,14 +176,12 @@ class Search::ParsedRequest
   def parse_offset(tokens)
     @offsetted = @list
     joined_tokens = tokens.join(" ")
-    if @list
-      joined_tokens = apply_list_offset(joined_tokens)
-    end
+    joined_tokens = apply_list_offset(joined_tokens) if @list
     filter_bad_offset(joined_tokens).split(" ")
   end
 
   def apply_list_offset(joined_tokens)
-    if joined_tokens.match(/offset: \d{1,}/i)
+    if joined_tokens =~ /offset: \d{1,}/i
       @offset = joined_tokens.match(/offset: (\d{1,})/i)[1].to_i
       joined_tokens = joined_tokens.gsub(/offset: *\d{1,}/i, "")
     else
@@ -195,7 +194,7 @@ class Search::ParsedRequest
   def filter_bad_offset(joined_tokens)
     if joined_tokens.match(/offset: *[^\s\\]{1,}/i).present?
       bad_offset = joined_tokens.match(/offset: *([^\s\\]{1,})/i)[1]
-      fail "Invalid offset: #{bad_offset}"
+      raise "Invalid offset: #{bad_offset}"
     end
     joined_tokens
   end
@@ -207,7 +206,7 @@ class Search::ParsedRequest
         @target_button_text = @target_table.capitalize.pluralize
         tokens = tokens.drop(1) if SIMPLE_QUERY_TARGETS.key?(tokens.first)
       else
-        fail "Cannot parse target: #{@query_target}"
+        raise "Cannot parse target: #{@query_target}"
       end
     end
     tokens
@@ -222,7 +221,7 @@ class Search::ParsedRequest
   end
 
   def parse_show_instances(tokens)
-    if tokens.include?('show-instances:')
+    if tokens.include?("show-instances:")
       @show_instances = true
       tokens.delete_if { |x| x.match(/show-instances:/) }
     else

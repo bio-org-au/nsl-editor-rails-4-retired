@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -48,7 +49,7 @@ class Name::AsServices < Name
     url = Name::AsServices.delete_url(id, reason)
     s_response = RestClient.delete(url, accept: :json)
     json = JSON.load(s_response)
-    fail "Delete Service said: #{json['errors'].try('join')} [#{s_response.code}]" unless s_response.code == 200 && json["ok"] == true
+    raise "Delete Service said: #{json['errors'].try('join')} [#{s_response.code}]" unless s_response.code == 200 && json["ok"] == true
     true
   rescue => e
     logger.error("Name::AsServices.delete exception : #{e}")

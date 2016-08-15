@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -50,7 +51,7 @@ class Reference < ActiveRecord::Base
   scope :lower_citation_equals,
         ->(string) { where("lower(citation) = ? ", string.downcase) }
   scope :lower_citation_like,
-        ->(string) { where("lower(citation) like ? ", string.gsub(/\*/, "%").downcase) }
+        ->(string) { where("lower(citation) like ? ", string.tr("*", "%").downcase) }
   scope :not_duplicate,
         -> { where("duplicate_of_id is null") }
   scope :is_duplicate,
@@ -150,7 +151,7 @@ class Reference < ActiveRecord::Base
                            namespace_id
                            source_system
                            source_id
-                           lock_version)
+                           lock_version).freeze
   VIEW_ONLY_FIELDS = %w(author
                         ref_author_role_name
                         comma_after_edition
@@ -162,7 +163,7 @@ class Reference < ActiveRecord::Base
                         verbatim_citation
                         year_with_parens
                         known_author
-                        verbatim_title)
+                        verbatim_title).freeze
   SEARCH_LIMIT = 50
   DEFAULT_DESCRIPTOR = "citation" # for citation
   LEGAL_TO_ORDER_BY = { "p" => "parent_id",
@@ -170,7 +171,7 @@ class Reference < ActiveRecord::Base
                         "y" => "year",
                         "pd" => "publication_date",
                         # 'rt' => 'ref_type_name',  # order by ref_type.name?
-                        "v" => "volume" }
+                        "v" => "volume" }.freeze
   DEFAULT_ORDER_BY = "citation asc "
 
   before_validation :set_defaults
@@ -178,17 +179,17 @@ class Reference < ActiveRecord::Base
   before_save :validate
 
   def has_children?
-    children.size > 0
+    children.size.positive?
   end
 
   def has_instances?
-    instances.size > 0
+    instances.size.positive?
   end
 
   def validate
     logger.debug("validate")
     logger.debug("errors: #{errors[:base].size}")
-    errors[:base].size == 0
+    errors[:base].size.zero?
   end
 
   def ref_type_permits_parent?
@@ -298,7 +299,7 @@ class Reference < ActiveRecord::Base
     logger.debug("before: citation: #{citation_html}")
     self.citation = citation_json["result"]["citation"]
     logger.debug("after:  citation: #{citation_html}")
-    self.save!
+    save!
   rescue => e
     logger.error("Exception rescued in ReferencesController#set_citation!")
     logger.error(e.to_s)
@@ -312,7 +313,7 @@ class Reference < ActiveRecord::Base
   # String referenceTitle = (reference.title && reference.title != 'Not set')
   # ? reference.title.fullStop() : ''
   def title_citation
-    if title.strip.match(/\Anot set\z/i)
+    if title.strip =~ /\Anot set\z/i
       ""
     else
       if parent
@@ -346,10 +347,10 @@ class Reference < ActiveRecord::Base
   end
 
   def ref_type_options
-    if children.size == 0
+    if children.size.zero?
       RefType.options
     else
-      RefType.options_for_parent_of(children.collect { |child| child.ref_type })
+      RefType.options_for_parent_of(children.collect(&:ref_type))
     end
   end
 end

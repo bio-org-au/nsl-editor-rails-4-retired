@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 source "https://rubygems.org"
 
 gem "rails", "~> 4.2.5.1"
@@ -50,22 +51,22 @@ end
 group :development, :test do
   gem "pry-rails"
   gem "pry-rescue"
-  #gem "schema_plus"
+  # gem "schema_plus"
 end
 
 platform :ruby do
-group :test do
-  gem "capybara"
-  gem "capybara-rails"
-  gem "minitest"
-  gem "minitest-rails"
-  gem "minitest-capybara"
-  gem "minitest-rails-capybara"
-  gem "capybara_minitest_spec"
-  gem "selenium-webdriver", "~> 2.45", require: false
-  gem "launchy"
-  gem "mocha", "~> 1.1.0"
-end
+  group :test do
+    gem "capybara"
+    gem "capybara-rails"
+    gem "minitest"
+    gem "minitest-rails"
+    gem "minitest-capybara"
+    gem "minitest-rails-capybara"
+    gem "capybara_minitest_spec"
+    gem "selenium-webdriver", "~> 2.45", require: false
+    gem "launchy"
+    gem "mocha", "~> 1.1.0"
+  end
 end
 
 platform :ruby do

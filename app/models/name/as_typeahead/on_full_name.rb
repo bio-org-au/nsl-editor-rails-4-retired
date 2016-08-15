@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -22,27 +23,27 @@ class Name::AsTypeahead::OnFullName
 
   def initialize(params)
     @params = params
-    if @params[:term].blank?
-      @suggestions = []
-    else
-      @suggestions = query
-    end
+    @suggestions = if @params[:term].blank?
+                     []
+                   else
+                     query
+                   end
   end
 
   def prepared_search_term
-    @params[:term].gsub(/\*/, "%").downcase + "%"
+    @params[:term].tr("*", "%").downcase + "%"
   end
 
   def query
     Name.not_a_duplicate
-      .where(["lower(full_name) like ?", prepared_search_term])
-      .includes(:name_status)
-      .joins(:name_rank)
-      .where("exists (select null from instance where instance.name_id = name.id)")
-      .order("name_rank.sort_order, lower(full_name)")
-      .limit(SEARCH_LIMIT)
-      .collect do |n|
-        { value: "#{n.full_name} - #{n.name_status.name}", id: n.id }
-      end
+        .where(["lower(full_name) like ?", prepared_search_term])
+        .includes(:name_status)
+        .joins(:name_rank)
+        .where("exists (select null from instance where instance.name_id = name.id)")
+        .order("name_rank.sort_order, lower(full_name)")
+        .limit(SEARCH_LIMIT)
+        .collect do |n|
+      { value: "#{n.full_name} - #{n.name_status.name}", id: n.id }
+    end
   end
 end

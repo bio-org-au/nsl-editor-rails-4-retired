@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -24,7 +25,7 @@ def suggestions_should_include(suggestions, given_rank_name, expected_rank_name)
     else
       0
     end
-  end.sum > 0,
+  end.sum.positive?,
          "#{given_rank_name} should suggest #{expected_rank_name}")
 end
 
@@ -35,7 +36,7 @@ def suggestions_should_not_include(suggestions,
     # rank is the second field in the pipe-separated string
     rank = h[:value].split("|")[1].strip
     rank =~ /\A#{Regexp.quote(unexpected_rank_name)}\z/ ? 1 : 0
-  end.sum > 0,
+  end.sum.positive?,
              "#{given_rank_name} shld not suggest #{unexpected_rank_name}")
 end
 

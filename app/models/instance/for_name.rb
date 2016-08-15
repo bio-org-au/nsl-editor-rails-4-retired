@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -72,9 +73,9 @@ class Instance::ForName
 
   def records_cited_by_standalone(instance)
     Instance.joins(:instance_type, :name, :reference)
-      .where(cited_by_id: instance.id)
-      .in_nested_instance_type_order
-      .order("reference.year,lower(name.full_name)")
+            .where(cited_by_id: instance.id)
+            .in_nested_instance_type_order
+            .order("reference.year,lower(name.full_name)")
   end
 
   def show_relationship_instance(name, instance)
@@ -112,8 +113,8 @@ class Instance::ForName
 
   def records_cited_by_relationship(instance)
     Instance.joins(:instance_type)
-      .where(cited_by_id: instance.id)
-      .in_nested_instance_type_order
+            .where(cited_by_id: instance.id)
+            .in_nested_instance_type_order
   end
 
   def debug(s)

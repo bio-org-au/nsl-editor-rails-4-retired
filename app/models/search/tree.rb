@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -24,7 +25,7 @@ class Search::Tree
 
   def initialize(params)
     Rails.logger.debug("Search::Tree start")
-    Rails.logger.debug("#{'=' * 40}")
+    Rails.logger.debug(("=" * 40).to_s)
     @parsed_request = Search::TreeParsedRequest.new(params)
     @common_and_cultivar_included = true
     @count = false

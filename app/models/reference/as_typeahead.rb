@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -25,7 +26,7 @@ class Reference::AsTypeahead < Reference
   def self.on_citation(terms, excluded_id = -1)
     where = ""
     binds = []
-    terms = terms.gsub(/\*/, "%")
+    terms = terms.tr("*", "%")
     terms_array = terms.split
     terms_uniq = terms_array.uniq
     terms_uniq.collect do |uniq_term|
@@ -37,13 +38,13 @@ class Reference::AsTypeahead < Reference
     end
     where += " 1=1 "
     results = Reference.includes(:ref_type)
-              .where.not(ref_type: { name: "Journal" })
-              .not_duplicate
-              .where.not(reference: { id: excluded_id })
-              .where(binds.unshift(where))
-              .order("citation")
-              .limit(SEARCH_LIMIT)
-              .collect { |ref| { value: "#{ref.citation} #{'[' + ref.pages + ']' unless ref.pages_useless?} #{' [' + ref.ref_type.name.downcase + ']'}", id: "#{ref.id}" } }
+                       .where.not(ref_type: { name: "Journal" })
+                       .not_duplicate
+                       .where.not(reference: { id: excluded_id })
+                       .where(binds.unshift(where))
+                       .order("citation")
+                       .limit(SEARCH_LIMIT)
+                       .collect { |ref| { value: "#{ref.citation} #{'[' + ref.pages + ']' unless ref.pages_useless?} #{' [' + ref.ref_type.name.downcase + ']'}", id: ref.id.to_s } }
   end
 
   # Based on self.on_citation.
@@ -56,7 +57,7 @@ class Reference::AsTypeahead < Reference
   def self.on_citation_for_duplicate(terms, current_id)
     where = ""
     binds = []
-    terms = terms.gsub(/\*/, "%")
+    terms = terms.tr("*", "%")
     terms_array = terms.split
     terms_uniq = terms_array.uniq
     terms_uniq.collect do |uniq_term|
@@ -68,15 +69,15 @@ class Reference::AsTypeahead < Reference
     end
     where += " 1=1 "
     results = Reference.includes(:ref_type)
-              .where.not(reference: { id: current_id })
-              .not_duplicate
-              .where(binds.unshift(where))
-              .order("citation")
-              .limit(SEARCH_LIMIT)
+                       .where.not(reference: { id: current_id })
+                       .not_duplicate
+                       .where(binds.unshift(where))
+                       .order("citation")
+                       .limit(SEARCH_LIMIT)
     unless Reference.find(current_id).ref_type.unknown?
       results = results.where(ref_type_id: [Reference.find(current_id).ref_type_id, RefType.unknown.id])
     end
-    results.collect { |ref| { value: "#{ref.citation} | #{'[' + ref.pages + ']' unless ref.pages_useless?} #{' [' + ref.ref_type.name.downcase + ']'}", id: "#{ref.id}" } }
+    results.collect { |ref| { value: "#{ref.citation} | #{'[' + ref.pages + ']' unless ref.pages_useless?} #{' [' + ref.ref_type.name.downcase + ']'}", id: ref.id.to_s } }
   end
 
   # Based on self.on_citation_for_duplicate.
@@ -100,7 +101,7 @@ class Reference::AsTypeahead < Reference
     end
     where = ""
     binds = []
-    terms = terms.gsub(/\*/, "%")
+    terms = terms.tr("*", "%")
     terms_array = terms.split
     terms_uniq = terms_array.uniq
     terms_uniq.collect do |uniq_term|
@@ -112,12 +113,12 @@ class Reference::AsTypeahead < Reference
     end
     where += " 1=1 "
     results = Reference.joins(:ref_type).includes(:ref_type)
-              .where.not(reference: { id: current_id.blank? ? 0 : current_id })
-              .not_duplicate
-              .where(binds.unshift(where))
-              .where(ref_type_id: RefType.find(best_ref_type_id).parent_id)
-              .order("citation")
-              .limit(SEARCH_LIMIT)
-    results.collect { |ref| { value: "#{ref.citation} | #{'[' + ref.pages + ']' unless ref.pages_useless?} #{' [' + ref.ref_type.name.downcase + ']'}", id: "#{ref.id}" } }
+                       .where.not(reference: { id: current_id.blank? ? 0 : current_id })
+                       .not_duplicate
+                       .where(binds.unshift(where))
+                       .where(ref_type_id: RefType.find(best_ref_type_id).parent_id)
+                       .order("citation")
+                       .limit(SEARCH_LIMIT)
+    results.collect { |ref| { value: "#{ref.citation} | #{'[' + ref.pages + ']' unless ref.pages_useless?} #{' [' + ref.ref_type.name.downcase + ']'}", id: ref.id.to_s } }
   end
 end

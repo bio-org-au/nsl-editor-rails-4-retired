@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -42,11 +43,11 @@ class Reference::DefinedQuery::ReferencesSharedNames
     debug("parsed_request.count: #{parsed_request.count}")
     debug("parsed_request.limit: #{parsed_request.limit}")
     args = parsed_request.where_arguments.split(",")
-    fail "Exactly 2 reference IDs are expected." unless args.size == 2
+    raise "Exactly 2 reference IDs are expected." unless args.size == 2
     ref_id_1 = args.first.to_i
     ref_id_2 = args.last.to_i
-    fail "No Reference exists for ID:#{args.first}" unless Reference.exists?(ref_id_1)
-    fail "No Reference exists for ID:#{args.last}" unless Reference.exists?(ref_id_2)
+    raise "No Reference exists for ID:#{args.first}" unless Reference.exists?(ref_id_1)
+    raise "No Reference exists for ID:#{args.last}" unless Reference.exists?(ref_id_2)
     @show_csv = false
     if parsed_request.count
       debug("counting")

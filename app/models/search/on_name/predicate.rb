@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -72,11 +73,11 @@ class Search::OnName::Predicate
 
   def apply_scope
     @has_scope = @scope_.present?
-    if @has_scope
-      @value_frequency = 1
-    else
-      @value_frequency = @predicate.count("?")
-    end
+    @value_frequency = if @has_scope
+                         1
+                       else
+                         @predicate.count("?")
+                       end
   end
 
   def process_value
@@ -84,7 +85,7 @@ class Search::OnName::Predicate
     @processed_value = "%#{@processed_value}" if @leading_wildcard
     @processed_value = "#{@processed_value}%" if @trailing_wildcard
     return unless @wildcard_embedded_spaces
-    @processed_value = "#{@processed_value.gsub(/  */, '%')}"
+    @processed_value = @processed_value.gsub(/  */, "%").to_s
   end
 
   def build_predicate(rule)
@@ -100,7 +101,7 @@ class Search::OnName::Predicate
     if @multiple_values && @value.split(/,/).size > 1
       val.split(",").collect(&:strip)
     else
-      val.gsub(/\*/, "%")
+      val.tr("*", "%")
     end
   end
 
@@ -108,10 +109,11 @@ class Search::OnName::Predicate
     if Search::OnName::FieldRule::RULES.key?(field)
       field
     elsif Search::OnName::FieldRule::RULES.key?(
-      Search::OnName::FieldAbbrev::ABBREVS[field])
+      Search::OnName::FieldAbbrev::ABBREVS[field]
+    )
       Search::OnName::FieldAbbrev::ABBREVS[field]
     else
-      fail "Cannot search name for: #{field}."
+      raise "Cannot search name for: #{field}."
     end
   end
 end

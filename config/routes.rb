@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -26,13 +27,13 @@ Rails.application.routes.draw do
 
   ###############  TRee controller paths - need to be moved somewhere more appropriate in this file
 
-  match "trees/ng/:template", as: "tree_ng", to: 'trees#ng', via: :get
+  match "trees/ng/:template", as: "tree_ng", to: "trees#ng", via: :get
 
   ###############  TRee controller paths - need to be moved somewhere more appropriate in this file
 
   match "sign_in", as: "start_sign_in", to: "sessions#new", via: :get
   match "retry_sign_in", as: "retry_start_sign_in", to: "sessions#retry_new", via: :get
-  match "sign_in", as: "sign_in", to: 'sessions#create', via: :post
+  match "sign_in", as: "sign_in", to: "sessions#create", via: :post
   match "sign_out", as: "sign_out", to: "sessions#destroy", via: :delete
   match "sign_out", as: "sign_out_get_for_firefox_bug", to: "sessions#destroy", via: :get
   match "throw_invalid_authenticity_token", to: "sessions#throw_invalid_authenticity_token", via: :get

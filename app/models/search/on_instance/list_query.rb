@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -26,7 +27,7 @@ class Search::OnInstance::ListQuery
 
   def prepare_query
     Rails.logger.debug("Search::OnInstance::ListQuery#prepare_query")
-    #prepared_query = Instance.joins(:name)
+    # prepared_query = Instance.joins(:name)
     prepared_query = Instance.where("1=1")
     where_clauses = Search::OnInstance::WhereClauses.new(@parsed_request,
                                                          prepared_query)

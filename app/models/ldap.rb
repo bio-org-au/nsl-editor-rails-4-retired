@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -25,7 +26,7 @@ class Ldap < ActiveType::Object
 
   # Groups user is assigned to.
   def users_groups
-    Rails.logger.info('Ldap#users_groups')
+    Rails.logger.info("Ldap#users_groups")
     Ldap.new.admin_search(Rails.configuration.ldap_groups,
                           "uniqueMember",
                           "uid=#{username}", "cn")
@@ -37,7 +38,7 @@ class Ldap < ActiveType::Object
 
   # Users full name.
   def user_full_name
-    Rails.logger.info('Ldap#user_full_name')
+    Rails.logger.info("Ldap#user_full_name")
     Ldap.new.admin_search(Rails.configuration.ldap_users,
                           "uid",
                           username,
@@ -64,7 +65,7 @@ class Ldap < ActiveType::Object
       entry.send(print_attribute)
     end.try("flatten") || []
     if admin_connection.get_operation_result.error_message.present?
-      fail admin_connection.get_operation_result.error_message
+      raise admin_connection.get_operation_result.error_message
     end
     result
   end
@@ -90,7 +91,8 @@ class Ldap < ActiveType::Object
     result = admin_connection.bind_as(
       base: Rails.configuration.ldap_users,
       filter: Net::LDAP::Filter.eq("uid", username),
-      password: password)
+      password: password
+    )
     unless result
       errors.add(:connection, "failed")
       Rails.logger.error("Validating user credentials failed.")

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -47,7 +48,7 @@ class SessionsController < ApplicationController
 
   # For testing.
   def throw_invalid_authenticity_token
-    fail ActionController::InvalidAuthenticityToken
+    raise ActionController::InvalidAuthenticityToken
   end
 
   private

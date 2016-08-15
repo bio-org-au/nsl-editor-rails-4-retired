@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -28,7 +29,7 @@ class NameRank < ActiveRecord::Base
                              Series
                              Subseries
                              Superspecies
-                             Species)
+                             Species).freeze
   NEEDS_SPECIFIC_EPITHET = %w(Subspecies
                               Nothosubspecies
                               Nothovarietas
@@ -37,7 +38,7 @@ class NameRank < ActiveRecord::Base
                               Forma
                               Subforma
                               morphological
-                              nothomorph.)
+                              nothomorph.).freeze
 
   Species = "Species"
   Genus = "Genus"

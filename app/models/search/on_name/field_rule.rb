@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -33,14 +34,12 @@ class Search::OnName::FieldRule
     where autonym
        )
        )
-      )"
-    },
+      )" },
     "is-a-duplicate:" => { where_clause: " duplicate_of_id is not null", },
     "is-not-a-duplicate:" => { where_clause: " duplicate_of_id is null", },
     "is-a-parent:" =>
     { where_clause:
-      " exists (select null from name child where child.parent_id = name.id) ",
-    },
+      " exists (select null from name child where child.parent_id = name.id) ", },
 
     "is-not-a-parent:" =>
     { where_clause:
@@ -132,10 +131,10 @@ class Search::OnName::FieldRule
       from comment \
       where comment.name_id = name.id and comment.created_by like ?) ", },
 
-    "id:"                   => { multiple_values: true,
-                                 where_clause: " id = ? ",
-                                 allow_common_and_cultivar: true,
-                                 multiple_values_where_clause: " id in (?)" },
+    "id:" => { multiple_values: true,
+               where_clause: " id = ? ",
+               allow_common_and_cultivar: true,
+               multiple_values_where_clause: " id in (?)" },
 
     "author-id:" => { where_clause: "author_id = ? ", },
     "base-author-id:" => { where_clause: "base_author_id = ? ", },
@@ -326,7 +325,7 @@ class Search::OnName::FieldRule
                   inner join reference r2
                      on i2.reference_id = r2.id
                   where n2.id = n.id)
-   and not exists (select null 
+   and not exists (select null
                      from name n3
                     inner join instance i3
                        on n3.id = i3.name_id
@@ -336,7 +335,7 @@ class Search::OnName::FieldRule
                        on i3.reference_id = r3.id
                     where n3.id = n.id
                       and (it3.primary_instance or it3.name = 'autonym')
-                      and r3.year = r.year) 
+                      and r3.year = r.year)
       )", },
 
     "ref-title:" =>
@@ -357,7 +356,7 @@ class Search::OnName::FieldRule
     { where_clause:
       " not exists (select null from accepted_name_vw where accepted_name_vw.id = name.id)" },
 
-    "bad-relationships-974:"    => { where_clause: " name.id in
+    "bad-relationships-974:" => { where_clause: " name.id in
     (select name_id from instance where id in (select syn.cited_by_id
   from instance syn
  inner join instance standalone
@@ -375,6 +374,5 @@ class Search::OnName::FieldRule
                    'nom. nov.',
                    'nom. et stat. nov.')
        ) ) )", order: "name.full_name" },
-  }
-
+  }.freeze
 end

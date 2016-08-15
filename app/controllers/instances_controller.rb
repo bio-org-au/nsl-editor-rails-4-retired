@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -31,7 +32,7 @@ class InstancesController < ApplicationController
     render "show", layout: false
   end
 
-  alias_method :tab, :show
+  alias tab show
 
   # Create the lesser version of relationship instance.
   def create_cited_by
@@ -131,7 +132,8 @@ class InstancesController < ApplicationController
     current_instance = Instance::AsCopier.find(params[:id])
     @instance = current_instance.copy_with_citations_to_new_reference(
       instance_params,
-      current_user.username)
+      current_user.username
+    )
     @message = "Instance was copied"
     render "instances/copy_standalone/success.js"
   rescue => e
@@ -196,19 +198,22 @@ class InstancesController < ApplicationController
   def render_cites_id_error
     render_create_error(
       "You must choose an instance.",
-      "instance-instance-for-name-showing-reference-typeahead")
+      "instance-instance-for-name-showing-reference-typeahead"
+    )
   end
 
   def render_cited_by_id_error
     render_create_error(
       "Please refresh the tab.",
-      "instance-instance-for-name-showing-reference-typeahead")
+      "instance-instance-for-name-showing-reference-typeahead"
+    )
   end
 
   def render_instance_type_id_error
     render_create_error(
       "You must choose an instance type.",
-      "instance_instance_type_id")
+      "instance_instance_type_id"
+    )
   end
 
   def cites_and_cited_by

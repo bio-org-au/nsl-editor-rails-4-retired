@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -40,7 +41,7 @@ class NameTagNamesController < ApplicationController
         format.json { render :show, status: :created, location: @name_tag_name }
         format.js {}
       else
-        error = "#{@name_tag_name.errors.full_messages.first}"
+        error = @name_tag_name.errors.full_messages.first.to_s
         @message = "Could not attach that tag because #{error}"
         format.html { render :new }
         format.json { render json: @name_tag_name.errors, status: :unprocessable_entity }

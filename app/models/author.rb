@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -29,9 +30,9 @@ class Author < ActiveRecord::Base
         ->(string) { where("lower(name) = ? ", string.downcase) }
 
   scope :lower_name_like,
-        ->(string) { where("lower(f_unaccent(name)) like f_unaccent(?) ", string.gsub(/\*/, "%").downcase) }
+        ->(string) { where("lower(f_unaccent(name)) like f_unaccent(?) ", string.tr("*", "%").downcase) }
   scope :lower_abbrev_like,
-        ->(string) { where("lower(f_unaccent(abbrev)) like f_unaccent(?) ", string.gsub(/\*/, "%").downcase) }
+        ->(string) { where("lower(f_unaccent(abbrev)) like f_unaccent(?) ", string.tr("*", "%").downcase) }
   scope :not_this_id,
         ->(this_id) { where.not(id: this_id) }
   scope :not_duplicate,
@@ -93,7 +94,7 @@ class Author < ActiveRecord::Base
   validates :abbrev,
             uniqueness: { unless: "abbrev.blank?",
                           case_sensitive: false,
-                          message: "has already been used"}
+                          message: "has already been used" }
 
   validates_exclusion_of :duplicate_of_id,
                          in: ->(author) { [author.id] },
@@ -131,9 +132,9 @@ class Author < ActiveRecord::Base
     if name.present? && abbrev.present?
       "#{name} | #{abbrev}"
     elsif name.present?
-      "#{name}"
+      name.to_s
     elsif abbrev.present?
-      "#{abbrev}"
+      abbrev.to_s
     else
       id.to_string
     end
@@ -185,17 +186,17 @@ class Author < ActiveRecord::Base
     when /\A-\z/
       ""
     else
-      "#{name.strip}"
+      name.strip.to_s
     end
   end
 
   def can_be_deleted?
-    names.size == 0 &&
-      references.size == 0 &&
-      duplicates.size == 0 &&
-      base_names.size == 0 &&
-      ex_names.size == 0 &&
-      ex_base_names.size == 0 &&
-      sanctioned_names.size == 0
+    names.size.zero? &&
+      references.size.zero? &&
+      duplicates.size.zero? &&
+      base_names.size.zero? &&
+      ex_names.size.zero? &&
+      ex_base_names.size.zero? &&
+      sanctioned_names.size.zero?
   end
 end

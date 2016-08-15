@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -79,5 +80,5 @@ class Search::Mapper::Extras
     "references/advanced_search/shared_names/examples",
     "references-shared-names-search-advanced" =>
     "references/advanced_search/shared_names/advanced",
-  }
+  }.freeze
 end

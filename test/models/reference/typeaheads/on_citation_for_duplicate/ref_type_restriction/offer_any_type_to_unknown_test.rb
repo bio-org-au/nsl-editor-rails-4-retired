@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -40,9 +41,9 @@ class TAOnCitnForDupeRefTypeRestrictionAnyType4Unknown < ActiveSupport::TestCase
         others += 1
       end
     end
-    assert others > 0, "Expecting plenty of other ref types."
-    assert journals > 0, "Expecting at least 1 journal."
-    assert papers > 0, "Expecting at least 1 paper."
-    assert unknowns > 0, "Expecting at least 1 unknown ref type."
+    assert others.positive?, "Expecting plenty of other ref types."
+    assert journals.positive?, "Expecting at least 1 journal."
+    assert papers.positive?, "Expecting at least 1 paper."
+    assert unknowns.positive?, "Expecting at least 1 unknown ref type."
   end
 end

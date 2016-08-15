@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -63,11 +64,11 @@ class Search::OnInstance::Predicate
 
   def apply_scope
     @has_scope = @scope_.present?
-    if @has_scope
-      @value_frequency = 1
-    else
-      @value_frequency = @predicate.count("?")
-    end
+    @value_frequency = if @has_scope
+                         1
+                       else
+                         @predicate.count("?")
+                       end
   end
 
   def process_value
@@ -89,7 +90,7 @@ class Search::OnInstance::Predicate
     if @multiple_values && @value.split(/,/).size > 1
       val.split(",").collect(&:strip)
     else
-      val.gsub(/\*/, "%")
+      val.tr("*", "%")
     end
   end
 
@@ -97,10 +98,11 @@ class Search::OnInstance::Predicate
     if Search::OnInstance::FieldRule::RULES.key?(field)
       field
     elsif Search::OnInstance::FieldRule::RULES.key?(
-      Search::OnInstance::FieldAbbrev::ABBREVS[field])
+      Search::OnInstance::FieldAbbrev::ABBREVS[field]
+    )
       Search::OnInstance::FieldAbbrev::ABBREVS[field]
     else
-      fail "Cannot search instances for: #{field}."
+      raise "Cannot search instances for: #{field}."
     end
   end
 end

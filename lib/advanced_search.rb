@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -16,13 +17,13 @@
 #
 module AdvancedSearch
   SEARCH_LIMIT = 100
-  GENERIC_LEGAL_TO_ORDER_BY = { "upd" => "updated_at", "cr" => "created_at" }
+  GENERIC_LEGAL_TO_ORDER_BY = { "upd" => "updated_at", "cr" => "created_at" }.freeze
 
   def prepare_search_term_string(raw)
     # add_leading_wildcard(add_trailing_wildcard(raw.strip)).downcase.gsub(/\*/,'%')
     x = add_token_wildcards(raw.strip)
     x = add_trailing_wildcard(x)
-    x.downcase.gsub(/\*/, "%")
+    x.downcase.tr("*", "%")
   end
 
   # Allows for phrase match: double quotes toggle strict/wild
@@ -50,11 +51,11 @@ module AdvancedSearch
   end
 
   def add_leading_wildcard(raw)
-    if raw.match(/\A\^/)
-      raw = raw.sub(/^./, "")
-    else
-      raw = "%" + raw
-    end
+    raw = if raw.start_with?("^")
+            raw.sub(/^./, "")
+          else
+            "%" + raw
+          end
   end
 
   def parse_search_for_limit(raw_search_request)
@@ -64,7 +65,7 @@ module AdvancedSearch
   end
 
   def add_trailing_wildcard(raw)
-    if raw.match(/\$\Z/)
+    if raw =~ /\$\Z/
       # $ is anchor, so no wildcard and get rid of the $
       raw = raw.chop
     else

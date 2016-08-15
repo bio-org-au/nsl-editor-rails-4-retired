@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -15,8 +16,8 @@
 #   limitations under the License.
 #
 class ActiveSupport::Logger::SimpleFormatter
-  SEVERITY_TO_TAG_MAP     = { "DEBUG" => "meh", "INFO" => "fyi", "WARN" => "hmm", "ERROR" => "wtf", "FATAL" => "omg", "UNKNOWN" => "???" }
-  SEVERITY_TO_COLOR_MAP   = { "DEBUG" => "0;37", "INFO" => "32", "WARN" => "33", "ERROR" => "31", "FATAL" => "31", "UNKNOWN" => "37" }
+  SEVERITY_TO_TAG_MAP     = { "DEBUG" => "meh", "INFO" => "fyi", "WARN" => "hmm", "ERROR" => "wtf", "FATAL" => "omg", "UNKNOWN" => "???" }.freeze
+  SEVERITY_TO_COLOR_MAP   = { "DEBUG" => "0;37", "INFO" => "32", "WARN" => "33", "ERROR" => "31", "FATAL" => "31", "UNKNOWN" => "37" }.freeze
   USE_HUMOROUS_SEVERITIES = true
 
   def call(severity, time, _progname, msg)

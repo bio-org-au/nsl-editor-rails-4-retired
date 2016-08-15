@@ -1,4 +1,5 @@
 #   encoding: utf-8
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -60,7 +61,7 @@ class History
     { date: "28-Jul-2016",
       jira_id: "1900",
       description:
-      %(You can now use letters with and without diacritics in author 
+      %(You can now use letters with and without diacritics in author
       typeaheads and they will match authors with and without diacritics.
       E.g. "Doll" finds "Doll" and "Döll", "Döll" finds "Doll" and "Döll".) },
     { date: "28-Jul-2016",
@@ -105,11 +106,11 @@ class History
       "not-in-accepted-tree:". Added field help, name search example, and
       report example combining with "with-exactly-one_instance:" and
       "ref-title:".) },
-      { date: "18-Jul-2016",
+    { date: "18-Jul-2016",
       jira_id: "1889",
       description:
-      %(Define a new name query argument "ref-title:" that can be used to find
-      names associated with a matching reference title.) },
+    %(Define a new name query argument "ref-title:" that can be used to find
+    names associated with a matching reference title.) },
     { date: "12-Jul-2016", release: true },
     { date: "11-Jul-2016",
       jira_id: "1882",
@@ -166,7 +167,7 @@ class History
       jira_id: "1745",
       description:
       %(Include names without instances in the Name typeahead for unpublished
-      citation - problem arose after NSL-945.) }, 
+      citation - problem arose after NSL-945.) },
     { date: "31-Mar-2016", release: true },
     { date: "30-Mar-2016",
       jira_id: "1157",
@@ -407,7 +408,7 @@ class History
       jira_id: "1505",
       description: "Duplicate Names are excluded from suggestions on the
       Reference page, New Instance tab, Name field." },
-  ]
+  ].freeze
 
   CHANGES_2015 = [
     { date: "24-Dec-2015",
@@ -1026,5 +1027,5 @@ class History
       jira_id: "1110",
       description: "Added a page showing the history of changes to the
       editor." },
-  ]
+  ].freeze
 end

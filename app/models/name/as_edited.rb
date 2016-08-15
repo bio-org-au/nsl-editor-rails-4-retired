@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -21,7 +22,7 @@ class Name::AsEdited < Name::AsTypeahead
     if name.save_with_username(username)
       name.set_names!
     else
-      fail "#{name.errors.full_messages.first}"
+      raise name.errors.full_messages.first.to_s
     end
     name
   rescue => e
@@ -104,9 +105,9 @@ class Name::AsEdited < Name::AsTypeahead
 
     if params.key?("duplicate_of_id")
       self.duplicate_of_id =
-      Name::AsEdited
-      .duplicate_of_from_typeahead(params["duplicate_of_id"],
-                                   params["duplicate_of_typeahead"])
+        Name::AsEdited
+        .duplicate_of_from_typeahead(params["duplicate_of_id"],
+                                     params["duplicate_of_typeahead"])
     end
 
   rescue => e
@@ -133,12 +134,12 @@ class Name::AsEdited < Name::AsTypeahead
         when 1
           value = possibles.first.id
         else
-          fail "please choose #{field_name} from suggestions"
+          raise "please choose #{field_name} from suggestions"
         end
       when 1
         value = possibles.first.id
       else
-        fail "please choose #{field_name} from suggestions (more than 1 match)"
+        raise "please choose #{field_name} from suggestions (more than 1 match)"
       end
     when :id_and_text
       possibles = Author.lower_abbrev_equals(text)
@@ -149,7 +150,7 @@ class Name::AsEdited < Name::AsTypeahead
         when 1
           value = possibles.first.id
         else
-          fail "please choose #{field_name} from suggestions"
+          raise "please choose #{field_name} from suggestions"
         end
       when 1
         value = possibles.first.id
@@ -160,11 +161,11 @@ class Name::AsEdited < Name::AsTypeahead
         if possibles_with_id.size == 1
           value = possibles_with_id.first.id
         else
-          fail "please choose #{field_name} from suggestions (> 1 match)"
+          raise "please choose #{field_name} from suggestions (> 1 match)"
         end
       end
     else
-      fail "please check the #{field_name}"
+      raise "please check the #{field_name}"
     end
     value
   end
@@ -177,9 +178,9 @@ class Name::AsEdited < Name::AsTypeahead
     logger.debug("Name::AsEdited:parent_from_typeahead: text: #{text}")
     case resolve_id_and_text(id_string, text)
     when :no_id_or_text
-      fail "please choose parent from suggestions"
+      raise "please choose parent from suggestions"
     when :id_only # assume delete
-      fail "please choose parent from suggestions"
+      raise "please choose parent from suggestions"
     when :text_only
       logger.info("Name::AsEdited:parent_from_typeahead: check string")
       possibles = Name.lower_full_name_like(text).not_a_duplicate
@@ -190,12 +191,12 @@ class Name::AsEdited < Name::AsTypeahead
         when 1
           value = possibles.first.id
         else
-          fail "please choose parent from suggestions"
+          raise "please choose parent from suggestions"
         end
       when 1
         value = possibles.first.id
       else
-        fail "please choose parent from suggestions (more than 1 match)"
+        raise "please choose parent from suggestions (more than 1 match)"
       end
     when :id_and_text
       # use the text
@@ -208,7 +209,7 @@ class Name::AsEdited < Name::AsTypeahead
         when 1
           value = possibles.first.id
         else
-          fail "please choose parent from suggestions"
+          raise "please choose parent from suggestions"
         end
       when 1
         value = possibles.first.id
@@ -220,12 +221,12 @@ class Name::AsEdited < Name::AsTypeahead
         if possibles_with_id.size == 1
           value = possibles_with_id.first.id
         else
-          fail "please choose parent from suggestions (more than 1 match)"
+          raise "please choose parent from suggestions (more than 1 match)"
         end
       end
     else
       logger.debug("Name::AsEdited:parent_from_typeahead: strange data")
-      fail "please check Parent"
+      raise "please check Parent"
     end
     logger.debug("Name::AsEdited:parent_from_typeahead:
                  returning value: #{value}")
@@ -253,12 +254,12 @@ class Name::AsEdited < Name::AsTypeahead
         when 1
           value = possibles.first.id
         else
-          fail "please choose parent from suggestions"
+          raise "please choose parent from suggestions"
         end
       when 1
         value = possibles.first.id
       else
-        fail "please choose duplicate of from suggestions (more than 1 match)"
+        raise "please choose duplicate of from suggestions (more than 1 match)"
       end
     when :id_and_text
       logger.debug("Name::AsEdited:duplicate_of_from_typeahead: id and text")
@@ -270,7 +271,7 @@ class Name::AsEdited < Name::AsTypeahead
         when 1
           value = possibles.first.id
         else
-          fail "please choose parent from suggestions"
+          raise "please choose parent from suggestions"
         end
       when 1
         value = possibles.first.id
@@ -281,12 +282,12 @@ class Name::AsEdited < Name::AsTypeahead
         if possibles_with_id.size == 1
           value = possibles_with_id.first.id
         else
-          fail "please choose duplicate of from suggestions (more than 1 match)"
+          raise "please choose duplicate of from suggestions (more than 1 match)"
         end
       end
     else
       logger.debug("Name::AsEdited:duplicate_of_from_typeahead: strange data")
-      fail "unrecognized information"
+      raise "unrecognized information"
     end
     logger.debug("Name::AsEdited:duplicate_of_from_typeahead:
                  returning value: #{value}")
@@ -303,7 +304,7 @@ class Name::AsEdited < Name::AsTypeahead
     elsif id_string.present? && text.present?
       return :id_and_text
     else
-      fail "please check your data"
+      raise "please check your data"
     end
   end
 end

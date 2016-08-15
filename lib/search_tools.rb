@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -17,21 +18,21 @@
 module SearchTools
   # simple search because no field descriptors?
   def search_is_simple?(raw)
-    raw.gsub(/[^:]/, "").length == 0
+    raw.gsub(/[^:]/, "").length.zero?
   end
 
   def format_search_terms(default_descriptor, raw)
     raw.strip\
-      .gsub(/\A:/, "")\
-      .gsub(/\s([\S]+:)/, "\034" + '\1')\
-      .sub(/^\034/, "")\
-      .split("\034")\
-      .collect do|term|
-        term.include?(":") ? term\
-          .strip\
-          .split(/:/)\
-          .collect(&:strip) : [default_descriptor, term]
-      end\
-      .sort { |a, b| a[0] <=> b[0] }
+       .gsub(/\A:/, "")\
+       .gsub(/\s([\S]+:)/, "\034" + '\1')\
+       .sub(/^\034/, "")\
+       .split("\034")\
+       .collect do |term|
+      term.include?(":") ? term\
+        .strip\
+        .split(/:/)\
+        .collect(&:strip) : [default_descriptor, term]
+    end\
+       .sort { |a, b| a[0] <=> b[0] }
   end
 end

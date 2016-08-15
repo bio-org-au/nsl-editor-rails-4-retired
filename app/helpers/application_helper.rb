@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -22,7 +23,7 @@ module ApplicationHelper
   def display_pages(pages = "")
     if pages.blank?
       ""
-    elsif pages.match(/null - null/)
+    elsif pages =~ /null - null/
       ""
     else
       " : #{pages}"
@@ -109,7 +110,7 @@ module ApplicationHelper
   def title(*parts)
     unless parts.empty?
       content_for :title do
-        (parts.unshift("NSL")).join(" - ") unless parts.empty?
+        parts.unshift("NSL").join(" - ") unless parts.empty?
       end
     end
   end
@@ -132,7 +133,7 @@ module ApplicationHelper
       content_tag(:section,
                   content_tag(:article,
                               content_tag(:a,
-                                          "#{reference.parent.title}",
+                                          reference.parent.title.to_s,
                                           href: url,
                                           title: title),
                               class: "field-data inline") +
@@ -153,7 +154,7 @@ module ApplicationHelper
   end
 
   def show_ref_children_link(label, reference, _contents_method, url, title)
-    if reference.children && reference.children.size != 0
+    if reference.children && reference.children.size.nonzero?
       ref_string = reference.children.size == 1 ? "reference" : "references"
       content_tag(:section,
                   content_tag(:article,
@@ -185,7 +186,7 @@ module ApplicationHelper
                                title,
                                desc_one,
                                desc_many)
-    if parent.send(children_method) && parent.send(children_method).size != 0
+    if parent.send(children_method) && parent.send(children_method).size.nonzero?
       ref_string = parent.send(children_method).size == 1 ? desc_one : desc_many
       child_size = parent.send(children_method).size
       content_tag(:section,
@@ -323,7 +324,7 @@ module ApplicationHelper
                 form_field +
                 content_tag(:label,
                             treated_label(label, label_is),
-                            class: "#{label_class}"),
+                            class: label_class.to_s),
                 class: "block width-100-percent")
   end
 
@@ -357,17 +358,17 @@ module ApplicationHelper
   end
 
   def icon(icon, text = "", html_options = {})
-    if html_options.key?(:class)
-      content_class = "fa fa-#{icon} #{html_options[:class]}" 
-    else
-      content_class = "fa fa-#{icon}"
-    end
+    content_class = if html_options.key?(:class)
+                      "fa fa-#{icon} #{html_options[:class]}"
+                    else
+                      "fa fa-#{icon}"
+                    end
     html_options[:class] = content_class
-    if text.blank?
-      html = content_tag(:i, nil, html_options)
-    else
-      html = "content_tag(:i, nil, html_options) #{text}"
-    end
+    html = if text.blank?
+             content_tag(:i, nil, html_options)
+           else
+             "content_tag(:i, nil, html_options) #{text}"
+           end
     html.html_safe
   end
 
@@ -430,14 +431,14 @@ module ApplicationHelper
       %(Last updated
       <span class="purple">#{time_ago_in_words(record.updated_at)}&nbsp;ago
       </span> by #{record.updated_by.downcase} #{formatted_timestamp(
-        record.updated_at)})
+        record.updated_at
+      )})
     end
   end
 
-
   def mapper_link(type, id)
     # we want to replace this with data pulled from the shard config table
-    %(<a href="#{Rails.configuration.mapper_root_url}#{type}/#{Rails.configuration.mapper_shard}/#{id}" title="#{type.capitalize()} #{id}"><i class="fa fa-link"></i></a>).html_safe
+    %(<a href="#{Rails.configuration.mapper_root_url}#{type}/#{Rails.configuration.mapper_shard}/#{id}" title="#{type.capitalize} #{id}"><i class="fa fa-link"></i></a>).html_safe
   end
 end
 

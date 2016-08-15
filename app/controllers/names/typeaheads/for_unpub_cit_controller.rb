@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -16,7 +17,6 @@
 #
 #   Names are central to the NSL.
 class Names::Typeaheads::ForUnpubCitController < ApplicationController
-
   def index
     typeahead = Name::AsTypeahead::ForUnpubCit.new(params)
     render json: typeahead.suggestions

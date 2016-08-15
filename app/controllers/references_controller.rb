@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -26,7 +27,7 @@ class ReferencesController < ApplicationController
     render "show", layout: false
   end
 
-  alias_method :tab, :show
+  alias tab show
 
   # GET /references/new
   def new
@@ -103,7 +104,8 @@ class ReferencesController < ApplicationController
     render json: Reference::AsTypeahead.on_citation_for_parent(
       params[:term],
       params[:id],
-      params[:ref_type_id])
+      params[:ref_type_id]
+    )
   end
 
   # Columns such as parent and duplicate_of_id use a typeahead search.
@@ -124,12 +126,13 @@ class ReferencesController < ApplicationController
 
   def reference_params
     params.require(:reference)
-      .permit(
-        :abbrev_title, :bhl_url, :display_title, :doi, :edition, :isbn, :issn,
-        :language_id, :notes, :pages, :publication_date, :published,
-        :published_location, :publisher, :ref_author_role_id, :ref_type_id,
-        :title, :tl2, :verbatim_author, :verbatim_citation, :verbatim_reference,
-        :volume, :year)
+          .permit(
+            :abbrev_title, :bhl_url, :display_title, :doi, :edition, :isbn, :issn,
+            :language_id, :notes, :pages, :publication_date, :published,
+            :published_location, :publisher, :ref_author_role_id, :ref_type_id,
+            :title, :tl2, :verbatim_author, :verbatim_citation, :verbatim_reference,
+            :volume, :year
+          )
   end
 
   def typeahead_params

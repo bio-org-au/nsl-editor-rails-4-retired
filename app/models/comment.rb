@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -49,7 +50,7 @@ class Comment < ActiveRecord::Base
     parents += 1 if instance_id.present?
     parents += 1 if name_id.present?
     parents += 1 if reference_id.present?
-    if parents == 0
+    if parents.zero?
       errors[:base] << "do not know which record this comment is for."
     elsif parents > 1
       errors[:base] << "cannot be attached to more than one record."

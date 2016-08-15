@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -22,7 +23,7 @@ class Reference::AsEdited < Reference::AsTypeahead
     if reference.save_with_username(username)
       reference.set_citation!
     else
-      fail "#{reference.errors.full_messages.first}"
+      raise reference.errors.full_messages.first.to_s
     end
     reference
   rescue => e
@@ -103,15 +104,16 @@ class Reference::AsEdited < Reference::AsTypeahead
 
     if params.key?("parent_id")
       self.parent_id = Reference::AsEdited.parent_from_typeahead(
-                         params["parent_id"],
-                         params["parent_typeahead"])
+        params["parent_id"],
+        params["parent_typeahead"]
+      )
     end
 
     if params.key?("duplicate_of_id")
       self.duplicate_of_id =
-      Reference::AsEdited
-      .duplicate_of_from_typeahead(params["duplicate_of_id"],
-                                   params["duplicate_of_typeahead"])
+        Reference::AsEdited
+        .duplicate_of_from_typeahead(params["duplicate_of_id"],
+                                     params["duplicate_of_typeahead"])
     end
   rescue => e
     logger.error("#{LABEL}:resolved_typeahead_params: rescuing exception: #{e}")
@@ -139,12 +141,12 @@ class Reference::AsEdited < Reference::AsTypeahead
         when 1
           value = possibles.first.id
         else
-          fail "please choose author from suggestions"
+          raise "please choose author from suggestions"
         end
       when 1
         value = possibles.first.id
       else
-        fail "please choose author from suggestions (more than 1 match)"
+        raise "please choose author from suggestions (more than 1 match)"
       end
     when :id_and_text
       logger.debug("#{LABEL}:author_from_typeahead: id and text")
@@ -156,7 +158,7 @@ class Reference::AsEdited < Reference::AsTypeahead
         when 1
           value = possibles.first.id
         else
-          fail "please choose author from suggestions"
+          raise "please choose author from suggestions"
         end
       when 1
         value = possibles.first.id
@@ -166,12 +168,12 @@ class Reference::AsEdited < Reference::AsTypeahead
         if possibles_with_id.size == 1
           value = possibles_with_id.first.id
         else
-          fail "please choose author from suggestions (more than 1 match)"
+          raise "please choose author from suggestions (more than 1 match)"
         end
       end
     else
       logger.debug("#{LABEL}:author_from_typeahead: strange data")
-      fail "unrecognized information"
+      raise "unrecognized information"
     end
     logger.debug("#{LABEL}:author_from_typeahead: returning value: #{value}")
     value
@@ -198,12 +200,12 @@ class Reference::AsEdited < Reference::AsTypeahead
         when 1
           value = possibles.first.id
         else
-          fail "please choose parent from suggestions"
+          raise "please choose parent from suggestions"
         end
       when 1
         value = possibles.first.id
       else
-        fail "please choose parent from suggestions (more than 1 match)"
+        raise "please choose parent from suggestions (more than 1 match)"
       end
     when :id_and_text
       logger.debug("#{LABEL}:parent_from_typeahead: id and text")
@@ -215,7 +217,7 @@ class Reference::AsEdited < Reference::AsTypeahead
         when 1
           value = possibles.first.id
         else
-          fail "please choose duplicate of from suggestions"
+          raise "please choose duplicate of from suggestions"
         end
       when 1
         value = possibles.first.id
@@ -226,12 +228,12 @@ class Reference::AsEdited < Reference::AsTypeahead
         if possibles_with_id.size == 1
           value = possibles_with_id.first.id
         else
-          fail "please choose parent from suggestions (more than 1 match)"
+          raise "please choose parent from suggestions (more than 1 match)"
         end
       end
     else
       logger.debug("#{LABEL}:parent_from_typeahead: strange data")
-      fail "unrecognized information"
+      raise "unrecognized information"
     end
     logger.debug("#{LABEL}:parent_from_typeahead: returning value: #{value}")
     value
@@ -259,12 +261,12 @@ class Reference::AsEdited < Reference::AsTypeahead
         when 1
           value = possibles.first.id
         else
-          fail "please choose duplicate of from suggestions"
+          raise "please choose duplicate of from suggestions"
         end
       when 1
         value = possibles.first.id
       else
-        fail "please choose duplicate of from suggestions (more than 1 match)"
+        raise "please choose duplicate of from suggestions (more than 1 match)"
       end
     when :id_and_text
       logger.debug("#{LABEL}:duplicate_of_from_typeahead: id and text")
@@ -276,7 +278,7 @@ class Reference::AsEdited < Reference::AsTypeahead
         when 1
           value = possibles.first.id
         else
-          fail "please choose duplicate of from suggestions"
+          raise "please choose duplicate of from suggestions"
         end
       when 1
         value = possibles.first.id
@@ -287,12 +289,12 @@ class Reference::AsEdited < Reference::AsTypeahead
         if possibles_with_id.size == 1
           value = possibles_with_id.first.id
         else
-          fail "please choose duplicate of from suggestions (more than 1 match)"
+          raise "please choose duplicate of from suggestions (more than 1 match)"
         end
       end
     else
       logger.debug("#{LABEL}:duplicate_of_from_typeahead: strange data")
-      fail "unrecognized information"
+      raise "unrecognized information"
     end
     logger.debug("#{LABEL}:duplicate_of_from_typeahead: return value: #{value}")
     value
@@ -308,7 +310,7 @@ class Reference::AsEdited < Reference::AsTypeahead
     elsif id_string.present? && text.present?
       return :id_and_text
     else
-      fail "please check your data"
+      raise "please check your data"
     end
   end
 end

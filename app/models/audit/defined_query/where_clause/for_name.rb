@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -37,7 +38,7 @@ class Audit::DefinedQuery::WhereClause::ForName
       debug("field: #{field}; value: #{value}")
       @sql = Audit::DefinedQuery::WhereClause::Predicate.new(sql, field, value, "name").sql
       x += 1
-      fail "endless loop #{x}" if x > 50
+      raise "endless loop #{x}" if x > 50
     end
   end
 

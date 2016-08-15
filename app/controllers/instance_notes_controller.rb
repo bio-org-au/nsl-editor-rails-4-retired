@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -104,7 +105,8 @@ class InstanceNotesController < ApplicationController
     end
   rescue => e
     logger.error(
-      "Controller:InstanceNotes:really_update:rescuing exception #{e}")
+      "Controller:InstanceNotes:really_update:rescuing exception #{e}"
+    )
     @message = e.to_s
     render "update_failed.js", status: :unprocessable_entity
   end

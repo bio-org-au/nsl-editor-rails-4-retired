@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -20,11 +21,11 @@ class RefAuthorRole < ActiveRecord::Base
   has_many :references
 
   def as_citation
-    name.downcase.match(/editor/) ? "(ed.)" : ""
+    name.downcase =~ /editor/ ? "(ed.)" : ""
   end
 
   def as_excitation
-    name.downcase.match(/editor/) ? "(ed.)" : ""
+    name.downcase =~ /editor/ ? "(ed.)" : ""
   end
 
   def self.author

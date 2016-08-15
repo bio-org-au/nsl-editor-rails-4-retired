@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -29,5 +30,5 @@ class Search::OnName::FieldAbbrev
     "exact-comment:" => "comments-exact:",
     "comment:" => "comments:",
     "exact-name-element:" => "name-element-exact:",
-  }
+  }.freeze
 end

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -51,8 +52,8 @@ class NameType < ActiveRecord::Base
   end
 
   def self.query_form_options
-    not_deprecated.sort { |x, y| x.name <=> y.name }.collect { |n| [n.capitalised_name, "#{n.name}", class: ""] }
-      .unshift(["Include common, cultivars", "type:*"]).unshift(["Exclude common, cultivars", ""])
+    not_deprecated.sort { |x, y| x.name <=> y.name }.collect { |n| [n.capitalised_name, n.name.to_s, class: ""] }
+                  .unshift(["Include common, cultivars", "type:*"]).unshift(["Exclude common, cultivars", ""])
   end
 
   def self.options

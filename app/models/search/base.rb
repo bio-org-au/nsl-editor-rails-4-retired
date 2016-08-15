@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -70,7 +71,7 @@ class Search::Base
     @count_allowed = true
     @executed_query =
       case @parsed_request.target_table
-      when /any/ then fail "cannot run an 'any' search yet"
+      when /any/ then raise "cannot run an 'any' search yet"
       when /author/ then Search::OnAuthor::Base.new(@parsed_request)
       when /instance/ then Search::OnInstance::Base.new(@parsed_request)
       when /reference/ then Search::OnReference::Base.new(@parsed_request)
@@ -82,7 +83,7 @@ class Search::Base
     @count_allowed = false
     if @parsed_request.defined_query_arg.blank? &&
        @parsed_request.where_arguments.blank?
-      fail "Defined queries need an argument."
+      raise "Defined queries need an argument."
     else
       run_specific_defined_query
     end
@@ -95,10 +96,10 @@ class Search::Base
         Reference::DefinedQuery::ReferenceIdWithInstances.new(@parsed_request)
       when /instances-for-ref-id-sort-by-page:/
         Reference::DefinedQuery::ReferenceIdWithInstancesSortedByPage
-        .new(@parsed_request)
+      .new(@parsed_request)
       when /references-name-full-synonymy/
         Reference::DefinedQuery::ReferencesNamesFullSynonymy
-        .new(@parsed_request)
+      .new(@parsed_request)
       when /\Ainstance-is-cited\z/
         Instance::DefinedQuery::IsCited.new(@parsed_request)
       when /\Ainstance-is-cited-by\z/
@@ -109,13 +110,13 @@ class Search::Base
         Reference::DefinedQuery::ReferencesWithNovelties.new(@parsed_request)
       when /\Areferences-accepted-names-for-id\z/i
         Reference::DefinedQuery::ReferencesAcceptedNamesForId
-        .new(@parsed_request)
+      .new(@parsed_request)
       when /\Areferences-shared-names\z/i
         Reference::DefinedQuery::ReferencesSharedNames.new(@parsed_request)
       else
         Rails.logger.error("Search::Base failed to run defined query: "\
                            "#{@parsed_request.defined_query}")
-        fail "No such defined query: #{@parsed_request.defined_query}"
+        raise "No such defined query: #{@parsed_request.defined_query}"
       end
   end
 end
