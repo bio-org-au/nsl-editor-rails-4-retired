@@ -21,7 +21,6 @@ class Search::Mapper::Extras
 
   def initialize(params)
     debug("Start for #{params[:extra_id]}")
-    @partial = "names/advanced_search/help"
     @partial = MAP[params[:extras_id]]
   end
 
