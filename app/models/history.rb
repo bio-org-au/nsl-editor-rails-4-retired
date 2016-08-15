@@ -18,6 +18,10 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "15-Aug-2016",
+      jira_id: "1928",
+      description:
+      %(Technical upgrade to code.) },
     { date: "12-Aug-2016",
       jira_id: "1929",
       description:
