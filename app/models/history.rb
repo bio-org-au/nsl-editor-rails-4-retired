@@ -18,6 +18,10 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "16-Aug-2016",
+      jira_id: "1931",
+      description: %(Show exception messages for instance create problems e.g. if
+      synonym create double-enter bypasses application-level validation.) },
     { date: "15-Aug-2016",
       jira_id: "1928",
       description:
