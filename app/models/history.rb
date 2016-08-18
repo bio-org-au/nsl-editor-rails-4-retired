@@ -18,6 +18,10 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "18-Aug-2016",
+      jira_id: "1935",
+      description: %(Delete reference confirm dialog should now always
+      show the success message.) },
     { date: "16-Aug-2016",
       jira_id: "1931",
       description: %(Show exception messages for instance create problems e.g. if
