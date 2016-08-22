@@ -21,10 +21,10 @@ require "test_helper"
 # Reference model typeahead search.
 class TAOnCitationForDuplicateWordCountTwoWalshesTest < ActiveSupport::TestCase
   test "reference typeahead on citation word count two walshes" do
-    results = Reference::AsTypeahead.on_citation_for_duplicate(
+    typeahead = Reference::AsTypeahead::OnCitationForDuplicate.new(
       "walsh walsh",
       references(:paper_by_brassard).id
     )
-    assert_equal 1, results.size, "Should be one and only one result"
+    assert_equal 1, typeahead.results.size, "Should be one and only one result"
   end
 end

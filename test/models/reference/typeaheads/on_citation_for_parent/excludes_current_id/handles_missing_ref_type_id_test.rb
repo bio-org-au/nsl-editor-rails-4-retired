@@ -21,10 +21,10 @@ require "test_helper"
 class TypeaheadsOnCit4ParHandlesMissingParamRefType < ActiveSupport::TestCase
   test "ref th on cit for parent handles missing param ref type" do
     curr = references(:simple)
-    results = Reference::AsTypeahead
-              .on_citation_for_parent("simple",
-                                      curr.id,
-                                      "")
-    assert results.size.zero?, "Should be no results for missing reference type"
+    typeahead = Reference::AsTypeahead::OnCitationForParent.new("simple",
+                                                                curr.id,
+                                                                "")
+    assert typeahead.results.size.zero?,
+           "Should be no results for missing reference type"
   end
 end

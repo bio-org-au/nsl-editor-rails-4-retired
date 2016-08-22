@@ -21,12 +21,12 @@ require "test_helper"
 class TAOnCitn4ParRefTypeRestrictionNothingForDatabase < ActiveSupport::TestCase
   test "ref typeahead on citation ref type restriction nothing for database" do
     current_reference = references(:simple)
-    results = Reference::AsTypeahead.on_citation_for_parent(
+    typeahead = Reference::AsTypeahead::OnCitationForParent.new(
       "%",
       current_reference.id,
       ref_types(:database).id
     )
-    assert results.size.zero?,
+    assert typeahead.results.size.zero?,
            "Should be no results because database takes no parent."
   end
 end

@@ -20,16 +20,14 @@ require "test_helper"
 # Reference model typeahead search.
 class TAOnCitnForDuplicateRefTypeRestrictionJournal < ActiveSupport::TestCase
   test "reference typeahead on citation ref type restriction journal" do
-    current_reference = references(:journal_with_papers)
-    results = Reference::AsTypeahead.on_citation_for_duplicate(
-      "o",
-      current_reference.id
-    )
-    assert !results.empty?, "Should be at least one result"
+    curr_ref = references(:journal_with_papers)
+    typeahead = Reference::AsTypeahead::OnCitationForDuplicate.new("o",
+                                                                   curr_ref.id)
+    assert !typeahead.results.empty?, "Should be at least one result"
     journals = 0
     unknowns = 0
     others = 0
-    results.each do |result|
+    typeahead.results.each do |result|
       if result[:value] =~ /\[journal\]/
         journals += 1
       elsif result[:value] =~ /\[unknown\]/

@@ -21,15 +21,15 @@ require "test_helper"
 class THOnCit4ParentRefTypeRestrictUnknowns4Unknown < ActiveSupport::TestCase
   test "ref typeahead on citation ref type restriction any type for unknown" do
     current_reference = references(:simple)
-    results = Reference::AsTypeahead.on_citation_for_parent(
+    typeahead = Reference::AsTypeahead::OnCitationForParent.new(
       "%",
       current_reference.id,
       ref_types(:unknown).id
     )
-    assert !results.empty?, "Should be at least one result"
+    assert_not typeahead.results.empty?, "Should be at least one result"
     unknowns = 0
     others = 0
-    results.each do |result|
+    typeahead.results.each do |result|
       if result[:value] =~ /\[unknown\]/
         unknowns += 1
       else

@@ -21,11 +21,12 @@ require "test_helper"
 class TheadsOnCit4ParWks4NewRecAlsoWNoParRefTypeTest < ActiveSupport::TestCase
   test "ref th on cit 4 parent works 4 new rec also w no par ref type" do
     curr = Reference.new
-    results = Reference::AsTypeahead
-              .on_citation_for_parent("*",
-                                      curr.id,
-                                      curr.ref_type_id)
-    assert results.size.zero?,
+    typeahead = Reference::AsTypeahead::OnCitationForParent.new(
+      "*",
+      curr.id,
+      curr.ref_type_id
+    )
+    assert typeahead.results.size.zero?,
            "Should be no results for new record with missing ref type"
   end
 end

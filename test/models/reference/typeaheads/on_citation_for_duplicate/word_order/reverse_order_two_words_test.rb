@@ -21,10 +21,10 @@ require "test_helper"
 # Reference model typeahead search.
 class TAOnCitationForDuplicateTwoWordsReverseOrder < ActiveSupport::TestCase
   test "two words in correct order" do
-    results = Reference::AsTypeahead.on_citation_for_duplicate(
+    typeahead = Reference::AsTypeahead::OnCitationForDuplicate.new(
       "wattle maslin",
       references(:book_by_brassard).id
     )
-    assert_equal 1, results.size, "Should be one and just one result"
+    assert_equal 1, typeahead.results.size, "Should be one and just one result"
   end
 end

@@ -21,15 +21,15 @@ require "test_helper"
 class TAOnCit4ParentRefTypeRestrictionSeriesForBook < ActiveSupport::TestCase
   test "reference typeahead on citation ref type restriction series for book" do
     current_reference = references(:simple)
-    results = Reference::AsTypeahead.on_citation_for_parent(
+    typeahead = Reference::AsTypeahead::OnCitationForParent.new(
       "%",
       current_reference.id,
       ref_types(:book).id
     )
-    assert !results.empty?, "Should be at least one result"
+    assert_not typeahead.results.empty?, "Should be at least one result"
     series = 0
     others = 0
-    results.each do |result|
+    typeahead.results.each do |result|
       if result[:value] =~ /\[series\]/
         series += 1
       else

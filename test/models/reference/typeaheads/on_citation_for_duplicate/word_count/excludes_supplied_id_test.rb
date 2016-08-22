@@ -21,12 +21,13 @@ require "test_helper"
 class TAOnCitationForDuplicateExcludesSuppliedIdTest < ActiveSupport::TestCase
   test "reference typeahead on citation excludes supplied id" do
     reference_to_exclude = references(:adams_paper_in_walsh_book)
-    results = Reference::AsTypeahead.on_citation_for_duplicate(
+    typeahead = Reference::AsTypeahead::OnCitationForDuplicate.new(
       "walsh",
       reference_to_exclude.id
     )
-    assert_equal 1, results.size, "Should be just one result"
-    assert results.first[:id].to_i == references(:walsh_paper_in_walsh_book).id,
-           "Unexpected typeahead suggestion."
+    assert_equal 1, typeahead.results.size, "Should be just one result"
+    assert_equal references(:walsh_paper_in_walsh_book).id,
+                 typeahead.results.first[:id].to_i,
+                 "Unexpected typeahead suggestion."
   end
 end

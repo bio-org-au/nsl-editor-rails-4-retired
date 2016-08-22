@@ -1,4 +1,6 @@
+#   encoding: utf-8
 # frozen_string_literal: true
+#
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -18,16 +20,19 @@
 
 require "test_helper"
 
-# Reference model typeahead search.
-class TypeaheadsOnCitationForParWordCount3ChaplinsTest < ActiveSupport::TestCase
-  test "reference typeahead on citation for parent word count 3 chaplins" do
-    typeahead = Reference::AsTypeahead::OnCitationForParent.new(
-      "chaplin chaplin chaplin",
-      references(:simple).id,
-      ref_types(:paper).id
+# Single reference model test.
+class RefTypeaheadOnCit4DupDiacriticFindsBothTest < ActiveSupport::TestCase
+  test "ref typeahead on citation 4 duplicate diacritic finds both" do
+    curr_ref = references(:ref_type_is_paper)
+    typeahead = Reference::AsTypeahead::OnCitationForDuplicate.new(
+      "Hultén",
+      curr_ref.id
     )
-    assert_equal 1,
-                 typeahead.results.size,
-                 "Should be exactly one record returned."
+    assert_equal 2, typeahead.results.length, "Expect 2 records for 'Hultén'."
+    ids = typeahead.results.collect { |reference| reference[:id] }
+    assert ids.include?(references(:hulten_with_diacritic).id.to_s),
+           "Expecting hulten_with_diacritic"
+    assert ids.include?(references(:hulten_without_diacritic).id.to_s),
+           "Expecting hulten_without_diacritic"
   end
 end

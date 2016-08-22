@@ -15,7 +15,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-class Reference::AsEdited < Reference::AsTypeahead
+class Reference::AsEdited < Reference
   LABEL = "Reference::AsEdited: "
   def self.create(params, typeahead_params, username)
     reference = Reference::AsEdited.new(params)

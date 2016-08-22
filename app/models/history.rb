@@ -18,6 +18,11 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "22-Aug-2016",
+      jira_id: "1936",
+      description: %(Reference typeaheads now handle diacritics, e.g. "é" 
+      This includes typeaheads for changing the reference for instances,
+      reference parent, and reference duplicate-of.) },
     { date: "19-Aug-2016", release: true },
     { date: "18-Aug-2016",
       jira_id: "1935",

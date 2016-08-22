@@ -1,4 +1,6 @@
+#   encoding: utf-8
 # frozen_string_literal: true
+#
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -15,28 +17,25 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
+
 require "test_helper"
 
-# Reference model typeahead search.
-class TAOnCitn4ParRefTypeRestrictionBooksForSection < ActiveSupport::TestCase
-  test "ref typeahead on citation ref type restriction books for section" do
-    current_reference = references(:simple)
+# Single reference model test.
+class RefTypeAhOnCit4ParentNonDiacriticFindsBothTest < ActiveSupport::TestCase
+  test "ref typeahead on citation for parent non diacritic finds both" do
+    curr_ref = references(:ref_type_is_chapter)
     typeahead = Reference::AsTypeahead::OnCitationForParent.new(
-      "%",
-      current_reference.id,
-      ref_types(:section).id
+      "Hilten",
+      curr_ref.id,
+      ref_types(:chapter).id
     )
-    assert_not typeahead.results.empty?, "Should be at least one result"
-    books = 0
-    others = 0
-    typeahead.results.each do |result|
-      if result[:value] =~ /\[book\]/
-        books += 1
-      else
-        others += 1
-      end
-    end
-    assert others.zero?, "Expecting no other ref types."
-    assert books.positive?, "Expecting at least 1 book ref type."
+    assert_equal 2,
+                 typeahead.results.length,
+                 "Expecting 2 records for 'Hilten'."
+    ids = typeahead.results.collect { |reference| reference[:id] }
+    assert ids.include?(references(:hilten_with_diacritic).id.to_s),
+           "Expecting hilten_with_diacritic"
+    assert ids.include?(references(:hilten_without_diacritic).id.to_s),
+           "Expecting hilten_without_diacritic"
   end
 end

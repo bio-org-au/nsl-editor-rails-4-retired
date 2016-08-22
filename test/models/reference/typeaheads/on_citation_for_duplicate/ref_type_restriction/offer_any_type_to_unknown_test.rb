@@ -21,16 +21,16 @@ require "test_helper"
 class TAOnCitnForDupeRefTypeRestrictionAnyType4Unknown < ActiveSupport::TestCase
   test "ref typeahead on citation ref type restriction any type for unknown" do
     current_reference = references(:ref_type_is_unknown)
-    results = Reference::AsTypeahead.on_citation_for_duplicate(
+    typeahead = Reference::AsTypeahead::OnCitationForDuplicate.new(
       "%",
       current_reference.id
     )
-    assert !results.empty?, "Should be at least one result"
+    assert !typeahead.results.empty?, "Should be at least one result"
     journals = 0
     unknowns = 0
     papers = 0
     others = 0
-    results.each do |result|
+    typeahead.results.each do |result|
       if result[:value] =~ /\[journal\]/
         journals += 1
       elsif result[:value] =~ /\[paper\]/

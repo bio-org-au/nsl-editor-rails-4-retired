@@ -21,12 +21,12 @@ require "test_helper"
 class TypeaheadsOnCitForParWildcardsTransAsteriskToPC < ActiveSupport::TestCase
   test "ref typeahead on citation wildcards translates asterisk to percent" do
     current_reference = references(:simple)
-    results = Reference::AsTypeahead.on_citation_for_parent(
+    typeahead = Reference::AsTypeahead::OnCitationForParent.new(
       "*",
       current_reference.id,
       ref_types(:book).id
     )
-    assert !results.empty?,
-           "Should be at least one result for asterisk wildcard"
+    assert_not typeahead.results.empty?,
+               "Should be at least one result for asterisk wildcard"
   end
 end

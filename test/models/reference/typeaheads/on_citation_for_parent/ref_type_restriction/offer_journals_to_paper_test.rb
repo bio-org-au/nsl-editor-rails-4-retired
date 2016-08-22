@@ -21,16 +21,16 @@ require "test_helper"
 class TAOnCitn4ParRefTypeRestrictionJournalsForPaper < ActiveSupport::TestCase
   test "ref typeahead on citation ref type restriction journals for paper" do
     current_reference = references(:simple)
-    results = Reference::AsTypeahead.on_citation_for_parent(
+    typeahead = Reference::AsTypeahead::OnCitationForParent.new(
       "%",
       current_reference.id,
       ref_types(:paper).id
     )
-    assert !results.empty?,
-           "Should be at least one result"
+    assert_not typeahead.results.empty?,
+               "Should be at least one result"
     journals = 0
     others = 0
-    results.each do |result|
+    typeahead.results.each do |result|
       if result[:value] =~ /\[journal\]/
         journals += 1
       else

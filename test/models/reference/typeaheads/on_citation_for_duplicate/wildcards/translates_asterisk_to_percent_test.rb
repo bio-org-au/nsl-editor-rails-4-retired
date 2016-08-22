@@ -21,11 +21,11 @@ require "test_helper"
 class TAOnCitnForDupleWildcardsTransAsteriskToPercent < ActiveSupport::TestCase
   test "ref typeahead on citation 4 dupe wildcards translates ast to percent" do
     current_reference = references(:ref_type_is_book)
-    results = Reference::AsTypeahead.on_citation_for_duplicate(
+    typeahead = Reference::AsTypeahead::OnCitationForDuplicate.new(
       "*",
       current_reference.id
     )
-    assert !results.empty?,
+    assert !typeahead.results.empty?,
            "Should be at least one result for asterisk wildcard"
   end
 end

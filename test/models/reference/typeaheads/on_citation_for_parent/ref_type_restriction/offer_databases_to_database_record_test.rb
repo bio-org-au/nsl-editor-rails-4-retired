@@ -21,16 +21,16 @@ require "test_helper"
 class TAOnCitn4ParRefTypeRestrictDbase4DatabaseRecord < ActiveSupport::TestCase
   test "ref typeahead on citation ref type database for database record" do
     current_reference = references(:simple)
-    results = Reference::AsTypeahead.on_citation_for_parent(
+    typeahead = Reference::AsTypeahead::OnCitationForParent.new(
       "%",
       current_reference.id,
       ref_types(:database_record).id
     )
-    assert !results.empty?,
-           "Should be at least one result"
+    assert_not typeahead.results.empty?,
+               "Should be at least one result"
     databases = 0
     others = 0
-    results.each do |result|
+    typeahead.results.each do |result|
       if result[:value] =~ /\[database\]/
         databases += 1
       else

@@ -1,4 +1,6 @@
+#   encoding: utf-8
 # frozen_string_literal: true
+#
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -15,19 +17,22 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
+
 require "test_helper"
 
-# Reference model typeahead search.
-class TypeaheadsOnCit4ParWorks4NewRecWNoIdTest < ActiveSupport::TestCase
-  test "ref typeahead on citation 4 parent works 4 new record with no ID" do
-    curr = Reference.new
-    curr.ref_type_id = ref_types(:paper).id
-    typeahead = Reference::AsTypeahead::OnCitationForParent.new(
-      "*",
-      "",
-      curr.ref_type_id
+# Single reference model test.
+class RefTypeaheadOnCitDiacriticFindsBothTest < ActiveSupport::TestCase
+  test "ref typeahead on citation diacritic finds both" do
+    curr_ref = references(:ref_type_is_paper)
+    typeahead = Reference::AsTypeahead::OnCitation.new(
+      "Hultén",
+      curr_ref.id
     )
-    assert_not typeahead.results.empty?,
-               "Should be at least one result for asterisk wildcard"
+    assert_equal 2, typeahead.results.length, "Expect 2 records for 'Hultén'."
+    ids = typeahead.results.collect { |reference| reference[:id] }
+    assert ids.include?(references(:hulten_with_diacritic).id.to_s),
+           "Expecting hulten_with_diacritic"
+    assert ids.include?(references(:hulten_without_diacritic).id.to_s),
+           "Expecting hulten_without_diacritic"
   end
 end

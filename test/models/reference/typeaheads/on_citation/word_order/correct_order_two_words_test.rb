@@ -21,7 +21,9 @@ require "test_helper"
 # Reference model typeahead search.
 class TypeaheadsOnCitationTwoWordsCorrectOrder < ActiveSupport::TestCase
   test "two words in correct order" do
-    results = Reference::AsTypeahead.on_citation("maslin wattle")
-    assert_equal 1, results.size, "Should be one and just one result"
+    typeahead = Reference::AsTypeahead::OnCitation.new("maslin wattle")
+    assert_equal 1,
+                 typeahead.results.length,
+                 "Should be one and just one result"
   end
 end

@@ -83,36 +83,47 @@ class ReferencesController < ApplicationController
   # Columns such as duplicate_of_id use a typeahead search.
   def typeahead_on_citation
     render json: [] if params[:term].blank?
-    render json: Reference::AsTypeahead.on_citation(params[:term])
+    render json: Reference::AsTypeahead::OnCitation.new(params[:term]).results
   end
 
   # Columns such as duplicate_of_id use a typeahead search.
+  # ToDo: deprecate and get rid of route
   def typeahead_on_citation_with_exclusion
     render json: [] if params[:term].blank?
-    render json: Reference::AsTypeahead.on_citation(params[:term], params[:id])
+    render json: Reference::AsTypeahead::OnCitation.new(
+      params[:term],
+      params[:id]
+    ).results
   end
 
   # Columns such as parent and duplicate_of_id use a typeahead search.
+  # ToDo: deprecate and get rid of route
   def typeahead_on_citation_duplicate_of_current
     render json: [] if params[:term].blank?
-    render json: Reference::AsTypeahead.on_citation(params[:term], params[:id])
+    render json: Reference::AsTypeahead::OnCitation.new(
+      params[:term],
+      params[:id]
+    ).results
   end
 
   # Columns such as parent and duplicate_of_id use a typeahead search.
   def typeahead_on_citation_for_parent
     render json: [] if params[:term].blank?
-    render json: Reference::AsTypeahead.on_citation_for_parent(
+    render json: Reference::AsTypeahead::OnCitationForParent.new(
       params[:term],
       params[:id],
       params[:ref_type_id]
-    )
+    ).results
   end
 
   # Columns such as parent and duplicate_of_id use a typeahead search.
   def typeahead_on_citation_for_duplicate
     render json: [] if params[:term].blank?
-    render json: Reference::AsTypeahead.on_citation_for_duplicate(params[:term],
-                                                                  params[:id])
+    typeahead = Reference::AsTypeahead::OnCitationForDuplicate.new(
+      params[:term],
+      params[:id]
+    )
+    render json: typeahead.results
   end
 
   private
@@ -127,11 +138,11 @@ class ReferencesController < ApplicationController
   def reference_params
     params.require(:reference)
           .permit(
-            :abbrev_title, :bhl_url, :display_title, :doi, :edition, :isbn, :issn,
-            :language_id, :notes, :pages, :publication_date, :published,
+            :abbrev_title, :bhl_url, :display_title, :doi, :edition, :isbn,
+            :issn, :language_id, :notes, :pages, :publication_date, :published,
             :published_location, :publisher, :ref_author_role_id, :ref_type_id,
-            :title, :tl2, :verbatim_author, :verbatim_citation, :verbatim_reference,
-            :volume, :year
+            :title, :tl2, :verbatim_author, :verbatim_citation,
+            :verbatim_reference, :volume, :year
           )
   end
 

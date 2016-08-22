@@ -2043,3 +2043,59 @@ published_with_no_parent_no_year_no_pub_date:
   published: true
   created_by: tester
   updated_by: tester
+
+hulten_with_diacritic:
+  title: "Title includes hultén with diacritic"
+  citation: "Citation includes hultén with diacritic"
+  citation_html: "Citation includes hultén with diacritic"
+  display_title: "Title includes hultén with diacritic"
+  author: hulten_with_diacritic
+  language: undetermined
+  namespace: apni
+  ref_author_role: editor
+  ref_type: paper
+  published: true
+  created_by: tester
+  updated_by: tester
+
+hulten_without_diacritic:
+  title: "Title includes hulten without diacritic"
+  citation: "Citation includes hulten without diacritic"
+  citation_html: "Citation includes hulten without diacritic"
+  display_title: "Title includes hulten without diacritic"
+  author: hulten_without_diacritic
+  language: undetermined
+  namespace: apni
+  ref_author_role: editor
+  ref_type: paper
+  published: true
+  created_by: tester
+  updated_by: tester
+
+hilten_with_diacritic:
+  title: "Title includes hiltén with diacritic"
+  citation: "Citation includes hiltén with diacritic"
+  citation_html: "Citation includes hiltén with diacritic"
+  display_title: "Title includes hiltén with diacritic"
+  author: hilten_with_diacritic
+  language: undetermined
+  namespace: apni
+  ref_author_role: editor
+  ref_type: book
+  published: true
+  created_by: tester
+  updated_by: tester
+
+hilten_without_diacritic:
+  title: "Title includes hilten without diacritic"
+  citation: "Citation includes hilten without diacritic"
+  citation_html: "Citation includes hilten without diacritic"
+  display_title: "Title includes hilten without diacritic"
+  author: hilten_without_diacritic
+  language: undetermined
+  namespace: apni
+  ref_author_role: editor
+  ref_type: book
+  published: true
+  created_by: tester
+  updated_by: tester
