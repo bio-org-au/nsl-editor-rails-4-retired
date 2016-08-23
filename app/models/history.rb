@@ -19,6 +19,10 @@
 class History
   CHANGES_2016 = [
     { date: "23-Aug-2016",
+      jira_id: "1939",
+      description: %(Show error message for attempt to create a duplicate
+      synonym.) },
+    { date: "23-Aug-2016",
       jira_id: "1937",
       description: %(When an author is deleted the confirmation message
       should once again show on the tab.) },

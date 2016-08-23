@@ -64,18 +64,13 @@ class InstancesController < ApplicationController
   # Sometimes we need to massage the params (safely) before calling this create.
   def create(the_params = instance_params)
     @instance = Instance.new(the_params)
-    if @instance.save_with_username(current_user.username)
-      render "create"
-    else
-      render "create_error"
-    end
+    @instance.save_with_username(current_user.username)
+    render "create"
   rescue ActiveRecord::RecordNotUnique
-    logger.error("Rescuing duplicate instance")
     @message = "Error: duplicate record"
     render "create_error.js", status: :unprocessable_entity
   rescue => e
-    logger.error("Rescuing insert problem: #{e.class}")
-    @message = "#{e.cause}"
+    @message = e.to_s
     render "create_error.js", status: :unprocessable_entity
   end
 
@@ -139,8 +134,7 @@ class InstancesController < ApplicationController
   def copy_standalone
     current_instance = Instance::AsCopier.find(params[:id])
     @instance = current_instance.copy_with_citations_to_new_reference(
-      instance_params,
-      current_user.username
+      instance_params, current_user.username
     )
     @message = "Instance was copied"
     render "instances/copy_standalone/success.js"

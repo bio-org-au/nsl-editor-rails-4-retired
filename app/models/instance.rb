@@ -289,7 +289,7 @@ class Instance < ActiveRecord::Base
 
   def save_with_username(username)
     self.created_by = self.updated_by = username
-    save
+    save!
   end
 
   def update_attributes_with_username!(attributes, username)
