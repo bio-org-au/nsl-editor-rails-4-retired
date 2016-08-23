@@ -18,6 +18,7 @@
 #  Reference entity - books, papers, journals, etc
 class Reference < ActiveRecord::Base
   include PgSearch
+  require 'open-uri'
   self.table_name = "reference"
   self.primary_key = "id"
   self.sequence_name = "nsl_global_seq"
