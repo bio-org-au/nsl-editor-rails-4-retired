@@ -41,17 +41,13 @@ def hybrid_parent_suggestions_should_not_include(suggestions,
 end
 
 def hybrid_parent_suggestions_should_only_include(
-  suggestions, given_rank_name, expected_rank_names
+  suggs, given_rank, expected_rank_names
 )
   NameRank.all.sort { |a, b| a.sort_order <=> b.sort_order }.each do |rank|
     if expected_rank_names.include?(rank.name)
-      hybrid_parent_suggestions_should_include(
-        suggestions, given_rank_name, rank.name
-      )
+      hybrid_parent_suggestions_should_include(suggs, given_rank, rank.name)
     else
-      hybrid_parent_suggestions_should_not_include(
-        suggestions, given_rank_name, rank.name
-      )
+      hybrid_parent_suggestions_should_not_include(suggs, given_rank, rank.name)
     end
   end
 end

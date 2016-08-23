@@ -30,18 +30,20 @@ class InNestedInstanceOrderTest < ActiveSupport::TestCase
   test "instances in nested instance type order" do
     results = Instance.joins(:instance_type)
                       .where(
-                        instance_type: { name:
-                                       ["basionym",
-                                        "common name",
-                                        "vernacular name",
-                                        "doubtful nomenclatural synonym",
-                                        "nomenclatural synonym",
-                                        "doubtful taxonomic synonym",
-                                        "taxonomic synonym",
-                                        "doubtful pro parte nomenclatural synonym",
-                                        "pro parte nomenclatural synonym",
-                                        "pro parte taxonomic synonym",
-                                        "doubtful pro parte taxonomic synonym"] }
+                        instance_type: {
+                          name:
+                          ["basionym",
+                           "common name",
+                           "vernacular name",
+                           "doubtful nomenclatural synonym",
+                           "nomenclatural synonym",
+                           "doubtful taxonomic synonym",
+                           "taxonomic synonym",
+                           "doubtful pro parte nomenclatural synonym",
+                           "pro parte nomenclatural synonym",
+                           "pro parte taxonomic synonym",
+                           "doubtful pro parte taxonomic synonym"]
+                        }
                       ).
               # extra order clause to make definitive and
               # repeatable ordering for these tests

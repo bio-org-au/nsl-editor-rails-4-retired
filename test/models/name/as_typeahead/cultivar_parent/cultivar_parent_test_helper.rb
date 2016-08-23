@@ -16,10 +16,10 @@
 #   limitations under the License.
 #
 
-def cultivar_parent_suggestions_should_include(suggestions,
-                                               given_rank_name,
-                                               expected_rank_name,
-                                               caller_test)
+def cult_parent_suggs_shd_include(suggestions,
+                                      given_rank_name,
+                                      expected_rank_name,
+                                      caller_test)
   re = Regexp.quote(expected_rank_name)
   assert(suggestions.collect do |h|
     h[:value] =~ /\s#{re}/ ? 1 : 0
@@ -28,10 +28,10 @@ def cultivar_parent_suggestions_should_include(suggestions,
          include #{expected_rank_name} [caller: #{caller_test}]")
 end
 
-def cultivar_parent_suggestions_should_not_include(suggestions,
-                                                   given_rank_name,
-                                                   unexpected_rank_name,
-                                                   caller_test)
+def cult_parent_suggs_shd_not_incl(suggestions,
+                                   given_rank_name,
+                                   unexpected_rank_name,
+                                   caller_test)
   re = Regexp.quote(unexpected_rank_name)
   assert_not(suggestions.collect do |h|
     h[:value] =~ /\s#{re}/ ? 1 : 0
@@ -41,17 +41,13 @@ def cultivar_parent_suggestions_should_not_include(suggestions,
 end
 
 def cultivar_parent_suggestions_should_only_include(
-  suggestions, given_rank_name, expected_rank_names
+  suggs, given_rank, expected_rank_names
 )
   sorted_name_ranks.each do |rank|
     if expected_rank_names.include?(rank.name)
-      cultivar_parent_suggestions_should_include(
-        suggestions, given_rank_name, rank.name, caller.first
-      )
+      cult_parent_suggs_shd_include(suggs, given_rank, rank.name, caller.first)
     else
-      cultivar_parent_suggestions_should_not_include(
-        suggestions, given_rank_name, rank.name, caller.first
-      )
+      cult_parent_suggs_shd_not_incl(suggs, given_rank, rank.name, caller.first)
     end
   end
 end

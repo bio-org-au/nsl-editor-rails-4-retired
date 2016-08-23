@@ -27,10 +27,16 @@ class ReferencePartNoPublicationDateAllowedTest < ActiveSupport::TestCase
     reference.save!
     assert reference.valid?, "Part should be valid"
     reference.publication_date = "xyz"
-    assert_raises ActiveRecord::RecordInvalid, "A reference part with a publication date should be invalid" do
+
+    err_string = "A reference part with a publication date should be invalid"
+    assert_raises ActiveRecord::RecordInvalid, err_string do
       reference.save!
     end
-    assert_equal("publication_date", reference.errors.first.first.to_s, "Error should be on 'publication date'")
-    assert_equal("is not allowed for a Part", reference.errors.first.last.to_s, "Incorrect error message")
+    assert_equal "publication_date",
+                 reference.errors.first.first.to_s,
+                 "Error should be on 'publication date'"
+    assert_equal "is not allowed for a Part",
+                 reference.errors.first.last.to_s,
+                 "Incorrect error message"
   end
 end

@@ -18,8 +18,8 @@
 require "test_helper"
 
 # Single Name typeahead test.
-class NameTAOnFullNameSuggestsShldNotInclNamesWOInstancesTest < ActiveSupport::TestCase
-  test "name on full name suggestions should not include names without instances" do
+class NameTAOnFullNameSuggsShldNotInclNamesWOInstTest < ActiveSupport::TestCase
+  test "name on full name suggestions shd not incl names without instances" do
     suggestions = Name::AsTypeahead::OnFullName
                   .new(term: "a name without instances")
                   .suggestions

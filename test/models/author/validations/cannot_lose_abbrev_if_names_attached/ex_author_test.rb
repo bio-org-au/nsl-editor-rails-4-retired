@@ -28,6 +28,7 @@ class AuthorCannotLoseAbbrevIfNamesExAuthorTest < ActiveSupport::TestCase
            "Author should start out with an abbreviation."
     author.abbrev = ""
     assert_not author.valid?,
-               "Author with ex-authored names should not be valid without an abbrev"
+               "Author with ex-authored names should not be valid without an
+               abbrev"
   end
 end

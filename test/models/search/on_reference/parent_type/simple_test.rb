@@ -21,7 +21,6 @@ load "test/models/search/users.rb"
 # Single Search model test for Reference target.
 class SearchOnReferenceParentTypeSimpleTest < ActiveSupport::TestCase
   test "search on parent type simple" do
-    reference = references(:paper_with_journal_parent)
     params =  ActiveSupport::HashWithIndifferentAccess
               .new(query_target: "reference",
                    query_string: "parent-type: Journal",

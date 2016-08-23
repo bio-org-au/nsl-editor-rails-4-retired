@@ -28,7 +28,8 @@ class ShouldNotIncludeDuplicatesTest < ActiveSupport::TestCase
     assert(typeahead.suggestions.is_a?(Array), "suggestions should be an array")
     assert(typeahead.suggestions.size == 1,
            'suggestions for "a duplicate genus" should have 1 entry')
-    assert typeahead.suggestions.first[:value].start_with?("a duplicate genus not "),
+    first_value = typeahead.suggestions.first[:value]
+    assert first_value.start_with?("a duplicate genus not "),
            "Should match the non-duplicate genus"
   end
 end
