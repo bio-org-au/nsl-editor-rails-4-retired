@@ -6,12 +6,14 @@
                          id: "author-delete-link",
                          class: "btn btn-warning unconfirmed-delete-link pull-right",
                          tabindex: increment_tab_index,
+                         title: "Delete the author.",
                          data: {show_this_id: "confirm-or-cancel-link-container"})
 %>
 <% confirm_delete_link = link_to("Confirm delete",
                                  author_path(@author.id),
                                  class: "btn btn-danger",
                                  tabindex: increment_tab_index,
+                                 title: "Confirm you want to delete the author.",
                                  remote: true,
                                  method: :delete)
 %>
@@ -21,6 +23,7 @@
                                 id: "cancel-delete-link",
                                 class: "btn btn-default cancel-link",
                                 tabindex: increment_tab_index,
+                                title: "Cancel the delete dialog for the author.",
                                 data: {enable_this_id: 'author-delete-link',
                                        hide_this_id: 'confirm-or-cancel-link-container'})
 %>
