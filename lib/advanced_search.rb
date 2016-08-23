@@ -17,10 +17,10 @@
 #
 module AdvancedSearch
   SEARCH_LIMIT = 100
-  GENERIC_LEGAL_TO_ORDER_BY = { "upd" => "updated_at", "cr" => "created_at" }.freeze
+  GENERIC_LEGAL_TO_ORDER_BY =
+    { "upd" => "updated_at", "cr" => "created_at" }.freeze
 
   def prepare_search_term_string(raw)
-    # add_leading_wildcard(add_trailing_wildcard(raw.strip)).downcase.gsub(/\*/,'%')
     x = add_token_wildcards(raw.strip)
     x = add_trailing_wildcard(x)
     x.downcase.tr("*", "%")
@@ -39,42 +39,41 @@ module AdvancedSearch
         else
           string += c
         end
+      elsif c =~ /"/
+        wild = !wild
       else
-        if c =~ /"/
-          wild = !wild
-        else
-          string += c
-        end
+        string += c
       end
     end
     string
   end
 
   def add_leading_wildcard(raw)
-    raw = if raw.start_with?("^")
-            raw.sub(/^./, "")
-          else
-            "%" + raw
-          end
+    if raw.start_with?("^")
+      raw.sub(/^./, "")
+    else
+      "%" + raw
+    end
   end
 
-  def parse_search_for_limit(raw_search_request)
-    supplied_limit = raw_search_request.to_s.gsub(/.*limit:([0-9][0-9]*)/, '\1').to_i
-    calculated_limit = supplied_limit <= 0 ? SEARCH_LIMIT : supplied_limit
-    [calculated_limit, raw_search_request.gsub(/limit:[^ ][^ ]*/, "")]
+  def parse_search_for_limit(search_request)
+    parsed_limit = search_request.to_s.gsub(/.*limit:([0-9][0-9]*)/, '\1').to_i
+    calculated_limit = parsed_limit <= 0 ? SEARCH_LIMIT : parsed_limit
+    [calculated_limit, search_request.gsub(/limit:[^ ][^ ]*/, "")]
   end
 
   def add_trailing_wildcard(raw)
     if raw =~ /\$\Z/
       # $ is anchor, so no wildcard and get rid of the $
-      raw = raw.chop
+      raw.chop
     else
-      raw += "%"
+      "#{raw}%"
     end
   end
 
   def generic_bindings_to_where(_active_record_class, search_terms_array)
-    logger.debug("generic_bindings_to_where: search_terms_array: #{search_terms_array.inspect}")
+    logger.debug("generic_bindings_to_where: search_terms_array:
+                 #{search_terms_array.inspect}")
     where = ""
     binds = []
     rejected_pairings = []
@@ -140,10 +139,11 @@ module AdvancedSearch
       if pairing.size == 2
         case pairing[0].downcase
         when "sort"
-          order_by_argument = pairing[1] # e.g. "upd" or "upd d"  or "title"  or "title d"
-          sort_component = order_by_argument
+          # e.g. "upd" or "upd d"  or "title"  or "title d"
+          order_by_argument = pairing[1]
           order_by_argument.split(",").each do |sort_component|
-            field_descriptor, sort_direction = interpret_sort_component(sort_component)
+            field_descriptor, sort_direction =
+              interpret_sort_component(sort_component)
             field_name = field_map[field_descriptor]
             unless field_name.blank?
               order_by_binds.push("#{field_name} #{sort_direction}")
@@ -154,7 +154,8 @@ module AdvancedSearch
           logger.error "Rejected pairing: #{pairing}"
         end
       else
-        logger.error("Pairing should include exactly 2 elements, but does not. Rejecting pairing: #{pairing}")
+        logger.error("Pairing should include exactly 2 elements,
+                     but does not. Rejecting pairing: #{pairing}")
         rejected_pairings.push(pairing)
       end
     end
@@ -173,7 +174,7 @@ module AdvancedSearch
                        when "d" then "desc"
                        when "a" then "asc"
                        else "asc"
-                        end
+                       end
     else
       # 3 or more makes no sense
       field_descriptor = ""
