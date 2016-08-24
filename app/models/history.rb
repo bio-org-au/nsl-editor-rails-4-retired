@@ -18,6 +18,7 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "25-Aug-2016", release: true },
     { date: "24-Aug-2016",
       jira_id: "1943",
       description: %(Fix color that is incorrect for some names on some
