@@ -17,9 +17,9 @@
 #
 
 def cult_parent_suggs_shd_include(suggestions,
-                                      given_rank_name,
-                                      expected_rank_name,
-                                      caller_test)
+                                  given_rank_name,
+                                  expected_rank_name,
+                                  caller_test)
   re = Regexp.quote(expected_rank_name)
   assert(suggestions.collect do |h|
     h[:value] =~ /\s#{re}/ ? 1 : 0

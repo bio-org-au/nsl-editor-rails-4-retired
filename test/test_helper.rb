@@ -43,6 +43,7 @@ require "capybara-webkit"
 Capybara.default_driver = :selenium
 # Capybara.default_wait_time = 5
 
+# Set up tests
 class ActiveSupport::TestCase
   ActiveRecord::Migration.check_pending!
 
@@ -61,9 +62,17 @@ def debug(string)
 end
 
 def standard_page_assertions
+  standard_page_assertions_part_1
+  standard_page_assertions_part_2
+end
+
+def standard_page_assertions_part_1
   assert page.has_selector?("#query-on"), "No query-on field"
   assert page.has_selector?("#search-field"), "No search-field"
   assert page.has_content?("© NSL"), message: "Page needs copyright notice."
+end
+
+def standard_page_assertions_part_2
   assert page.has_selector?("#search-button"), "Page has no #search-button"
   assert page.has_selector?("input#search-field"),
          "Page has no #search-field element"
@@ -119,20 +128,20 @@ def sign_in_as_read_only_user
 end
 
 def tiny_sleep
-  sleep(inspection_time = 0.01)
+  sleep(0.01)
 end
 
 def little_sleep
-  sleep(inspection_time = 0.1)
+  sleep(0.1)
 end
 
 def moderate_sleep
-  sleep(inspection_time = 0.1)
+  sleep(0.1)
 end
 
 def big_sleep
   debug("start big_sleep")
-  sleep(inspection_time = 1.0)
+  sleep(1.0)
   debug("end big_sleep")
 end
 
@@ -140,67 +149,95 @@ def make_sure_details_are_showing
   debug "start make_sure_details_are_showing"
   found = false
   tries = 0
-  until found
-    debug "looking"
+  until found || tries > 9
     tries += 1
     fill_in "search-field", with: tries.to_s if tries > 1
-    if page.has_selector?("tr.search-result.fresh "\
-                          "td.takes-focus.main-content a.show-details-link")
-      if page.has_selector?("tr.search-result.fresh.showing-details td.ta"\
-                                "kes-focus.main-content a.show-details-link")
-        debug "found."
-        found = true
-      else
-        all("tr.search-result.fresh td.takes-focus.main-content "\
-            "a.show-details-link").first.click
-        debug "sleeping...."
-        sleep(inspection_time = 0.01)
-      end
-    end
-    if tries > 8 # give up
-      found = true
-      puts "make_sure_details_are_showing is exhausted - bailing out"
-    end
+    found = search_results_with_details?
+    puts "make_sure_details_are_showing is exhausted - bailing out" if tries > 8
   end
   debug "end make_sure_details_are_showing"
+end
+
+def search_results_with_details?
+  if search_results?
+    if details_are_showing?
+      true
+    else
+      show_details
+      debug "sleeping...."
+      sleep(0.01)
+      false
+    end
+  end
+end
+
+def search_results?
+  results_selector = "tr.search-result.fresh
+                     td.takes-focus.main-content a.show-details-link"
+  page.has_selector?(results_selector)
+end
+
+def details_are_showing?
+  details_selector = "tr.search-result.fresh.showing-details
+                     td.takes-focus.main-content a.show-details-link"
+  page.has_selector?(details_selector)
+end
+
+def show_details
+  all("tr.search-result.fresh td.takes-focus.main-content a.show-details-link")
+    .first.click
 end
 
 def wait_for(selector, max_tries = 5)
   found = false
   tries = 0
-  until found
+  until found || tries > max_tries
     tries += 1
     if page.has_selector?(selector)
       found = true
     else
-      sleep(inspection_time = 1)
+      sleep(1)
     end
-    found = true if tries > max_tries
   end
 end
 
 def set_name_parent
-  fill_in_typeahead("name-parent-typeahead", "name_parent_id", "Agenus", names(:a_genus).id)
+  fill_in_typeahead("name-parent-typeahead",
+                    "name_parent_id",
+                    "Agenus",
+                    names(:a_genus).id)
   find("#search-result-details h4").click
 end
 
 def set_name_parent_using(parent)
-  fill_in_typeahead("name-parent-typeahead", "name_parent_id", names(parent).full_name, names(parent).id)
+  fill_in_typeahead("name-parent-typeahead",
+                    "name_parent_id",
+                    names(parent).full_name,
+                    names(parent).id)
   find("#search-result-details h4").click
 end
 
 def set_name_second_parent_to_a_species
-  fill_in_typeahead("name-second-parent-typeahead", "name_second_parent_id", "Aspecies", names(:a_species).id)
+  fill_in_typeahead("name-second-parent-typeahead",
+                    "name_second_parent_id",
+                    "Aspecies",
+                    names(:a_species).id)
   find("#search-result-details h4").click
 end
 
 def set_name_parent_to_a_species
-  fill_in_typeahead("name-parent-typeahead", "name_parent_id", "Aspecies", names(:a_species).id)
+  fill_in_typeahead("name-parent-typeahead",
+                    "name_parent_id",
+                    "Aspecies",
+                    names(:a_species).id)
   find("#search-result-details h4").click
 end
 
 def set_name_parent_to_a_genus
-  fill_in_typeahead("name-parent-typeahead", "name_parent_id", "Agenus", names(:a_genus).id)
+  fill_in_typeahead("name-parent-typeahead",
+                    "name_parent_id",
+                    "Agenus",
+                    names(:a_genus).id)
   find("#search-result-details h4").click
 end
 
@@ -255,7 +292,9 @@ def load_new_hybrid_formula_form
   select_from_menu(["New", "Hybrid formula name"])
   find_link("New hybrid formula name").click
   search_result_must_include_content("New hybrid formula name")
-  search_result_details_must_include_content("New Scientific Hybrid Formula Name")
+  search_result_details_must_include_content(
+    "New Scientific Hybrid Formula Name"
+  )
 end
 
 def load_new_cultivar_hybrid_name_form
@@ -276,7 +315,9 @@ def load_new_hybrid_formula_unknown_2nd_parent_form
   end
   select_from_menu(["New", "Hybrid formula unknown 2nd parent name"])
   search_result_must_include_link("New hybrid formula unknown 2nd parent name")
-  search_result_details_must_include_content("New Scientific Hybrid Formula Unknown 2nd Parent Name")
+  search_result_details_must_include_content(
+    "New Scientific Hybrid Formula Unknown 2nd Parent Name"
+  )
 end
 
 def load_new_other_name_form
@@ -319,30 +360,45 @@ def after_javascript_finishes
   end
 end
 
-def assert_successful_create_for(expected_contents, prohibited_contents = [])
+def assert_successful_create_for(expected_contents, prohibited = [])
   after_javascript_finishes
   default = Capybara.default_wait_time
   Capybara.default_wait_time = 2
-  assert page.has_field?("search-field"), "No search field."
-  make_sure_details_are_showing
-  find("#search-result-details")
-  expected_contents.each do |expected_content|
-    assert page.has_content?(expected_content), "assert_successful_create_for says: Missing expected content: #{expected_content}"
-  end
-  prohibited_contents.each do |prohibited_content|
-    assert page.has_no_content?(prohibited_content), "assert_successful_create_for says: Missing prohibited content: #{prohibited_content}"
-  end
+  inner_assert_successful_create_for(expected_contents, prohibited)
   Capybara.default_wait_time = default
 end
 
-def fill_in_typeahead(text_field_id,
-                      hidden_field_id,
-                      text_to_enter,
-                      id_to_enter)
+def inner_assert_successful_create_for(expected_contents, prohibited)
+  assert page.has_field?("search-field"), "No search field."
+  make_sure_details_are_showing
+  find("#search-result-details")
+  assert_expected(expected_contents)
+  assert_no_prohibited(prohibited)
+end
+
+def assert_expected(expected_contents)
+  expected_contents.each do |expected_content|
+    assert page.has_content?(expected_content),
+           "assert_successful_create_for says:
+           Missing expected content: #{expected_content}"
+  end
+end
+
+def assert_no_prohibited(prohibited_contents)
+  prohibited_contents.each do |prohibited_content|
+    assert page.has_no_content?(prohibited_content),
+           "assert_successful_create_for says:
+           Missing prohibited content: #{prohibited_content}"
+  end
+end
+
+def fill_in_typeahead(text_field_id, hidden_field_id,
+                      text_to_enter, id_to_enter)
   using_wait_time 4 do
     fill_in(text_field_id, with: text_to_enter)
   end
-  script = "document.getElementById('" + hidden_field_id + "').setAttribute('type','text')"
+  script = "document.getElementById('" + hidden_field_id + "')
+           .setAttribute('type','text')"
   execute_script(script)
   using_wait_time 2 do
     fill_in(hidden_field_id, with: id_to_enter)
@@ -355,7 +411,8 @@ def fill_in_author_typeahead(text_field = "sanctioning-author-by-abbrev",
   fill_in_typeahead(text_field, id_field, author.abbrev, author.id)
 end
 
-def search_result_must_include_content(content, msg = "Search result content not found: '#{content}'")
+def search_result_must_include_content(content, msg = nil)
+  msg = "Search result content not found: '#{content}'" if msg.nil?
   after_javascript_finishes
   assert find("div#search-result-container").has_content?(content), msg
 end
@@ -370,69 +427,94 @@ def search_result_must_not_include(link_text, msg = "Search result found!")
   assert find("div#search-result-container").has_no_link?(link_text), msg
 end
 
-def search_result_details_must_include_link(link_text, msg = "Expected details link not found!: #{link_text}")
+def search_result_details_must_include_link(link_text, msg = nil)
+  msg = "Expected details link not found!: #{link_text}" if msg.nil?
   after_javascript_finishes
   assert find("div#search-result-details").has_link?(link_text), msg
 end
 
-def search_result_details_must_include_button(button_text, msg = "Expected details button not found!: #{button_text}")
+def search_result_details_must_include_button(button_text, msg = nil)
+  msg = "Expected details button not found!: #{button_text}" if msg.nil?
   after_javascript_finishes
   assert find("div#search-result-details").has_button?(button_text), msg
 end
 
-def search_result_details_must_include_field(field_id, msg = "Expected details field not found!: #{link_text}")
+def search_result_details_must_include_field(field_id, msg = nil)
+  msg = "Expected details field not found!: #{link_text}" if msg.nil?
   after_javascript_finishes
   assert find("div#search-result-details").has_field?(field_id), msg
 end
 
-def search_result_details_must_not_include_field(field_id, msg = "Found field that should not be there!: #{link_text}")
+def search_result_details_must_not_include_field(field_id, msg = nil)
+  msg = "Found field that should not be there!: #{link_text}" if msg.nil?
   after_javascript_finishes
   assert find("div#search-result-details").has_no_field?(field_id), msg
 end
 
-def search_result_details_must_not_include_link(link_text, msg = "Prohibited details link found!: #{link_text}")
+def search_result_details_must_not_include_link(link_text, msg = nil)
+  msg = "Prohibited details link found!: #{link_text}" if msg.nil?
   after_javascript_finishes
   assert find("div#search-result-details").has_no_link?(link_text), msg
 end
 
-def search_result_details_must_not_include_button(button_text, msg = "Prohibited details button found!: #{button_text}")
+def search_result_details_must_not_include_button(button_text, msg = nil)
+  msg = "Prohibited details button found!: #{button_text}" if msg.nil?
   after_javascript_finishes
   assert find("div#search-result-details").has_no_button?(button_text), msg
 end
 
-def search_result_summary_must_include_content(content, msg = "Search result summary content not found!")
+def search_result_summary_must_include_content(content, msg = nil)
+  msg = "Search result summary content not found!" if msg.nil?
   after_javascript_finishes
   assert find("div#search-results-summary-container").has_content?(content), msg
 end
 
-def search_result_details_must_include_content(text, msg = "Expected details content not found!: #{text}")
+def search_result_details_must_include_content(text, msg = nil?)
+  msg = "Expected details content not found!: #{text}" if msg.nil?
   after_javascript_finishes
   assert find("div#search-result-details").has_content?(text), msg
 end
 
-def search_result_must_include_link(link, msg = "Search result content not found: '#{link}'")
+def search_result_must_include_link(link, msg = nil)
+  msg = "Search result content not found: '#{link}'" if msg.nil?
   after_javascript_finishes
   assert find("div#search-result-container").has_link?(link), msg
 end
 
-def try_typeahead_multi(field_id, input_text, expected_suggestion, which_suggestion = "first")
-  # See www.rubytutorial.io/how-to-test-an-autocomplete-with-rails
+# See www.rubytutorial.io/how-to-test-an-autocomplete-with-rails
+def try_typeahead_multi(field_id,
+                        input_text,
+                        expected,
+                        which_suggestion = "first")
   fill_in(field_id, with: input_text)
   page.execute_script %{ $('##{field_id}').trigger("focus") }
-  suggestion = find("#" + field_id).find(:xpath, ".//..").all("div.tt-suggestion").send(which_suggestion)
+  suggestion = find("#" + field_id).find(:xpath, ".//..")
+                                   .all("div.tt-suggestion")
+                                   .send(which_suggestion)
   assert_not_nil suggestion, "Should have found a suggestion."
-  assert_equal expected_suggestion, suggestion.text, "Suggestion text should have #{expected_suggestion}."
+  assert_equal expected, suggestion.text, "Expected: #{expected}."
 end
 
-def try_typeahead_single(field_id, input_text, expected_suggestion)
-  # See www.rubytutorial.io/how-to-test-an-autocomplete-with-rails
+# See www.rubytutorial.io/how-to-test-an-autocomplete-with-rails
+def try_typeahead_single(field_id, input_text, expected)
   fill_in(field_id, with: input_text)
   page.execute_script %{ $('##{field_id}').trigger("focus") }
-  suggestion = nil
   begin
-    suggestion = find("#" + field_id).find(:xpath, ".//..").find("div.tt-suggestion")
-  rescue => e
+    suggestion = find("#" + field_id).find(:xpath, ".//..")
+                                     .find("div.tt-suggestion")
   end
-  assert_not_nil suggestion, "Did not find suggestion for '#{expected_suggestion}'"
-  assert_equal expected_suggestion, suggestion.text, "Suggestion text should have #{expected_suggestion}."
+  assert_not_nil suggestion, "No such suggestion: '#{expected}'"
+  assert_equal expected, suggestion.text, "Expected: #{expected}."
+end
+
+def fill_in_text_field(field, value)
+  using_wait_time 20 do
+    fill_in(field, with: value)
+  end
+end
+
+def fill_in_id_field(field, id)
+  using_wait_time 20 do
+    fill_in(field, with: id)
+  end
 end

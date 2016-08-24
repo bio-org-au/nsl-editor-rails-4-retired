@@ -58,18 +58,21 @@ class NamesCreateScientific2Test < ActionDispatch::IntegrationTest
   end
 
   def assert_successful_create_for(expected_contents, prohibited_contents = [])
-    # default = Capybara.default_wait_time
     Capybara.default_wait_time = 5
     find("#search-field")
     make_sure_details_are_showing
     find("#search-result-details")
-    expected_contents.each do |expected_content|
-      assert page.has_content?(expected_content),
-             "Missing expected content: #{expected_content}"
-    end
+    check_expected(expected_contents)
     prohibited_contents.each do |prohibited_content|
       assert page.has_no_content?(prohibited_content),
              "Missing prohibited content: #{prohibited_content}"
+    end
+  end
+
+  def check_expected
+    expected_contents.each do |expected_content|
+      assert page.has_content?(expected_content),
+             "Missing expected content: #{expected_content}"
     end
   end
 

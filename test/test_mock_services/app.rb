@@ -136,8 +136,10 @@ delete "/nsl/services/instance/apni/:id/api/delete" do |id|
                 <i>Journal of Botany, British and Foreign<\u002fi> 54" },
             "action" => "delete",
             "ok" => false,
-            "errors" => ["There are 1 instances that cite this.",
-                         "There are 1 instances that say this cites it."] }.to_json]
+            "errors" => [
+              "There are 1 instances that cite this.",
+              "There are 1 instances that say this cites it."
+            ] }.to_json]
   elsif id == "5"
     [500]
   else
@@ -180,6 +182,7 @@ delete "/nsl/services/name/apni/:id/api/delete" do
   end
 end
 
+# Dynamic mapping and json-ing methods
 class Struct
   def to_map
     map = {}
@@ -192,6 +195,7 @@ class Struct
   end
 end
 
+# Mock Reference
 class Reference < Struct.new(:class,
                              :_links,
                              :name,
@@ -199,12 +203,16 @@ class Reference < Struct.new(:class,
                              :action,
                              :result)
 end
+
+# Mock Name
 class Name < Struct.new(:class,
                         :_links,
                         :name_element,
                         :action,
                         :result)
 end
+
+# Mock InApc
 class InApc < Struct.new(:class,
                          :_links,
                          "nameElement",

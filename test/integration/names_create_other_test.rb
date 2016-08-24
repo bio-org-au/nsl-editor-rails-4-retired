@@ -52,17 +52,12 @@ class NamesCreateOtherTest < ActionDispatch::IntegrationTest
 
   def set_up_an_author(text_field = "sanctioning-author-by-abbrev",
                        id_field = "name_sanctioning_author_id",
-                       abbrev = "Benth.",
-                       author = authors(:bentham))
-    using_wait_time 20 do
-      fill_in(text_field, with: abbrev)
-    end
+                       abbrev = "Benth.", author = authors(:bentham))
+    fill_in_text_field(text_field, abbrev)
     script = "document.getElementById('" + id_field + "')
       .setAttribute('type','text')"
     execute_script(script)
-    using_wait_time 20 do
-      fill_in(id_field, with: author.id)
-    end
+    fill_in_id_field(id_field, author.id)
   end
 
   def assert_successful_create_for(expected_contents, prohibited_contents = [])

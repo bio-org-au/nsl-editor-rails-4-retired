@@ -44,7 +44,10 @@ class NameTagNamesController < ApplicationController
         error = @name_tag_name.errors.full_messages.first.to_s
         @message = "Could not attach that tag because #{error}"
         format.html { render :new }
-        format.json { render json: @name_tag_name.errors, status: :unprocessable_entity }
+        format.json do
+          render json: @name_tag_name.errors,
+                 status: :unprocessable_entity
+        end
         format.js { render :create_failed }
       end
     end

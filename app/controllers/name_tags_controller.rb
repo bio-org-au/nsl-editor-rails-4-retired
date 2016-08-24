@@ -38,7 +38,10 @@ class NameTagsController < ApplicationController
         format.json { render :show, status: :created, location: @name_tag }
       else
         format.html { render :new }
-        format.json { render json: @name_tag.errors, status: :unprocessable_entity }
+        format.json do
+          render json: @name_tag.errors,
+                 status: :unprocessable_entity
+        end
       end
     end
   end
@@ -60,7 +63,8 @@ class NameTagsController < ApplicationController
     @name_tag = NameTag.find(params[:id])
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
+  # Never trust parameters from the scary internet,
+  # only allow the white list through.
   def name_tag_params
     params.require(:name_tag).permit(:name)
   end
