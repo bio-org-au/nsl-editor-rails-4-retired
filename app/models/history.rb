@@ -18,6 +18,10 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "24-Aug-2016",
+      jira_id: "1943",
+      description: %(Fix color that is incorrect for some names on some
+      instances.) },
     { date: "23-Aug-2016",
       jira_id: "1939",
       description: %(Show error message for attempt to create a duplicate
