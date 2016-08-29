@@ -18,6 +18,10 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "29-Aug-2016",
+      jira_id: "1956",
+      description: %(Fix reference parent typeahead problem and improve error
+      messages.) },
     { date: "25-Aug-2016", release: true },
     { date: "24-Aug-2016",
       jira_id: "1943",
