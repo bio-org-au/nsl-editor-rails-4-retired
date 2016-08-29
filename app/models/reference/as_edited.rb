@@ -200,12 +200,12 @@ class Reference::AsEdited < Reference
         when 1
           value = possibles.first.id
         else
-          raise "please choose parent from suggestions"
+          raise "no match for that parent"
         end
       when 1
         value = possibles.first.id
       else
-        raise "please choose parent from suggestions (more than 1 match)"
+        raise "more than 1 match for that parent"
       end
     when :id_and_text
       logger.debug("#{LABEL}:parent_from_typeahead: id and text")
@@ -217,7 +217,7 @@ class Reference::AsEdited < Reference
         when 1
           value = possibles.first.id
         else
-          raise "please choose duplicate of from suggestions"
+          raise "no match for that parent"
         end
       when 1
         value = possibles.first.id
