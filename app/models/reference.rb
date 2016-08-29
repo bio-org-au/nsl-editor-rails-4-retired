@@ -326,8 +326,8 @@ class Reference < ActiveRecord::Base
   end
 
   def typeahead_display_value
-    "#{citation} #{'[' + pages + ']' unless pages_useless?} \
-      [#{ref_type.name.downcase}]"
+    type = ref_type.name.downcase
+    "#{citation} #{'[' + pages + ']' unless pages_useless?} | #{type}"
   end
 
   def build_citations
