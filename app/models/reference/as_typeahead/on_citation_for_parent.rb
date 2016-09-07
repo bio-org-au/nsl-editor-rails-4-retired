@@ -28,7 +28,6 @@ class Reference::AsTypeahead::OnCitationForParent
   attr_reader :results
   SEARCH_LIMIT = 50
   def initialize(terms, current_id, param_ref_type_id)
-
     @results = query(terms, current_id, param_ref_type_id).collect do |ref|
       { value: ref.typeahead_display_value,
         id: ref.id.to_s }
@@ -59,7 +58,6 @@ class Reference::AsTypeahead::OnCitationForParent
   end
 
   def query(terms, current_id, param_ref_type_id)
-
     if param_ref_type_id.present?
       best_ref_type_id = param_ref_type_id
     else

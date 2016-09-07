@@ -151,10 +151,18 @@ class Instance < ActiveRecord::Base
   validate :synonymy_must_keep_cites_id, on: :update
   validate :name_id_must_not_change, on: :update
   validate :standalone_reference_id_can_change_if_no_dependents, on: :update
+  validate :name_cannot_be_synonym_of_itself
 
   before_validation :set_defaults
   before_create :set_defaults
   # before_update :update_allowed?
+
+  def name_cannot_be_synonym_of_itself
+    return if cited_by_id.blank?
+    return if cites_id.blank?
+    return if cites_id != cited_by_id
+    errors[:base] << "A name cannot be a synonym of itself"
+  end
 
   def apc_instance_notes
     instance_notes.apc

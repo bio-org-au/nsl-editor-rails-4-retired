@@ -18,6 +18,10 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "07-Sep-2016",
+      jira_id: "1952",
+      description: %(Prevent any name being a synonym of itself.) },
+    { date: "01-Sep-2016", release: true },
     { date: "29-Aug-2016",
       jira_id: "1956",
       description: %(Fix reference parent typeahead problem and improve error
@@ -37,13 +41,13 @@ class History
       should once again show on the tab.) },
     { date: "22-Aug-2016",
       jira_id: "1936",
-      description: %(Reference typeaheads now handle diacritics, e.g. "é" 
+      description: %(Reference typeaheads now handle diacritics, e.g. "é"
       This includes typeaheads for changing the reference for instances,
       reference parent, and reference duplicate-of.) },
     { date: "19-Aug-2016", release: true },
     { date: "18-Aug-2016",
       jira_id: "1935",
-      description: %(Delete reference confirm dialog should now reliably 
+      description: %(Delete reference confirm dialog should now reliably
       show the success message if the reference is deleted.) },
     { date: "18-Aug-2016", release: true },
     { date: "16-Aug-2016",
