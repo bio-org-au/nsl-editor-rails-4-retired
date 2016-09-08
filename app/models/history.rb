@@ -18,12 +18,15 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "08-Sep-2016",
+      jira_id: "1974",
+      description: %(Report of any name listed as synonym of itself.) },
+    { date: "08-Sep-2016",
+      jira_id: "1952",
+      description: %(Prevent any name being a synonym of itself.) },
     { date: "07-Sep-2016",
       jira_id: "1951",
       description: %(Report of accepted names as synonyms of accepted names.) },
-    { date: "07-Sep-2016",
-      jira_id: "1952",
-      description: %(Prevent any name being a synonym of itself.) },
     { date: "01-Sep-2016", release: true },
     { date: "29-Aug-2016",
       jira_id: "1956",

@@ -390,7 +390,7 @@ class Search::OnName::FieldRule
                           AND snode.tree_arrangement_id = a.id
                           AND snode.type_uri_id_part = 'ApcConcept') ",
                                                    order: "name.full_name" },
-    "cepted-name-synonym-of-accepted-name:" => { where_clause: "  name.id in (91755)",
+    "name-synonym-of-itself:" => { where_clause: "  name.id in (select i.name_id from instance i inner join instance syn on i.id = syn.cited_by_id inner join instance i2 on syn.cites_id = i2.id where i.name_id = i2.name_id)",
                                                    order: "name.full_name" },
 
   }.freeze

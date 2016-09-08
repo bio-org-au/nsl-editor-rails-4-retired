@@ -188,5 +188,28 @@
   <% end %>
 </table>
 
+<h5>Name is listed as a synonym of itself (NSL-1974)</h5>
+<table class="example-searches table table-striped">
+  <% [
+      {search_target: 'Names',
+       search_string: "name-synonym-of-itself: limit: 10",
+       explanation: %Q(Name is a synonym of itself.  First 10 records.) },
+      {search_target: 'Names',
+       search_string: "name-synonym-of-itself: limit: 10 show-instances:",
+       explanation: %Q(Name is a synonym of itself.  First 10 records, showing instances.) },
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent">
+      <%= link_to(val[:search_string],
+                  search_path(query_string: val[:search_string],
+                              query_target: val[:search_target]),
+                  class:'blue',
+                  title: "Run the report.") %>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+
   </div>
 </div>
