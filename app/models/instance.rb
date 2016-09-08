@@ -160,7 +160,7 @@ class Instance < ActiveRecord::Base
   def name_cannot_be_synonym_of_itself
     return if cited_by_id.blank?
     return if cites_id.blank?
-    return if cites_id != cited_by_id
+    return unless this_is_cited_by.name_id == this_cites.name_id
     errors[:base] << "A name cannot be a synonym of itself"
   end
 
