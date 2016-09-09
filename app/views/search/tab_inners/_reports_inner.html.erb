@@ -211,5 +211,36 @@
   <% end %>
 </table>
 
+<h5>Name is listed more than once as a synonym of another name, excluding
+misapplications (NSL-1974)</h5>
+<table class="example-searches table table-striped">
+  <% [
+      {search_target: 'Names',
+       search_string: "name-has-double-synonym: limit: 10",
+       explanation: %Q(Name has another name as synonym twice - any number of
+       misapplications count as 1 synonym.  First 10 records.) },
+      {search_target: 'Names',
+       search_string: "name-has-double-synonym: show-instances: limit: 10",
+       explanation: %Q(Name has another name as synonym twice - any number of
+       misapplications count as 1 synonym.  First 10 records, showing
+       instances.) },
+      {search_target: 'Names',
+       search_string: "name-is-double-synonym: limit: 10",
+       explanation: %Q(Name is a synonym of another name twice - any number of
+       misapplications count as 1 synonym.  First 10 records.) },
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent">
+      <%= link_to(val[:search_string],
+                  search_path(query_string: val[:search_string],
+                              query_target: val[:search_target]),
+                  class:'blue',
+                  title: "Run the report.") %>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+
   </div>
 </div>

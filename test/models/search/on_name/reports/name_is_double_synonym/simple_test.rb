@@ -23,16 +23,16 @@ load "test/models/search/users.rb"
 load "test/models/search/on_name/test_helper.rb"
 
 # Single Search model test.
-class SearchOnNameReportsNameSynOfItselfSimpleTest < ActiveSupport::TestCase
-  test "name report name synonym of itself simple" do
+class SearchOnNameReportsNameIsDoubleSynTest < ActiveSupport::TestCase
+  test "name report name is double synonym simple" do
     params = ActiveSupport::HashWithIndifferentAccess.new(
       query_target: "name",
-      query_string: "name-synonym-of-itself:",
+      query_string: "name-is-double-synonym:",
       current_user: build_edit_user
     )
     search = Search::Base.new(params)
     confirm_results_class(search.executed_query.results)
     assert search.executed_query.results.size >= 0,
-           "Expected report name-synonym-of-itself to run:"
+           "Expected name-is-double-synonym report to run:"
   end
 end

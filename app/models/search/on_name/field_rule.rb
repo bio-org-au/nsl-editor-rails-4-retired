@@ -390,7 +390,75 @@ class Search::OnName::FieldRule
                           AND snode.tree_arrangement_id = a.id
                           AND snode.type_uri_id_part = 'ApcConcept') ",
                                                    order: "name.full_name" },
-    "name-synonym-of-itself:" => { where_clause: "  name.id in (select i.name_id from instance i inner join instance syn on i.id = syn.cited_by_id inner join instance i2 on syn.cites_id = i2.id where i.name_id = i2.name_id)",
+    "name-synonym-of-itself:" => { where_clause: "  name.id in (
+                                   select i.name_id
+                                     from instance i
+                                          inner join instance syn
+                                          on i.id = syn.cited_by_id
+                                          inner join instance i2
+                                          on syn.cites_id = i2.id
+                                          where i.name_id = i2.name_id)",
+                                   order: "name.full_name" },
+    "name-is-double-synonym:" => { where_clause: "  name.id in (
+    select name_id2
+      from (
+    select i2.name_id name_id2, i1.id i1_id,usage.cited_by_id,
+          case t.misapplied
+          when true then 'some sort of misapplication'
+          else t.name
+          end
+      from instance i1
+    inner join name n1
+        on i1.name_id = n1.id
+    inner join instance usage
+        on i1.id = usage.cited_by_id
+    inner join instance_type t
+        on usage.instance_type_id = t.id
+    inner join instance i2
+        on usage.cites_id = i2.id
+    inner join name n2
+        on i2.name_id = n2.id
+    group by i2.name_id, i1.id,usage.cited_by_id,
+          case t.misapplied
+          when true then 'some sort of misapplication'
+          else t.name
+       end
+       ) grouped_by_misapplied
+ group by name_id2, i1_id, cited_by_id
+having count(*)   > 1)",
+                                                   order: "name.full_name" },
+    "name-has-double-synonym:" => { where_clause: "  name.id in (
+select name_id
+  from instance
+ where id in (
+select i1_id
+  from (
+    select i2.name_id name_id2, i1.id i1_id,usage.cited_by_id,
+          case t.misapplied
+          when true then 'some sort of misapplication'
+          else t.name
+          end
+      from instance i1
+    inner join name n1
+        on i1.name_id = n1.id
+    inner join instance usage
+        on i1.id = usage.cited_by_id
+    inner join instance_type t
+        on usage.instance_type_id = t.id
+    inner join instance i2
+        on usage.cites_id = i2.id
+    inner join name n2
+        on i2.name_id = n2.id
+    group by i2.name_id, i1.id,usage.cited_by_id,
+          case t.misapplied
+          when true then 'some sort of misapplication'
+          else t.name
+       end
+       ) grouped_by_misapplied
+ group by name_id2, i1_id, cited_by_id
+having count(*)   > 1
+)
+    )",
                                                    order: "name.full_name" },
 
   }.freeze

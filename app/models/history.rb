@@ -18,6 +18,11 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "09-Sep-2016",
+      jira_id: "1954",
+      description: %(Two reports on double synonyms - "has" double synonyms and
+      "is" double synonym.) },
+    { date: "09-Sep-2016", release: true },
     { date: "08-Sep-2016",
       jira_id: "1974",
       description: %(Report of any name listed as synonym of itself.) },
