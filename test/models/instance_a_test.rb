@@ -60,14 +60,6 @@ class InstanceATest < ActiveSupport::TestCase
            "should be valid; errors: #{instance.errors.full_messages.join(';')}"
   end
 
-  test "metrosideros_costata_is_basionym_of_angophora_costata valid" do
-    metrosideros_instance =
-      instances(:metrosideros_costata_is_basionym_of_angophora_costata)
-    assert metrosideros_instance.valid?,
-           "should be valid; errors:
-           #{metrosideros_instance.errors.full_messages.join(';')}"
-  end
-
   test "rusty_gum_is_a_common_name_of_angophora_costata should be valid" do
     instance = instances(:rusty_gum_is_a_common_name_of_angophora_costata)
     assert instance.valid?,

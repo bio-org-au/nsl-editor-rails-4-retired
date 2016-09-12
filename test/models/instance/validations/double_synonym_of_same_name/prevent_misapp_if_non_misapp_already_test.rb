@@ -18,15 +18,25 @@
 require "test_helper"
 
 # Single instance model test.
-class InstanceValidationPreventSynonymOfItselfTest < ActiveSupport::TestCase
-  test "instance prevent synonym of itself" do
-    synonym = instances(:species_or_below_syn_with_genus_or_above)
-    assert synonym.valid?, "Starting synonym must be valid for this test."
-    synonym.cited_by_id = synonym.cites_id
-    synonym.reference_id = synonym.this_is_cited_by.reference.id
+class InstValDoubleSynPreventMisappIfNonMisAlreadyTest < ActiveSupport::TestCase
+  def setup
+    instance_1 = instances(:for_to_have_a_double_in_ref)
+    instance_2 = instances(:for_to_be_a_double_in_alt_ref)
+    @syn = Instance.new
+    @syn.instance_type = InstanceType.find_by(name: "misapplied")
+    @syn.this_is_cited_by = instance_1
+    @syn.reference = instance_1.reference
+    @syn.this_cites = instance_2
+    @syn.name = instance_2.name
+    @syn.created_by = @syn.updated_by = "tester"
+  end
+
+  test "instance double synonym prevent misapplications if non misapp" do
+    assert @syn.name_id == @syn.this_cites.name_id,
+           "Name IDs must match for this test."
     assert_raises(ActiveRecord::RecordInvalid,
-                  "Synonym of itself shouldn't be saved") do
-      synonym.save!
+                  "Double synonym should be invalid and not saved") do
+      @syn.save!
     end
   end
 end

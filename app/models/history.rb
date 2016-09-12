@@ -18,10 +18,13 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "12-Sep-2016",
+      jira_id: "1954",
+      description: %(Prevent double synonyms being created.) },
     { date: "09-Sep-2016",
       jira_id: "1954",
       description: %(Two reports on double synonyms - "has" double synonyms and
-      "is" double synonym.) },
+      "is" a double synonym.) },
     { date: "09-Sep-2016", release: true },
     { date: "08-Sep-2016",
       jira_id: "1974",
@@ -63,8 +66,8 @@ class History
     { date: "18-Aug-2016", release: true },
     { date: "16-Aug-2016",
       jira_id: "1931",
-      description: %(Show exception messages for instance create problems e.g. if
-      synonym create double-enter bypasses application-level validation.) },
+      description: %(Show exception messages for instance create problems e.g.
+      if synonym create double-enter bypasses application-level validation.) },
     { date: "15-Aug-2016",
       jira_id: "1928",
       description:
@@ -207,7 +210,8 @@ class History
     { date: "13-May-2016",
       jira_id: "1778",
       description:
-      %(Assume first namespace record is the default namespace for the database.) },
+      %(Assume first namespace record is the default namespace for the
+      database.) },
     { date: "14-Apr-2016", release: true },
     { date: "13-Apr-2016",
       jira_id: "1756",

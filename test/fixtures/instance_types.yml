@@ -197,7 +197,7 @@ doubtful_invalid_publication:
 misapplied:
   citing: true
   deprecated: false
-  misapplied: false
+  misapplied: true
   name: "misapplied"
   nomenclatural: false
   primary_instance: false
@@ -212,7 +212,7 @@ misapplied:
 doubtful_misapplied:
   citing: true
   deprecated: false
-  misapplied: false
+  misapplied: true
   name: "doubtful misapplied"
   nomenclatural: false
   primary_instance: false
@@ -257,7 +257,7 @@ doubtful_nomenclatural_synonym:
 doubtful_pro_parte_misapplied:
   citing: true
   deprecated: false
-  misapplied: false
+  misapplied: true
   name: "doubtful pro parte misapplied"
   nomenclatural: false
   primary_instance: false
@@ -437,7 +437,7 @@ orthographic_variant:
 pro_parte_misapplied:
   citing: true
   deprecated: false
-  misapplied: false
+  misapplied: true
   name: "pro parte misapplied"
   nomenclatural: false
   primary_instance: false

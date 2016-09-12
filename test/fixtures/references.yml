@@ -2099,3 +2099,45 @@ hilten_without_diacritic:
   published: true
   created_by: tester
   updated_by: tester
+
+for_to_have_a_double_synonym:
+  title: For to have a double synonym
+  citation: For to have a double synonym
+  citation_html: For to have a double synonym
+  display_title: For to have a double synonym
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: editor
+  ref_type: book
+  published: true
+  created_by: tester
+  updated_by: tester
+
+alt_for_to_have_a_double_synonym:
+  title: Alt for to have a double synonym
+  citation: Alt for to have a double synonym
+  citation_html: Alt for to have a double synonym
+  display_title: Alt for to have a double synonym
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: editor
+  ref_type: book
+  published: true
+  created_by: tester
+  updated_by: tester
+
+for_to_be_a_double_synonym:
+  title: For to be a double synonym
+  citation: For to be a double synonym
+  citation_html: For to be a double synonym
+  display_title: For to be a double synonym
+  author: unknown
+  language: undetermined
+  namespace: apni
+  ref_author_role: editor
+  ref_type: book
+  published: true
+  created_by: tester
+  updated_by: tester

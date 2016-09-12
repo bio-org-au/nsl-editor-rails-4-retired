@@ -16,12 +16,12 @@
 #   limitations under the License.
 #
 require "test_helper"
-
+ 
 # Single instance model test.
 class InstanceValidationPreventSynonymOfSameNameTest < ActiveSupport::TestCase
   test "instance prevent synonym of same name" do
-    instance_1 = instances(:britten_created_angophora_costata)
-    instance_2 = instances(:angophora_costata_in_stanley)
+    instance_1 = instances(:for_to_have_a_double_in_ref)
+    instance_2 = instances(:for_to_be_a_double_in_alt_ref)
     syn = Instance.new
     syn.instance_type = InstanceType.find_by(name: 'taxonomic synonym')
     syn.this_is_cited_by = instance_1
@@ -34,7 +34,7 @@ class InstanceValidationPreventSynonymOfSameNameTest < ActiveSupport::TestCase
     assert syn.name_id == syn.this_cites.name_id,
            "Name IDs must match for this test."
     assert_raises(ActiveRecord::RecordInvalid,
-                  "Synonym of itself shouldn't be saved") do
+                  "Double synonym should be invalid and not saved") do
       syn.save!
     end
   end

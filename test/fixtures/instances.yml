@@ -788,3 +788,40 @@ secondary_ref_citation:
   created_by: tester
   updated_by: tester
 
+for_to_have_a_double_in_ref:
+  reference: for_to_have_a_double_synonym
+  name: to_have_double_synonym
+  instance_type: unknown
+  page: exclude-from-ordering-test
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+
+for_to_be_a_double_in_ref:
+  reference: for_to_be_a_double_synonym
+  name: to_be_a_double_synonym
+  instance_type: unknown
+  page: exclude-from-ordering-test
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+
+for_to_be_a_double_in_alt_ref:
+  reference: alt_for_to_be_a_double_synonym
+  name: to_be_a_double_synonym
+  instance_type: unknown
+  page: exclude-from-ordering-test
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+
+first_syn_for_to_have_a_double:
+  this_cites: for_to_be_a_double_in_ref
+  name: to_be_a_double_synonym
+  this_is_cited_by: for_to_have_a_double_in_ref
+  reference: for_to_have_a_double_synonym
+  instance_type: synonym
+  page: exclude-from-ordering-test
+  namespace: apni
+  created_by: tester
+  updated_by: tester

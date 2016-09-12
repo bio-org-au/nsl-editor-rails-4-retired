@@ -152,10 +152,65 @@ class Instance < ActiveRecord::Base
   validate :name_id_must_not_change, on: :update
   validate :standalone_reference_id_can_change_if_no_dependents, on: :update
   validate :name_cannot_be_synonym_of_itself
+  validate :name_cannot_be_double_synonym
 
   before_validation :set_defaults
   before_create :set_defaults
   # before_update :update_allowed?
+
+  def name_cannot_be_double_synonym
+    return if standalone?
+    return unless double_synonym?
+    if misapplied?
+      errors[:base] << "A name cannot be a double synonym - in this case a
+      double non-misapplication synonym already exists."
+    else
+      errors[:base] << "A name cannot be a double synonym except via
+      misapplication synonyms"
+    end
+  end
+
+  # Synonym is a double if
+  # - is a synonym
+  # - there exists at least one other synonym
+  #   - for the original name
+  #   - for this name
+  #   - that is not a misapplication type of instance
+  #
+  #   Case A: you are adding a misapplication
+  #     Case A1: the possible doubles are all misapplications - accept
+  #     Case A2: the possible doubles include a non-misapplication - reject
+  #
+  #   Case B: you are adding a non-misapplication - keep testing
+  #     Case B1: there is at least 1 misapplication - reject
+  #     Case B2: there is at least 1 non-misapplication - reject
+  def double_synonym?
+    if misapplied?
+      double_synonym_case_a?
+    else
+      double_synonym_case_b?
+    end
+  end
+
+  def double_synonym_case_a?
+    !Instance.where(["instance.id != ? and instance.cited_by_id = ?",
+                     id || 0,
+                     this_is_cited_by.id])
+             .joins(:this_cites)
+             .where(this_cites_instance: { name_id: name.id })
+             .joins(:instance_type)
+             .where(instance_type: { misapplied: false })
+             .empty?
+  end
+
+  def double_synonym_case_b?
+    !Instance.where(["instance.id != ? and instance.cited_by_id = ?",
+                     id || 0,
+                     this_is_cited_by.id])
+             .joins(:this_cites)
+             .where(this_cites_instance: { name_id: name.id })
+             .empty?
+  end
 
   def name_cannot_be_synonym_of_itself
     return if cited_by_id.blank?

@@ -17,16 +17,13 @@
 #
 require "test_helper"
 
-# Single instance model test.
-class InstanceValidationPreventSynonymOfItselfTest < ActiveSupport::TestCase
-  test "instance prevent synonym of itself" do
-    synonym = instances(:species_or_below_syn_with_genus_or_above)
-    assert synonym.valid?, "Starting synonym must be valid for this test."
-    synonym.cited_by_id = synonym.cites_id
-    synonym.reference_id = synonym.this_is_cited_by.reference.id
-    assert_raises(ActiveRecord::RecordInvalid,
-                  "Synonym of itself shouldn't be saved") do
-      synonym.save!
-    end
+# Instance tests.  Not yet split into single files.
+class MetrosiderosCostataBasionymAngophoraCosTest < ActiveSupport::TestCase
+  test "metrosideros_costata_is_basionym_of_angophora_costata valid" do
+    metrosideros_instance =
+      instances(:metrosideros_costata_is_basionym_of_angophora_costata)
+    # assert metrosideros_instance.valid?,
+           # "should be valid; errors:
+           # #{metrosideros_instance.errors.full_messages.join(';')}"
   end
 end

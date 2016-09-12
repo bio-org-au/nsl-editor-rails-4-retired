@@ -1927,3 +1927,29 @@ name_in_secondary_ref:
   updated_by: greg
   created_by: greg
 
+to_have_a_double_synonym: 
+  simple_name: to have a double synonym
+  full_name: to have a double synonym
+  name_element: to have a double synonym
+  full_name_html: to have a double synonym
+  name_rank: species
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+to_be_a_double_synonym: 
+  simple_name: to be a double synonym
+  full_name: to be a double synonym
+  name_element: to be a double synonym
+  full_name_html: to be a double synonym
+  name_rank: species
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+

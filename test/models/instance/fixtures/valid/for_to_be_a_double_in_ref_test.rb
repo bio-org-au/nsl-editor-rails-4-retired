@@ -16,19 +16,14 @@
 #   limitations under the License.
 #
 require "test_helper"
-load "models/search/users.rb"
 
-# Single instance model test.
-class ForInstanceTypeUnknown < ActiveSupport::TestCase
-  test "instance type search for unknown" do
-    search = Search::Base
-             .new(ActiveSupport::HashWithIndifferentAccess
-                  .new(query_string: "type: [unknown]",
-                       query_target: "Instance",
-                       current_user: build_edit_user))
-    assert_equal Instance::ActiveRecord_Relation,
-                 search.executed_query.results.class,
-                 "Results should be an Instance::ActiveRecord_Relation"
-    assert_equal 1, search.executed_query.results.size, "One record expected."
+# Instance tests.  Not yet split into single files.
+class InstanceFixturesValidIsADoubleInRefTest < ActiveSupport::TestCase
+  test "for_to_be_a_double_in_ref should be a standalone instance" do
+    instance = instances(:for_to_be_a_double_in_ref)
+    assert instance.type_of_instance == "Standalone",
+           "Instance should be Standalone."
+    assert instance.valid?,
+           "should be valid; errors: #{instance.errors.full_messages.join(';')}"
   end
 end
