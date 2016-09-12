@@ -24,7 +24,9 @@ class InstanceBackDoor < ActiveRecord::Base
       self.reference_id = params["reference_id"]
       self.updated_by = username
       save
-      InstanceBackDoor.find_by_sql(["select * from instance where cited_by_id = ?", id]).each do |instance|
+      InstanceBackDoor
+        .find_by_sql(["select * from instance where cited_by_id = ?", id])
+        .each do |instance|
         instance.reference_id = params["reference_id"]
         instance.updated_by = username
         instance.save

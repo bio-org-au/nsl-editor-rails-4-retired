@@ -20,12 +20,13 @@ class Instance::AsServices < Instance
     "#{Rails.configuration.name_services}#{id}/api/name-strings"
   end
 
-  # Service will send back 200 even if delete fails, but will also sometimes send back 404,
-  # so have to look at both.
+  # Service will send back 200 even if delete fails, but will also sometimes
+  # send back 404, so have to look at both. Sigh.
   # The interface *should* never let a user try to delete an instance
-  # that cannot be deleted, so the chances of hitting a 'meaningful' error are small.
-  # The service error messages are not suitable for showing to users. e.g. "There are 1 instances that cite this."
-  # so just log them.
+  # that cannot be deleted, so the chances of hitting a 'meaningful' error
+  # should be small but experience has shows this happens.
+  # The service error messages are not always good for showing to users, but
+  # users need to see them, so we quote them.
   def self.delete(id)
     logger.info("Instance::AsServices.delete")
     api_key = Rails.configuration.api_key
@@ -36,8 +37,8 @@ class Instance::AsServices < Instance
   rescue => e
     logger.error("Instance::AsServices.delete exception : #{e}")
     logger.error("Instance::AsServices.delete exception for url: #{url}")
-    logger.error("Instance::AsServices.delete exception with s_response: #{s_response}")
-    logger.error("Instance::AsServices.delete exception with errors: #{json['errors'] if json.present?}")
+    logger.error("Instance::AsServices.delete exc s_response: #{s_response}")
+    logger.error("Instance::AsServices.delete exc errors: #{json['errors'] if json.present?}")
     raise
   end
 end

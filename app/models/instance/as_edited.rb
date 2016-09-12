@@ -35,7 +35,8 @@ class Instance::AsEdited < Instance
 
   private
 
-  # Prevent empty or blank-filled params being treated as changes to empty columns.
+  # Prevent empty or blank-filled params being treated as changes to empty
+  # columns.
   def clean(param)
     if param == ""
       return nil

@@ -20,7 +20,6 @@ class SearchController < ApplicationController
 
   def search
     handle_old
-    handle_old_ffox
     run_tree_search || run_local_search || run_empty_search
     respond_to do |format|
       format.html
@@ -29,7 +28,6 @@ class SearchController < ApplicationController
   rescue => e
     params[:error_message] = e.to_s
     @search = Search::Error.new(params) unless @search.present?
-    save_search
   end
 
   def tree
@@ -45,7 +43,6 @@ class SearchController < ApplicationController
   end
 
   def set_include_common_and_cultivar
-    logger.debug("set_include_common_and_cultivar")
     session[:include_common_and_cultivar] = \
       !session[:include_common_and_cultivar]
   end
@@ -56,15 +53,6 @@ class SearchController < ApplicationController
   end
 
   private
-
-  def save_search
-    # session[:searches] ||= []
-    # session[:searches].push(@search.to_history)
-    # trim_session_searches
-  rescue => e
-    logger.error("Error saving search: #{e}")
-    session[:searches] = []
-  end
 
   def trim_session_searches
     session[:searches].shift if session[:searches].size > 2
@@ -84,6 +72,7 @@ class SearchController < ApplicationController
   def handle_old
     handle_old_style_params
     handle_old_targets
+    handle_old_ffox
   end
 
   # translate services/search/link

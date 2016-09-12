@@ -36,18 +36,14 @@ class InstanceNotesController < ApplicationController
   # POST /instance_notes
   # POST /instance_notes.json
   def create
-    @message = ""
-    @instance_note = InstanceNote.new(instance_note_params)
-    if @instance_note.save_with_username(current_user.username)
+    if InstanceNote.new(instance_note_params)
+                   .save_with_username(current_user.username)
       @message = "Saved"
       render :create
     else
-      logger.error("Save failed!")
-      @message = "Not saved"
-      render :create_failed
+      raise("Not saved")
     end
   rescue => e
-    logger.error("Controller:InstanceNotes:create:rescuing exception #{e}")
     @message = e.to_s
     render "create_failed.js", status: :unprocessable_entity
   end
@@ -62,7 +58,6 @@ class InstanceNotesController < ApplicationController
   # DELETE /instance_notes/1
   # DELETE /instance_notes/1.json
   def destroy
-    u = current_user.username
     @instance_note.updated_by = current_user.username
     if @instance_note.save(validate: false) && @instance_note.destroy
       render :destroy
@@ -100,13 +95,9 @@ class InstanceNotesController < ApplicationController
       @message = "Updated"
       render :update
     else
-      @message = "Not updated"
-      render :update_failed
+      raise("Not updated")
     end
   rescue => e
-    logger.error(
-      "Controller:InstanceNotes:really_update:rescuing exception #{e}"
-    )
     @message = e.to_s
     render "update_failed.js", status: :unprocessable_entity
   end

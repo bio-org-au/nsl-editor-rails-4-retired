@@ -17,13 +17,13 @@
 #
 require "test_helper"
 
-# Instance tests.  Not yet split into single files.
+# Instance tests.
 class MetrosiderosCostataBasionymAngophoraCosTest < ActiveSupport::TestCase
   test "metrosideros_costata_is_basionym_of_angophora_costata valid" do
     metrosideros_instance =
       instances(:metrosideros_costata_is_basionym_of_angophora_costata)
-    # assert metrosideros_instance.valid?,
-           # "should be valid; errors:
-           # #{metrosideros_instance.errors.full_messages.join(';')}"
+    assert_not metrosideros_instance.valid?,
+               "should be valid; errors:
+               #{metrosideros_instance.errors.full_messages.join(';')}"
   end
 end

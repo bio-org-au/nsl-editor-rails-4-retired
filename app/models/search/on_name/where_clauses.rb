@@ -31,11 +31,10 @@ class Search::OnName::WhereClauses
 
   def build_sql
     args = @parsed_request.where_arguments.downcase
-    @common_and_cultivar_included = @parsed_request.include_common_and_cultivar_session
+    @common_and_cultivar_included =
+      @parsed_request.include_common_and_cultivar_session
     @sql = @sql.for_id(@parsed_request.id) if @parsed_request.id
-    debug("build_sql, before apply_args_to_sql; @common_and_cultivar_included: #{@common_and_cultivar_included}")
     apply_args_to_sql(args)
-    debug("build_sql, after apply_args_to_sql; @common_and_cultivar_included: #{@common_and_cultivar_included}")
     @sql = @sql.not_common_or_cultivar unless @common_and_cultivar_included
   end
 
@@ -82,7 +81,7 @@ class Search::OnName::WhereClauses
     when 2 then supply_value_twice(rule)
     when 3 then supply_value_thrice(rule)
     else
-      raise "Where clause value frequency: #{rule.value_frequency}, is too high."
+      raise "Where clause value frequency (#{rule.value_frequency}), too high."
     end
   end
 

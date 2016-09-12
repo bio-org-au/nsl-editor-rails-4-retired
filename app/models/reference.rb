@@ -166,7 +166,7 @@ class Reference < ActiveRecord::Base
                         known_author
                         verbatim_title).freeze
   SEARCH_LIMIT = 50
-  DEFAULT_DESCRIPTOR = "citation" # for citation
+  DEFAULT_DESCRIPTOR = "citation"  # for citation
   LEGAL_TO_ORDER_BY = { "p" => "parent_id",
                         "t" => "title",
                         "y" => "year",

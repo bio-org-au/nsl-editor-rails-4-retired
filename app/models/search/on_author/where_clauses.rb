@@ -105,7 +105,7 @@ class Search::OnAuthor::WhereClauses
     when 2 then supply_token_twice(rule, token)
     when 3 then supply_token_thrice(rule, token)
     else
-      raise "Where clause value frequency: #{rule.value_frequency}, is too high."
+      raise "Where-clause value frequency (#{rule.value_frequency}) too high."
     end
   end
 

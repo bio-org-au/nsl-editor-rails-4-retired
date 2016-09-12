@@ -29,9 +29,8 @@ class InstanceFixturesValidFirstSynForToHaveDoubleTest < ActiveSupport::TestCase
     assert_not_nil instance.this_is_cited_by.standalone?,
                    "Should point to standalone instance."
     assert instance.reference_id == instance.this_is_cited_by.reference_id,
-               "Refs should match."
+           "Refs should match."
     assert instance.valid?,
            "should be valid; errors: #{instance.errors.full_messages.join(';')}"
   end
 end
-

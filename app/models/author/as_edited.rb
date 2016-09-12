@@ -132,7 +132,7 @@ class Author::AsEdited < Author::AsTypeahead
         if possibles_with_id.size == 1
           value = possibles_with_id.first.id
         else
-          raise "please choose duplicate of from suggestions (more than 1 match)"
+          raise "please choose duplicate-of from suggestions (> 1 match)"
         end
       end
     else

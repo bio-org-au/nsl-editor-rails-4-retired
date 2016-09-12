@@ -40,12 +40,12 @@ class NameRank < ActiveRecord::Base
                               morphological
                               nothomorph.).freeze
 
-  Species = "Species"
-  Genus = "Genus"
-  Familia = "Familia"
-  Family = Familia
+  SPECIES = "Species"
+  GENUS = "Genus"
+  FAMILIA = "Familia"
+  FAMILY = FAMILIA
   NA = "[n/a]"
-  Unranked = "[unranked]"
+  UNRANKED = "[unranked]"
 
   def needs_generic_epithet
     NEEDS_GENERIC_EPITHET.include?(name)
@@ -141,11 +141,11 @@ class NameRank < ActiveRecord::Base
   end
 
   def species?
-    !!name.match(/\A#{Species}\z/)
+    !!name.match(/\A#{SPECIES}\z/)
   end
 
   def genus?
-    !!name.match(/\A#{Genus}\z/)
+    !!name.match(/\A#{GENUS}\z/)
   end
 
   def self.not_applicable
@@ -157,11 +157,11 @@ class NameRank < ActiveRecord::Base
   end
 
   def unranked?
-    !!name.match(/\A#{Regexp.escape(Unranked)}\z/)
+    !!name.match(/\A#{Regexp.escape(UNRANKED)}\z/)
   end
 
   def self.genus
-    NameRank.find_by(name: Genus)
+    NameRank.find_by(name: GENUS)
   end
 
   # if rank below species, species
@@ -203,11 +203,11 @@ class NameRank < ActiveRecord::Base
   end
 
   def self.species
-    find_by(name: Species)
+    find_by(name: SPECIES)
   end
 
   def self.family
-    find_by(name: Family)
+    find_by(name: FAMILY)
   end
 
   def self.print_parent_divisions

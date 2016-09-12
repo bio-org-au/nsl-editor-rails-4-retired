@@ -29,6 +29,7 @@ class ForInstanceTypeUnknown < ActiveSupport::TestCase
     assert_equal Instance::ActiveRecord_Relation,
                  search.executed_query.results.class,
                  "Results should be an Instance::ActiveRecord_Relation"
-    assert search.executed_query.results.size > 0, "At least one record expected."
+    assert search.executed_query.results.size.positive?,
+           "At least one record expected."
   end
 end

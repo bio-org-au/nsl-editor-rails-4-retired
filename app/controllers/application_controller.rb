@@ -19,8 +19,8 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-  before_action :start_timer, :set_debug, :set_layout, :check_system_broadcast,
-                :authenticate, :show_request_info, :check_authorization
+  before_action :start_timer, :set_debug, :check_system_broadcast,
+                :authenticate, :check_authorization
 
   rescue_from ActionController::InvalidAuthenticityToken, with: :show_login_page
   rescue_from CanCan::AccessDenied do |_exception|
@@ -30,7 +30,6 @@ class ApplicationController < ActionController::Base
 
   def show_login_page
     logger.info("Show login page - invalid authenticity token.")
-    show_request_info
     if request.format == "text/javascript"
       logger.info('JavaScript request with invalid authenticity token\
                   - expired session?')
@@ -57,15 +56,7 @@ class ApplicationController < ActionController::Base
     authorize!(params[:controller], pseudo_action)
   end
 
-  def show_request_info
-    logger.debug(("=" * 40).to_s)
-    logger.debug("request.format: #{request.format}")
-    logger.debug("request.content_type: #{request.content_type}")
-    logger.debug(("=" * 40).to_s)
-  end
-
   def authenticate
-    logger.debug("Authenticating.")
     if session[:username].blank?
       ask_user_to_sign_in
     else
@@ -76,7 +67,6 @@ class ApplicationController < ActionController::Base
   private #####################################################################
 
   def ask_user_to_sign_in
-    logger.debug("Unauthenticated session.")
     session[:url_after_sign_in] = request.url
     respond_to do |format|
       format.html { redirect_to start_sign_in_url, notice: "Please sign in." }
@@ -90,12 +80,6 @@ class ApplicationController < ActionController::Base
                              full_name: session[:user_full_name],
                              groups: session[:groups])
     logger.debug("User is known: #{current_user.username}")
-  end
-
-  def set_layout
-    @sidebar_width = "col-md-1 col-lg-1"
-    @main_content_width = "col-md-11 col-lg-10"
-    @search_result_details_width = "col-md-5 col-lg-5"
   end
 
   def set_debug

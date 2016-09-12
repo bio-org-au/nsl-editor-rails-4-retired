@@ -78,7 +78,7 @@ class Search::OnInstance::WhereClauses
     when 2 then supply_value_twice(rule)
     when 3 then supply_value_thrice(rule)
     else
-      raise "Where clause value frequency: #{rule.value_frequency}, is too high."
+      raise "Where-clause value frequency (#{rule.value_frequency}) too high."
     end
   end
 

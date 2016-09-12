@@ -16,26 +16,27 @@
 #   limitations under the License.
 #
 require "test_helper"
- 
+
 # Single instance model test.
 class InstanceValidationPreventSynonymOfSameNameTest < ActiveSupport::TestCase
-  test "instance prevent synonym of same name" do
+  def setup
     instance_1 = instances(:for_to_have_a_double_in_ref)
     instance_2 = instances(:for_to_be_a_double_in_alt_ref)
-    syn = Instance.new
-    syn.instance_type = InstanceType.find_by(name: 'taxonomic synonym')
-    syn.this_is_cited_by = instance_1
-    syn.reference = instance_1.reference
-    syn.this_cites = instance_2
-    syn.name = instance_2.name
-    syn.created_by = 'tester'
-    syn.updated_by = 'tester'
- 
-    assert syn.name_id == syn.this_cites.name_id,
+    @syn = Instance.new
+    @syn.instance_type = InstanceType.find_by(name: "taxonomic synonym")
+    @syn.this_is_cited_by = instance_1
+    @syn.reference = instance_1.reference
+    @syn.this_cites = instance_2
+    @syn.name = instance_2.name
+    @syn.created_by = @syn.updated_by = "tester"
+  end
+
+  test "instance prevent synonym of same name" do
+    assert @syn.name_id == @syn.this_cites.name_id,
            "Name IDs must match for this test."
     assert_raises(ActiveRecord::RecordInvalid,
                   "Double synonym should be invalid and not saved") do
-      syn.save!
+      @syn.save!
     end
   end
 end

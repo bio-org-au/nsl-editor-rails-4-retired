@@ -9,7 +9,9 @@ Bundler.require(*Rails.groups)
 
 ENV["TZ"] = "Australia/Melbourne"
 
+# Rails
 module Ned
+  # Rails application
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those here.
     # Application configuration should go into files in config/initializers

@@ -604,7 +604,6 @@ class Instance < ActiveRecord::Base
     redundant_instance = Instance.find(cites_id)
     same_reference = this_is_cited_by.reference.id == reference.id
     raise "Expected same reference but that is not true!" unless same_reference
-    to be removed: # {redundant_instance.id}; same reference: #{same_reference} "
     Instance.transaction do
       # bypass a validation that would prevent this change
       self.data_fix_in_process = true

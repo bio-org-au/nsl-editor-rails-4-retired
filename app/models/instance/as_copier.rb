@@ -17,8 +17,7 @@
 #
 class Instance::AsCopier < Instance
   def copy_with_new_name_id(new_name_id, as_username)
-    Rails.logger.debug("Instance::AsCopier#copy with new name id: #{new_name_id}")
-    raise "Copied record would have the same name id." if new_name_id.eql?(name_id)
+    raise "Copied record would have same name id." if new_name_id.eql?(name_id)
     new = dup
     new.name_id = new_name_id
     new.created_by = new.updated_by = as_username
@@ -29,9 +28,9 @@ class Instance::AsCopier < Instance
   def copy_with_citations_to_new_reference(params, as_username)
     new = nil
     raise "Need a reference" if params[:reference_id].blank?
-    raise "Reference must be different" if params[:reference_id].to_i == reference.id
+    raise "Ref must be different" if params[:reference_id].to_i == reference.id
     raise "Unrecognized reference id" if params[:reference_id].to_i <= 0
-    raise "No such reference" if Reference.find(params[:reference_id].to_i).blank?
+    raise "No such ref" if Reference.find(params[:reference_id].to_i).blank?
     new_reference_id_string = params[:reference_id]
     new_page = params[:page]
     new_instance_type_id = params[:instance_type_id]

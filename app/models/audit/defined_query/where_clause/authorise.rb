@@ -24,7 +24,9 @@ class Audit::DefinedQuery::WhereClause::Authorise
     if user.qa?
       @sql = sql
     else
-      @sql = sql.where("created_by = ? or updated_by = ?", user.username, user.username)
+      @sql = sql.where("created_by = ? or updated_by = ?",
+                       user.username,
+                       user.username)
     end
     debug(@sql.to_sql)
   end

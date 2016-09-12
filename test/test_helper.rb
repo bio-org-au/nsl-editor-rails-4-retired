@@ -209,14 +209,6 @@ def set_name_parent
   find("#search-result-details h4").click
 end
 
-def set_name_parent_using(parent)
-  fill_in_typeahead("name-parent-typeahead",
-                    "name_parent_id",
-                    names(parent).full_name,
-                    names(parent).id)
-  find("#search-result-details h4").click
-end
-
 def set_name_second_parent_to_a_species
   fill_in_typeahead("name-second-parent-typeahead",
                     "name_second_parent_id",

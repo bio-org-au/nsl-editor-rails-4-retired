@@ -101,7 +101,6 @@ class Instance::AsArray::ForName < Array
   end
 
   def show_relationship_instance(name, instance)
-    debug("show_relationship_instance_records #{name.full_name} instance: #{instance.id}")
     citing_instance = instance.this_is_cited_by
     return if @already_shown.include?(citing_instance.id)
     relationship_instance_records(name, citing_instance).each do |element|
@@ -114,7 +113,6 @@ class Instance::AsArray::ForName < Array
   # NSL-536: If instance name is not the subject name then
   # do not show the instance type.
   def relationship_instance_records(name, instance)
-    debug("relationship_instance_records for name #{name.full_name} and instance #{instance.id}")
     results = [instance.display_as_citing_instance_within_name_search]
     records_cited_by_relationship(instance)
       .each do |cited_by_original_instance|
