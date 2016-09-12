@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 source "https://rubygems.org"
 
-gem "rails", "~> 4.2.5.1"
+gem "rails", "~> 4.2"
 
 platform :jruby do
   gem "activerecord-jdbcpostgresql-adapter"
