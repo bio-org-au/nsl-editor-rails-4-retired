@@ -374,15 +374,17 @@ class Search::OnName::FieldRule
                    'nom. nov.',
                    'nom. et stat. nov.')
        ) ) )", order: "name.full_name" },
-       "accepted-name-synonym-of-accepted-name:" => { where_clause: "id in (SELECT distinct n.id FROM name n
+       "accepted-name-synonym-of-accepted-name:" => { where_clause: "id in
+       (SELECT distinct n.id FROM name n
   JOIN tree_node nd ON nd.name_id = n.id
                        AND nd.type_uri_id_part = 'ApcConcept'
                        AND nd.next_node_id IS NULL
-  and nd.checked_in_at_id is not null
+                       AND nd.checked_in_at_id is not null
   JOIN tree_arrangement a ON nd.tree_arrangement_id = a.id AND a.label = 'APC'
   JOIN instance i ON nd.instance_id = i.id
   JOIN instance s ON s.cited_by_id = i.id
-  JOIN instance_type t ON s.instance_type_id = t.id AND NOT t.misapplied and not t.pro_parte
+  JOIN instance_type t ON s.instance_type_id = t.id
+                      AND NOT t.misapplied and not t.pro_parte
   JOIN name sname ON s.name_id = sname.id
   JOIN tree_node snode ON s.name_id = snode.name_id
                           AND snode.next_node_id IS NULL
