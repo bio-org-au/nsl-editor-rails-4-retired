@@ -162,11 +162,11 @@ class Instance < ActiveRecord::Base
     return if standalone?
     return unless double_synonym?
     if misapplied?
-      errors[:base] << "A name cannot be a double synonym - in this case a
-      double non-misapplication synonym already exists."
+      errors[:base] << "A name cannot be placed in synonymy twice
+      (non-misapplication synonym is already present)."
     else
-      errors[:base] << "A name cannot be a double synonym except via
-      misapplication synonyms"
+      errors[:base] << "A name cannot be placed in synonymy twice, except as a
+      misapplication."
     end
   end
 
