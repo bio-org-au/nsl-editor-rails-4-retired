@@ -40,7 +40,7 @@ class Search::OnName::Predicate
     apply_rule(rule)
     @canon_value = build_canon_value(value)
     apply_scope
-    @order = rule[:order] || "full_name"
+    @order = rule[:order] || "sort_name"
     process_value
     @tokenize = rule[:tokenize] || false
   end

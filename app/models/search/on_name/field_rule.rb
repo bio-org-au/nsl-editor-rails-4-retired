@@ -373,7 +373,7 @@ class Search::OnName::FieldRule
                    'comb. et stat. nov.',
                    'nom. nov.',
                    'nom. et stat. nov.')
-       ) ) )", order: "name.full_name" },
+       ) ) )", order: "name.sort_name" },
        "accepted-name-synonym-of-accepted-name:" => { where_clause: "id in
        (SELECT distinct n.id FROM name n
   JOIN tree_node nd ON nd.name_id = n.id
@@ -391,7 +391,7 @@ class Search::OnName::FieldRule
                           and snode.checked_in_at_id is not null
                           AND snode.tree_arrangement_id = a.id
                           AND snode.type_uri_id_part = 'ApcConcept') ",
-                                                   order: "name.full_name" },
+                                                   order: "name.sort_name" },
     "name-synonym-of-itself:" => { where_clause: "  name.id in (
                                    select i.name_id
                                      from instance i
@@ -400,7 +400,7 @@ class Search::OnName::FieldRule
                                           inner join instance i2
                                           on syn.cites_id = i2.id
                                           where i.name_id = i2.name_id)",
-                                   order: "name.full_name" },
+                                   order: "name.sort_name" },
     "name-is-double-synonym:" => { where_clause: "  name.id in (
     select name_id2
       from (
@@ -428,7 +428,7 @@ class Search::OnName::FieldRule
        ) grouped_by_misapplied
  group by name_id2, i1_id, cited_by_id
 having count(*)   > 1)",
-                                                   order: "name.full_name" },
+                                                   order: "name.sort_name" },
     "name-has-double-synonym:" => { where_clause: "  name.id in (
 select name_id
   from instance
@@ -461,7 +461,7 @@ select i1_id
 having count(*)   > 1
 )
     )",
-                                                   order: "name.full_name" },
+                                                   order: "name.sort_name" },
 
   }.freeze
 end
