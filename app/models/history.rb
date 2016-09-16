@@ -18,6 +18,10 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "16-Sep-2016", release: true },
+    { date: "12-Sep-2016",
+      jira_id: "",
+      description: %(Now running on CSIRO infrastructure.) },
     { date: "12-Sep-2016",
       jira_id: "1954",
       description: %(Prevent double synonyms being created.) },
