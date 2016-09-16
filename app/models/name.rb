@@ -178,13 +178,6 @@ class Name < ActiveRecord::Base
   validates :verbatim_rank, length: { maximum: 50 }
 
   SEARCH_LIMIT = 50
-  AUTOCOMPLETE_SEARCH_LIMIT = 20
-  DEFAULT_DESCRIPTOR = "n" # for full_name
-  DEFAULT_ORDER_BY = "full_name"
-  LEGAL_TO_ORDER_BY = { "fn" => "full_name",
-                        "sn" => "simple_name",
-                        "ne" => "name_element",
-                        "r" => "name_rank_id" }.freeze
 
   # Category constants
   SCIENTIFIC_CATEGORY = "scientific"
