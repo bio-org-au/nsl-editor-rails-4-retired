@@ -18,18 +18,24 @@
 require "test_helper"
 
 # Single name model test.
-class NameInAPCTest < ActiveSupport::TestCase
-  test "name in apc" do
+class NameAPCDeclaredBTTest < ActiveSupport::TestCase
+  test "name apc declared bt" do
+    skip "need to convert this away from services using tree data"
     name = Name.new
     expected_instance_id = 44
-    name.stubs(:get_apc_json).returns("inAPC" => true, "excluded" => false,
+    name.stubs(:get_apc_json).returns("inAPC" => true,
+                                      "excluded" => false,
                                       "taxonId" => expected_instance_id.to_s,
-                                      "type" => "ApcConcept")
+                                      "type" => "DeclaredBt")
     assert_equal true, name.apc?, "Name should be in APC"
-    assert_equal expected_instance_id, name.apc_instance_id,
+    assert_equal expected_instance_id,
+                 name.apc_instance_id,
                  "APC instance id should be set"
-    assert_equal false, name.apc_declared_bt, "Name should not be a declared BT"
-    assert_equal false, name.apc_instance_is_an_excluded_name,
+    assert_equal false,
+                 name.apc_instance_is_an_excluded_name,
                  "Should not be an excluded name"
+    assert_equal true,
+                 name.apc_declared_bt,
+                 "Name should be declared BT"
   end
 end

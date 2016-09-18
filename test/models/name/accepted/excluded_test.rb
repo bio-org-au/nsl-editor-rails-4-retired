@@ -20,6 +20,7 @@ require "test_helper"
 # Single name model test.
 class NameAPCExcludedTest < ActiveSupport::TestCase
   test "name apc excluded" do
+    skip "need to convert this away from services using tree data"
     name = Name.new
     expected_instance_id = 44
     name.stubs(:get_apc_json).returns("inAPC" => true, "excluded" => true,
