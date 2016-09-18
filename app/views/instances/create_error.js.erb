@@ -1,3 +1,6 @@
 <% focus_on_this_id ||= 'no-field' %>
 $('#search-result-details-error-message-container').html('<%= escape_javascript(@message) %>');
 $('#<%= focus_on_this_id %>').focus();
+<% if @allow_bypass %>
+  $('#bypass-warning-widget').removeClass('hidden');
+<% end %>

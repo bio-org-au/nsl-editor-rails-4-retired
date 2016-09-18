@@ -131,6 +131,8 @@ class Name < ActiveRecord::Base
   has_one :apni_tree_path,
           -> { where "exists (select null from tree_arrangement ta where tree_id = ta.id and ta.description = 'APNI names classification')" },
           class_name: "NameTreePath"
+  has_one :accepted_in_some_way, foreign_key: "id"
+  has_one :accepted_concept, foreign_key: "id"
 
   validates :name_rank_id, presence: true
   validates :name_type_id, presence: true
@@ -479,11 +481,15 @@ class Name < ActiveRecord::Base
     "Name-#{id}"
   end
 
-  def apc_excluded?
+  def accepted_concept?
+    accepted_concept.present?
+  end
+
+  def xapc_excluded?
     apc_instance_is_an_excluded_name == true
   end
 
-  def apc_declared_bt?
+  def xapc_declared_bt?
     apc_declared_bt == true
   end
 
@@ -496,23 +502,27 @@ class Name < ActiveRecord::Base
     "[unknown - service error]"
   end
 
+  def accepted_in_some_way?
+    accepted_in_some_way.present?
+  end
+
   def apc?
-    json = get_apc_json
-    if json["inAPC"] == true
-      self.apc_instance_id = json["taxonId"].to_i
-      self.apc_declared_bt = (json["type"] == DECLARED_BT)
-      self.apc_instance_is_an_excluded_name =
-        (!apc_declared_bt && json["excluded"] == true)
-    else
-      self.apc_instance_id = nil
-      self.apc_instance_is_an_excluded_name = false
-      self.apc_declared_bt = false
-    end
-    return !apc_instance_id.nil?
-  rescue => e
-    logger.error("Name::apc? exception: #{e}")
-    self.apc_instance_id = nil
-    false
+    accepted_in_some_way?
+  end
+
+  def apc_instance_id
+    return nil unless accepted_in_some_way?
+    accepted_in_some_way.instance_id
+  end
+
+  def apc_declared_bt?
+    return nil unless accepted_in_some_way?
+    accepted_in_some_way.declared_bt?
+  end
+
+  def apc_excluded?
+    return nil unless accepted_in_some_way?
+    accepted_in_some_way.excluded?
   end
 
   def get_in_apni

@@ -18,6 +18,8 @@
 class InstancesController < ApplicationController
   include ActionView::Helpers::TextHelper
   before_filter :find_instance, only: [:show, :tab, :destroy]
+  CONCEPT_WARNING = "Validation failed: This concept includes an accepted name \
+as a synonym"
 
   # GET /instances/1
   # GET /instances/1/tab/:tab
@@ -64,15 +66,28 @@ class InstancesController < ApplicationController
   # Sometimes we need to massage the params (safely) before calling this create.
   def create(the_params = instance_params)
     @instance = Instance.new(the_params)
+    @instance.concept_warning_bypassed =
+      instance_params[:concept_warning_bypassed] == "1"
     @instance.save_with_username(current_user.username)
     render "create"
   rescue ActiveRecord::RecordNotUnique
+    handle_not_unique
+  rescue => e
+    handle_other_errors(e)
+  end
+
+  def handle_not_unique
     @message = "Error: duplicate record"
     render "create_error.js", status: :unprocessable_entity
-  rescue => e
+  end
+  private :handle_not_unique
+
+  def handle_other_errors(e)
+    @allow_bypass = e.to_s.match(/\A#{CONCEPT_WARNING}\z/)
     @message = e.to_s
     render "create_error.js", status: :unprocessable_entity
   end
+  private :handle_other_errors
 
   # PUT /instances/1
   # PUT /instances/1.json
@@ -162,7 +177,8 @@ class InstancesController < ApplicationController
                                      :page,
                                      :cites_id,
                                      :cited_by_id,
-                                     :bhl_url)
+                                     :bhl_url,
+                                     :concept_warning_bypassed)
   end
 
   def tab_or_default_tab
@@ -225,6 +241,10 @@ class InstancesController < ApplicationController
 
   def build_the_params
     cites, cited_by = cites_and_cited_by
+    build_them(cites, cited_by)
+  end
+
+  def build_them(cites, cited_by)
     { name_id: cites.name.id,
       cites_id: cites.id,
       cited_by_id: cited_by.id,

@@ -30,7 +30,8 @@ class Instance < ActiveRecord::Base
   attr_accessor :expanded_instance_type, :display_as, :relationship_flag,
                 :give_me_focus,
                 :show_primary_instance_type, :data_fix_in_process,
-                :consider_apc
+                :consider_apc,
+                :concept_warning_bypassed
   SEARCH_LIMIT = 50
   scope :ordered_by_name, -> { joins(:name).order("simple_name asc") }
   scope :ordered_by_page, lambda {
@@ -153,10 +154,34 @@ class Instance < ActiveRecord::Base
   validate :standalone_reference_id_can_change_if_no_dependents, on: :update
   validate :name_cannot_be_synonym_of_itself
   validate :name_cannot_be_double_synonym
+  validate :accepted_concept_cannot_be_synonym_of_accepted_concept
 
   before_validation :set_defaults
   before_create :set_defaults
-  # before_update :update_allowed?
+
+  def accepted_concept_cannot_be_synonym_of_accepted_concept
+    return if concept_warning_bypassed?
+    return if standalone?
+    return if allowed_type_for_accepted_concept_synonym?
+    return unless both_names_are_accepted_concepts?
+    return unless this_is_cited_by.name.accepted_concept.instance_id ==
+                  this_is_cited_by.id
+    errors[:base] << "This concept includes an accepted name as a synonym"
+  end
+
+  def concept_warning_bypassed?
+    @concept_warning_bypassed || false
+  end
+
+  def both_names_are_accepted_concepts?
+    this_is_cited_by.name.present? &&
+      this_is_cited_by.name.accepted_concept? &&
+      this_cites.name.accepted_concept?
+  end
+
+  def allowed_type_for_accepted_concept_synonym?
+    instance_type.allowed_type_for_accepted_concept_synonym?
+  end
 
   def name_cannot_be_double_synonym
     return if standalone?

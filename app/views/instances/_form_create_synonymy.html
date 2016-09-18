@@ -56,15 +56,17 @@
     <br>
     with BHL URL
     <%= f.text_field :bhl_url, class: "form-control", title: 'Enter BHL URL', tabindex: increment_tab_index %>
-    <br>
     <%= f.hidden_field :reference_id, value: @instance.reference_id %>
-    <br>
     <%= f.hidden_field :cited_by_id, value: @instance.id %>
-    <br>
     <%= f.hidden_field :cites_id %>
     <br>
-   <%= f.submit class: 'btn-primary', tabindex: increment_tab_index, title: "Create the synonym" %>
+<div id="bypass-warning-widget" class="hidden form-check">
+  <br>
+  <label class="green form-check-label">
+    <%= f.check_box(:concept_warning_bypassed,{title: "Over-ride the warning message"}) %>
+    Ignore the warning and create the synonym.
+  </label>
+</div>
+  <br>
+    <%= f.submit class: 'btn-primary', tabindex: increment_tab_index, title: "Create the synonym" %>
 <% end %>
-
-
-

@@ -18,6 +18,10 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "19-Sep-2016",
+      jira_id: "1950",
+      description: %(Warn if an accepted name is being added as a 
+      synonym of another accepted name.) },
     { date: "16-Sep-2016",
       jira_id: "1987",
       description: %(Sort names using the sort_name key.) },
