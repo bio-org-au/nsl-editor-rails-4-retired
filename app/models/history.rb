@@ -19,6 +19,10 @@
 class History
   CHANGES_2016 = [
     { date: "19-Sep-2016",
+      jira_id: "1989",
+      description: %(Reference duplicate-of typeahead now works again 
+      consistently.) },
+    { date: "19-Sep-2016",
       jira_id: "1950",
       description: %(Warn if an accepted name is being added as a 
       synonym of another accepted name.) },

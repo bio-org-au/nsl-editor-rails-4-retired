@@ -2141,3 +2141,17 @@ for_to_be_a_double_synonym:
   published: true
   created_by: tester
   updated_by: tester
+
+for_typeahead_display:
+  title: For Typeahead Display
+  display_title: For Typeahead Display
+  citation: For Typeahead Display
+  citation_html: For Typeahead Display
+  author: blume_c_l_von
+  pages: 2-3
+  language: undetermined
+  namespace: apni
+  ref_author_role: author
+  ref_type: book
+  created_by: tester
+  updated_by: tester
