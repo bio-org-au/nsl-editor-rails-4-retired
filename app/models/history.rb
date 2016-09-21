@@ -18,6 +18,7 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "21-Sep-2016", release: true },
     { date: "19-Sep-2016",
       jira_id: "1989",
       description: %(Reference duplicate-of typeahead now works again 
