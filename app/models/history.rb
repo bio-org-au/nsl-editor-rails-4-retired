@@ -18,6 +18,10 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "21-Sep-2016",
+      jira_id: "1984",
+      description: %(Cultivar tags working again, now with a work-around in
+      the program that is invisible to users.) },
     { date: "21-Sep-2016", release: true },
     { date: "19-Sep-2016",
       jira_id: "1989",
