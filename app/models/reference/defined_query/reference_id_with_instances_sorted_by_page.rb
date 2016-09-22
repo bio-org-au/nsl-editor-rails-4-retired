@@ -61,9 +61,8 @@ class Reference::DefinedQuery::ReferenceIdWithInstancesSortedByPage
   end
 
   def run_list_query
-    @results = Instance.ref_usages(@parsed_request.where_arguments,
-                                   @parsed_request.limit.to_i,
-                                   "page")
+    query = Reference::DefinedQuery::ReferenceIdWithInstancesQuery.new(@parsed_request, "page")
+    @results = query.results
     @limited = false
     @common_and_cultivar_included = true
     @count = @results.size

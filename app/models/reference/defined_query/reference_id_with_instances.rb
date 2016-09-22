@@ -38,11 +38,14 @@ class Reference::DefinedQuery::ReferenceIdWithInstances
 
   def run_query(parsed_request)
     debug("")
-    debug("parsed_request.where_arguments: #{parsed_request.where_arguments}")
-    debug("parsed_request.defined_query_arg: #{parsed_request.defined_query_arg}")
-    debug("parsed_request.count: #{parsed_request.count}")
-    debug("parsed_request.limit: #{parsed_request.limit}")
+    debug("where_arguments: #{parsed_request.where_arguments}")
+    debug("defined_query_arg: #{parsed_request.defined_query_arg}")
+    debug("count: #{parsed_request.count}")
+    debug("limit: #{parsed_request.limit}")
     @show_csv = false
+    @relation = nil
+    @has_relation = false
+
     if parsed_request.count
       debug("counting")
       ref = Reference.find(parsed_request.where_arguments)
@@ -50,18 +53,14 @@ class Reference::DefinedQuery::ReferenceIdWithInstances
       @results = []
       @limited = false
       @common_and_cultivar_included = true
-      @has_relation = false
-      @relation = nil
     else
       debug("listing with limit: #{parsed_request.limit}")
-      @results = Instance.ref_usages(parsed_request.where_arguments,
-                                     parsed_request.limit.to_i,
+      query = Reference::DefinedQuery::ReferenceIdWithInstancesQuery.new(parsed_request,
                                      "name")
+      @results = query.results
       @limited = false; # name_query.limited
       @common_and_cultivar_included = true
       @count = @results.size
-      @has_relation = false
-      @relation = nil
     end
     @total = nil
   end

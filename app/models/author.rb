@@ -118,8 +118,8 @@ class Author < ActiveRecord::Base
   scope :changed_in_the_last_n_days,
         ->(n) { where("created_at::date > current_date - ? or updated_at::date > current_date - ?", n, n) }
 
-  DEFAULT_DESCRIPTOR = "n"  # for name
-  DEFAULT_ORDER_BY = "name asc "
+  DEFAULT_DESCRIPTOR = "n".freeze # for name
+  DEFAULT_ORDER_BY = "name asc ".freeze
 
   before_create :set_defaults
 

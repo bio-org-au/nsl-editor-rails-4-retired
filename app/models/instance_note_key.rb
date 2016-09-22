@@ -18,7 +18,7 @@
 class InstanceNoteKey < ActiveRecord::Base
   self.table_name = "instance_note_key"
   self.primary_key = "id"
-  APC_DIST = "APC Dist."
+  APC_DIST = "APC Dist.".freeze
   has_many :instance_notes
   scope :apc, -> { where(name: ["APC Comment", "APC Dist."]) }
   scope :apc_comment, -> { where(name: ["APC Comment"]) }

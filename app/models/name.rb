@@ -182,15 +182,15 @@ class Name < ActiveRecord::Base
   SEARCH_LIMIT = 50
 
   # Category constants
-  SCIENTIFIC_CATEGORY = "scientific"
-  SCIENTIFIC_HYBRID_FORMULA_CATEGORY = "scientific hybrid formula"
+  SCIENTIFIC_CATEGORY = "scientific".freeze
+  SCIENTIFIC_HYBRID_FORMULA_CATEGORY = "scientific hybrid formula".freeze
   SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY =
-    "scientific hybrid formula unknown 2nd parent"
-  CULTIVAR_CATEGORY = "cultivar"
-  CULTIVAR_HYBRID_CATEGORY = "cultivar hybrid"
-  OTHER_CATEGORY = "other"
+    "scientific hybrid formula unknown 2nd parent".freeze
+  CULTIVAR_CATEGORY = "cultivar".freeze
+  CULTIVAR_HYBRID_CATEGORY = "cultivar hybrid".freeze
+  OTHER_CATEGORY = "other".freeze
 
-  DECLARED_BT = "DeclaredBt"
+  DECLARED_BT = "DeclaredBt".freeze
 
   before_create :set_defaults
   before_save :validate

@@ -4,9 +4,9 @@
 class AcceptedInSomeWay < ActiveRecord::Base
   self.table_name = "accepted_name_vw"
   self.primary_key = "id"
-  ACCEPTED = "ApcConcept"
-  EXCLUDED = "ApcExcluded"
-  DECLARED_BT = "DeclaredBt"
+  ACCEPTED = "ApcConcept".freeze
+  EXCLUDED = "ApcExcluded".freeze
+  DECLARED_BT = "DeclaredBt".freeze
   belongs_to :name, foreign_key: "id"
 
   def declared_bt?
@@ -21,4 +21,3 @@ class AcceptedInSomeWay < ActiveRecord::Base
     type_code == ACCEPTED
   end
 end
-

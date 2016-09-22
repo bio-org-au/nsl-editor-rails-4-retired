@@ -17,18 +17,10 @@
 #
 require "test_helper"
 
-# Single search controller test.
-class ReaderSearchControllerNamesNoSuchFieldTest < ActionController::TestCase
-  tests SearchController
-
-  test "reader can search for a name" do
-    get(:search,
-        { query_target: "name", query_string: "not-a-real-field: r.br." },
-        username: "fred",
-        user_full_name: "Fred Jones",
-        groups: [])
-    assert_select "span#search-results-summary",
-                  /Cannot search name for: not-a-real-field:./,
-                  "Should get error message."
+# Name status options test.
+class NameStatusDefaultSimpleTest < ActiveSupport::TestCase
+  test "simple" do
+    assert NameStatus.default.name == "legitimate",
+           "The default name status should be 'legitimate'"
   end
 end

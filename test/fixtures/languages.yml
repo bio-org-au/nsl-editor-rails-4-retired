@@ -1,20 +1,1480 @@
-multiple-languages:
-  name: Multiple Languages
+multiple languages:
+  name: Multiple languages
+  iso6391code: 
   iso6393code: mul
-
-no-linguistic-content:
+no linguistic content:
   name: No linguistic content
+  iso6391code: 
   iso6393code: zxx
-
-uncoded-languages:
+uncoded languages:
   name: Uncoded languages
+  iso6391code: 
   iso6393code: mis
-
 undetermined:
   name: Undetermined
+  iso6391code: 
   iso6393code: und
-
+afar:
+  name: Afar
+  iso6391code: aa
+  iso6393code: aar
+abkhazian:
+  name: Abkhazian
+  iso6391code: ab
+  iso6393code: abk
+achinese:
+  name: Achinese
+  iso6391code: 
+  iso6393code: ace
+acoli:
+  name: Acoli
+  iso6391code: 
+  iso6393code: ach
+adangme:
+  name: Adangme
+  iso6391code: 
+  iso6393code: ada
+adyghe:
+  name: Adyghe
+  iso6391code: 
+  iso6393code: ady
+afrikaans:
+  name: Afrikaans
+  iso6391code: af
+  iso6393code: afr
+ainu:
+  name: Ainu
+  iso6391code: 
+  iso6393code: ain
+aleut:
+  name: Aleut
+  iso6391code: 
+  iso6393code: ale
+southern altai:
+  name: Southern Altai
+  iso6391code: 
+  iso6393code: alt
+amharic:
+  name: Amharic
+  iso6391code: am
+  iso6393code: amh
+angika:
+  name: Angika
+  iso6391code: 
+  iso6393code: anp
+aragonese:
+  name: Aragonese
+  iso6391code: an
+  iso6393code: arg
+mapudungun:
+  name: Mapudungun
+  iso6391code: 
+  iso6393code: arn
+arapaho:
+  name: Arapaho
+  iso6391code: 
+  iso6393code: arp
+arawak:
+  name: Arawak
+  iso6391code: 
+  iso6393code: arw
+assamese:
+  name: Assamese
+  iso6391code: as
+  iso6393code: asm
+asturian:
+  name: Asturian
+  iso6391code: 
+  iso6393code: ast
+avaric:
+  name: Avaric
+  iso6391code: av
+  iso6393code: ava
+awadhi:
+  name: Awadhi
+  iso6391code: 
+  iso6393code: awa
+bashkir:
+  name: Bashkir
+  iso6391code: ba
+  iso6393code: bak
+bambara:
+  name: Bambara
+  iso6391code: bm
+  iso6393code: bam
+balinese:
+  name: Balinese
+  iso6391code: 
+  iso6393code: ban
+basa:
+  name: Basa
+  iso6391code: 
+  iso6393code: bas
+beja:
+  name: Beja
+  iso6391code: 
+  iso6393code: bej
+belarusian:
+  name: Belarusian
+  iso6391code: be
+  iso6393code: bel
+bemba:
+  name: Bemba
+  iso6391code: 
+  iso6393code: bem
+bengali:
+  name: Bengali
+  iso6391code: bn
+  iso6393code: ben
+bhojpuri:
+  name: Bhojpuri
+  iso6391code: 
+  iso6393code: bho
+bini:
+  name: Bini
+  iso6391code: 
+  iso6393code: bin
+bislama:
+  name: Bislama
+  iso6391code: bi
+  iso6393code: bis
+siksika:
+  name: Siksika
+  iso6391code: 
+  iso6393code: bla
+tibetan:
+  name: Tibetan
+  iso6391code: bo
+  iso6393code: bod
+bosnian:
+  name: Bosnian
+  iso6391code: bs
+  iso6393code: bos
+braj:
+  name: Braj
+  iso6391code: 
+  iso6393code: bra
+breton:
+  name: Breton
+  iso6391code: br
+  iso6393code: bre
+buginese:
+  name: Buginese
+  iso6391code: 
+  iso6393code: bug
+bulgarian:
+  name: Bulgarian
+  iso6391code: bg
+  iso6393code: bul
+bilin:
+  name: Bilin
+  iso6391code: 
+  iso6393code: byn
+caddo:
+  name: Caddo
+  iso6391code: 
+  iso6393code: cad
+galibi carib:
+  name: Galibi Carib
+  iso6391code: 
+  iso6393code: car
+catalan:
+  name: Catalan
+  iso6391code: ca
+  iso6393code: cat
+cebuano:
+  name: Cebuano
+  iso6391code: 
+  iso6393code: ceb
+czech:
+  name: Czech
+  iso6391code: cs
+  iso6393code: ces
+chamorro:
+  name: Chamorro
+  iso6391code: ch
+  iso6393code: cha
+chechen:
+  name: Chechen
+  iso6391code: ce
+  iso6393code: che
+chuukese:
+  name: Chuukese
+  iso6391code: 
+  iso6393code: chk
+chinook jargon:
+  name: Chinook jargon
+  iso6391code: 
+  iso6393code: chn
+choctaw:
+  name: Choctaw
+  iso6391code: 
+  iso6393code: cho
+chipewyan:
+  name: Chipewyan
+  iso6391code: 
+  iso6393code: chp
+cherokee:
+  name: Cherokee
+  iso6391code: 
+  iso6393code: chr
+chuvash:
+  name: Chuvash
+  iso6391code: cv
+  iso6393code: chv
+cheyenne:
+  name: Cheyenne
+  iso6391code: 
+  iso6393code: chy
+cornish:
+  name: Cornish
+  iso6391code: kw
+  iso6393code: cor
+corsican:
+  name: Corsican
+  iso6391code: co
+  iso6393code: cos
+crimean tatar:
+  name: Crimean Tatar
+  iso6391code: 
+  iso6393code: crh
+kashubian:
+  name: Kashubian
+  iso6391code: 
+  iso6393code: csb
+welsh:
+  name: Welsh
+  iso6391code: cy
+  iso6393code: cym
+dakota:
+  name: Dakota
+  iso6391code: 
+  iso6393code: dak
+danish:
+  name: Danish
+  iso6391code: da
+  iso6393code: dan
+dargwa:
+  name: Dargwa
+  iso6391code: 
+  iso6393code: dar
+german:
+  name: German
+  iso6391code: de
+  iso6393code: deu
+dogrib:
+  name: Dogrib
+  iso6391code: 
+  iso6393code: dgr
+dhivehi:
+  name: Dhivehi
+  iso6391code: dv
+  iso6393code: div
+lower sorbian:
+  name: Lower Sorbian
+  iso6391code: 
+  iso6393code: dsb
+duala:
+  name: Duala
+  iso6391code: 
+  iso6393code: dua
+dyula:
+  name: Dyula
+  iso6391code: 
+  iso6393code: dyu
+dzongkha:
+  name: Dzongkha
+  iso6391code: dz
+  iso6393code: dzo
+efik:
+  name: Efik
+  iso6391code: 
+  iso6393code: efi
+ekajuk:
+  name: Ekajuk
+  iso6391code: 
+  iso6393code: eka
+greek:
+  name: Greek
+  iso6391code: el
+  iso6393code: ell
 english:
   name: English
-  iso6393code: eng
   iso6391code: en
+  iso6393code: eng
+basque:
+  name: Basque
+  iso6391code: eu
+  iso6393code: eus
+ewe:
+  name: Ewe
+  iso6391code: ee
+  iso6393code: ewe
+ewondo:
+  name: Ewondo
+  iso6391code: 
+  iso6393code: ewo
+fang:
+  name: Fang
+  iso6391code: 
+  iso6393code: fan
+faroese:
+  name: Faroese
+  iso6391code: fo
+  iso6393code: fao
+fanti:
+  name: Fanti
+  iso6391code: 
+  iso6393code: fat
+fijian:
+  name: Fijian
+  iso6391code: fj
+  iso6393code: fij
+filipino:
+  name: Filipino
+  iso6391code: 
+  iso6393code: fil
+finnish:
+  name: Finnish
+  iso6391code: fi
+  iso6393code: fin
+fon:
+  name: Fon
+  iso6391code: 
+  iso6393code: fon
+french:
+  name: French
+  iso6391code: fr
+  iso6393code: fra
+northern frisian:
+  name: Northern Frisian
+  iso6391code: 
+  iso6393code: frr
+eastern frisian:
+  name: Eastern Frisian
+  iso6391code: 
+  iso6393code: frs
+western frisian:
+  name: Western Frisian
+  iso6391code: fy
+  iso6393code: fry
+friulian:
+  name: Friulian
+  iso6391code: 
+  iso6393code: fur
+ga:
+  name: Ga
+  iso6391code: 
+  iso6393code: gaa
+gayo:
+  name: Gayo
+  iso6391code: 
+  iso6393code: gay
+gilbertese:
+  name: Gilbertese
+  iso6391code: 
+  iso6393code: gil
+scottish gaelic:
+  name: Scottish Gaelic
+  iso6391code: gd
+  iso6393code: gla
+irish:
+  name: Irish
+  iso6391code: ga
+  iso6393code: gle
+galician:
+  name: Galician
+  iso6391code: gl
+  iso6393code: glg
+manx:
+  name: Manx
+  iso6391code: gv
+  iso6393code: glv
+gorontalo:
+  name: Gorontalo
+  iso6391code: 
+  iso6393code: gor
+swiss german:
+  name: Swiss German
+  iso6391code: 
+  iso6393code: gsw
+gujarati:
+  name: Gujarati
+  iso6391code: gu
+  iso6393code: guj
+gwichʼin:
+  name: Gwichʼin
+  iso6391code: 
+  iso6393code: gwi
+haitian:
+  name: Haitian
+  iso6391code: ht
+  iso6393code: hat
+hausa:
+  name: Hausa
+  iso6391code: ha
+  iso6393code: hau
+hawaiian:
+  name: Hawaiian
+  iso6391code: 
+  iso6393code: haw
+hebrew:
+  name: Hebrew
+  iso6391code: he
+  iso6393code: heb
+herero:
+  name: Herero
+  iso6391code: hz
+  iso6393code: her
+hiligaynon:
+  name: Hiligaynon
+  iso6391code: 
+  iso6393code: hil
+hindi:
+  name: Hindi
+  iso6391code: hi
+  iso6393code: hin
+hiri motu:
+  name: Hiri Motu
+  iso6391code: ho
+  iso6393code: hmo
+croatian:
+  name: Croatian
+  iso6391code: hr
+  iso6393code: hrv
+upper sorbian:
+  name: Upper Sorbian
+  iso6391code: 
+  iso6393code: hsb
+hungarian:
+  name: Hungarian
+  iso6391code: hu
+  iso6393code: hun
+hupa:
+  name: Hupa
+  iso6391code: 
+  iso6393code: hup
+armenian:
+  name: Armenian
+  iso6391code: hy
+  iso6393code: hye
+iban:
+  name: Iban
+  iso6391code: 
+  iso6393code: iba
+igbo:
+  name: Igbo
+  iso6391code: ig
+  iso6393code: ibo
+sichuan yi:
+  name: Sichuan Yi
+  iso6391code: ii
+  iso6393code: iii
+iloko:
+  name: Iloko
+  iso6391code: 
+  iso6393code: ilo
+indonesian:
+  name: Indonesian
+  iso6391code: id
+  iso6393code: ind
+ingush:
+  name: Ingush
+  iso6391code: 
+  iso6393code: inh
+icelandic:
+  name: Icelandic
+  iso6391code: is
+  iso6393code: isl
+italian:
+  name: Italian
+  iso6391code: it
+  iso6393code: ita
+javanese:
+  name: Javanese
+  iso6391code: jv
+  iso6393code: jav
+japanese:
+  name: Japanese
+  iso6391code: ja
+  iso6393code: jpn
+judeo-persian:
+  name: Judeo-Persian
+  iso6391code: 
+  iso6393code: jpr
+kara-kalpak:
+  name: Kara-Kalpak
+  iso6391code: 
+  iso6393code: kaa
+kabyle:
+  name: Kabyle
+  iso6391code: 
+  iso6393code: kab
+kachin:
+  name: Kachin
+  iso6391code: 
+  iso6393code: kac
+kalaallisut:
+  name: Kalaallisut
+  iso6391code: kl
+  iso6393code: kal
+kamba:
+  name: Kamba
+  iso6391code: 
+  iso6393code: kam
+kannada:
+  name: Kannada
+  iso6391code: kn
+  iso6393code: kan
+kashmiri:
+  name: Kashmiri
+  iso6391code: ks
+  iso6393code: kas
+georgian:
+  name: Georgian
+  iso6391code: ka
+  iso6393code: kat
+kazakh:
+  name: Kazakh
+  iso6391code: kk
+  iso6393code: kaz
+kabardian:
+  name: Kabardian
+  iso6391code: 
+  iso6393code: kbd
+khasi:
+  name: Khasi
+  iso6391code: 
+  iso6393code: kha
+central khmer:
+  name: Central Khmer
+  iso6391code: km
+  iso6393code: khm
+kikuyu:
+  name: Kikuyu
+  iso6391code: ki
+  iso6393code: kik
+kinyarwanda:
+  name: Kinyarwanda
+  iso6391code: rw
+  iso6393code: kin
+kirghiz:
+  name: Kirghiz
+  iso6391code: ky
+  iso6393code: kir
+kimbundu:
+  name: Kimbundu
+  iso6391code: 
+  iso6393code: kmb
+korean:
+  name: Korean
+  iso6391code: ko
+  iso6393code: kor
+kosraean:
+  name: Kosraean
+  iso6391code: 
+  iso6393code: kos
+karachay-balkar:
+  name: Karachay-Balkar
+  iso6391code: 
+  iso6393code: krc
+karelian:
+  name: Karelian
+  iso6391code: 
+  iso6393code: krl
+kurukh:
+  name: Kurukh
+  iso6391code: 
+  iso6393code: kru
+kuanyama:
+  name: Kuanyama
+  iso6391code: kj
+  iso6393code: kua
+kumyk:
+  name: Kumyk
+  iso6391code: 
+  iso6393code: kum
+kutenai:
+  name: Kutenai
+  iso6391code: 
+  iso6393code: kut
+ladino:
+  name: Ladino
+  iso6391code: 
+  iso6393code: lad
+lamba:
+  name: Lamba
+  iso6391code: 
+  iso6393code: lam
+lao:
+  name: Lao
+  iso6391code: lo
+  iso6393code: lao
+lezghian:
+  name: Lezghian
+  iso6391code: 
+  iso6393code: lez
+limburgan:
+  name: Limburgan
+  iso6391code: li
+  iso6393code: lim
+lingala:
+  name: Lingala
+  iso6391code: ln
+  iso6393code: lin
+lithuanian:
+  name: Lithuanian
+  iso6391code: lt
+  iso6393code: lit
+mongo:
+  name: Mongo
+  iso6391code: 
+  iso6393code: lol
+lozi:
+  name: Lozi
+  iso6391code: 
+  iso6393code: loz
+luxembourgish:
+  name: Luxembourgish
+  iso6391code: lb
+  iso6393code: ltz
+luba-lulua:
+  name: Luba-Lulua
+  iso6391code: 
+  iso6393code: lua
+luba-katanga:
+  name: Luba-Katanga
+  iso6391code: lu
+  iso6393code: lub
+ganda:
+  name: Ganda
+  iso6391code: lg
+  iso6393code: lug
+luiseno:
+  name: Luiseno
+  iso6391code: 
+  iso6393code: lui
+lunda:
+  name: Lunda
+  iso6391code: 
+  iso6393code: lun
+luo:
+  name: Luo
+  iso6391code: 
+  iso6393code: luo
+lushai:
+  name: Lushai
+  iso6391code: 
+  iso6393code: lus
+madurese:
+  name: Madurese
+  iso6391code: 
+  iso6393code: mad
+magahi:
+  name: Magahi
+  iso6391code: 
+  iso6393code: mag
+marshallese:
+  name: Marshallese
+  iso6391code: mh
+  iso6393code: mah
+maithili:
+  name: Maithili
+  iso6391code: 
+  iso6393code: mai
+makasar:
+  name: Makasar
+  iso6391code: 
+  iso6393code: mak
+malayalam:
+  name: Malayalam
+  iso6391code: ml
+  iso6393code: mal
+marathi:
+  name: Marathi
+  iso6391code: mr
+  iso6393code: mar
+masai:
+  name: Masai
+  iso6391code: 
+  iso6393code: mas
+moksha:
+  name: Moksha
+  iso6391code: 
+  iso6393code: mdf
+mandar:
+  name: Mandar
+  iso6391code: 
+  iso6393code: mdr
+mende:
+  name: Mende
+  iso6391code: 
+  iso6393code: men
+mi'kmaq:
+  name: Mi'kmaq
+  iso6391code: 
+  iso6393code: mic
+minangkabau:
+  name: Minangkabau
+  iso6391code: 
+  iso6393code: min
+macedonian:
+  name: Macedonian
+  iso6391code: mk
+  iso6393code: mkd
+maltese:
+  name: Maltese
+  iso6391code: mt
+  iso6393code: mlt
+manchu:
+  name: Manchu
+  iso6391code: 
+  iso6393code: mnc
+manipuri:
+  name: Manipuri
+  iso6391code: 
+  iso6393code: mni
+mohawk:
+  name: Mohawk
+  iso6391code: 
+  iso6393code: moh
+mossi:
+  name: Mossi
+  iso6391code: 
+  iso6393code: mos
+maori:
+  name: Maori
+  iso6391code: mi
+  iso6393code: mri
+creek:
+  name: Creek
+  iso6391code: 
+  iso6393code: mus
+mirandese:
+  name: Mirandese
+  iso6391code: 
+  iso6393code: mwl
+burmese:
+  name: Burmese
+  iso6391code: my
+  iso6393code: mya
+erzya:
+  name: Erzya
+  iso6391code: 
+  iso6393code: myv
+neapolitan:
+  name: Neapolitan
+  iso6391code: 
+  iso6393code: nap
+nauru:
+  name: Nauru
+  iso6391code: na
+  iso6393code: nau
+navajo:
+  name: Navajo
+  iso6391code: nv
+  iso6393code: nav
+south ndebele:
+  name: South Ndebele
+  iso6391code: nr
+  iso6393code: nbl
+north ndebele:
+  name: North Ndebele
+  iso6391code: nd
+  iso6393code: nde
+ndonga:
+  name: Ndonga
+  iso6391code: ng
+  iso6393code: ndo
+low german:
+  name: Low German
+  iso6391code: 
+  iso6393code: nds
+newari:
+  name: Newari
+  iso6391code: 
+  iso6393code: new
+nias:
+  name: Nias
+  iso6391code: 
+  iso6393code: nia
+niuean:
+  name: Niuean
+  iso6391code: 
+  iso6393code: niu
+dutch:
+  name: Dutch
+  iso6391code: nl
+  iso6393code: nld
+norwegian nynorsk:
+  name: Norwegian Nynorsk
+  iso6391code: nn
+  iso6393code: nno
+norwegian bokmål:
+  name: Norwegian Bokmål
+  iso6391code: nb
+  iso6393code: nob
+nogai:
+  name: Nogai
+  iso6391code: 
+  iso6393code: nog
+n'ko:
+  name: N'Ko
+  iso6391code: 
+  iso6393code: nqo
+pedi:
+  name: Pedi
+  iso6391code: 
+  iso6393code: nso
+nyanja:
+  name: Nyanja
+  iso6391code: ny
+  iso6393code: nya
+nyamwezi:
+  name: Nyamwezi
+  iso6391code: 
+  iso6393code: nym
+nyankole:
+  name: Nyankole
+  iso6391code: 
+  iso6393code: nyn
+nyoro:
+  name: Nyoro
+  iso6391code: 
+  iso6393code: nyo
+nzima:
+  name: Nzima
+  iso6391code: 
+  iso6393code: nzi
+occitan:
+  name: Occitan
+  iso6391code: oc
+  iso6393code: oci
+osage:
+  name: Osage
+  iso6391code: 
+  iso6393code: osa
+ossetian:
+  name: Ossetian
+  iso6391code: os
+  iso6393code: oss
+pangasinan:
+  name: Pangasinan
+  iso6391code: 
+  iso6393code: pag
+pampanga:
+  name: Pampanga
+  iso6391code: 
+  iso6393code: pam
+panjabi:
+  name: Panjabi
+  iso6391code: pa
+  iso6393code: pan
+papiamento:
+  name: Papiamento
+  iso6391code: 
+  iso6393code: pap
+palauan:
+  name: Palauan
+  iso6391code: 
+  iso6393code: pau
+polish:
+  name: Polish
+  iso6391code: pl
+  iso6393code: pol
+pohnpeian:
+  name: Pohnpeian
+  iso6391code: 
+  iso6393code: pon
+portuguese:
+  name: Portuguese
+  iso6391code: pt
+  iso6393code: por
+rapanui:
+  name: Rapanui
+  iso6391code: 
+  iso6393code: rap
+rarotongan:
+  name: Rarotongan
+  iso6391code: 
+  iso6393code: rar
+romansh:
+  name: Romansh
+  iso6391code: rm
+  iso6393code: roh
+romanian:
+  name: Romanian
+  iso6391code: ro
+  iso6393code: ron
+rundi:
+  name: Rundi
+  iso6391code: rn
+  iso6393code: run
+macedo-romanian:
+  name: Macedo-Romanian
+  iso6391code: 
+  iso6393code: rup
+russian:
+  name: Russian
+  iso6391code: ru
+  iso6393code: rus
+sandawe:
+  name: Sandawe
+  iso6391code: 
+  iso6393code: sad
+sango:
+  name: Sango
+  iso6391code: sg
+  iso6393code: sag
+yakut:
+  name: Yakut
+  iso6391code: 
+  iso6393code: sah
+sasak:
+  name: Sasak
+  iso6391code: 
+  iso6393code: sas
+santali:
+  name: Santali
+  iso6391code: 
+  iso6393code: sat
+sicilian:
+  name: Sicilian
+  iso6391code: 
+  iso6393code: scn
+scots:
+  name: Scots
+  iso6391code: 
+  iso6393code: sco
+selkup:
+  name: Selkup
+  iso6391code: 
+  iso6393code: sel
+shan:
+  name: Shan
+  iso6391code: 
+  iso6393code: shn
+sidamo:
+  name: Sidamo
+  iso6391code: 
+  iso6393code: sid
+sinhala:
+  name: Sinhala
+  iso6391code: si
+  iso6393code: sin
+slovak:
+  name: Slovak
+  iso6391code: sk
+  iso6393code: slk
+slovenian:
+  name: Slovenian
+  iso6391code: sl
+  iso6393code: slv
+southern sami:
+  name: Southern Sami
+  iso6391code: 
+  iso6393code: sma
+northern sami:
+  name: Northern Sami
+  iso6391code: se
+  iso6393code: sme
+lule sami:
+  name: Lule Sami
+  iso6391code: 
+  iso6393code: smj
+inari sami:
+  name: Inari Sami
+  iso6391code: 
+  iso6393code: smn
+samoan:
+  name: Samoan
+  iso6391code: sm
+  iso6393code: smo
+skolt sami:
+  name: Skolt Sami
+  iso6391code: 
+  iso6393code: sms
+shona:
+  name: Shona
+  iso6391code: sn
+  iso6393code: sna
+sindhi:
+  name: Sindhi
+  iso6391code: sd
+  iso6393code: snd
+soninke:
+  name: Soninke
+  iso6391code: 
+  iso6393code: snk
+somali:
+  name: Somali
+  iso6391code: so
+  iso6393code: som
+southern sotho:
+  name: Southern Sotho
+  iso6391code: st
+  iso6393code: sot
+spanish:
+  name: Spanish
+  iso6391code: es
+  iso6393code: spa
+sranan tongo:
+  name: Sranan Tongo
+  iso6391code: 
+  iso6393code: srn
+serbian:
+  name: Serbian
+  iso6391code: sr
+  iso6393code: srp
+serer:
+  name: Serer
+  iso6391code: 
+  iso6393code: srr
+swati:
+  name: Swati
+  iso6391code: ss
+  iso6393code: ssw
+sukuma:
+  name: Sukuma
+  iso6391code: 
+  iso6393code: suk
+sundanese:
+  name: Sundanese
+  iso6391code: su
+  iso6393code: sun
+susu:
+  name: Susu
+  iso6391code: 
+  iso6393code: sus
+swedish:
+  name: Swedish
+  iso6391code: sv
+  iso6393code: swe
+tahitian:
+  name: Tahitian
+  iso6391code: ty
+  iso6393code: tah
+tamil:
+  name: Tamil
+  iso6391code: ta
+  iso6393code: tam
+tatar:
+  name: Tatar
+  iso6391code: tt
+  iso6393code: tat
+telugu:
+  name: Telugu
+  iso6391code: te
+  iso6393code: tel
+timne:
+  name: Timne
+  iso6391code: 
+  iso6393code: tem
+tereno:
+  name: Tereno
+  iso6391code: 
+  iso6393code: ter
+tetum:
+  name: Tetum
+  iso6391code: 
+  iso6393code: tet
+tajik:
+  name: Tajik
+  iso6391code: tg
+  iso6393code: tgk
+tagalog:
+  name: Tagalog
+  iso6391code: tl
+  iso6393code: tgl
+thai:
+  name: Thai
+  iso6391code: th
+  iso6393code: tha
+tigre:
+  name: Tigre
+  iso6391code: 
+  iso6393code: tig
+tigrinya:
+  name: Tigrinya
+  iso6391code: ti
+  iso6393code: tir
+tiv:
+  name: Tiv
+  iso6391code: 
+  iso6393code: tiv
+tokelau:
+  name: Tokelau
+  iso6391code: 
+  iso6393code: tkl
+tlingit:
+  name: Tlingit
+  iso6391code: 
+  iso6393code: tli
+tonga (nyasa):
+  name: Tonga (Nyasa)
+  iso6391code: 
+  iso6393code: tog
+tonga (tonga islands):
+  name: Tonga (Tonga Islands)
+  iso6391code: to
+  iso6393code: ton
+tok pisin:
+  name: Tok Pisin
+  iso6391code: 
+  iso6393code: tpi
+tsimshian:
+  name: Tsimshian
+  iso6391code: 
+  iso6393code: tsi
+tswana:
+  name: Tswana
+  iso6391code: tn
+  iso6393code: tsn
+tsonga:
+  name: Tsonga
+  iso6391code: ts
+  iso6393code: tso
+turkmen:
+  name: Turkmen
+  iso6391code: tk
+  iso6393code: tuk
+tumbuka:
+  name: Tumbuka
+  iso6391code: 
+  iso6393code: tum
+turkish:
+  name: Turkish
+  iso6391code: tr
+  iso6393code: tur
+tuvalu:
+  name: Tuvalu
+  iso6391code: 
+  iso6393code: tvl
+twi:
+  name: Twi
+  iso6391code: tw
+  iso6393code: twi
+tuvinian:
+  name: Tuvinian
+  iso6391code: 
+  iso6393code: tyv
+udmurt:
+  name: Udmurt
+  iso6391code: 
+  iso6393code: udm
+uighur:
+  name: Uighur
+  iso6391code: ug
+  iso6393code: uig
+ukrainian:
+  name: Ukrainian
+  iso6391code: uk
+  iso6393code: ukr
+umbundu:
+  name: Umbundu
+  iso6391code: 
+  iso6393code: umb
+urdu:
+  name: Urdu
+  iso6391code: ur
+  iso6393code: urd
+vai:
+  name: Vai
+  iso6391code: 
+  iso6393code: vai
+venda:
+  name: Venda
+  iso6391code: ve
+  iso6393code: ven
+vietnamese:
+  name: Vietnamese
+  iso6391code: vi
+  iso6393code: vie
+votic:
+  name: Votic
+  iso6391code: 
+  iso6393code: vot
+wolaytta:
+  name: Wolaytta
+  iso6391code: 
+  iso6393code: wal
+waray:
+  name: Waray
+  iso6391code: 
+  iso6393code: war
+washo:
+  name: Washo
+  iso6391code: 
+  iso6393code: was
+walloon:
+  name: Walloon
+  iso6391code: wa
+  iso6393code: wln
+wolof:
+  name: Wolof
+  iso6391code: wo
+  iso6393code: wol
+kalmyk:
+  name: Kalmyk
+  iso6391code: 
+  iso6393code: xal
+xhosa:
+  name: Xhosa
+  iso6391code: xh
+  iso6393code: xho
+yao:
+  name: Yao
+  iso6391code: 
+  iso6393code: yao
+yapese:
+  name: Yapese
+  iso6391code: 
+  iso6393code: yap
+yoruba:
+  name: Yoruba
+  iso6391code: yo
+  iso6393code: yor
+zenaga:
+  name: Zenaga
+  iso6391code: 
+  iso6393code: zen
+zulu:
+  name: Zulu
+  iso6391code: zu
+  iso6393code: zul
+zuni:
+  name: Zuni
+  iso6391code: 
+  iso6393code: zun
+akan:
+  name: Akan
+  iso6391code: ak
+  iso6393code: aka
+arabic:
+  name: Arabic
+  iso6391code: ar
+  iso6393code: ara
+aymara:
+  name: Aymara
+  iso6391code: ay
+  iso6393code: aym
+azerbaijani:
+  name: Azerbaijani
+  iso6391code: az
+  iso6393code: aze
+baluchi:
+  name: Baluchi
+  iso6391code: 
+  iso6393code: bal
+bikol:
+  name: Bikol
+  iso6391code: 
+  iso6393code: bik
+buriat:
+  name: Buriat
+  iso6391code: 
+  iso6393code: bua
+mari:
+  name: Mari
+  iso6391code: 
+  iso6393code: chm
+cree:
+  name: Cree
+  iso6391code: cr
+  iso6393code: cre
+delaware:
+  name: Delaware
+  iso6391code: 
+  iso6393code: del
+slave:
+  name: Slave
+  iso6391code: 
+  iso6393code: den
+dinka:
+  name: Dinka
+  iso6391code: 
+  iso6393code: din
+dogri:
+  name: Dogri
+  iso6391code: 
+  iso6393code: doi
+estonian:
+  name: Estonian
+  iso6391code: et
+  iso6393code: est
+persian:
+  name: Persian
+  iso6391code: fa
+  iso6393code: fas
+fulah:
+  name: Fulah
+  iso6391code: ff
+  iso6393code: ful
+gbaya:
+  name: Gbaya
+  iso6391code: 
+  iso6393code: gba
+gondi:
+  name: Gondi
+  iso6391code: 
+  iso6393code: gon
+grebo:
+  name: Grebo
+  iso6391code: 
+  iso6393code: grb
+guarani:
+  name: Guarani
+  iso6391code: gn
+  iso6393code: grn
+haida:
+  name: Haida
+  iso6391code: 
+  iso6393code: hai
+hmong:
+  name: Hmong
+  iso6391code: 
+  iso6393code: hmn
+inuktitut:
+  name: Inuktitut
+  iso6391code: iu
+  iso6393code: iku
+inupiaq:
+  name: Inupiaq
+  iso6391code: ik
+  iso6393code: ipk
+judeo-arabic:
+  name: Judeo-Arabic
+  iso6391code: 
+  iso6393code: jrb
+kanuri:
+  name: Kanuri
+  iso6391code: kr
+  iso6393code: kau
+konkani:
+  name: Konkani
+  iso6391code: 
+  iso6393code: kok
+komi:
+  name: Komi
+  iso6391code: kv
+  iso6393code: kom
+kongo:
+  name: Kongo
+  iso6391code: kg
+  iso6393code: kon
+kpelle:
+  name: Kpelle
+  iso6391code: 
+  iso6393code: kpe
+kurdish:
+  name: Kurdish
+  iso6391code: ku
+  iso6393code: kur
+lahnda:
+  name: Lahnda
+  iso6391code: 
+  iso6393code: lah
+latvian:
+  name: Latvian
+  iso6391code: lv
+  iso6393code: lav
+mandingo:
+  name: Mandingo
+  iso6391code: 
+  iso6393code: man
+malagasy:
+  name: Malagasy
+  iso6391code: mg
+  iso6393code: mlg
+mongolian:
+  name: Mongolian
+  iso6391code: mn
+  iso6393code: mon
+malay:
+  name: Malay
+  iso6391code: ms
+  iso6393code: msa
+marwari:
+  name: Marwari
+  iso6391code: 
+  iso6393code: mwr
+nepali:
+  name: Nepali
+  iso6391code: ne
+  iso6393code: nep
+norwegian:
+  name: Norwegian
+  iso6391code: no
+  iso6393code: nor
+ojibwa:
+  name: Ojibwa
+  iso6391code: oj
+  iso6393code: oji
+oriya:
+  name: Oriya
+  iso6391code: or
+  iso6393code: ori
+oromo:
+  name: Oromo
+  iso6391code: om
+  iso6393code: orm
+pushto:
+  name: Pushto
+  iso6391code: ps
+  iso6393code: pus
+quechua:
+  name: Quechua
+  iso6391code: qu
+  iso6393code: que
+rajasthani:
+  name: Rajasthani
+  iso6391code: 
+  iso6393code: raj
+romany:
+  name: Romany
+  iso6391code: 
+  iso6393code: rom
+albanian:
+  name: Albanian
+  iso6391code: sq
+  iso6393code: sqi
+sardinian:
+  name: Sardinian
+  iso6391code: sc
+  iso6393code: srd
+swahili:
+  name: Swahili
+  iso6391code: sw
+  iso6393code: swa
+syriac:
+  name: Syriac
+  iso6391code: 
+  iso6393code: syr
+tamashek:
+  name: Tamashek
+  iso6391code: 
+  iso6393code: tmh
+uzbek:
+  name: Uzbek
+  iso6391code: uz
+  iso6393code: uzb
+yiddish:
+  name: Yiddish
+  iso6391code: yi
+  iso6393code: yid
+zapotec:
+  name: Zapotec
+  iso6391code: 
+  iso6393code: zap
+zhuang:
+  name: Zhuang
+  iso6391code: za
+  iso6393code: zha
+chinese:
+  name: Chinese
+  iso6391code: zh
+  iso6393code: zho
+zaza:
+  name: Zaza
+  iso6391code: 
+  iso6393code: zza

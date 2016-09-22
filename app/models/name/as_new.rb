@@ -50,7 +50,7 @@ class Name::AsNew < Name
     name = Name.new
     name.name_type_id = NameType.find_by(name: "cultivar hybrid").id
     name.name_rank_id = NameRank.find_by(name: "[unranked]").id
-    name.name_status_id = NameStatus.not_applicable
+    name.name_status = NameStatus.not_applicable
     name
   end
 
@@ -58,7 +58,7 @@ class Name::AsNew < Name
     name = Name.new
     name.name_type_id = NameType.find_by(name: "cultivar").id
     name.name_rank_id = NameRank.find_by(name: "[unranked]").id
-    name.name_status_id = NameStatus.not_applicable
+    name.name_status = NameStatus.not_applicable
     name
   end
 
@@ -66,7 +66,7 @@ class Name::AsNew < Name
     name = Name.new
     name.name_type_id = NameType.find_by(name: "common").id
     name.name_rank_id = NameRank.not_applicable
-    name.name_status_id = NameStatus.not_applicable
+    name.name_status = NameStatus.not_applicable
     name
   end
 end

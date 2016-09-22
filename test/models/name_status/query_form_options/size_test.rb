@@ -17,18 +17,12 @@
 #
 require "test_helper"
 
-# Single search controller test.
-class ReaderSearchControllerNamesNoSuchFieldTest < ActionController::TestCase
-  tests SearchController
-
-  test "reader can search for a name" do
-    get(:search,
-        { query_target: "name", query_string: "not-a-real-field: r.br." },
-        username: "fred",
-        user_full_name: "Fred Jones",
-        groups: [])
-    assert_select "span#search-results-summary",
-                  /Cannot search name for: not-a-real-field:./,
-                  "Should get error message."
+# Nam status options test.
+class NameStatusQueryFormOptionsSizeTest < ActiveSupport::TestCase
+  test "name status query form options size" do
+    expected = 37
+    assert_equal expected,
+                 NameStatus.query_form_options.size,
+                 "Should be #{expected} Name Status query form options"
   end
 end

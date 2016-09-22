@@ -18,7 +18,7 @@
 class Search::OnReference::WhereClauses
   attr_reader :sql
 
-  DEFAULT_FIELD = "citation-text:"
+  DEFAULT_FIELD = "citation-text:".freeze
 
   def initialize(parsed_request, incoming_sql)
     @parsed_request = parsed_request

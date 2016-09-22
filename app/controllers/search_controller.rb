@@ -113,7 +113,6 @@ class SearchController < ApplicationController
     params[:include_common_and_cultivar_session] = \
       session[:include_common_and_cultivar]
     @search = Search::Base.new(params)
-    save_search
     true
   end
 

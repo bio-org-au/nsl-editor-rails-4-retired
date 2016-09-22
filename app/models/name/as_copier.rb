@@ -17,7 +17,7 @@
 #
 # For operation of copying names
 class Name::AsCopier < Name
-  NAC = "Name::AsCopier"
+  NAC = "Name::AsCopier".freeze
   def copy_with_username(new_name_element, as_username)
     Rails.logger.debug("#{NAC}#copy with username
                        new_name_element: #{new_name_element}")

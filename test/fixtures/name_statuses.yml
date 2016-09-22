@@ -47,7 +47,7 @@ nom_inval_nom_subnud:
   nom_inval: true
 
 nom_inval_pro_syn:
-  name: "nom. inval., pro. syn."
+  name: "nom. inval., pro syn."
   name_group_id: NameGroup.botanical
   nom_illeg: false
   nom_inval: true
@@ -137,6 +137,12 @@ nom_alt:
   nom_illeg: false
   nom_inval: false
 
+nom_alt_nom_illeg:
+  name: "nom. alt., nom. illeg"
+  name_group_id: NameGroup.botanical
+  nom_illeg: false
+  nom_inval: false
+
 nom_cult:
   name: "nom. cult."
   name_group_id: NameGroup.botanical
@@ -214,11 +220,3 @@ nom_inval_opera_utique_oppressa:
   name_group_id: NameGroup.botanical
   nom_illeg: false
   nom_inval: false
-
-nom_inval_pro syn:
-  name: "nom. inval., pro syn."
-  name_group_id: NameGroup.botanical    
-  nom_illeg: false
-  nom_inval: false
-
-

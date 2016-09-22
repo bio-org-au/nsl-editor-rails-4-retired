@@ -475,65 +475,6 @@ class Instance < ActiveRecord::Base
     results
   end
 
-  def self.ref_usages(search_string, limit = 100, order_by = "name",
-                      show_instances = true)
-    logger.debug("Start new ref_usages: search string: #{search_string};
-                 show_instances: #{show_instances};
-                 limit: #{limit}; order by: #{order_by}")
-    reference_id = search_string.to_i
-    extra_search_terms = search_string.to_s.sub(/[0-9][0-9]*/, "")
-    results = []
-    rejected_pairings = []
-    # But what if that reference no longer exists?
-    reference = Reference.find_by(id: reference_id)
-    unless reference.blank?
-      reference.display_as_part_of_concept
-      count = 1
-      query = reference
-              .instances
-              .joins(:name)
-              .includes(name: :name_status)
-              .includes(:instance_type)
-              .includes(this_is_cited_by: [:name, :instance_type])
-      query = order_by == "page" ? query.ordered_by_page : query.ordered_by_name
-      query.each do |instance|
-        logger.debug("Query loop.....")
-        if count < limit
-          if instance.cited_by_id.blank?
-            count += 1
-            if show_instances
-              instance.display_within_reference
-              results.push(instance)
-              instance.is_cited_by.each do |cited_by|
-                count += 1
-                cited_by.expanded_instance_type = cited_by.instance_type.name
-                results.push(cited_by)
-                if count > limit
-                  limited = true
-                  break
-                end
-              end
-              unless instance.cites_this.nil?
-                results.push(instance.cites_this)
-                count += 1
-                if count > limit
-                  limited = true
-                  break
-                end
-              end
-            end
-          end
-        end
-        if count > limit
-          limited = true
-          break
-        end
-      end
-      results.unshift(reference)
-    end
-    results
-  end
-
   # Instances targetted in nsl-720
   def self.nsl_720
     logger.debug("nsl_720")
@@ -567,12 +508,12 @@ class Instance < ActiveRecord::Base
 
   def self.reverse_of_cites_id_query(instance_id)
     instance = Instance.find_by(id: instance_id.to_i)
-    results = instance.present? ? instance.reverse_of_this_cites : []
+    instance.present? ? instance.reverse_of_this_cites : []
   end
 
   def self.reverse_of_cited_by_id_query(instance_id)
     instance = Instance.find_by(id: instance_id.to_i)
-    results = instance.present? ? instance.reverse_of_this_is_cited_by : []
+    instance.present? ? instance.reverse_of_this_is_cited_by : []
   end
 
   def display_as_part_of_concept

@@ -21,8 +21,7 @@ require "test_helper"
 class RefTheadsDisplayValueCitationWithPageRangeTest < ActiveSupport::TestCase
   test "ref typeahead display value citation with page range" do
     ref = references(:for_typeahead_display)
-    assert(/\AFor Typeahead Display . \[2-3\] \[book\]\z/
-            .match(ref.typeahead_display_value),
-            "Should match")
+    assert_match(/\AFor Typeahead Display . \[2-3\] \[book\]\z/,
+                 ref.typeahead_display_value)
   end
 end

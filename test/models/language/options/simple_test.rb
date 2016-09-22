@@ -17,18 +17,25 @@
 #
 require "test_helper"
 
-# Single search controller test.
-class ReaderSearchControllerNamesNoSuchFieldTest < ActionController::TestCase
-  tests SearchController
+# Single name model test.
+class LanguageOptionsSimpleTest < ActiveSupport::TestCase
+  test "options" do
+    options = Language.options
+    first_set(options)
+  end
 
-  test "reader can search for a name" do
-    get(:search,
-        { query_target: "name", query_string: "not-a-real-field: r.br." },
-        username: "fred",
-        user_full_name: "Fred Jones",
-        groups: [])
-    assert_select "span#search-results-summary",
-                  /Cannot search name for: not-a-real-field:./,
-                  "Should get error message."
+  def try_pair(pair, str)
+    assert pair[0] == str, "Expected #{str}, not #{pair[0]}"
+  end
+
+  def first_set(options)
+    assert options[0][0] == "Undetermined", "Unexpected option 0,0"
+    try_pair(options[1], "English")
+    try_pair(options[2], "French")
+    try_pair(options[3], "German")
+    assert options[4][0] == "--------------", "Missing dashed line separator."
+    try_pair(options[5], "Abkhazian")
+    try_pair(options.last, "Zuni")
   end
 end
+

@@ -16,7 +16,7 @@
 #   limitations under the License.
 #
 class Reference::AsEdited < Reference
-  LABEL = "Reference::AsEdited: "
+  LABEL = "Reference::AsEdited: ".freeze
   def self.create(params, typeahead_params, username)
     reference = Reference::AsEdited.new(params)
     reference.resolve_typeahead_params(typeahead_params)

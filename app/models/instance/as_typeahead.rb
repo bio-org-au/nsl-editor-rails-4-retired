@@ -37,7 +37,7 @@
 class Instance::AsTypeahead < Instance
   COLUMNS = " name.full_name, reference.citation, reference.year, " \
             " reference.pages, instance.id, instance.source_system, "\
-            " instance_type.name as instance_type_name"
+            " instance_type.name as instance_type_name".freeze
 
   def self.for_synonymy(terms)
     @name_binds = []

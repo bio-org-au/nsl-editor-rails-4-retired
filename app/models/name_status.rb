@@ -22,7 +22,7 @@ class NameStatus < ActiveRecord::Base
 
   scope :ordered_by_name, -> { order("replace(name,'[','zzzzzz')") }
 
-  NA = "[n/a]"
+  NA = "[n/a]".freeze
 
   has_many :names
 
@@ -39,7 +39,7 @@ class NameStatus < ActiveRecord::Base
   end
 
   def na?
-    name =~ /\A\[n\/a\]\z/
+    name =~ %r{\A\[n/a\]\z}
   end
 
   def bracketed_non_legitimate_status
@@ -55,45 +55,51 @@ class NameStatus < ActiveRecord::Base
   end
 
   def self.not_applicable
-    find_by(name: NA).id
+    find_by(name: NA)
   end
 
   def self.options_for_category(name_category = :unknown, allow_delete = false)
     case name_category
     when Name::SCIENTIFIC_CATEGORY
       scientific_options(allow_delete)
-    when Name::SCIENTIFIC_HYBRID_FORMULA_CATEGORY
-      na_and_deleted_options(allow_delete)
-    when Name::SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY
-      na_and_deleted_options(allow_delete)
-    when Name::CULTIVAR_HYBRID_CATEGORY
+    when Name::CULTIVAR_HYBRID_CATEGORY,
+         Name::CULTIVAR_CATEGORY
       na_default_and_deleted_options(allow_delete)
-    when Name::CULTIVAR_CATEGORY
-      na_default_and_deleted_options(allow_delete)
-    when Name::OTHER_CATEGORY
-      na_and_deleted_options(allow_delete)
     else
       na_and_deleted_options(allow_delete)
     end
   end
 
   def self.query_form_options
-    all.ordered_by_name.collect { |n| [n.name, "status: #{n.name.downcase}"] }.unshift(["any status", ""])
+    all.ordered_by_name.collect do |n|
+      [n.name, "status: #{n.name.downcase}"]
+    end.unshift(["any status", ""])
   end
 
-  def self.options(allow_delete = false)
-    all.ordered_by_name.collect { |n| [n.name, n.id, disabled: (n.name == "[deleted]" && !allow_delete)] }
+  def self.xoptions(allow_delete = false)
+    all.ordered_by_name.collect do |n|
+      [n.name, n.id, disabled: (n.name == "[deleted]" && !allow_delete)]
+    end
   end
 
   def self.scientific_options(allow_delete = false)
-    where(" name not in ('nom. cult.', 'nom. cult., nom. alt.') ").ordered_by_name.collect { |n| [n.name, n.id, disabled: (n.name == "[deleted]" && !allow_delete)] }
+    where(" name not in ('nom. cult.', 'nom. cult., nom. alt.') ")
+      .ordered_by_name.collect do |n|
+        [n.name, n.id, disabled: (n.name == "[deleted]" && !allow_delete)]
+      end
   end
 
   def self.na_and_deleted_options(allow_delete)
-    where(" name = '[n/a]' or name = '[deleted]' ").order("name").collect { |n| [n.name, n.id, disabled: n.name == "[deleted]" && !allow_delete] }
+    where(" name = '[n/a]' or name = '[deleted]' ")
+      .order("name").collect do |n|
+        [n.name, n.id, disabled: n.name == "[deleted]" && !allow_delete]
+      end
   end
 
   def self.na_default_and_deleted_options(allow_delete)
-    where(" name = '[n/a]' or name = '[default]' or name = '[deleted]' ").order("name").collect { |n| [n.name, n.id, disabled: n.name == "[deleted]" && !allow_delete] }
+    where(" name = '[n/a]' or name = '[default]' or name = '[deleted]' ")
+      .order("name").collect do |n|
+        [n.name, n.id, disabled: n.name == "[deleted]" && !allow_delete]
+      end
   end
 end

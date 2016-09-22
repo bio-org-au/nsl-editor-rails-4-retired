@@ -17,18 +17,17 @@
 #
 require "test_helper"
 
-# Single search controller test.
-class ReaderSearchControllerNamesNoSuchFieldTest < ActionController::TestCase
-  tests SearchController
-
-  test "reader can search for a name" do
-    get(:search,
-        { query_target: "name", query_string: "not-a-real-field: r.br." },
-        username: "fred",
-        user_full_name: "Fred Jones",
-        groups: [])
-    assert_select "span#search-results-summary",
-                  /Cannot search name for: not-a-real-field:./,
-                  "Should get error message."
+# Name status options test.
+class NameStatusBracketedNonLegitimateStatusSimpleTest < ActiveSupport::TestCase
+  test "simple" do
+    NameStatus.all.each do |ns|
+      if ns.name == "legitimate"
+        assert ns.bracketed_non_legitimate_status.blank?
+      elsif ns.name =~ /]/
+        assert_match ns.name, ns.bracketed_non_legitimate_status
+      else
+        assert_match "[#{ns.name}]", ns.bracketed_non_legitimate_status
+      end
+    end
   end
 end

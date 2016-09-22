@@ -40,12 +40,12 @@ class NameRank < ActiveRecord::Base
                               morphological
                               nothomorph.).freeze
 
-  SPECIES = "Species"
-  GENUS = "Genus"
-  FAMILIA = "Familia"
-  FAMILY = FAMILIA
-  NA = "[n/a]"
-  UNRANKED = "[unranked]"
+SPECIES = "Species".freeze
+GENUS = "Genus".freeze
+FAMILIA = "Familia".freeze
+FAMILY = FAMILIA.freeze
+NA = "[n/a]".freeze
+UNRANKED = "[unranked]".freeze
 
   def needs_generic_epithet
     NEEDS_GENERIC_EPITHET.include?(name)
