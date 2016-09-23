@@ -17,10 +17,15 @@
 #
 require "test_helper"
 
-# Reference model typeahead test.
-class ReferenceAsEditedNoAuthorIdWithNoString < ActiveSupport::TestCase
-  test "no id with no string" do
-    result = Reference::AsEdited.author_from_typeahead("", "")
-    assert result.blank?, "Should be no result for blank inputs."
+# Reference model parent from typeahead test.
+class RefARTA4PNoIdWStrMatchingCurrentReferenceTest < ActiveSupport::TestCase
+  test "no id with string matching current reference" do
+    skip
+    # reference_1 = references(:has_a_matching_citation_1)
+    # assert Reference.where(citation: reference_1.citation).size == 2,
+    # "Should be two References with the same citation string."
+    # assert_raise(RuntimeError, "Should fail - invalid reference string.") do
+    #   Reference::AsEdited.parent_from_typeahead('',reference_1.citation)
+    # end
   end
 end

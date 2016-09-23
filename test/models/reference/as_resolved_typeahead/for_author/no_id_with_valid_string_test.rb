@@ -18,10 +18,11 @@
 require "test_helper"
 
 # Reference model typeahead test.
-class RefAsEdNoAuthIdWValStringWithTrailingWhitespace < ActiveSupport::TestCase
+class RefARTA4AuthNoIdWithValidString < ActiveSupport::TestCase
   test "no id with valid string" do
     author = authors(:chaplin)
-    result = Reference::AsEdited.author_from_typeahead("", author.name + " ")
-    assert_equal author.id, result, "Should get a matching id for the author"
+    result = Reference::AsResolvedTypeahead::ForAuthor.new("", author.name)
+    assert_equal author.id, result.value,
+                 "Should get a matching id for the author"
   end
 end

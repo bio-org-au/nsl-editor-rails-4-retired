@@ -17,18 +17,15 @@
 #
 require "test_helper"
 
-# Reference model parent from typeahead test.
-class RefAsEdParIdWPartStrMatchingAnotherReferenceTest < ActiveSupport::TestCase
-  test "parent id with partial string for another reference" do
-    reference_1 = references(:journal_of_botany_british_and_foreign)
-    reference_2 = references(:origin_of_species)
-    result = Reference::AsEdited.parent_from_typeahead(
-      reference_1.id.to_s,
-      reference_2.citation.chop
-    )
-    assert_equal reference_2.id,
-                 result,
-                 "Should get matching ID for citation string despite \
-                 mismatched ID and partial string"
+# Reference model typeahead test.
+class RefARTA4AuthNoIdWStringMatchingTwoReferencesTest < ActiveSupport::TestCase
+  test "no id with string matching two authors" do
+    reference_1 = references(:has_a_matching_citation_1)
+    assert_equal 2,
+                 Reference.where(citation: reference_1.citation).size,
+                 "Should be two References with the same citation string."
+    assert_raise(RuntimeError, "Should fail with invalid ref string.") do
+      Reference::AsResolvedTypeahead::ForAuthor.new("", reference_1.citation)
+    end
   end
 end

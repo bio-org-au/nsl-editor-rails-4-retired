@@ -17,10 +17,10 @@
 #
 require "test_helper"
 
-# Reference model typeahead test.
-class ReferenceAsEditedAuthorIdWithNoString < ActiveSupport::TestCase
-  test "id with no string" do
-    result = Reference::AsEdited.author_from_typeahead("1", "")
-    assert_equal "", result, "Delete is allowed"
+# Reference model parent from typeahead test.
+class RefARTA4ParentNoIdWithNoString < ActiveSupport::TestCase
+  test "no id with no string" do
+    result = Reference::AsResolvedTypeahead::ForParent.new("", "")
+    assert result.value.blank?, "Should be no result for blank inputs."
   end
 end

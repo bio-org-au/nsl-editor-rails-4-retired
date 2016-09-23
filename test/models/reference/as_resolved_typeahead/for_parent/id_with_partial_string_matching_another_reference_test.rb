@@ -18,11 +18,17 @@
 require "test_helper"
 
 # Reference model parent from typeahead test.
-class ReferenceAsEditedNoParentIdWithValidString < ActiveSupport::TestCase
-  test "no id with valid string" do
-    reference = references(:origin_of_species)
-    result = Reference::AsEdited.parent_from_typeahead("", reference.citation)
-    assert_equal reference.id, result,
-                 "Should get a matching id for the reference"
+class RefARTA4ParentIdWPartStrMatchingAnotherRefTest < ActiveSupport::TestCase
+  test "parent id with partial string for another reference" do
+    reference_1 = references(:journal_of_botany_british_and_foreign)
+    reference_2 = references(:origin_of_species)
+    result = Reference::AsResolvedTypeahead::ForParent.new(
+      reference_1.id.to_s,
+      reference_2.citation.chop
+    )
+    assert_equal reference_2.id,
+                 result.value,
+                 "Should get matching ID for citation string despite \
+                 mismatched ID and partial string"
   end
 end

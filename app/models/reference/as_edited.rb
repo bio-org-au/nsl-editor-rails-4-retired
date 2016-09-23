@@ -15,7 +15,10 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
+
+# Reference insert and update.
 class Reference::AsEdited < Reference
+  include ReferenceAuthorResolvable
   LABEL = "Reference::AsEdited: ".freeze
   def self.create(params, typeahead_params, username)
     reference = Reference::AsEdited.new(params)
@@ -96,17 +99,19 @@ class Reference::AsEdited < Reference
   end
 
   def resolve_typeahead_params(params)
+    #resolve_author(params, "author")
     if params.key?("author_id")
-      self.author_id = Reference::AsEdited
-                       .author_from_typeahead(params["author_id"],
-                                              params["author_typeahead"])
+      self.author_id = Reference::AsResolvedTypeahead::ForAuthor.new(
+                         params["author_id"],
+                         params["author_typeahead"]
+      ).value
     end
 
     if params.key?("parent_id")
-      self.parent_id = Reference::AsEdited.parent_from_typeahead(
+      self.parent_id = Reference::AsResolvedTypeahead::ForParent.new(
         params["parent_id"],
         params["parent_typeahead"]
-      )
+      ).value
     end
 
     if params.key?("duplicate_of_id")
@@ -118,125 +123,6 @@ class Reference::AsEdited < Reference
   rescue => e
     logger.error("#{LABEL}:resolved_typeahead_params: rescuing exception: #{e}")
     raise
-  end
-
-  def self.author_from_typeahead(id_string, text)
-    logger.debug("#{LABEL}:author_from_typeahead: id_string: #{id_string};
-                 text: #{text}")
-    name_text = text.sub(/ *\|.*\z/, "")
-    name_text.rstrip!
-    logger.debug("#{LABEL}:author_from_typeahead: name_text: #{name_text}")
-    case resolve_id_and_text(id_string, name_text)
-    when :no_id_or_text
-      value = ""
-    when :id_only # assume delete
-      value = ""
-    when :text_only
-      logger.info("#{LABEL}:author_from_typeahead: string")
-      possibles = Author.lower_name_equals(name_text)
-      case possibles.size
-      when 0
-        possibles = Author.lower_name_like(name_text + "%")
-        case possibles.size
-        when 1
-          value = possibles.first.id
-        else
-          raise "please choose author from suggestions"
-        end
-      when 1
-        value = possibles.first.id
-      else
-        raise "please choose author from suggestions (more than 1 match)"
-      end
-    when :id_and_text
-      logger.debug("#{LABEL}:author_from_typeahead: id and text")
-      possibles = Author.lower_name_equals(name_text)
-      case possibles.size
-      when 0
-        possibles = Author.lower_name_like(name_text + "%")
-        case possibles.size
-        when 1
-          value = possibles.first.id
-        else
-          raise "please choose author from suggestions"
-        end
-      when 1
-        value = possibles.first.id
-      else
-        possibles_with_id = Author.where(id: id_string.to_i)
-                                  .lower_name_equals(name_text)
-        if possibles_with_id.size == 1
-          value = possibles_with_id.first.id
-        else
-          raise "please choose author from suggestions (more than 1 match)"
-        end
-      end
-    else
-      logger.debug("#{LABEL}:author_from_typeahead: strange data")
-      raise "unrecognized information"
-    end
-    logger.debug("#{LABEL}:author_from_typeahead: returning value: #{value}")
-    value
-  end
-
-  def self.parent_from_typeahead(id_string, text)
-    logger.debug("#{LABEL}:parent_from_typeahead: id_string: #{id_string};
-                 text: #{text}")
-    text = text.sub(/ *\|.*\z/, "")
-    text.rstrip!
-    logger.debug("#{LABEL}:parent_from_typeahead: text: #{text}")
-    case resolve_id_and_text(id_string, text)
-    when :no_id_or_text
-      value = ""
-    when :id_only # assume delete
-      value = ""
-    when :text_only
-      logger.info("#{LABEL}:parent_from_typeahead: string")
-      possibles = Reference.lower_citation_equals(text)
-      case possibles.size
-      when 0
-        possibles = Reference.lower_citation_like(text + "%")
-        case possibles.size
-        when 1
-          value = possibles.first.id
-        else
-          raise "no match for that parent"
-        end
-      when 1
-        value = possibles.first.id
-      else
-        raise "more than 1 match for that parent"
-      end
-    when :id_and_text
-      logger.debug("#{LABEL}:parent_from_typeahead: id and text")
-      possibles = Reference.lower_citation_equals(text)
-      case possibles.size
-      when 0
-        possibles = Reference.lower_citation_like(text + "%")
-        case possibles.size
-        when 1
-          value = possibles.first.id
-        else
-          raise "no match for that parent"
-        end
-      when 1
-        value = possibles.first.id
-      else
-        possibles_with_id = Reference
-                            .where(id: id_string.to_i)
-                            .lower_citation_equals(text)
-        if possibles_with_id.size == 1
-          value = possibles_with_id.first.id
-        else
-          raise "please choose parent from suggestions (more than 1 match)"
-        end
-      end
-    else
-      logger.debug("#{LABEL}:parent_from_typeahead: strange data")
-      raise "unrecognized information"
-    end
-    logger.debug("#{LABEL}:parent_from_typeahead: returning value: #{value}")
-    value
   end
 
   def self.duplicate_of_from_typeahead(id_string, text)

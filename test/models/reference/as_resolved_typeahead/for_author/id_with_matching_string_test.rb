@@ -18,22 +18,14 @@
 require "test_helper"
 
 # Reference model typeahead test.
-class RefAsEdAuthorIdWithStringMatching2Authors < ActiveSupport::TestCase
-  test "id with string matching 2 authors" do
-    skip
-    # This test became redundant in its present form when a
-    # database constraint was added to prevent duplicate author names.
-    # I'm leaving it here so when we clean it out we review the code
-    # than handles this case in the typeahead - needs refactoring,
-    # possibly different type of testing.
-    author_1 = authors(:has_matching_name_1)
-    author_2 = authors(:has_matching_name_2)
-    result = Reference::AsEdited.author_from_typeahead(
-      author_2.id.to_s,
-      author_1.name
+class ReferenceARTA4AuthorIdWithMatchingString < ActiveSupport::TestCase
+  test "id with matching string" do
+    author = authors(:chaplin)
+    result = Reference::AsResolvedTypeahead::ForAuthor.new(
+      author.id.to_s,
+      author.name
     )
-    assert_equal author_2.id,
-                 result,
-                 "Should get a match for the correct id"
+    assert_equal author.id, result.value,
+                 "Should get a matching id for the author name"
   end
 end

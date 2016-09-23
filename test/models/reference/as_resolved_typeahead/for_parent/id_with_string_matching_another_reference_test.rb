@@ -17,17 +17,17 @@
 #
 require "test_helper"
 
-# Reference model typeahead test.
-class RefAsEdAuthIdWStringMatchingAnotherReferenceTest < ActiveSupport::TestCase
-  test "author id with string for another reference" do
-    author_1 = authors(:chaplin)
-    author_2 = authors(:moe)
-    result = Reference::AsEdited.author_from_typeahead(
-      author_1.id.to_s,
-      author_2.name
+# Reference model parent from typeahead test.
+class RefART4ParIdWStringMatchingAnotherRefTest < ActiveSupport::TestCase
+  test "parent id with string for another reference" do
+    reference_1 = references(:journal_of_botany_british_and_foreign)
+    reference_2 = references(:origin_of_species)
+    result = Reference::AsResolvedTypeahead::ForParent.new(
+      reference_1.id.to_s,
+      reference_2.citation
     )
-    assert_equal author_2.id,
-                 result,
-                 "Should get a matching id for the name despite mismatched ID"
+    assert_equal reference_2.id,
+                 result.value,
+                 "Should get matching ID for citation despite mismatched ID"
   end
 end

@@ -17,11 +17,16 @@
 #
 require "test_helper"
 
-# Reference model typeahead test.
-class ReferenceAsEditedNoAuthorIdWithValidString < ActiveSupport::TestCase
-  test "no id with valid string" do
-    author = authors(:chaplin)
-    result = Reference::AsEdited.author_from_typeahead("", author.name)
-    assert_equal author.id, result, "Should get a matching id for the author"
+# Reference model parent from typeahead test.
+class RefARTA4ParentNorIdWPartValidStringMatchingOne < ActiveSupport::TestCase
+  test "no id with partial valid string matching one reference" do
+    reference = references(:origin_of_species)
+    result = Reference::AsResolvedTypeahead::ForParent.new(
+      "",
+      reference.citation.chop
+    )
+    assert_equal reference.id,
+                 result.value,
+                 "Should get a matching id for the reference"
   end
 end

@@ -18,14 +18,13 @@
 require "test_helper"
 
 # Reference model parent from typeahead test.
-class RefAsEdNoParIdWStrMatchingCurrentReferenceTest < ActiveSupport::TestCase
-  test "no id with string matching current reference" do
-    skip
-    # reference_1 = references(:has_a_matching_citation_1)
-    # assert Reference.where(citation: reference_1.citation).size == 2,
-    # "Should be two References with the same citation string."
-    # assert_raise(RuntimeError, "Should fail - invalid reference string.") do
-    #   Reference::AsEdited.parent_from_typeahead('',reference_1.citation)
-    # end
+class RefARTA4ParentIdWithMatchingString < ActiveSupport::TestCase
+  test "id with matching string" do
+    reference = references(:origin_of_species)
+    result = Reference::AsResolvedTypeahead::ForParent.new(reference.id.to_s,
+                                                           reference.citation)
+    assert_equal reference.id,
+                 result.value,
+                 "Should get a matching id for the parent citation"
   end
 end

@@ -17,10 +17,10 @@
 #
 require "test_helper"
 
-# Reference model parent from typeahead test.
-class ReferenceAsEditedNoParentIdWithNoString < ActiveSupport::TestCase
+# Reference model typeahead test.
+class ReferenceARTA4AuthorNoIdWithNoString < ActiveSupport::TestCase
   test "no id with no string" do
-    result = Reference::AsEdited.parent_from_typeahead("", "")
-    assert result.blank?, "Should be no result for blank inputs."
+    result = Reference::AsResolvedTypeahead::ForAuthor.new("", "")
+    assert result.value.blank?, "Should be no result for blank inputs."
   end
 end

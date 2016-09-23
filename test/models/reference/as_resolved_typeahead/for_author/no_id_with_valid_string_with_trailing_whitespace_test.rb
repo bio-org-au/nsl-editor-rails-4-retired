@@ -17,11 +17,13 @@
 #
 require "test_helper"
 
-# Reference model parent from typeahead test.
-class ReferenceAsEditedNoParentIdWithInvalidString < ActiveSupport::TestCase
-  test "no parent id with invalid string" do
-    assert_raise(RuntimeError, "Should fail with invalid ref string.") do
-      Reference::AsEdited.parent_from_typeahead("", "asdfasfdasd")
-    end
+# Reference model typeahead test.
+class RefARTA4AuthNoIdWValStringWithTrailingWhitespace < ActiveSupport::TestCase
+  test "no id with valid string with trailing whitespace" do
+    author = authors(:chaplin)
+    result = Reference::AsResolvedTypeahead::ForAuthor.new("",
+                                                           author.name + " ")
+    assert_equal author.id, result.value,
+                 "Should get a matching id for the author"
   end
 end

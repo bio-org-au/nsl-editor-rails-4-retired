@@ -18,11 +18,11 @@
 require "test_helper"
 
 # Reference model typeahead test.
-class ReferenceAsEditedNoAuthorIdWithInvalidString < ActiveSupport::TestCase
-  test "no author id with invalid string" do
-    assert_raise(RuntimeError,
-                 "Should raise a RuntimeError for invalid reference string.") do
-      Reference::AsEdited.author_from_typeahead("", "asdfasfdasd")
-    end
+class RefARTA4AutNoIdWPartValidStringMatchingOneAuthor < ActiveSupport::TestCase
+  test "no id with partial valid string matching one author" do
+    author = authors(:chaplin)
+    result = Reference::AsResolvedTypeahead::ForAuthor.new("", author.name.chop)
+    assert_equal author.id, result.value,
+                 "Should get a matching id for the author"
   end
 end

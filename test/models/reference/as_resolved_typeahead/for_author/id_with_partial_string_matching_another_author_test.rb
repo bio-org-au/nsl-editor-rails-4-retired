@@ -17,10 +17,18 @@
 #
 require "test_helper"
 
-# Reference model parent from typeahead test.
-class ReferenceAsEditedParentIdWithNoString < ActiveSupport::TestCase
-  test "id with no string" do
-    result = Reference::AsEdited.parent_from_typeahead("1", "")
-    assert_equal "", result, "Delete is allowed"
+# Reference model typeahead test.
+class RefARTA4AuthorWPartStrMatchingAnotherAuthorTest < ActiveSupport::TestCase
+  test "author id with partial string for another author" do
+    author_1 = authors(:chaplin)
+    author_2 = authors(:moe)
+    result = Reference::AsResolvedTypeahead::ForAuthor.new(
+      author_1.id.to_s,
+      author_2.name.chop
+    )
+    assert_equal author_2.id,
+                 result.value,
+                 "Should get matching ID 4 name despite mismatched ID and \
+                 partial name"
   end
 end

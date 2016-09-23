@@ -18,13 +18,9 @@
 require "test_helper"
 
 # Reference model parent from typeahead test.
-class ReferenceAsEditedParentIdWithMatchingString < ActiveSupport::TestCase
-  test "id with matching string" do
-    reference = references(:origin_of_species)
-    result = Reference::AsEdited.parent_from_typeahead(reference.id.to_s,
-                                                       reference.citation)
-    assert_equal reference.id,
-                 result,
-                 "Should get a matching id for the parent citation"
+class RefARTA4ParentIdWithNoString < ActiveSupport::TestCase
+  test "id with no string" do
+    result = Reference::AsResolvedTypeahead::ForParent.new("1", "")
+    assert_equal "", result.value, "Delete is allowed"
   end
 end
