@@ -18,18 +18,17 @@
 require "test_helper"
 
 # Single name model test.
-class NameAsEditedResolveTypeaheadParamsSetParentTest < ActiveSupport::TestCase
-  test "name as edited resolve typeahead params set parent" do
-    dummy = names(:a_genus)
-    name = Name::AsEdited.find(names(:has_no_parent).id)
-    assert name.parent_id.blank?,
-           "Name should be have no parent to start this test."
-    name.resolve_typeahead_params(
-      "parent_id" => dummy.id,
-      "parent_typeahead" => dummy.full_name
+class NameAsEdAuthIdWPartStringMatchingAnotherAuthor < ActiveSupport::TestCase
+  test "id with partial string for anther author" do
+    author_1 = authors(:dummy_author_1)
+    author_2 = authors(:chaplin)
+    result = Name::AsResolvedTypeahead::ForAuthor.new(
+      author_1.id.to_s,
+      author_2.name.chop,
+      "Some Author Field"
     )
-    assert_equal dummy.id,
-                 name.parent_id,
-                 "Should now have a parent id"
+    assert_equal author_2.id,
+                 result.value,
+                 "Should get matching ID for part string despite mismatched ID"
   end
 end

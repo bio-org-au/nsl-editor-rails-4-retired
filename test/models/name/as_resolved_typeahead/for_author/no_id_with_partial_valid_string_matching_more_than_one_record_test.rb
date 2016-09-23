@@ -18,18 +18,16 @@
 require "test_helper"
 
 # Single name model test.
-class NameAsEditedResolveTypeaheadParamsSetParentTest < ActiveSupport::TestCase
-  test "name as edited resolve typeahead params set parent" do
-    dummy = names(:a_genus)
-    name = Name::AsEdited.find(names(:has_no_parent).id)
-    assert name.parent_id.blank?,
-           "Name should be have no parent to start this test."
-    name.resolve_typeahead_params(
-      "parent_id" => dummy.id,
-      "parent_typeahead" => dummy.full_name
-    )
-    assert_equal dummy.id,
-                 name.parent_id,
-                 "Should now have a parent id"
+class NameAsEdNoAuthIdWPartValidStrMatchMoreThan1Rec < ActiveSupport::TestCase
+  test "no id with partial valid string matching more than one record" do
+    author = authors(:dummy_author_1)
+    assert_raise(RuntimeError,
+                 "Should raise exception because multiple matches.") do
+      Name::AsResolvedTypeahead::ForAuthor.new(
+        "",
+        author.abbrev.chop,
+        "SOME FIELD"
+      )
+    end
   end
 end

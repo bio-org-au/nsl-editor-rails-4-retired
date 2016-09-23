@@ -18,18 +18,18 @@
 require "test_helper"
 
 # Single name model test.
-class NameAsEditedResolveTypeaheadParamsSetParentTest < ActiveSupport::TestCase
-  test "name as edited resolve typeahead params set parent" do
-    dummy = names(:a_genus)
-    name = Name::AsEdited.find(names(:has_no_parent).id)
-    assert name.parent_id.blank?,
-           "Name should be have no parent to start this test."
-    name.resolve_typeahead_params(
-      "parent_id" => dummy.id,
-      "parent_typeahead" => dummy.full_name
+class NameAsResolvedTADupeOfIdWithStringMatching2Names < ActiveSupport::TestCase
+  test "id with string matching 2 names" do
+    name_1 = names(:name_matches_another_1)
+    name_2 = names(:name_matches_another_2)
+    assert name_1.full_name.match(name_2.full_name),
+           "Should be two names with the same full name."
+    result = Name::AsResolvedTypeahead::ForDuplicateOf.new(
+      name_2.id.to_s,
+      name_2.full_name
     )
-    assert_equal dummy.id,
-                 name.parent_id,
-                 "Should now have a parent id"
+    assert_equal name_2.id,
+                 result.value,
+                 "Should get a match for the correct id"
   end
 end

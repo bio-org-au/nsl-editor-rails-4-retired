@@ -15,21 +15,35 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require "test_helper"
+module Resolvable
+  extend ActiveSupport::Concern
 
-# Single name model test.
-class NameAsEditedResolveTypeaheadParamsSetParentTest < ActiveSupport::TestCase
-  test "name as edited resolve typeahead params set parent" do
-    dummy = names(:a_genus)
-    name = Name::AsEdited.find(names(:has_no_parent).id)
-    assert name.parent_id.blank?,
-           "Name should be have no parent to start this test."
-    name.resolve_typeahead_params(
-      "parent_id" => dummy.id,
-      "parent_typeahead" => dummy.full_name
-    )
-    assert_equal dummy.id,
-                 name.parent_id,
-                 "Should now have a parent id"
+  NO_ID_OR_TEXT = :no_id_or_text
+  ID_AND_TEXT = :id_and_text
+  ID_ONLY = :id_only
+  TEXT_ONLY = :text_only
+
+  def resolve(id_string, text)
+    if id_string.blank?
+      no_id(text)
+    else
+      id_present(text)
+    end
+  end
+
+  def no_id(text)
+    if text.blank?
+      NO_ID_OR_TEXT
+    else # text is present
+      TEXT_ONLY
+    end
+  end
+
+  def id_present(text)
+    if text.blank?
+      ID_ONLY # assume intention is to remove the field value
+    else # text is present
+      ID_AND_TEXT
+    end
   end
 end

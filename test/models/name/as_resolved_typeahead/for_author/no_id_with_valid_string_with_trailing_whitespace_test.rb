@@ -18,18 +18,16 @@
 require "test_helper"
 
 # Single name model test.
-class NameAsEditedResolveTypeaheadParamsSetParentTest < ActiveSupport::TestCase
-  test "name as edited resolve typeahead params set parent" do
-    dummy = names(:a_genus)
-    name = Name::AsEdited.find(names(:has_no_parent).id)
-    assert name.parent_id.blank?,
-           "Name should be have no parent to start this test."
-    name.resolve_typeahead_params(
-      "parent_id" => dummy.id,
-      "parent_typeahead" => dummy.full_name
+class NameAsEdNoAuthIdWValStrWithTrailingWhitespace < ActiveSupport::TestCase
+  test "no id with valid string with trailing whitespace" do
+    author = authors(:dummy_author_1)
+    result = Name::AsResolvedTypeahead::ForAuthor.new(
+      "",
+      author.name + " ",
+      "some field"
     )
-    assert_equal dummy.id,
-                 name.parent_id,
-                 "Should now have a parent id"
+    assert_equal author.id,
+                 result.value,
+                 "Should get a matching id for the author name"
   end
 end

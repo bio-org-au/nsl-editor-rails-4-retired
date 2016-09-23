@@ -18,18 +18,14 @@
 require "test_helper"
 
 # Single name model test.
-class NameAsEditedResolveTypeaheadParamsSetParentTest < ActiveSupport::TestCase
-  test "name as edited resolve typeahead params set parent" do
-    dummy = names(:a_genus)
-    name = Name::AsEdited.find(names(:has_no_parent).id)
-    assert name.parent_id.blank?,
-           "Name should be have no parent to start this test."
-    name.resolve_typeahead_params(
-      "parent_id" => dummy.id,
-      "parent_typeahead" => dummy.full_name
-    )
-    assert_equal dummy.id,
-                 name.parent_id,
-                 "Should now have a parent id"
+class NameARTA4ParentIdWithStringMatchingTwoNamesTest < ActiveSupport::TestCase
+  test "no id with string matching two names" do
+    name_1 = names(:name_matches_another_1)
+    assert Name.where(full_name: name_1.full_name).size == 2,
+           "Should be two Names with the same full name string."
+    assert_raise(RuntimeError,
+                 "Should raise a RuntimeError for invalid author string.") do
+      Name::AsResolvedTypeahead::ForParent.new("", name_1.full_name, "parent")
+    end
   end
 end

@@ -22,6 +22,7 @@ class LanguageOptionsSimpleTest < ActiveSupport::TestCase
   test "options" do
     options = Language.options
     first_set(options)
+    second_set(options)
   end
 
   def try_pair(pair, str)
@@ -33,9 +34,11 @@ class LanguageOptionsSimpleTest < ActiveSupport::TestCase
     try_pair(options[1], "English")
     try_pair(options[2], "French")
     try_pair(options[3], "German")
+  end
+
+  def second_set(options)
     assert options[4][0] == "--------------", "Missing dashed line separator."
     try_pair(options[5], "Abkhazian")
     try_pair(options.last, "Zuni")
   end
 end
-
