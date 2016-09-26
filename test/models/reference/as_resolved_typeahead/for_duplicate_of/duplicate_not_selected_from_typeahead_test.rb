@@ -18,7 +18,7 @@
 require "test_helper"
 
 # Reference model typeahead test.
-class DuplicateOfNotSelectedFromTypeahead < ActiveSupport::TestCase
+class RefARTA4DuplicateOfNotSelectedFromTypeahead < ActiveSupport::TestCase
   test "update reference with duplicate of not selected from typeahead" do
     reference = Reference::AsEdited.first
     assert_raise(RuntimeError,

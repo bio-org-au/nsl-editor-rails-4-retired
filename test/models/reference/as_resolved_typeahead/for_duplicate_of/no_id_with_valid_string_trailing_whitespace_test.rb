@@ -18,16 +18,15 @@
 require "test_helper"
 
 # Reference model typeahead test.
-class RefAsEdDupeOfIdWPartStrMatchingAnotherReference < ActiveSupport::TestCase
-  test "id with partial string for another reference" do
-    reference_1 = references(:journal_of_botany_british_and_foreign)
-    reference_2 = references(:an_herbarium_annotation)
-    result = Reference::AsEdited.duplicate_of_from_typeahead(
-      reference_1.id.to_s,
-      reference_2.citation.chop
+class RefARTA4DupeOfNoIdWValStrTrailingWhitespace < ActiveSupport::TestCase
+  test "no id with valid string trailing whitespace" do
+    reference_1 = references(:origin_of_species)
+    result = Reference::AsResolvedTypeahead::ForDuplicateOf.new(
+      "",
+      reference_1.citation + " "
     )
-    assert_equal reference_2.id,
-                 result,
-                 "Should get a matching id for the reference citation"
+    assert_equal reference_1.id,
+                 result.value,
+                 "Should get a matching id for the citation"
   end
 end

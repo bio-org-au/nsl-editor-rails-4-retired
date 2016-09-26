@@ -18,9 +18,19 @@
 require "test_helper"
 
 # Reference model typeahead test.
-class ReferenceAsEditedNoDuplicateOfIdWithNoString < ActiveSupport::TestCase
-  test "no id with no string" do
-    result = Reference::AsEdited.duplicate_of_from_typeahead("", "")
-    assert result.blank?, "Should be no result for blank inputs."
+class RefARTA4DupeOfNoIdWStrMatchingCurrentRefTest < ActiveSupport::TestCase
+  test "no id with string matching current reference" do
+    skip
+    # reference_1 = references(:has_a_matching_citation_1)
+    # reference_2 = references(:has_a_matching_citation_2)
+    # assert reference_1.citation.match(reference_2.citation),
+    #        "Should be two references with the same citation."
+    # assert_raise(RuntimeError,
+    #              'Should object to 2 matches without ID to help.') do
+    #   Reference::AsResolvedTypeahead::ForDuplicateOf.new(
+    #   '',
+    #   reference_2.citation
+    #   )
+    # end
   end
 end

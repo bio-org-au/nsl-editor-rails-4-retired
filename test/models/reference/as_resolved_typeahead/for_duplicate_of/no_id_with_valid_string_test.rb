@@ -18,16 +18,15 @@
 require "test_helper"
 
 # Reference model typeahead test.
-class RefAsEdDupeOfIdWithStringMatching2References < ActiveSupport::TestCase
-  test "id with string matching 2 references" do
-    reference_1 = references(:has_a_matching_citation_1)
-    reference_2 = references(:has_a_matching_citation_2)
-    assert reference_1.citation.match(reference_2.citation),
-           "Should be two references with the same ciation."
-    result = Reference::AsEdited.duplicate_of_from_typeahead(
-      reference_2.id.to_s,
-      reference_2.citation
+class ReferenceARTA4DuplicateOfNoIdWithValidString < ActiveSupport::TestCase
+  test "no id with valid string" do
+    reference_1 = references(:origin_of_species)
+    result = Reference::AsResolvedTypeahead::ForDuplicateOf.new(
+      "",
+      reference_1.citation
     )
-    assert_equal reference_2.id, result, "Should get a match for the correct id"
+    assert_equal reference_1.id,
+                 result.value,
+                 "Should get a matching id for the citation"
   end
 end

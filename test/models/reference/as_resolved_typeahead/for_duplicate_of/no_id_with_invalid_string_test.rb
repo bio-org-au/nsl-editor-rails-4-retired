@@ -18,15 +18,11 @@
 require "test_helper"
 
 # Reference model typeahead test.
-class RefAsEdNoDupeOfIdWPartialValidStringMatchingOne < ActiveSupport::TestCase
-  test "no id with patial valid string matching one record" do
-    reference = references(:origin_of_species)
-    result = Reference::AsEdited.duplicate_of_from_typeahead(
-      "",
-      reference.citation.chop
-    )
-    assert_equal reference.id,
-                 result,
-                 "Should get a matching id for the citation"
+class RefARTA4DuplicateOfNoIdWithInvalidString < ActiveSupport::TestCase
+  test "duplicate of no id with invalid string" do
+    assert_raise(RuntimeError,
+                 "Should raise a RuntimeError for invalid author string.") do
+      Reference::AsResolvedTypeahead::ForDuplicateOf.new("", "asdfasfdasd")
+    end
   end
 end

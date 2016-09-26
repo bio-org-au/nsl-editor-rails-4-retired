@@ -18,15 +18,18 @@
 require "test_helper"
 
 # Reference model typeahead test.
-class ReferenceAsEditedDuplicateOfIdWithMatchingString < ActiveSupport::TestCase
-  test "id with matching string" do
-    reference = references(:journal_of_botany_british_and_foreign)
-    result = Reference::AsEdited.duplicate_of_from_typeahead(
-      reference.id,
-      reference.citation
+class RefAsRTA4DupeOfIdWithStringMatching2References < ActiveSupport::TestCase
+  test "id with string matching 2 references" do
+    reference_1 = references(:has_a_matching_citation_1)
+    reference_2 = references(:has_a_matching_citation_2)
+    assert reference_1.citation.match(reference_2.citation),
+           "Should be two references with the same ciation."
+    result = Reference::AsResolvedTypeahead::ForDuplicateOf.new(
+      reference_2.id.to_s,
+      reference_2.citation
     )
-    assert_equal reference.id,
-                 result,
-                 "The typeahead result should match the ID"
+    assert_equal reference_2.id,
+                 result.value,
+                 "Should get a match for the correct id"
   end
 end

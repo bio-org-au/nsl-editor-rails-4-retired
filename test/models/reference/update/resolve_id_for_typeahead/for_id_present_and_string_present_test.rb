@@ -20,7 +20,9 @@ require "test_helper"
 # Single Reference model test.
 class ForIdPresentAndStringPresent < ActiveSupport::TestCase
   test "id present string present" do
-    assert_match "id_and_text",
-                 Reference::AsEdited.resolve_id_and_text("24", "xyz")
+    ref = references(:hookers_icones_plantarum)
+    assert Resolvable::ID_AND_TEXT ==
+           Reference::AsResolvedTypeahead::ForDuplicateOf
+           .new(ref.id, ref.citation).resolve("ref.id", "ref.citation")
   end
 end

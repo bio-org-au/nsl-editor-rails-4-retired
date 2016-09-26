@@ -18,11 +18,16 @@
 require "test_helper"
 
 # Reference model typeahead test.
-class RefAsEditedNoDuplicateOfIdWithInvalidString < ActiveSupport::TestCase
-  test "no duplicate of id with invalid string" do
-    assert_raise(RuntimeError,
-                 "Should raise a RuntimeError for invalid author string.") do
-      Reference::AsEdited.duplicate_of_from_typeahead("", "asdfasfdasd")
-    end
+class RefARTA4DupeOfIdWStringMatchingAnotherReference < ActiveSupport::TestCase
+  test "id with string for another reference" do
+    reference_1 = references(:journal_of_botany_british_and_foreign)
+    reference_2 = references(:an_herbarium_annotation)
+    result = Reference::AsResolvedTypeahead::ForDuplicateOf.new(
+      reference_1.id.to_s,
+      reference_2.citation
+    )
+    assert_equal reference_2.id,
+                 result.value,
+                 "Should get a matching id for the reference citation"
   end
 end

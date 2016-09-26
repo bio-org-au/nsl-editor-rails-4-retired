@@ -19,7 +19,9 @@
 # Reference insert and update.
 class Reference::AsEdited < Reference
   include ReferenceAuthorResolvable
-  LABEL = "Reference::AsEdited: ".freeze
+  include ReferenceParentResolvable
+  include ReferenceDuplicateOfResolvable
+
   def self.create(params, typeahead_params, username)
     reference = Reference::AsEdited.new(params)
     reference.resolve_typeahead_params(typeahead_params)
@@ -29,38 +31,27 @@ class Reference::AsEdited < Reference
       raise reference.errors.full_messages.first.to_s
     end
     reference
-  rescue => e
-    logger.error("#{LABEL}:rescuing: #{e}")
-    logger.error("#{LABEL}#create; params: #{params};
-                 typeahead params: #{typeahead_params}")
-    raise
-  end
-
-  def debug(s)
-    logger.debug("#{LABEL}: #{s}")
   end
 
   def update_if_changed(params, typeahead_params, username)
-    params = empty_strings_should_be_nils(params)
-    assign_attributes(params)
+    assign_attributes(empty_strings_to_nils(params))
     resolve_typeahead_params(typeahead_params)
     if changed?
-      if just_setting_duplicate_of_id
-        just_set_duplicate_of_id(typeahead_params, username)
-      else
-        self.updated_by = username
-        save!
-        set_citation!
-        "Updated"
-      end
+      apply_change(typeahead_params, username)
     else
       "No change."
     end
-  rescue => e
-    logger.error("#{LABEL} with params: #{params},
-                 typeahead_params: #{typeahead_params}")
-    logger.error("#{LABEL} with params: #{e}")
-    raise
+  end
+
+  def apply_change(typeahead_params, username)
+    if just_setting_duplicate_of_id
+      just_set_duplicate_of_id(typeahead_params, username)
+    else
+      self.updated_by = username
+      save!
+      set_citation!
+      "Updated"
+    end
   end
 
   def just_setting_duplicate_of_id
@@ -80,123 +71,18 @@ class Reference::AsEdited < Reference
   end
 
   # Empty strings as parameters for string fields are interpreted as a change.
-  def empty_strings_should_be_nils(params)
-    params["edition"] = nil if params["edition"] == ""
-    params["volume"] = nil if params["volume"] == ""
-    params["notes"] = nil if params["notes"] == ""
-    params["pages"] = nil if params["pages"] == ""
-    params["publication_date"] = nil if params["publication_date"] == ""
-    params["publisher"] = nil if params["publisher"] == ""
-    params["published_location"] = nil if params["published_location"] == ""
-    params["abbrev_title"] = nil if params["abbrev_title"] == ""
-    params["display_title"] = nil if params["display_title"] == ""
-    params["bhl_url"] = nil if params["bhl_url"] == ""
-    params["doi"] = nil if params["doi"] == ""
-    params["tl2"] = nil if params["tl2"] == ""
-    params["isbn"] = nil if params["isbn"] == ""
-    params["issn"] = nil if params["issn"] == ""
+  def empty_strings_to_nils(params)
+    params.each do |key, value|
+      if value.class == String
+        params[key] = nil if value == ""
+      end
+    end
     params
   end
 
   def resolve_typeahead_params(params)
-    #resolve_author(params, "author")
-    if params.key?("author_id")
-      self.author_id = Reference::AsResolvedTypeahead::ForAuthor.new(
-                         params["author_id"],
-                         params["author_typeahead"]
-      ).value
-    end
-
-    if params.key?("parent_id")
-      self.parent_id = Reference::AsResolvedTypeahead::ForParent.new(
-        params["parent_id"],
-        params["parent_typeahead"]
-      ).value
-    end
-
-    if params.key?("duplicate_of_id")
-      self.duplicate_of_id =
-        Reference::AsEdited
-        .duplicate_of_from_typeahead(params["duplicate_of_id"],
-                                     params["duplicate_of_typeahead"])
-    end
-  rescue => e
-    logger.error("#{LABEL}:resolved_typeahead_params: rescuing exception: #{e}")
-    raise
-  end
-
-  def self.duplicate_of_from_typeahead(id_string, text)
-    logger.debug("#{LABEL}:duplicate_of_from_typeahead:
-                 id_string: #{id_string}; text: #{text}")
-    citation_text = text.sub(/ *\|.*\z/, "")
-    citation_text.rstrip!
-    logger.debug("#{LABEL}:duplicate_of_from_typeahead:
-                 citation_text: #{citation_text}")
-    case resolve_id_and_text(id_string, citation_text)
-    when :no_id_or_text
-      value = ""
-    when :id_only # assume delete
-      value = ""
-    when :text_only
-      logger.info("#{LABEL}:duplicate_of_from_typeahead: string")
-      possibles = Reference.lower_citation_equals(citation_text)
-      case possibles.size
-      when 0
-        possibles = Reference.lower_citation_like(citation_text + "%")
-        case possibles.size
-        when 1
-          value = possibles.first.id
-        else
-          raise "please choose duplicate of from suggestions"
-        end
-      when 1
-        value = possibles.first.id
-      else
-        raise "please choose duplicate of from suggestions (more than 1 match)"
-      end
-    when :id_and_text
-      logger.debug("#{LABEL}:duplicate_of_from_typeahead: id and text")
-      possibles = Reference.lower_citation_equals(citation_text)
-      case possibles.size
-      when 0
-        possibles = Reference.lower_citation_like(citation_text + "%")
-        case possibles.size
-        when 1
-          value = possibles.first.id
-        else
-          raise "please choose duplicate of from suggestions"
-        end
-      when 1
-        value = possibles.first.id
-      else
-        possibles_with_id = Reference
-                            .where(id: id_string.to_i)
-                            .lower_citation_equals(citation_text)
-        if possibles_with_id.size == 1
-          value = possibles_with_id.first.id
-        else
-          raise "please choose duplicate of from suggestions (more than 1 match)"
-        end
-      end
-    else
-      logger.debug("#{LABEL}:duplicate_of_from_typeahead: strange data")
-      raise "unrecognized information"
-    end
-    logger.debug("#{LABEL}:duplicate_of_from_typeahead: return value: #{value}")
-    value
-  end
-
-  def self.resolve_id_and_text(id_string, text)
-    if id_string.blank? && text.blank?
-      return :no_id_or_text
-    elsif id_string.blank? && text.present?
-      return :text_only
-    elsif id_string.present? && text.blank?
-      return :id_only
-    elsif id_string.present? && text.present?
-      return :id_and_text
-    else
-      raise "please check your data"
-    end
+    resolve_author(params)
+    resolve_parent(params)
+    resolve_duplicate_of(params)
   end
 end

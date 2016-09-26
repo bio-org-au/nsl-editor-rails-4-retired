@@ -18,15 +18,15 @@
 require "test_helper"
 
 # Reference model typeahead test.
-class RefAsEdNoDupeOfIdWValStrWithTrailingWhitespace < ActiveSupport::TestCase
-  test "no id with valid string" do
-    reference_1 = references(:origin_of_species)
-    result = Reference::AsEdited.duplicate_of_from_typeahead(
-      "",
-      reference_1.citation + " "
+class ReferenceARTA4DuplicateOfIdWithNoString < ActiveSupport::TestCase
+  test "id with no string" do
+    reference = references(:journal_of_botany_british_and_foreign)
+    result = Reference::AsResolvedTypeahead::ForDuplicateOf.new(
+      reference.id.to_s,
+      ""
     )
-    assert_equal reference_1.id,
-                 result,
-                 "Should get a matching id for the citation"
+    assert_match "",
+                 result.value,
+                 "Should get nothing - treating as delete."
   end
 end

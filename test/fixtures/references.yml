@@ -1886,6 +1886,8 @@ an_unknown_type_invalid_child_of_book:
   language: undetermined
   created_by: tester
   updated_by: tester
+  created_at: 2012-01-05 13:00:00.000000000 Z
+  updated_at: 2012-01-05 13:00:00.000000000 Z
   
 a_section_type_intended_master:
   title: a section type intended master
