@@ -40,12 +40,12 @@ class NameRank < ActiveRecord::Base
                               morphological
                               nothomorph.).freeze
 
-SPECIES = "Species".freeze
-GENUS = "Genus".freeze
-FAMILIA = "Familia".freeze
-FAMILY = FAMILIA.freeze
-NA = "[n/a]".freeze
-UNRANKED = "[unranked]".freeze
+  SPECIES = "Species".freeze
+  GENUS = "Genus".freeze
+  FAMILIA = "Familia".freeze
+  FAMILY = FAMILIA.freeze
+  NA = "[n/a]".freeze
+  UNRANKED = "[unranked]".freeze
 
   def needs_generic_epithet
     NEEDS_GENERIC_EPITHET.include?(name)
@@ -118,7 +118,8 @@ UNRANKED = "[unranked]".freeze
   def self.cultivar_hybrid_options
     where("deprecated is false")
       .where("(name not like '%[%' or name = '[unranked]') ")
-      .where(" sort_order >= (select sort_order from name_rank where lower(name) = 'species')")
+      .where(" sort_order >= (select sort_order from name_rank where lower(name)
+    = 'species')")
       .order(:sort_order)
       .collect { |n| [n.name, n.id] }
   end
@@ -126,7 +127,8 @@ UNRANKED = "[unranked]".freeze
   def self.cultivar_options
     where("deprecated is false")
       .where("name not like '%[%' or name = '[unranked]' ")
-      .where(" sort_order >= (select sort_order from name_rank where lower(name) = 'species')")
+      .where(" sort_order >= (select sort_order from name_rank where lower(name)
+    = 'species')")
       .order(:sort_order)
       .collect { |n| [n.name, n.id] }
   end
@@ -141,7 +143,8 @@ UNRANKED = "[unranked]".freeze
   end
 
   def species?
-    !!name.match(/\A#{SPECIES}\z/)
+    # !!name.match(/\A#{SPECIES}\z/)
+    /\A#{SPECIES}\z/ === name
   end
 
   def genus?
