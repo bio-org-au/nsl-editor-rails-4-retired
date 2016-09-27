@@ -22,6 +22,8 @@ require "search_tools"
 class Name < ActiveRecord::Base
   extend AdvancedSearch
   extend SearchTools
+  include NameScopable
+  include AuditScopable
 
   strip_attributes
   # acts_as_tree
@@ -36,58 +38,6 @@ class Name < ActiveRecord::Base
                 :apc_instance_is_an_excluded_name,
                 :apc_declared_bt,
                 :change_category_to
-
-  scope :not_common_or_cultivar,
-        -> { where([" name_type_id in (select id from name_type where not (cultivar or lower(name_type.name) = 'common'))"]) }
-  scope :not_a_duplicate, -> { where(duplicate_of_id: nil) }
-  scope :with_an_instance, -> { where(["exists (select null from instance where name.id = instance.name_id)"]) }
-  scope :full_name_like, ->(string) { where("lower(f_unaccent(full_name)) like f_unaccent(?) ", string.tr("*", "%").downcase + "%") }
-  scope :lower_full_name_equals, ->(string) { where("lower(f_unaccent(full_name)) = f_unaccent(?) ", string.downcase) }
-  scope :lower_full_name_like, ->(string) { where("lower(f_unaccent(full_name)) like f_unaccent(?) ", string.tr("*", "%").downcase) }
-  scope :lower_rank_like, ->(string) { where("name_rank_id in (select id from name_rank where lower(name) like ?)", string.tr("*", "%").downcase) }
-  scope :order_by_full_name, -> { order("lower(full_name)") }
-  scope :order_by_rank_and_full_name, -> { order("name_rank.sort_order, lower(full_name)") }
-  scope :select_fields_for_typeahead, -> { select(" name.id, name.full_name, name_rank.name name_rank_name, name_status.name name_status_name") }
-  scope :select_fields_for_parent_typeahead, -> { select(" name.id, name.full_name, name_rank.name name_rank_name, name_status.name name_status_name, count(instance.id) instance_count") }
-  scope :from_a_higher_rank, ->(rank_id) { joins(:name_rank).where("name_rank.sort_order < (select sort_order from name_rank where id = ?)", rank_id) } # tested
-
-  query = "name_rank.id in "\
-          "(select id from name_rank where sort_order <= "\
-          "(select sort_order from name_rank where name = 'Subforma') "\
-          "or name_rank.name = '[unranked]') "
-  scope :ranks_for_unranked, -> { joins(:name_rank).where(query) }
-
-  scope :ranks_for_unranked_assumes_join, -> { where("name_rank.sort_order <= (select sort_order from name_rank where name = 'Subforma') or name_rank.name = '[unranked]' ") }
-  scope :but_rank_not_too_high, lambda { |rank_id|
-    where("name_rank.id in (select id from name_rank where sort_order >= " \
-                   "(select max(sort_order) from name_rank where major and name not in ('Tribus','Ordo','Classis','Division') " \
-                   " and sort_order <  (select sort_order from name_rank where id = ?)))", rank_id)
-  }
-  scope :name_rank_not_deprecated, -> { where("not name_rank.deprecated") }
-  scope :name_rank_not_infra,
-        -> { where("name_rank.name not in ('[infrafamily]','[infragenus]','[infrasp.]') ") }
-  scope :name_rank_not_na, -> { where("name_rank.name != '[n/a]' ") }
-  scope :name_rank_not_unknown, -> { where("name_rank.name != '[unknown]' ") }
-  scope :name_rank_not_unranked, -> { where("name_rank.name != '[unranked]' ") }
-  scope :name_rank_species_and_below, -> { where("name_rank.sort_order >= (select sort_order from name_rank sp where sp.name = 'Species')") }
-  scope :name_rank_genus_and_below, -> { where("name_rank.sort_order >= (select sort_order from name_rank genus where genus.name = 'Genus')") }
-  scope :avoids_id, ->(avoid_id) { where("name.id != ?", avoid_id) }
-  scope :all_children, ->(parent_id) { where("name.parent_id = ? or name.second_parent_id = ?", parent_id, parent_id) }
-  scope :for_id, ->(id) { where("name.id = ?", id) }
-
-  scope :created_n_days_ago,
-        ->(n) { where("current_date - created_at::date = ?", n) }
-  scope :updated_n_days_ago,
-        ->(n) { where("current_date - updated_at::date = ?", n) }
-  scope :changed_n_days_ago,
-        ->(n) { where("current_date - created_at::date = ? or current_date - updated_at::date = ?", n, n) }
-
-  scope :created_in_the_last_n_days,
-        ->(n) { where("current_date - created_at::date < ?", n) }
-  scope :updated_in_the_last_n_days,
-        ->(n) { where("current_date - updated_at::date < ?", n) }
-  scope :changed_in_the_last_n_days,
-        ->(n) { where("current_date - created_at::date < ? or current_date - updated_at::date < ?", n, n) }
 
   belongs_to :name_rank
   belongs_to :name_type
@@ -125,11 +75,19 @@ class Name < ActiveRecord::Base
   has_many :comments
   has_many :name_tag_names
   has_many :name_tags, through: :name_tag_names
+  # TODO: Needs a test
   has_one :apc_tree_path,
-          -> { where "exists (select null from tree_arrangement ta where tree_id = ta.id and ta.description = 'Australian Plant Census')" },
+          (lambda do
+             where "exists (select null from tree_arrangement ta where
+             tree_id = ta.id and ta.description = 'Australian Plant Census')"
+           end),
           class_name: "NameTreePath"
+  # TODO: Needs a test
   has_one :apni_tree_path,
-          -> { where "exists (select null from tree_arrangement ta where tree_id = ta.id and ta.description = 'APNI names classification')" },
+          (lambda do
+             where "exists (select null from tree_arrangement ta where
+             tree_id = ta.id and ta.description = 'APNI names classification')"
+           end),
           class_name: "NameTreePath"
   has_one :accepted_in_some_way, foreign_key: "id"
   has_one :accepted_concept, foreign_key: "id"
@@ -240,11 +198,12 @@ class Name < ActiveRecord::Base
     name_rank_id == parent.name_rank_id && name_rank.unranked?
   end
 
+  # TODO: Boolean function shouldn't add error.
   def parent_rank_high_enough?
     if requires_parent? && requires_higher_ranked_parent?
       unless parent.blank? || parent_rank_above? || both_unranked?
         errors.add(:parent_id, "rank (#{parent.try('name_rank').try('name')})
-                   must be higher than the name rank (#{name_rank.try('name')})")
+                   must be higher than name rank (#{name_rank.try('name')})")
       end
     end
   end
@@ -277,7 +236,7 @@ class Name < ActiveRecord::Base
   end
 
   def raw_category
-    case name_type.try("name") || nil
+    case name_type.try("name") || ""
     when "autonym"
       then SCIENTIFIC_CATEGORY
     when "hybrid formula unknown 2nd parent"
@@ -498,7 +457,7 @@ class Name < ActiveRecord::Base
       JSON.load(open(Name::AsServices.in_apc_url(id)))
     end
   rescue => e
-    logger.error("Name#get_apc_json exception: #{e} for URL: #{Name::AsServices.in_apc_url(id)}")
+    logger.error("get_apc_json: #{e} for : #{Name::AsServices.in_apc_url(id)}")
     "[unknown - service error]"
   end
 
@@ -608,8 +567,12 @@ class Name < ActiveRecord::Base
     ->(full_name) { Name.where(" lower(full_name) = ?", full_name.downcase) }
   end
 
-  def self.find_genera
-    ->(name_element) { Name.where(" name_rank_id = (select id from name_rank where lower(name) = 'genus') and lower(name_element) = ? ", name_element.downcase) }
+  def self.xfind_genera
+    (lambda do |name_element|
+       Name.where(" name_rank_id = (select id from name_rank
+                  where lower(name) = 'genus') and lower(name_element) = ? ",
+                  name_element.downcase)
+     end)
   end
 
   def get_names_json
