@@ -25,7 +25,7 @@
   <span id="search-result-details-error-message-container" class="error-container"></span>
   <div class="form-group margin-top-1em">
     <label for="name_type_id">Type*</label>
-    <% if @name.has_only_one_type? %>
+    <% if @name.only_one_type? %>
       <%= f.select('name_type_id', NameType.options_for_category(@name.category),{prompt: 'Choose one'}, title: 'Select type', tabindex: increment_tab_index, autocomplete: "off", class: "form-control give-me-focus", required: true) %>
     <% else %>
       <%= f.select('name_type_id', NameType.options_for_category(@name.category),{}, title: 'Select type', tabindex: increment_tab_index, autocomplete: "off", class: "form-control give-me-focus", required: true) %>

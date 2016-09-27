@@ -1,14 +1,17 @@
+# frozen_string_literal: true
+
+# Name Parent resolvable typeahead parameters
 module NameParentResolvable
   extend ActiveSupport::Concern
 
-  def resolve_parent(params,which_parent)
-    key_field = "#{which_parent}_id"
-    ta_field = "#{which_parent}_typeahead"
+  def resolve_parent(params, field_name_stub)
+    key_field = "#{field_name_stub}_id"
+    ta_field = "#{field_name_stub}_typeahead"
     if params.key?(key_field)
-      self.send("#{key_field}=", Name::AsResolvedTypeahead::ForParent.new(
+      send("#{key_field}=", Name::AsResolvedTypeahead::ForParent.new(
         params[key_field],
         params[ta_field],
-        which_parent.capitalize
+        field_name_stub.capitalize
       ).value)
     end
   end
