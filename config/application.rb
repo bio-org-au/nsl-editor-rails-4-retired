@@ -32,7 +32,7 @@ module Ned
     # config.i18n.default_locale = :de
 
     # We have controller-specific code in the separate helpers.
-    config.action_controller.include_all_helpers = false
+    # config.action_controller.include_all_helpers = false
     config.active_record.default_timezone = :local
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
