@@ -20,17 +20,46 @@ class Instance::AsTypeahead::ForNameShowingReferences
 
   def initialize(params)
     @references = []
-    unless params[:instance_id].blank?
-      @references = Reference.find_by_sql(["select i.id,r.citation,r.year, r.pages, r.source_system, t.name instance_type from reference r  " \
-                                          " inner join author a on r.author_id = a.id " \
-                                          " inner join instance i on r.id = i.reference_id " \
-                                          " inner join instance_type t on i.instance_type_id = t.id " \
-                                          " where i.name_id = (select name_id from instance where id = ?)" \
-                                          "   and i.id != ? " \
-                                          "   and lower(r.citation) like lower('%'||?||'%') " \
-                                          " order by r.year,a.name",
-                                           params[:instance_id].to_i, params[:instance_id].to_i, params[:term]])
-                             .collect { |ref| { value: "#{ref.citation}:#{ref.year} #{'[' + ref.pages + ']' unless ref.pages_useless?} #{'[' + ref.instance_type + ']' unless ref.instance_type == 'secondary reference'} #{'[' + ref.source_system.downcase + ']' unless ref.source_system.blank?}", id: ref.id } }
-    end
+    return if params[:instance_id].blank?
+    @references = Reference.find_by_sql([sql_string,
+                                         params[:instance_id].to_i,
+                                         params[:instance_id].to_i,
+                                         params[:term]])
+                           .collect do |ref|
+                             { value: formatted_reference(ref),
+                               id: ref.id }
+                           end
+  end
+
+  def sql_string
+    "select i.id,r.citation,r.year, r.pages, r.source_system,
+    t.name instance_type
+    from reference r
+    inner join author a on r.author_id = a.id
+    inner join instance i on r.id = i.reference_id
+    inner join instance_type t on i.instance_type_id = t.id
+    where i.name_id = (select name_id from instance where id = ?)
+      and i.id != ?
+      and lower(r.citation) like lower('%'||?||'%') order by r.year,a.name"
+  end
+
+  def formatted_reference(ref)
+    "#{ref.citation}:#{ref.year} #{formatted_pages(ref)} #{formatted_type(ref)}
+    #{'[' + ref.source_system.downcase + ']' unless ref.source_system.blank?}"
+  end
+
+  def formatted_pages(ref)
+    return "" if ref.pages_useless?
+    "[#{ref.pages}]"
+  end
+
+  def formatted_type(ref)
+    return "" if ref.instance_type == "secondary reference"
+    "[#{ref.instance_type}]"
+  end
+
+  def formatted_source_system(ref)
+    return "" if ref.source_system.blank?
+    "[#{ref.source_system.downcase}]"
   end
 end

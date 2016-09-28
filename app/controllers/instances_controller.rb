@@ -140,6 +140,7 @@ as a synonym"
   end
 
   # Expect instance id - of the instance user is updating.
+  # Synonym Edit tab.
   def typeahead_for_name_showing_references_to_update_instance
     typeahead = Instance::AsTypeahead::ForNameShowingReferences.new(params)
     render json: typeahead.references
