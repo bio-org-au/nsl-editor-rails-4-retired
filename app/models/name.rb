@@ -43,7 +43,6 @@ class Name < ActiveRecord::Base
 
   attr_accessor :display_as,
                 :give_me_focus,
-                :apc_instance_id,
                 :apc_instance_is_an_excluded_name,
                 :apc_declared_bt,
                 :change_category_to
