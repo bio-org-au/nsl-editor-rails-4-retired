@@ -18,13 +18,15 @@
 require "test_helper"
 
 # Single author model test.
-class AuthorAsEditedNoDuplicateOfIdWithValidString < ActiveSupport::TestCase
-  test "no id with valid string" do
-    current_author_id = 1
+class AuthAsEdNoDupeOfIdWValStrAlsoMatchingCurrRec < ActiveSupport::TestCase
+  test "no id with valid string also matching current record" do
     author = authors(:chaplin)
-    result = Author::AsEdited.duplicate_of_from_typeahead(
-      "", author.name, current_author_id
-    )
-    assert_equal author.id, result, "Should get a matching id for the author"
+    author_to_avoid = author
+    assert_raise(RuntimeError,
+                 "Should raise a RuntimeError cannot be dupe of itself.") do
+      Author::AsResolvedTypeahead::ForDuplicateOf.new(
+        "", author.name, author_to_avoid
+      )
+    end
   end
 end

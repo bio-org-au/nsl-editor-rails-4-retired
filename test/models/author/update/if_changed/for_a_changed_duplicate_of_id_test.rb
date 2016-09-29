@@ -21,10 +21,12 @@ require "test_helper"
 class ForAChangedDuplicateOfIdTest < ActiveSupport::TestCase
   def setup
     @author = Author::AsEdited.find(authors(:haeckel).id)
+    form_params = ActiveSupport::HashWithIndifferentAccess.new
+    form_params[:duplicate_of_id] = authors(:brongn).id
+    form_params[:duplicate_of_typeahead] = authors(:brongn).name
     @author.update_if_changed(
       {},
-      { duplicate_of_id: authors(:brongn).id,
-        duplicate_of_typeahead: authors(:brongn).name },
+      form_params,
       "a user"
     )
   end

@@ -18,12 +18,18 @@
 require "test_helper"
 
 # Single author model test.
-class AuthorAsEditedNoDuplicateOfIdWithNoString < ActiveSupport::TestCase
-  test "no id with no string" do
-    current_author_id = 1
-    result = Author::AsEdited.duplicate_of_from_typeahead(
-      "", "", current_author_id
+class AuthARTA4DupeOfIdWStrMatchingAnotherAuthor < ActiveSupport::TestCase
+  test "id with string for another author" do
+    author_1 = authors(:chaplin)
+    author_2 = authors(:stanley)
+    author_to_avoid = authors(:bentham)
+    result = Author::AsResolvedTypeahead::ForDuplicateOf.new(
+      author_1.id.to_s,
+      author_2.name,
+      author_to_avoid
     )
-    assert result.blank?, "Should be no result for blank inputs."
+    assert_equal author_2.id, result.value,
+                 "Should get a matching ID for the first author with "\
+                 "matching name despite mismatched ID"
   end
 end

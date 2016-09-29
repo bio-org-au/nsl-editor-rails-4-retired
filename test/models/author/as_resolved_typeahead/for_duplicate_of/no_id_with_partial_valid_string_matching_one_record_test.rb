@@ -18,17 +18,14 @@
 require "test_helper"
 
 # Single author model test.
-class AuthorAsEditedDuplicateOfIdWithMatchingString < ActiveSupport::TestCase
-  test "id with matching string" do
-    current_author_id = 1
+class AuthARTA4DupeOfNoIdWPartValStrMatching1Rec < ActiveSupport::TestCase
+  test "no id with partial valid string matching one record" do
+    author_to_avoid = authors(:bentham)
     author = authors(:chaplin)
-    result = Author::AsEdited.duplicate_of_from_typeahead(
-      author.id.to_s,
-      author.name,
-      current_author_id
+    result = Author::AsResolvedTypeahead::ForDuplicateOf.new(
+      "", author.name.chop, author_to_avoid
     )
-    assert_equal author.id,
-                 result,
-                 "Should get a matching id for the duplicate of author"
+    assert_equal author.id, result.value,
+                 "Should get a matching id for the author"
   end
 end

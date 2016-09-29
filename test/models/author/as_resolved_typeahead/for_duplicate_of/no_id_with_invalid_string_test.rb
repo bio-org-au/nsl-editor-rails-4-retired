@@ -18,15 +18,15 @@
 require "test_helper"
 
 # Single author model test.
-class AuthorAsEditedNoDuplicateOfIdWithInvalidString < ActiveSupport::TestCase
+class AuthorARTA4DupeOfNoIdWithInvalidString < ActiveSupport::TestCase
   test "no duplicate of id with invalid string" do
-    current_author_id = 1
+    author_to_avoid = authors(:bentham)
     assert_raise(RuntimeError,
                  "Should raise a RuntimeError for invalid author string.") do
-      Author::AsEdited.duplicate_of_from_typeahead(
+      Author::AsResolvedTypeahead::ForDuplicateOf.new(
         "",
         "asdfasfdasd",
-        current_author_id
+        author_to_avoid
       )
     end
   end
