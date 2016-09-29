@@ -23,7 +23,7 @@ class History
       description: %(Refactoring code - no visible changes.) },
     { date: "29-Sep-2016",
       jira_id: "1999",
-      description: %(Search successfully for uppper-case diacritics. e.g. 
+      description: %(Search successfully for uppper-case diacritics. e.g.
       you can now set author Ollegaard as duplicate of author Øllegaard.) },
     { date: "21-Sep-2016", release: true },
     { date: "21-Sep-2016",
@@ -32,11 +32,11 @@ class History
       the program that is invisible to users.) },
     { date: "19-Sep-2016",
       jira_id: "1989",
-      description: %(Reference duplicate-of typeahead now works again 
+      description: %(Reference duplicate-of typeahead now works again
       consistently.) },
     { date: "19-Sep-2016",
       jira_id: "1950",
-      description: %(Warn if an accepted name is being added as a 
+      description: %(Warn if an accepted name is being added as a
       synonym of another accepted name.) },
     { date: "16-Sep-2016",
       jira_id: "1987",
