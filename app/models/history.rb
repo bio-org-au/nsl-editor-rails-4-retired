@@ -22,11 +22,11 @@ class History
       jira_id: "1999",
       description: %(Search successfully for uppper-case diacritics. e.g. 
       you can now set author Ollegaard as duplicate of author Øllegaard.) },
+    { date: "21-Sep-2016", release: true },
     { date: "21-Sep-2016",
       jira_id: "1984",
       description: %(Cultivar tags working again, now with a work-around in
       the program that is invisible to users.) },
-    { date: "21-Sep-2016", release: true },
     { date: "19-Sep-2016",
       jira_id: "1989",
       description: %(Reference duplicate-of typeahead now works again 
