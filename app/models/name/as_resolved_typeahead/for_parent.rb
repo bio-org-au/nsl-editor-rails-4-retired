@@ -42,7 +42,8 @@ class Name::AsResolvedTypeahead::ForParent
   end
 
   def text_only
-    possibles = Name.lower_full_name_like(@text).not_a_duplicate
+    possibles = Name.lower_full_name_like(@text).not_common_or_cultivar
+                    .not_a_duplicate
     case possibles.size
     when 0
       zero_possibles_for_text
@@ -58,7 +59,8 @@ class Name::AsResolvedTypeahead::ForParent
   end
 
   def zero_possibles
-    possibles = Name.lower_full_name_like(@text + "%").not_a_duplicate
+    possibles = Name.lower_full_name_like(@text + "%").not_common_or_cultivar
+                    .not_a_duplicate
     case possibles.size
     when 1
       @value = possibles.first.id
@@ -68,7 +70,8 @@ class Name::AsResolvedTypeahead::ForParent
   end
 
   def id_and_text
-    possibles = Name.lower_full_name_like(@text).not_a_duplicate
+    possibles = Name.lower_full_name_like(@text).not_common_or_cultivar
+                    .not_a_duplicate
     case possibles.size
     when 0
       zero_possibles_for_id_and_text
