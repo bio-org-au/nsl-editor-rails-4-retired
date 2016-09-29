@@ -50,15 +50,12 @@ class Name::AsEdited < Name::AsTypeahead
   end
 
   def resolve_typeahead_params(params)
-    Rails.logger.debug("")
     resolve_author(params, "author")
     resolve_author(params, "ex_author")
     resolve_author(params, "base_author")
     resolve_author(params, "ex_base_author")
     resolve_author(params, "sanctioning_author")
-    Rails.logger.debug("before resolve parent")
     resolve_parent(params, "parent")
-    Rails.logger.debug("after resolve parent")
     resolve_parent(params, "second_parent")
     resolve_duplicate_of(params)
   end
