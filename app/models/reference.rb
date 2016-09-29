@@ -50,9 +50,9 @@ class Reference < ActiveRecord::Base
                   }
 
   scope :lower_citation_equals,
-        ->(string) { where("lower(citation) = ? ", string.downcase) }
+        ->(string) { where("lower(citation) = lower(?) ", string.downcase) }
   scope :lower_citation_like,
-        ->(string) { where("lower(citation) like ? ", string.tr("*", "%").downcase) }
+        ->(string) { where("lower(citation) like lower(?) ", string.tr("*", "%").downcase) }
   scope :not_duplicate,
         -> { where("duplicate_of_id is null") }
   scope :is_duplicate,
@@ -255,11 +255,11 @@ class Reference < ActiveRecord::Base
   end
 
   def self.find_authors
-    ->(name) { Author.where(" lower(name) = ?", name.downcase) }
+    ->(name) { Author.where(" lower(name) = lower(?)", name.downcase) }
   end
 
   def self.find_references
-    ->(title) { Reference.where(" lower(title) = ?", title.downcase) }
+    ->(title) { Reference.where(" lower(title) = lower(?)", title.downcase) }
   end
 
   def self.dummy_record

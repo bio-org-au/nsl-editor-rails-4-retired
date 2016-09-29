@@ -110,8 +110,8 @@ class Audit::DefinedQuery::WhereClause::Predicate
   }.freeze
 
   WHERE_VALUE_HASH = {
-    "created-by:" => "lower(created_by) like ?",
-    "updated-by:" => "lower(updated_by) like ?",
+    "created-by:" => "lower(created_by) like lower(?)",
+    "updated-by:" => "lower(updated_by) like lower(?)",
     "created-at:" => "created_at::date = ?",
     "updated-at:" => "updated_at::date = ?",
     "created-since:" => "created_at::date >= ?",
@@ -125,10 +125,14 @@ class Audit::DefinedQuery::WhereClause::Predicate
   }.freeze
 
   WHERE_VALUE_HASH_2_VALUES = {
-    "created-or-updated-by:" => "(lower(created_by) like ? or lower(updated_by) like ?)",
+    "created-or-updated-by:" =>
+    "(lower(created_by) like lower(?) or lower(updated_by) like lower(?))",
     "created-or-updated-at:" => "(created_at::date = ? or updated_at = ?)",
-    "not-created-or-updated-by:" => "(lower(created_by) not like ? and lower(updated_by) not like ?)",
-    "date-created-or-last-updated:" => "date_trunc('day',updated_at) = ? or date_trunc('day',updated_at) = ?",
+    "not-created-or-updated-by:" =>
+    "(lower(created_by) not like lower(?)
+    and lower(updated_by) not like lower(?))",
+    "date-created-or-last-updated:" =>
+    "date_trunc('day',updated_at) = ? or date_trunc('day',updated_at) = ?",
   }.freeze
 
   CANONICAL_FIELD_NAMES = {

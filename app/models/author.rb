@@ -27,12 +27,12 @@ class Author < ActiveRecord::Base
 
   # Only used for typeahead confirmation, so DO NOT use f_unaccent.
   scope :lower_name_equals,
-        ->(string) { where("lower(name) = ? ", string.downcase) }
+        ->(string) { where("lower(name) = lower(?) ", string) }
 
   scope :lower_name_like,
-        ->(string) { where("lower(f_unaccent(name)) like f_unaccent(?) ", string.tr("*", "%").downcase) }
+        ->(string) { where("lower(f_unaccent(name)) like lower(f_unaccent(?)) ", string.tr("*", "%")) }
   scope :lower_abbrev_like,
-        ->(string) { where("lower(f_unaccent(abbrev)) like f_unaccent(?) ", string.tr("*", "%").downcase) }
+        ->(string) { where("lower(f_unaccent(abbrev)) like lower(f_unaccent(?)) ", string.tr("*", "%")) }
   scope :not_this_id,
         ->(this_id) { where.not(id: this_id) }
   scope :not_duplicate,

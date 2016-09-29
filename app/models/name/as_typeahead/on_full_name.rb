@@ -36,7 +36,7 @@ class Name::AsTypeahead::OnFullName
 
   def query
     Name.not_a_duplicate
-        .where(["lower(full_name) like ?", prepared_search_term])
+        .where(["lower(full_name) like lower(?)", prepared_search_term])
         .includes(:name_status)
         .joins(:name_rank)
         .where("exists (select null from instance where instance.name_id = name.id)")

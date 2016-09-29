@@ -29,13 +29,13 @@ class Search::OnInstance::FieldRule
     "name:"                 => { where_clause: "exists (select null
                                  from name n
                                  where instance.name_id = n.id
-                                 and lower(n.full_name) like ?)",
+                                 and lower(n.full_name) like lower(?) )",
                                  leading_wildcard: true,
                                  trailing_wildcard: true },
     "name-exact:"           => { where_clause: "exists (select null
                                  from name n
                                  where instance.name_id = n.id
-                                 and lower(n.full_name) like ?)" },
+                                 and lower(n.full_name) like lower(?) )" },
     "comments:"             => { where_clause: " exists (select null from
                                  comment
                                  where comment.instance_id = instance.id
@@ -44,9 +44,9 @@ class Search::OnInstance::FieldRule
                                  from comment
                                  where comment.instance_id = instance.id
                                  and comment.created_by like ?) " },
-    "page:"                 => { where_clause: " lower(page) like ?" },
+    "page:"                 => { where_clause: " lower(page) like lower(?)" },
     "page-qualifier:"       => { where_clause:
-                                 " lower(page_qualifier) like ?" },
+                                 " lower(page_qualifier) like lower(?)" },
     "note-key:"             => { where_clause: " exists (select null
                                  from instance_note
                                  where instance_id = instance.id
@@ -54,29 +54,29 @@ class Search::OnInstance::FieldRule
                                  from instance_note_key
                                  where instance_note_key_id =
                                  instance_note_key.id
-                                 and lower(instance_note_key.name) like ?)) " },
+                                 and lower(instance_note_key.name) like lower(?) )) " },
 
     "notes-exact:"          => { where_clause: " exists (select null
                                  from instance_note
                                  where instance_id = instance.id
-                                 and lower(instance_note.value) like ?) " },
+                                 and lower(instance_note.value) like lower(?)) " },
     "verbatim-name-exact:"  => { where_clause:
-                                 "lower(verbatim_name_string) like ?" },
+                                 "lower(verbatim_name_string) like lower(?) " },
     "verbatim-name:"        => { where_clause:
-                                 "lower(verbatim_name_string) like ?",
+                                 "lower(verbatim_name_string) like lower(?)",
                                  leading_wildcard: true,
                                  trailing_wildcard: true },
     "notes:"                => { where_clause: " exists (select null
                                  from instance_note
                                  where instance_id = instance.id
-                                 and lower(instance_note.value) like ?) ",
+                                 and lower(instance_note.value) like lower(?)) ",
                                  leading_wildcard: true,
                                  trailing_wildcard: true },
 
     "note-key-type-note:"   => { where_clause: " exists (select null
                                  from instance_note
                                  where instance_id = instance.id
-                                 and lower(instance_note.value) like ?
+                                 and lower(instance_note.value) like lower(?)
                                  and exists (select null
                                  from instance_note_key
                                  where instance_note_key_id =

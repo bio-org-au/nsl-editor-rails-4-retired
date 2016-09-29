@@ -13,18 +13,18 @@ module NameScopable
     scope :not_a_duplicate, -> { where(duplicate_of_id: nil) }
     scope :full_name_like,
           (lambda do |string|
-             where("lower(f_unaccent(full_name)) like f_unaccent(?) ",
-                   string.tr("*", "%").downcase + "%")
+             where("lower(f_unaccent(full_name)) like lower(f_unaccent(?)) ",
+                   string.tr("*", "%") + "%")
            end)
     scope :lower_full_name_equals,
           (lambda do |string|
-             where("lower(f_unaccent(full_name)) = f_unaccent(?) ",
-                   string.downcase)
+             where("lower(f_unaccent(full_name)) = lower(f_unaccent(?)) ",
+                   string)
            end)
     scope :lower_full_name_like,
           (lambda do |string|
-             where("lower(f_unaccent(full_name)) like f_unaccent(?) ",
-                   string.tr("*", "%").downcase)
+             where("lower(f_unaccent(full_name)) like lower(f_unaccent(?)) ",
+                   string.tr("*", "%"))
            end)
     scope :order_by_full_name, -> { order("lower(full_name)") }
     scope :order_by_rank_and_full_name,

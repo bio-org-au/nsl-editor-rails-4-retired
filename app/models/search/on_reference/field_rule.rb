@@ -36,25 +36,27 @@ class Search::OnReference::FieldRule
     "is-not-published:"     => { where_clause: " not published" },
 
     "author-exact:"         => { where_clause: " author_id in (select id from
-                                 author where lower(name) like ?)" },
+                                 author where lower(name) like lower(?))" },
 
     "comments:"             => { trailing_wildcard: true,
                                  leading_wildcard: true,
                                  where_clause: " exists (select null from
                                  comment where comment.reference_id =
                                  reference.id and lower(comment.text)
-                                 like ?) " },
+                                 like lower(?)) " },
 
     "comments-by:"          => { where_clause: " exists (select null from
                                  comment where comment.reference_id =
                                  reference.id and comment.created_by
                                  like ?) " },
-    "edition:"              => { where_clause: " lower(edition) like ?" },
+    "edition:"              => { where_clause:
+                                 " lower(edition) like lower(?)" },
     "publication-date:"     => { where_clause: " lower(publication_date)
                                  like ?" },
     "type:"                 => { multiple_values: true,
                                  where_clause: " ref_type_id in (select id
-                                 from ref_type where lower(name) like ?)",
+                                 from ref_type
+                                 where lower(name) like lower(?))",
                                  multiple_values_where_clause: " ref_type_id
                                  in (select id from ref_type where lower(name)
                                  in (?))" },
@@ -63,23 +65,27 @@ class Search::OnReference::FieldRule
                                  " exists (select null from reference parent
                                   where parent.id = reference.parent_id
                                   and parent.ref_type_id in (select id
-                                 from ref_type where lower(name) like ?) )", },
+                                 from ref_type
+                                 where lower(name) like lower(?)) )", },
     "not-type:"             => { where_clause: " ref_type_id not in (select id
-                                 from ref_type where lower(name) like ?)" },
+                                 from ref_type
+                                 where lower(name) like lower(?))" },
 
     "author-role:"          => { where_clause: " ref_author_role_id in
                                  (select id from ref_author_role where
-                                 lower(name) like ?)" },
-    "title-exact:"          => { where_clause: " lower(title) like ?" },
-    "isbn:"                 => { where_clause: " lower(isbn) like ?" },
-    "issn:"                 => { where_clause: " lower(issn) like ?" },
+                                 lower(name) like lower(?))" },
+    "title-exact:"          => { where_clause: " lower(title) like lower(?)" },
+    "isbn:"                 => { where_clause: " lower(isbn) like lower(?)" },
+    "issn:"                 => { where_clause: " lower(issn) like lower(?)" },
     "published-location:"   => { where_clause: " lower(published_location)
-                                 like ?" },
-    "publisher:"            => { where_clause: " lower(publisher) like ?" },
-    "volume:"               => { where_clause: " lower(volume) like ?" },
-    "bhl:"                  => { where_clause: " lower(bhl_url) like ?" },
-    "doi:"                  => { where_clause: " lower(doi) like ?" },
-    "tl2:"                  => { where_clause: " lower(tl2) like ?" },
+                                 like lower(?)" },
+    "publisher:"            => { where_clause:
+                                 " lower(publisher) like lower(?)" },
+    "volume:"               => { where_clause: " lower(volume) like lower(?)" },
+    "bhl:"                  => { where_clause:
+                                 " lower(bhl_url) like lower(?)" },
+    "doi:"                  => { where_clause: " lower(doi) like lower(?)" },
+    "tl2:"                  => { where_clause: " lower(tl2) like lower(?)" },
 
     "id:"                   => { multiple_values: true,
                                  where_clause: " id = ? ",
@@ -107,25 +113,27 @@ class Search::OnReference::FieldRule
     "master-id:"            => { where_clause: " id = ? or
                                  duplicate_of_id = ?" },
 
-    "citation-exact:"       => { where_clause: " lower(citation) like ?" },
+    "citation-exact:"       => { where_clause:
+                                 " lower(citation) like lower(?)" },
 
     "citation-text:"        => { scope_: "search_citation_text_for" },
 
     "citation:"             => { trailing_wildcard: true,
                                  leading_wildcard: true,
                                  tokenize: true,
-                                 where_clause: " lower(citation) like ? " },
+                                 where_clause:
+                                 " lower(citation) like lower(?) " },
 
     "author:"               => { trailing_wildcard: true,
                                  leading_wildcard: true,
                                  where_clause: "author_id in
                                  (select id from author where lower(name)
-                                 like ?)" },
+                                 like lower(?))" },
 
     "title:"                => { trailing_wildcard: true,
-                                 where_clause: " lower(title) like ? " },
+                                 where_clause: " lower(title) like lower(?) " },
 
-    "notes:" => { where_clause: " lower(notes) like ? " },
+    "notes:" => { where_clause: " lower(notes) like lower(?) " },
 
     "parent-ref-wrong-child-type:" => { where_clause: "reference.id in (
 select r.id

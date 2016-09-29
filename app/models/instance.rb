@@ -430,11 +430,11 @@ class Instance < ActiveRecord::Base
   end
 
   def self.find_references
-    ->(title) { Reference.where(" lower(title) = ?", title.downcase) }
+    ->(title) { Reference.where(" lower(title) = lower(?)", title) }
   end
 
   def self.find_names
-    ->(term) { Name.where(" lower(simple_name) = ?", term.downcase) }
+    ->(term) { Name.where(" lower(simple_name) = lower(?)", term) }
   end
 
   def self.expansion(search_string)

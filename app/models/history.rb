@@ -18,6 +18,10 @@
 #
 class History
   CHANGES_2016 = [
+    { date: "29-Sep-2016",
+      jira_id: "1999",
+      description: %(Search successfully for uppper-case diacritics. e.g. 
+      you can now set author Ollegaard as duplicate of author Øllegaard.) },
     { date: "21-Sep-2016",
       jira_id: "1984",
       description: %(Cultivar tags working again, now with a work-around in

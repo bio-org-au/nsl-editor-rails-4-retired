@@ -39,7 +39,8 @@ class Search::OnName::FieldRule
     "is-not-a-duplicate:" => { where_clause: " duplicate_of_id is null", },
     "is-a-parent:" =>
     { where_clause:
-      " exists (select null from name child where child.parent_id = name.id) ", },
+      " exists (select null from name child where
+      child.parent_id = name.id) ", },
 
     "is-not-a-parent:" =>
     { where_clause:
@@ -157,39 +158,45 @@ class Search::OnName::FieldRule
       allow_common_and_cultivar: true, },
 
     "name:" =>
-    { where_clause: "lower(f_unaccent(full_name)) like f_unaccent(?) ",
+    { where_clause: "lower(f_unaccent(full_name)) like lower(f_unaccent(?)) ",
       wildcard_embedded_spaces: true,
       trailing_wildcard: true, },
 
     "name-exact:" =>
-    { where_clause: "lower(f_unaccent(full_name)) like f_unaccent(?) ", },
+    { where_clause: "lower(f_unaccent(full_name))
+      like lower(f_unaccent(?)) ", },
 
     "name-element:" =>
-    { where_clause: "lower(f_unaccent(name_element)) like f_unaccent(?) ",
+    { where_clause: "lower(f_unaccent(name_element))
+      like lower(f_unaccent(?)) ",
       leading_wildcard: true,
       trailing_wildcard: true, },
 
     "name-element-exact:" =>
-    { where_clause: "lower(f_unaccent(name_element)) like f_unaccent(?) ", },
+    { where_clause: "lower(f_unaccent(name_element)) like
+      lower(f_unaccent(?)) ", },
 
     "simple-name:" =>
-    { where_clause: "lower(f_unaccent(simple_name)) like f_unaccent(?) ",
+    { where_clause: "lower(f_unaccent(simple_name)) like lower(f_unaccent(?)) ",
       leading_wildcard: true,
       trailing_wildcard: true, },
 
     "simple-name-exact:" =>
-    { where_clause: "lower(f_unaccent(simple_name)) like f_unaccent(?) ", },
+    { where_clause: "lower(f_unaccent(simple_name))
+      like lower(f_unaccent(?)) ", },
 
     "rank:" =>
     { where_clause:
-      "name_rank_id in (select id from name_rank where lower(name) like ?)",
+      "name_rank_id in (select id from name_rank where lower(name)
+      like lower(?))",
       multiple_values: true,
       multiple_values_where_clause:
       "name_rank_id in (select id from name_rank where lower(name) in (?))", },
 
     "type:" =>
     { where_clause:
-      "name_type_id in (select id from name_type where lower(name) like ?)",
+      "name_type_id in (select id from name_type where lower(name)
+      like lower(?))",
       allow_common_and_cultivar: true,
       multiple_values: true,
       multiple_values_where_clause:
@@ -201,40 +208,45 @@ class Search::OnName::FieldRule
       (select id from name_status where lower(name) like ?)",
       multiple_values: true,
       multiple_values_where_clause:
-      "name_status_id in (select id from name_status where lower(name) in (?))", },
+      "name_status_id in (select id from name_status where lower(name)
+      in (?))", },
 
     "below-rank:" =>
     { where_clause:
       "name_rank_id in \
       (select id from name_rank where sort_order > (select sort_order from \
-      name_rank the_nr where lower(the_nr.name) like ?))", },
+      name_rank the_nr where lower(the_nr.name) like lower(?)))", },
 
     "above-rank:" =>
     { where_clause:
       "name_rank_id in (select id from name_rank where sort_order < (select \
-      sort_order from name_rank the_nr where lower(the_nr.name) like ?))", },
+      sort_order from name_rank the_nr where lower(the_nr.name)
+      like lower(?)))", },
 
     "author:" =>
     { where_clause:
-      "author_id in (select id from author where lower(abbrev) like ?)", },
+      "author_id in (select id from author where lower(abbrev)
+      like lower(?))", },
 
     "ex-author:" =>
     { where_clause:
-      "ex_author_id in (select id from author where lower(abbrev) like ?)", },
+      "ex_author_id in (select id from author where lower(abbrev)
+      like lower(?))", },
 
     "base-author:" =>
     { where_clause:
-      "base_author_id in (select id from author where lower(abbrev) like ?)", },
+      "base_author_id in (select id from author where lower(abbrev)
+      like lower(?))", },
 
     "ex-base-author:" =>
     { where_clause:
       "ex_base_author_id in \
-      (select id from author where lower(abbrev) like ?)", },
+      (select id from author where lower(abbrev) like lower(?))", },
 
     "sanctioning-author:" =>
     { where_clause:
       "sanctioning_author_id in \
-      (select id from author where lower(abbrev) like ?)", },
+      (select id from author where lower(abbrev) like lower(?))", },
 
     "comments-but-no-instances:" =>
     { where_clause:
@@ -346,15 +358,17 @@ class Search::OnName::FieldRule
                   and exists (select null
                                 from reference
                                where reference.id = instance.reference_id
-                                 and lower(reference.title) like ?))", },
+                                 and lower(reference.title) like lower(?)))", },
 
     "in-accepted-tree:" =>
     { where_clause:
-      " exists (select null from accepted_name_vw where accepted_name_vw.id = name.id)" },
+      " exists (select null from accepted_name_vw
+      where accepted_name_vw.id = name.id)" },
 
     "not-in-accepted-tree:" =>
     { where_clause:
-      " not exists (select null from accepted_name_vw where accepted_name_vw.id = name.id)" },
+      " not exists (select null from accepted_name_vw
+      where accepted_name_vw.id = name.id)" },
 
     "bad-relationships-974:" => { where_clause: " name.id in
     (select name_id from instance where id in (select syn.cited_by_id
@@ -374,24 +388,26 @@ class Search::OnName::FieldRule
                    'nom. nov.',
                    'nom. et stat. nov.')
        ) ) )", order: "name.sort_name" },
-       "accepted-name-synonym-of-accepted-name:" => { where_clause: "id in
-       (SELECT distinct n.id FROM name n
-  JOIN tree_node nd ON nd.name_id = n.id
-                       AND nd.type_uri_id_part = 'ApcConcept'
-                       AND nd.next_node_id IS NULL
-                       AND nd.checked_in_at_id is not null
-  JOIN tree_arrangement a ON nd.tree_arrangement_id = a.id AND a.label = 'APC'
-  JOIN instance i ON nd.instance_id = i.id
-  JOIN instance s ON s.cited_by_id = i.id
-  JOIN instance_type t ON s.instance_type_id = t.id
-                      AND NOT t.misapplied and not t.pro_parte
-  JOIN name sname ON s.name_id = sname.id
-  JOIN tree_node snode ON s.name_id = snode.name_id
-                          AND snode.next_node_id IS NULL
-                          and snode.checked_in_at_id is not null
-                          AND snode.tree_arrangement_id = a.id
-                          AND snode.type_uri_id_part = 'ApcConcept') ",
-                                                   order: "name.sort_name" },
+    "accepted-name-synonym-of-accepted-name:" =>
+         { where_clause: "id in
+                         (SELECT distinct n.id FROM name n
+                         JOIN tree_node nd ON nd.name_id = n.id
+                         AND nd.type_uri_id_part = 'ApcConcept'
+                         AND nd.next_node_id IS NULL
+                         AND nd.checked_in_at_id is not null
+                         JOIN tree_arrangement a ON nd.tree_arrangement_id
+                         = a.id AND a.label = 'APC'
+                         JOIN instance i ON nd.instance_id = i.id
+                         JOIN instance s ON s.cited_by_id = i.id
+                         JOIN instance_type t ON s.instance_type_id = t.id
+                         AND NOT t.misapplied and not t.pro_parte
+                         JOIN name sname ON s.name_id = sname.id
+                         JOIN tree_node snode ON s.name_id = snode.name_id
+                         AND snode.next_node_id IS NULL
+                         and snode.checked_in_at_id is not null
+                         AND snode.tree_arrangement_id = a.id
+                         AND snode.type_uri_id_part = 'ApcConcept') ",
+           order: "name.sort_name" },
     "name-synonym-of-itself:" => { where_clause: "  name.id in (
                                    select i.name_id
                                      from instance i
@@ -428,7 +444,7 @@ class Search::OnName::FieldRule
        ) grouped_by_misapplied
  group by name_id2, i1_id, cited_by_id
 having count(*)   > 1)",
-                                                   order: "name.sort_name" },
+                                   order: "name.sort_name" },
     "name-has-double-synonym:" => { where_clause: "  name.id in (
 select name_id
   from instance
@@ -461,7 +477,7 @@ select i1_id
 having count(*)   > 1
 )
     )",
-                                                   order: "name.sort_name" },
+                                    order: "name.sort_name" },
 
   }.freeze
 end

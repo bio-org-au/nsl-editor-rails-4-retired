@@ -477,3 +477,15 @@ hilten_without_diacritic:
   namespace_id: namespace.apni
   created_by: greg
   updated_by: greg
+
+ollegaard_without_diacritic:
+  name: Ollegaard, H.
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
+
+ollegaard_with_leading_diacritic:
+  name: Øllegaard, H.
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg

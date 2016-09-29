@@ -1,4 +1,6 @@
+#   encoding: utf-8
 # frozen_string_literal: true
+#
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -15,30 +17,18 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-#   A list of names.
-class Name::AsTypeahead::ForUnpubCit
-  attr_reader :suggestions,
-              :params
-  SEARCH_LIMIT = 50
 
-  def initialize(params)
-    @params = params
-    @suggestions = @params[:term].blank? ? [] : query
-  end
+require "test_helper"
 
-  def prepared_search_term
-    @params[:term].tr("*", "%").downcase + "%"
-  end
-
-  def query
-    Name.not_a_duplicate
-        .where(["lower(full_name) like lower(?)", prepared_search_term])
-        .includes(:name_status)
-        .joins(:name_rank)
-        .order("name_rank.sort_order, lower(full_name)")
-        .limit(SEARCH_LIMIT)
-        .collect do |n|
-      { value: "#{n.full_name} - #{n.name_status.name}", id: n.id }
-    end
+# Single author model test.
+class AuthorAsTAHOnNameOllegaardFindsDiacriticTooTest < ActiveSupport::TestCase
+  test "author ollegaard finds diacritic too test" do
+    results = Author::AsTypeahead.on_name("Ollegaard")
+    assert_equal 2, results.size, "Expecting 2 records for 'Ollegard'."
+    ids = results.collect { |author| author[:id] }
+    assert ids.include?(authors(:ollegaard_without_diacritic).id.to_s),
+           "Expecting ollegaard without diacritic"
+    assert ids.include?(authors(:ollegaard_with_leading_diacritic).id.to_s),
+           "Expecting ollegaard with leading diacritic"
   end
 end

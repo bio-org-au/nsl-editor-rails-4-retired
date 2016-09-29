@@ -49,37 +49,38 @@ class Search::OnAuthor::FieldRule
                                where_clause: " exists (select null from
                                comment where comment.author_id =
                                author.id and lower(comment.text)
-                               like ?) " },
+                               like lower(?) ) " },
 
     "comments-by:"        => { where_clause: " exists (select null from
                                comment where comment.author_id =
                                author.id and lower(comment.created_by)
-                               like ?) " },
+                               like lower(?) ) " },
     "full-name:"          => { leading_wildcard: true,
                                trailing_wildcard: true,
-                               where_clause: "lower(full_name) like ?" },
+                               where_clause: "lower(full_name) like lower(?)" },
     "name:"               => { tokenize: true,
                                where_clause:
                                " lower(f_unaccent(name))
-                               like f_unaccent(?) " },
+                               like lower(f_unaccent(?))" },
     "abbrev:"             => { tokenize: true,
                                where_clause:
                                " lower(f_unaccent(abbrev))
-                               like f_unaccent(?) " },
+                               like lower(f_unaccent(?)) " },
     "name-or-abbrev:"     => { leading_wildcard: true,
                                trailing_wildcard: true,
                                tokenize: true,
                                where_clause: "lower(f_unaccent(name))
-                               like f_unaccent(?) or
-                               lower(f_unaccent(abbrev)) like f_unaccent(?) " },
-    "name-exact:"         => { where_clause: "lower(name) like ?" },
-    "abbrev-exact:"       => { where_clause: "lower(abbrev) like ?" },
-    "full-name-exact:"    => { where_clause: "lower(full_name) like ?" },
+                               like lower(f_unaccent(?)) or
+                               lower(f_unaccent(abbrev))
+                               like lower(f_unaccent(?)) " },
+    "name-exact:"         => { where_clause: "lower(name) like lower(?)" },
+    "abbrev-exact:"       => { where_clause: "lower(abbrev) like lower(?)" },
+    "full-name-exact:"    => { where_clause: "lower(full_name) like lower(?)" },
     "comments-exact:"     => { where_clause: " exists (select null from
                                comment where comment.author_id = author.id
-                               and lower(comment.text) like ?) " },
-    "notes-exact:"        => { where_clause: " lower(notes) like ? " },
-    "ipni-id:"            => { where_clause: "lower(ipni_id) like ?" },
+                               and lower(comment.text) like lower(?) ) " },
+    "notes-exact:"        => { where_clause: " lower(notes) like lower(?) " },
+    "ipni-id:"            => { where_clause: "lower(ipni_id) like lower(?) " },
     "id:"                 => { multiple_values: true,
                                where_clause: "id = ? ",
                                multiple_values_where_clause: " id in (?)" },
