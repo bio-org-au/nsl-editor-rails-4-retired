@@ -14,7 +14,8 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#
+
+#  Name services
 class Name::AsServices < Name
   def self.name_strings_url(id)
     "#{Rails.configuration.name_services}#{id}/api/name-strings"
@@ -34,28 +35,36 @@ class Name::AsServices < Name
 
   def self.delete_url(id, reason = "No longer required.")
     api_key = Rails.configuration.api_key
-    "#{Rails.configuration.name_services}#{id}/api/delete?apiKey=#{api_key}&reason=#{ERB::Util.url_encode(reason)}"
+    address = Rails.configuration.name_services
+    path = "#{id}/api/delete"
+    "#{address}#{path}?apiKey=#{api_key}&reason=#{ERB::Util.url_encode(reason)}"
   end
 
-  # Service will send back 200 even if delete fails, but will also sometimes send back 404,
-  # so have to look at both.
-  # The interface *should* never let a user try to delete a name
-  # that cannot be deleted, so the chances of hitting a 'meaningful' error are small.
-  # The service error messages are not suitable for showing to users. e.g. "There are 1 that cite this.", raw database messages like multi-level foreign key technical errors,
-  # so just log them.
+  # Service will send back 200 even if delete fails, but will also sometimes
+  # send back 404, so have to look at both.
+  # The interface *should* never let a user try to delete a name that cannot be
+  # deleted, so the chances of hitting a 'meaningful' error are [supposed to
+  # be] small.
+  # The service error messages are not suitable for showing to users. e.g.
+  # "There are 1 that cite this.", raw database messages like multi-level
+  # foreign key technical errors, but we get them often enough that we
+  # need to pass them through to the application GUI.
   def delete_with_reason(reason)
-    logger.info("Name::AsServices.delete")
-    json = {}
     url = Name::AsServices.delete_url(id, reason)
     s_response = RestClient.delete(url, accept: :json)
     json = JSON.load(s_response)
-    raise "Delete Service said: #{json['errors'].try('join')} [#{s_response.code}]" unless s_response.code == 200 && json["ok"] == true
-    true
-  rescue => e
-    logger.error("Name::AsServices.delete exception : #{e}")
-    logger.error("Name::AsServices.delete exception for url: #{url}")
-    logger.error("Name::AsServices.delete exception with s_response: #{s_response}")
-    logger.error("Name::AsServices.delete exception with errors: #{json['errors']}")
-    raise
+    if s_response.code == 200 && json["ok"] == true
+      true
+    else
+      log_error(url, s_response, json)
+      preface = "Delete Service error:"
+      raise "#{preface} #{json['errors'].try('join')} [#{s_response.code}]"
+    end
+  end
+
+  def log_error(url, s_response, json)
+    logger.error("Name::AsServices.delete url: #{url}")
+    logger.error("Name::AsServices.delete s_response: #{s_response}")
+    logger.error("Name::AsServices.delete errors: #{json['errors']}")
   end
 end
