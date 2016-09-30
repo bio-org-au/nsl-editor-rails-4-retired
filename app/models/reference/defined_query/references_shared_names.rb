@@ -28,7 +28,8 @@ class Reference::DefinedQuery::ReferencesSharedNames
               :total
 
   def initialize(parsed_request)
-    run_query(parsed_request)
+    @parsed_request = parsed_request
+    run_query
   end
 
   def debug(s)
@@ -36,38 +37,51 @@ class Reference::DefinedQuery::ReferencesSharedNames
     Rails.logger.debug("#{tag}: #{s}")
   end
 
-  def run_query(parsed_request)
-    debug("")
-    debug("parsed_request.where_arguments: #{parsed_request.where_arguments}")
-    debug("parsed_request.defined_query_arg: #{parsed_request.defined_query_arg}")
-    debug("parsed_request.count: #{parsed_request.count}")
-    debug("parsed_request.limit: #{parsed_request.limit}")
-    args = parsed_request.where_arguments.split(",")
-    raise "Exactly 2 reference IDs are expected." unless args.size == 2
-    ref_id_1 = args.first.to_i
-    ref_id_2 = args.last.to_i
-    raise "No Reference exists for ID:#{args.first}" unless Reference.exists?(ref_id_1)
-    raise "No Reference exists for ID:#{args.last}" unless Reference.exists?(ref_id_2)
+  def run_query
+    build_args
+    validate_args
     @show_csv = false
-    if parsed_request.count
-      debug("counting")
-      instances = Instance.for_ref(ref_id_1).for_ref_and_correlated_on_name_id(ref_id_2)
-      @count = instances.size
-      @results = []
-      @limited = false
-      @common_and_cultivar_included = true
-      @has_relation = false
-      @relation = nil
+    if @parsed_request.count
+      count_query
     else
-      debug("listing with limit: #{parsed_request.limit}")
-      @results = Instance.for_ref(ref_id_1).for_ref_and_correlated_on_name_id(ref_id_2).order_by_name_full_name.limit(parsed_request.limit)
-      @limited = true
-      @common_and_cultivar_included = true
-      @count = @results.size
-      @has_relation = false
-      @relation = nil
+      list_query
     end
     @total = nil
+  end
+
+  def build_args
+    args = @parsed_request.where_arguments.split(",")
+    raise "Exactly 2 reference IDs are expected." unless args.size == 2
+    @ref_id_1 = args.first.to_i
+    @ref_id_2 = args.last.to_i
+  end
+
+  def validate_args
+    raise "No Reference ID:#{args.first}" unless Reference.exists?(@ref_id_1)
+    raise "No Reference ID:#{args.last}" unless Reference.exists?(@ref_id_2)
+  end
+
+  def count_query
+    instances = Instance.for_ref(@ref_id_1)
+                        .for_ref_and_correlated_on_name_id(@ref_id_2)
+    @count = instances.size
+    @results = []
+    @limited = false
+    @common_and_cultivar_included = true
+    @has_relation = false
+    @relation = nil
+  end
+
+  def list_query
+    @results = Instance.for_ref(@ref_id_1)
+                       .for_ref_and_correlated_on_name_id(@ref_id_2)
+                       .order_by_name_full_name
+                       .limit(@parsed_request.limit)
+    @limited = true
+    @common_and_cultivar_included = true
+    @count = @results.size
+    @has_relation = false
+    @relation = nil
   end
 
   def csv?
