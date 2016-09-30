@@ -18,25 +18,15 @@
 # Author entity: name strings and abbreviation strings for individuals or
 # groups of individuals who have authored a reference or authorised a name.
 class Author < ActiveRecord::Base
+  include AuditScopable
+  include AuthorValidations
+  include AuthorScopes
   strip_attributes
   self.table_name = "author"
   self.primary_key = "id"
   self.sequence_name = "nsl_global_seq"
 
   attr_accessor :display_as, :give_me_focus, :message
-
-  # Only used for typeahead confirmation, so DO NOT use f_unaccent.
-  scope :lower_name_equals,
-        ->(string) { where("lower(name) = lower(?) ", string) }
-
-  scope :lower_name_like,
-        ->(string) { where("lower(f_unaccent(name)) like lower(f_unaccent(?)) ", string.tr("*", "%")) }
-  scope :lower_abbrev_like,
-        ->(string) { where("lower(f_unaccent(abbrev)) like lower(f_unaccent(?)) ", string.tr("*", "%")) }
-  scope :not_this_id,
-        ->(this_id) { where.not(id: this_id) }
-  scope :not_duplicate,
-        -> { where("author.duplicate_of_id is null") }
 
   has_many :references
   belongs_to :namespace, class_name: "Namespace", foreign_key: "namespace_id"
@@ -59,64 +49,8 @@ class Author < ActiveRecord::Base
            dependent: :restrict_with_error
   has_many :comments
 
-  validates :name,
-            presence: { if: "abbrev.blank?",
-                        unless: "duplicate_of_id.present?",
-                        message: "can't be blank if abbrev is blank." }
-
-  validates :abbrev,
-            presence: { if: "name.blank?",
-                        unless: "duplicate_of_id.present?",
-                        message: "can't be blank if name is blank." }
-
-  validates :abbrev,
-            presence: { if: "names.size > 0",
-                        message: "can't be blank if names are attached." }
-
-  validates :abbrev,
-            presence: { if: "base_names.size > 0",
-                        message:
-                        "can't be blank if base authored names are attached." }
-
-  validates :abbrev,
-            presence: { if: "ex_base_names.size > 0",
-                        message:
-                        "can't be blank if ex-base authored names are attached." }
-
-  validates :abbrev,
-            presence: { if: "ex_names.size > 0",
-                        message: "can't be blank if ex-authored names are attached." }
-
-  validates :abbrev,
-            presence: { if: "sanctioned_names.size > 0",
-                        message: "can't be blank if sanctioned names are attached." }
-
-  validates :abbrev,
-            uniqueness: { unless: "abbrev.blank?",
-                          case_sensitive: false,
-                          message: "has already been used" }
-
-  validates_exclusion_of :duplicate_of_id,
-                         in: ->(author) { [author.id] },
-                         allow_blank: true,
-                         message: "and master cannot be the same record"
-
   scope :lower_abbrev_equals,
         ->(string) { where("lower(abbrev) = lower(?) ", string) }
-
-  scope :created_n_days_ago,
-        ->(n) { where("current_date - created_at::date = ?", n) }
-  scope :updated_n_days_ago,
-        ->(n) { where("current_date - updated_at::date = ?", n) }
-  scope :changed_n_days_ago,
-        ->(n) { where("current_date - created_at::date = ? or current_date - updated_at::date = ?", n, n) }
-
-  scope :created_in_the_last_n_days,
-        ->(n) { where("created_at::date > current_date - ?", n) }
-  scope :updated_in_the_last_n_days,
-        ->(n) { where("updated_at::date > current_date - ?", n) }
-  scope :changed_in_the_last_n_days,
-        ->(n) { where("created_at::date > current_date - ? or updated_at::date > current_date - ?", n, n) }
 
   DEFAULT_DESCRIPTOR = "n".freeze # for name
   DEFAULT_ORDER_BY = "name asc ".freeze
@@ -133,10 +67,8 @@ class Author < ActiveRecord::Base
       "#{name} | #{abbrev}"
     elsif name.present?
       name.to_s
-    elsif abbrev.present?
-      abbrev.to_s
     else
-      id.to_string
+      abbrev.to_s
     end
   end
 
@@ -191,10 +123,14 @@ class Author < ActiveRecord::Base
   end
 
   def can_be_deleted?
-    names.size.zero? &&
-      references.size.zero? &&
+    references.size.zero? &&
       duplicates.size.zero? &&
-      base_names.size.zero? &&
+      names.size.zero? &&
+      no_other_authored_names?
+  end
+
+  def no_other_authored_names?
+    base_names.size.zero? &&
       ex_names.size.zero? &&
       ex_base_names.size.zero? &&
       sanctioned_names.size.zero?
