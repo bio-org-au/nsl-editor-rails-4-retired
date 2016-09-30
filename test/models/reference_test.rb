@@ -45,12 +45,12 @@ class ReferenceTest < ActiveSupport::TestCase
   end
 
   test "test for has children" do
-    assert references(:journal_with_children).has_children?,
+    assert references(:journal_with_children).children?,
            "Children not detected."
   end
 
   test "test for has no children" do
-    assert_not references(:ref_without_children).has_children?,
+    assert_not references(:ref_without_children).children?,
                "Children found where none exist."
   end
 end

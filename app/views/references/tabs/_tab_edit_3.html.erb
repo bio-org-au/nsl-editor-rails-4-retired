@@ -5,15 +5,15 @@
 <div id="search-result-details-error-message-container" class="message-container"></div>
 
 
-<% if @reference.has_children? %>
+<% if @reference.children? %>
   You cannot delete this reference because it has one or more children.
 <% end %>
 
-<% if @reference.has_instances? %>
+<% if @reference.instances? %>
   You cannot delete this reference because it has one or more instances.
 <% end %>
 
-<% unless @reference.has_children? || @reference.has_instances? %>
+<% unless @reference.children? || @reference.instances? %>
 
   <% delete_link = link_to("Delete the reference...",
                            '#',

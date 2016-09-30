@@ -109,11 +109,35 @@ get "/nsl/services/name/apni/:id/api/apc.json" do |id|
 end
 
 get "/nsl/services/reference/apni/:id/api/citation-strings" do
-  "Hello World"
+  result = { "reference": {
+    "class": "au.org.biodiversity.nsl.Reference",
+    "_links": {
+      "permalink": []
+    },
+    "citation": "Hasskarl, J.C. (Oct. 1855), Retzia sive Observationes
+    Botanicae, quas in primis in horto botanico Bogoriensi mensibus Februario
+    ad Julium 1855",
+    "citationHtml": "Hasskarl, J.C. (Oct. 1855), Retzia sive Observationes
+    Botanicae, quas in primis in horto botanico Bogoriensi mensibus Februario
+    ad Julium 1855",
+    "citationAuthYear": "Hassk., null"
+  },
+             "action": "citation-strings",
+             "result": {
+               "citationHtml": "Hasskarl, J.C. (Oct. 1855), Retzia sive
+               Observationes Botanicae, quas in primis in horto botanico
+               Bogoriensi mensibus Februario ad Julium 1855",
+               "citation": "Hasskarl, J.C. (Oct. 1855), Retzia sive
+               Observationes Botanicae, quas in primis in horto botanico
+               Bogoriensi mensibus Februario ad Julium 1855"
+             } }
+  result.to_json
 end
 
-# http://localhost:9090/nsl/services/instance/apni/666/api/delete?apiKey=test-api-key&reason=Edit
-# http://localhost:8080/nsl/services/instance/apni/514039/api/delete?apiKey=d0d1e81d-181c-4ac6-ad75-ddd172594793&reason=Ixxxx
+# http://localhost:9090/nsl/services/instance/apni/666/api/
+#   delete?apiKey=test-api-key&reason=Edit
+# http://localhost:8080/nsl/services/instance/apni/514039/api/
+#   delete?apiKey=d0d1e81d-181c-4ac6-ad75-ddd172594793&reason=Ixxxx
 delete "/nsl/services/instance/apni/:id/api/delete" do |id|
   if id == "404"
     [404, { "action" => "delete",
