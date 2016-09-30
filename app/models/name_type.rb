@@ -48,16 +48,20 @@ class NameType < ActiveRecord::Base
   end
 
   def self.default
-    NameType.where(name: "scientific").push(NameType.order("name").limit(1).first).first
+    NameType.where(name: "scientific")
+            .push(NameType.order("name").limit(1).first).first
   end
 
   def self.query_form_options
-    not_deprecated.sort { |x, y| x.name <=> y.name }.collect { |n| [n.capitalised_name, n.name.to_s, class: ""] }
-                  .unshift(["Include common, cultivars", "type:*"]).unshift(["Exclude common, cultivars", ""])
+    not_deprecated.sort { |x, y| x.name <=> y.name }
+                  .collect { |n| [n.capitalised_name, n.name.to_s, class: ""] }
+                  .unshift(["Include common, cultivars", "type:*"])
+                  .unshift(["Exclude common, cultivars", ""])
   end
 
   def self.options
-    all.sort { |x, y| x.name <=> y.name }.collect { |n| [n.capitalised_name, n.id, class: ""] }
+    all.sort { |x, y| x.name <=> y.name }
+       .collect { |n| [n.capitalised_name, n.id, class: ""] }
   end
 
   def self.option_ids_for_category(name_category_string)
@@ -92,7 +96,10 @@ class NameType < ActiveRecord::Base
   end
 
   def self.scientific_2_parent_options
-    where(" name in ('cultivar hybrid formula', 'graft/chimera') or (scientific and hybrid and name not in ('hybrid formula unknown 2nd parent','named hybrid','named hybrid autonym'))")
+    where(" name in ('cultivar hybrid formula', 'graft/chimera')
+          or (scientific and hybrid and name not in
+          ('hybrid formula unknown 2nd parent','named hybrid',
+          'named hybrid autonym'))")
       .sort { |x, y| x.name <=> y.name }.collect { |n| [n.name, n.id] }
   end
 
@@ -126,7 +133,9 @@ class NameType < ActiveRecord::Base
   end
 
   def self.other_options
-    where(scientific: false).where(cultivar: false).sort { |x, y| x.name <=> y.name }.collect do |n|
+    where(scientific: false).where(cultivar: false)
+                            .sort { |x, y| x.name <=> y.name }
+                            .collect do |n|
       [n.name, n.id, class: "other"]
     end
   end

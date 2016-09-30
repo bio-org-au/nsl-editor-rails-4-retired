@@ -42,24 +42,32 @@ class InstanceType < ActiveRecord::Base
   end
 
   def self.info_or_help_links
+    head = %(<li><a tabindex="-1" href="#" class="append-to-query-field" )
+    tail = %(</a></li>)
     all.order(:name).collect do |instance_type|
-      %(<li><a tabindex="-1" href="#" class="append-to-query-field" data-value="#{instance_type.name}">#{instance_type.name}</a></li>)
+      %(#{head} data-value="#{instance_type.name}">#{instance_type.name}#{tail})
     end
   end
 
   # For new records: just the standard set.
   def self.standalone_options
-    where("standalone").where.not("deprecated").sort { |x, y| x.name <=> y.name }.collect { |i| [i.name, i.id] }
+    where("standalone").where.not("deprecated")
+                       .sort { |x, y| x.name <=> y.name }
+                       .collect { |i| [i.name, i.id] }
   end
 
   # For new records: just the standard set.
   def self.synonym_options
-    where("citing").where.not("deprecated").sort { |x, y| x.name <=> y.name }.collect { |i| [i.name, i.id] }
+    where("citing").where.not("deprecated")
+                   .sort { |x, y| x.name <=> y.name }
+                   .collect { |i| [i.name, i.id] }
   end
 
   # For new records: just the standard set.
   def self.unpublished_citation_options
-    where("unsourced").where.not("deprecated").sort { |x, y| x.name <=> y.name }.collect { |i| [i.name, i.id] }
+    where("unsourced").where.not("deprecated")
+                      .sort { |x, y| x.name <=> y.name }
+                      .collect { |i| [i.name, i.id] }
   end
 
   # For existing records.
@@ -77,7 +85,8 @@ class InstanceType < ActiveRecord::Base
 
   def name_with_indefinite_article
     case name
-    when "[unknown]", "autonym", "[n/a]", "excluded name", "invalid publication", "isonym", "orth. var"
+    when "[unknown]", "autonym", "[n/a]", "excluded name",
+         "invalid publication", "isonym", "orth. var"
       "an #{name}"
     else
       "a #{name}"
@@ -89,7 +98,8 @@ class InstanceType < ActiveRecord::Base
   end
 
   def self.query_form_options
-    all.sort { |x, y| x.name <=> y.name }.collect { |n| [n.name, n.name.downcase, class: ""] }
+    all.sort { |x, y| x.name <=> y.name }
+       .collect { |n| [n.name, n.name.downcase, class: ""] }
   end
 
   def self.secondary_reference
