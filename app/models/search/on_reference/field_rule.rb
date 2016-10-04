@@ -21,14 +21,11 @@ class Search::OnReference::FieldRule
     "is-a-duplicate:"       => { where_clause: " duplicate_of_id is not null" },
     "is-not-a-duplicate:"   => { where_clause: " duplicate_of_id is null" },
     "is-a-parent:"          => { where_clause: " exists (select null from
-                                 reference child where child.parent_id =
-                                 reference.id) " },
+reference child where child.parent_id = reference.id) " },
     "is-not-a-parent:"      => { where_clause: " not exists (select null from
-                                 reference child where child.parent_id =
-                                 reference.id) " },
+reference child where child.parent_id = reference.id) " },
     "has-no-children:"      => { where_clause: " not exists (select null from
-                                 reference child where child.parent_id =
-                                 reference.id) " },
+reference child where child.parent_id = reference.id) " },
     "has-no-parent:"        => { where_clause: " parent_id is null" },
     "is-a-child:"           => { where_clause: " parent_id is not null" },
     "is-not-a-child:"       => { where_clause: " parent_id is null" },
@@ -41,39 +38,33 @@ class Search::OnReference::FieldRule
     "comments:"             => { trailing_wildcard: true,
                                  leading_wildcard: true,
                                  where_clause: " exists (select null from
-                                 comment where comment.reference_id =
-                                 reference.id and lower(comment.text)
+comment where comment.reference_id = reference.id and lower(comment.text)
                                  like lower(?)) " },
 
     "comments-by:"          => { where_clause: " exists (select null from
-                                 comment where comment.reference_id =
-                                 reference.id and comment.created_by
+comment where comment.reference_id = reference.id and comment.created_by
                                  like ?) " },
     "edition:"              => { where_clause:
                                  " lower(edition) like lower(?)" },
+
     "publication-date:"     => { where_clause: " lower(publication_date)
                                  like ?" },
+
     "type:"                 => { multiple_values: true,
                                  where_clause: " ref_type_id in (select id
-                                 from ref_type
-                                 where lower(name) like lower(?))",
+from ref_type where lower(name) like lower(?))",
                                  multiple_values_where_clause: " ref_type_id
-                                 in (select id from ref_type where lower(name)
-                                 in (?))" },
+in (select id from ref_type where lower(name) in (?))" },
     "parent-type:"          => { multiple_values: true,
-                                 where_clause:
-                                 " exists (select null from reference parent
-                                  where parent.id = reference.parent_id
-                                  and parent.ref_type_id in (select id
-                                 from ref_type
-                                 where lower(name) like lower(?)) )", },
+                                 where_clause: " exists (select null from
+reference parent where parent.id = reference.parent_id and parent.ref_type_id
+in (select id from ref_type where lower(name) like lower(?)) )", },
+
     "not-type:"             => { where_clause: " ref_type_id not in (select id
-                                 from ref_type
-                                 where lower(name) like lower(?))" },
+from ref_type where lower(name) like lower(?))" },
 
     "author-role:"          => { where_clause: " ref_author_role_id in
-                                 (select id from ref_author_role where
-                                 lower(name) like lower(?))" },
+(select id from ref_author_role where lower(name) like lower(?))" },
     "title-exact:"          => { where_clause: " lower(title) like lower(?)" },
     "isbn:"                 => { where_clause: " lower(isbn) like lower(?)" },
     "issn:"                 => { where_clause: " lower(issn) like lower(?)" },
@@ -119,16 +110,14 @@ class Search::OnReference::FieldRule
     "citation-text:"        => { scope_: "search_citation_text_for" },
 
     "citation:"             => { trailing_wildcard: true,
-                                 leading_wildcard: true,
-                                 tokenize: true,
+                                 leading_wildcard: true, tokenize: true,
                                  where_clause:
                                  " lower(citation) like lower(?) " },
 
     "author:"               => { trailing_wildcard: true,
                                  leading_wildcard: true,
                                  where_clause: "author_id in
-                                 (select id from author where lower(name)
-                                 like lower(?))" },
+(select id from author where lower(name) like lower(?))" },
 
     "title:"                => { trailing_wildcard: true,
                                  where_clause: " lower(title) like lower(?) " },
@@ -136,22 +125,12 @@ class Search::OnReference::FieldRule
     "notes:" => { where_clause: " lower(notes) like lower(?) " },
 
     "parent-ref-wrong-child-type:" => { where_clause: "reference.id in (
-select r.id
-from reference r
-inner join
-ref_type rt
-on r.ref_type_id = rt.id
-inner join
-reference child
-on r.id = child.parent_id
-inner join
-ref_type child_rt
-on child.ref_type_id = child_rt.id
-where (rt.name,child_rt.name) not in
-(select xrt.name, xcrt.name
+select r.id from reference r
+inner join ref_type rt on r.ref_type_id = rt.id
+inner join reference child on r.id = child.parent_id
+inner join ref_type child_rt on child.ref_type_id = child_rt.id
+where (rt.name,child_rt.name) not in (select xrt.name, xcrt.name
 from ref_type xrt
-inner join
-ref_type xcrt
-on xrt.id = xcrt.parent_id))" },
+inner join ref_type xcrt on xrt.id = xcrt.parent_id))" },
   }.freeze
 end
