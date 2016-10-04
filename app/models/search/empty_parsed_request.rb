@@ -36,7 +36,7 @@ class Search::EmptyParsedRequest
               :show_instances
 
   def initialize(params)
-    Rails.logger.debug("Search::EmptyParsedQuery start: params: #{params}")
+    Rails.logger.debug("Search::EmptyParsedRequest start: params: #{params}")
     @params = params
     @empty = true
     @defined_query = false
