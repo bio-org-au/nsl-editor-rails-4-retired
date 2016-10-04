@@ -1,5 +1,9 @@
 ---
 - :date: 04-Oct-2016
+  :jira_id: '2000'
+  :description: |-
+    Display page or page range for References in query results listing.
+- :date: 04-Oct-2016
   :jira_id: '1701'
   :description: |-
     Name edit error messages are now cleared before a new
