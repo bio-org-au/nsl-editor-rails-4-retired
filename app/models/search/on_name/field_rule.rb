@@ -479,5 +479,8 @@ having count(*)   > 1
     )",
                                     order: "name.sort_name" },
 
+    "at-top-of-accepted-tree:" =>
+    { where_clause:
+      "name.id in (select n.id from name_tree_path ntp inner join name n on n.id = ntp.name_id where cast(name_id as text) = name_id_path and tree_id = (select id from tree_arrangement where label = (select value from shard_config where name = 'tree label')))", },
   }.freeze
 end

@@ -242,5 +242,36 @@ misapplications (NSL-1974)</h5>
   <% end %>
 </table>
 
+<h5>Names at the top of the accepted tree</h5>
+<table class="example-searches table table-striped">
+  <% [
+      {search_target: 'Names',
+       search_string: "at-top-of-accepted-tree:",
+       explanation: %Q(Names attached to the top of the accepted name tree.) },
+      {search_target: 'Names',
+       search_string: "name: br at-top-of-accepted-tree:",
+       explanation: %Q(Names starting with "br" attached to the top of the accepted name tree.) },
+      {search_target: 'Names',
+       search_string: "at-top-of-accepted-tree: show-instances: limit: 10",
+       explanation: %Q(Names attached to the top of the accepted name tree,
+       showing instances.  First 10.) },
+      {search_target: 'Names',
+       search_string: "name: ch at-top-of-accepted-tree: show-instances: limit: 10",
+       explanation: %Q(Names starting with "ch" attached to the top of the accepted name tree,
+       showing instances.  First 10.) },
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent">
+      <%= link_to(val[:search_string],
+                  search_path(query_string: val[:search_string],
+                              query_target: val[:search_target]),
+                  class:'blue',
+                  title: "Run the report.") %>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+
   </div>
 </div>
