@@ -36,33 +36,46 @@ class Reference::DefinedQuery::ReferenceIdWithInstances
     Rails.logger.debug("#{tag}: #{s}")
   end
 
-  def run_query(parsed_request)
+  def inspect_query(parsed_request)
     debug("")
     debug("where_arguments: #{parsed_request.where_arguments}")
     debug("defined_query_arg: #{parsed_request.defined_query_arg}")
     debug("count: #{parsed_request.count}")
     debug("limit: #{parsed_request.limit}")
+  end
+
+  def run_query(parsed_request)
+    inspect_query(parsed_request)
     @show_csv = false
     @relation = nil
     @has_relation = false
-
     if parsed_request.count
-      debug("counting")
-      ref = Reference.find(parsed_request.where_arguments)
-      @count = ref.instances.size + 1
-      @results = []
-      @limited = false
-      @common_and_cultivar_included = true
+      run_count_query(parsed_request)
     else
-      debug("listing with limit: #{parsed_request.limit}")
-      query = Reference::DefinedQuery::ReferenceIdWithInstancesQuery.new(parsed_request,
-                                     "name")
-      @results = query.results
-      @limited = false; # name_query.limited
-      @common_and_cultivar_included = true
-      @count = @results.size
+      run_list_query(parsed_request)
     end
     @total = nil
+  end
+
+  def run_count_query(parsed_request)
+    debug("run_count_query")
+    ref = Reference.find(parsed_request.where_arguments)
+    @count = ref.instances.size + 1
+    @results = []
+    @limited = false
+    @common_and_cultivar_included = true
+  end
+
+  def run_list_query(parsed_request)
+    debug("listing with limit: #{parsed_request.limit}")
+    query = Reference::DefinedQuery::ReferenceIdWithInstancesQuery.new(
+      parsed_request,
+      "name"
+    )
+    @results = query.results
+    @limited = false; # name_query.limited
+    @common_and_cultivar_included = true
+    @count = @results.size
   end
 
   def csv?
