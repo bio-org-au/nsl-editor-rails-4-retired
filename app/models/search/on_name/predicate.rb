@@ -36,7 +36,7 @@ class Search::OnName::Predicate
     @field = field
     @value = value
     @canon_field = build_canon_field(field)
-    rule = Search::OnName::FieldRule::RULES[@canon_field] || EMPTY_RULE
+    rule = Search::OnName::FieldRule.rules[@canon_field] || EMPTY_RULE
     apply_rule(rule)
     @canon_value = build_canon_value(value)
     apply_scope
@@ -106,9 +106,9 @@ class Search::OnName::Predicate
   end
 
   def build_canon_field(field)
-    if Search::OnName::FieldRule::RULES.key?(field)
+    if Search::OnName::FieldRule.rules.key?(field)
       field
-    elsif Search::OnName::FieldRule::RULES.key?(
+    elsif Search::OnName::FieldRule.rules.key?(
       Search::OnName::FieldAbbrev::ABBREVS[field]
     )
       Search::OnName::FieldAbbrev::ABBREVS[field]
