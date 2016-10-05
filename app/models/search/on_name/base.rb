@@ -45,6 +45,7 @@ class Search::OnName::Base
   def run_query
     @has_relation = true
     @rejected_pairings = []
+    @show_csv = false
     if @parsed_request.count
       run_count_query
     else
@@ -53,7 +54,6 @@ class Search::OnName::Base
   end
 
   def run_count_query
-    debug("#run_count_query")
     count_query = Search::OnName::CountQuery.new(@parsed_request)
     @relation = count_query.sql
     @count = relation.count
@@ -61,7 +61,6 @@ class Search::OnName::Base
     @info_for_display = count_query.info_for_display
     @common_and_cultivar_included = count_query.common_and_cultivar_included
     @names = @results = []
-    @show_csv = false
     @total = nil
     @summary = "#{@names.size} names"
   end
@@ -73,7 +72,6 @@ class Search::OnName::Base
     @limited = list_query.limited
     @info_for_display = list_query.info_for_display
     @common_and_cultivar_included = list_query.common_and_cultivar_included
-    @show_csv = false
     consider_instances
     @count = @results.size
     calculate_total
