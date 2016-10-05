@@ -18,8 +18,6 @@
 
 #   Record significant changes and let users read about them.
 class History
-  attr_reader :changes_2016
-
   def self.changes_2015
     @changes_2015.blank? ? load_changes_2015 : @changes_2015
   end
