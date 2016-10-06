@@ -32,6 +32,30 @@ class SignIn < ActiveType::Object
     build_ldap.user_full_name
   end
 
+  def web_token
+    # do service call to ask the service layer for the JWT
+
+    api_key = Rails.configuration.api_key
+    address = Rails.configuration.nsl_services
+    path = "auth/getInfoJsonForUsername"
+    url = "#{address}#{path}?apiKey=#{api_key}&username=#{username}"
+
+    logger.info url
+
+    s_response = RestClient.get(url, accept: :json)
+    json = JSON.load(s_response)
+    logger.debug json
+    if json && json['success'] == true
+      json[:jwt]
+    else
+      logger.warn("SignIn::webToken url: #{url}")
+      logger.warn("SignIn::webToken s_response: #{s_response}")
+      logger.warn("SignIn::webToken json: #{json}")
+      preface = "Get web token error:"
+      raise "#{preface} #{json['errors'].try('join')} [#{s_response.code}]"
+    end
+  end
+
   private
 
   def validate_credentials
@@ -44,4 +68,5 @@ class SignIn < ActiveType::Object
     credentials[:password] = password
     Ldap.new(credentials)
   end
+
 end

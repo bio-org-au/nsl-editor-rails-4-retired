@@ -82,7 +82,8 @@ class ApplicationController < ActionController::Base
 
     @visible_classifications = [  ]
     # TODO: check that this classification is visible to this user
-    @current_classification = session[:current_classification] ? TreeArrangement.find(session[:current_classification]) : null
+
+    @current_classification = session[:current_classification] ? TreeArrangement.find(session[:current_classification]) : nil
 
     TreeArrangement.where(tree_type: 'P').order(:label).each  do |t|
       if @current_user.groups.include?(t.label) || t.shared
