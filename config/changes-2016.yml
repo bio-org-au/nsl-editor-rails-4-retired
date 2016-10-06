@@ -1,4 +1,10 @@
 ---
+- :date: 07-Oct-2016
+  :jira_id: '2006'
+  :description: |-
+    Fix add unpublished citation.
+- :date: 06-Oct-2016
+  :release: true
 - :date: 05-Oct-2016
   :jira_id: '1998'
   :description: |-
