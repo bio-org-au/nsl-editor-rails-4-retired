@@ -79,6 +79,39 @@ class ApplicationController < ActionController::Base
     @current_user = User.new(username: session[:username],
                              full_name: session[:user_full_name],
                              groups: session[:groups])
+
+    @visible_classifications = [  ]
+    # TODO: check that this classification is visible to this user
+    @current_classification = session[:current_classification] ? TreeArrangement.find(session[:current_classification]) : null
+
+    TreeArrangement.where(tree_type: 'P').order(:label).each  do |t|
+      if @current_user.groups.include?(t.label) || t.shared
+
+        tree = {
+          tree: t,
+          editable: @current_user.groups.include?(t.label),
+          selected: @current_classification == t,
+          workspaces: []
+        }
+
+        @visible_classifications <<  tree
+
+        TreeArrangement.where(tree_type: 'U', base_arrangement_id: t.id).each  do |w|
+#          if @current_user.groups.include?(t.label) || w.shared
+            workspace = {
+              workspace: w,
+              editable: @current_user.groups.include?(t.label),
+              selected: @current_classification == w
+            }
+            tree[:workspaces] << workspace
+#          end
+        end
+      end
+
+
+    end
+
+
     logger.debug("User is known: #{current_user.username}")
   end
 

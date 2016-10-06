@@ -72,6 +72,7 @@ class Ability
     can "services",           :all
     can "sessions",           :all
     can "trees",              "ng"
+    can "trees",              "select_classification"
   end
 
   def edit_auth

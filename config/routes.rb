@@ -31,6 +31,7 @@ Rails.application.routes.draw do
   # Tree controller paths - need to be somewhere more appropriate in this file
 
   match "trees/ng/:template", as: "tree_ng", to: "trees#ng", via: :get
+  match "trees/select_classification", as: "select_classification", to: "trees#select_classification", via: :get
 
   # Tree controller paths - need to be somewhere more appropriate in this file
 

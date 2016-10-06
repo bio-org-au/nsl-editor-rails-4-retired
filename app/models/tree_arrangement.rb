@@ -15,16 +15,11 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-class TreesController < ApplicationController
-  def index
-  end
+#  A tree - usually a classification or a classification workspace
+class TreeArrangement < ActiveRecord::Base
+  self.table_name = "tree_arrangement"
+  self.primary_key = "id"
+  self.sequence_name = "nsl_global_seq"
 
-  def ng
-    render "trees/#{params[:template]}", layout: false
-  end
 
-  def select_classification
-    session[:current_classification] = params[:classification]
-    redirect_to controller: 'search', action: 'search'
-  end
 end

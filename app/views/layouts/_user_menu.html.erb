@@ -8,7 +8,7 @@
      title="Select this to see your account options."
      data-toggle="dropdown">
     <%= icon('user') %>&nbsp;<%= @current_user.full_name %> <span class="caret"></span></a>
-  <ul id="help-dropdown-menu" class="dropdown-menu" role="menu"> 
+  <ul id="user-dropdown-menu" class="dropdown-menu" role="menu">
     <% if @current_user.groups.size > 0 %>
       <li class="dropdown-submenu">
         <a tabindex="-1" 
@@ -28,6 +28,31 @@
           </ul>
       </li>
     <% end %>
+
+    <li class="dropdown-submenu">
+      <a tabindex="-1"
+         href="#"
+         title="Hover over this to see what classifications you can select from">Classifications</a>
+      <ul class="dropdown-menu">
+        <% @visible_classifications.each  do |t|
+            icon_name = t[:editable] ? 'edit' : 'circle-o'
+            icon_check = t[:selected] ? 'check' : ''
+          %>
+          <li role="presentation">
+            <%= link_to "#{icon(icon_name)} #{t[:tree].label} #{icon(icon_check)}".html_safe, {controller: 'trees', action: 'select_classification', classification: t[:tree].id}, { title: 'A Classification' } %>
+          </li>
+          <% t[:workspaces].each  do |w|
+                icon_name = w[:editable] ? 'edit' : 'circle-o'
+                icon_check = w[:selected]  ? 'check' : ''
+            %>
+            <li role="presentation" style="padding-left: 1em;">
+              <%= link_to("#{icon(icon_name)} #{w[:workspace].title} #{icon(icon_check)}".html_safe, {controller: 'trees', action: 'select_classification', classification: w[:workspace].id}, { title: 'A workspace' })%>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+    </li>
+
     <li class="" role="presentation">
       <%= link_to "#{icon('sign-out')} Sign out".html_safe, sign_out_path, method: :delete, title: 'Select this to sign out from the NSL Editor'%>
     </li>
