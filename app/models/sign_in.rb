@@ -44,15 +44,17 @@ class SignIn < ActiveType::Object
 
     s_response = RestClient.get(url, accept: :json)
     json = JSON.load(s_response)
-    logger.debug json
     if json && json['success'] == true
       json[:jwt]
     else
-      logger.warn("SignIn::webToken url: #{url}")
-      logger.warn("SignIn::webToken s_response: #{s_response}")
-      logger.warn("SignIn::webToken json: #{json}")
-      preface = "Get web token error:"
-      raise "#{preface} #{json['errors'].try('join')} [#{s_response.code}]"
+      logger.error("SignIn::webToken url: #{url}")
+      logger.error("SignIn::webToken s_response: #{s_response}")
+      logger.error("SignIn::webToken json: #{json}")
+      # I do not raise an error, because I do not want the editor to
+      # crash if the services are down. Comonents in service-oriented
+      # architectures must be built to limp along as best they can
+      # when other bits are down, or else nothing ever works
+      nil
     end
   end
 

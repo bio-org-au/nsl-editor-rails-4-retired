@@ -18,7 +18,7 @@
 
 # User model.
 class User < ActiveType::Object
-  attr_accessor :username, :full_name, :groups
+  attr_accessor :username, :full_name, :groups, :web_token
 
   validates :username, presence: true
   validates :full_name, presence: true

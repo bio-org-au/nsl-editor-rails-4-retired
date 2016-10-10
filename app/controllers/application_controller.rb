@@ -78,12 +78,28 @@ class ApplicationController < ActionController::Base
   def continue_user_session
     @current_user = User.new(username: session[:username],
                              full_name: session[:user_full_name],
-                             groups: session[:groups])
+                             groups: session[:groups],
+                             web_token: session[:web_token])
 
     @visible_classifications = [  ]
     # TODO: check that this classification is visible to this user
 
-    @current_classification = session[:current_classification] ? TreeArrangement.find(session[:current_classification]) : nil
+    if session[:current_classification]
+      @current_classification = TreeArrangement.find(session[:current_classification])
+      if @current_classification.tree_type == 'U'
+        # a workspace is editable if the user is a member of the group
+        # named by the workspace's base classification
+        t = TreeArrangement.find(@current_classification.base_arrangement_id)
+        @current_classification_editable = @current_user.groups.include? t.label
+      else
+        # only workspaces are editable
+        @current_classification_editable = false
+      end
+    else
+      @current_classification = nil
+      @current_classification_editable = false
+    end
+
 
     TreeArrangement.where(tree_type: 'P').order(:label).each  do |t|
       if @current_user.groups.include?(t.label) || t.shared
@@ -98,14 +114,14 @@ class ApplicationController < ActionController::Base
         @visible_classifications <<  tree
 
         TreeArrangement.where(tree_type: 'U', base_arrangement_id: t.id).each  do |w|
-#          if @current_user.groups.include?(t.label) || w.shared
+          if @current_user.groups.include?(t.label) || w.shared
             workspace = {
               workspace: w,
               editable: @current_user.groups.include?(t.label),
               selected: @current_classification == w
             }
             tree[:workspaces] << workspace
-#          end
+          end
         end
       end
 
