@@ -34,8 +34,6 @@ class Reference::DefinedQuery::ReferenceIdWithInstancesQuery
     @limit = parsed_request.limit.to_i || 100
     @results = []
     run_query
-    #           parsed_request.limit.to_i,
-    #           sort_key)
   end
 
   def debug(s)
@@ -61,7 +59,7 @@ class Reference::DefinedQuery::ReferenceIdWithInstancesQuery
             .includes(name: :name_status)
             .includes(:instance_type)
             .includes(this_is_cited_by: [:name, :instance_type])
-    @sort_by == "page" ? query.ordered_by_page : query.ordered_by_name
+    @sort_key == "page" ? query.ordered_by_page : query.ordered_by_name
   end
 
   def find_instances_for_ref

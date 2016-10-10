@@ -1,5 +1,9 @@
 ---
 - :date: 10-Oct-2016
+  :jira_id: '2008'
+  :description: |-
+    Instances for reference sorted by page fixed.
+- :date: 10-Oct-2016
   :jira_id: '2009'
   :description: |-
     Remove the feedback link from the universal page footer and add a feedback
