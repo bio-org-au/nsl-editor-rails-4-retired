@@ -1,0 +1,93 @@
+<% increment_tab_index(0) %>
+
+<% if @current_classification %>
+    <h5>
+    <% if @current_classification.tree_type == 'P'
+         tree_label = @current_classification.label
+    %>
+        Placement in <%= tree_label %>
+    <% elsif @current_classification.tree_type == 'U'
+         tree_label = @current_classification.base_arrangement.label
+    %>
+        Placement in <%= tree_label %><br/>
+        Using workspace "<%= @current_classification.title %>"
+    <% else
+        tree_label = @current_classification.id
+    %>
+        Classification (type <%= @current_classification.tree_type %>)
+    <% end %>
+    </h5>
+    <div>
+    <b>Name</b>: <%= raw(@instance.name.full_name_html) %>
+    </div>
+    <div>
+      <b>Reference</b>: <%= raw(@instance.reference.citation_html) %>
+    </div>
+
+    <%
+      # prefetch this - we will be using it a fair bit
+      placement = @current_classification.find_placement_of_name(@instance.name)
+    %>
+
+    <% if placement.nil? %>
+        <b><%=tree_label%> status</b>: Non <%=tree_label%>.
+    <% elsif placement.subnode.instance == @instance %>
+        <div>
+          <b><%=tree_label%> Status</b>:
+
+          <%=
+            case placement.subnode.type_uri_id_part
+              when 'ApcConcept' then 'accepted'
+              when 'ApcExcluded' then 'excluded name'
+              when 'DeclaredBt' then "non-#{tree_label} parent"
+              else placement.subnode.node_type_uri_id_part
+            end
+            %>
+        </div>
+
+        <div>
+          <b><%=tree_label%> Parent</b>:
+          <% if placement.supernode.type_uri_id_part == 'classification-root' %>
+            no name (top-level instance)
+          <% else %>
+            <%= raw(placement.supernode.name.full_name_html) %>
+          <% end %>
+        </div>
+    <% else %>
+
+        <div>
+          <b>Current <%=tree_label%> Reference</b>:
+          <% if placement.subnode.instance.reference.nil? %>
+            (name placed without reference)
+          <% else %>
+            <%= raw(placement.subnode.instance.reference.citation_html) %>
+          <% end %>
+        </div>
+
+        <div>
+          <b> <%=tree_label%> Parent</b>:
+          <% if placement.supernode.type_uri_id_part == 'classification-root' %>
+              no name (top-level instance)
+          <% else %>
+              <%= raw(placement.supernode.name.full_name_html) %>
+          <% end %>
+        </div>
+
+
+    <% end %>
+
+<% else %>
+    <h5>No classification selected</h5>
+    <p>
+      Select a classification or workspace from the User&nbsp;&gt;&nbsp;Classifications menu.
+    </p>
+<% end %>
+
+
+<div id="instance-note-fields" >
+  <%= render partial: 'instances/tabs/apc_note_widgets',
+             locals: { instance_notes: @instance.apc_instance_notes } %>
+</div>
+
+
+

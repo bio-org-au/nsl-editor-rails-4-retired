@@ -15,23 +15,12 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-#  A tree - usually a classification or a classification workspace
-
-class TreeArrangement < ActiveRecord::Base
-  self.table_name = "tree_arrangement"
+class TreeLink < ActiveRecord::Base
+  self.table_name = "tree_link"
   self.primary_key = "id"
   self.sequence_name = "nsl_global_seq"
 
-  belongs_to :base_arrangement, class_name: TreeArrangement
+  belongs_to :supernode, class_name: TreeNode
+  belongs_to :subnode, class_name: TreeNode
 
-  def find_placement_of_name(name)
-    link_id = TreeArrangement::sp_find_name_in_tree(name.id, id)
-    TreeLink.find(link_id)
-  end
-
-  def self.sp_find_name_in_tree(name_id, tree_id)
-    # doing this as bind variables isn't working for me, and anyway
-    # it doesn't matter because this select doen't involve a lot of planning
-    connection.select_value("select find_name_in_tree(#{name_id}, #{tree_id})")
-  end
 end
