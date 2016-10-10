@@ -1,4 +1,8 @@
 ---
+- :date: 11-Oct-2016
+  :jira_id: '2001'
+  :description: |-
+    Add show-instances: option for reference searches.
 - :date: 10-Oct-2016
   :jira_id: '2008'
   :description: |-

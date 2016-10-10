@@ -85,6 +85,7 @@ as a synonym"
   def handle_other_errors(e)
     @allow_bypass = e.to_s.match(/\A#{CONCEPT_WARNING}\z/)
     @message = e.to_s
+    logger.error("Error: #{@message}")
     render "create_error.js", status: :unprocessable_entity
   end
   private :handle_other_errors
@@ -211,6 +212,7 @@ as a synonym"
   def render_create_error(base_error_string, focus_id)
     @instance = Instance.new
     @instance.errors.add(:base, base_error_string)
+    @message = base_error_string
     render "create_error", locals: { focus_on_this_id: focus_id }
   end
 
