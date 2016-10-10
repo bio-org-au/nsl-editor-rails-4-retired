@@ -16,6 +16,7 @@
 #   limitations under the License.
 #
 Rails.application.routes.draw do
+  match "/feedback", as: "feedback", to: "feedback#index", via: :get
   match "/ping", as: "ping_service", to: "services#ping", via: :get
   match "services", as: "services", to: "services#index", via: :get
 

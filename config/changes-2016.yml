@@ -1,4 +1,9 @@
 ---
+- :date: 10-Oct-2016
+  :jira_id: '2009'
+  :description: |-
+    Remove the feedback link from the universal page footer and add a feedback
+    link to the Help menu.
 - :date: 07-Oct-2016
   :jira_id: '2006'
   :description: |-
