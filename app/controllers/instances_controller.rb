@@ -196,7 +196,9 @@ as a synonym"
     if @instance.simple?
       offer << "tab_synonymy"
       offer << "tab_unpublished_citation"
+      # TODO remove apc placement tab
       offer << "tab_apc_placement"
+      offer << "tab_classification"
     end
     offer << "tab_comments"
     offer << "tab_copy_to_new_reference" if offer_tab_copy_to_new_ref?

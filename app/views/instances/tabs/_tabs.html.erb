@@ -74,18 +74,33 @@
     <% end %>
   <% end %>
 
+  <!-- TODO remove this - NSL-2007 -->
   <% if @tabs_to_offer.include?('tab_apc_placement') %>
-    <% if can? 'apc', 'place' %>
-      <%= render partial: 'instances/tabs/tab', locals: {first: false,
-                                          last: false,
-                                          this_tab: 'tab_apc_placement',
-                                          link_text: "APC".html_safe,
-                                          link_id: 'instance-apc-placement-tab',
-                                          link_title: 'APC',
-                                          tab_index: increment_tab_index,
-                                          prev_tab: '',
-                                          next_tab: ''} %>
-    <% end %>
+      <% if can? 'apc', 'place' %>
+          <%= render partial: 'instances/tabs/tab', locals: {first: false,
+                                                             last: false,
+                                                             this_tab: 'tab_apc_placement',
+                                                             link_text: "APC".html_safe,
+                                                             link_id: 'instance-apc-placement-tab',
+                                                             link_title: 'APC',
+                                                             tab_index: increment_tab_index,
+                                                             prev_tab: '',
+                                                             next_tab: ''} %>
+      <% end %>
+  <% end %>
+
+  <% if @tabs_to_offer.include?('tab_classification') %>
+      <% if can? 'classification', 'place' %>
+          <%= render partial: 'instances/tabs/tab', locals: {first: false,
+                                                             last: false,
+                                                             this_tab: 'tab_classification',
+                                                             link_text: "Class".html_safe,
+                                                             link_id: 'instance-classification-tab',
+                                                             link_title: 'Classification',
+                                                             tab_index: increment_tab_index,
+                                                             prev_tab: '',
+                                                             next_tab: ''} %>
+      <% end %>
   <% end %>
 
   <% if @tabs_to_offer.include?('tab_comments') %>
