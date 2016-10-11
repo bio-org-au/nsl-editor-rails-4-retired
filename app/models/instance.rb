@@ -186,6 +186,7 @@ class Instance < ActiveRecord::Base
 
   def name_cannot_be_double_synonym
     return if standalone?
+    return if unpublished_citation?
     return unless double_synonym?
     if misapplied?
       errors[:base] << "A name cannot be placed in synonymy twice

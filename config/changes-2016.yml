@@ -1,5 +1,12 @@
 ---
 - :date: 11-Oct-2016
+  :jira_id: '1735'
+  :description: |-
+    Unpublished citation name typeahead now works with common names that match
+    scientific names when wildcarded.  It works like name authors: if you enter
+    text that matches exactly one name, then that name will be used.  E.g.
+    "acacia"
+- :date: 11-Oct-2016
   :jira_id: '2001'
   :description: |-
     Add show-instances: option for reference searches.
