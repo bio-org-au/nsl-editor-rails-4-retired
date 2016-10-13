@@ -2,19 +2,13 @@
 
 <% if @current_classification %>
     <h5>
-    <% if @current_classification.tree_type == 'P'
-         tree_label = @current_classification.label
-    %>
-        Placement in <%= tree_label %>
-    <% elsif @current_classification.tree_type == 'U'
-         tree_label = @current_classification.base_arrangement.label
-    %>
-        Placement in <%= tree_label %><br/>
+    <% if @current_classification.tree_type == 'P' %>
+        Placement in <%= @current_classification.derivedLabel %>
+    <% elsif @current_classification.tree_type == 'U' %>
+        Placement in <%= @current_classification.derivedLabel %><br/>
         Using workspace "<%= @current_classification.title %>"
-    <% else
-        tree_label = @current_classification.id
-    %>
-        Classification (type <%= @current_classification.tree_type %>)
+    <% else %>
+        Classification (<%= @current_classification.derivedLabel %> of type <%= @current_classification.tree_type %>)
     <% end %>
     </h5>
     <div>
@@ -30,23 +24,23 @@
     %>
 
     <% if placement.nil? %>
-        <b><%=tree_label%> status</b>: Non <%=tree_label%>.
+        <b><%= @current_classification.derivedLabel %> status</b>: Non <%=@current_classification.derivedLabel %>.
     <% elsif placement.subnode.instance == @instance %>
         <div>
-          <b><%=tree_label%> Status</b>:
+          <b><%=@current_classification.derivedLabel %> Status</b>:
 
           <%=
             case placement.subnode.type_uri_id_part
               when 'ApcConcept' then 'accepted'
               when 'ApcExcluded' then 'excluded name'
-              when 'DeclaredBt' then "non-#{tree_label} parent"
+              when 'DeclaredBt' then "non-#{@current_classification.derivedLabel } parent"
               else placement.subnode.node_type_uri_id_part
             end
             %>
         </div>
 
         <div>
-          <b><%=tree_label%> Parent</b>:
+          <b><%=@current_classification.derivedLabel %> Parent</b>:
           <% if placement.supernode.type_uri_id_part == 'classification-root' %>
             no name (top-level instance)
           <% else %>
@@ -56,7 +50,7 @@
     <% else %>
 
         <div>
-          <b>Current <%=tree_label%> Reference</b>:
+          <b>Current <%=@current_classification.derivedLabel %> Reference</b>:
           <% if placement.subnode.instance.reference.nil? %>
             (name placed without reference)
           <% else %>
@@ -65,7 +59,7 @@
         </div>
 
         <div>
-          <b> <%=tree_label%> Parent</b>:
+          <b> <%=@current_classification.derivedLabel %> Parent</b>:
           <% if placement.supernode.type_uri_id_part == 'classification-root' %>
               no name (top-level instance)
           <% else %>
@@ -75,6 +69,9 @@
 
 
     <% end %>
+
+
+    EDITABLE: <%= @current_classification.editableBy?(@current_user) %>
 
 <% else %>
     <h5>No classification selected</h5>

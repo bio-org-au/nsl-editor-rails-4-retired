@@ -106,7 +106,7 @@ class ApplicationController < ActionController::Base
 
         tree = {
           tree: t,
-          editable: @current_user.groups.include?(t.label),
+          editable: t.editableBy?(@current_user),
           selected: @current_classification == t,
           workspaces: []
         }

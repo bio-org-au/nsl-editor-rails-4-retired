@@ -29,6 +29,18 @@ class TreeArrangement < ActiveRecord::Base
     TreeLink.find(link_id)
   end
 
+  def editableBy?(user)
+    user && tree_type == 'U' && user.groups.include?(base_arrangement.label)
+  end
+
+  def derivedLabel()
+    case
+      when tree_type =='P' then label
+      when tree_type == 'U' then base_arrangement.derivedLabel
+      else "##{id}"
+    end
+  end
+
   def self.sp_find_name_in_tree(name_id, tree_id)
     # doing this as bind variables isn't working for me, and anyway
     # it doesn't matter because this select doen't involve a lot of planning
