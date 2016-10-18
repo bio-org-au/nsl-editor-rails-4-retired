@@ -218,6 +218,12 @@ Rails.application.routes.draw do
         as: "set_include_common_and_cultivar",
         via: :post
 
+  match "tree_arrangement/:id/remove_name_placement",
+         as: "tree_arrangement_remove_name", to: "trees#remove_name_placement", via: :patch
+
+  match "tree_arrangement/:id/place_name",
+        as: "tree_arrangement_place_name", to: "trees#place_name", via: :patch
+
   root to: "search#search"
   match "/*random", to: "search#search", via: [:get, :post, :delete, :patch]
 end

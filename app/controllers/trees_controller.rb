@@ -27,4 +27,13 @@ class TreesController < ApplicationController
     session[:current_classification] = params[:classification]
     redirect_to controller: 'search', action: 'search'
   end
+
+  def place_name
+    logger.debug "PLACING A NAME"
+  end
+
+  def remove_name_placement
+    logger.debug "REMOVING A NAME"
+  end
+
 end

@@ -50,7 +50,7 @@ class Ability
     # TODO remove this - NSL-2007
     apc_auth if user.apc?
     admin_auth if user.admin?
-    classification_auth if user.treebuilder?
+    treebuilder_auth if user.treebuilder?
   end
 
   def basic_auth_1
@@ -100,8 +100,9 @@ class Ability
     can "apc",                "place"
   end
 
-  def classification_auth
+  def treebuilder_auth
     can "classification",     "place"
+    can "trees", :all
   end
 
   def admin_auth
