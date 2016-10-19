@@ -35,9 +35,12 @@ class TreeArrangement < ActiveRecord::Base
 
   def derivedLabel()
     case
-      when tree_type =='P' then label
-      when tree_type == 'U' then base_arrangement.derivedLabel
-      else "##{id}"
+      when tree_type =='P' then
+        label
+      when tree_type == 'U' then
+        base_arrangement.derivedLabel
+      else
+        "##{id}"
     end
   end
 
@@ -45,5 +48,93 @@ class TreeArrangement < ActiveRecord::Base
     # doing this as bind variables isn't working for me, and anyway
     # it doesn't matter because this select doen't involve a lot of planning
     connection.select_value("select find_name_in_tree(#{name_id}, #{tree_id})")
+  end
+
+
+  def self.place_instance_on_tree_url(username, tree_id, instance, parent_name, placement_type)
+    if !username
+      raise "must be logged on to place instances"
+    end
+    api_key = Rails.configuration.api_key
+    address = Rails.configuration.nsl_services
+    path = "treeJsonEdit/placeInstanceOnTree"
+    "#{address}#{path}?apiKey=#{api_key}&runAs=#{ERB::Util.url_encode(username)}&tree=#{tree_id}&instance=#{instance}&parent_name=#{ERB::Util.url_encode(parent_name)}&placement_type=#{ERB::Util.url_encode(placement_type)}"
+  end
+
+  def self.remove_instance_from_tree_url(username, tree_id, instance)
+    if !username
+      raise "must be logged on to remove instances"
+    end
+    api_key = Rails.configuration.api_key
+    address = Rails.configuration.nsl_services
+    path = "treeJsonEdit/removeInstanceFromTree"
+    "#{address}#{path}?apiKey=#{api_key}&runAs=#{ERB::Util.url_encode(username)}&tree=#{tree_id}&instance=#{instance}"
+  end
+
+  def place_instance(username, instance, parent_name, placement_type)
+    logger.debug "place_instance #{id} ,#{username}, #{instance} ,#{parent_name} ,#{placement_type} "
+
+    if parent_name
+      ct = Name.where(full_name: parent_name).count
+      logger.debug ct
+      case ct
+        when 0 then
+          return {
+              success: false,
+              msg: [
+                  {
+                      status: 'warning',
+                      msg: 'not found',
+                      body: "Name #{parent_name} not found"
+                  }
+              ]
+          }.to_json
+
+        when 1 then
+          pn = Name.find_by full_name: parent_name
+
+        else
+          return {
+              success: false,
+              msg: [
+                  {
+                      status: 'warn',
+                      msg: 'multiple matches',
+                      body: "Multiple names named #{parent_name}"
+                  }
+              ]
+          }.to_json
+      end
+    else
+      pn = nil
+    end
+
+    url = TreeArrangement::place_instance_on_tree_url(username, id, instance, pn.nil? ? nil : pn.id, placement_type)
+    s_response = RestClient.post(url, accept: :json)
+    # json = JSON.load(s_response)
+    if s_response.code == 200
+      s_response
+    else
+      preface = "Place instance service error:"
+      raise "#{preface} #{json['msg'].try('join')} [#{s_response.code}]"
+    end
+
+
+  end
+
+  def remove_instance(username, instance)
+    logger.debug "remove_instance #{id} ,#{username}, #{instance}"
+
+    url = TreeArrangement::remove_instance_from_tree_url(username, id, instance)
+    s_response = RestClient.post(url, accept: :json)
+    # json = JSON.load(s_response)
+    if s_response.code == 200
+      s_response
+    else
+      preface = "Remove instance service error:"
+      raise "#{preface} #{json['msg'].try('join')} [#{s_response.code}]"
+    end
+
+
   end
 end
