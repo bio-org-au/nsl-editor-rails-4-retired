@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title><%= 'Test' if Rails.configuration.session_key_tag.match(/test/i) %> NSL Editor</title>
+    <title><%= Rails.env.capitalize unless Rails.env.match(/production/i) %> NSL Editor</title>
 
     <script>
       window.relative_url_root = "<%= Rails.application.config.relative_url_root %>"
