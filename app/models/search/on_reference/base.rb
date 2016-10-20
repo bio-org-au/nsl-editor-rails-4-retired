@@ -26,7 +26,8 @@ class Search::OnReference::Base
               :id,
               :count,
               :show_csv,
-              :total
+              :total,
+              :full_count_known
 
   def initialize(parsed_request)
     @parsed_request = parsed_request
@@ -59,13 +60,13 @@ class Search::OnReference::Base
     list_query = Search::OnReference::ListQuery.new(@parsed_request)
     @relation = list_query.sql
     @references = relation.all
-    @limited = list_query.limited
     @info_for_display = list_query.info_for_display
     @common_and_cultivar_included = list_query.common_and_cultivar_included
     consider_instances
     @count = @results.size
     @show_csv = false
     calculate_total
+    @limited = @full_count_known && @total > @relation.size
   end
 
   def consider_instances
@@ -76,11 +77,17 @@ class Search::OnReference::Base
     end
   end
 
+  def instances_sort_key
+    @parsed_request.order_instances_by_page ? "page" : "name"
+  end
+
   def show_instances
     @results = []
     @references.each do |ref|
       @results << ref
-      instances_query = Instance::AsArray::ForReference.new(ref)
+      instances_query = Instance::AsArray::ForReference
+                        .new(ref,
+                             instances_sort_key)
       instances_query.results.each { |i| @results << i }
     end
   end
@@ -95,8 +102,11 @@ class Search::OnReference::Base
 
   def calculate_total
     @total = if @parsed_request.show_instances
+               @limited = true
+               @full_count_known = false
                @results.size
              else
+               @full_count_known = true
                @relation.except(:offset, :limit, :order).count
              end
   end

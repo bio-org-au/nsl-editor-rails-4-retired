@@ -37,6 +37,7 @@ class Search::ParsedRequest
               :offsetted,
               :list,
               :order,
+              :order_instances_by_page,
               :params,
               :query_string,
               :query_target,
@@ -223,7 +224,12 @@ class Search::ParsedRequest
   def parse_show_instances(tokens)
     if tokens.include?("show-instances:")
       @show_instances = true
+      @order_instances_by_page = false
       tokens.delete_if { |x| x.match(/show-instances:/) }
+    elsif tokens.include?("show-instances-by-page:")
+      @show_instances = true
+      @order_instances_by_page = true
+      tokens.delete_if { |x| x.match(/show-instances-by-page:/) }
     else
       @show_instances = false
     end

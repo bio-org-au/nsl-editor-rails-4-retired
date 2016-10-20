@@ -21,16 +21,19 @@ class Search::OnReference::ListQuery
   def initialize(parsed_request)
     @parsed_request = parsed_request
     prepare_query
-    @limited = true
+    @limited = parsed_request.limited
     @info_for_display = ""
   end
 
   def prepare_query
     Rails.logger.debug("Search::OnReference::ListQuery#prepare_query")
     prepared_query = Reference.includes(:ref_type)
-    where_clauses = Search::OnReference::WhereClauses.new(@parsed_request, prepared_query)
+    where_clauses = Search::OnReference::WhereClauses.new(@parsed_request,
+                                                          prepared_query)
     prepared_query = where_clauses.sql
-    prepared_query = prepared_query.limit(@parsed_request.limit) if @parsed_request.limited
+    if @parsed_request.limited
+      prepared_query = prepared_query.limit(@parsed_request.limit)
+    end
     @sql = prepared_query
   end
 end

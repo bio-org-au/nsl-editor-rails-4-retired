@@ -33,13 +33,14 @@
 class Instance::AsArray::ForReference < Array
   attr_reader :results
 
-  def initialize(reference)
+  def initialize(reference, sort_by = "name", limit = 1000)
     debug("init #{reference.citation}")
     @results = []
     @already_shown = []
     @reference = reference
     @count = 0
-    @limit = 100
+    @limit = limit
+    @sort_by = sort_by
     find_instances
   end
 
@@ -57,15 +58,12 @@ class Instance::AsArray::ForReference < Array
   end
 
   def built_query
-    debug("built_query")
-    debug(@reference)
     query = @reference
             .instances
             .joins(:name)
             .includes(name: :name_status)
             .includes(:instance_type)
             .includes(this_is_cited_by: [:name, :instance_type])
-    debug(query.to_sql)
     @sort_by == "page" ? query.ordered_by_page : query.ordered_by_name
   end
 

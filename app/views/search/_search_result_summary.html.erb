@@ -27,7 +27,11 @@
           <% end %>
         <% else %>
           <% if @search.executed_query.limited %>
-            <%= "#{pluralize(@search.executed_query.results.size,"of #{@search.executed_query.total} record")}" %>
+            <% if @search.executed_query.results.size < @search.executed_query.total %>
+              <%= "#{pluralize(@search.executed_query.results.size,"of #{@search.executed_query.total} record")}" %>
+            <% else %>
+              <%= pluralize(@search.executed_query.results.size, "record") %>
+            <% end %>
           <% else %>
             <%= "#{pluralize(@search.executed_query.total,"record")}" %>
           <% end %>

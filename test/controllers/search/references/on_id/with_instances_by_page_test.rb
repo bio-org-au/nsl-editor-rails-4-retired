@@ -18,19 +18,20 @@
 require "test_helper"
 
 # Single search controller test.
-class SearchRefsOnDefaultWithInstancesTest < ActionController::TestCase
+class SearchRefsOnIdWithInstancesByPageTest < ActionController::TestCase
   tests SearchController
 
-  test "search on reference default with instances" do
+  test "search on reference id with instances by page" do
+    ref = references(:bucket_reference_for_default_instances)
     get(:search,
         { query_target: "reference",
-          query_string: "de fructibus show-instances:" },
+          query_string: "id: #{ref.id} show-instances-by-page:" },
         username: "fred",
         user_full_name: "Fred Jones",
         groups: [])
     assert_response :success
     assert_select "#search-results-summary",
-                  /6 records\b/,
-                  "Should find 6 records"
+                  /28 records\b/,
+                  "Should find 28 records"
   end
 end

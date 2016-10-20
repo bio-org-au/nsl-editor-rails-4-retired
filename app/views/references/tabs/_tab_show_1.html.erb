@@ -78,10 +78,12 @@
     %>
     <br>
     <%= link_to("&mdash; sorted by page #{search_icon_on_tab}".html_safe,
-                          search_path(query_string: @reference.id.to_s, query_target: "Instances sorted by page for Ref ID"),
-                          tabindex: increment_tab_index, 
-                          title: 'Search for the instances, sorted by page.',
-                          class: 'instance') %>
+                search_path(query_string: "id:#{@reference.id.to_s} show-instances-by-page:",
+                            query_target: "references"),
+                tabindex: increment_tab_index, 
+                title: 'Search for the instances, sorted by page.',
+                class: 'instance')
+    %>
    <% end %>
 <% end %>
   <br>
