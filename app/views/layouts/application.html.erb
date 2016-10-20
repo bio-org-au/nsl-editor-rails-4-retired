@@ -7,7 +7,13 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>NSL Editor</title>
+    <title>
+      <% if Rails.configuration.try('display_as_test') == true %>
+        Test
+      <% elsif Rails.env.match(/development/) %>
+        Dev
+      <% end %> NSL Editor
+    </title>
 
     <script>
       window.relative_url_root = "<%= Rails.application.config.relative_url_root %>"
