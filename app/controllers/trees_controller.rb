@@ -31,19 +31,21 @@ class TreesController < ApplicationController
   def place_name
     @response = TreeArrangement.find(session[:current_classification]).place_instance(
         username,
+        params[:tree_arrangement][:name_id],
         params[:tree_arrangement][:instance_id],
         params[:parent_name],
         params[:placement_type])
 
   rescue => e
     logger.error e
+    logger.info e.response
     render "place_name_error.js"
   end
 
   def remove_name_placement
     @response = TreeArrangement.find(session[:current_classification]).remove_instance(
         username,
-        params[:tree_arrangement][:instance_id])
+        params[:tree_arrangement][:name_id])
 
   rescue => e
     logger.error e

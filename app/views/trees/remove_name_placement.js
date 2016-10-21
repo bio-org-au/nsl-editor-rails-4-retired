@@ -1,6 +1,26 @@
 
 var json_result = <%=raw(@response)%>;
 
+
+function recursivelyAdd(json, block) {
+    console.log(json);
+    var subblock
+    if (json.message) {
+        var subblock = $("<div style='padding-left: 1em;'>"+json.message+"</div>");
+        block.append(subblock);
+    }
+    else {
+        var subblock = $("<div style='padding-left: 1em;'><span class='text-" + json.status + "'><b>" + json.msg + "</b> " + json.body + "</span></div>");
+        block.append(subblock);
+    }
+    if (json.nested) {
+        for(i in json.nested) {
+            recursivelyAdd(json.nested[i], subblock);
+        }
+    }
+}
+
+
 if(json_result.success) {
     $('#instance-classification-tab').click();
 }
@@ -10,7 +30,6 @@ else {
     block.append("<div class='text-danger'><b><u>Could not remove name</u></b></div>");
 
     for(var i in json_result.msg) {
-        block.append("<div class='text-"+json_result.msg[i].status+"'><b>"+json_result.msg[i].msg+"</b> "+json_result.msg[i].body+"</div>");
-
+        recursivelyAdd(json_result.msg[i], block);
     }
 }

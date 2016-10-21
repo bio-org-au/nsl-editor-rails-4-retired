@@ -89,7 +89,7 @@
     <% if @current_classification.editableBy?(@current_user) %>
         <% if !@instance.cited_by_id %>
             <%= form_for(@current_classification, controller: 'Trees', action: 'patch', remote: true, url: :tree_arrangement_place_name) do |f| %>
-                <%= f.hidden_field(:name_id, value: @instance.name_id) %>
+                <%= f.hidden_field(:name_id, value: @instance.name.id) %>
                 <%= f.hidden_field(:instance_id, value: @instance.id) %>
                 <h3>
                   <% if instancePlaced %>
@@ -162,7 +162,8 @@
 
         <% if instancePlaced %>
             <%= form_for(@current_classification, controller: 'Trees', action: 'patch', remote: true, url: :tree_arrangement_remove_name) do |f| %>
-                <%= f.hidden_field(:name_id, value: @instance.name_id) %>
+                <%= f.hidden_field(:name_id, value: @instance.name.id) %>
+                <%= f.hidden_field(:instance_id, value: @instance.id) %>
                 <h3>Remove name from <%= @current_classification.derivedLabel %></h3>
 
                 <u><%= raw(@instance.name.full_name_html) %></u> will be removed from

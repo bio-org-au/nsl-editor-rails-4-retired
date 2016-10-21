@@ -51,28 +51,28 @@ class TreeArrangement < ActiveRecord::Base
   end
 
 
-  def self.place_instance_on_tree_url(username, tree_id, instance, parent_name, placement_type)
+  def self.place_name_on_tree_url(username, tree_id, name, instance, parent_name, placement_type)
     if !username
       raise "must be logged on to place instances"
     end
     api_key = Rails.configuration.api_key
     address = Rails.configuration.nsl_services
-    path = "treeJsonEdit/placeInstanceOnTree"
-    "#{address}#{path}?apiKey=#{api_key}&runAs=#{ERB::Util.url_encode(username)}&tree=#{tree_id}&instance=#{instance}&parent_name=#{ERB::Util.url_encode(parent_name)}&placement_type=#{ERB::Util.url_encode(placement_type)}"
+    path = "treeEdit/placeNameOnTree"
+    "#{address}#{path}?apiKey=#{api_key}&runAs=#{ERB::Util.url_encode(username)}&tree=#{tree_id}&name=#{name}&instance=#{instance}&parentName=#{ERB::Util.url_encode(parent_name)}&placementType=#{ERB::Util.url_encode(placement_type)}"
   end
 
-  def self.remove_instance_from_tree_url(username, tree_id, instance)
+  def self.remove_name_from_tree_url(username, tree_id, name)
     if !username
       raise "must be logged on to remove instances"
     end
     api_key = Rails.configuration.api_key
     address = Rails.configuration.nsl_services
-    path = "treeJsonEdit/removeInstanceFromTree"
-    "#{address}#{path}?apiKey=#{api_key}&runAs=#{ERB::Util.url_encode(username)}&tree=#{tree_id}&instance=#{instance}"
+    path = "treeEdit/removeNameFromTree"
+    "#{address}#{path}?apiKey=#{api_key}&runAs=#{ERB::Util.url_encode(username)}&tree=#{tree_id}&name=#{name}"
   end
 
-  def place_instance(username, instance, parent_name, placement_type)
-    logger.debug "place_instance #{id} ,#{username}, #{instance} ,#{parent_name} ,#{placement_type} "
+  def place_instance(username, name, instance, parent_name, placement_type)
+    logger.debug "place_instance #{id} ,#{username}, #{name}, #{instance} ,#{parent_name} ,#{placement_type} "
 
     if parent_name
       ct = Name.where(full_name: parent_name).count
@@ -109,32 +109,23 @@ class TreeArrangement < ActiveRecord::Base
       pn = nil
     end
 
-    url = TreeArrangement::place_instance_on_tree_url(username, id, instance, pn.nil? ? nil : pn.id, placement_type)
-    s_response = RestClient.post(url, accept: :json)
-    # json = JSON.load(s_response)
-    if s_response.code == 200
-      s_response
-    else
-      preface = "Place instance service error:"
-      raise "#{preface} #{json['msg'].try('join')} [#{s_response.code}]"
-    end
+    url = TreeArrangement::place_name_on_tree_url(username, id, name, instance, pn.nil? ? nil : pn.id, placement_type)
+    logger.debug url
+    RestClient.post(url, accept: :json)
 
+  rescue RestClient::BadRequest => ex
+    ex.response
 
   end
 
-  def remove_instance(username, instance)
-    logger.debug "remove_instance #{id} ,#{username}, #{instance}"
+  def remove_instance(username, name)
+    logger.debug "remove_instance #{id} ,#{username}, #{name}"
 
-    url = TreeArrangement::remove_instance_from_tree_url(username, id, instance)
-    s_response = RestClient.post(url, accept: :json)
-    # json = JSON.load(s_response)
-    if s_response.code == 200
-      s_response
-    else
-      preface = "Remove instance service error:"
-      raise "#{preface} #{json['msg'].try('join')} [#{s_response.code}]"
-    end
+    url = TreeArrangement::remove_name_from_tree_url(username, id, name)
+    logger.debug url
+    RestClient.post(url, accept: :json)
 
-
+  rescue RestClient::BadRequest => ex
+    ex.response
   end
 end
