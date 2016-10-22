@@ -52,14 +52,12 @@ class Instance::AsArray::ForName < Array
   end
 
   def sorted_instances(instances)
-    debug("sorted_instances")
     instances.sort do |i1, i2|
       sort_fields(i1) <=> sort_fields(i2)
     end
   end
 
   def sort_fields(instance)
-    debug("sort_fields")
     [instance.reference.year || 9999,
      instance.instance_type.primaries_first,
      instance.reference.author.try("name") || "x"]
