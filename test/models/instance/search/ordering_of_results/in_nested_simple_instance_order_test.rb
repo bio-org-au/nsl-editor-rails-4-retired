@@ -31,9 +31,9 @@ class InNestedSimpleInstanceOrderTest < ActiveSupport::TestCase
                       .in_nested_instance_type_order
                       .order("reference.year,lower(name.full_name)")
                       .order("instance_type.name") # make test order definitive
-    # results.each_with_index do |i,ndx|
-    #   puts "#{ndx}: #{i.page} - #{i.name.full_name}" if ndx < 80
-    # end
+    #  results.each_with_index do |i,ndx|
+    #    puts "#{ndx}: #{i.page} - #{i.name.full_name}" if ndx < 80
+    #  end
     assert_with_args(results, 0, "xx,20,900 - Metrosideros costata Gaertn.")
     assert_with_args(results, 1, "3 - Angophora costata (Gaertn.) Britten")
     assert_with_args(results, 2, "xx 1 - Metrosideros costata Gaertn.")

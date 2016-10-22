@@ -1,4 +1,8 @@
 ---
+- :date: 22-Oct-2016
+  :jira_id: '1739'
+  :description: |-
+    Sort name instances to the top if the reference has no year.
 - :date: 21-Oct-2016
   :jira_id: '2012'
   :description: |-

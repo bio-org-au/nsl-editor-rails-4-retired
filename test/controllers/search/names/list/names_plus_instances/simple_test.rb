@@ -18,25 +18,18 @@
 require "test_helper"
 
 # Single search controller test.
-class NamesSearchDefinedAtTopOfAcceptedTreeRegTest < ActionController::TestCase
+class NamesSearchListPlusInstancesSimpleTest < ActionController::TestCase
   tests SearchController
 
-  test "search names at top of accepted tree is registered" do
+  test "search for a name plus instances" do
     get(:search,
-        { query_target: "Names",
-          query_string: "at-top-of-accepted-tree:" },
+        { query_target: "Names plus instances", query_string: "author: bent*" },
         username: "fred",
         user_full_name: "Fred Jones",
         groups: [])
     assert_response :success
     assert_select "#search-results-summary",
-                  /Names.*at-top-of-accepted-tree:/,
-                  "Report should be recognised"
-    assert_select "#search-results-summary" do |summary|
-      summary.each do |s|
-        assert_no_match(/Cannot search name for: at-top-of-accepted-tree:/,
-                        s.to_s)
-      end
-    end
+                  /[0-9][0-9] names\b/,
+                  "Should find some names"
   end
 end

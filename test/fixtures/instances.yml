@@ -459,6 +459,15 @@ casuarina_inophloia_in_bailey_catalogue_qld_plants:
   created_by: tester
   updated_by: tester
 
+casuarina_inophloia_in_ref_with_no_year:
+  reference: ref_with_no_year
+  name: casuarina_inophloia
+  instance_type: secondary_reference
+  page: exclude-from-ordering-test
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+
 for_a_genus_with_one_instance:
   reference: bailey_catalogue_qld_plants
   name: a_genus_with_one_instance

@@ -20,32 +20,47 @@ load "models/search/users.rb"
 
 # Single instance model test.
 class NameUsagesOrderByReferenceYear < ActiveSupport::TestCase
-  test "instance search name usages for casuarina inophloia order" do
-    name = names(:casuarina_inophloia)
-    first_ref = references(:australasian_chemist_and_druggist)
-    second_ref = references(:mueller_1882_section)
-    third_ref = references(:bailey_catalogue_qld_plants)
-    params =  ActiveSupport::HashWithIndifferentAccess.new(
-      query_string: "id:#{name.id} show-instances:",
+  def setup
+    @name = names(:casuarina_inophloia)
+    @first_ref = references(:ref_with_no_year)
+    @second_ref = references(:australasian_chemist_and_druggist)
+    @third_ref = references(:mueller_1882_section)
+    @fourth_ref = references(:bailey_catalogue_qld_plants)
+    @params = ActiveSupport::HashWithIndifferentAccess.new(
+      query_string: "id:#{@name.id} show-instances:",
       query_target: "Name",
       current_user: build_edit_user
     )
-    search = Search::Base.new(params)
+  end
+
+  test "instance search name usages for casuarina inophloia order" do
+    search = Search::Base.new(@params)
     assert_equal search.executed_query.results.class,
                  Array, "Results should be an Array"
-    assert_equal 4, search.executed_query.results.size, "One record expected."
-    assert_equal name.id,
-                 search.executed_query.results[1].name_id, "Name not first"
-    # search.results.each {|r| puts "#{r.try('reference').try('year')}"}
-    assert_equal first_ref.id,
-                 search.executed_query.results[1].reference_id,
-                 "Ref 1
-                 wrong: #{search.executed_query.results[2].reference.year}"
-    assert_equal second_ref.id,
-                 search.executed_query.results[2].reference_id,
+    results = search.executed_query.results
+    # print_data(results)
+    assert_equal 5, results.size, "5 records expected."
+    assert_equal @name.id, results[1].name_id, "Expected a different name."
+    assert_equal @first_ref.id,
+                 results[1].reference_id,
+                 "Instance for ref with no year should be first: \
+                 #{results[1].reference.year}"
+    assert_equal @second_ref.id,
+                 results[2].reference_id,
                  "Second reference wrong"
-    assert_equal third_ref.id,
-                 search.executed_query.results[3].reference_id,
+    assert_equal @third_ref.id,
+                 results[3].reference_id,
                  "Third reference wrong"
+    assert_equal @fourth_ref.id,
+                 results[4].reference_id,
+                 "Fourth reference wrong"
+  end
+
+  def print_data(results)
+    results.each do |r|
+      if r.class == Instance
+        puts "#{r.reference.citation}; year: #{r.reference.year}"
+      end
+    end
   end
 end
