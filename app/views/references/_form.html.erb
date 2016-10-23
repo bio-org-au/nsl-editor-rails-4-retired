@@ -66,6 +66,7 @@
 
   <script>
     $('#reference_ref_type_id').on('change',function(e) {
+      $('#current-ref-type-message-about-parent').html('');
       var key = $('#reference_ref_type_id option:selected').text().replace(' ','');
       $('#current-ref-type-message-about-parent').html($('div#ref-type-message div#'+ key).html());
     });
@@ -78,6 +79,7 @@
     <div id="Herbariumannotation" class="hidden">An Herbarium Annotation cannot belong to another reference - no parent allowed</div>
     <div id="Index" class="hidden">An index cannot belong to another reference - no parent allowed </div>
     <div id="Journal" class="hidden">A Journal cannot belong to another reference - no parent allowed</div>
+    <div id="Part" class="hidden">A Part can belong to a Paper</div>
     <div id="Paper" class="hidden">A Paper can belong to a Journal</div>
     <div id="PersonalCommunication" class="hidden">A Personal Communication cannot belong to another reference - no parent allowed</div>
     <div id="Section" class="hidden">A Section can belong to a Book</div>
