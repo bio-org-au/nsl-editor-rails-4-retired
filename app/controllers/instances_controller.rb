@@ -39,8 +39,8 @@ as a synonym"
 
   # Create the lesser version of relationship instance.
   def create_cited_by
-    resolve_name_id(instance_params[:name_id],
-                    instance_name_params[:name_typeahead])
+    resolve_unpub_citation_name_id(instance_params[:name_id],
+                                   instance_name_params[:name_typeahead])
     if instance_params[:name_id].blank?
       render_create_error("You must choose a name.", "instance-name-typeahead")
     elsif instance_params[:instance_type_id].blank?
@@ -49,6 +49,8 @@ as a synonym"
     else
       create
     end
+  rescue => e
+    render_create_error(e.to_s, "instance-name-typeahead")
   end
 
   # Create full synonymy instance.
@@ -264,11 +266,8 @@ as a synonym"
       page: instance_params[:page] }
   end
 
-  def resolve_name_id(name_id, name_typeahead)
-    return if instance_params[:name_id].present?
-    params[:instance][:name_id] = Name::AsResolvedTypeahead::ForInstance
-                                  .new(name_id, name_typeahead).value
-  rescue
-    ""
+  def resolve_unpub_citation_name_id(name_id, name_typeahead)
+    return unless instance_params[:name_id].blank?
+    params[:instance][:name_id] = Name::AsResolvedTypeahead::ForUnpubCitationInstance.new(name_id, name_typeahead).value
   end
 end

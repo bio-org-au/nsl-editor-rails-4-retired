@@ -1,9 +1,16 @@
 ---
+- :date: 24-Oct-2016
+  :jira_id: '2011'
+  :description: |-
+    The name typeahead for creating an unpublished citation now starts
+    validating text strings case-sensitively.  For example, "Blue Gum" and
+    "Blue gum" are treated as different.  If it finds no matches that way
+    it resumes checking case-INsensitively.
 - :date: 23-Oct-2016
   :jira_id: '1740'
   :description: |-
-    Added reference search for "pub-date-matches:".  Might be a hit with those
-    keen to use regular expressions.  Examples on Reports tab.
+    Added reference search for "pub-date-matches:".  It takes simple regular
+    expressions and finds matching publication dates. Examples on Reports tab.
     [Partial solution to JIRA.]
 - :date: 23-Oct-2016
   :jira_id: '1740'
