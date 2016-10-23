@@ -108,6 +108,9 @@
     {field_name: 'year:', description: "year - 4 digit integer field, do not use wildcards"},
     {field_name: 'after-year:', description: "year greater than or after an integer"},
     {field_name: 'before-year:', description: "year less than or before an integer"},
+    {field_name: 'pub-date-matches:',
+     description: "publication date matches the regular expression you
+     provide. (Case insensitive; asterisk is not available.)"},
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">
@@ -152,6 +155,10 @@
       {field_name: 'is-not-a-child:', description: "Has no parent"},
       {field_name: 'is-published:', description: "Published flag is set true"},
       {field_name: 'is-not-published:', description: "Published flag is not set true"},
+      {field_name: 'no-year:', description: "Year field has no value."},
+      {field_name: 'pub-date-matches-year:',
+       description: "Publication date is 4 digits alone or 4 digits within
+       parentheses."},
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">

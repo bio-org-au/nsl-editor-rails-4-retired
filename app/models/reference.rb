@@ -86,6 +86,10 @@ class Reference < ActiveRecord::Base
     !duplicate_of_id.blank?
   end
 
+  def published?
+    published
+  end
+
   def set_defaults
     self.language_id = Language.default.id if language_id.blank?
     self.display_title = title if display_title.blank?

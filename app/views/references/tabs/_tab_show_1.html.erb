@@ -3,13 +3,13 @@
 <%= @reference.ref_type.name %> by 
 <%= link_to("#{@reference.author.name} (#{@reference.ref_author_role.name}) #{search_icon_on_tab}".html_safe, search_path(query_string: "id:#{@reference.author_id}",query_target: 'author'),title: 'Search for the author(s)/editor(s)...',class: 'author') %> 
 <br>
-<%= @reference.title %>
+<span title="Title"><%= @reference.title %></span>
 <br>
 <% if @reference.parent %>
   <%= render partial: "references/tabs/details/parent" %>
 <% end %>
 <br>
-<% if @reference.published %>
+<% if @reference.published? %>
   <%= @reference.volume %>
   <%= ": #{@reference.pages}" if @reference.pages.present? %>
   <%  if @reference.publication_date.present? %>

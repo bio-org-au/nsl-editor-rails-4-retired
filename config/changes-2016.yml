@@ -1,5 +1,22 @@
 ---
 - :date: 23-Oct-2016
+  :jira_id: '1740'
+  :description: |-
+    Added reference search for "pub-date-matches:".  Might be a hit with those
+    keen to use regular expressions.  Examples on Reports tab.
+    [Partial solution to JIRA.]
+- :date: 23-Oct-2016
+  :jira_id: '1740'
+  :description: |-
+    Added reference search for "pub-date-is-year:", which returns references 
+    with a 4-digit publication date, with or without surrounding parentheses. 
+    Examples on Reports tab.  [Partial solution to JIRA.]
+- :date: 23-Oct-2016
+  :jira_id: '1740'
+  :description: |-
+    Added search for references with no value in the year. ie. "no-year:".
+    Examples on Reports tab.  [Partial solution to JIRA.]
+- :date: 23-Oct-2016
   :jira_id: '2018'
   :description: |-
     Added reference parent help text (under field) for reference type of
