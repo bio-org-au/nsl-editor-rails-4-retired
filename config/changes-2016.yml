@@ -1,23 +1,30 @@
 ---
 - :date: 24-Oct-2016
+  :jira_id: '2024'
+  :description: |-
+    Removed the Search dropdown options "Instance for Ref ID" and "Instances
+    sorted by page for Ref Id". <br/><br/>Get the same result by applying
+    "show-instances:" or "show-instances-by_page:" to Reference searches.
+- :date: 24-Oct-2016
   :jira_id: '2011'
   :description: |-
     The name typeahead for creating an unpublished citation now starts
-    validating text strings case-sensitively.  For example, "Blue Gum" and
-    "Blue gum" are treated as different.  If it finds no matches that way
-    it resumes checking case-INsensitively.
+    validating text strings case-sensitively.  <br/><br/>For example,
+    "Blue Gum" and "Blue gum" are distinct.  If it finds no matches that way
+    it resumes checking case-INsensitively - so if you entered the right name
+    in the wrong case, it will still find the name.
 - :date: 23-Oct-2016
   :jira_id: '1740'
   :description: |-
-    Added reference search for "pub-date-matches:".  It takes simple regular
-    expressions and finds matching publication dates. Examples on Reports tab.
-    [Partial solution to JIRA.]
+    Added reference search for "pub-date-matches:".  <br/><br/>It takes simple
+    regular expressions and finds matching publication dates. Examples on the
+    Reports tab.  [Partial solution to JIRA.]
 - :date: 23-Oct-2016
   :jira_id: '1740'
   :description: |-
     Added reference search for "pub-date-is-year:", which returns references 
     with a 4-digit publication date, with or without surrounding parentheses. 
-    Examples on Reports tab.  [Partial solution to JIRA.]
+    <br/><br/>Examples on Reports tab.  [Partial solution to JIRA.]
 - :date: 23-Oct-2016
   :jira_id: '1740'
   :description: |-
@@ -46,9 +53,9 @@
   :jira_id: '1735'
   :description: |-
     Unpublished citation name typeahead now works with common names that match
-    scientific names when wildcarded.  It works like name authors: if you enter
-    text that matches exactly one name, then that name will be used.  E.g.
-    "acacia"
+    scientific names when wildcarded.  <br/><br/>It works like name authors:
+    if you enter text that matches exactly one name, then that name will be
+    used.  E.g.  "acacia"
 - :date: 11-Oct-2016
   :jira_id: '2001'
   :description: |-

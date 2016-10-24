@@ -22,12 +22,6 @@ class Search::ParsedDefinedQuery
               :target_button_text
 
   DEFINED_QUERIES = {
-    "instance-ref-id-sort-by-page:" => "instances-for-ref-id-sort-by-page:",
-    "instances-for-ref-id-sort-by-page:" =>
-    "instances-for-ref-id-sort-by-page:",
-    "instances for ref id sort by page" => "instances-for-ref-id-sort-by-page:",
-    "instances sorted by page for ref id" =>
-    "instances-for-ref-id-sort-by-page:",
     "references with instances" => "references-name-full-synonymy",
     "references, names, full synonymy" => "references-name-full-synonymy",
     "references + instances" => "references-name-full-synonymy",
