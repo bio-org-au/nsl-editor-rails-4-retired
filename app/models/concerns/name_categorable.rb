@@ -16,66 +16,43 @@ module NameCategorable
     change_category_to.present? ? change_category_to : raw_category
   end
 
+  RAW_CATEGORY = {
+    "autonym" => NameCategories::SCIENTIFIC_CATEGORY,
+    "hybrid formula unknown 2nd parent" =>
+    NameCategories::SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY,
+    "named hybrid" => NameCategories::SCIENTIFIC_CATEGORY,
+    "named hybrid autonym" => NameCategories::SCIENTIFIC_CATEGORY,
+    "sanctioned" => NameCategories::SCIENTIFIC_CATEGORY,
+    "scientific" => NameCategories::SCIENTIFIC_CATEGORY,
+    "phrase name" => NameCategories::PHRASE,
+    "cultivar hybrid formula" =>
+    NameCategories::SCIENTIFIC_HYBRID_FORMULA_CATEGORY,
+    "graft/chimera" => NameCategories::SCIENTIFIC_HYBRID_FORMULA_CATEGORY,
+    "hybrid" => NameCategories::SCIENTIFIC_HYBRID_FORMULA_CATEGORY,
+    "hybrid autonym" => NameCategories::SCIENTIFIC_HYBRID_FORMULA_CATEGORY,
+    "hybrid formula parents known" =>
+    NameCategories::SCIENTIFIC_HYBRID_FORMULA_CATEGORY,
+    "intergrade" => NameCategories::SCIENTIFIC_HYBRID_FORMULA_CATEGORY,
+    "formula" => NameCategories::SCIENTIFIC_HYBRID_FORMULA_CATEGORY,
+    "acra" => NameCategories::CULTIVAR_CATEGORY,
+    # deprecated name type
+    "acra hybrid" => NameCategories::CULTIVAR_HYBRID_CATEGORY,
+    "cultivar" => NameCategories::CULTIVAR_CATEGORY,
+    "cultivar hybrid" => NameCategories::CULTIVAR_HYBRID_CATEGORY,
+    "pbr" => NameCategories::CULTIVAR_CATEGORY,
+    # deprecated name type
+    "pbr hybrid" => NameCategories::CULTIVAR_HYBRID_CATEGORY,
+    "trade" => NameCategories::CULTIVAR_CATEGORY,
+    # deprecated name type
+    "trade hybrid" => NameCategories::CULTIVAR_HYBRID_CATEGORY,
+    "[default]" => NameCategories::OTHER_CATEGORY,
+    "[n/a]" => NameCategories::OTHER_CATEGORY,
+    "[unknown]" => NameCategories::OTHER_CATEGORY,
+    "common" => NameCategories::OTHER_CATEGORY,
+    "informal" => NameCategories::OTHER_CATEGORY,
+  }.freeze
+
   def raw_category
-    case name_type.try("name")
-    when "autonym"
-      then NameCategories::SCIENTIFIC_CATEGORY
-    when "hybrid formula unknown 2nd parent"
-      then NameCategories::SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY
-    when "named hybrid"
-      then NameCategories::SCIENTIFIC_CATEGORY
-    when "named hybrid autonym"
-      then NameCategories::SCIENTIFIC_CATEGORY
-    when "sanctioned"
-      then NameCategories::SCIENTIFIC_CATEGORY
-    when "scientific"
-      then NameCategories::SCIENTIFIC_CATEGORY
-    when "phrase name"
-      then NameCategories::SCIENTIFIC_CATEGORY
-    when "cultivar hybrid formula"
-      then NameCategories::SCIENTIFIC_HYBRID_FORMULA_CATEGORY
-    when "graft/chimera"
-      then NameCategories::SCIENTIFIC_HYBRID_FORMULA_CATEGORY
-    when "hybrid"
-      then NameCategories::SCIENTIFIC_HYBRID_FORMULA_CATEGORY
-    when "hybrid autonym"
-      then NameCategories::SCIENTIFIC_HYBRID_FORMULA_CATEGORY
-    when "hybrid formula parents known"
-      then NameCategories::SCIENTIFIC_HYBRID_FORMULA_CATEGORY
-    when "intergrade"
-      then NameCategories::SCIENTIFIC_HYBRID_FORMULA_CATEGORY
-    when "formula"
-      then NameCategories::SCIENTIFIC_HYBRID_FORMULA_CATEGORY
-    when "acra"
-      then NameCategories::CULTIVAR_CATEGORY
-    # deprecated name type
-    when "acra hybrid"
-      then NameCategories::CULTIVAR_HYBRID_CATEGORY
-    when "cultivar"
-      then NameCategories::CULTIVAR_CATEGORY
-    when "cultivar hybrid"
-      then NameCategories::CULTIVAR_HYBRID_CATEGORY
-    when "pbr"
-      then NameCategories::CULTIVAR_CATEGORY
-    # deprecated name type
-    when "pbr hybrid"
-      then NameCategories::CULTIVAR_HYBRID_CATEGORY
-    when "trade"
-      then NameCategories::CULTIVAR_CATEGORY
-    # deprecated name type
-    when "trade hybrid"
-      then NameCategories::CULTIVAR_HYBRID_CATEGORY
-    when "[default]"
-      then NameCategories::OTHER_CATEGORY
-    when "[n/a]"
-      then NameCategories::OTHER_CATEGORY
-    when "[unknown]"
-      then NameCategories::OTHER_CATEGORY
-    when "common"
-      then NameCategories::OTHER_CATEGORY
-    when "informal"
-      then NameCategories::OTHER_CATEGORY
-    else NameCategories::OTHER_CATEGORY
-    end
+    RAW_CATEGORY[name_type.try("name").try("downcase")] || NameCategories::OTHER_CATEGORY
   end
 end

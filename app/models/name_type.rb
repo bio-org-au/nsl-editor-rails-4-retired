@@ -80,6 +80,8 @@ class NameType < ActiveRecord::Base
       cultivar_hybrid_options
     when Name::CULTIVAR_CATEGORY
       cultivar_options
+    when Name::PHRASE
+      phrase_options
     when Name::OTHER_CATEGORY
       other_options
     when "all"
@@ -106,6 +108,11 @@ class NameType < ActiveRecord::Base
   def self.scientific_hybrid_formula_unknown_2nd_parent_options
     where(" name in ('hybrid formula unknown 2nd parent')")
       .sort { |x, y| x.name <=> y.name }.collect { |n| [n.name, n.id] }
+  end
+
+  def self.phrase_options
+    n = find_by(name: "phrase name")
+    [[n.name, n.id]]
   end
 
   def self.cultivar_hybrid_options
@@ -158,6 +165,7 @@ class NameType < ActiveRecord::Base
     when "[unknown]"                         then "other"
     when "[n/a]"                             then "other"
     when "scientific"                        then "scientific_1_parent"
+    when "phrase name"                       then "scientific_1_parent"
     when "sanctioned"                        then "scientific_1_parent"
     when "hybrid"                            then "scientific_2_parents"
     when "hybrid formula parents known"      then "scientific_2_parents"

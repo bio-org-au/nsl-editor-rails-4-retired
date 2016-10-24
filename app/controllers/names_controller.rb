@@ -202,6 +202,7 @@ class NamesController < ApplicationController
   def new_name_for_category
     case params[:category]
     when "scientific"      then Name::AsNew.scientific
+    when "phrase"          then Name::AsNew.phrase
     when "hybrid formula"  then Name::AsNew.scientific_hybrid
     when "hybrid formula unknown 2nd parent"
       Name::AsNew.scientific_hybrid_unknown_2nd_parent

@@ -18,18 +18,24 @@ module NameEnterable
   end
 
   def takes_status?
-    category == NameCategories::SCIENTIFIC_CATEGORY
+    category == NameCategories::SCIENTIFIC_CATEGORY ||
+      category == NameCategories::PHRASE
   end
 
   def takes_rank?
     category == NameCategories::SCIENTIFIC_CATEGORY ||
       category == NameCategories::SCIENTIFIC_HYBRID_FORMULA_CATEGORY ||
       category == NameCategories::CULTIVAR_CATEGORY ||
-      category == NameCategories::CULTIVAR_HYBRID_CATEGORY
+      category == NameCategories::CULTIVAR_HYBRID_CATEGORY ||
+      category == NameCategories::PHRASE
   end
 
   def takes_authors?
     category == NameCategories::SCIENTIFIC_CATEGORY
+  end
+
+  def takes_author_only?
+      category == NameCategories::PHRASE
   end
 
   def requires_name_element?

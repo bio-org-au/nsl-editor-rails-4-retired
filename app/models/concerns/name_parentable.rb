@@ -34,6 +34,7 @@ module NameParentable
 
   def takes_parent_1?
     category == NameCategories::SCIENTIFIC_CATEGORY ||
+      category == NameCategories::PHRASE ||
       category == NameCategories::SCIENTIFIC_HYBRID_FORMULA_CATEGORY ||
       category == NameCategories::CULTIVAR_CATEGORY ||
       category == NameCategories::CULTIVAR_HYBRID_CATEGORY ||

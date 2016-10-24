@@ -98,6 +98,7 @@ class Name < ActiveRecord::Base
     category == CULTIVAR_CATEGORY ||
       category == CULTIVAR_HYBRID_CATEGORY ||
       category == SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY
+      category == PHRASE
   end
 
   def full_name_or_default

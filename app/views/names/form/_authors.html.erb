@@ -1,5 +1,4 @@
 
-
   <% if @name.takes_authors? %>
 
   <div class="form-group">
@@ -41,6 +40,10 @@
   </div>
   <%= f.hidden_field(:ex_author_id) %>
 
+  <% end %>
+
+  <% if @name.takes_authors? || @name.takes_author_only? %>
+
   <div class="form-group author">
     <label for="author-by-abbrev">Author</label><br>
     <input id="author-by-abbrev"
@@ -52,6 +55,11 @@
            value="<%= @name.author.try('abbrev_if_possible') %>"/>
   </div>
   <%= f.hidden_field(:author_id) %>
+  <script>setUpAuthorByAbbrev(); </script>
+
+  <% end %>
+
+  <% if @name.takes_authors? %>
 
   <div class="form-group">
     <label for="sanctioning-author-by-abbrev">Sanctioning Author</label><br>
@@ -64,10 +72,12 @@
            value="<%= @name.sanctioning_author.try('abbrev_if_possible') %>"/>
   </div>
   <%= f.hidden_field(:sanctioning_author_id) %>
-    <script>setUpAuthorByAbbrev(); </script>
+
+
     <script>setUpExBaseAuthorByAbbrev();</script>
     <script>setUpBaseAuthorByAbbrev();</script>
     <script>setUpExAuthorByAbbrev();</script>
     <script>setUpSanctioningAuthorByAbbrev();</script>
-<% end %><%# of takes_authors? %>
+
+  <% end %>
 
