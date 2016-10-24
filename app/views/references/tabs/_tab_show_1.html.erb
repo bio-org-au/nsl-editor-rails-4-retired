@@ -62,7 +62,7 @@
   <br>
   <% if instances_size == 1 %>
     <%= link_to("1 Instance #{search_icon_on_tab}".html_safe,
-                          search_path(query_target: "instances for ref id", query_string: "#{@reference.id}"), 
+                          search_path(query_target: "references", query_string: "id: #{@reference.id} show-instances:"), 
                           tabindex: increment_tab_index, 
                           title: 'Search for the instance.') %>
   <% else %>

@@ -24,7 +24,8 @@ class SearchRefsDefinedQRefIdWithInstsListHasInst < ActionController::TestCase
   test "reference id with instances" do
     ref = references(:bucket_reference_for_default_instances)
     get(:search,
-        { query_target: "instances for ref id", query_string: ref.id.to_s },
+        { query_target: "references",
+          query_string: "id: #{ref.id} show-instances:" },
         username: "fred",
         user_full_name: "Fred Jones",
         groups: [])

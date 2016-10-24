@@ -21,9 +21,6 @@ load "test/models/search/parsed_request/defined_queries/test_runner.rb"
 # Single Search model test.
 class SearchParsedRequestDefinedQueriesAllTest < ActiveSupport::TestCase
   DEFINED_QUERIES = {
-    "instance-ref-id:" => "instances-for-ref-id:",
-    "instances-for-ref-id:" => "instances-for-ref-id:",
-    "instances for ref id" => "instances-for-ref-id:",
     "instance-ref-id-sort-by-page:" => "instances-for-ref-id-sort-by-page:",
     "instances-for-ref-id-sort-by-page:" =>
       "instances-for-ref-id-sort-by-page:",

@@ -35,8 +35,6 @@ class Search::Mapper::Extras
     "name-plus-instances-search-help" => "names/advanced_search/help",
     "author-search-help" => "authors/advanced_search/help",
     "instance-search-help" => "instances/advanced_search/help",
-    "instances-for-ref-id-search-help" =>
-    "instances/advanced_search/for_ref_id/help",
     "instances-sorted-by-page-for-ref-id-search-help" =>
     "instances/advanced_search/sorted_by_page_for_ref_id/help",
     "tree-search-help" => "trees/advanced_search/help",
@@ -50,8 +48,6 @@ class Search::Mapper::Extras
     "name-plus-instances-search-examples" => "names/advanced_search/examples",
     "author-search-examples" => "authors/advanced_search/examples",
     "instance-search-examples" => "instances/advanced_search/examples",
-    "instances-for-ref-id-search-examples" =>
-    "instances/advanced_search/for_ref_id/examples",
     "instances-sorted-by-page-for-ref-id-search-examples" =>
     "instances/advanced_search/sorted_by_page_for_ref_id/examples",
     "tree-search-examples" => "trees/advanced_search/examples",
@@ -68,8 +64,6 @@ class Search::Mapper::Extras
     "references/advanced_search/names_full_synonymy/advanced",
     "author-search-advanced" => "authors/advanced_search/advanced",
     "instance-search-advanced" => "instances/advanced_search/advanced",
-    "instances-for-ref-id-search-advanced" =>
-    "instances/advanced_search/for_ref_id/advanced",
     "instances-sorted-by-page-for-ref-id-search-advanced" =>
     "instances/advanced_search/sorted_by_page_for_ref_id/advanced",
     "tree-search-advanced" => "trees/advanced_search/advanced",

@@ -24,8 +24,8 @@ class SrchRefsDefQueriesRefIdWInstListHasInstWLimit < ActionController::TestCase
   test "search reference id with instances limited" do
     ref = references(:bucket_reference_for_default_instances)
     get(:search,
-        { query_target: "instances for ref id",
-          query_string: "#{ref.id} limit:10" },
+        { query_target: "references",
+          query_string: "id: #{ref.id} show-instances: limit:10" },
         username: "fred",
         user_full_name: "Fred Jones",
         groups: [])
@@ -34,16 +34,7 @@ class SrchRefsDefQueriesRefIdWInstListHasInstWLimit < ActionController::TestCase
                   /[0-9][0-9] records\b/,
                   "Should find some records"
     assert_select "#search-results-summary",
-                  /\blimited\b/,
-                  "Should say result is limited"
-    assert_select "#search-results-summary",
-                  /\b10 records\b/,
-                  "Should say 10 records"
-    assert_select "#search-results-summary",
-                  /of an unknown total\b/,
-                  "Should say of an unknown total"
-    assert_select "#search-results-summary",
-                  /10 records.*of an unknown total/m,
-                  "Should say 10 records of an unknown total"
+                  /\b28 records\b/,
+                  "Should say 28 records"
   end
 end
