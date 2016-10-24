@@ -1,0 +1,9 @@
+
+  <% if @name.takes_name_element? %>
+
+  <div class="form-group">
+    <label for="name">Name<%= "*" if @name.requires_name_element? %></label>
+   <%= f.text_field :name_element, tabindex: increment_tab_index, title: "Enter name", class: 'form-control', required: @name.requires_name_element?, autofocus: true %>
+  </div>
+
+  <% end %>

@@ -1,0 +1,29 @@
+  <% if @name.takes_parent_2? %>
+
+    <div class="form-group">
+      <label for="name-second-parent-typeahead">Second parent<%= "*" if @name.requires_parent_2? %></label><%= " [#{@name.second_parent_rule}]" %><br>
+      <input id="name-second-parent-typeahead"
+             name="name[second_parent_typeahead]"
+             class="typeahead form-control requires-rank"
+             <% if @name.requires_parent_2? %>
+               required
+             <% end %>
+             type="text" 
+             title="Name parents will be suggested as you type, so please select from the list. Duplicates and names without instances are excluded.  Rank restrictions also apply."
+             tabindex="<%= increment_tab_index %>"
+             value="<%= @name.second_parent.try('full_name') %>"/>
+      <p> 
+        <span class="hide-if-rank <%= 'hidden' if @name.name_rank %>">
+          Cannot be set if there is no rank.
+        </span>
+      </p>
+    </div>
+    <%= hidden_field(:name,:second_parent_id, value: @name.second_parent_id) %>
+
+    <% if @name.takes_cultivar_scoped_parent? %>   
+      <script>setUpNameCultivarSecondParentTypeahead();</script>
+    <% else %>
+      <script>setUpNameSecondParentTypeahead();</script>
+    <% end %>
+
+  <% end %>

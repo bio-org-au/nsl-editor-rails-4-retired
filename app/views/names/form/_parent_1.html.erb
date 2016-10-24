@@ -1,0 +1,29 @@
+  <% if @name.takes_parent_1? %>
+    <div class="form-group">
+      <label for="name-parent-typeahead"><%= 'First ' if @name.hybrid? %>Parent<%= "*" if @name.requires_parent_1? %></label> <%= " [#{@name.parent_rule}]" %><br>
+      <input id="name-parent-typeahead"
+             name="name[parent_typeahead]"
+             class="typeahead form-control requires-rank"
+             data-name-id="<%= @name.id %>"
+             <% if @name.requires_parent_1? %>
+               required 
+             <% end %>
+             type="text" 
+             tabindex="<%= increment_tab_index %>"
+             title="Name parents will be suggested as you type, so please select from the list. Duplicates and names without instances are excluded.  Rank restrictions also apply."
+             value="<%= @name.parent.try('full_name') %>"/>
+      <p> 
+        <span class="hide-if-rank <%= 'hidden' if @name.name_rank %>">
+          Cannot be set if there is no rank.
+        </span>
+      </p>
+    </div>
+    <%= hidden_field(:name,:parent_id, value: @name.parent_id) %>
+    <% if @name.takes_hybrid_scoped_parent? %>   
+      <script>setUpNameHybridParentTypeahead();</script>
+    <% elsif @name.takes_cultivar_scoped_parent? %>   
+      <script>setUpNameCultivarParentTypeahead();</script>
+    <% else %>
+      <script>setUpNameParentTypeahead();</script>
+    <% end %>
+  <% end %>
