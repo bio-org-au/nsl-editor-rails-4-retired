@@ -26,7 +26,7 @@ class InstCreCitedByWNameWildcardedTextMatch1Test < ActionController::TestCase
   end
 
   test "should be able to create unpub citation" do
-    assert_difference("Instance.count") do
+    assert_no_difference("Instance.count") do
       post(:create_cited_by,
            { instance: { "name_typeahead" => "argyle app",
                          "name_id" => "",

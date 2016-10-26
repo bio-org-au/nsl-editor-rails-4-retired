@@ -16,6 +16,8 @@
 #   limitations under the License.
 
 # Work out the typeahead params for the name field of an instance.
+# Unpublished citations rule for text only, is it MUST match exactly
+# honouring case.
 class Name::AsResolvedTypeahead::ForUnpubCitationInstance
   include Resolvable
   attr_reader :value
@@ -45,40 +47,12 @@ class Name::AsResolvedTypeahead::ForUnpubCitationInstance
     possibles = ::Name.case_sensitive_full_name_like(@text)
     case possibles.size
     when 0
-      text_only_case_sensitive_like
+      raise "No case-sensitive exact match for '#{@text}'"
     when 1
       @value = possibles.first.id
     else
-      raise "More than one case-sensitive name match for '#{@text}'"
+      raise "More than one case-sensitive exact match for '#{@text}'"
     end
-  end
-
-  def text_only_case_sensitive_like
-    possibles = ::Name.case_sensitive_full_name_like("#{@text}%")
-    case possibles.size
-    when 0
-      text_only_no_case
-    when 1
-      @value = possibles.first.id
-    else
-      raise "More than one wildcarded case-sensitive name match for '#{@text}%'"
-    end
-  end
-
-  def text_only_no_case
-    possibles = ::Name.full_name_like(@text)
-    case possibles.size
-    when 0
-      zero_possibles_for_text
-    when 1
-      @value = possibles.first.id
-    else
-      raise "More than one name match for '#{@text}'"
-    end
-  end
-
-  def zero_possibles_for_text
-    zero_possibles
   end
 
   def zero_possibles

@@ -1,4 +1,9 @@
 ---
+- :date: 26-Oct-2016
+  :jira_id: '2011'
+  :description: |-
+    The name typeahead for creating an unpublished citation now expects
+    text-only (no ID) results to match exactly, honouring case.
 - :date: 25-Oct-2016
   :jira_id: '2004'
   :description: |-
