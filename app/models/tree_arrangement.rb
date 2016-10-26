@@ -26,7 +26,7 @@ class TreeArrangement < ActiveRecord::Base
 
   def find_placement_of_name(name)
     link_id = TreeArrangement::sp_find_name_in_tree(name.id, id)
-    TreeLink.find(link_id)
+    link_id ? TreeLink.find(link_id) : nil
   end
 
   def editableBy?(user)
