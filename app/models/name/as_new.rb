@@ -30,7 +30,7 @@ class Name::AsNew < Name
     name = Name.new
     name.name_type_id = NameType.find_by(name: "phrase name").id
     name.name_rank_id = NameRank.find_by(name: "Species").id
-    name.name_status_id = NameStatus.find_by(name: "legitimate").id
+    name.name_status_id = NameStatus.find_by(name: "[n/a]").id
     name
   end
 

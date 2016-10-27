@@ -34,6 +34,15 @@ class NamesNewPhraseNameSimpleTest < ActionController::TestCase
         {},
         xhr: true)
     assert_response :success, "Cannot edit new phrase name in details tab"
+    check_status
+  end
+
+  def check_status
     assert_select("h4", /New Phrase Name/)
+    assert_select("option", %r{[n/a]})
+    selector = 'select[title][required*="required"][name*="name_status_id"]'
+    assert_select(selector) do
+      assert_select("option[selected]", %r{[n/a]})
+    end
   end
 end

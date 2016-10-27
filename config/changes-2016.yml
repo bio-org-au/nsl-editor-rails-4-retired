@@ -1,9 +1,13 @@
 ---
+- :date: 27-Oct-2016
+  :jira_id: '2004'
+  :description: |-
+    Default new phrase name status to 'n/a'.
 - :date: 26-Oct-2016
   :jira_id: '2011'
   :description: |-
     The name typeahead for creating an unpublished citation now expects
-    text-only (no ID) results to match exactly, honouring case.
+    text-only (no ID) results to match exactly.
 - :date: 25-Oct-2016
   :jira_id: '2004'
   :description: |-
