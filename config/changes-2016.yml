@@ -1,5 +1,7 @@
 ---
 - :date: 27-Oct-2016
+  :release: true
+- :date: 27-Oct-2016
   :jira_id: '2004'
   :description: |-
     Default new phrase name status to 'n/a'.
