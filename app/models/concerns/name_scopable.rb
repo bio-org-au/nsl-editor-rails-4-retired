@@ -16,6 +16,11 @@ module NameScopable
              where("lower(f_unaccent(full_name)) like lower(f_unaccent(?)) ",
                    string.tr("*", "%") + "%")
            end)
+    scope :case_sensitive_full_name_like,
+          (lambda do |string|
+             where("f_unaccent(full_name) like f_unaccent(?) ",
+                   string.tr("*", "%"))
+           end)
     scope :lower_full_name_equals,
           (lambda do |string|
              where("lower(f_unaccent(full_name)) = lower(f_unaccent(?)) ",

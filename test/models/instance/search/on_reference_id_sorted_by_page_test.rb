@@ -21,11 +21,12 @@ load "models/search/users.rb"
 # Single instance model test.
 class OnReferenceIdTest < ActiveSupport::TestCase
   test "instance search on Reference ID sort by page" do
+    ref = references(:paper_by_britten_on_angophora)
     search = Search::Base
              .new(ActiveSupport::HashWithIndifferentAccess
              .new(query_string:
-                  references(:paper_by_britten_on_angophora).id.to_s,
-                  query_target: "Instances-for-ref-id-sort-by-page:",
+                  "id: #{ref.id} show-instances-by-page:",
+                  query_target: "references",
                   current_user: build_edit_user))
     assert_equal Array,
                  search.executed_query.results.class,

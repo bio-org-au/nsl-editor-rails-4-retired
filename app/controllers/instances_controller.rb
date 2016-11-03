@@ -14,7 +14,8 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#
+
+#   Controls instances.
 class InstancesController < ApplicationController
   include ActionView::Helpers::TextHelper
   before_filter :find_instance, only: [:show, :tab, :destroy]
@@ -38,15 +39,18 @@ as a synonym"
 
   # Create the lesser version of relationship instance.
   def create_cited_by
+    resolve_unpub_citation_name_id(instance_params[:name_id],
+                                   instance_name_params[:name_typeahead])
     if instance_params[:name_id].blank?
-      render_create_error("You must choose a name.",
-                          "instance-name-typeahead")
+      render_create_error("You must choose a name.", "instance-name-typeahead")
     elsif instance_params[:instance_type_id].blank?
       render_create_error("You must choose an instance type.",
                           "instance_instance_type_id")
     else
       create
     end
+  rescue => e
+    render_create_error(e.to_s, "instance-name-typeahead")
   end
 
   # Create full synonymy instance.
@@ -85,6 +89,7 @@ as a synonym"
   def handle_other_errors(e)
     @allow_bypass = e.to_s.match(/\A#{CONCEPT_WARNING}\z/)
     @message = e.to_s
+    logger.error("Error: #{@message}")
     render "create_error.js", status: :unprocessable_entity
   end
   private :handle_other_errors
@@ -182,6 +187,10 @@ as a synonym"
                                      :concept_warning_bypassed)
   end
 
+  def instance_name_params
+    params.require(:instance).permit(:name_id, :name_typeahead)
+  end
+
   def tab_or_default_tab
     if params[:tab] && !params[:tab].blank? && params[:tab] != "undefined"
       params[:tab]
@@ -213,6 +222,7 @@ as a synonym"
   def render_create_error(base_error_string, focus_id)
     @instance = Instance.new
     @instance.errors.add(:base, base_error_string)
+    @message = base_error_string
     render "create_error", locals: { focus_on_this_id: focus_id }
   end
 
@@ -256,5 +266,10 @@ as a synonym"
       verbatim_name_string: instance_params[:verbatim_name_string],
       bhl_url: instance_params[:bhl_url],
       page: instance_params[:page] }
+  end
+
+  def resolve_unpub_citation_name_id(name_id, name_typeahead)
+    return unless instance_params[:name_id].blank?
+    params[:instance][:name_id] = Name::AsResolvedTypeahead::ForUnpubCitationInstance.new(name_id, name_typeahead).value
   end
 end

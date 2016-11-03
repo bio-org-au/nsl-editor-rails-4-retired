@@ -25,6 +25,14 @@
       </li>
 
       <li role="presentation">
+        <%= link_to "Phrase name",
+                    name_new_row_path('phrase'),
+                    title: 'Add a new phrase name',
+                    remote: true,
+                    tabindex: '-1' %>
+      </li>
+
+      <li role="presentation">
         <%= link_to "Hybrid formula name",
                     name_new_row_path('hybrid formula'),
                     title: 'Add a new hybrid name',

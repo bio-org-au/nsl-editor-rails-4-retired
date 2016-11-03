@@ -273,5 +273,51 @@ misapplications (NSL-1974)</h5>
   <% end %>
 </table>
 
+<h5>Reference with no year reports</h5>
+<table class="example-searches table table-striped">
+  <% [
+      {search_target: 'References',
+       search_string: "no-year:",
+       explanation: %Q(References with no year value.) },
+      {search_target: 'References',
+       search_string: "no-year: rt: book",
+       explanation: %Q(Books with no year value.) },
+      {search_target: 'References',
+       search_string: "no-year: rt: paper",
+       explanation: %Q(Papers with no year value.) },
+      {search_target: 'References',
+       search_string: "no-year: rt: book is-published:",
+       explanation: %Q(Published books with no year value.) },
+      {search_target: 'References',
+       search_string: "no-year: pub-date-is-year:",
+       explanation: %Q(References with no year that have a publication date
+       that is a year or a year in parentheses.) },
+      {search_target: 'References',
+       search_string: "no-year: pub-date-is-year: rt:book",
+       explanation: %Q(Books with no year that have a publication date that is
+       a year or a year in parentheses.) },
+      {search_target: 'References',
+       search_string: "no-year: rt: paper is-published:
+       pub-date-matches: Jan 2[0-9][0-9][0-9]$",
+       explanation: %Q([Advanced] Published papers with no year and a
+       publication date matching the regular expression (case-insensitive).) },
+      {search_target: 'References',
+       search_string: "no-year: rt: book is-published: pub-date-matches: 1795",
+       explanation: %Q([Advanced] Published papers with no year and a
+       publication date matching the regular expression 1795.) },
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent">
+      <%= link_to(val[:search_string],
+                  search_path(query_string: val[:search_string],
+                              query_target: val[:search_target]),
+                  class:'blue',
+                  title: "Run the report.") %>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+
   </div>
 </div>

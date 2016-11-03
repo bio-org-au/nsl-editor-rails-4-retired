@@ -1,0 +1,17 @@
+
+  <% if @name.id.present? %>
+  <div class="form-group">
+    <label for="">Duplicate of</label><br>
+    <input id="duplicate-of-typeahead"
+           name="name[duplicate_of_typeahead]"   
+           class="typeahead form-control" 
+           type="text"
+           title="Possible duplicate names will be suggested as you type, so please select from the list or type enough to identify a single name."
+           tabindex="<%= increment_tab_index %>"
+           data-name-id="<%= @name.id %>"
+           value="<%= @name.duplicate_of.try('full_name') %>"/>
+    <%= f.hidden_field(:duplicate_of_id) %>
+  </div>
+  <script> setUpNameDuplicateOf(); </script>
+  <% end %>
+

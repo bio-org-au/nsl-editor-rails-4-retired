@@ -24,8 +24,8 @@ class OnReferenceIdTest < ActiveSupport::TestCase
     search = Search::Base
              .new(ActiveSupport::HashWithIndifferentAccess
              .new(query_string:
-                  references(:paper_by_britten_on_angophora).id.to_s,
-                  query_target: "Instances-for-ref-id:",
+                  "id:#{references(:paper_by_britten_on_angophora).id} show-instances:",
+                  query_target: "references",
                   current_user: build_edit_user))
     assert_equal Array,
                  search.executed_query.results.class,

@@ -162,6 +162,7 @@ class Instance < ActiveRecord::Base
   def accepted_concept_cannot_be_synonym_of_accepted_concept
     return if concept_warning_bypassed?
     return if standalone?
+    return if unpublished_citation?
     return if allowed_type_for_accepted_concept_synonym?
     return unless both_names_are_accepted_concepts?
     return unless this_is_cited_by.name.accepted_concept.instance_id ==
@@ -185,6 +186,7 @@ class Instance < ActiveRecord::Base
 
   def name_cannot_be_double_synonym
     return if standalone?
+    return if unpublished_citation?
     return unless double_synonym?
     if misapplied?
       errors[:base] << "A name cannot be placed in synonymy twice

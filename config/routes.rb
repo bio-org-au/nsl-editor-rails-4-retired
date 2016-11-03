@@ -16,6 +16,7 @@
 #   limitations under the License.
 #
 Rails.application.routes.draw do
+  match "/feedback", as: "feedback", to: "feedback#index", via: :get
   match "/ping", as: "ping_service", to: "services#ping", via: :get
   match "services", as: "services", to: "services#index", via: :get
 
@@ -135,7 +136,7 @@ Rails.application.routes.draw do
         as: "name_new_row",
         to: "names#new_row",
         via: :get,
-        type: /scientific|hybrid.*formula|hybrid-formula-unknown-2nd-parent|cultivar-hybrid|cultivar|other/
+        type: /scientific|phrase|hybrid.*formula|hybrid-formula-unknown-2nd-parent|cultivar-hybrid|cultivar|other/
   match "names/:id/tab/:tab", as: "name_tab", to: "names#tab", via: :get
   match "names/:id/tab/:tab/as/:new_category",
         as: "name_edit_as_category", to: "names#edit_as_category", via: :get

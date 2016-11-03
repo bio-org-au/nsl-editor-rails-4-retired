@@ -29,7 +29,7 @@ reference child where child.parent_id = reference.id) " },
     "has-no-parent:"        => { where_clause: " parent_id is null" },
     "is-a-child:"           => { where_clause: " parent_id is not null" },
     "is-not-a-child:"       => { where_clause: " parent_id is null" },
-    "is-published:"         => { where_clause: " published" },
+    "is-published:"         => { where_clause: " published = true" },
     "is-not-published:"     => { where_clause: " not published" },
 
     "author-exact:"         => { where_clause: " author_id in (select id from
@@ -132,5 +132,10 @@ inner join ref_type child_rt on child.ref_type_id = child_rt.id
 where (rt.name,child_rt.name) not in (select xrt.name, xcrt.name
 from ref_type xrt
 inner join ref_type xcrt on xrt.id = xcrt.parent_id))" },
+    "no-year:" => { where_clause: " year is null " },
+    "pub-date-is-year:" => {
+      where_clause: "publication_date ~ '^\\(*[0-9][0-9][0-9][0-9]\\)*$' "
+    },
+    "pub-date-matches:" => { where_clause: " publication_date ~* ? " },
   }.freeze
 end

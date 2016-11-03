@@ -56,6 +56,7 @@ class Ability
   def basic_auth_1
     can "application",        "set_include_common_cultivars"
     can "authors",            "tab_show_1"
+    can "feedback",           :all
     can "help",               :all
     can "history",            :all
     can "instance_types",     "index"

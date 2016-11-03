@@ -101,4 +101,5 @@ gem "pg_search"
 gem "acts_as_tree"
 
 # Removed because it seems to stop icons Angular part of the app.
-# gem "font-awesome-rails"
+# Restored because getting rid of Angular.
+gem "font-awesome-rails"

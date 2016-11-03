@@ -459,6 +459,15 @@ casuarina_inophloia_in_bailey_catalogue_qld_plants:
   created_by: tester
   updated_by: tester
 
+casuarina_inophloia_in_ref_with_no_year:
+  reference: ref_with_no_year
+  name: casuarina_inophloia
+  instance_type: secondary_reference
+  page: exclude-from-ordering-test
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+
 for_a_genus_with_one_instance:
   reference: bailey_catalogue_qld_plants
   name: a_genus_with_one_instance
@@ -538,10 +547,13 @@ metrosideros_costata_gaertn:
   verbatim_name_string:
 
 # Relationship instance - unpublished citation
+#  this_cites: for_to_be_a_double_in_ref
+#  this_is_cited_by: for_to_have_a_double_in_ref
 angophora_lanceolata_cav_in_stanley:
   reference: stanley_in_stanley_and_ross
   name: rusty_gum
-  cites_id: britten_created_angophora_costata.id
+  this_cites: britten_created_angophora_costata.id
+  this_is_cited_by: for_to_have_a_double_in_ref
   instance_type: common_name
   verbatim_name_string: verbatim
   page: zzzz99910
@@ -816,8 +828,8 @@ for_to_be_a_double_in_alt_ref:
   updated_by: tester
 
 first_syn_for_to_have_a_double:
-  this_cites: for_to_be_a_double_in_ref
   name: to_be_a_double_synonym
+  this_cites: for_to_be_a_double_in_ref
   this_is_cited_by: for_to_have_a_double_in_ref
   reference: for_to_have_a_double_synonym
   instance_type: synonym

@@ -928,8 +928,8 @@ unpublished_book_for_change_detection:
 mueller_1882_section:
   title: Not set 
   display_title:  Not set
-  citation:	Mueller, F.J.H. von, (1882) Systematic Census of Australian Plants 
-  citation_html:	Mueller, F.J.H. von, (1882) Systematic Census of Australian Plants 
+  citation: Mueller, F.J.H. von, (1882) Systematic Census of Australian Plants 
+  citation_html: Mueller, F.J.H. von, (1882) Systematic Census of Australian Plants 
   author: mueller_von
   language: undetermined
   namespace: apni
@@ -944,8 +944,8 @@ mueller_1882_section:
 australasian_chemist_and_druggist:
   title: Not set 
   display_title:  Not set
-  citation:	Mueller, F.J.H. von & Bailey, F.M., (1882) Australasian Chemist and Druggist
-  citation_html:	Mueller, F.J.H. von & Bailey, F.M., (1882) Australasian Chemist and Druggist
+  citation: Mueller, F.J.H. von & Bailey, F.M., (1882) Australasian Chemist and Druggist
+  citation_html: Mueller, F.J.H. von & Bailey, F.M., (1882) Australasian Chemist and Druggist
   author: mueller_von_and_bailey
   language: undetermined
   namespace: apni
@@ -960,14 +960,29 @@ australasian_chemist_and_druggist:
 bailey_catalogue_qld_plants:
   title: Not set 
   display_title:  Not set
-  citation:	Bailey, F.M., (1913) Comprehensive Catalogue of Queensland Plants
-  citation_html:	Bailey, F.M., (1913) Comprehensive Catalogue of Queensland Plants
+  citation: Bailey, F.M., (1913) Comprehensive Catalogue of Queensland Plants
+  citation_html: Bailey, F.M., (1913) Comprehensive Catalogue of Queensland Plants
   author: bailey_fm
   language: undetermined
   namespace: apni
   ref_author_role: unknown
   ref_type: section
   year: 1913
+  published: true
+  publication_date: early 1913
+  created_by: tester
+  updated_by: tester
+
+ref_with_no_year:
+  title: Not set 
+  display_title:  Not set
+  citation: Ref with no year
+  citation_html: Ref with no year
+  author: bailey_fm
+  language: undetermined
+  namespace: apni
+  ref_author_role: unknown
+  ref_type: section
   published: true
   publication_date: early 1913
   created_by: tester
@@ -1035,8 +1050,8 @@ stanley_in_stanley_and_ross:
 cavanilles_icones:
   title: Not set 
   display_title:  Not set
-  citation:	"Cavanilles, A.J., (1797) Icones et Descriptiones Plantarum. 4(1)"
-  citation_html:	"Cavanilles, A.J., (1797) Icones et Descriptiones Plantarum. 4(1)"
+  citation: "Cavanilles, A.J., (1797) Icones et Descriptiones Plantarum. 4(1)"
+  citation_html: "Cavanilles, A.J., (1797) Icones et Descriptiones Plantarum. 4(1)"
   author: cav
   language: undetermined
   namespace: apni
@@ -1051,8 +1066,8 @@ cavanilles_icones:
 never_used:
   title: Not set 
   display_title:  Not set
-  citation:	"Never Used"
-  citation_html:	"Never Used"
+  citation: "Never Used"
+  citation_html: "Never Used"
   author: cav
   language: undetermined
   namespace: apni
@@ -1067,8 +1082,8 @@ never_used:
 master:
   title: Not set 
   display_title:  Not set
-  citation:	"Master"
-  citation_html:	"Master"
+  citation: "Master"
+  citation_html: "Master"
   author: cav
   language: undetermined
   namespace: apni
@@ -1083,8 +1098,8 @@ master:
 duplicate:
   title: Not set 
   display_title:  Not set
-  citation:	"Duplicate"
-  citation_html:	"Duplicate"
+  citation: "Duplicate"
+  citation_html: "Duplicate"
   author: cav
   language: undetermined
   namespace: apni
@@ -1848,8 +1863,8 @@ dummy_reference_1:
 hookers_icones_plantarum:
   title: Hooker's Icones Plantarum 
   display_title: Hooker's Icones Plantarum 
-  citation:  	(1867-), Hooker's Icones Plantarum 
-  citation_html:  	(1867-), Hooker's Icones Plantarum 
+  citation:   (1867-), Hooker's Icones Plantarum 
+  citation_html:   (1867-), Hooker's Icones Plantarum 
   author: dash
   ref_author_role: editor
   namespace: apni

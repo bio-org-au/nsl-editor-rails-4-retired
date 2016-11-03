@@ -63,6 +63,27 @@
 </table>
 <br>
 
+<h5 class="">List references showing instances</h5>
+<table class="example-searches table table-striped">
+  <% [
+      {search_target: 'References', search_string: "citation: * limit:10 show-instances:",explanation: %Q(First 10 references sorted by citation.)},
+      {search_target: 'References', search_string: "nuytsia show-instances:", explanation: %Q(Reference searches match on citation by default.  Leading and trailing wildcards are added automatically.)},
+      {search_target: 'References', search_string: "nuytsia limit: 5 show-instances:", explanation: %Q(Limit the search results.)},
+      {search_target: 'References', search_string: "nuytsia limit: 5 show-instances-by-page:", explanation: %Q(Limit the search results.)},
+      {search_target: 'References', search_string: "title:nuytsia show-instances:", explanation: %Q(Search on title.  A trailing wildcard is added automatically.)},
+      {search_target: 'References', search_string: "citation: nuytsia limit: 15 show-instances:", explanation: %Q(Search explicitly on citation field and limit the results.)},
+      {search_target: 'References', search_string: "citation: nuytsia limit: 15 show-instances-by-page:", explanation: %Q(Search explicitly on citation field and limit the results.)},
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent">
+      <%= link_to(val[:search_string], search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue', title: "Run the described search.") %>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+<br>
+
 </div>
 
 

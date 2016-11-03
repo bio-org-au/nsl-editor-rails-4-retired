@@ -1,0 +1,23 @@
+<%= form_for(@name, as: 'name', role: 'form', remote: true) do |f| %>
+  <%= render partial: "names/form/title" %>
+  <input type="hidden" name="random_id" value="<%= params[:random_id] %>"/>
+  <input type="hidden" name="category" value="<%= params[:category] %>"/>
+  <%= render partial: "names/form/top_buttons", locals: {f: f} %>
+  <span id="search-result-details-info-message-container" class="message-container"></span>
+  <span id="search-result-details-error-message-container" class="error-container"></span>
+  <%= render partial: "names/form/name_type", locals: {f: f} %>
+  <%= render partial: "names/form/name_rank", locals: {f: f} %>
+  <%= render partial: "names/form/name_status", locals: {f: f} %>
+  <%= render partial: "names/form/parent_1", locals: {f: f} %>
+  <%= render partial: "names/form/parent_2", locals: {f: f} %>
+  <%= render partial: "names/form/name_element", locals: {f: f} %>
+  <%= render partial: "names/form/authors", locals: {f: f} %>
+  <%= render partial: "names/form/duplicate_of", locals: {f: f} %>
+  <%= render partial: "names/form/verbatim_rank", locals: {f: f} %>
+  <br>
+  <%= render partial: "names/form/save_widgets", locals: {f: f} %>
+  <span id="search-result-details-info-message-container2" class="message-container"></span>
+  <span id="search-result-details-error-message-container2" class="error-container"></span>
+<% end %>
+
+

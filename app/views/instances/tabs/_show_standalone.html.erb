@@ -16,7 +16,7 @@
   appears in
   <br>
   <%= link_to("#{@instance.reference.citation} #{search_icon_on_tab}".html_safe, search_path(query_string: "id: #{@instance.reference_id}", query_target: 'reference'),title: "Search for the reference.",class: 'ref') %>
-  <%= link_to("(with instances)", search_path(query_string: @instance.reference_id.to_s, query_target: 'instances for ref id'),title: "Search for the reference its instances.") %>
+  <%= link_to("(with instances)", search_path(query_string: "id: #{@instance.reference_id} show-instances:", query_target: 'references'),title: "Search for the reference its instances.") %>
   <br>
   as <%= @instance.instance_type.name_with_indefinite_article.sub(/ /,'<br>').html_safe %>
   <%= "<br>on page #{@instance.page}".html_safe if @instance.page.present? %>

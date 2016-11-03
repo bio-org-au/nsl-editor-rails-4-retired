@@ -1,5 +1,3 @@
-  <%#= "#{pluralize(@search.executed_query.count,"record")}." %>
-  <%#= link_to(%Q("#{@search.parsed_request.query_string}" #{icon('refresh')}).html_safe, search_path(query_string: "#{@search.parsed_request.query_string}",query_target: "#{params[:query_target]}"), title: 'Rerun the query.') %>
 
  <span id="set-include-common-and-cultivar">
    <%= render partial: 'set_include_common_and_cultivar' %>
@@ -29,7 +27,11 @@
           <% end %>
         <% else %>
           <% if @search.executed_query.limited %>
-            <%= "#{pluralize(@search.executed_query.results.size,"of #{@search.executed_query.total} record")}" %>
+            <% if @search.executed_query.results.size < @search.executed_query.total %>
+              <%= "#{pluralize(@search.executed_query.results.size,"of #{@search.executed_query.total} record")}" %>
+            <% else %>
+              <%= pluralize(@search.executed_query.results.size, "record") %>
+            <% end %>
           <% else %>
             <%= "#{pluralize(@search.executed_query.total,"record")}" %>
           <% end %>

@@ -1,4 +1,101 @@
 ---
+- :date: 02-Nov-2016
+  :release: true
+- :date: 02-Nov-2016
+  :jira_id: ''
+  :description: |-
+    Fix icons
+- :date: 27-Oct-2016
+  :release: true
+- :date: 27-Oct-2016
+  :jira_id: '2004'
+  :description: |-
+    Default new phrase name status to 'n/a'.
+- :date: 26-Oct-2016
+  :jira_id: '2011'
+  :description: |-
+    The name typeahead for creating an unpublished citation now expects
+    text-only (no ID) results to match exactly.
+- :date: 25-Oct-2016
+  :jira_id: '2004'
+  :description: |-
+    New entry form for phrase names.
+- :date: 24-Oct-2016
+  :jira_id: '2024'
+  :description: |-
+    Removed the Search dropdown options "Instance for Ref ID" and "Instances
+    sorted by page for Ref Id". <br/><br/>Get the same result by applying
+    "show-instances:" or "show-instances-by_page:" to Reference searches.
+- :date: 24-Oct-2016
+  :jira_id: '2011'
+  :description: |-
+    The name typeahead for creating an unpublished citation now starts
+    validating text strings case-sensitively.  <br/><br/>For example,
+    "Blue Gum" and "Blue gum" are distinct.  If it finds no matches that way
+    it resumes checking case-INsensitively - so if you entered the right name
+    in the wrong case, it will still find the name.
+- :date: 23-Oct-2016
+  :jira_id: '1740'
+  :description: |-
+    Added reference search for "pub-date-matches:".  <br/><br/>It takes simple
+    regular expressions and finds matching publication dates. Examples on the
+    Reports tab.  [Partial solution to JIRA.]
+- :date: 23-Oct-2016
+  :jira_id: '1740'
+  :description: |-
+    Added reference search for "pub-date-is-year:", which returns references 
+    with a 4-digit publication date, with or without surrounding parentheses. 
+    <br/><br/>Examples on Reports tab.  [Partial solution to JIRA.]
+- :date: 23-Oct-2016
+  :jira_id: '1740'
+  :description: |-
+    Added search for references with no value in the year. ie. "no-year:".
+    Examples on Reports tab.  [Partial solution to JIRA.]
+- :date: 23-Oct-2016
+  :jira_id: '2018'
+  :description: |-
+    Added reference parent help text (under field) for reference type of
+    "Paper".
+- :date: 22-Oct-2016
+  :jira_id: '1739'
+  :description: |-
+    Sort name instances to the top if the reference has no year.
+- :date: 21-Oct-2016
+  :jira_id: '2012'
+  :description: |-
+    Add "show-instances-by-page:" for reference searches.
+- :date: 19-Oct-2016
+  :jira_id: '2013'
+  :description: |-
+    Show 'test' in the page title for the test environment.
+- :date: 13-Oct-2016
+  :release: true
+- :date: 11-Oct-2016
+  :jira_id: '1735'
+  :description: |-
+    Unpublished citation name typeahead now works with common names that match
+    scientific names when wildcarded.  <br/><br/>It works like name authors:
+    if you enter text that matches exactly one name, then that name will be
+    used.  E.g.  "acacia"
+- :date: 11-Oct-2016
+  :jira_id: '2001'
+  :description: |-
+    Add show-instances: option for reference searches.
+- :date: 10-Oct-2016
+  :jira_id: '2008'
+  :description: |-
+    Instances for reference sorted by page fixed.
+- :date: 10-Oct-2016
+  :jira_id: '2009'
+  :description: |-
+    Remove the feedback link from the universal page footer and add a feedback
+    link to the Help menu.
+- :date: 07-Oct-2016
+  :jira_id: '2006'
+  :description: |-
+    Fix add unpublished citation.
+- :date: 06-Oct-2016
+  :release: true
 - :date: 05-Oct-2016
   :jira_id: '1998'
   :description: |-
