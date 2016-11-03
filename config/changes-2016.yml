@@ -1,4 +1,10 @@
 ---
+- :date: 02-Nov-2016
+  :release: true
+- :date: 02-Nov-2016
+  :jira_id: ''
+  :description: |-
+    Fix icons
 - :date: 27-Oct-2016
   :release: true
 - :date: 27-Oct-2016
