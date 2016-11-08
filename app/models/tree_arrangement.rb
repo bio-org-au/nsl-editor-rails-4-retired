@@ -72,9 +72,9 @@ class TreeArrangement < ActiveRecord::Base
   end
 
   def place_instance(username, name, instance, parent_name, placement_type)
-    logger.debug "place_instance #{id} ,#{username}, #{name}, #{instance} ,#{parent_name} ,#{placement_type} "
+    logger.debug "place_instance #{id} ,#{username}, #{name}, #{instance} ,'#{parent_name}' ,#{placement_type} "
 
-    if parent_name
+    if parent_name && parent_name!=''
       ct = Name.where(full_name: parent_name).count
       logger.debug ct
       case ct
