@@ -32,32 +32,6 @@ class SignIn < ActiveType::Object
     build_ldap.user_full_name
   end
 
-  def web_token
-    # do service call to ask the service layer for the JWT
-
-    api_key = Rails.configuration.api_key
-    address = Rails.configuration.nsl_services
-    path = "auth/getInfoJsonForUsername"
-    url = "#{address}#{path}?apiKey=#{api_key}&username=#{username}"
-
-    logger.info url
-
-    s_response = RestClient.get(url, accept: :json)
-    json = JSON.load(s_response)
-    if json && json['success'] == true
-      json[:jwt]
-    else
-      logger.error("SignIn::webToken url: #{url}")
-      logger.error("SignIn::webToken s_response: #{s_response}")
-      logger.error("SignIn::webToken json: #{json}")
-      # I do not raise an error, because I do not want the editor to
-      # crash if the services are down. Comonents in service-oriented
-      # architectures must be built to limp along as best they can
-      # when other bits are down, or else nothing ever works
-      nil
-    end
-  end
-
   private
 
   def validate_credentials

@@ -78,8 +78,7 @@ class ApplicationController < ActionController::Base
   def continue_user_session
     @current_user = User.new(username: session[:username],
                              full_name: session[:user_full_name],
-                             groups: session[:groups],
-                             web_token: session[:web_token])
+                             groups: session[:groups])
 
     @visible_classifications = [  ]
     # TODO: check that this classification is visible to this user
