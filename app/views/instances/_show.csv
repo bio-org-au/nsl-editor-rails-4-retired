@@ -1,1 +1,1 @@
-<%= record.fields_for_csv.to_csv.html_safe -%>
+<%= record.to_comma -%>

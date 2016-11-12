@@ -103,3 +103,4 @@ gem "acts_as_tree"
 # Removed because it seems to stop icons Angular part of the app.
 # Restored because getting rid of Angular.
 gem "font-awesome-rails"
+gem "comma", "~> 4.0.0" # csv dsl

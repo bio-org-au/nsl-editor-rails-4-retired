@@ -1,4 +1,12 @@
 ---
+- :date: 11-Nov-2016
+  :jira_id: '2041'
+  :description: |-
+    Fix CSV link for instance queries.
+- :date: 08-Nov-2016
+  :jira_id: '2007'
+  :description: |-
+    Preliminary changes associated with workspace tree editing.
 - :date: 02-Nov-2016
   :release: true
 - :date: 02-Nov-2016
