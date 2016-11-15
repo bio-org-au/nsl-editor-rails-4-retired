@@ -23,6 +23,7 @@ class TreeArrangement < ActiveRecord::Base
   self.sequence_name = "nsl_global_seq"
 
   belongs_to :base_arrangement, class_name: TreeArrangement
+  belongs_to :namespace, class_name: "Namespace", foreign_key: "namespace_id"
 
   def find_placement_of_name(name)
     link_id = TreeArrangement::sp_find_name_in_tree(name.id, id)
