@@ -34,11 +34,11 @@ class Search::OnInstance::Predicate
 
   def initialize(field, value)
     @field = field
-    @value = value
     @canon_field = build_canon_field(field)
     rule = Search::OnInstance::FieldRule::RULES[@canon_field] || EMPTY_RULE
+    @value = value
     apply_rule(rule)
-    @canon_value = build_canon_value(value)
+    @canon_value = build_canon_value
     apply_scope
     @order = rule[:order] || nil
     process_value
@@ -60,6 +60,8 @@ class Search::OnInstance::Predicate
     @leading_wildcard = rule[:leading_wildcard] || false
     @multiple_values = rule[:multiple_values] || false
     @predicate = build_predicate(rule)
+    # TODO: build this into the rule
+    @value = @value.downcase unless @canon_field =~ /-match/
   end
 
   def apply_scope
@@ -78,7 +80,6 @@ class Search::OnInstance::Predicate
   end
 
   def build_predicate(rule)
-    debug("build_predicate")
     if @multiple_values && @value.split(/,/).size > 1
       rule[:multiple_values_where_clause]
     else
@@ -86,11 +87,11 @@ class Search::OnInstance::Predicate
     end
   end
 
-  def build_canon_value(val)
+  def build_canon_value
     if @multiple_values && @value.split(/,/).size > 1
-      val.split(",").collect(&:strip)
+      @value.split(",").collect(&:strip)
     else
-      val.tr("*", "%")
+      @value.tr("*", "%")
     end
   end
 
