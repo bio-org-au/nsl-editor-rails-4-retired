@@ -3,6 +3,8 @@ AllCops:
     - 'db/**/*'
 Style/TrailingCommaInLiteral:
   Enabled: false
+Style/VariableNumber:
+  Enabled: false
 StringLiterals:
   EnforcedStyle: double_quotes
   Enabled: true
