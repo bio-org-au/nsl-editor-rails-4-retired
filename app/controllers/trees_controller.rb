@@ -39,7 +39,7 @@ class TreesController < ApplicationController
   rescue => e
     logger.error e
     logger.info e.response
-    render "place_name_error.js"
+    render 'place_name_error.js'
   end
 
   def remove_name_placement
@@ -49,7 +49,15 @@ class TreesController < ApplicationController
 
   rescue => e
     logger.error e
-    render "remove_name_placement_error.js"
+    render 'remove_name_placement_error.js'
+  end
+
+  def update_values
+    raise 'TODO: implement update_values'
+
+  rescue => e
+    logger.error e
+    render 'update_values_error.js'
   end
 
 end
