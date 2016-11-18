@@ -71,6 +71,19 @@ class TreeArrangement < ActiveRecord::Base
     "#{address}#{path}?apiKey=#{api_key}&runAs=#{ERB::Util.url_encode(username)}&tree=#{tree_id}&name=#{name}"
   end
 
+  def self.update_value_url(username, tree_id, name, value_uri_label, value)
+    if !username
+      raise "must be logged on to place instances"
+    end
+    api_key = Rails.configuration.api_key
+    address = Rails.configuration.nsl_services
+    path = "treeEdit/updateValue"
+
+    logger.debug "#{address}#{path}?apiKey=#{api_key}&runAs=#{ERB::Util.url_encode(username)}&tree=#{tree_id}&name=#{name}&valueUriLabel=#{value_uri_label}&value=#{ERB::Util.url_encode(value)}"
+
+    "#{address}#{path}?apiKey=#{api_key}&runAs=#{ERB::Util.url_encode(username)}&tree=#{tree_id}&name=#{name}&valueUriLabel=#{value_uri_label}&value=#{ERB::Util.url_encode(value)}"
+  end
+
   def place_instance(username, name, instance, parent_name, placement_type)
     logger.debug "place_instance #{id} ,#{username}, #{name}, #{instance} ,'#{parent_name}' ,#{placement_type} "
 
@@ -128,4 +141,19 @@ class TreeArrangement < ActiveRecord::Base
   rescue RestClient::BadRequest => ex
     ex.response
   end
+
+
+
+  def update_value(username, name, value_uri, value)
+    logger.debug "update_value #{id} ,#{username}, #{name}, #{value_uri} ,'#{value}'"
+
+    url = TreeArrangement::update_value_url(username, id, name, value_uri, value)
+    logger.debug url
+    RestClient.post(url, accept: :json)
+
+  rescue RestClient::BadRequest => ex
+    ex.response
+
+  end
+
 end

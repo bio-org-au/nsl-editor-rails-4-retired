@@ -225,8 +225,8 @@ Rails.application.routes.draw do
   match "tree_arrangement/:id/place_name",
         as: "tree_arrangement_place_name", to: "trees#place_name", via: :patch
 
-  match "tree_arrangement/:id/update_values",
-        as: "tree_arrangement_update_values", to: "trees#update_values", via: :patch
+  match "tree_arrangement/:id/update_value",
+        as: "tree_arrangement_update_value", to: "trees#update_value", via: :patch
 
   root to: "search#search"
   match "/*random", to: "search#search", via: [:get, :post, :delete, :patch]
