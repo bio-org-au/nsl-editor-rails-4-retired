@@ -24,4 +24,15 @@ class TreeNode < ActiveRecord::Base
   belongs_to :name, class_name: Name
   belongs_to :instance, class_name: Instance
 
+  def valueLink(tree_value_uri)
+    if tree_value_uri.is_multi_valued
+      TreeLink.where(' supernode_id = ? and type_uri_ns_part_id = ? and type_uri_id_part = ?', self.id, tree_value_uri.link_uri_ns_part.id, tree_value_uri.link_uri_id_part)
+    else
+      TreeLink.where(' supernode_id = ? and type_uri_ns_part_id = ? and type_uri_id_part = ?', self.id, tree_value_uri.link_uri_ns_part.id, tree_value_uri.link_uri_id_part).first()
+    end
+
+
+#    Link.where(' supernode = ? and type_uri_ns_part = ? and type_uri_id = ?', self.id, tree_value_uri.link_uri_ns_part, tree_value_uri.link_uri_id_part)
+  end
+
 end

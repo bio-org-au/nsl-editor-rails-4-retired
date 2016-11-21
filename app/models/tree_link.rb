@@ -22,5 +22,6 @@ class TreeLink < ActiveRecord::Base
 
   belongs_to :supernode, class_name: TreeNode
   belongs_to :subnode, class_name: TreeNode
+  belongs_to :type_uri_ns_part, class_name: TreeUriNs
 
 end

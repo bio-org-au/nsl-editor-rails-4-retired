@@ -184,7 +184,7 @@
 
 
         <% if instancePlaced %>
-            <h5> <%= @current_classification.derivedLabel %> Placement notes</h5>
+            <h5> <%= @current_classification.derivedLabel %> Placement Notes</h5>
             <%
               if @current_classification.tree_type == 'U'
                 # a workspace is editable if the user is a member of the group
@@ -203,8 +203,11 @@
                     <%= form_for(@current_classification, controller: 'Trees', action: 'patch', remote: true, url: :tree_arrangement_update_value) do |f| %>
                         <%= f.hidden_field(:name_id, value: @instance.name.id) %>
                         <%= f.hidden_field(:value_label, value: u.label) %>
+
+                        <% current_value_link = placement.subnode.valueLink(u) %>
+
                         <label for="node-value-<%= u.label %>"><%= u.title %></label>
-                        <textarea name="value"></textarea>
+                        <textarea name="value" title="<%=u.title%>"><%= current_value_link.subnode.literal unless current_value_link.nil? %></textarea>
 
                         <%= f.submit id: "update_value",
                                      class: "btn btn-primary width-6em",
