@@ -14,7 +14,9 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#
+
+#   Trees are classification graphs for taxa.
+#   There are several types of trees - see the model.
 class TreesController < ApplicationController
   def index
   end
@@ -23,33 +25,39 @@ class TreesController < ApplicationController
     render "trees/#{params[:template]}", layout: false
   end
 
-  def select_classification
-    session[:current_classification] = params[:classification]
-    redirect_to controller: 'search', action: 'search'
-  end
-
+  # Move name ....
   def place_name
-    @response = TreeArrangement.find(session[:current_classification]).place_instance(
-        username,
-        params[:tree_arrangement][:name_id],
-        params[:tree_arrangement][:instance_id],
-        params[:parent_name],
-        params[:placement_type])
-
+    logger.debug("=========================")
+    logger.debug("place_name")
+    logger.debug("place_name; @current_workspace.id: #{@current_workspace.id}")
+    @response = @current_workspace.place_instance(username, place_name_params)
   rescue => e
     logger.error e
-    logger.info e.response
+    logger.error e.response
+    @message = JSON.parse(e.response)["msg"]["msg"]
     render "place_name_error.js"
   end
 
   def remove_name_placement
-    @response = TreeArrangement.find(session[:current_classification]).remove_instance(
-        username,
-        params[:tree_arrangement][:name_id])
+    @response = @current_workspace.remove_instance(username, remove_name_placement_params[:name_id])
+    #@response = TreeArrangement.find(session[:current_classification]).remove_instance(
+        #username,
+        #params[:tree_arrangement][:name_id])
 
   rescue => e
     logger.error e
     render "remove_name_placement_error.js"
   end
+
+  private
+
+  def place_name_params
+    params.require(:place_name).permit(:name_id, :instance_id, :parent_name, :placement_type, :move)
+  end
+
+  def remove_name_placement_params
+    params.require(:remove_placement).permit(:name_id, :instance_id)
+  end
+
 
 end

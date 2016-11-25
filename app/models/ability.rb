@@ -75,7 +75,6 @@ class Ability
     can "services",           :all
     can "sessions",           :all
     can "trees",              "ng"
-    can "trees",              "select_classification"
   end
 
   def edit_auth
@@ -104,6 +103,7 @@ class Ability
   def treebuilder_auth
     can "classification",     "place"
     can "trees", :all
+    can "trees/workspaces/current", "create"
   end
 
   def admin_auth

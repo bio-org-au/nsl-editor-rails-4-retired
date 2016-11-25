@@ -54,6 +54,9 @@ class TreeArrangement < ActiveRecord::Base
 
   def self.place_name_on_tree_url(username, tree_id, name, instance, parent_name, placement_type)
     logger.debug "place_name_on_tree_url"
+    if !username
+      raise "must be logged on to place instances"
+    end
     api_key = Rails.configuration.api_key
     address = Rails.configuration.services
     path = "treeEdit/placeNameOnTree"
@@ -111,13 +114,11 @@ class TreeArrangement < ActiveRecord::Base
     end
 
     logger.debug "before url"
-    #url = TreeArrangement::place_name_on_tree_url(username, id, name, instance, pn.nil? ? nil : pn.id, placement_type)
-    url = Tree::AsServices.placement_url(username, id, name, instance, pn.nil? ? nil : pn.id, placement_type)
+    url = TreeArrangement::place_name_on_tree_url(username, id, name, instance, pn.nil? ? nil : pn.id, placement_type)
     logger.debug url
     RestClient.post(url, accept: :json)
 
   rescue RestClient::BadRequest => ex
-    ap ex.response
     ex.response
 
   end

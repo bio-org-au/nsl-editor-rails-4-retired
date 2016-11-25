@@ -1,0 +1,8 @@
+      <div>
+        <b><%= @tree_link.node.name.full_name_html.html_safe %> name</b><br>
+        <b><%= @tree_link.placed_as.capitalize %> name</b> based on<br>
+        <b><%= @tree_link.node.instance.reference.citation %></b> under<br>
+        <b><%= @tree_link.supernode.instance.name.full_name_html.html_safe %></b> in workspace<br>
+        <b> <%= @tree_link.node.tree.title %> </b>
+      </div>
+      <%= divider %>

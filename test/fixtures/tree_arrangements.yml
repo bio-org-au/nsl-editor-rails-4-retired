@@ -31,7 +31,7 @@ end_tree:
   shared: t
 
 for_test:
-  tree_type: P
+  tree_type: U
   description: Temp classification for testing forms
   label: TMP
   node_id: 
@@ -40,4 +40,4 @@ for_test:
   namespace: apni
   owner:
   shared: t
-  base_arrangement_id:
+  base_arrangement_id: apc.id

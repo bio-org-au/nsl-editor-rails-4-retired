@@ -16,65 +16,53 @@
 #   limitations under the License.
 
 #   A tree link identifies a placement in a tree.
-class TreeLink < ActiveRecord::Base
+class Tree::EmptyTreeLink < ActiveRecord::Base
   self.table_name = "tree_link"
   self.primary_key = "id"
   self.sequence_name = "nsl_global_seq"
+  default_scope { where("2 = 3") }
 
-  belongs_to :supernode, class_name: TreeNode, foreign_key: "supernode_id"
-  belongs_to :node, class_name: TreeNode, foreign_key: "subnode_id"
+  def supernode
+    nil
+  end
 
-  ACCEPTED_RAW = "ApcConcept"
-  EXCLUDED_RAW = "ApcExcluded"
-  UNTREATED_RAW = "DeclaredBt"
-
-  ACCEPTED = "accepted"
-  EXCLUDED = "excluded"
-  UNTREATED = "untreated"
+  def subnode
+    nil
+  end
 
   def placed?
-    true
+    false
   end
 
   def placed_via_instance?(instance)
-    placed? && node.instance.id == instance.id
+    false
   end
 
   def placed_as
-    case node.type_uri_id_part
-    when ACCEPTED_RAW then
-      ACCEPTED
-    when EXCLUDED_RAW then
-      EXCLUDED
-    when UNTREATED_RAW then
-      UNTREATED
-      #"non-#{@current_workspace.label } parent"
-    else
-      node.node_type_uri_id_part
-    end
+    "not placed"
   end
 
   def accepted?
-    placed_as == ACCEPTED
+    false
   end
 
   def excluded?
-    placed_as == EXCLUDED
+    false
   end
 
   def untreated?
-    placed_as == UNTREATED
+    false
   end
 
   def default_to_accepted?
-    accepted?
+    true
   end
 
   def default_to_excluded?
-    excluded?
+    false
   end
 
   def default_to_untreated?
-    untreated?
+    false
   end
 end

@@ -1,2 +1,1 @@
-
 alert("error placing name");

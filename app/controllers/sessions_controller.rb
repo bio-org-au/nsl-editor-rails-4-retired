@@ -66,6 +66,7 @@ class SessionsController < ApplicationController
     session[:groups] = @sign_in.groups
     session[:user_full_name] = @sign_in.user_full_name
     session[:include_common_and_cultivar] = false
+    session[:workspace] = {}
   end
 
   def deep_link

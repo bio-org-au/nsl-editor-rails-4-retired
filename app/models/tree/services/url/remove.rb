@@ -15,21 +15,28 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-class TreeNode < ActiveRecord::Base
-  self.table_name = "tree_node"
-  self.primary_key = "id"
-  self.sequence_name = "nsl_global_seq"
+#  URL to remove a name from a tree
+class Tree::Services::Url::Remove
+  ADDRESS = Rails.configuration.services
+  PATH = "treeEdit/removeNameFromTree"
+  API_KEY = Rails.configuration.api_key
+  attr_reader :url
 
-  belongs_to :tree, class_name: TreeArrangement, foreign_key: "tree_arrangement_id"
-  belongs_to :name, class_name: Name
-  belongs_to :instance, class_name: Instance
-  has_many   :sublinks, class_name: ::TreeLink, foreign_key: "supernode_id"
+  def initialize(params)
+    @params = params
+    @url = "#{ADDRESS}#{PATH}?#{credentials}&#{args}"
+  end
+  #  "#{address}#{path}?apiKey=#{api_key}&runAs=#{ERB::Util.url_encode(username)}&tree=#{tree_id}&name=#{name}"
 
-  def delete?
-    subnodes.size == 0
+  def credentials
+    key = "apiKey=#{Rails.configuration.api_key}"
+    run_as = "runAs=#{ERB::Util.url_encode(@params[:username])}"
+    "#{key}&#{run_as}"
   end
 
-  def subnodes
-    sublinks.map {|sublink| sublink.node unless sublink.node.name_id.nil? }.compact
+  def args
+    tree = "tree=#{@params[:tree_id]}"
+    name = "name=#{@params[:name_id]}"
+    "#{tree}&#{name}"
   end
 end

@@ -14,22 +14,24 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
+#
+require "test_helper"
 
-class TreeNode < ActiveRecord::Base
-  self.table_name = "tree_node"
-  self.primary_key = "id"
-  self.sequence_name = "nsl_global_seq"
-
-  belongs_to :tree, class_name: TreeArrangement, foreign_key: "tree_arrangement_id"
-  belongs_to :name, class_name: Name
-  belongs_to :instance, class_name: Instance
-  has_many   :sublinks, class_name: ::TreeLink, foreign_key: "supernode_id"
-
-  def delete?
-    subnodes.size == 0
+# Comments controller tests.
+class TreeClassificationChooseOneTest < ActionController::TestCase
+  tests ::Trees::Workspaces::CurrentController
+  setup do
+    @tree = tree_arrangements(:for_test)
   end
 
-  def subnodes
-    sublinks.map {|sublink| sublink.node unless sublink.node.name_id.nil? }.compact
+  test "tree placement create" do
+    @request.headers["Accept"] = "application/javascript"
+    post(:create,
+        { id: @tree.id },
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: ["edit", "treebuilder"])
+    assert_response :success
   end
 end
+

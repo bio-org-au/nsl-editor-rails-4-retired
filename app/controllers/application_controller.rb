@@ -74,61 +74,17 @@ class ApplicationController < ActionController::Base
       format.js   { render partial: "layouts/no_session.js" }
     end
   end
-
+   
   def continue_user_session
     @current_user = User.new(username: session[:username],
                              full_name: session[:user_full_name],
                              groups: session[:groups])
-
-    @visible_classifications = [  ]
-    # TODO: check that this classification is visible to this user
-
-    if session[:current_classification]
-      @current_classification = TreeArrangement.find(session[:current_classification])
-      if @current_classification.tree_type == 'U'
-        # a workspace is editable if the user is a member of the group
-        # named by the workspace's base classification
-        t = TreeArrangement.find(@current_classification.base_arrangement_id)
-        @current_classification_editable = @current_user.groups.include? t.label
-      else
-        # only workspaces are editable
-        @current_classification_editable = false
-      end
-    else
-      @current_classification = nil
-      @current_classification_editable = false
-    end
-
-
-    TreeArrangement.where(tree_type: 'P').order(:label).each  do |t|
-      if @current_user.groups.include?(t.label) || t.shared
-
-        tree = {
-          tree: t,
-          editable: t.editableBy?(@current_user),
-          selected: @current_classification == t,
-          workspaces: []
-        }
-
-        @visible_classifications <<  tree
-
-        TreeArrangement.where(tree_type: 'U', base_arrangement_id: t.id).each  do |w|
-          if @current_user.groups.include?(t.label) || w.shared
-            workspace = {
-              workspace: w,
-              editable: @current_user.groups.include?(t.label),
-              selected: @current_classification == w
-            }
-            tree[:workspaces] << workspace
-          end
-        end
-      end
-
-
-    end
-
-
-    logger.debug("User is known: #{current_user.username}")
+    logger.info("User is known: #{@current_user.username}")
+    @current_workspace = if session[:workspace].blank?
+                           nil
+                         else
+                           Tree::Workspace.find(session[:workspace]["id"])
+                         end
   end
 
   def set_debug

@@ -15,47 +15,55 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-#  A tree - usually a classification or a classification workspace
-
-class TreeArrangement < ActiveRecord::Base
+#  A workspace is an unpublished tree (formally a tree arrangement) that can be edited.
+class Tree::Workspace < ActiveRecord::Base
   self.table_name = "tree_arrangement"
   self.primary_key = "id"
-  self.sequence_name = "nsl_global_seq"
-
+  default_scope { where(tree_type: "U") }
   belongs_to :base_arrangement, class_name: TreeArrangement
   belongs_to :namespace, class_name: "Namespace", foreign_key: "namespace_id"
+
+  def name(name)
+    name_in_tree(name)
+  end
+
+  def name_in_workspace(name)
+    link_id = TreeArrangement::sp_find_name_in_tree(name.id, id)
+    link_id ? TreeLink.find(link_id) : nil
+  end
+
+  def tree_link_for_name(name)
+    Rails.logger.debug("tree_link_for_name: #{name.id} #{name.full_name_html}")
+    link_id = TreeArrangement::sp_find_name_in_tree(name.id, id)
+    link_id ? TreeLink.find(link_id) : Tree::EmptyTreeLink.new
+  end
+  
+  def find_name(name)
+    workspace_name = Tree::Workspace::NameIn.find(name.id)
+    workspace_name.workspace_id = self.id
+    workspace_name.link_id = ActiveRecord::Base.connection.select_value("select find_name_in_tree(#{name.id}, #{self.id})")
+    workspace_name
+  end
 
   def find_placement_of_name(name)
     link_id = TreeArrangement::sp_find_name_in_tree(name.id, id)
     link_id ? TreeLink.find(link_id) : nil
   end
 
-  def editableBy?(user)
-    user && tree_type == 'U' && user.groups.include?(base_arrangement.label)
+  def user_can_edit?(user)
+    user && user.groups.include?(base_arrangement.label)
   end
 
-  def derivedLabel()
-    case
-      when tree_type =='P' then
-        label
-      when tree_type == 'U' then
-        base_arrangement.derivedLabel
-      else
-        "##{id}"
-    end
+  def label
+    base_arrangement.label
   end
-
-  def self.sp_find_name_in_tree(name_id, tree_id)
-    # doing this as bind variables isn't working for me, and anyway
-    # it doesn't matter because this select doen't involve a lot of planning
-    connection.select_value("select find_name_in_tree(#{name_id}, #{tree_id})")
-  end
-
 
   def self.place_name_on_tree_url(username, tree_id, name, instance, parent_name, placement_type)
-    logger.debug "place_name_on_tree_url"
+    if !username
+      raise "must be logged on to place instances"
+    end
     api_key = Rails.configuration.api_key
-    address = Rails.configuration.services
+    address = Rails.configuration.nsl_services
     path = "treeEdit/placeNameOnTree"
     "#{address}#{path}?apiKey=#{api_key}&runAs=#{ERB::Util.url_encode(username)}&tree=#{tree_id}&name=#{name}&instance=#{instance}&parentName=#{ERB::Util.url_encode(parent_name)}&placementType=#{ERB::Util.url_encode(placement_type)}"
   end
@@ -70,13 +78,36 @@ class TreeArrangement < ActiveRecord::Base
     "#{address}#{path}?apiKey=#{api_key}&runAs=#{ERB::Util.url_encode(username)}&tree=#{tree_id}&name=#{name}"
   end
 
-  def place_instance(username, name, instance, parent_name, placement_type)
-    Rails.logger.debug "--------------------------------------"
-    Rails.logger.debug "TreeArrangement.place_instance #{id} ,#{username}, #{name}, #{instance} ,'#{parent_name}' ,#{placement_type} "
 
+  def place_instance(username, params)
+    Rails.logger.debug "--------------------------------------"
+    Rails.logger.debug "Workspace::place_instance"
+    Rails.logger.debug "username: #{username}"
+    Rails.logger.debug "params: #{params}"
+    Rails.logger.debug "--------------------------------------"
+    parent_name = resolve_parent_name(params[:parent_name])
+    #url = TreeArrangement::place_name_on_tree_url(username, id, params[:name_id], params[:instance_id], parent_name.nil? ? nil : parent_name.id, params[:placement_type])
+    #url = Tree::AsServices.placement_url(username, id, params[:name_id], params[:instance_id], parent_name.nil? ? nil : parent_name.id, params[:placement_type])
+    url = Tree::AsServices.placement_url({username: username,
+                                          tree_id: id,
+                                          name_id: params[:name_id],
+                                          instance_id: params[:instance_id],
+                                          parent_name: parent_name.nil? ? nil : parent_name.id,
+                                          placement_type: params[:placement_type]})
+    logger.debug url
+    RestClient.post(url, accept: :json)
+
+  rescue RestClient::BadRequest => ex
+    ex.response
+
+  end
+
+  def resolve_parent_name(parent_name)
+    parent_name = parent_name.strip
+    Rails.logger.debug "resolve_parent_name"
     if parent_name && parent_name!=''
       ct = Name.where(full_name: parent_name).count
-      logger.debug "Number of parents: #{ct}"
+      logger.debug ct
       case ct
         when 0 then
           return {
@@ -92,7 +123,6 @@ class TreeArrangement < ActiveRecord::Base
 
         when 1 then
           pn = Name.find_by full_name: parent_name
-          logger.debug("parent_name: #{ap pn}")
 
         else
           return {
@@ -109,23 +139,14 @@ class TreeArrangement < ActiveRecord::Base
     else
       pn = nil
     end
-
-    logger.debug "before url"
-    #url = TreeArrangement::place_name_on_tree_url(username, id, name, instance, pn.nil? ? nil : pn.id, placement_type)
-    url = Tree::AsServices.placement_url(username, id, name, instance, pn.nil? ? nil : pn.id, placement_type)
-    logger.debug url
-    RestClient.post(url, accept: :json)
-
-  rescue RestClient::BadRequest => ex
-    ap ex.response
-    ex.response
-
+    pn
   end
 
-  def remove_instance(username, name)
-    logger.debug "remove_instance #{id} ,#{username}, #{name}"
+  def remove_instance(username, name_id)
+    logger.debug "remove_instance #{id} ,#{username}, #{name_id}"
 
-    url = TreeArrangement::remove_name_from_tree_url(username, id, name)
+    #url = TreeArrangement::remove_name_from_tree_url(username, id, name_id)
+    url = Tree::Services::Url::Remove.new({username: username,name_id: name_id, tree_id: self.id}).url
     logger.debug url
     RestClient.post(url, accept: :json)
 

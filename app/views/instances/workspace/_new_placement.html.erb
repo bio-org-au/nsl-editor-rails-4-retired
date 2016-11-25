@@ -1,0 +1,38 @@
+<% if !@instance.cited_by_id %>
+  <%= form_tag({controller: 'trees', action: 'place_name'}, {method: :post, remote: true}) do %>
+  <%= hidden_field_tag("place_name[name_id]", @instance.name.id) %>
+  <%= hidden_field_tag("place_name[instance_id]", @instance.id) %>
+  <b>Place</b> in <%= @current_workspace.title %>referencing</br>
+  <b><%= @instance.reference.citation_html.html_safe %></b><br/>
+  under
+  <div class="form-group">
+     <input type="text"
+            class="form-control"
+            title="APC Parent"
+            name="place_name[parent_name]"
+            value="<%#= @tree_link.supernode.name.full_name %>"
+     >
+  </div>
+      <div class="form-group">
+      <%= radio_button_tag(:type, "accepted", @tree_link.default_to_accepted?, name: "place_name[placement_type]") %>
+      <%= label_tag(:type_accepted, "Accepted") %>
+      <%= radio_button_tag(:type, "excluded", @tree_link.default_to_excluded?, name: "place_name[placement_type]") %>
+      <%= label_tag(:type_excluded, "Excluded") %>
+      <%= radio_button_tag(:type, "untreated", @tree_link.default_to_untreated?, name: "place_name[placement_type]") %>
+      <%= label_tag(:type_untreated, "Untreated") %>
+    </div>
+
+                <%= submit_tag "Place", id: "move_name_placement_btn",
+                             class: "btn btn-primary width-6em",
+                             name: "place_name[place]",
+                             tabindex: increment_tab_index,
+                             title: "Place the name in the workspace."
+                             %>
+
+
+                <div id="place_name_error_block"></div>
+                <div id="placement-error-message-container" class="error-message-container red hidden"></div>
+  <% end %>
+<% end %>
+
+

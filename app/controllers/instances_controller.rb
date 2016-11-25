@@ -32,6 +32,11 @@ as a synonym"
     @tab = tab_or_default_tab
     @tab_index = (params[:tabIndex] || "1").to_i
     @tabs_to_offer = tabs_to_offer
+    unless @current_workspace.blank?
+      @placement = @current_workspace.find_placement_of_name(@instance.name)
+      #@tree_link = @current_workspace.tree_link_for_name(@instance.name)
+      @tree_link = @current_workspace.tree_link_for_name(@instance.name)
+    end
     render "show", layout: false
   end
 

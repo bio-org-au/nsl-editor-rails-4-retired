@@ -29,13 +29,6 @@ Rails.application.routes.draw do
   resources :name_tags, only: [:show]
   resources :comments, only: [:show, :new, :edit, :create, :update, :destroy]
 
-  # Tree controller paths - need to be somewhere more appropriate in this file
-
-  match "trees/ng/:template", as: "tree_ng", to: "trees#ng", via: :get
-  match "trees/select_classification", as: "select_classification", to: "trees#select_classification", via: :get
-
-  # Tree controller paths - need to be somewhere more appropriate in this file
-
   match "sign_in", as: "start_sign_in", to: "sessions#new", via: :get
   match "retry_sign_in",
         as: "retry_start_sign_in", to: "sessions#retry_new", via: :get
@@ -219,11 +212,16 @@ Rails.application.routes.draw do
         as: "set_include_common_and_cultivar",
         via: :post
 
+  match "trees/ng/:template", as: "tree_ng", to: "trees#ng", via: :get
   match "tree_arrangement/:id/remove_name_placement",
-         as: "tree_arrangement_remove_name", to: "trees#remove_name_placement", via: :patch
-
+        as: "tree_arrangement_remove_name",
+        to: "trees#remove_name_placement", via: :delete
   match "tree_arrangement/:id/place_name",
-        as: "tree_arrangement_place_name", to: "trees#place_name", via: :patch
+        as: "tree_arrangement_place_name", to: "trees#place_name", via: [:patch, :post]
+  match "trees/workspace/current",
+        as: "create_current_workspace",
+        to: "trees/workspaces/current#create",
+        via: :post
 
   root to: "search#search"
   match "/*random", to: "search#search", via: [:get, :post, :delete, :patch]

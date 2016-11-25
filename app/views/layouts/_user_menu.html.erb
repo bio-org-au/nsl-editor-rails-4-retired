@@ -13,7 +13,7 @@
       <li class="dropdown-submenu">
         <a tabindex="-1" 
            href="#"
-           title="Hover over this to see your security groups, if any">
+           title="Your security groups">
           <%= pluralize(@current_user.groups.size,'Group') %></a>
           <ul class="dropdown-menu">
           <% @current_user.groups.each do |group| %>
@@ -23,7 +23,11 @@
                else icon_name = 'circle-o' 
                end 
              %>
-              <li role="presentation"><a title="A security group you belong to"><%= "#{icon(icon_name)} #{group == group.upcase ? group : group.capitalize}".html_safe %></a></li>
+             <li role="presentation">
+               <a title="A security group you belong to">
+                 <%= "#{icon(icon_name)} #{group == group.upcase ? group : group.capitalize}".html_safe %>
+               </a>
+             </li>
           <% end %>
           </ul>
       </li>
@@ -32,24 +36,9 @@
     <li class="dropdown-submenu">
       <a tabindex="-1"
          href="#"
-         title="Hover over this to see what classifications you can select from">Classifications</a>
-      <ul class="dropdown-menu">
-        <% @visible_classifications.each  do |t|
-            icon_name = t[:editable] ? 'edit' : 'circle-o'
-            icon_check = t[:selected] ? 'check' : ''
-          %>
-          <li role="presentation">
-            <%= link_to "#{icon(icon_name)} #{t[:tree].label} #{icon(icon_check)}".html_safe, {controller: 'trees', action: 'select_classification', classification: t[:tree].id}, { title: 'A Classification' } %>
-          </li>
-          <% t[:workspaces].each  do |w|
-                icon_name = w[:editable] ? 'edit' : 'circle-o'
-                icon_check = w[:selected]  ? 'check' : ''
-            %>
-            <li role="presentation" style="padding-left: 1em;">
-              <%= link_to("#{icon(icon_name)} #{w[:workspace].title} #{icon(icon_check)}".html_safe, {controller: 'trees', action: 'select_classification', classification: w[:workspace].id}, { title: 'A workspace' })%>
-            </li>
-          <% end %>
-        <% end %>
+         title="Available classification workspaces">Classifications</a>
+      <ul id="classifications-menu" class="dropdown-menu">
+        <%= render partial: "trees/menu" %>
       </ul>
     </li>
 

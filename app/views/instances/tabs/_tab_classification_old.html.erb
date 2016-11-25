@@ -1,14 +1,14 @@
 <% increment_tab_index(0) %>
 
-<% if @current_classification %>
+<% if @current_workspace %>
     <h5>
-      <% if @current_classification.tree_type == 'P' %>
-          Placement in <%= @current_classification.derivedLabel %>
-      <% elsif @current_classification.tree_type == 'U' %>
-          Placement in <%= @current_classification.derivedLabel %><br/>
-          Using workspace "<%= @current_classification.title %>"
+      <% if @current_workspace.tree_type == 'P' %>
+          Placement in <%= @current_workspace.derivedLabel %>
+      <% elsif @current_workspace.tree_type == 'U' %>
+          Placement in <%= @current_workspace.derivedLabel %><br/>
+          Using workspace "<%= @current_workspace.title %>"
       <% else %>
-          Classification (<%= @current_classification.derivedLabel %> of type <%= @current_classification.tree_type %>)
+          Classification (<%= @current_workspace.derivedLabel %> of type <%= @current_workspace.tree_type %>)
       <% end %>
     </h5>
     <div>
@@ -20,20 +20,20 @@
 
     <%
       # prefetch this - we will be using it a fair bit
-      placement = @current_classification.find_placement_of_name(@instance.name)
+      placement = @current_workspace.find_placement_of_name(@instance.name)
     %>
 
     <% if placement.nil?
          namePlaced = false
          instancePlaced = false
     %>
-        <b><%= @current_classification.derivedLabel %> status</b>: Non <%= @current_classification.derivedLabel %>.
+        <b><%= @current_workspace.derivedLabel %> status</b>: Non <%= @current_workspace.derivedLabel %>.
     <% elsif placement.subnode.instance == @instance
          namePlaced = true
          instancePlaced = true
     %>
         <div>
-          <b><%= @current_classification.derivedLabel %> Status</b>:
+          <b><%= @current_workspace.derivedLabel %> Status</b>:
 
           <%=
             case placement.subnode.type_uri_id_part
@@ -42,7 +42,7 @@
               when 'ApcExcluded' then
                 'excluded name'
               when 'DeclaredBt' then
-                "non-#{@current_classification.derivedLabel } parent"
+                "non-#{@current_workspace.derivedLabel } parent"
               else
                 placement.subnode.node_type_uri_id_part
             end
@@ -50,7 +50,7 @@
         </div>
 
         <div>
-          <b><%= @current_classification.derivedLabel %> Parent</b>:
+          <b><%= @current_workspace.derivedLabel %> Parent</b>:
           <% if placement.supernode.type_uri_id_part == 'classification-root' %>
               no name (top-level instance)
           <% else %>
@@ -63,7 +63,7 @@
     %>
 
         <div>
-          <b>Current <%= @current_classification.derivedLabel %> Reference</b>:
+          <b>Current <%= @current_workspace.derivedLabel %> Reference</b>:
           <% if placement.subnode.instance.reference.nil? %>
               (name placed without reference)
           <% else %>
@@ -72,7 +72,7 @@
         </div>
 
         <div>
-          <b> <%= @current_classification.derivedLabel %> Parent</b>:
+          <b> <%= @current_workspace.derivedLabel %> Parent</b>:
           <% if placement.supernode.type_uri_id_part == 'classification-root' %>
               no name (top-level instance)
           <% else %>
@@ -86,18 +86,18 @@
     <%= divider %>
 
     <%#TODO: move this block to _classification_edit_widgets or similar %>
-    <% if @current_classification.editableBy?(@current_user) %>
+    <% if @current_workspace.editableBy?(@current_user) %>
         <% if !@instance.cited_by_id %>
-            <%= form_for(@current_classification, controller: 'Trees', action: 'patch', remote: true, url: :tree_arrangement_place_name) do |f| %>
+            <%= form_for(@current_workspace, controller: 'Trees', action: 'patch', remote: true, url: :tree_arrangement_place_name) do |f| %>
                 <%= f.hidden_field(:name_id, value: @instance.name.id) %>
                 <%= f.hidden_field(:instance_id, value: @instance.id) %>
                 <h3>
                   <% if instancePlaced %>
-                      Update name in <%= @current_classification.derivedLabel %>
+                      Update name in <%= @current_workspace.derivedLabel %>
                   <% elsif namePlaced %>
-                      Update name in <%= @current_classification.derivedLabel %>
+                      Update name in <%= @current_workspace.derivedLabel %>
                   <% else %>
-                      Place name in <%= @current_classification.derivedLabel %>
+                      Place name in <%= @current_workspace.derivedLabel %>
                   <% end %>
                 </h3>
 
@@ -109,7 +109,7 @@
                   end
                 %>
                 <div class="form-group">
-                  <label><%= @current_classification.derivedLabel %> Status</label>
+                  <label><%= @current_workspace.derivedLabel %> Status</label>
 
                   <div >
                   <input id="radioAccepted" type="radio" name="placement_type" value="accepted"
@@ -161,14 +161,14 @@
         <% end %>
 
         <% if instancePlaced %>
-            <%= form_for(@current_classification, controller: 'Trees', action: 'patch', remote: true, url: :tree_arrangement_remove_name) do |f| %>
+            <%= form_for(@current_workspace, controller: 'Trees', action: 'patch', remote: true, url: :tree_arrangement_remove_name) do |f| %>
                 <%= f.hidden_field(:name_id, value: @instance.name.id) %>
                 <%= f.hidden_field(:instance_id, value: @instance.id) %>
-                <h3>Remove name from <%= @current_classification.derivedLabel %></h3>
+                <h3>Remove name from <%= @current_workspace.derivedLabel %></h3>
 
                 <u><%= raw(@instance.name.full_name_html) %></u> will be removed from
-                <%= @current_classification.derivedLabel %> <br/> in workspace
-                <u><%= @current_classification.title %></u>.
+                <%= @current_workspace.derivedLabel %> <br/> in workspace
+                <u><%= @current_workspace.title %></u>.
 
                 <%= f.submit id: "remove_name_placement",
                              class: "btn btn-primary width-6em",

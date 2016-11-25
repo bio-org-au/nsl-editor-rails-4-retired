@@ -43,6 +43,7 @@ jQuery ->
   $('#search-field').change (event) ->                                     searchFieldChanged(event,$(this))
   $('body').on('change','select#query-on', (event) ->                      queryonSelectChanged(event,$(this)))
   $('body').on('click','li.dropdown', (event) ->                           dropdownClick(event,$(this)))
+  # $('body').on('click','li.dropdown-submenu a', (event) ->                 dropdownSubmenuClick(event,$(this)))
   $('body').on('click','a.unconfirmed-delete-link', (event) ->             unconfirmedActionLinkClick(event,$(this)))
   $('body').on('click','a.unconfirmed-action-link', (event) ->             unconfirmedActionLinkClick(event,$(this)))
   $('body').on('click','a.cancel-link', (event) ->                         cancelLinkClick(event,$(this)))
@@ -142,6 +143,11 @@ dropdownClick = (event,$element) ->
     hideSearchResultDetailsIfMenusOpen()
     return
   ), 600
+
+# Do NOT close the menu when submenu is clicked.
+dropdownSubmenuClick = (event,$element) ->
+  event.preventDefault()
+  event.stopPropagation()
 
 showSearchResultDetailsIfMenusClosed = ->
   debug('showSearchResultDetailsIfMenusClosed')

@@ -15,21 +15,25 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-class TreeNode < ActiveRecord::Base
-  self.table_name = "tree_node"
-  self.primary_key = "id"
-  self.sequence_name = "nsl_global_seq"
-
-  belongs_to :tree, class_name: TreeArrangement, foreign_key: "tree_arrangement_id"
-  belongs_to :name, class_name: Name
-  belongs_to :instance, class_name: Instance
-  has_many   :sublinks, class_name: ::TreeLink, foreign_key: "supernode_id"
-
-  def delete?
-    subnodes.size == 0
+#   User can choose a workspace.
+class Trees::Workspaces::CurrentController < ApplicationController
+  def create
+    if session[:workspace] &&
+       session[:workspace]["id"] == params[:id].to_i
+      head :ok
+    else
+      set_workspace
+    end
   end
 
-  def subnodes
-    sublinks.map {|sublink| sublink.node unless sublink.node.name_id.nil? }.compact
+  private
+
+  # Set instance variable for use in the request.
+  # Set session variable for following requests.
+  # Need both because session variable loses ActiveRecord features
+  # but activerecord variable dies after the request.
+  def set_workspace
+    @current_workspace = Tree::Workspace.find(params[:id])
+    session[:workspace] = @current_workspace
   end
 end

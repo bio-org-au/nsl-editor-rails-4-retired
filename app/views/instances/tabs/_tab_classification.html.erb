@@ -1,0 +1,19 @@
+<% increment_tab_index(0) %>
+
+<% if @current_workspace %>
+  <%= render partial: "instances/workspace/tab_main" %>
+<% else %>
+    <h5>No classification selected</h5>
+    <p>
+      Select a classification or workspace from the User&nbsp;&gt;&nbsp;Classifications menu.
+    </p>
+<% end %>
+
+
+<div id="instance-note-fields">
+  <%= render partial: 'instances/tabs/apc_note_widgets',
+             locals: {instance_notes: @instance.apc_instance_notes} %>
+</div>
+
+
+

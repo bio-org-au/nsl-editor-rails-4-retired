@@ -1,0 +1,17 @@
+
+<% Tree::Public.all.each do |classification| %>
+  <% next unless classification.workspaces? %> 
+  <li role="presentation">
+    <span>&nbsp; <%= classification.label %></span>
+  </li>
+  <% classification.workspaces.each  do |workspace| %>
+    <% icon_check_class = workspace.id == session["workspace"]["id"]  ? '' : 'hidden' %>
+    <li role="presentation" style="padding-left: 1em;">
+      <%= link_to("#{icon('cirle-o')} #{workspace.title} #{fa_icon 'check', class: icon_check_class}".html_safe,
+                  create_current_workspace_path(id: workspace.id),
+                  { remote: true,
+                    method: "post",
+                    title: 'Choose current workspace' }) %>
+    </li>
+  <% end %>
+<% end %>

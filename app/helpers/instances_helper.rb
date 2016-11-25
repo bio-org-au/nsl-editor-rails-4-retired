@@ -72,8 +72,7 @@ module InstancesHelper
       if tab == "tab_synonymy" ||
          tab == "tab_create_unpublished_citation" ||
          # TODO remove this - NSL-2007
-         tab == "tab_apc_placement" ||
-         tab == "tab_classification" ||
+         tab == "tab_apc_placement"
         tab
       elsif tab == "tab_copy_to_new_reference"
         "tab_copy_to_new_reference_na"

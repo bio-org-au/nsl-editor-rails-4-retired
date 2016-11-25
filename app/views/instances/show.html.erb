@@ -16,6 +16,7 @@
     <%= render partial: "#{'instances/tabs/tabs'}" %>
     <%= render partial: "instances/tabs/#{tab_for_instance_type(@tab,params['row-type'])}" %>
 
+
     <br>
     <span class='server-response-time'><%= "(#{(Time.now - @start_time).round(2)}s)" if @start_time %></span>
 
