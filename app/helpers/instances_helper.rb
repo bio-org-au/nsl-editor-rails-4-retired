@@ -54,7 +54,8 @@ module InstancesHelper
   def tab_for_instance_type(tab, row_type)
     if tab == "tab_show_1" ||
        tab == "tab_edit" ||
-       tab == "tab_edit_notes" || tab == "tab_comments"
+       tab == "tab_edit_notes" || tab == "tab_comments" ||
+       tab == "tab_apc_placement"
       tab
     elsif row_type == "instance_as_part_of_concept_record"
       if tab == "tab_synonymy" ||

@@ -44,9 +44,11 @@ class Search::OnInstance::FieldRule
                                  from comment
                                  where comment.instance_id = instance.id
                                  and comment.created_by like ?) " },
+
     "page:"                 => { where_clause: " lower(page) like lower(?)" },
     "page-qualifier:"       => { where_clause:
                                  " lower(page_qualifier) like lower(?)" },
+
     "note-key:"             => { where_clause: " exists (select null
                                  from instance_note
                                  where instance_id = instance.id
@@ -54,22 +56,20 @@ class Search::OnInstance::FieldRule
                                  from instance_note_key
                                  where instance_note_key_id =
                                  instance_note_key.id
-                                 and lower(instance_note_key.name) like lower(?) )) " },
+                                 and lower(instance_note_key.name)
+                                 like lower(?) )) " },
 
     "notes-exact:"          => { where_clause: " exists (select null
                                  from instance_note
                                  where instance_id = instance.id
-                                 and lower(instance_note.value) like lower(?)) " },
-    "verbatim-name-exact:"  => { where_clause:
-                                 "lower(verbatim_name_string) like lower(?) " },
-    "verbatim-name:"        => { where_clause:
-                                 "lower(verbatim_name_string) like lower(?)",
-                                 leading_wildcard: true,
-                                 trailing_wildcard: true },
+                                 and lower(instance_note.value)
+                                 like lower(?)) " },
+
     "notes:"                => { where_clause: " exists (select null
                                  from instance_note
                                  where instance_id = instance.id
-                                 and lower(instance_note.value) like lower(?)) ",
+                                 and lower(instance_note.value)
+                                 like lower(?)) ",
                                  leading_wildcard: true,
                                  trailing_wildcard: true },
 
@@ -84,7 +84,15 @@ class Search::OnInstance::FieldRule
                                  and lower(instance_note_key.name) = 'type')) ",
                                  leading_wildcard: true,
                                  trailing_wildcard: true },
-
+    "apc-dist-matches:"     => { where_clause: " exists (select null
+                                 from instance_note
+                                 where instance_id = instance.id
+                                 and instance_note.value ~ ?
+                                 and exists (select null
+                                 from instance_note_key
+                                 where instance_note_key_id =
+                                 instance_note_key.id
+                                 and instance_note_key.name = 'APC Dist.')) "},
     "type:"                 => { where_clause: " exists (select null
                                  from instance_type
                                  where instance_type_id = instance_type.id
@@ -117,6 +125,12 @@ class Search::OnInstance::FieldRule
     "is-cited-by-an-instance:" => { where_clause: " cited_by_id is not null" },
     "does-not-cite-an-instance:" => { where_clause: " cites_id is null" },
     "is-not-cited-by-an-instance:" => { where_clause: " cited_by_id is null" },
+    "verbatim-name-exact:"  => { where_clause:
+                                 "lower(verbatim_name_string) like lower(?) " },
+    "verbatim-name:"        => { where_clause:
+                                 "lower(verbatim_name_string) like lower(?)",
+                                 leading_wildcard: true,
+                                 trailing_wildcard: true },
     "verbatim-name-matches-full-name:" => { where_clause:
                                              " lower(verbatim_name_string) =
                                              (select lower(full_name)
@@ -135,7 +149,14 @@ class Search::OnInstance::FieldRule
                                  from instance_type
                                  where instance_type_id = instance_type.id
                                  and instance_type.name = 'tax. nov.') and
-                                         exists (select null from name where name.id = instance.name_id and exists (select null from name_status where name_status.id = name.name_status_id and name_status.name = 'orth. var.'))" },
+                                 exists (select null from name
+                                         where name.id = instance.name_id
+                                           and exists (select null
+                                                         from name_status
+                                                        where name_status.id =
+                                                        name.name_status_id
+                                                          and name_status.name =
+                                                             'orth. var.'))" },
     "species-or-below-syn-with-genus-or-above:" =>
     { where_clause:
       " instance.id in

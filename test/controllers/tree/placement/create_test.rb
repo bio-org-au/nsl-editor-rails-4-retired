@@ -15,12 +15,17 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-class Tree < ActiveType::Object
-  # Maps query option tokens to user-interface.
-  # Used in html select.
-  def self.query_options
-    {
-      "apc" => "APC",
-    }
+require "test_helper"
+
+# Comments controller tests.
+class TreePlacementCreateTest < ActionController::TestCase
+  tests ::TreesController
+  setup do
+  end
+
+  test "tree placement create" do
+    skip
+    # assert 1 == 2, "tree placement create failed"
   end
 end
+

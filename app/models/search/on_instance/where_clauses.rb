@@ -31,7 +31,7 @@ class Search::OnInstance::WhereClauses
   end
 
   def build_sql
-    args = @parsed_request.where_arguments.downcase
+    args = @parsed_request.where_arguments
     @common_and_cultivar_included = @parsed_request.common_and_cultivar
     @sql = @sql.for_id(@parsed_request.id) if @parsed_request.id
     apply_args_to_sql(args)

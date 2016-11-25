@@ -80,8 +80,8 @@ class Ldap < ActiveType::Object
     ldap.auth Rails.configuration.ldap_admin_username,
               Rails.configuration.ldap_admin_password
     unless ldap.bind
-      Rails.logger.error("LDAP error")
-      Rails.logger.error(ldap.get_operation_result.error_message)
+      Rails.logger.error("LDAP error: #{ldap.get_operation_result.error_message}")
+      raise "Failed admin connection!"
     end
     ldap
   end

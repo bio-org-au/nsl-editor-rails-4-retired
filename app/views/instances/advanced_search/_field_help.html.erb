@@ -29,11 +29,12 @@
   <% end %>
 </table>
 
-  <h5>Special Combination fields</h5>
+  <h5>Special Note Searches</h5>
 <table class="table table-striped">
   <tr><th>Field</th><th>Description</th></tr>
   <% [
       {field_name: 'note-key-type-note:', description: "Instances with the specified text in a note with a key of 'type'."},
+      {field_name: 'apc-dist-matches:', description: "Regular expression matches on the APC Dist. instance note.  Case-sensitive."},
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">
