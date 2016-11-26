@@ -30,6 +30,7 @@ require "minitest/unit"
 require "mocha"
 require "mocha/setup"
 require "mocha/mini_test"
+require "webmock/minitest"
 
 # To add Capybara feature tests add `gem "minitest-rails-capybara"`
 # to the test group in the Gemfile and uncomment the following:

@@ -17,8 +17,8 @@
 #
 require "test_helper"
 
-# Tree (workspace) controller test for create placement.
-class TreePlacementCreateTest < ActionController::TestCase
+# Tree (workspace) controller test for remove placement.
+class TreePlacementRemoveTest < ActionController::TestCase
   tests ::TreesController
   setup do
     @instance = instances(:usage_of_name_to_be_placed)
@@ -29,19 +29,15 @@ class TreePlacementCreateTest < ActionController::TestCase
   end
 
   def a
-    "http://localhost:9090/nsl/services/treeEdit/placeNameOnTree"
+    "http://localhost:9090/nsl/services/treeEdit/removeNameFromTree"
   end
 
   def b
-    "?apiKey=test-api-key&instance=#{@instance.id}&name=#{@name.id}"
+    "?apiKey=test-api-key&name=#{@name.id}"
   end
 
   def c
-    "&parentName=#{@parent.id}&placementType=accepted&runAs=fred&"
-  end
-
-  def d
-    "tree=#{@workspace.id}"
+    "&runAs=fred&tree=#{@workspace.id}"
   end
 
   def user_agent
@@ -49,7 +45,7 @@ class TreePlacementCreateTest < ActionController::TestCase
   end
 
   def stub_it
-    stub_request(:post, "#{a}#{b}#{c}#{d}")
+    stub_request(:post, "#{a}#{b}#{c}")
       .with(body: { "accept" => "json" },
             headers: { "Accept" => "*/*",
                        "Accept-Encoding" => "gzip, deflate",
@@ -60,18 +56,18 @@ class TreePlacementCreateTest < ActionController::TestCase
       .to_return(status: 200, body: "", headers: {})
   end
 
-  test "place name in workspace" do
+  test "remove name from workspace" do
     @request.headers["Accept"] = "application/javascript"
-    patch(:place_name,
-          { id: @workspace,
-            place_name: { name_id: @name,
-                          instance_id: @instance.id,
-                          parent_name: @parent.full_name,
-                          placement_type: "accepted" } },
-          username: "fred",
-          user_full_name: "Fred Jones",
-          groups: %w(edit treebuilder),
-          workspace: @workspace)
+    delete(:remove_name_placement,
+           { id: @workspace,
+             remove_placement: { name_id: @name,
+                                 instance_id: @instance.id,
+                                 parent_name: @parent.full_name,
+                                 placement_type: "accepted" } },
+           username: "fred",
+           user_full_name: "Fred Jones",
+           groups: %w(edit treebuilder),
+           workspace: @workspace)
     assert_response :success
   end
 end

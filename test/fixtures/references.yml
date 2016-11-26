@@ -2172,3 +2172,17 @@ for_typeahead_display:
   ref_type: book
   created_by: tester
   updated_by: tester
+
+for_name_to_be_placed:
+  title: For Name To Be Placed
+  display_title: For Name To Be Placed
+  citation: For Name To Be Placed
+  citation_html: For Name To Be Placed
+  author: blume_c_l_von
+  pages: 2-3
+  language: undetermined
+  namespace: apni
+  ref_author_role: author
+  ref_type: book
+  created_by: tester
+  updated_by: tester

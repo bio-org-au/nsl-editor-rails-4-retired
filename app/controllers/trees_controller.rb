@@ -35,18 +35,14 @@ class TreesController < ApplicationController
     logger.error e
     logger.error e.response
     @message = JSON.parse(e.response)["msg"]["msg"]
-    render "place_name_error.js"
+    render "place_name_error.js", :status => 422
   end
 
   def remove_name_placement
     @response = @current_workspace.remove_instance(username, remove_name_placement_params[:name_id])
-    #@response = TreeArrangement.find(session[:current_classification]).remove_instance(
-        #username,
-        #params[:tree_arrangement][:name_id])
-
   rescue => e
-    logger.error e
-    render "remove_name_placement_error.js"
+    e.backtrace.each { |trace| logger.error trace }
+    render "remove_name_placement_error.js", :status => 422
   end
 
   private

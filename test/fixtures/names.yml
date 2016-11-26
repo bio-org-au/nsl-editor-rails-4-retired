@@ -1953,3 +1953,16 @@ to_be_a_double_synonym:
   updated_by: greg
   created_by: greg
 
+to_be_placed: 
+  simple_name: to be placed
+  full_name: to be placed
+  name_element: to be placed
+  full_name_html: to be placed
+  name_rank: species
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+

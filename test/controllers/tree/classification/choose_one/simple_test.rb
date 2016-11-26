@@ -24,7 +24,7 @@ class TreeClassificationChooseOneTest < ActionController::TestCase
     @tree = tree_arrangements(:for_test)
   end
 
-  test "tree placement create" do
+  test "choose workspace" do
     @request.headers["Accept"] = "application/javascript"
     post(:create,
         { id: @tree.id },

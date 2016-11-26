@@ -837,3 +837,12 @@ first_syn_for_to_have_a_double:
   namespace: apni
   created_by: tester
   updated_by: tester
+
+usage_of_name_to_be_placed:
+  reference: for_name_to_be_placed
+  name: to_be_placed
+  instance_type: primary_reference
+  page: exclude-from-ordering-test
+  namespace: apni
+  created_by: tester
+  updated_by: tester
