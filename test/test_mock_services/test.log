@@ -1,5 +1,0 @@
-
-08:19:21 [rerun] Bin launched
-
-08:19:23 [rerun] Bin Launch Failed
-08:19:23 [rerun] Watching . for **/*.{rb,js,coffee,css,scss,sass,erb,html,haml,ru,yml,slim,md} using Darwin adapter
