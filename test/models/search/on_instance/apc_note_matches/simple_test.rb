@@ -28,6 +28,6 @@ class SearchOnInstanceApcDistMatchesTest < ActiveSupport::TestCase
     )
     search = Search::Base.new(params)
     assert search.executed_query.results.size == 1
-           "Expecting exactly 1 matching instance and note."
+    "Expecting exactly 1 matching instance and note."
   end
 end

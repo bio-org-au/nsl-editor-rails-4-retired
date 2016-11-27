@@ -44,5 +44,4 @@ class SignIn < ActiveType::Object
     credentials[:password] = password
     Ldap.new(credentials)
   end
-
 end

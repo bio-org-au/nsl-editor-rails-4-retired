@@ -43,7 +43,7 @@ end
 def suggestions_should_only_include(suggestions,
                                     given_rank_name,
                                     expected_rank_names)
-  NameRank.all.sort { |a, b| a.sort_order <=> b.sort_order }.each do |rank|
+  NameRank.all.sort_by(&:sort_order).each do |rank|
     if expected_rank_names.include?(rank.name)
       suggestions_should_include(suggestions, given_rank_name, rank.name)
     else

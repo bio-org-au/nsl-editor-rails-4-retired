@@ -19,6 +19,27 @@ require "test_helper"
 
 # Single name model test.
 class NameAsCopierWithAllInstancesSimpleTest < ActiveSupport::TestCase
+  setup do
+    stub_request(:get, %r{http://localhost:9090/nsl/services/name/apni/[0-9]{8,}/api/name-strings})
+      .with(headers: { "Accept" => "*/*", "Accept-Encoding" => "gzip;q=1.0,deflate;q=0.6,identity;q=0.3", "User-Agent" => "Ruby" })
+      .to_return(status: 200, body: {
+
+        "class": "silly name class",
+        "_links": {
+          "permalink": []
+        },
+        "name_element": "redundant name element for id 960477440",
+        "action": "unnecessary action",
+        "result": {
+          "fullMarkedUpName": "full marked up name for id 960477440",
+          "simpleMarkedUpName": "simple marked up name for id 960477440",
+          "fullName": "full name for id 960477440",
+          "simpleName": "simple name for id 960477440"
+        }
+
+      }.to_json, headers: {})
+  end
+
   test "copy name with all instances" do
     before = Name.count
     master_name = Name::AsCopier.find(names(:a_genus_with_two_instances).id)

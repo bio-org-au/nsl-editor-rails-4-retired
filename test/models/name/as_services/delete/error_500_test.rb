@@ -19,6 +19,27 @@ require "test_helper"
 
 # Single name model test.
 class NameAsServicesDeleteError500Test < ActiveSupport::TestCase
+  setup do
+    stub_request(:delete, "#{s1}#{s2}")
+      .with(headers: { "Accept" => "application/json",
+                       "Accept-Encoding" => "gzip, deflate",
+                       "Host" => "localhost:9090",
+                       "User-Agent" => agent })
+      .to_return(status: 500, body: "", headers: {})
+  end
+
+  def agent
+    "rest-client/2.0.0 (darwin16.1.0 x86_64) ruby/2.3.0p0"
+  end
+
+  def s1
+    "http://localhost:9090/nsl/services/name/apni/540036697/"
+  end
+
+  def s2
+    "api/delete?apiKey=test-api-key&reason=500%20this%20is%20the%20reason....."
+  end
+
   test "url" do
     name_id = names(:name_to_delete).id
     name = Name::AsServices.find(name_id)

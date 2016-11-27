@@ -20,6 +20,43 @@ require "models/reference/update/if_changed/test_helper"
 
 # Single Reference model test.
 class ForAChangedVolumeTest < ActiveSupport::TestCase
+  setup do
+    stub_it
+  end
+
+  def a
+    "localhost:9090"
+  end
+
+  def b
+    "reference"
+  end
+
+  def c
+    "citation-strings"
+  end
+
+  def stub_it
+    stub_request(:get,
+                 %r{http://#{a}/nsl/services/#{b}/apni/[0-9][0-9]*/api/#{c}})
+      .with(headers: { "Accept" => "*/*",
+                       "Accept-Encoding" =>
+                       "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
+                       "User-Agent" => "Ruby" })
+      .to_return(status: 200, body: body.to_json, headers: {})
+  end
+
+  def body
+    %({"action": "citation-strings",
+    "reference": { "_links": { "permalink": [] }, "citation":
+    "Hasskarl, J.C. (Oct. 1855), Retzia sive Observationes in ...Julium 1855",
+    "citationAuthYear": "Hassk., null",
+    "citationHtml": "Hasskarl, J.C. (Oct. 1855), Retzia sive ...Julium 1855",
+    "class": "au.org.biodiversity.nsl.Reference" },
+    "result": { "citation": "Hasskarl, J.C. (Oct. 1855), ...Julium 1855",
+    "citationHtml": "Hasskarl, J.C. (Oct. 1855), Retzia...Julium 1855" } })
+  end
+
   test "changed volume" do
     test_reference_text_field_change_is_detected("volume")
   end

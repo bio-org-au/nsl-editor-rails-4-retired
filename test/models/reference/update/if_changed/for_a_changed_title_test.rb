@@ -17,9 +17,14 @@
 #
 require "test_helper"
 require "models/reference/update/if_changed/test_helper"
+require "models/reference/update/if_changed/stub_helper"
 
 # Single Reference model test.
 class ForAChangedTitleTest < ActiveSupport::TestCase
+  setup do
+    stub_it
+  end
+
   test "changed title" do
     test_reference_text_field_change_is_detected("title")
   end

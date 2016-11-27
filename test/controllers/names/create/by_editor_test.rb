@@ -21,16 +21,51 @@ require "test_helper"
 class NamesCreateByEditorTest < ActionController::TestCase
   tests NamesController
 
+  setup do
+    @name_status = name_statuses(:legitimate)
+    @name_rank = name_ranks(:species)
+    @name_type = name_types(:scientific)
+    @parent = names(:a_genus)
+    @parent_typeahead = names(:a_genus).full_name
+    @name_element = "fred"
+    stub_it
+  end
+
+  def a
+    "localhost:9090"
+  end
+
+  def b
+    "name-strings"
+  end
+
+  def user_agent
+    "Ruby"
+  end
+
+  def stub_it
+    stub_request(:get, %r{#{a}.nsl/services.name.apni.[0-9][0-9]*.api.#{b}})
+      .with(headers: { "Accept" => "*/*", "Accept-Encoding" => /.*/,
+                       "User-Agent" => user_agent })
+      .to_return(status: 200, body: %({ "class": "silly name class",
+      "_links": { "permalink": [ ] }, "name_element":
+      "redundant name element for id 91755", "action": "unnecessary action",
+      "result": { "fullMarkedUpName": "full marked up name for id 91755",
+        "simpleMarkedUpName": "simple marked up name for id 91755",
+        "fullName": "full name for id 91755",
+        "simpleName": "simple name for id 91755" } }).to_json, headers: {})
+  end
+
   test "editor should be able to create name" do
     @request.headers["Accept"] = "application/javascript"
     assert_difference("Name.count") do
       post(:create,
-           { name: { "name_status_id" => name_statuses(:legitimate),
-                     "name_rank_id" => name_ranks(:species),
-                     "name_type_id" => name_types(:scientific),
-                     "parent_id" => names(:a_genus),
-                     "parent_typeahead" => names(:a_genus).full_name,
-                     "name_element" => "fred" } },
+           { name: { "name_status_id" => @name_status.id,
+                     "name_rank_id" => @name_rank.id,
+                     "name_type_id" => @name_type.id,
+                     "parent_id" => @parent.id,
+                     "parent_typeahead" => @parent_typeahead,
+                     "name_element" => @name_element } },
            username: "fred",
            user_full_name: "Fred Jones",
            groups: ["edit"])

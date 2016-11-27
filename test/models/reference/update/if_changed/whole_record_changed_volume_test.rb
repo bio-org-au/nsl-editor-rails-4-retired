@@ -19,35 +19,71 @@ require "test_helper"
 
 # Single Reference model test.
 class WholeRecordChangedVolumeTest < ActiveSupport::TestCase
-  test "realistic form submission" do
-    reference = Reference::AsEdited.find(
+  setup do
+    @reference = Reference::AsEdited.find(
       references(:for_whole_record_change_detection).id
     )
 
-    params = { "title" => reference.title,
-               "year" => reference.year,
-               "volume" => (reference.volume || "") + "x",
-               "pages" => reference.pages,
-               "edition" => reference.edition,
-               "ref_author_role_id" => reference.ref_author_role_id,
-               "published" => reference.published,
-               "publication_date" => reference.publication_date,
-               "notes" => reference.notes,
-               "ref_type_id" => reference.ref_type_id }
+    @params = { "title" => @reference.title,
+                "year" => @reference.year,
+                "volume" => (@reference.volume || "") + "x",
+                "pages" => @reference.pages,
+                "edition" => @reference.edition,
+                "ref_author_role_id" => @reference.ref_author_role_id,
+                "published" => @reference.published,
+                "publication_date" => @reference.publication_date,
+                "notes" => @reference.notes,
+                "ref_type_id" => @reference.ref_type_id }
 
-    typeahead_params = { "parent_id" => reference.parent_id,
-                         "parent_typeahead" => reference.parent.citation,
-                         "author_id" => reference.author_id,
-                         "author_typeahead" => reference.author.name }
+    @typeahead_params = { "parent_id" => @reference.parent_id,
+                          "parent_typeahead" => @reference.parent.citation,
+                          "author_id" => @reference.author_id,
+                          "author_typeahead" => @reference.author.name }
+    stub_it
+  end
 
-    assert reference.update_if_changed(params,
-                                       typeahead_params,
-                                       "a user"),
+  def a
+    "localhost:9090"
+  end
+
+  def b
+    "reference"
+  end
+
+  def c
+    "citation-strings"
+  end
+
+  def stub_it
+    stub_request(:get,
+                 %r{http://#{a}/nsl/services/#{b}/apni/[0-9][0-9]*/api/#{c}})
+      .with(headers: { "Accept" => "*/*",
+                       "Accept-Encoding" =>
+                       "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
+                       "User-Agent" => "Ruby" })
+      .to_return(status: 200, body: body.to_json, headers: {})
+  end
+
+  def body
+    %({"action": "citation-strings",
+    "reference": { "_links": { "permalink": [] }, "citation":
+    "Hasskarl, J.C. (Oct. 1855), Retzia sive Observationes in ...Julium 1855",
+    "citationAuthYear": "Hassk., null",
+    "citationHtml": "Hasskarl, J.C. (Oct. 1855), Retzia sive ...Julium 1855",
+    "class": "au.org.biodiversity.nsl.Reference" },
+    "result": { "citation": "Hasskarl, J.C. (Oct. 1855), ...Julium 1855",
+    "citationHtml": "Hasskarl, J.C. (Oct. 1855), Retzia...Julium 1855" } })
+  end
+
+  test "realistic form submission" do
+    assert @reference.update_if_changed(@params,
+                                        @typeahead_params,
+                                        "a user"),
            "The reference has changed so it should be updated."
-    changed_reference = Reference.find_by(id: reference.id)
-    assert reference.created_at < changed_reference.updated_at,
+    changed_reference = Reference.find_by(id: @reference.id)
+    assert @reference.created_at < changed_reference.updated_at,
            "Reference updated at should have changed."
-    assert reference.updated_by.match("a user"),
+    assert @reference.updated_by.match("a user"),
            "Reference updated by should have been set."
   end
 end

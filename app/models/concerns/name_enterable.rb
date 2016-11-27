@@ -35,7 +35,7 @@ module NameEnterable
   end
 
   def takes_author_only?
-      category == NameCategories::PHRASE
+    category == NameCategories::PHRASE
   end
 
   def requires_name_element?

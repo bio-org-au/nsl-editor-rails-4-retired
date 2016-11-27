@@ -5,7 +5,7 @@ module ReferenceCitations
   extend ActiveSupport::Concern
   included do
   end
-  
+
   def set_citation!
     json = citation_json
     self.citation_html = json["result"]["citationHtml"]

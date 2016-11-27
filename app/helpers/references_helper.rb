@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module ReferencesHelper
   def display_pages(pages = "")
     if pages.blank?

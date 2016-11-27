@@ -79,7 +79,9 @@ module ReferenceValidations
 
   def a_part_ref_cannot_have_publication_details_date
     errors.add(:year, "is not allowed for a Part") if year.present?
-    errors.add(:publication_date,
-               "is not allowed for a Part") if publication_date.present?
+    if publication_date.present?
+      errors.add(:publication_date,
+                 "is not allowed for a Part")
+    end
   end
 end

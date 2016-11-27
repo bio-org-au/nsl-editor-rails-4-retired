@@ -24,11 +24,11 @@ class Tree::Public < ActiveRecord::Base
   has_many :workspaces, class_name: "Tree::Workspace", foreign_key: "base_arrangement_id"
 
   def find_placement_of_name(name)
-    link_id = TreeArrangement::sp_find_name_in_tree(name.id, id)
+    link_id = TreeArrangement.sp_find_name_in_tree(name.id, id)
     link_id ? TreeLink.find(link_id) : nil
   end
 
-  def user_can_edit?(user)
+  def user_can_edit?(_user)
     false
   end
 
@@ -39,6 +39,6 @@ class Tree::Public < ActiveRecord::Base
   end
 
   def workspaces?
-    workspaces.size > 0
+    !workspaces.empty?
   end
 end

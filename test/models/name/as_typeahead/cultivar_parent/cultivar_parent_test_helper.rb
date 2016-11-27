@@ -53,7 +53,7 @@ def cultivar_parent_suggestions_should_only_include(
 end
 
 def sorted_name_ranks
-  NameRank.all.sort { |a, b| a.sort_order <=> b.sort_order }
+  NameRank.all.sort_by(&:sort_order)
 end
 
 def show(suggestions)

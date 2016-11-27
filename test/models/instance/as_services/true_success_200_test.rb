@@ -16,12 +16,19 @@
 #   limitations under the License.
 #
 require "test_helper"
+require "models/instance/as_services/success_stub_helper"
 
 # Single instance model test.
-class InstanceDeleteServiceTrueSuccess200Test < ActiveSupport::TestCase
+class InstanceAsServicesTrueSuccess200Test < ActiveSupport::TestCase
+  setup do
+    stub_request(:delete, "http://localhost:9090/nsl/services/instance/apni/200/api/delete?apiKey=test-api-key&reason=Edit")
+      .with(headers: { "Accept" => "application/json", "Accept-Encoding" => "gzip, deflate", "Host" => "localhost:9090", "User-Agent" => "rest-client/2.0.0 (darwin16.1.0 x86_64) ruby/2.3.0p0" })
+      .to_return(status: 200, body: { "instance": { "class": "au.org.biodiversity.nsl.Instance", "_links": { "permalink": { "link": "http://localhost:8080/nsl/mapper/boa/instance/apni/819227", "preferred": true, "resources": 1 } }, "instanceType": "taxonomic synonym", "protologue": false, "citation": "Leach, G.J. (1986), A Revision of the Genus Angophora (Myrtaceae). Telopea 2(6)", "citationHtml": "Leach, G.J. (1986), A Revision of the Genus Angophora (Myrtaceae). Telopea 2(6)" }, "action": "delete", "ok": true }.to_json, headers: {})
+  end
+
   test "instance delete service true success 200" do
     assert_nothing_raised("Should not raise exception if everything is ok") do
-      # The test mock service determines response based on the id
+      # The test mock responds based on the id
       Instance::AsServices.delete(200)
     end
   end

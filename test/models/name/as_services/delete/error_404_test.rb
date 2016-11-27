@@ -16,9 +16,17 @@
 #   limitations under the License.
 #
 require "test_helper"
+require "models/name/as_services/delete/404_stub_helper"
 
 # Single name model test.
 class NameAsServicesDeleteError404Test < ActiveSupport::TestCase
+  setup do
+    # stub_it
+    stub_request(:delete, "http://localhost:9090/nsl/services/name/apni/540036697/api/delete?apiKey=test-api-key&reason=404%20this%20is%20the%20reason.....")
+      .with(headers: { "Accept" => "application/json", "Accept-Encoding" => "gzip, deflate", "Host" => "localhost:9090", "User-Agent" => "rest-client/2.0.0 (darwin16.1.0 x86_64) ruby/2.3.0p0" })
+      .to_return(status: 404, body: "", headers: {})
+  end
+
   test "url" do
     name_id = names(:name_to_delete).id
     name = Name::AsServices.find(name_id)

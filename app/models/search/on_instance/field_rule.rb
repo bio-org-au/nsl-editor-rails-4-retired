@@ -92,7 +92,7 @@ class Search::OnInstance::FieldRule
                                  from instance_note_key
                                  where instance_note_key_id =
                                  instance_note_key.id
-                                 and instance_note_key.name = 'APC Dist.')) "},
+                                 and instance_note_key.name = 'APC Dist.')) " },
     "type:"                 => { where_clause: " exists (select null
                                  from instance_type
                                  where instance_type_id = instance_type.id

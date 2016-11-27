@@ -97,7 +97,7 @@ class Name < ActiveRecord::Base
   def only_one_type?
     category == CULTIVAR_CATEGORY ||
       category == CULTIVAR_HYBRID_CATEGORY ||
-      category == SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY
+      category == SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY ||
       category == PHRASE
   end
 

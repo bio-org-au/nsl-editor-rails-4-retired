@@ -26,10 +26,10 @@ class TreeNode < ActiveRecord::Base
   has_many   :sublinks, class_name: ::TreeLink, foreign_key: "supernode_id"
 
   def delete?
-    subnodes.size == 0
+    subnodes.empty?
   end
 
   def subnodes
-    sublinks.map {|sublink| sublink.node unless sublink.node.name_id.nil? }.compact
+    sublinks.map { |sublink| sublink.node unless sublink.node.name_id.nil? }.compact
   end
 end

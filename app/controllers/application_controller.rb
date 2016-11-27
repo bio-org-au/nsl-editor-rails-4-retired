@@ -74,7 +74,7 @@ class ApplicationController < ActionController::Base
       format.js   { render partial: "layouts/no_session.js" }
     end
   end
-   
+
   def continue_user_session
     @current_user = User.new(username: session[:username],
                              full_name: session[:user_full_name],

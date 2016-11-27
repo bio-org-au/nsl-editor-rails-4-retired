@@ -81,6 +81,6 @@ class SessionsController < ApplicationController
 
   def sign_in_params
     sign_in_params = params[:sign_in]
-    sign_in_params.permit(:username, :password) if sign_in_params
+    sign_in_params&.permit(:username, :password)
   end
 end

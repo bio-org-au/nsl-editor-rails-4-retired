@@ -25,9 +25,9 @@ class Tree::Workspace::NameIn < ActiveRecord::Base
   def placed?
     link_id > 0
   end
-  
+
   def placed_as
-    'SOME - THING'
+    "SOME - THING"
   end
 
   # Once set, you cannot change the workspace.
@@ -46,7 +46,7 @@ class Tree::Workspace::NameIn < ActiveRecord::Base
   def workspace
     TreeArrangement.find(@workspace_id)
   end
-  
+
   def self.find_in_workspace(id, workspace_id)
     name = Tree::Workspace::Name.find(id)
     name.workspace_id = workspace_id.to_i

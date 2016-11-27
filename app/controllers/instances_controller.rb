@@ -34,7 +34,7 @@ as a synonym"
     @tabs_to_offer = tabs_to_offer
     unless @current_workspace.blank?
       @placement = @current_workspace.find_placement_of_name(@instance.name)
-      #@tree_link = @current_workspace.tree_link_for_name(@instance.name)
+      # @tree_link = @current_workspace.tree_link_for_name(@instance.name)
       @tree_link = @current_workspace.tree_link_for_name(@instance.name)
     end
     render "show", layout: false
@@ -141,7 +141,7 @@ as a synonym"
   rescue => e
     logger.error("Instance#destroy exception: #{e}")
     @message = e.to_s
-    render "destroy_error.js"
+    render "destroy_error.js", status: 422
   end
 
   def typeahead_for_synonymy
@@ -210,7 +210,7 @@ as a synonym"
     if @instance.simple?
       offer << "tab_synonymy"
       offer << "tab_unpublished_citation"
-      # TODO remove apc placement tab
+      # TODO: remove apc placement tab
       offer << "tab_apc_placement"
       offer << "tab_classification"
     end

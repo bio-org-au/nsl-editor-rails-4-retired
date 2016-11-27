@@ -21,13 +21,40 @@ require "test_helper"
 class NamesDeleteConfirmForEditorSimpleTest < ActionController::TestCase
   tests NamesDeletesController
 
+  setup do
+    @name = names(:name_to_delete)
+    @reason = "some reason"
+    @extra_info = ""
+    stub_it
+  end
+
+  def a
+    "http://localhost:9090/nsl/services/name/apni/#{@name.id}/api/delete"
+  end
+
+  def b
+    "?apiKey=test-api-key&reason=#{@reason}"
+  end
+
+  def user_agent
+    "rest-client/2.0.0 (darwin16.1.0 x86_64) ruby/2.3.0p0"
+  end
+
+  def stub_it
+    stub_request(:delete, "#{a}#{b}")
+      .with(headers: { "Accept" => "application/json",
+                       "Accept-Encoding" => "gzip, deflate",
+                       "Host" => "localhost:9090",
+                       "User-Agent" => user_agent })
+      .to_return(status: 200, body: "", headers: {})
+  end
+
   test "editor should be able to confirm name delete" do
-    name = names(:name_to_delete)
     @request.headers["Accept"] = "application/javascript"
     delete(:confirm,
-           { names_delete: { name_id: name.id,
-                             reason: "some reason",
-                             extra_info: "" } },
+           { names_delete: { name_id: @name.id,
+                             reason: @reason,
+                             extra_info: @extra_info } },
            username: "fred",
            user_full_name: "Fred Jones",
            groups: ["edit"])

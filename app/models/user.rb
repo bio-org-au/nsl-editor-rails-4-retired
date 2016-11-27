@@ -32,7 +32,7 @@ class User < ActiveType::Object
     groups.include?("admin")
   end
 
-  # TODO remove this - NSL-2007
+  # TODO: remove this - NSL-2007
   def apc?
     groups.include?("APC")
   end
@@ -44,5 +44,4 @@ class User < ActiveType::Object
   def treebuilder?
     groups.include?("treebuilder")
   end
-
 end

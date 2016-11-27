@@ -25,7 +25,7 @@ class SearchInstanceCsvSimpleTest < ActionController::TestCase
     get(:search,
         { query_target: "instance",
           query_string: "*",
-          format: "csv"},
+          format: "csv" },
         username: "fred",
         user_full_name: "Fred Jones",
         groups: [])

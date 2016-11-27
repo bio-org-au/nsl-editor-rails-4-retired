@@ -47,7 +47,7 @@ class Ability
     basic_auth_2
     edit_auth if user.edit?
     qa_auth if user.qa?
-    # TODO remove this - NSL-2007
+    # TODO: remove this - NSL-2007
     apc_auth if user.apc?
     admin_auth if user.admin?
     treebuilder_auth if user.treebuilder?
@@ -95,7 +95,7 @@ class Ability
     can "instances",          "copy_standalone"
   end
 
-  # TODO remove this - NSL-2007
+  # TODO: remove this - NSL-2007
   def apc_auth
     can "apc",                "place"
   end

@@ -34,7 +34,7 @@ class Tree::EmptyTreeLink < ActiveRecord::Base
     false
   end
 
-  def placed_via_instance?(instance)
+  def placed_via_instance?(_instance)
     false
   end
 

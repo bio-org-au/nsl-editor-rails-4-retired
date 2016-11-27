@@ -19,6 +19,37 @@ require "test_helper"
 
 # Single name model test.
 class NameAsServicesDeleteFalseSuccessTest < ActiveSupport::TestCase
+  setup do
+    stub_request(:delete, /#{sub1}.*[0-9]{8,}#{sub2}.*/)
+      .with(headers: { "Accept" => "application/json",
+                       "Accept-Encoding" => "gzip, deflate",
+                       "Host" => "localhost:9090",
+                       "User-Agent" => agent })
+      .to_return(status: 200, body: body, headers: {})
+  end
+
+  def body
+    {
+      "ok": false,
+      "errors": [
+        "some silly error"
+      ]
+
+    }.to_json
+  end
+
+  def agent
+    "rest-client/2.0.0 (darwin16.1.0 x86_64) ruby/2.3.0p0"
+  end
+
+  def sub1
+    "nsl.services.name.apni"
+  end
+
+  def sub2
+    ".api.delete.apiKey=test-api-key.reason=666"
+  end
+
   test "url" do
     name_id = names(:name_to_delete).id
     name = Name::AsServices.find(name_id)

@@ -22,7 +22,7 @@ class SrchRefsDefinedQuerRefIdWithInstCountHasInst < ActionController::TestCase
   tests SearchController
 
   test "reference id with instances count" do
-    skip # I want to retire this test because the defined query 
+    skip # I want to retire this test because the defined query
     # is now replaced by show-instances:, but there isn't a count
     # option for show instances.  If demand for one I can add it.
     ref = references(:bucket_reference_for_default_instances)

@@ -20,7 +20,7 @@ require "test_helper"
 # Instance type category test.
 class InstTypeAllowedType4AcceptConSynNotAllowedTest < ActiveSupport::TestCase
   test "the rest are not allowed" do
-    InstanceType.all.sort { |x, y| x.name <=> y.name }.each do |record|
+    InstanceType.all.sort_by(&:name).each do |record|
       next if record.misapplied? ||
               record.name.match(/\Apro parte taxonomic synonym\z/)
       assert_not record.allowed_type_for_accepted_concept_synonym?,

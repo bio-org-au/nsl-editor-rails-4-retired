@@ -38,9 +38,9 @@ class Instance < ActiveRecord::Base
     name_id "Name ID"
     name :full_name
     reference_id "Reference ID"
-    reference :citation => "Reference Citation"
-    instance_notes :size => "Number of Notes"
-    instance_notes {|note| note.collect{|n| {n.instance_note_key.name => n.value } }}
+    reference citation: "Reference Citation"
+    instance_notes size: "Number of Notes"
+    instance_notes { |note| note.collect { |n| { n.instance_note_key.name => n.value } } }
   end
   scope :ordered_by_name, -> { joins(:name).order("simple_name asc") }
   scope :ordered_by_page, lambda {

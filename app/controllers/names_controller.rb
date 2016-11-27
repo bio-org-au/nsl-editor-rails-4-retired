@@ -121,7 +121,7 @@ class NamesController < ApplicationController
   rescue => e
     logger.error("Controller:Names:create:rescuing exception #{e}")
     @error = e.to_s
-    render "create_error.js", status: :unprocessable_entity
+    render "create_error.js", status: 422
   end
 
   # PUT /names/1.json

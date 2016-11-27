@@ -26,22 +26,21 @@ class TreeArrangement < ActiveRecord::Base
   belongs_to :namespace, class_name: "Namespace", foreign_key: "namespace_id"
 
   def find_placement_of_name(name)
-    link_id = TreeArrangement::sp_find_name_in_tree(name.id, id)
+    link_id = TreeArrangement.sp_find_name_in_tree(name.id, id)
     link_id ? TreeLink.find(link_id) : nil
   end
 
   def editableBy?(user)
-    user && tree_type == 'U' && user.groups.include?(base_arrangement.label)
+    user && tree_type == "U" && user.groups.include?(base_arrangement.label)
   end
 
-  def derivedLabel()
-    case
-      when tree_type =='P' then
-        label
-      when tree_type == 'U' then
-        base_arrangement.derivedLabel
-      else
-        "##{id}"
+  def derivedLabel
+    if tree_type == "P"
+      label
+    elsif tree_type == "U"
+      base_arrangement.derivedLabel
+    else
+      "##{id}"
     end
   end
 
@@ -51,12 +50,9 @@ class TreeArrangement < ActiveRecord::Base
     connection.select_value("select find_name_in_tree(#{name_id}, #{tree_id})")
   end
 
-
   def self.place_name_on_tree_url(username, tree_id, name, instance, parent_name, placement_type)
     logger.debug "place_name_on_tree_url"
-    if !username
-      raise "must be logged on to place instances"
-    end
+    raise "must be logged on to place instances" unless username
     api_key = Rails.configuration.api_key
     address = Rails.configuration.services
     path = "treeEdit/placeNameOnTree"
@@ -64,9 +60,7 @@ class TreeArrangement < ActiveRecord::Base
   end
 
   def self.remove_name_from_tree_url(username, tree_id, name)
-    if !username
-      raise "must be logged on to remove instances"
-    end
+    raise "must be logged on to remove instances" unless username
     api_key = Rails.configuration.api_key
     address = Rails.configuration.nsl_services
     path = "treeEdit/removeNameFromTree"
@@ -77,56 +71,55 @@ class TreeArrangement < ActiveRecord::Base
     Rails.logger.debug "--------------------------------------"
     Rails.logger.debug "TreeArrangement.place_instance #{id} ,#{username}, #{name}, #{instance} ,'#{parent_name}' ,#{placement_type} "
 
-    if parent_name && parent_name!=''
+    if parent_name && parent_name != ""
       ct = Name.where(full_name: parent_name).count
       logger.debug "Number of parents: #{ct}"
       case ct
-        when 0 then
-          return {
-              success: false,
-              msg: [
-                  {
-                      status: 'warning',
-                      msg: 'not found',
-                      body: "Name #{parent_name} not found"
-                  }
-              ]
-          }.to_json
+      when 0 then
+        return {
+          success: false,
+          msg: [
+            {
+              status: "warning",
+              msg: "not found",
+              body: "Name #{parent_name} not found"
+            }
+          ]
+        }.to_json
 
-        when 1 then
-          pn = Name.find_by full_name: parent_name
-          logger.debug("parent_name: #{ap pn}")
+      when 1 then
+        pn = Name.find_by full_name: parent_name
+        logger.debug("parent_name: #{ap pn}")
 
-        else
-          return {
-              success: false,
-              msg: [
-                  {
-                      status: 'warn',
-                      msg: 'multiple matches',
-                      body: "Multiple names named #{parent_name}"
-                  }
-              ]
-          }.to_json
+      else
+        return {
+          success: false,
+          msg: [
+            {
+              status: "warn",
+              msg: "multiple matches",
+              body: "Multiple names named #{parent_name}"
+            }
+          ]
+        }.to_json
       end
     else
       pn = nil
     end
 
     logger.debug "before url"
-    url = TreeArrangement::place_name_on_tree_url(username, id, name, instance, pn.nil? ? nil : pn.id, placement_type)
+    url = TreeArrangement.place_name_on_tree_url(username, id, name, instance, pn.nil? ? nil : pn.id, placement_type)
     logger.debug url
     RestClient.post(url, accept: :json)
 
   rescue RestClient::BadRequest => ex
     ex.response
-
   end
 
   def remove_instance(username, name)
     logger.debug "remove_instance #{id} ,#{username}, #{name}"
 
-    url = TreeArrangement::remove_name_from_tree_url(username, id, name)
+    url = TreeArrangement.remove_name_from_tree_url(username, id, name)
     logger.debug url
     RestClient.post(url, accept: :json)
 
