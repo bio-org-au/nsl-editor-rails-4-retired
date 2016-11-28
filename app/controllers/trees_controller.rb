@@ -45,6 +45,17 @@ class TreesController < ApplicationController
     render "remove_name_placement_error.js", status: 422
   end
 
+  def update_value
+    @response = TreeArrangement.find(session[:current_classification]).update_value(
+        username,
+        params[:tree_arrangement][:name_id],
+        params[:tree_arrangement][:value_label],
+        params[:value])
+  rescue => e
+    logger.error e
+    render 'update_value_error.js', status: 422
+  end
+
   private
 
   def place_name_params

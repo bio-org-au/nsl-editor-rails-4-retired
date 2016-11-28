@@ -23,6 +23,8 @@ class TreeLink < ActiveRecord::Base
 
   belongs_to :supernode, class_name: TreeNode, foreign_key: "supernode_id"
   belongs_to :node, class_name: TreeNode, foreign_key: "subnode_id"
+  belongs_to :subnode, class_name: TreeNode
+  belongs_to :type_uri_ns_part, class_name: TreeUriNs
 
   ACCEPTED_RAW = "ApcConcept"
   EXCLUDED_RAW = "ApcExcluded"

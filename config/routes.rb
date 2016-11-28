@@ -223,6 +223,9 @@ Rails.application.routes.draw do
         to: "trees/workspaces/current#create",
         via: :post
 
+  match "tree_arrangement/:id/update_value",
+        as: "tree_arrangement_update_value", to: "trees#update_value", via: :patch
+
   root to: "search#search"
   match "/*random", to: "search#search", via: [:get, :post, :delete, :patch]
 end
