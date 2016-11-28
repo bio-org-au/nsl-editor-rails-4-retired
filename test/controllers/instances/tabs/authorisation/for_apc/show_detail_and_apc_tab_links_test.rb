@@ -22,10 +22,10 @@ class InstanceEditorShowDetailAPCTabsTest < ActionController::TestCase
   tests InstancesController
   setup do
     @instance = instances(:britten_created_angophora_costata)
+    @request.headers["Accept"] = "application/javascript"
   end
 
   test "should show detail and APC tab links if editor requests details tab" do
-    @request.headers["Accept"] = "application/javascript"
     get(:show,
         { id: @instance.id,
           tab: "tab_show_1",
@@ -33,6 +33,16 @@ class InstanceEditorShowDetailAPCTabsTest < ActionController::TestCase
         username: "fred",
         user_full_name: "Fred Jones",
         groups: ["APC"])
+    asserts
+  end
+
+  def asserts
+    asserts1
+    asserts2
+    asserts3
+  end
+
+  def asserts1
     assert_response :success
     assert_select "li.active a#instance-show-tab",
                   /Details/,
@@ -43,6 +53,9 @@ class InstanceEditorShowDetailAPCTabsTest < ActionController::TestCase
     assert_select "a#instance-edit-notes-tab",
                   false,
                   "Should not show 'Notes' tab link."
+  end
+
+  def asserts2
     assert_select "a#instance-cite-this-instance-tab",
                   false,
                   "Should not show 'Syn' tab link."
@@ -52,6 +65,9 @@ class InstanceEditorShowDetailAPCTabsTest < ActionController::TestCase
     assert_select "a#instance-apc-placement-tab",
                   /APC/,
                   "Does not show 'APC' tab link."
+  end
+
+  def asserts3
     assert_select "a#instance-comments-tab",
                   false,
                   "Should not show 'Adnot' tab link."
