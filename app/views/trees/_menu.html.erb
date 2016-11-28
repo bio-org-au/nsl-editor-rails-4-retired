@@ -1,6 +1,8 @@
 
+<% ws_count = 0 %>
 <% Tree::Public.all.each do |classification| %>
   <% next unless classification.workspaces? %> 
+  <% ws_count += 1 %>
   <li role="presentation">
     <span>&nbsp; <%= classification.label %></span>
   </li>
@@ -14,4 +16,9 @@
                     title: 'Choose current workspace' }) %>
     </li>
   <% end %>
+<% end %>
+<% if ws_count == 0 %>
+  <li role="presentation">
+    <span>&nbsp;&nbsp;[No&nbsp;workspaces&nbsp;-&nbsp;create&nbsp;one&nbsp;in&nbsp;the&nbsp;Tree&nbsp;Editor.]&nbsp;</span>
+  </li>
 <% end %>
