@@ -75,14 +75,7 @@ class Tree::Workspace < ActiveRecord::Base
   end
 
   def place_instance(username, params)
-    Rails.logger.debug "--------------------------------------"
-    Rails.logger.debug "Workspace::place_instance"
-    Rails.logger.debug "username: #{username}"
-    Rails.logger.debug "params: #{params}"
-    Rails.logger.debug "--------------------------------------"
     parent_name = resolve_parent_name(params[:parent_name])
-    # url = TreeArrangement::place_name_on_tree_url(username, id, params[:name_id], params[:instance_id], parent_name.nil? ? nil : parent_name.id, params[:placement_type])
-    # url = Tree::AsServices.placement_url(username, id, params[:name_id], params[:instance_id], parent_name.nil? ? nil : parent_name.id, params[:placement_type])
     url = Tree::AsServices.placement_url(username: username,
                                          tree_id: id,
                                          name_id: params[:name_id],
@@ -91,9 +84,9 @@ class Tree::Workspace < ActiveRecord::Base
                                          placement_type: params[:placement_type])
     logger.debug url
     RestClient.post(url, accept: :json)
-
-  rescue RestClient::BadRequest => ex
-    ex.response
+  rescue => e
+    logger.error e
+    raise
   end
 
   def resolve_parent_name(parent_name)
@@ -137,14 +130,12 @@ class Tree::Workspace < ActiveRecord::Base
   end
 
   def remove_instance(username, name_id)
-    logger.debug "remove_instance #{id} ,#{username}, #{name_id}"
-
-    # url = TreeArrangement::remove_name_from_tree_url(username, id, name_id)
-    url = Tree::Services::Url::Remove.new(username: username, name_id: name_id, tree_id: id).url
-    logger.debug url
+    url = Tree::Services::Url::Remove.new(username: username,
+                                          name_id: name_id,
+                                          tree_id: id).url
     RestClient.post(url, accept: :json)
-
   rescue RestClient::BadRequest => ex
-    ex.response
+    logger.error "remove_instance error: #{e}"
+    raise
   end
 end

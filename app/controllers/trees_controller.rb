@@ -27,42 +27,52 @@ class TreesController < ApplicationController
 
   # Move name ....
   def place_name
-    logger.debug("=========================")
-    logger.debug("place_name")
-    logger.debug("place_name; @current_workspace.id: #{@current_workspace.id}")
     @response = @current_workspace.place_instance(username, place_name_params)
-  rescue => e
-    logger.error e
-    logger.error e.response
-    @message = JSON.parse(e.response)["msg"]["msg"]
-    render "place_name_error.js", status: 422
+  rescue => e1
+    logger.error "Error in place_name: #{e1}"
+    begin
+      @message = JSON.parse(first_error.response)["msg"]["msg"]
+    rescue
+      @message = "Services error: #{e1}"
+    end
+    logger.error "@message: #{@message}"
+    render "place_name_error", status: 422
   end
 
   def remove_name_placement
-    @response = @current_workspace.remove_instance(username, remove_name_placement_params[:name_id])
+    @response = @current_workspace
+                .remove_instance(username,
+                                 remove_name_placement_params[:name_id])
   rescue => e
     e.backtrace.each { |trace| logger.error trace }
-    render "remove_name_placement_error.js", status: 422
+    @message = "Services error: #{e}"
+    render "remove_name_placement_error", status: 422
   end
 
   def update_value
-    @response = TreeArrangement.find(session[:current_classification]).update_value(
-        username,
-        params[:tree_arrangement][:name_id],
-        params[:tree_arrangement][:value_label],
-        params[:value])
+    @response = TreeArrangement.find(session[:current_classification])
+                               .update_value(
+                                 username,
+                                 params[:tree_arrangement][:name_id],
+                                 params[:tree_arrangement][:value_label],
+                                 params[:value]
+                               )
   rescue => e
     logger.error e
-    render 'update_value_error.js', status: 422
+    render "update_value_error", status: 422
   end
 
   private
 
   def place_name_params
-    params.require(:place_name).permit(:name_id, :instance_id, :parent_name, :placement_type, :move)
+    params.require(:place_name).permit(:name_id,
+                                       :instance_id,
+                                       :parent_name,
+                                       :placement_type,
+                                       :move)
   end
 
   def remove_name_placement_params
-    params.require(:remove_placement).permit(:name_id, :instance_id)
+    params.require(:remove_placement).permit(:name_id, :instance_id, :delete)
   end
 end
