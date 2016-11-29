@@ -7,40 +7,36 @@ This code is Licensed under the Apache 2 License and we welcome contributions fr
 
 Please use Github issues for any bug reports.
 
-== Development Environment
+== Environment
 
-* Ruby version: jruby-1.7.20
-* Startup:     jruby -S trinidad -p 2014 --threadsafe
-* Using rbenv: ruby 1.9.3-p551
+We run the app under JRuby because Tomcat.
 
-
-=== Running in Development with Trinidad on the command line
-
-    $ jruby -S trinidad -p 2014 --threadsafe
-    Deploying from /Users/gregc/rails/ned as /
-    Initializing ProtocolHandler ["http-bio-127.0.0.1-2014"]
-    jruby 1.7.12 (1.9.3p392) 2014-04-15 643e292 on Java HotSpot(TM) 64-Bit Server VM 1.7.0_21-b12 [darwin-x86_64]
-    using a shared (threadsafe!) runtime
-    The signal QUIT is in use by the JVM and will not work correctly on this platform
-    Starting ProtocolHandler ["http-bio-127.0.0.1-2014"]
+* Ruby version: 2.3.1
+* JRuby version: 9.1.5.0
+* Rails version: 4.2.7.1
 
 
-=== Running Trinidad with a config file and a context path:
+=== Running in Development with puma
 
-    $ trinidad -f ./config/trinidad-dev.yml
-    Deploying from /Users/gregc/rails/ned as /nsldev
-    Initializing ProtocolHandler ["http-bio-127.0.0.1-2014"]
-    jruby 1.7.12 (1.9.3p392) 2014-04-15 643e292 on Java HotSpot(TM) 64-Bit Server VM 1.7.0_21-b12 [darwin-x86_64]
-    using a shared (threadsafe!) runtime
-    The signal QUIT is in use by the JVM and will not work correctly on this platform
-    Starting ProtocolHandler ["http-bio-127.0.0.1-2014"]
+    $ export JRUBY_OPTS='\''-J-Xmx1G -J-XX:MaxPermSize=1G'\''; rbenv local jruby-9.1.5.0; rails s -p 2014
+      The signal QUIT is in use by the JVM and will not work correctly on this platform
+      => Booting Puma
+      => Rails 4.2.7.1 application starting in development on http://localhost:2014
+      => Run `rails server -h` for more startup options
+      => Ctrl-C to shutdown server
+      /Users/gregc/.rbenv/versions/jruby-9.1.5.0/lib/ruby/gems/shared/gems/rack-1.6.4/lib/rack/builder.rb:49: warning: `frozen_string_literal' is ignored after any tokens
+      Puma starting in single mode...
+      * Version 3.6.0 (jruby 9.1.5.0 - ruby 2.3.1), codename: Sleepy Sunday Serenity
+      * Min threads: 0, max threads: 16
+      * Environment: development
+      * Listening on tcp://localhost:2014
+      Use Ctrl-C to stop
 
-    http://localhost:2014/nsl/editor/
 
 * System dependencies
 
 * Configuration
-    * Set up config files
+    * Set up config files in ~/.nsl
 
 * Database creation
 
@@ -48,13 +44,12 @@ Please use Github issues for any bug reports.
 
 * Set up LDAP
 
-
 * How to run the test suite
 
     rake test:controllers
     rake test:models
 
-    Integration tests are very slow.
+    Integration tests are very slow and neglected sadly.
 
 
 
@@ -63,13 +58,27 @@ Please use Github issues for any bug reports.
 * Deployment instructions
 
 
-    create user web;
-    grant select, insert, update, delete on author to web;
+    create user webapni;
+    grant select, insert, update, delete on author to webapni;
     etc
 
-    grant select on nsl_global_seq to web;
+    grant select on nsl_global_seq to webapni;
 
-    grant select on reference_vw to web;
+    grant select on reference_vw to webapni;
 
 
+* Code is rubocopped with these exceptions:
+
+    AllCops:
+      Exclude:
+        - 'db/**/*'
+    Style/TrailingCommaInLiteral:
+      Enabled: false
+    Style/VariableNumber:
+      Enabled: false
+    StringLiterals:
+      EnforcedStyle: double_quotes
+      Enabled: true
+    Style/ClassAndModuleChildren:
+      Enabled: false
 
