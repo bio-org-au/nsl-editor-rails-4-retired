@@ -21,8 +21,11 @@ require "test_helper"
 class NameUpdateSetNamesSimpleTest < ActiveSupport::TestCase
   setup do
     @name = names(:a_species)
-    stub_request(:get, "http://localhost:9090/nsl/services/name/apni/#{@name.id}/api/name-strings")
-      .with(headers: { "Accept" => "*/*", "Accept-Encoding" => "gzip;q=1.0,deflate;q=0.6,identity;q=0.3", "User-Agent" => "Ruby" })
+    stub_request(:get, "#{address}#{@name.id}/api/name-strings")
+      .with(headers: { "Accept" => "*/*",
+                       "Accept-Encoding" =>
+                       "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
+                       "User-Agent" => "Ruby" })
       .to_return(status: 200, body: %({ "class": "silly name class",
     "_links": {
         "permalink": [ ]
@@ -35,6 +38,10 @@ class NameUpdateSetNamesSimpleTest < ActiveSupport::TestCase
         "fullName": "full name for id #{@name.id}",
         "simpleName": "simple name for id #{@name.id}"
     } }), headers: {})
+  end
+
+  def address
+    "http://localhost:9090/nsl/services/name/apni/"
   end
 
   test "name update set names simple" do

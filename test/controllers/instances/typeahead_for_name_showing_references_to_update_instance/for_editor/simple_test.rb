@@ -21,11 +21,12 @@ require "test_helper"
 class InstTAhead4NameShowRefToUpdSynonymy4EditTest < ActionController::TestCase
   tests InstancesController
 
-  ROSS = "Ross, E.M., (1986) Flora of South-eastern Queensland. 2:1986"
+  ROSS = "Ross, E.M., (1986) Flora of South-eastern Queensland. 2:1986".freeze
   FIN = "De Fructibus et Seminibus Plantarum. 1:1788  [invalid publication]"
+        .freeze
 
-  FCOMB = "De Fructibus et Seminibus Plantarum. 1:1788  [comb. nov.]"
-  JOB = "Journal of Botany, British and Foreign. 54:1916  [basionym]"
+  FCOMB = "De Fructibus et Seminibus Plantarum. 1:1788  [comb. nov.]".freeze
+  JOB = "Journal of Botany, British and Foreign. 54:1916  [basionym]".freeze
 
   test "editor should be able to typehead for synonymy instance" do
     instance = instances(:xyz_costata_is_synonym_of_angophora_costata)

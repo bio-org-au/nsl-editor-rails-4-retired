@@ -23,6 +23,7 @@ class InstanceTabsNotesTest < ActionController::TestCase
   setup do
     @triodia_in_brassard = instances(:triodia_in_brassard)
   end
+
   test "notes tab simple" do
     @request.headers["Accept"] = "application/javascript"
     get(:show,
@@ -32,6 +33,16 @@ class InstanceTabsNotesTest < ActionController::TestCase
         user_full_name: "Fred Jones",
         groups: ["edit"])
     assert_response :success
+    asserts
+  end
+
+  def asserts
+    asserts1
+    asserts2
+    asserts3
+  end
+
+  def asserts1
     assert_select "h5", "Add Instance Note", "Needs correct heading."
     assert_select "form#new_instance_note", true, "Needs insert form."
     assert_select "form#new_instance_note" do
@@ -41,6 +52,11 @@ class InstanceTabsNotesTest < ActionController::TestCase
       assert_select "option", /\ALectotype\z/i, "Needs Lectotype option."
       assert_select "option", /\ANeotype\z/i, "Needs Neotype option."
       assert_select "option", /\AText\z/i, "Needs Text option."
+    end
+  end
+
+  def asserts2
+    assert_select "form#new_instance_note" do
       assert_select "option", /\AComment\z/i, "Needs Comment option."
       assert_select "option", /\AEtymology\z/i, "Needs Etymology option."
       assert_select "option", /\AEPBC Advice\z/i, "Needs EPBC Advice option."
@@ -50,6 +66,9 @@ class InstanceTabsNotesTest < ActionController::TestCase
       assert_select "input#instance-note-create-btn", 1, "Needs create button."
     end
     assert_select "option", { text: /APC/i, count: 0 }, "No APC options."
+  end
+
+  def asserts3
     assert_select "textarea.instance-note-value-text-area", true, "Needs text."
   end
 end

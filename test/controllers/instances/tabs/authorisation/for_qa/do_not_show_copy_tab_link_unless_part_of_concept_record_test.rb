@@ -22,16 +22,26 @@ class InstQADontShowCopyTabLinksUnlessConceptTest < ActionController::TestCase
   tests InstancesController
   setup do
     @instance = instances(:britten_created_angophora_costata)
+    @request.headers["Accept"] = "application/javascript"
   end
 
   # would be better to test the controller method
   test "do not show copy tab links unless part of concept record" do
-    @request.headers["Accept"] = "application/javascript"
     get(:show,
         { id: @instance.id, tab: "tab_show_1", "row-type" => "instance" },
         username: "fred",
         user_full_name: "Fred Jones",
         groups: ["qa"])
+    asserts
+  end
+
+  def asserts
+    asserts1
+    asserts2
+    asserts3
+  end
+
+  def asserts1
     assert_response :success
     assert_select "li.active a#instance-show-tab",
                   /Details/,
@@ -42,6 +52,9 @@ class InstQADontShowCopyTabLinksUnlessConceptTest < ActionController::TestCase
     assert_select "a#instance-edit-notes-tab",
                   false,
                   "Should not show 'Notes' tab link."
+  end
+
+  def asserts2
     assert_select "a#instance-cite-this-instance-tab",
                   false,
                   "Should not show 'Syn' tab link."
@@ -51,6 +64,9 @@ class InstQADontShowCopyTabLinksUnlessConceptTest < ActionController::TestCase
     assert_select "a#instance-apc-placement-tab",
                   false,
                   "Should not show 'APC' tab link."
+  end
+
+  def asserts3
     assert_select "a#instance-comments-tab",
                   false,
                   "Should not show 'Adnot' tab link."

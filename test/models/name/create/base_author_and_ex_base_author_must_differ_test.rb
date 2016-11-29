@@ -19,35 +19,50 @@ require "test_helper"
 
 # Single name model test.
 class BaseAuthorExBaseAuthorMustDifferOnCreateTest < ActiveSupport::TestCase
+  setup do
+    @name = Name.new
+    @name.namespace = namespaces(:apni)
+    @name.name_element = "test for base author and ex-base-author"
+    @name.name_type = name_types(:scientific)
+    @name.name_rank = name_ranks(:species)
+    @name.name_status = name_statuses(:legitimate)
+    @name.parent = names(:a_genus)
+    @name.created_by = "fred"
+    @name.updated_by = "fred"
+  end
+
   test "base author and ex base author must be different" do
-    name = Name.new
-    name.namespace = namespaces(:apni)
-    name.name_element = "test for base author and ex-base-author"
-    name.name_type = name_types(:scientific)
-    name.name_rank = name_ranks(:species)
-    name.name_status = name_statuses(:legitimate)
-    name.parent = names(:a_genus)
-    name.created_by = "fred"
-    name.updated_by = "fred"
-    assert name.valid?,
+    part1
+    part2
+    part3
+  end
+
+  def part1
+    assert @name.valid?,
            "New name should be valid without authorr.
-           Errors: #{name.errors.full_messages.join('; ')}"
-    name.author = authors(:bentham)
-    assert name.valid?,
+           Errors: #{@name.errors.full_messages.join('; ')}"
+    @name.author = authors(:bentham)
+    assert @name.valid?,
            "New name should be valid with an author.
-           Errors: #{name.errors.full_messages.join('; ')}"
-    name.base_author = authors(:joe)
-    assert name.valid?,
+           Errors: #{@name.errors.full_messages.join('; ')}"
+    @name.base_author = authors(:joe)
+  end
+
+  def part2
+    assert @name.valid?,
            "New name should be valid with a base author.
-           Errors: #{name.errors.full_messages.join('; ')}"
-    name.ex_base_author = authors(:bentham)
-    assert name.valid?,
+           Errors: #{@name.errors.full_messages.join('; ')}"
+    @name.ex_base_author = authors(:bentham)
+    assert @name.valid?,
            "New name should be valid with an ex-base author.
-           Errors: #{name.errors.full_messages.join('; ')}"
-    name.ex_base_author = authors(:joe)
-    assert_not name.valid?,
+           Errors: #{@name.errors.full_messages.join('; ')}"
+    @name.ex_base_author = authors(:joe)
+    assert_not @name.valid?,
                "New name shldnt be valid with same base and ex-base author"
-    assert_equal name.errors.full_messages.first,
+  end
+
+  def part3
+    assert_equal @name.errors.full_messages.first,
                  "The ex-base author cannot be the same as the base author.",
                  "Wrong error message."
   end

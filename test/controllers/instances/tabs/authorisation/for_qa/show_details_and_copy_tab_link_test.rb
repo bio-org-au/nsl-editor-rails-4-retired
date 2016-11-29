@@ -22,10 +22,10 @@ class InstancesShowQAUserDetailsAndCopyTabLinksTest < ActionController::TestCase
   tests InstancesController
   setup do
     @instance = instances(:britten_created_angophora_costata)
+    @request.headers["Accept"] = "application/javascript"
   end
 
   test "should show detail and copy tab links if qa user gets details tab" do
-    @request.headers["Accept"] = "application/javascript"
     get(:show,
         { id: @instance.id,
           tab: "tab_show_1",
@@ -34,6 +34,16 @@ class InstancesShowQAUserDetailsAndCopyTabLinksTest < ActionController::TestCase
         user_full_name: "Fred Jones",
         groups: ["QA"])
     assert_response :success
+    asserts
+  end
+
+  def asserts
+    asserts1
+    asserts2
+    asserts3
+  end
+
+  def asserts1
     assert_select "li.active a#instance-show-tab",
                   /Details/,
                   "Should show 'Details' tab link."
@@ -43,6 +53,9 @@ class InstancesShowQAUserDetailsAndCopyTabLinksTest < ActionController::TestCase
     assert_select "a#instance-edit-notes-tab",
                   false,
                   "Should not show 'Notes' tab link."
+  end
+
+  def asserts2
     assert_select "a#instance-cite-this-instance-tab",
                   false,
                   "Should not show 'Syn' tab link."
@@ -52,6 +65,9 @@ class InstancesShowQAUserDetailsAndCopyTabLinksTest < ActionController::TestCase
     assert_select "a#instance-apc-placement-tab",
                   false,
                   "Should not show 'APC' tab link."
+  end
+
+  def asserts3
     assert_select "a#instance-comments-tab",
                   false,
                   "Should not show 'Adnot' tab link."

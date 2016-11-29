@@ -19,7 +19,7 @@
 
 def a
   "localhost:9090"
-  end
+end
 
 def b
   "reference"

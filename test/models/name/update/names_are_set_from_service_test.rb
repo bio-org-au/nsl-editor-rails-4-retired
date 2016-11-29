@@ -20,8 +20,11 @@ require "test_helper"
 # Single Name model test.
 class NamesAreSetFromServiceTest < ActiveSupport::TestCase
   setup do
-    stub_request(:get, %r{http://localhost:9090/nsl/services/name/apni/[0-9]{8,}/api/name-strings})
-      .with(headers: { "Accept" => "*/*", "Accept-Encoding" => "gzip;q=1.0,deflate;q=0.6,identity;q=0.3", "User-Agent" => "Ruby" })
+    stub_request(:get, %r{#{address}[0-9]{8,}/api/name-strings})
+      .with(headers: { "Accept" => "*/*",
+                       "Accept-Encoding" =>
+                       "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
+                       "User-Agent" => "Ruby" })
       .to_return(status: 200, body: '{ "class": "silly name class",
     "_links": {
         "permalink": [ ]
@@ -34,6 +37,10 @@ class NamesAreSetFromServiceTest < ActiveSupport::TestCase
         "fullName": "full name for id 91755",
         "simpleName": "simple name for id 91755"
     } }', headers: {})
+  end
+
+  def address
+    "http://localhost:9090/nsl/services/name/apni/"
   end
 
   test "names are set from service" do

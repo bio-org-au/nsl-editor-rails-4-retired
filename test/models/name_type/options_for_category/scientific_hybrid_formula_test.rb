@@ -19,37 +19,55 @@ require "test_helper"
 
 # Name type options for category test.
 class ScientificHybridFormulaTest < ActiveSupport::TestCase
+  setup do
+    @current_category = Name::SCIENTIFIC_HYBRID_FORMULA_CATEGORY
+  end
   test "scientific hybrid formula name type options" do
-    current_category = Name::SCIENTIFIC_HYBRID_FORMULA_CATEGORY
+    part1
+    part2
+    part3
+    part4
+  end
+
+  def part1
     assert_equal 5,
-                 NameType.options_for_category(current_category).size,
-                 "Should be 5 #{current_category} name types."
+                 NameType.options_for_category(@current_category).size,
+                 "Should be 5 #{@current_category} name types."
     assert NameType
-      .options_for_category(current_category)
+      .options_for_category(@current_category)
       .collect(&:first)
       .include?("hybrid autonym"),
-           "Name type 'hybrid autonym' should be a #{current_category} option."
+           "Name type 'hybrid autonym' should be a #{@current_category} option."
+  end
+
+  def part2
     assert NameType
-      .options_for_category(current_category)
+      .options_for_category(@current_category)
       .collect(&:first)
       .include?("intergrade"),
-           "Name type 'intergrade' should be a #{current_category} option."
+           "Name type 'intergrade' should be a #{@current_category} option."
     assert NameType
-      .options_for_category(current_category)
+      .options_for_category(@current_category)
       .collect(&:first)
       .include?("graft/chimera"),
-           "Name type 'graft/chimera' should be a #{current_category} option."
+           "Name type 'graft/chimera' should be a #{@current_category} option."
+  end
+
+  def part3
     assert NameType
-      .options_for_category(current_category)
+      .options_for_category(@current_category)
       .collect(&:first)
       .include?("hybrid formula parents known"),
            "Name type 'hybrid formula parents known' should be
-           a #{current_category} option."
+           a #{@current_category} option."
+  end
+
+  def part4
     assert NameType
-      .options_for_category(current_category)
+      .options_for_category(@current_category)
       .collect(&:first)
       .include?("cultivar hybrid formula"),
            "Name type 'cultivar hybrid formula' should be
-           a #{current_category} option."
+           a #{@current_category} option."
   end
 end

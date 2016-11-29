@@ -22,10 +22,10 @@ class ReferenceReaderShowOnlyDetailsTabLinkTest < ActionController::TestCase
   tests ReferencesController
   setup do
     @reference = references(:a_book)
+    @request.headers["Accept"] = "application/javascript"
   end
 
   test "should show only details tab link if reader requests details tab" do
-    @request.headers["Accept"] = "application/javascript"
     get(:show,
         { id: @reference.id, tab: "tab_show_1" },
         username: "fred",
@@ -35,6 +35,16 @@ class ReferenceReaderShowOnlyDetailsTabLinkTest < ActionController::TestCase
     assert_select "li.active a#reference-edit-show-1-tab",
                   /Details/,
                   "Does not show 'Details' tab link."
+    asserts
+  end
+
+  def asserts
+    asserts1
+    asserts2
+    asserts3
+  end
+
+  def asserts1
     assert_select "a#reference-edit-tab",
                   false,
                   "Should not show 'Edit' tab."
@@ -44,6 +54,9 @@ class ReferenceReaderShowOnlyDetailsTabLinkTest < ActionController::TestCase
     assert_select "a#reference-edit-2-tab",
                   false,
                   "Shows 'Edit..' tab link."
+  end
+
+  def asserts2
     assert_select "a#reference-edit-3-tab",
                   false,
                   "Shows 'Edit...' tab link."
@@ -53,6 +66,9 @@ class ReferenceReaderShowOnlyDetailsTabLinkTest < ActionController::TestCase
     assert_select "a#reference-new-instance-tab",
                   false,
                   "Shows 'New instance' tab link."
+  end
+
+  def asserts3
     assert_select "a#tab-heading",
                   /A Book/,
                   "Should have tab heading showing 'A Book'."
