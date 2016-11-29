@@ -34,7 +34,6 @@ gem "warbler"
 
 group :development do
   gem "puma"
-  gem "awesome_print"
   gem "better_errors", "~>1.0"
   gem "spring"
   gem "binding_of_caller", platforms: [:mri_19, :mri_20, :mri_21, :rbx]
@@ -46,6 +45,7 @@ group :development do
   gem "rb-fchange", require: false
   gem "rb-fsevent", require: false
   gem "rb-inotify", require: false
+  gem "rails-erd"
 end
 
 group :development, :test do
@@ -105,3 +105,4 @@ gem "acts_as_tree"
 # Restored because getting rid of Angular.
 gem "font-awesome-rails"
 gem "comma", "~> 4.0.0" # csv dsl
+gem "awesome_print"
