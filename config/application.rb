@@ -43,6 +43,3 @@ module Ned
 end
 
 Rails.configuration.path_to_broadcast_file = "#{ENV['HOME']}/.nsl/broadcast.txt"
-
-require 'openssl'
-OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
