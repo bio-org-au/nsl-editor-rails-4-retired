@@ -21,8 +21,11 @@ class Tree::Workspace < ActiveRecord::Base
   self.primary_key = "id"
   default_scope { where(tree_type: "U") }
   belongs_to :base_arrangement, class_name: TreeArrangement
+  belongs_to :base_tree, class_name: TreeArrangement, foreign_key: "base_arrangement_id"
   belongs_to :namespace, class_name: "Namespace", foreign_key: "namespace_id"
-
+  has_many   :value_namespaces, class_name: "WorkspaceValueNamespace", foreign_key: "workspace_id"
+  has_many   :workspace_instance_values, class_name: "::WorkspaceInstanceValue", foreign_key: "workspace_id"
+ 
   def name(name)
     name_in_tree(name)
   end
@@ -75,17 +78,23 @@ class Tree::Workspace < ActiveRecord::Base
   end
 
   def place_instance(username, params)
-    parent_name = resolve_parent_name(params[:parent_name])
+    logger.debug("place instance")
+    logger.debug(params.inspect)
+    # parent_name = resolve_parent_name(params[:parent_name])
+    logger.debug("before resolve_parent")
+    parent_name_id = resolve_parent(parent_name_id: params[:parent_name_id],
+                                     parent_name_typeahead_string: params[:parent_name_typeahead_string])
+    logger.debug("after resolve_parent")
+    logger.debug("parent_name_id: #{parent_name_id}")
     url = Tree::AsServices.placement_url(username: username,
                                          tree_id: id,
                                          name_id: params[:name_id],
                                          instance_id: params[:instance_id],
                                          parent_name: parent_name.nil? ? nil : parent_name.id,
                                          placement_type: params[:placement_type])
-    logger.debug url
     RestClient.post(url, accept: :json)
   rescue => e
-    logger.error e
+    logger.error("place_instance error: #{e}")
     raise
   end
 
@@ -97,36 +106,15 @@ class Tree::Workspace < ActiveRecord::Base
       logger.debug ct
       case ct
       when 0 then
-        return {
-          success: false,
-          msg: [
-            {
-              status: "warning",
-              msg: "not found",
-              body: "Name #{parent_name} not found"
-            }
-          ]
-        }.to_json
-
+        raise "Name #{parent_name} not found"
       when 1 then
         pn = Name.find_by full_name: parent_name
-
       else
-        return {
-          success: false,
-          msg: [
-            {
-              status: "warn",
-              msg: "multiple matches",
-              body: "Multiple names named #{parent_name}"
-            }
-          ]
-        }.to_json
+        raise "Multiple names named #{parent_name}"
       end
     else
-      pn = nil
+      raise "No name parent"
     end
-    pn
   end
 
   def remove_instance(username, name_id)
@@ -138,4 +126,17 @@ class Tree::Workspace < ActiveRecord::Base
     logger.error "remove_instance error: #{e}"
     raise
   end
+
+  def update_value(username, name, value_uri, value)
+    logger.debug "update_value #{id} ,#{username}, #{name}, #{value_uri} ,'#{value}'"
+
+    url = TreeArrangement::update_value_url(username, id, name, value_uri, value)
+    logger.debug url
+    RestClient.post(url, accept: :json)
+
+  rescue RestClient::BadRequest => ex
+    ex.response
+
+  end
+
 end

@@ -24,6 +24,18 @@ class TreeArrangement < ActiveRecord::Base
 
   belongs_to :base_arrangement, class_name: TreeArrangement
   belongs_to :namespace, class_name: "Namespace", foreign_key: "namespace_id"
+  has_many :tree_value_uris,
+            (lambda do
+               order("sort_order")
+             end),
+           foreign_key: "root_id"
+  has_many :editable_tree_value_uris,
+            (lambda do
+              where("not is_multi_valued and not is_resource ")
+                .order("sort_order")
+             end),
+           class_name: "TreeValueUri",
+           foreign_key: "root_id"
 
   def find_placement_of_name(name)
     link_id = TreeArrangement.sp_find_name_in_tree(name.id, id)
@@ -61,7 +73,7 @@ class TreeArrangement < ActiveRecord::Base
   def self.remove_name_from_tree_url(username, tree_id, name)
     raise "must be logged on to remove instances" unless username
     api_key = Rails.configuration.api_key
-    address = Rails.configuration.nsl_services
+    address = Rails.configuration.services
     path = "treeEdit/removeNameFromTree"
     "#{address}#{path}?apiKey=#{api_key}&runAs=#{ERB::Util.url_encode(username)}&tree=#{tree_id}&name=#{name}"
   end
@@ -71,7 +83,7 @@ class TreeArrangement < ActiveRecord::Base
       raise "must be logged on to place instances"
     end
     api_key = Rails.configuration.api_key
-    address = Rails.configuration.nsl_services
+    address = Rails.configuration.services
     path = "treeEdit/updateValue"
 
     logger.debug "#{address}#{path}?apiKey=#{api_key}&runAs=#{ERB::Util.url_encode(username)}&tree=#{tree_id}&name=#{name}&valueUriLabel=#{value_uri_label}&value=#{ERB::Util.url_encode(value)}"
@@ -142,17 +154,5 @@ class TreeArrangement < ActiveRecord::Base
   end
 
 
-
-  def update_value(username, name, value_uri, value)
-    logger.debug "update_value #{id} ,#{username}, #{name}, #{value_uri} ,'#{value}'"
-
-    url = TreeArrangement::update_value_url(username, id, name, value_uri, value)
-    logger.debug url
-    RestClient.post(url, accept: :json)
-
-  rescue RestClient::BadRequest => ex
-    ex.response
-
-  end
 
 end

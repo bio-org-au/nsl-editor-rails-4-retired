@@ -24,15 +24,15 @@ class TreeLink < ActiveRecord::Base
   belongs_to :supernode, class_name: TreeNode, foreign_key: "supernode_id"
   belongs_to :node, class_name: TreeNode, foreign_key: "subnode_id"
   belongs_to :subnode, class_name: TreeNode
-  belongs_to :type_uri_ns_part, class_name: TreeUriNs
+  belongs_to :namespace, class_name: "TreeUriNs", foreign_key: "type_uri_ns_part_id"
 
-  ACCEPTED_RAW = "ApcConcept"
-  EXCLUDED_RAW = "ApcExcluded"
-  UNTREATED_RAW = "DeclaredBt"
+  ACCEPTED_RAW = "ApcConcept".freeze
+  EXCLUDED_RAW = "ApcExcluded".freeze
+  UNTREATED_RAW = "DeclaredBt".freeze
 
-  ACCEPTED = "accepted"
-  EXCLUDED = "excluded"
-  UNTREATED = "untreated"
+  ACCEPTED = "accepted".freeze
+  EXCLUDED = "excluded".freeze
+  UNTREATED = "untreated".freeze
 
   def placed?
     true

@@ -104,6 +104,7 @@ class Ability
     can "classification",     "place"
     can "trees", :all
     can "trees/workspaces/current", "create"
+    can "names/typeaheads/for_workspace_parent_name", :all
   end
 
   def admin_auth

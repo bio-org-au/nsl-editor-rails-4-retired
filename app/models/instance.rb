@@ -138,6 +138,7 @@ class Instance < ActiveRecord::Base
   #         where ink.name in ('APC Comment', 'APC Dist.')" }
 
   has_many :comments
+  has_many :nodes, class_name: "TreeNode"
 
   validates_presence_of :name_id,
                         :reference_id,

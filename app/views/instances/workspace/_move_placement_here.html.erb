@@ -5,14 +5,7 @@
     <b>Move</b> placement to<br/>
     <b><%= @instance.reference.citation_html.html_safe %></b><br/>
     under
-    <div class="form-group">
-       <input type="text"
-              class="form-control"
-              title="APC Parent"
-              name="place_name[parent_name]"
-              value="<%= @tree_link.supernode.name.full_name %>"
-       >
-    </div>
+    <%= render partial: "instances/workspace/forms/name_typeahead" %>
 
     <div class="form-group">
       <%= radio_button_tag(:type, "accepted", @tree_link.default_to_accepted?, name: "place_name[placement_type]") %>
@@ -23,15 +16,22 @@
       <%= label_tag(:type_untreated, "Untreated") %>
     </div>
 
-    <%= submit_tag "Move", id: "move_name_placement_btn",
+    <%= submit_tag "Move", id: "move-name-placement-btn",
                  class: "btn btn-primary width-6em",
                  name: "place_name[move]",
                  tabindex: increment_tab_index,
                  title: "Move the name in the workspace."
                  %>
-
-    <div id="place_name_error_block"></div>
-    <div id="placement-error-message-container" class="error-message-container red hidden"></div>
+    <span id="placement-message-container"
+          class="message-container green hidden"></span>
+    <button id="instance-class-tab-refresh-btn"
+            title="Refresh tab display."
+            class="hidden btn"
+            onclick="$('#instance-classification-tab').click();">
+      Refresh tab
+    </button>
+    <div id="placement-error-message-container"
+         class="error-message-container red hidden"></div>
   <% end %>
 <% end %>
 

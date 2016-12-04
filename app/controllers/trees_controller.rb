@@ -27,13 +27,23 @@ class TreesController < ApplicationController
 
   # Move name ....
   def place_name
-    @response = @current_workspace.place_instance(username, place_name_params)
+    placement = Tree::Workspace::Placement.new(
+      username: current_user.username,
+      name_id: place_name_params[:name_id],
+      instance_id: place_name_params[:instance_id],
+      parent_name_id: place_name_params[:parent_name_id],
+      parent_name_typeahead: place_name_params[:parent_name_typeahead_string],
+      placement_type: place_name_params[:placement_type],
+      workspace_id: @current_workspace.id)
+    placement.save 
+    logger.debug(placement.inspect)
+    # @response = @current_workspace.place_instance(username, place_name_params)
   rescue => e1
     logger.error "Error in place_name: #{e1}"
     begin
       @message = JSON.parse(first_error.response)["msg"]["msg"]
     rescue
-      @message = "Services error: #{e1}"
+      @message = e1.to_s
     end
     logger.error "@message: #{@message}"
     render "place_name_error", status: 422
@@ -49,12 +59,29 @@ class TreesController < ApplicationController
     render "remove_name_placement_error", status: 422
   end
 
-  def update_value
+  def xupdate_value
     @response = TreeArrangement.find(session[:current_classification])
                                .update_value(
                                  username,
                                  params[:tree_arrangement][:name_id],
                                  params[:tree_arrangement][:value_label],
+                                 params[:value]
+                               )
+  rescue => e
+    logger.error e
+    render "update_value_error", status: 422
+  end
+
+  def update_value
+    logger.debug('start update_value')
+    logger.debug("params[:tree_workspace][:name_id]: #{params[:tree_workspace][:name_id]}")
+    logger.debug("params[:tree_workspace][:value_label]: #{params[:tree_workspace][:value_label]}")
+    logger.debug("params[:value]: #{params[:value]}")
+    logger.debug('update_value before call')
+    @response = @current_workspace.update_value(
+                                 username,
+                                 params[:tree_workspace][:name_id],
+                                 params[:tree_workspace][:value_label],
                                  params[:value]
                                )
   rescue => e
@@ -68,6 +95,8 @@ class TreesController < ApplicationController
     params.require(:place_name).permit(:name_id,
                                        :instance_id,
                                        :parent_name,
+                                       :parent_name_id,
+                                       :parent_name_typeahead_string,
                                        :placement_type,
                                        :move)
   end
@@ -76,3 +105,4 @@ class TreesController < ApplicationController
     params.require(:remove_placement).permit(:name_id, :instance_id, :delete)
   end
 end
+

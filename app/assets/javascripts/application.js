@@ -37,6 +37,8 @@
 //= require typeahead/for_name/cultivar_parent.js
 //= require typeahead/for_name/cultivar_second_parent.js
 //= require typeahead/for_name/duplicate_of.js
+//= require typeahead/for_name/set_up/workspace_parent_name.js
+//= require typeahead/for_name/suggestions/workspace_parent_name.js
 //= require typeahead/for_name/hybrid_parent.js
 //= require typeahead/for_name/parent.js
 //= require typeahead/for_name/second_parent.js

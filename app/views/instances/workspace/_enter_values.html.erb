@@ -1,0 +1,34 @@
+<h5> <%= @current_workspace.title %> Placement Notes</h5>
+
+<hr>
+<hr>
+<ul>
+<% @current_workspace.workspace_instance_values.where(instance_id: @instance).each do |value| %>
+  <li><%= value.base_link_uri_id_part %>: <%= value.literal %>
+<% end %>
+</ul>
+
+<%# For each of the value types allowed by the base tree do .... %>
+<% @current_workspace.base_tree.editable_tree_value_uris.each do |tree_value_uri| %>
+  <%= form_for(@current_workspace, controller: 'Trees', action: 'patch', remote: true, url: :tree_arrangement_update_value) do |f| %>
+    title: <%= tree_value_uri.title %><br/>
+    link_uri_id_part: <%= tree_value_uri.link_uri_id_part %><br/>
+    tree_value_uri.link_uri_ns_part.id: <%= tree_value_uri.link_uri_ns_part.id %><br/>
+    tree_value_uri.link_uri_ns_part.title: <%= tree_value_uri.link_uri_ns_part.title %><br/>
+    tree_value_uri.link_uri_ns_part.description: <%= tree_value_uri.link_uri_ns_part.description %><br/>
+    <%= f.text_field(:name_id, value: @instance.name.id) %>
+    <%= f.text_field(:value_label, value: tree_value_uri.label) %>
+    <%# current_value_link = placement.subnode.valueLink(u) %>
+
+    <label for="node-value-<%= tree_value_uri.label %>"><%= tree_value_uri.title %></label>
+    <textarea name="value" title="<%=tree_value_uri.title%>"><%#= current_value_link.subnode.literal unless current_value_link.nil? %></textarea>
+
+    <%= f.submit id: "update_value",
+                 class: "btn btn-primary width-6em",
+                 tabindex: increment_tab_index,
+                 title: "Update",
+                 value: "Update" %>
+    <% end %>
+  <% end %>
+<%= divider %>
+

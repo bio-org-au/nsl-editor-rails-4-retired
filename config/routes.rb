@@ -120,6 +120,11 @@ Rails.application.routes.draw do
         to: "names#duplicate_suggestions",
         via: :get
 
+  match "suggestions/workspace/parent_name",
+        as: "workspace_parent_name_suggestions",
+        to: "names/typeaheads/for_workspace_parent_name#index",
+        via: :get
+
   match "names/rules",
         as: "name_rules",
         to: "names#rules",
