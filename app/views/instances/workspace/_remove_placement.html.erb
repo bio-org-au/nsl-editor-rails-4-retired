@@ -1,6 +1,6 @@
 
 <% if @current_workspace.user_can_edit?(@current_user) %>
-  <% if @tree_link.node.delete? %>
+  <% if @name_node_link.node.delete? %>
     <%= form_tag({controller: 'trees', action: 'remove_name_placement'}, {method: :delete, remote: true}) do %>
                 <%= hidden_field_tag("remove_placement[name_id]", @instance.name.id) %>
                 <%= hidden_field_tag("remove_placement[instance_id]", @instance.id) %>
@@ -18,6 +18,6 @@
 
      <% end %>
    <% else %>
-     Has <%= pluralize(@tree_link.node.subnodes.size,'child') %>, cannot remove.
+     Has <%= pluralize(@name_node_link.node.subnodes.size,'child') %>, cannot remove.
  <% end %>
 <% end %>

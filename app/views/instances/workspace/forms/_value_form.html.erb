@@ -1,0 +1,7 @@
+<div>
+  value form
+    <%= value.field_name %>: <%= value.field_value %>
+  <%= form_for(@current_workspace, controller: 'Trees', action: 'patch', remote: true, url: :tree_arrangement_update_value) do |f| %>
+    <label for="node-value-<%#= tree_value_uri.label %>"><%#= tree_value_uri.title %></label>
+  <% end %>
+</div>

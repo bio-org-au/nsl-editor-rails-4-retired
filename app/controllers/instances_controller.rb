@@ -35,7 +35,7 @@ as a synonym"
     unless @current_workspace.blank?
       @placement = @current_workspace.find_placement_of_name(@instance.name)
       # @tree_link = @current_workspace.tree_link_for_name(@instance.name)
-      @tree_link = @current_workspace.tree_link_for_name(@instance.name)
+      @name_node_link = @current_workspace.find_name_node_link(@instance.name)
     end
     render "show", layout: false
   end

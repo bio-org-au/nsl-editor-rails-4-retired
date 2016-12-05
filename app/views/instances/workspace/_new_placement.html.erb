@@ -10,15 +10,15 @@
             class="form-control"
             title="APC Parent"
             name="place_name[parent_name]"
-            value="<%#= @tree_link.supernode.name.full_name %>"
+            value="<%#= @name_node_link.supernode.name.full_name %>"
      >
   </div>
       <div class="form-group">
-      <%= radio_button_tag(:type, "accepted", @tree_link.default_to_accepted?, name: "place_name[placement_type]") %>
+      <%= radio_button_tag(:type, "accepted", @name_node_link.default_to_accepted?, name: "place_name[placement_type]") %>
       <%= label_tag(:type_accepted, "Accepted") %>
-      <%= radio_button_tag(:type, "excluded", @tree_link.default_to_excluded?, name: "place_name[placement_type]") %>
+      <%= radio_button_tag(:type, "excluded", @name_node_link.default_to_excluded?, name: "place_name[placement_type]") %>
       <%= label_tag(:type_excluded, "Excluded") %>
-      <%= radio_button_tag(:type, "untreated", @tree_link.default_to_untreated?, name: "place_name[placement_type]") %>
+      <%= radio_button_tag(:type, "untreated", @name_node_link.default_to_untreated?, name: "place_name[placement_type]") %>
       <%= label_tag(:type_untreated, "Untreated") %>
     </div>
 

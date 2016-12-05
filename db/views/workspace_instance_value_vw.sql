@@ -37,5 +37,4 @@ select workspace.id workspace_id,
     on base_value.node_uri_ns_part_id = base_ns.id
  inner join tree_node value_node
     on tree_link.subnode_id = value_node.id
- where instance.id = 612278
-   and link_value.link_uri_id_part = base_value.link_uri_id_part
+ where link_value.link_uri_id_part = base_value.link_uri_id_part

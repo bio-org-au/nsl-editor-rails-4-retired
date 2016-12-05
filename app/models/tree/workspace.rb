@@ -35,10 +35,18 @@ class Tree::Workspace < ActiveRecord::Base
     link_id ? TreeLink.find(link_id) : nil
   end
 
-  def tree_link_for_name(name)
-    Rails.logger.debug("tree_link_for_name: #{name.id} #{name.full_name_html}")
+  # Find the link for the node in this tree for a particular name
+  # This could be attached to the base tree
+  # or, if mods occurred, it could be to the workspace.
+  def find_name_node_link(name)
+    Rails.logger.debug("find_name_node_link: #{name.id} #{name.full_name_html}")
     link_id = TreeArrangement.sp_find_name_in_tree(name.id, id)
     link_id ? TreeLink.find(link_id) : Tree::EmptyTreeLink.new
+  end
+
+  def find_node(name)
+    link_id = TreeArrangement.sp_find_name_in_tree(name.id, id)
+    link_id ? TreeLink.find(link_id) : nil
   end
 
   def find_name(name)

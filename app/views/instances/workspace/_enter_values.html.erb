@@ -2,11 +2,36 @@
 
 <hr>
 <hr>
-<ul>
-<% @current_workspace.workspace_instance_values.where(instance_id: @instance).each do |value| %>
-  <li><%= value.base_link_uri_id_part %>: <%= value.literal %>
-<% end %>
-</ul>
+  <%
+      @current_workspace.workspace_instance_values
+                        .where(instance_id: @instance)
+                        .each do |value|
+  %>
+  <%#=
+      render partial: "instances/workspace/forms/value_form",
+             locals: {value: value}
+  %>
+  <%
+      end
+  %>
+<%= divider %>
+<%= divider %>
+<%= @name_node_link.id %>
+
+<%= divider %>
+  <%
+      @name_node_link.workspace_values
+                        .each do |value|
+  %>
+  <%=
+      render partial: "instances/workspace/forms/value_form",
+             locals: {value: value}
+  %>
+  <%
+      end
+  %>
+<%= divider %>
+<%= divider %>
 
 <%# For each of the value types allowed by the base tree do .... %>
 <% @current_workspace.base_tree.editable_tree_value_uris.each do |tree_value_uri| %>

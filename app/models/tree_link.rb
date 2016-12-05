@@ -25,6 +25,7 @@ class TreeLink < ActiveRecord::Base
   belongs_to :node, class_name: TreeNode, foreign_key: "subnode_id"
   belongs_to :subnode, class_name: TreeNode
   belongs_to :namespace, class_name: "TreeUriNs", foreign_key: "type_uri_ns_part_id"
+  has_many   :workspace_values, foreign_key: "name_node_link_id"
 
   ACCEPTED_RAW = "ApcConcept".freeze
   EXCLUDED_RAW = "ApcExcluded".freeze
