@@ -102,7 +102,8 @@ class Ability
 
   def treebuilder_auth
     can "classification",     "place"
-    can "trees", :all
+    can "trees",               :all
+    can "workspace_values",    :all
     can "trees/workspaces/current", "create"
     can "names/typeaheads/for_workspace_parent_name", :all
   end

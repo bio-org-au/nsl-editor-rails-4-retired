@@ -26,16 +26,16 @@ as a synonym"
   # GET /instances/1/tab/:tab
   # Sets up RHS details panel on the search results page.
   # Displays a specified or default tab.
-  # ToDo: sticky tabs to handle different tabs for standalone
-  # and relationship instances.
   def show
     @tab = tab_or_default_tab
     @tab_index = (params[:tabIndex] || "1").to_i
     @tabs_to_offer = tabs_to_offer
+    # Really only need to do this if the "class" tab is chosen.
+    # ToDo: do this only when needed.
     unless @current_workspace.blank?
-      @placement = @current_workspace.find_placement_of_name(@instance.name)
+      #@placement = @current_workspace.find_placement_of_name(@instance.name)
       # @tree_link = @current_workspace.tree_link_for_name(@instance.name)
-      @name_node_link = @current_workspace.find_name_node_link(@instance.name)
+      @name_node_tree_link = @current_workspace.find_name_node_link(@instance.name)
     end
     render "show", layout: false
   end

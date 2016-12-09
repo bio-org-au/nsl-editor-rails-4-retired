@@ -1,21 +1,15 @@
-link to node for name: <%= @name_node_link.id %><br>
-current workspace: <%= @current_workspace.id %><br>
-current workspace: <%= @current_workspace.title %><br>
-    <% if @name_node_link.placed? %>
+    <% if @name_node_tree_link.placed? %>
       <%= render partial: "instances/workspace/current_placement" %>
-      <% if @name_node_link.placed_via_instance?(@instance) %>
+      <% if @name_node_tree_link.placed_via_instance?(@instance) %>
         <%= render partial: "instances/workspace/update_placement" %>
         <%= divider %>
         <%= render partial: "instances/workspace/remove_placement" %>
         <%= divider %>
         <%= render partial: "instances/workspace/enter_values" %>
-        <%= divider %>
       <% else %>
         <%= render partial: "instances/workspace/move_placement_here" %>
-        <%= divider %>
       <% end %>
     <% else %>
         <%= render partial: "instances/workspace/new_placement" %>
-        <%= divider %>
     <% end %>
 

@@ -228,8 +228,25 @@ Rails.application.routes.draw do
         to: "trees/workspaces/current#create",
         via: :post
 
-  match "tree_arrangement/:id/update_value",
-        as: "tree_arrangement_update_value", to: "trees#update_value", via: :patch
+  match "tree/value/:id",
+        as: "update_tree_value",
+        to: "workspace_values#old_update",
+        via: :patch
+
+  match "workspace/value",
+        as: "workspace_value",
+        to: "workspace_values#update",
+        via: :patch
+
+  match "workspace/value",
+        as: "create_workspace_value",
+        to: "workspace_values#create",
+        via: :post
+
+  match "workspace/value/:name_id/:type_uri_id_part/:name_node_link_id",
+        as: "delete_workspace_value",
+        to: "workspace_values#destroy",
+        via: :delete
 
   root to: "search#search"
   match "/*random", to: "search#search", via: [:get, :post, :delete, :patch]

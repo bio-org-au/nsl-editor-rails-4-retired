@@ -8,7 +8,11 @@ select name_node_link.id name_node_link_id,
        name_sub_link.type_uri_id_part name_sub_link_type_uri_id,
        name_sub_link_value.link_uri_id_part name_sub_link_value_link_uri_id_part,
        name_sub_link.type_uri_id_part field_name,
-       value_node.literal field_value
+       value_node.literal,
+       value_node.literal field_value,
+       name_node.name_id name_id,
+       name_sub_link_value.label value_label,
+       value_node.id value_node_id
 from tree_link name_node_link
      inner join tree_node name_node
      on name_node_link.subnode_id = name_node.id

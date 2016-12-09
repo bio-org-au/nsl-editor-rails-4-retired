@@ -2,12 +2,16 @@
 -- PostgreSQL database dump
 --
 
+-- Dumped from database version 9.5.5
+-- Dumped by pg_dump version 9.5.5
+
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
+SET row_security = off;
 
 --
 -- Name: audit; Type: SCHEMA; Schema: -; Owner: -
@@ -336,6 +340,80 @@ $_$;
 
 
 --
+-- Name: find_name_in_tree(bigint, bigint); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION find_name_in_tree(pname bigint, ptree bigint) RETURNS bigint
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+  -- declarations
+  ct integer;
+  base_id tree_arrangement.id%TYPE;
+  link_id tree_link.id%TYPE;
+BEGIN
+  -- if this is a simple tree, then we can just look for the tree link directly.
+  -- if it is a tree based on another tree, then we must do a treewalk
+
+  select base_arrangement_id into base_id from tree_arrangement a where a.id = ptree;
+
+  begin
+    IF base_id is null then
+      -- ok. look for the name as a current node in the tree, and find the link to its current parent.
+
+      select l.id INTO STRICT link_id
+      from tree_node c
+        join tree_link l on c.id = l.subnode_id
+        join tree_node p on l.supernode_id = p.id
+      where c.name_id = pname
+            and c.tree_arrangement_id = ptree
+            and c.next_node_id is null
+            and p.tree_arrangement_id = ptree
+            and p.next_node_id is null;
+    ELSE
+      -- ok. we need to do a treewalk. As always, this gets nasty.
+
+      with RECURSIVE walk as (
+        select l.id as stem_link, l.id as leaf_link, p.tree_arrangement_id = ptree as foundit
+        from tree_node c
+          join tree_link l on c.id = l.subnode_id
+          join tree_node p on l.supernode_id = p.id
+        where
+          c.name_id = pname
+          and (c.tree_arrangement_id = ptree or c.tree_arrangement_id = base_id)
+          and c.next_node_id is null
+          and (p.tree_arrangement_id = ptree or p.tree_arrangement_id = base_id)
+          and p.next_node_id is null
+        UNION ALL
+        SELECT
+          superlink.id as stem_link, walk.leaf_link, p.tree_arrangement_id = ptree as foundit
+        FROM walk
+          JOIN tree_link sublink on walk.stem_link = sublink.id
+          join tree_link superlink on sublink.supernode_id = superlink.subnode_id
+          join tree_node p on superlink.supernode_id = p.id
+        where not walk.foundit -- clip the search
+              and (p.tree_arrangement_id = ptree or p.tree_arrangement_id = base_id)
+              and p.next_node_id is null
+      )
+      select leaf_link INTO STRICT link_id from walk where foundit;
+
+    END IF;
+
+    return link_id;
+
+    EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+      raise notice 'no data found';
+      return null;
+    WHEN TOO_MANY_ROWS THEN
+      raise notice 'too many rows';
+      RAISE 'Multiple placements of name % in tree %', pname, ptree USING ERRCODE = 'unique_violation';
+  end;
+END;
+$$;
+
+
+--
 -- Name: is_instance_in_tree(bigint, bigint); Type: FUNCTION; Schema: public; Owner: -
 --
 
@@ -483,7 +561,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: logged_actions; Type: TABLE; Schema: audit; Owner: -; Tablespace: 
+-- Name: logged_actions; Type: TABLE; Schema: audit; Owner: -
 --
 
 CREATE TABLE logged_actions (
@@ -656,7 +734,7 @@ ALTER SEQUENCE logged_actions_event_id_seq OWNED BY logged_actions.event_id;
 SET search_path = mapper, pg_catalog;
 
 --
--- Name: db_version; Type: TABLE; Schema: mapper; Owner: -; Tablespace: 
+-- Name: db_version; Type: TABLE; Schema: mapper; Owner: -
 --
 
 CREATE TABLE db_version (
@@ -678,7 +756,7 @@ CREATE SEQUENCE mapper_sequence
 
 
 --
--- Name: host; Type: TABLE; Schema: mapper; Owner: -; Tablespace: 
+-- Name: host; Type: TABLE; Schema: mapper; Owner: -
 --
 
 CREATE TABLE host (
@@ -689,7 +767,7 @@ CREATE TABLE host (
 
 
 --
--- Name: identifier; Type: TABLE; Schema: mapper; Owner: -; Tablespace: 
+-- Name: identifier; Type: TABLE; Schema: mapper; Owner: -
 --
 
 CREATE TABLE identifier (
@@ -706,7 +784,7 @@ CREATE TABLE identifier (
 
 
 --
--- Name: identifier_identities; Type: TABLE; Schema: mapper; Owner: -; Tablespace: 
+-- Name: identifier_identities; Type: TABLE; Schema: mapper; Owner: -
 --
 
 CREATE TABLE identifier_identities (
@@ -716,7 +794,7 @@ CREATE TABLE identifier_identities (
 
 
 --
--- Name: match; Type: TABLE; Schema: mapper; Owner: -; Tablespace: 
+-- Name: match; Type: TABLE; Schema: mapper; Owner: -
 --
 
 CREATE TABLE match (
@@ -729,7 +807,7 @@ CREATE TABLE match (
 
 
 --
--- Name: match_host; Type: TABLE; Schema: mapper; Owner: -; Tablespace: 
+-- Name: match_host; Type: TABLE; Schema: mapper; Owner: -
 --
 
 CREATE TABLE match_host (
@@ -756,19 +834,16 @@ CREATE SEQUENCE hibernate_sequence
 -- Name: nsl_global_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
--- GC - increase the max to all for fixtures IDs to be used.
-
-
 CREATE SEQUENCE nsl_global_seq
     START WITH 1000
     INCREMENT BY 1
     MINVALUE 1000
-    MAXVALUE 10000000000
+    MAXVALUE 100000000000
     CACHE 1;
 
 
 --
--- Name: instance; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: instance; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE instance (
@@ -801,7 +876,7 @@ CREATE TABLE instance (
 
 
 --
--- Name: name; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: name; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE name (
@@ -843,7 +918,7 @@ CREATE TABLE name (
 
 
 --
--- Name: shard_config; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: shard_config; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE shard_config (
@@ -854,7 +929,7 @@ CREATE TABLE shard_config (
 
 
 --
--- Name: tree_arrangement; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: tree_arrangement; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE tree_arrangement (
@@ -877,7 +952,7 @@ CREATE TABLE tree_arrangement (
 
 
 --
--- Name: tree_node; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: tree_node; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE tree_node (
@@ -902,11 +977,11 @@ CREATE TABLE tree_node (
     name_id bigint,
     instance_id bigint,
     CONSTRAINT chk_arrangement_synthetic_yn CHECK ((is_synthetic = ANY (ARRAY['N'::bpchar, 'Y'::bpchar]))),
-    CONSTRAINT chk_internal_type_d CHECK ((((internal_type)::text <> 'D'::text) OR (((name_uri_ns_part_id IS NULL) AND (taxon_uri_ns_part_id IS NULL)) AND (literal IS NULL)))),
+    CONSTRAINT chk_internal_type_d CHECK ((((internal_type)::text <> 'D'::text) OR ((name_uri_ns_part_id IS NULL) AND (taxon_uri_ns_part_id IS NULL) AND (literal IS NULL)))),
     CONSTRAINT chk_internal_type_enum CHECK (((internal_type)::text = ANY (ARRAY[('S'::character varying)::text, ('Z'::character varying)::text, ('T'::character varying)::text, ('D'::character varying)::text, ('V'::character varying)::text]))),
-    CONSTRAINT chk_internal_type_s CHECK ((((internal_type)::text <> 'S'::text) OR ((((name_uri_ns_part_id IS NULL) AND (taxon_uri_ns_part_id IS NULL)) AND (resource_uri_ns_part_id IS NULL)) AND (literal IS NULL)))),
+    CONSTRAINT chk_internal_type_s CHECK ((((internal_type)::text <> 'S'::text) OR ((name_uri_ns_part_id IS NULL) AND (taxon_uri_ns_part_id IS NULL) AND (resource_uri_ns_part_id IS NULL) AND (literal IS NULL)))),
     CONSTRAINT chk_internal_type_t CHECK ((((internal_type)::text <> 'T'::text) OR (literal IS NULL))),
-    CONSTRAINT chk_internal_type_v CHECK ((((internal_type)::text <> 'V'::text) OR (((name_uri_ns_part_id IS NULL) AND (taxon_uri_ns_part_id IS NULL)) AND (((resource_uri_ns_part_id IS NOT NULL) AND (literal IS NULL)) OR ((resource_uri_ns_part_id IS NULL) AND (literal IS NOT NULL)))))),
+    CONSTRAINT chk_internal_type_v CHECK ((((internal_type)::text <> 'V'::text) OR ((name_uri_ns_part_id IS NULL) AND (taxon_uri_ns_part_id IS NULL) AND (((resource_uri_ns_part_id IS NOT NULL) AND (literal IS NULL)) OR ((resource_uri_ns_part_id IS NULL) AND (literal IS NOT NULL)))))),
     CONSTRAINT chk_tree_node_instance_matches CHECK (((instance_id IS NULL) OR (((instance_id)::character varying)::text = (taxon_uri_id_part)::text))),
     CONSTRAINT chk_tree_node_name_matches CHECK (((name_id IS NULL) OR (((name_id)::character varying)::text = (name_uri_id_part)::text))),
     CONSTRAINT chk_tree_node_synthetic_yn CHECK ((is_synthetic = ANY (ARRAY['N'::bpchar, 'Y'::bpchar])))
@@ -945,13 +1020,13 @@ CREATE VIEW accepted_name_vw AS
      JOIN instance ON ((accepted.id = instance.name_id)))
      JOIN tree_node ON ((accepted.id = tree_node.name_id)))
      JOIN tree_arrangement ta ON ((tree_node.tree_arrangement_id = ta.id)))
-  WHERE (((((ta.label)::text = (( SELECT shard_config.value
+  WHERE (((ta.label)::text = (( SELECT shard_config.value
            FROM shard_config
-          WHERE ((shard_config.name)::text = 'tree label'::text)))::text) AND (tree_node.next_node_id IS NULL)) AND (tree_node.checked_in_at_id IS NOT NULL)) AND (instance.id = tree_node.instance_id));
+          WHERE ((shard_config.name)::text = 'tree label'::text)))::text) AND (tree_node.next_node_id IS NULL) AND (tree_node.checked_in_at_id IS NOT NULL) AND (instance.id = tree_node.instance_id));
 
 
 --
--- Name: instance_type; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: instance_type; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE instance_type (
@@ -982,7 +1057,7 @@ CREATE TABLE instance_type (
 
 
 --
--- Name: reference; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: reference; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE reference (
@@ -1068,283 +1143,13 @@ CREATE VIEW accepted_synonym_vw AS
      JOIN tree_arrangement ta ON ((tree_node.tree_arrangement_id = ta.id)))
      JOIN instance cites_cites ON ((cites.cites_id = cites_cites.id)))
      JOIN reference cites_cites_ref ON ((cites_cites.reference_id = cites_cites_ref.id)))
-  WHERE (((((ta.label)::text = (( SELECT shard_config.value
+  WHERE (((ta.label)::text = (( SELECT shard_config.value
            FROM shard_config
-          WHERE ((shard_config.name)::text = 'tree label'::text)))::text) AND (tree_node.next_node_id IS NULL)) AND (tree_node.checked_in_at_id IS NOT NULL)) AND (tree_node.instance_id = citer.id));
+          WHERE ((shard_config.name)::text = 'tree label'::text)))::text) AND (tree_node.next_node_id IS NULL) AND (tree_node.checked_in_at_id IS NOT NULL) AND (tree_node.instance_id = citer.id));
 
 
 --
--- Name: instance_note; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE instance_note (
-    id bigint DEFAULT nextval('nsl_global_seq'::regclass) NOT NULL,
-    lock_version bigint DEFAULT 0 NOT NULL,
-    created_at timestamp with time zone NOT NULL,
-    created_by character varying(50) NOT NULL,
-    instance_id bigint NOT NULL,
-    instance_note_key_id bigint NOT NULL,
-    namespace_id bigint NOT NULL,
-    source_id bigint,
-    source_id_string character varying(100),
-    source_system character varying(50),
-    trash boolean DEFAULT false NOT NULL,
-    updated_at timestamp with time zone NOT NULL,
-    updated_by character varying(50) NOT NULL,
-    value character varying(4000) NOT NULL
-);
-
-
---
--- Name: instance_note_key; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE instance_note_key (
-    id bigint DEFAULT nextval('nsl_global_seq'::regclass) NOT NULL,
-    lock_version bigint DEFAULT 0 NOT NULL,
-    deprecated boolean DEFAULT false NOT NULL,
-    name character varying(255) NOT NULL,
-    sort_order integer DEFAULT 0 NOT NULL,
-    description_html text,
-    rdf_id character varying(50)
-);
-
-
---
--- Name: name_rank; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE name_rank (
-    id bigint DEFAULT nextval('nsl_global_seq'::regclass) NOT NULL,
-    lock_version bigint DEFAULT 0 NOT NULL,
-    abbrev character varying(20) NOT NULL,
-    deprecated boolean DEFAULT false NOT NULL,
-    has_parent boolean DEFAULT false NOT NULL,
-    italicize boolean DEFAULT false NOT NULL,
-    major boolean DEFAULT false NOT NULL,
-    name character varying(50) NOT NULL,
-    name_group_id bigint NOT NULL,
-    parent_rank_id bigint,
-    sort_order integer DEFAULT 0 NOT NULL,
-    visible_in_name boolean DEFAULT true NOT NULL,
-    description_html text,
-    rdf_id character varying(50)
-);
-
-
---
--- Name: name_status; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE name_status (
-    id bigint DEFAULT nextval('nsl_global_seq'::regclass) NOT NULL,
-    lock_version bigint DEFAULT 0 NOT NULL,
-    display boolean DEFAULT true NOT NULL,
-    name character varying(50),
-    name_group_id bigint NOT NULL,
-    name_status_id bigint,
-    nom_illeg boolean DEFAULT false NOT NULL,
-    nom_inval boolean DEFAULT false NOT NULL,
-    description_html text,
-    rdf_id character varying(50)
-);
-
-
---
--- Name: name_tree_path; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE name_tree_path (
-    id bigint DEFAULT nextval('hibernate_sequence'::regclass) NOT NULL,
-    version bigint NOT NULL,
-    inserted bigint NOT NULL,
-    name_id bigint NOT NULL,
-    name_id_path text NOT NULL,
-    name_path text NOT NULL,
-    next_id bigint,
-    parent_id bigint,
-    rank_path text NOT NULL,
-    tree_id bigint NOT NULL,
-    family_id bigint
-);
-
-
---
--- Name: name_type; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE name_type (
-    id bigint DEFAULT nextval('nsl_global_seq'::regclass) NOT NULL,
-    lock_version bigint DEFAULT 0 NOT NULL,
-    autonym boolean DEFAULT false NOT NULL,
-    connector character varying(1),
-    cultivar boolean DEFAULT false NOT NULL,
-    formula boolean DEFAULT false NOT NULL,
-    hybrid boolean DEFAULT false NOT NULL,
-    name character varying(255) NOT NULL,
-    name_category_id bigint NOT NULL,
-    name_group_id bigint NOT NULL,
-    scientific boolean DEFAULT false NOT NULL,
-    sort_order integer DEFAULT 0 NOT NULL,
-    description_html text,
-    rdf_id character varying(50),
-    deprecated boolean DEFAULT false NOT NULL
-);
-
-
---
--- Name: tree_link; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE tree_link (
-    id bigint DEFAULT nextval('nsl_global_seq'::regclass) NOT NULL,
-    lock_version bigint DEFAULT 0 NOT NULL,
-    link_seq integer NOT NULL,
-    subnode_id bigint NOT NULL,
-    supernode_id bigint NOT NULL,
-    is_synthetic bpchar NOT NULL,
-    type_uri_id_part character varying(255),
-    type_uri_ns_part_id bigint NOT NULL,
-    versioning_method bpchar NOT NULL,
-    CONSTRAINT chk_tree_link_seq_positive CHECK ((link_seq >= 1)),
-    CONSTRAINT chk_tree_link_sub_not_end CHECK ((subnode_id <> 0)),
-    CONSTRAINT chk_tree_link_sup_not_end CHECK ((supernode_id <> 0)),
-    CONSTRAINT chk_tree_link_synthetic_yn CHECK ((is_synthetic = ANY (ARRAY['N'::bpchar, 'Y'::bpchar]))),
-    CONSTRAINT chk_tree_link_vmethod CHECK ((versioning_method = ANY (ARRAY['F'::bpchar, 'V'::bpchar, 'T'::bpchar])))
-);
-
-
---
--- Name: apc_taxon_view; Type: MATERIALIZED VIEW; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE MATERIALIZED VIEW apc_taxon_view AS
- SELECT 'ICNAFP'::text AS "nomenclaturalCode",
-        CASE
-            WHEN (apcn.id IS NOT NULL) THEN
-            CASE
-                WHEN (apc_cited_inst.id IS NOT NULL) THEN ('http://id.biodiversity.org.au/instance/apni/'::text || apc_inst.id)
-                ELSE ('http://id.biodiversity.org.au/node/apni/'::text || apcn.id)
-            END
-            ELSE NULL::text
-        END AS "taxonID",
-    nt.name AS "nameType",
-    ('http://id.biodiversity.org.au/name/apni/'::text || n.id) AS "scientificNameID",
-    n.full_name AS "scientificName",
-        CASE
-            WHEN ((ns.name)::text <> ALL (ARRAY[('legitimate'::character varying)::text, ('[default]'::character varying)::text])) THEN ns.name
-            ELSE NULL::character varying
-        END AS "nomenclaturalStatus",
-        CASE
-            WHEN (apc_inst.id = apcn.instance_id) THEN apcn.type_uri_id_part
-            ELSE apc_inst_type.name
-        END AS "taxonomicStatus",
-    apc_inst_type.pro_parte AS "proParte",
-        CASE
-            WHEN (apc_inst.id <> apcn.instance_id) THEN accepted_name.full_name
-            ELSE NULL::character varying
-        END AS "acceptedNameUsage",
-        CASE
-            WHEN (apcn.instance_id IS NOT NULL) THEN ('http://id.biodiversity.org.au/node/apni/'::text || apcn.id)
-            ELSE NULL::text
-        END AS "acceptedNameUsageID",
-        CASE
-            WHEN ((apc_inst.id = apcn.instance_id) AND (apcp.id IS NOT NULL)) THEN
-            CASE
-                WHEN ((apcp.type_uri_id_part)::text = 'classification-root'::text) THEN '[APC]'::text
-                ELSE ('http://id.biodiversity.org.au/node/apni/'::text || apcp.id)
-            END
-            ELSE NULL::text
-        END AS "parentNameUsageID",
-    rank.name AS "taxonRank",
-    rank.sort_order AS "taxonRankSortOrder",
-    "substring"(ntp.rank_path, 'Regnum:([^>]*)'::text) AS kingdom,
-    "substring"(ntp.rank_path, 'Classis:([^>]*)'::text) AS class,
-    "substring"(ntp.rank_path, 'Subclassis:([^>]*)'::text) AS subclass,
-    "substring"(ntp.rank_path, 'Familia:([^>]*)'::text) AS family,
-    n.created_at AS created,
-    n.updated_at AS modified,
-    ARRAY( SELECT t2.label
-           FROM (name_tree_path ntp2
-             JOIN tree_arrangement t2 ON ((ntp2.tree_id = t2.id)))
-          WHERE (ntp2.name_id = n.id)
-          ORDER BY t2.label) AS "datasetName",
-        CASE
-            WHEN (apc_cited_inst.id IS NOT NULL) THEN ('http://id.biodiversity.org.au/instance/apni/'::text || apc_inst.cites_id)
-            ELSE ('http://id.biodiversity.org.au/instance/apni/'::text || apc_inst.id)
-        END AS "taxonConceptID",
-        CASE
-            WHEN (apcr.citation IS NOT NULL) THEN ('http://id.biodiversity.org.au/reference/apni/'::text || apcr.id)
-            ELSE ('http://id.biodiversity.org.au/reference/apni/'::text || apc_inst.reference_id)
-        END AS "nameAccordingToID",
-        CASE
-            WHEN (apcr.citation IS NOT NULL) THEN apcr.citation
-            ELSE apc_ref.citation
-        END AS "nameAccordingTo",
-    ( SELECT string_agg(regexp_replace((nt_1.value)::text, '[\n\r\u2028]+'::text, ' '::text, 'g'::text), ' '::text) AS string_agg
-           FROM (instance_note nt_1
-             JOIN instance_note_key key1 ON (((key1.id = nt_1.instance_note_key_id) AND ((key1.name)::text = 'APC Comment'::text))))
-          WHERE (nt_1.instance_id = apcn.instance_id)) AS "taxonRemarks",
-    ( SELECT string_agg(regexp_replace((nt_1.value)::text, '[\n\r\u2028]+'::text, ' '::text, 'g'::text), ' '::text) AS string_agg
-           FROM (instance_note nt_1
-             JOIN instance_note_key key1 ON (((key1.id = nt_1.instance_note_key_id) AND ((key1.name)::text = 'APC Dist.'::text))))
-          WHERE (nt_1.instance_id = apcn.instance_id)) AS "taxonDistribution",
-        CASE
-            WHEN (apc_inst.id = apcn.instance_id) THEN regexp_replace(ntp.name_path, '\>'::text, '|'::text, 'g'::text)
-            ELSE NULL::text
-        END AS "higherClassification",
-    'http://creativecommons.org/licenses/by/3.0/'::text AS "ccLicense",
-        CASE
-            WHEN (apcn.id IS NOT NULL) THEN
-            CASE
-                WHEN (apc_cited_inst.id IS NOT NULL) THEN ('http://id.biodiversity.org.au/instance/apni/'::text || apc_inst.id)
-                ELSE ('http://id.biodiversity.org.au/node/apni/'::text || apcn.id)
-            END
-            ELSE NULL::text
-        END AS "ccAttributionIRI ",
-    n.simple_name AS "canonicalName",
-        CASE
-            WHEN nt.autonym THEN NULL::text
-            ELSE regexp_replace("substring"((n.full_name_html)::text, '<authors>(.*)</authors>'::text), '<[^>]*>'::text, ''::text, 'g'::text)
-        END AS "scientificNameAuthorship",
-        CASE
-            WHEN (firsthybridparent.id IS NOT NULL) THEN firsthybridparent.full_name
-            ELSE NULL::character varying
-        END AS "firstHybridParentName",
-        CASE
-            WHEN (firsthybridparent.id IS NOT NULL) THEN ('http://id.biodiversity.org.au/name/apni/'::text || firsthybridparent.id)
-            ELSE NULL::text
-        END AS "firstHybridParentNameID",
-        CASE
-            WHEN (secondhybridparent.id IS NOT NULL) THEN secondhybridparent.full_name
-            ELSE NULL::character varying
-        END AS "secondHybridParentName",
-        CASE
-            WHEN (secondhybridparent.id IS NOT NULL) THEN ('http://id.biodiversity.org.au/name/apni/'::text || secondhybridparent.id)
-            ELSE NULL::text
-        END AS "secondHybridParentNameID"
-   FROM ((((((((((((((instance apc_inst
-     JOIN instance_type apc_inst_type ON ((apc_inst.instance_type_id = apc_inst_type.id)))
-     JOIN reference apc_ref ON ((apc_ref.id = apc_inst.reference_id)))
-     JOIN (tree_node apcn
-     JOIN tree_arrangement tree ON (((tree.id = apcn.tree_arrangement_id) AND ((tree.label)::text = 'APC'::text)))) ON (((((apcn.instance_id = apc_inst.id) OR (apcn.instance_id = apc_inst.cited_by_id)) AND (apcn.checked_in_at_id IS NOT NULL)) AND (apcn.next_node_id IS NULL))))
-     LEFT JOIN (tree_link
-     JOIN tree_node apcp ON ((((apcp.id = tree_link.supernode_id) AND (apcp.checked_in_at_id IS NOT NULL)) AND (apcp.next_node_id IS NULL)))) ON ((apcn.id = tree_link.subnode_id)))
-     LEFT JOIN instance apc_cited_inst ON ((apc_inst.cites_id = apc_cited_inst.id)))
-     LEFT JOIN reference apcr ON ((apc_cited_inst.reference_id = apcr.id)))
-     LEFT JOIN name_tree_path ntp ON (((ntp.name_id = apcn.name_id) AND (ntp.tree_id = tree.id))))
-     LEFT JOIN name accepted_name ON ((accepted_name.id = apcn.name_id)))
-     JOIN name n ON ((n.id = apc_inst.name_id)))
-     JOIN name_type nt ON ((n.name_type_id = nt.id)))
-     JOIN name_status ns ON ((n.name_status_id = ns.id)))
-     JOIN name_rank rank ON ((n.name_rank_id = rank.id)))
-     LEFT JOIN name firsthybridparent ON (((n.parent_id = firsthybridparent.id) AND nt.hybrid)))
-     LEFT JOIN name secondhybridparent ON (((n.second_parent_id = secondhybridparent.id) AND nt.hybrid)))
-  WITH NO DATA;
-
-
---
--- Name: author; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: author; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE author (
@@ -1371,7 +1176,7 @@ CREATE TABLE author (
 
 
 --
--- Name: comment; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: comment; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE comment (
@@ -1390,7 +1195,7 @@ CREATE TABLE comment (
 
 
 --
--- Name: db_version; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: db_version; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE db_version (
@@ -1400,7 +1205,7 @@ CREATE TABLE db_version (
 
 
 --
--- Name: delayed_jobs; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: delayed_jobs; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE delayed_jobs (
@@ -1421,7 +1226,16 @@ CREATE TABLE delayed_jobs (
 
 
 --
--- Name: external_ref; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: distribution; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE distribution (
+    region text
+);
+
+
+--
+-- Name: external_ref; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE external_ref (
@@ -1438,7 +1252,7 @@ CREATE TABLE external_ref (
 
 
 --
--- Name: help_topic; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: help_topic; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE help_topic (
@@ -1456,7 +1270,7 @@ CREATE TABLE help_topic (
 
 
 --
--- Name: id_mapper; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: id_mapper; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE id_mapper (
@@ -1469,7 +1283,44 @@ CREATE TABLE id_mapper (
 
 
 --
--- Name: language; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: instance_note; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE instance_note (
+    id bigint DEFAULT nextval('nsl_global_seq'::regclass) NOT NULL,
+    lock_version bigint DEFAULT 0 NOT NULL,
+    created_at timestamp with time zone NOT NULL,
+    created_by character varying(50) NOT NULL,
+    instance_id bigint NOT NULL,
+    instance_note_key_id bigint NOT NULL,
+    namespace_id bigint NOT NULL,
+    source_id bigint,
+    source_id_string character varying(100),
+    source_system character varying(50),
+    trash boolean DEFAULT false NOT NULL,
+    updated_at timestamp with time zone NOT NULL,
+    updated_by character varying(50) NOT NULL,
+    value character varying(4000) NOT NULL
+);
+
+
+--
+-- Name: instance_note_key; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE instance_note_key (
+    id bigint DEFAULT nextval('nsl_global_seq'::regclass) NOT NULL,
+    lock_version bigint DEFAULT 0 NOT NULL,
+    deprecated boolean DEFAULT false NOT NULL,
+    name character varying(255) NOT NULL,
+    sort_order integer DEFAULT 0 NOT NULL,
+    description_html text,
+    rdf_id character varying(50)
+);
+
+
+--
+-- Name: language; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE language (
@@ -1482,7 +1333,7 @@ CREATE TABLE language (
 
 
 --
--- Name: locale; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: locale; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE locale (
@@ -1493,7 +1344,7 @@ CREATE TABLE locale (
 
 
 --
--- Name: name_category; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: name_category; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE name_category (
@@ -1503,6 +1354,25 @@ CREATE TABLE name_category (
     sort_order integer DEFAULT 0 NOT NULL,
     description_html text,
     rdf_id character varying(50)
+);
+
+
+--
+-- Name: name_status; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE name_status (
+    id bigint DEFAULT nextval('nsl_global_seq'::regclass) NOT NULL,
+    lock_version bigint DEFAULT 0 NOT NULL,
+    display boolean DEFAULT true NOT NULL,
+    name character varying(50),
+    name_group_id bigint NOT NULL,
+    name_status_id bigint,
+    nom_illeg boolean DEFAULT false NOT NULL,
+    nom_inval boolean DEFAULT false NOT NULL,
+    description_html text,
+    rdf_id character varying(50),
+    deprecated boolean DEFAULT false NOT NULL
 );
 
 
@@ -1560,7 +1430,52 @@ CREATE VIEW name_detail_synonyms_vw AS
      JOIN name ON ((instance.name_id = name.id)))
      JOIN instance_type ity ON ((ity.id = instance.instance_type_id)))
      JOIN name_status ns ON ((ns.id = name.name_status_id)))
-  WHERE ((ity.name)::text <> ALL ((ARRAY['common name'::character varying, 'vernacular name'::character varying])::text[]));
+  WHERE ((ity.name)::text <> ALL (ARRAY[('common name'::character varying)::text, ('vernacular name'::character varying)::text]));
+
+
+--
+-- Name: name_rank; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE name_rank (
+    id bigint DEFAULT nextval('nsl_global_seq'::regclass) NOT NULL,
+    lock_version bigint DEFAULT 0 NOT NULL,
+    abbrev character varying(20) NOT NULL,
+    deprecated boolean DEFAULT false NOT NULL,
+    has_parent boolean DEFAULT false NOT NULL,
+    italicize boolean DEFAULT false NOT NULL,
+    major boolean DEFAULT false NOT NULL,
+    name character varying(50) NOT NULL,
+    name_group_id bigint NOT NULL,
+    parent_rank_id bigint,
+    sort_order integer DEFAULT 0 NOT NULL,
+    visible_in_name boolean DEFAULT true NOT NULL,
+    description_html text,
+    rdf_id character varying(50)
+);
+
+
+--
+-- Name: name_type; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE name_type (
+    id bigint DEFAULT nextval('nsl_global_seq'::regclass) NOT NULL,
+    lock_version bigint DEFAULT 0 NOT NULL,
+    autonym boolean DEFAULT false NOT NULL,
+    connector character varying(1),
+    cultivar boolean DEFAULT false NOT NULL,
+    formula boolean DEFAULT false NOT NULL,
+    hybrid boolean DEFAULT false NOT NULL,
+    name character varying(255) NOT NULL,
+    name_category_id bigint NOT NULL,
+    name_group_id bigint NOT NULL,
+    scientific boolean DEFAULT false NOT NULL,
+    sort_order integer DEFAULT 0 NOT NULL,
+    description_html text,
+    rdf_id character varying(50),
+    deprecated boolean DEFAULT false NOT NULL
+);
 
 
 --
@@ -1621,7 +1536,7 @@ CREATE VIEW name_details_vw AS
 
 
 --
--- Name: name_group; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: name_group; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE name_group (
@@ -1655,7 +1570,7 @@ CREATE VIEW name_or_synonym_vw AS
 
 
 --
--- Name: name_part; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: name_part; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE name_part (
@@ -1668,7 +1583,7 @@ CREATE TABLE name_part (
 
 
 --
--- Name: name_tag; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: name_tag; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE name_tag (
@@ -1679,7 +1594,7 @@ CREATE TABLE name_tag (
 
 
 --
--- Name: name_tag_name; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: name_tag_name; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE name_tag_name (
@@ -1693,7 +1608,26 @@ CREATE TABLE name_tag_name (
 
 
 --
--- Name: name_view; Type: MATERIALIZED VIEW; Schema: public; Owner: -; Tablespace: 
+-- Name: name_tree_path; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE name_tree_path (
+    id bigint DEFAULT nextval('hibernate_sequence'::regclass) NOT NULL,
+    version bigint NOT NULL,
+    inserted bigint NOT NULL,
+    name_id bigint NOT NULL,
+    name_id_path text NOT NULL,
+    name_path text NOT NULL,
+    next_id bigint,
+    parent_id bigint,
+    rank_path text NOT NULL,
+    tree_id bigint NOT NULL,
+    family_id bigint
+);
+
+
+--
+-- Name: name_view; Type: MATERIALIZED VIEW; Schema: public; Owner: -
 --
 
 CREATE MATERIALIZED VIEW name_view AS
@@ -1808,7 +1742,7 @@ CREATE MATERIALIZED VIEW name_view AS
      JOIN reference apc_ref ON ((apc_ref.id = apc_inst.reference_id)))
      JOIN ((tree_node apcn
      JOIN tree_arrangement tree ON (((tree.id = apcn.tree_arrangement_id) AND ((tree.label)::text = 'APC'::text))))
-     JOIN name_tree_path ntp ON (((ntp.name_id = apcn.name_id) AND (ntp.tree_id = tree.id)))) ON ((((((apcn.instance_id = apc_inst.id) OR (apcn.instance_id = apc_inst.cited_by_id)) AND (apcn.checked_in_at_id IS NOT NULL)) AND (apcn.next_node_id IS NULL)) AND ((apcn.type_uri_id_part)::text <> 'DeclaredBt'::text)))) ON ((apc_inst.name_id = n.id)))
+     JOIN name_tree_path ntp ON (((ntp.name_id = apcn.name_id) AND (ntp.tree_id = tree.id)))) ON ((((apcn.instance_id = apc_inst.id) OR (apcn.instance_id = apc_inst.cited_by_id)) AND (apcn.checked_in_at_id IS NOT NULL) AND (apcn.next_node_id IS NULL) AND ((apcn.type_uri_id_part)::text <> 'DeclaredBt'::text)))) ON ((apc_inst.name_id = n.id)))
      LEFT JOIN name firsthybridparent ON (((n.parent_id = firsthybridparent.id) AND nt.hybrid)))
      LEFT JOIN name secondhybridparent ON (((n.second_parent_id = secondhybridparent.id) AND nt.hybrid)))
   WHERE ((EXISTS ( SELECT 1
@@ -1818,7 +1752,7 @@ CREATE MATERIALIZED VIEW name_view AS
 
 
 --
--- Name: namespace; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: namespace; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE namespace (
@@ -1831,7 +1765,7 @@ CREATE TABLE namespace (
 
 
 --
--- Name: nomenclatural_event_type; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: nomenclatural_event_type; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE nomenclatural_event_type (
@@ -1845,7 +1779,7 @@ CREATE TABLE nomenclatural_event_type (
 
 
 --
--- Name: notification; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: notification; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE notification (
@@ -1857,7 +1791,7 @@ CREATE TABLE notification (
 
 
 --
--- Name: nsl_simple_name_export; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: nsl_simple_name_export; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE nsl_simple_name_export (
@@ -1921,7 +1855,7 @@ CREATE TABLE nsl_simple_name_export (
 
 
 --
--- Name: ref_author_role; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: ref_author_role; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE ref_author_role (
@@ -1934,7 +1868,7 @@ CREATE TABLE ref_author_role (
 
 
 --
--- Name: ref_type; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: ref_type; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE ref_type (
@@ -1950,7 +1884,29 @@ CREATE TABLE ref_type (
 
 
 --
--- Name: taxon_view; Type: MATERIALIZED VIEW; Schema: public; Owner: -; Tablespace: 
+-- Name: tree_link; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE tree_link (
+    id bigint DEFAULT nextval('nsl_global_seq'::regclass) NOT NULL,
+    lock_version bigint DEFAULT 0 NOT NULL,
+    link_seq integer NOT NULL,
+    subnode_id bigint NOT NULL,
+    supernode_id bigint NOT NULL,
+    is_synthetic bpchar NOT NULL,
+    type_uri_id_part character varying(255),
+    type_uri_ns_part_id bigint NOT NULL,
+    versioning_method bpchar NOT NULL,
+    CONSTRAINT chk_tree_link_seq_positive CHECK ((link_seq >= 1)),
+    CONSTRAINT chk_tree_link_sub_not_end CHECK ((subnode_id <> 0)),
+    CONSTRAINT chk_tree_link_sup_not_end CHECK ((supernode_id <> 0)),
+    CONSTRAINT chk_tree_link_synthetic_yn CHECK ((is_synthetic = ANY (ARRAY['N'::bpchar, 'Y'::bpchar]))),
+    CONSTRAINT chk_tree_link_vmethod CHECK ((versioning_method = ANY (ARRAY['F'::bpchar, 'V'::bpchar, 'T'::bpchar])))
+);
+
+
+--
+-- Name: taxon_view; Type: MATERIALIZED VIEW; Schema: public; Owner: -
 --
 
 CREATE MATERIALIZED VIEW taxon_view AS
@@ -2062,9 +2018,9 @@ CREATE MATERIALIZED VIEW taxon_view AS
      JOIN instance_type apc_inst_type ON ((apc_inst.instance_type_id = apc_inst_type.id)))
      JOIN reference apc_ref ON ((apc_ref.id = apc_inst.reference_id)))
      JOIN (tree_node apcn
-     JOIN tree_arrangement tree ON (((tree.id = apcn.tree_arrangement_id) AND ((tree.label)::text = 'APC'::text)))) ON (((((apcn.instance_id = apc_inst.id) OR (apcn.instance_id = apc_inst.cited_by_id)) AND (apcn.checked_in_at_id IS NOT NULL)) AND (apcn.next_node_id IS NULL))))
+     JOIN tree_arrangement tree ON (((tree.id = apcn.tree_arrangement_id) AND ((tree.label)::text = 'APC'::text)))) ON ((((apcn.instance_id = apc_inst.id) OR (apcn.instance_id = apc_inst.cited_by_id)) AND (apcn.checked_in_at_id IS NOT NULL) AND (apcn.next_node_id IS NULL))))
      LEFT JOIN (tree_link
-     JOIN tree_node apcp ON ((((apcp.id = tree_link.supernode_id) AND (apcp.checked_in_at_id IS NOT NULL)) AND (apcp.next_node_id IS NULL)))) ON ((apcn.id = tree_link.subnode_id)))
+     JOIN tree_node apcp ON (((apcp.id = tree_link.supernode_id) AND (apcp.checked_in_at_id IS NOT NULL) AND (apcp.next_node_id IS NULL)))) ON ((apcn.id = tree_link.subnode_id)))
      LEFT JOIN instance apc_cited_inst ON ((apc_inst.cites_id = apc_cited_inst.id)))
      LEFT JOIN reference apcr ON ((apc_cited_inst.reference_id = apcr.id)))
      LEFT JOIN name_tree_path ntp ON (((ntp.name_id = apcn.name_id) AND (ntp.tree_id = tree.id))))
@@ -2079,7 +2035,7 @@ CREATE MATERIALIZED VIEW taxon_view AS
 
 
 --
--- Name: tree_event; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: tree_event; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE tree_event (
@@ -2093,7 +2049,7 @@ CREATE TABLE tree_event (
 
 
 --
--- Name: tree_uri_ns; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: tree_uri_ns; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE tree_uri_ns (
@@ -2111,7 +2067,28 @@ CREATE TABLE tree_uri_ns (
 
 
 --
--- Name: user_query; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: tree_value_uri; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE tree_value_uri (
+    id bigint DEFAULT nextval('nsl_global_seq'::regclass) NOT NULL,
+    lock_version bigint DEFAULT 0 NOT NULL,
+    description character varying(2048),
+    is_multi_valued boolean DEFAULT false NOT NULL,
+    is_resource boolean DEFAULT false NOT NULL,
+    label character varying(20) NOT NULL,
+    link_uri_id_part character varying(255) NOT NULL,
+    link_uri_ns_part_id bigint NOT NULL,
+    node_uri_id_part character varying(255) NOT NULL,
+    node_uri_ns_part_id bigint NOT NULL,
+    root_id bigint NOT NULL,
+    sort_order integer NOT NULL,
+    title character varying(50) NOT NULL
+);
+
+
+--
+-- Name: user_query; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE user_query (
@@ -2133,7 +2110,7 @@ CREATE TABLE user_query (
 
 
 --
--- Name: why_is_this_here; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: why_is_this_here; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE why_is_this_here (
@@ -2142,6 +2119,107 @@ CREATE TABLE why_is_this_here (
     name character varying(50) NOT NULL,
     sort_order integer DEFAULT 0 NOT NULL
 );
+
+
+--
+-- Name: workspace_instance_value_vw; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW workspace_instance_value_vw AS
+ SELECT workspace.id AS workspace_id,
+    instance.id AS instance_id,
+    tree_node.tree_arrangement_id,
+    tree_node.id AS tree_node_id,
+    tree_link.id AS tree_link_id,
+    workspace.title AS workspace_title,
+    tree_uri_ns.label AS tree_uri_ns_label,
+    tree_link.type_uri_id_part AS tree_link_type_uri_id_part,
+    base.label AS base_label,
+    base_value.id AS base_value_uri_id,
+    base_value.link_uri_ns_part_id AS base_link_uri_ns_part,
+    link_value.link_uri_ns_part_id AS link_uri_ns_part,
+    link_value.id AS link_value_uri_id,
+    base_ns.title,
+    tree_link.subnode_id,
+    value_node.type_uri_id_part,
+    link_value.link_uri_id_part,
+    base_value.link_uri_id_part AS base_link_uri_id_part,
+    value_node.literal
+   FROM (((((((((instance
+     JOIN tree_node ON ((instance.id = tree_node.instance_id)))
+     JOIN tree_link ON ((tree_node.id = tree_link.supernode_id)))
+     JOIN tree_value_uri link_value ON (((tree_link.type_uri_id_part)::text = (link_value.link_uri_id_part)::text)))
+     JOIN tree_uri_ns ON ((tree_link.type_uri_ns_part_id = tree_uri_ns.id)))
+     JOIN tree_arrangement workspace ON ((tree_node.tree_arrangement_id = workspace.id)))
+     JOIN tree_arrangement base ON ((workspace.base_arrangement_id = base.id)))
+     JOIN tree_value_uri base_value ON ((base.id = base_value.root_id)))
+     JOIN tree_uri_ns base_ns ON ((base_value.node_uri_ns_part_id = base_ns.id)))
+     JOIN tree_node value_node ON ((tree_link.subnode_id = value_node.id)))
+  WHERE ((instance.id = 612278) AND ((link_value.link_uri_id_part)::text = (base_value.link_uri_id_part)::text));
+
+
+--
+-- Name: workspace_value_namespace_vw; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW workspace_value_namespace_vw AS
+ SELECT workspace.id AS workspace_id,
+    workspace.title AS workspace_title,
+    base.label AS base_tree_label,
+    value.label AS value_label,
+    value.link_uri_id_part AS value_link_uri_id_part,
+    value.node_uri_id_part AS value_node_uri_id_part,
+    value.node_uri_ns_part_id AS "Value_node_uri_ns_part_id",
+    value.title AS value_title,
+    node_namespace.description AS node_namespace_description,
+    node_namespace.id_mapper_namespace_id AS node_namespace_id_mapper_namespace_id,
+    node_namespace.id_mapper_system AS node_namespace_id_mapper_system,
+    node_namespace.label AS node_namespace_label,
+    node_namespace.owner_uri_id_part AS node_namespace_owner_uri_id_part,
+    node_namespace.owner_uri_ns_part_id AS node_namespace_owner_uri_ns_part_id,
+    node_namespace.title AS node_namespace_title,
+    node_namespace.uri AS node_namespace_uri,
+    link_namespace.description AS link_namespace_description,
+    link_namespace.id_mapper_namespace_id AS link_namespace_id_mapper_namespace_id,
+    link_namespace.id_mapper_system AS link_namespace_id_mapper_system,
+    link_namespace.label AS link_namespace_label,
+    link_namespace.owner_uri_id_part AS link_namespace_owner_uri_id_part,
+    link_namespace.owner_uri_ns_part_id AS link_namespace_owner_uri_ns_part_id,
+    link_namespace.title AS link_namespace_title,
+    link_namespace.uri AS link_namespace_uri
+   FROM ((((tree_arrangement workspace
+     JOIN tree_arrangement base ON ((workspace.base_arrangement_id = base.id)))
+     JOIN tree_value_uri value ON ((base.id = value.root_id)))
+     JOIN tree_uri_ns node_namespace ON ((value.node_uri_ns_part_id = node_namespace.id)))
+     JOIN tree_uri_ns link_namespace ON ((value.link_uri_ns_part_id = link_namespace.id)));
+
+
+--
+-- Name: workspace_value_vw; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW workspace_value_vw AS
+ SELECT name_node_link.id AS name_node_link_id,
+    name_node.id AS name_node_id,
+    instance.id AS instance_id,
+    name_sub_link.type_uri_id_part,
+    name_sub_link.type_uri_ns_part_id,
+    workspace.id AS workspace_id,
+    name_sub_link.type_uri_id_part AS name_sub_link_type_uri_id,
+    name_sub_link_value.link_uri_id_part AS name_sub_link_value_link_uri_id_part,
+    name_sub_link.type_uri_id_part AS field_name,
+    value_node.literal,
+    value_node.literal AS field_value,
+    name_node.name_id,
+    name_sub_link_value.label AS value_label,
+    value_node.id AS value_node_id
+   FROM ((((((tree_link name_node_link
+     JOIN tree_node name_node ON ((name_node_link.subnode_id = name_node.id)))
+     JOIN instance ON ((name_node.instance_id = instance.id)))
+     JOIN tree_link name_sub_link ON ((name_node.id = name_sub_link.supernode_id)))
+     JOIN tree_value_uri name_sub_link_value ON (((name_sub_link.type_uri_id_part)::text = (name_sub_link_value.link_uri_id_part)::text)))
+     JOIN tree_arrangement workspace ON ((name_node.tree_arrangement_id = workspace.id)))
+     JOIN tree_node value_node ON ((name_sub_link.subnode_id = value_node.id)));
 
 
 SET search_path = audit, pg_catalog;
@@ -2154,7 +2232,7 @@ ALTER TABLE ONLY logged_actions ALTER COLUMN event_id SET DEFAULT nextval('logge
 
 
 --
--- Name: logged_actions_pkey; Type: CONSTRAINT; Schema: audit; Owner: -; Tablespace: 
+-- Name: logged_actions_pkey; Type: CONSTRAINT; Schema: audit; Owner: -
 --
 
 ALTER TABLE ONLY logged_actions
@@ -2164,7 +2242,7 @@ ALTER TABLE ONLY logged_actions
 SET search_path = mapper, pg_catalog;
 
 --
--- Name: db_version_pkey; Type: CONSTRAINT; Schema: mapper; Owner: -; Tablespace: 
+-- Name: db_version_pkey; Type: CONSTRAINT; Schema: mapper; Owner: -
 --
 
 ALTER TABLE ONLY db_version
@@ -2172,7 +2250,7 @@ ALTER TABLE ONLY db_version
 
 
 --
--- Name: host_pkey; Type: CONSTRAINT; Schema: mapper; Owner: -; Tablespace: 
+-- Name: host_pkey; Type: CONSTRAINT; Schema: mapper; Owner: -
 --
 
 ALTER TABLE ONLY host
@@ -2180,7 +2258,7 @@ ALTER TABLE ONLY host
 
 
 --
--- Name: identifier_identities_pkey; Type: CONSTRAINT; Schema: mapper; Owner: -; Tablespace: 
+-- Name: identifier_identities_pkey; Type: CONSTRAINT; Schema: mapper; Owner: -
 --
 
 ALTER TABLE ONLY identifier_identities
@@ -2188,7 +2266,7 @@ ALTER TABLE ONLY identifier_identities
 
 
 --
--- Name: identifier_pkey; Type: CONSTRAINT; Schema: mapper; Owner: -; Tablespace: 
+-- Name: identifier_pkey; Type: CONSTRAINT; Schema: mapper; Owner: -
 --
 
 ALTER TABLE ONLY identifier
@@ -2196,7 +2274,7 @@ ALTER TABLE ONLY identifier
 
 
 --
--- Name: match_pkey; Type: CONSTRAINT; Schema: mapper; Owner: -; Tablespace: 
+-- Name: match_pkey; Type: CONSTRAINT; Schema: mapper; Owner: -
 --
 
 ALTER TABLE ONLY match
@@ -2204,7 +2282,7 @@ ALTER TABLE ONLY match
 
 
 --
--- Name: uk_2u4bey0rox6ubtvqevg3wasp9; Type: CONSTRAINT; Schema: mapper; Owner: -; Tablespace: 
+-- Name: uk_2u4bey0rox6ubtvqevg3wasp9; Type: CONSTRAINT; Schema: mapper; Owner: -
 --
 
 ALTER TABLE ONLY match
@@ -2212,7 +2290,7 @@ ALTER TABLE ONLY match
 
 
 --
--- Name: unique_name_space; Type: CONSTRAINT; Schema: mapper; Owner: -; Tablespace: 
+-- Name: unique_name_space; Type: CONSTRAINT; Schema: mapper; Owner: -
 --
 
 ALTER TABLE ONLY identifier
@@ -2222,7 +2300,7 @@ ALTER TABLE ONLY identifier
 SET search_path = public, pg_catalog;
 
 --
--- Name: author_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: author_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY author
@@ -2230,7 +2308,7 @@ ALTER TABLE ONLY author
 
 
 --
--- Name: comment_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: comment_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY comment
@@ -2238,7 +2316,7 @@ ALTER TABLE ONLY comment
 
 
 --
--- Name: db_version_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: db_version_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY db_version
@@ -2246,7 +2324,7 @@ ALTER TABLE ONLY db_version
 
 
 --
--- Name: delayed_jobs_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: delayed_jobs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY delayed_jobs
@@ -2254,7 +2332,7 @@ ALTER TABLE ONLY delayed_jobs
 
 
 --
--- Name: external_ref_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: external_ref_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY external_ref
@@ -2262,7 +2340,7 @@ ALTER TABLE ONLY external_ref
 
 
 --
--- Name: help_topic_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: help_topic_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY help_topic
@@ -2270,7 +2348,7 @@ ALTER TABLE ONLY help_topic
 
 
 --
--- Name: id_mapper_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: id_mapper_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY id_mapper
@@ -2278,7 +2356,7 @@ ALTER TABLE ONLY id_mapper
 
 
 --
--- Name: instance_note_key_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: instance_note_key_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY instance_note_key
@@ -2286,7 +2364,7 @@ ALTER TABLE ONLY instance_note_key
 
 
 --
--- Name: instance_note_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: instance_note_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY instance_note
@@ -2294,7 +2372,7 @@ ALTER TABLE ONLY instance_note
 
 
 --
--- Name: instance_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: instance_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY instance
@@ -2302,7 +2380,7 @@ ALTER TABLE ONLY instance
 
 
 --
--- Name: instance_type_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: instance_type_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY instance_type
@@ -2310,7 +2388,7 @@ ALTER TABLE ONLY instance_type
 
 
 --
--- Name: language_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: language_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY language
@@ -2318,7 +2396,7 @@ ALTER TABLE ONLY language
 
 
 --
--- Name: locale_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: locale_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY locale
@@ -2326,7 +2404,7 @@ ALTER TABLE ONLY locale
 
 
 --
--- Name: name_category_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: name_category_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY name_category
@@ -2334,7 +2412,7 @@ ALTER TABLE ONLY name_category
 
 
 --
--- Name: name_group_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: name_group_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY name_group
@@ -2342,7 +2420,7 @@ ALTER TABLE ONLY name_group
 
 
 --
--- Name: name_part_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: name_part_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY name_part
@@ -2350,7 +2428,7 @@ ALTER TABLE ONLY name_part
 
 
 --
--- Name: name_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: name_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY name
@@ -2358,7 +2436,7 @@ ALTER TABLE ONLY name
 
 
 --
--- Name: name_rank_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: name_rank_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY name_rank
@@ -2366,7 +2444,7 @@ ALTER TABLE ONLY name_rank
 
 
 --
--- Name: name_status_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: name_status_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY name_status
@@ -2374,7 +2452,7 @@ ALTER TABLE ONLY name_status
 
 
 --
--- Name: name_tag_name_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: name_tag_name_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY name_tag_name
@@ -2382,7 +2460,7 @@ ALTER TABLE ONLY name_tag_name
 
 
 --
--- Name: name_tag_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: name_tag_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY name_tag
@@ -2390,7 +2468,7 @@ ALTER TABLE ONLY name_tag
 
 
 --
--- Name: name_tree_path_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: name_tree_path_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY name_tree_path
@@ -2398,7 +2476,7 @@ ALTER TABLE ONLY name_tree_path
 
 
 --
--- Name: name_type_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: name_type_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY name_type
@@ -2406,7 +2484,7 @@ ALTER TABLE ONLY name_type
 
 
 --
--- Name: namespace_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: namespace_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY namespace
@@ -2414,7 +2492,7 @@ ALTER TABLE ONLY namespace
 
 
 --
--- Name: no_duplicate_synonyms; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: no_duplicate_synonyms; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY instance
@@ -2422,7 +2500,7 @@ ALTER TABLE ONLY instance
 
 
 --
--- Name: nomenclatural_event_type_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: nomenclatural_event_type_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY nomenclatural_event_type
@@ -2430,7 +2508,7 @@ ALTER TABLE ONLY nomenclatural_event_type
 
 
 --
--- Name: notification_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: notification_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY notification
@@ -2438,7 +2516,7 @@ ALTER TABLE ONLY notification
 
 
 --
--- Name: ref_author_role_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: ref_author_role_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY ref_author_role
@@ -2446,7 +2524,7 @@ ALTER TABLE ONLY ref_author_role
 
 
 --
--- Name: ref_type_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: ref_type_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY ref_type
@@ -2454,7 +2532,7 @@ ALTER TABLE ONLY ref_type
 
 
 --
--- Name: reference_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: reference_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY reference
@@ -2462,7 +2540,7 @@ ALTER TABLE ONLY reference
 
 
 --
--- Name: shard_config_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: shard_config_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY shard_config
@@ -2470,7 +2548,7 @@ ALTER TABLE ONLY shard_config
 
 
 --
--- Name: tree_arrangement_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: tree_arrangement_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY tree_arrangement
@@ -2478,7 +2556,7 @@ ALTER TABLE ONLY tree_arrangement
 
 
 --
--- Name: tree_event_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: tree_event_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY tree_event
@@ -2486,7 +2564,7 @@ ALTER TABLE ONLY tree_event
 
 
 --
--- Name: tree_link_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: tree_link_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY tree_link
@@ -2494,7 +2572,7 @@ ALTER TABLE ONLY tree_link
 
 
 --
--- Name: tree_node_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: tree_node_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY tree_node
@@ -2502,7 +2580,7 @@ ALTER TABLE ONLY tree_node
 
 
 --
--- Name: tree_uri_ns_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: tree_uri_ns_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY tree_uri_ns
@@ -2510,7 +2588,15 @@ ALTER TABLE ONLY tree_uri_ns
 
 
 --
--- Name: uk_314uhkq8i7r46050kd1nfrs95; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: tree_value_uri_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY tree_value_uri
+    ADD CONSTRAINT tree_value_uri_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: uk_314uhkq8i7r46050kd1nfrs95; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY name_type
@@ -2518,7 +2604,7 @@ ALTER TABLE ONLY name_type
 
 
 --
--- Name: uk_4fp66uflo7rgx59167ajs0ujv; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: uk_4fp66uflo7rgx59167ajs0ujv; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY ref_type
@@ -2526,7 +2612,7 @@ ALTER TABLE ONLY ref_type
 
 
 --
--- Name: uk_5185nbyw5hkxqyyqgylfn2o6d; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: uk_5185nbyw5hkxqyyqgylfn2o6d; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY name_group
@@ -2534,7 +2620,7 @@ ALTER TABLE ONLY name_group
 
 
 --
--- Name: uk_5smmen5o34hs50jxd247k81ia; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: uk_5smmen5o34hs50jxd247k81ia; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY tree_uri_ns
@@ -2542,7 +2628,7 @@ ALTER TABLE ONLY tree_uri_ns
 
 
 --
--- Name: uk_70p0ys3l5v6s9dqrpjr3u3rrf; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: uk_70p0ys3l5v6s9dqrpjr3u3rrf; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY tree_uri_ns
@@ -2550,7 +2636,7 @@ ALTER TABLE ONLY tree_uri_ns
 
 
 --
--- Name: uk_9kovg6nyb11658j2tv2yv4bsi; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: uk_9kovg6nyb11658j2tv2yv4bsi; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY author
@@ -2558,7 +2644,7 @@ ALTER TABLE ONLY author
 
 
 --
--- Name: uk_a0justk7c77bb64o6u1riyrlh; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: uk_a0justk7c77bb64o6u1riyrlh; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY instance_note_key
@@ -2566,7 +2652,7 @@ ALTER TABLE ONLY instance_note_key
 
 
 --
--- Name: uk_eq2y9mghytirkcofquanv5frf; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: uk_eq2y9mghytirkcofquanv5frf; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY namespace
@@ -2574,7 +2660,7 @@ ALTER TABLE ONLY namespace
 
 
 --
--- Name: uk_g8hr207ijpxlwu10pewyo65gv; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: uk_g8hr207ijpxlwu10pewyo65gv; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY language
@@ -2582,7 +2668,7 @@ ALTER TABLE ONLY language
 
 
 --
--- Name: uk_hghw87nl0ho38f166atlpw2hy; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: uk_hghw87nl0ho38f166atlpw2hy; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY language
@@ -2590,7 +2676,7 @@ ALTER TABLE ONLY language
 
 
 --
--- Name: uk_j5337m9qdlirvd49v4h11t1lk; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: uk_j5337m9qdlirvd49v4h11t1lk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY instance_type
@@ -2598,7 +2684,7 @@ ALTER TABLE ONLY instance_type
 
 
 --
--- Name: uk_kqwpm0crhcq4n9t9uiyfxo2df; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: uk_kqwpm0crhcq4n9t9uiyfxo2df; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY reference
@@ -2606,7 +2692,7 @@ ALTER TABLE ONLY reference
 
 
 --
--- Name: uk_l95kedbafybjpp3h53x8o9fke; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: uk_l95kedbafybjpp3h53x8o9fke; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY ref_author_role
@@ -2614,7 +2700,7 @@ ALTER TABLE ONLY ref_author_role
 
 
 --
--- Name: uk_o4su6hi7vh0yqs4c1dw0fsf1e; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: uk_o4su6hi7vh0yqs4c1dw0fsf1e; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY name_tag
@@ -2622,7 +2708,7 @@ ALTER TABLE ONLY name_tag
 
 
 --
--- Name: uk_qjkskvl9hx0w78truoyq9teju; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: uk_qjkskvl9hx0w78truoyq9teju; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY locale
@@ -2630,7 +2716,7 @@ ALTER TABLE ONLY locale
 
 
 --
--- Name: uk_rpsahneqboogcki6p1bpygsua; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: uk_rpsahneqboogcki6p1bpygsua; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY language
@@ -2638,7 +2724,7 @@ ALTER TABLE ONLY language
 
 
 --
--- Name: uk_rxqxoenedjdjyd4x7c98s59io; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: uk_rxqxoenedjdjyd4x7c98s59io; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY name_category
@@ -2646,7 +2732,7 @@ ALTER TABLE ONLY name_category
 
 
 --
--- Name: uk_se7crmfnhjmyvirp3p9hiqerx; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: uk_se7crmfnhjmyvirp3p9hiqerx; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY name_status
@@ -2654,7 +2740,7 @@ ALTER TABLE ONLY name_status
 
 
 --
--- Name: uk_sv1q1i7xve7xgmkwvmdbeo1mb; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: uk_sv1q1i7xve7xgmkwvmdbeo1mb; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY why_is_this_here
@@ -2662,7 +2748,7 @@ ALTER TABLE ONLY why_is_this_here
 
 
 --
--- Name: uk_y303qbh1ijdg3sncl9vlxus0; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: uk_y303qbh1ijdg3sncl9vlxus0; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY tree_arrangement
@@ -2670,7 +2756,7 @@ ALTER TABLE ONLY tree_arrangement
 
 
 --
--- Name: unique_from_id; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: unique_from_id; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY id_mapper
@@ -2678,7 +2764,7 @@ ALTER TABLE ONLY id_mapper
 
 
 --
--- Name: user_query_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: user_query_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY user_query
@@ -2686,7 +2772,7 @@ ALTER TABLE ONLY user_query
 
 
 --
--- Name: why_is_this_here_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: why_is_this_here_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY why_is_this_here
@@ -2696,21 +2782,21 @@ ALTER TABLE ONLY why_is_this_here
 SET search_path = audit, pg_catalog;
 
 --
--- Name: logged_actions_action_idx; Type: INDEX; Schema: audit; Owner: -; Tablespace: 
+-- Name: logged_actions_action_idx; Type: INDEX; Schema: audit; Owner: -
 --
 
 CREATE INDEX logged_actions_action_idx ON logged_actions USING btree (action);
 
 
 --
--- Name: logged_actions_action_tstamp_tx_stm_idx; Type: INDEX; Schema: audit; Owner: -; Tablespace: 
+-- Name: logged_actions_action_tstamp_tx_stm_idx; Type: INDEX; Schema: audit; Owner: -
 --
 
 CREATE INDEX logged_actions_action_tstamp_tx_stm_idx ON logged_actions USING btree (action_tstamp_stm);
 
 
 --
--- Name: logged_actions_relid_idx; Type: INDEX; Schema: audit; Owner: -; Tablespace: 
+-- Name: logged_actions_relid_idx; Type: INDEX; Schema: audit; Owner: -
 --
 
 CREATE INDEX logged_actions_relid_idx ON logged_actions USING btree (relid);
@@ -2719,35 +2805,35 @@ CREATE INDEX logged_actions_relid_idx ON logged_actions USING btree (relid);
 SET search_path = mapper, pg_catalog;
 
 --
--- Name: identifier_index; Type: INDEX; Schema: mapper; Owner: -; Tablespace: 
+-- Name: identifier_index; Type: INDEX; Schema: mapper; Owner: -
 --
 
 CREATE INDEX identifier_index ON identifier USING btree (id_number, name_space, object_type);
 
 
 --
--- Name: identity_uri_index; Type: INDEX; Schema: mapper; Owner: -; Tablespace: 
+-- Name: identity_uri_index; Type: INDEX; Schema: mapper; Owner: -
 --
 
 CREATE INDEX identity_uri_index ON match USING btree (uri);
 
 
 --
--- Name: mapper_identifier_index; Type: INDEX; Schema: mapper; Owner: -; Tablespace: 
+-- Name: mapper_identifier_index; Type: INDEX; Schema: mapper; Owner: -
 --
 
 CREATE INDEX mapper_identifier_index ON identifier_identities USING btree (identifier_id);
 
 
 --
--- Name: mapper_match_index; Type: INDEX; Schema: mapper; Owner: -; Tablespace: 
+-- Name: mapper_match_index; Type: INDEX; Schema: mapper; Owner: -
 --
 
 CREATE INDEX mapper_match_index ON identifier_identities USING btree (match_id);
 
 
 --
--- Name: match_host_index; Type: INDEX; Schema: mapper; Owner: -; Tablespace: 
+-- Name: match_host_index; Type: INDEX; Schema: mapper; Owner: -
 --
 
 CREATE INDEX match_host_index ON match_host USING btree (match_hosts_id);
@@ -2756,693 +2842,714 @@ CREATE INDEX match_host_index ON match_host USING btree (match_hosts_id);
 SET search_path = public, pg_catalog;
 
 --
--- Name: auth_source_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: auth_source_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX auth_source_index ON author USING btree (namespace_id, source_id, source_system);
 
 
 --
--- Name: auth_source_string_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: auth_source_string_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX auth_source_string_index ON author USING btree (source_id_string);
 
 
 --
--- Name: auth_system_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: auth_system_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX auth_system_index ON author USING btree (source_system);
 
 
 --
--- Name: author_abbrev_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: author_abbrev_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX author_abbrev_index ON author USING btree (abbrev);
 
 
 --
--- Name: author_name_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: author_name_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX author_name_index ON author USING btree (name);
 
 
 --
--- Name: comment_author_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: by_root_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX by_root_id ON tree_value_uri USING btree (root_id);
+
+
+--
+-- Name: comment_author_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX comment_author_index ON comment USING btree (author_id);
 
 
 --
--- Name: comment_instance_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: comment_instance_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX comment_instance_index ON comment USING btree (instance_id);
 
 
 --
--- Name: comment_name_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: comment_name_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX comment_name_index ON comment USING btree (name_id);
 
 
 --
--- Name: comment_reference_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: comment_reference_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX comment_reference_index ON comment USING btree (reference_id);
 
 
 --
--- Name: id_mapper_from_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: id_mapper_from_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX id_mapper_from_index ON id_mapper USING btree (from_id, namespace_id, system);
 
 
 --
--- Name: idx_node_current_a; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: idx_node_current_a; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_node_current_a ON tree_node USING btree (tree_arrangement_id) WHERE (replaced_at_id IS NULL);
 
 
 --
--- Name: idx_node_current_b; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: idx_node_current_b; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_node_current_b ON tree_node USING btree (tree_arrangement_id) WHERE (next_node_id IS NULL);
 
 
 --
--- Name: idx_node_current_instance_a; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: idx_node_current_instance_a; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_node_current_instance_a ON tree_node USING btree (instance_id, tree_arrangement_id) WHERE (replaced_at_id IS NULL);
 
 
 --
--- Name: idx_node_current_instance_b; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: idx_node_current_instance_b; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_node_current_instance_b ON tree_node USING btree (instance_id, tree_arrangement_id) WHERE (next_node_id IS NULL);
 
 
 --
--- Name: idx_node_current_name_a; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: idx_node_current_name_a; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_node_current_name_a ON tree_node USING btree (name_id, tree_arrangement_id) WHERE (replaced_at_id IS NULL);
 
 
 --
--- Name: idx_node_current_name_b; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: idx_node_current_name_b; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_node_current_name_b ON tree_node USING btree (name_id, tree_arrangement_id) WHERE (next_node_id IS NULL);
 
 
 --
--- Name: idx_tree_link_seq; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: idx_tree_link_seq; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX idx_tree_link_seq ON tree_link USING btree (supernode_id, link_seq);
 
 
 --
--- Name: idx_tree_node_instance_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: idx_tree_node_instance_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_tree_node_instance_id ON tree_node USING btree (instance_id);
 
 
 --
--- Name: idx_tree_node_instance_id_in; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: idx_tree_node_instance_id_in; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_tree_node_instance_id_in ON tree_node USING btree (instance_id, tree_arrangement_id);
 
 
 --
--- Name: idx_tree_node_literal; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: idx_tree_node_literal; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_tree_node_literal ON tree_node USING btree (literal);
 
 
 --
--- Name: idx_tree_node_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: idx_tree_node_name; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_tree_node_name ON tree_node USING btree (name_uri_id_part, name_uri_ns_part_id);
 
 
 --
--- Name: idx_tree_node_name_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: idx_tree_node_name_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_tree_node_name_id ON tree_node USING btree (name_id);
 
 
 --
--- Name: idx_tree_node_name_id_in; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: idx_tree_node_name_id_in; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_tree_node_name_id_in ON tree_node USING btree (name_id, tree_arrangement_id);
 
 
 --
--- Name: idx_tree_node_name_in; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: idx_tree_node_name_in; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_tree_node_name_in ON tree_node USING btree (name_uri_id_part, name_uri_ns_part_id, tree_arrangement_id);
 
 
 --
--- Name: idx_tree_node_resource; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: idx_tree_node_resource; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_tree_node_resource ON tree_node USING btree (resource_uri_id_part, resource_uri_ns_part_id);
 
 
 --
--- Name: idx_tree_node_resource_in; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: idx_tree_node_resource_in; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_tree_node_resource_in ON tree_node USING btree (resource_uri_id_part, resource_uri_ns_part_id, tree_arrangement_id);
 
 
 --
--- Name: idx_tree_node_taxon; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: idx_tree_node_taxon; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_tree_node_taxon ON tree_node USING btree (taxon_uri_id_part, taxon_uri_ns_part_id);
 
 
 --
--- Name: idx_tree_node_taxon_in; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: idx_tree_node_taxon_in; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_tree_node_taxon_in ON tree_node USING btree (taxon_uri_id_part, taxon_uri_ns_part_id, tree_arrangement_id);
 
 
 --
--- Name: idx_tree_uri_ns_label; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: idx_tree_uri_ns_label; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_tree_uri_ns_label ON tree_uri_ns USING btree (label);
 
 
 --
--- Name: idx_tree_uri_ns_uri; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: idx_tree_uri_ns_uri; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_tree_uri_ns_uri ON tree_uri_ns USING btree (uri);
 
 
 --
--- Name: instance_citedby_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: instance_citedby_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX instance_citedby_index ON instance USING btree (cited_by_id);
 
 
 --
--- Name: instance_cites_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: instance_cites_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX instance_cites_index ON instance USING btree (cites_id);
 
 
 --
--- Name: instance_instancetype_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: instance_instancetype_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX instance_instancetype_index ON instance USING btree (instance_type_id);
 
 
 --
--- Name: instance_name_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: instance_name_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX instance_name_index ON instance USING btree (name_id);
 
 
 --
--- Name: instance_note_key_rdfid; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: instance_note_key_rdfid; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX instance_note_key_rdfid ON instance_note_key USING btree (rdf_id);
 
 
 --
--- Name: instance_parent_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: instance_parent_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX instance_parent_index ON instance USING btree (parent_id);
 
 
 --
--- Name: instance_reference_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: instance_reference_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX instance_reference_index ON instance USING btree (reference_id);
 
 
 --
--- Name: instance_source_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: instance_source_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX instance_source_index ON instance USING btree (namespace_id, source_id, source_system);
 
 
 --
--- Name: instance_source_string_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: instance_source_string_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX instance_source_string_index ON instance USING btree (source_id_string);
 
 
 --
--- Name: instance_system_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: instance_system_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX instance_system_index ON instance USING btree (source_system);
 
 
 --
--- Name: instance_type_rdfid; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: instance_type_rdfid; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX instance_type_rdfid ON instance_type USING btree (rdf_id);
 
 
 --
--- Name: lower_full_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: link_uri_index; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX link_uri_index ON tree_value_uri USING btree (link_uri_id_part, link_uri_ns_part_id, root_id);
+
+
+--
+-- Name: lower_full_name; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX lower_full_name ON name USING btree (lower((full_name)::text));
 
 
 --
--- Name: name_author_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: name_author_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX name_author_index ON name USING btree (author_id);
 
 
 --
--- Name: name_baseauthor_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: name_baseauthor_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX name_baseauthor_index ON name USING btree (base_author_id);
 
 
 --
--- Name: name_category_rdfid; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: name_category_rdfid; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX name_category_rdfid ON name_category USING btree (rdf_id);
 
 
 --
--- Name: name_duplicate_of_id_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: name_duplicate_of_id_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX name_duplicate_of_id_index ON name USING btree (duplicate_of_id);
 
 
 --
--- Name: name_exauthor_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: name_exauthor_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX name_exauthor_index ON name USING btree (ex_author_id);
 
 
 --
--- Name: name_exbaseauthor_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: name_exbaseauthor_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX name_exbaseauthor_index ON name USING btree (ex_base_author_id);
 
 
 --
--- Name: name_full_name_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: name_full_name_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX name_full_name_index ON name USING btree (full_name);
 
 
 --
--- Name: name_group_rdfid; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: name_group_rdfid; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX name_group_rdfid ON name_group USING btree (rdf_id);
 
 
 --
--- Name: name_lower_f_unaccent_full_name_like; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: name_lower_f_unaccent_full_name_like; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX name_lower_f_unaccent_full_name_like ON name USING btree (lower(f_unaccent((full_name)::text)) varchar_pattern_ops);
 
 
 --
--- Name: name_lower_full_name_gin_trgm; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: name_lower_full_name_gin_trgm; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX name_lower_full_name_gin_trgm ON name USING gin (lower((full_name)::text) gin_trgm_ops);
 
 
 --
--- Name: name_lower_simple_name_gin_trgm; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: name_lower_simple_name_gin_trgm; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX name_lower_simple_name_gin_trgm ON name USING gin (lower((simple_name)::text) gin_trgm_ops);
 
 
 --
--- Name: name_lower_unacent_full_name_gin_trgm; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: name_lower_unacent_full_name_gin_trgm; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX name_lower_unacent_full_name_gin_trgm ON name USING gin (lower(f_unaccent((full_name)::text)) gin_trgm_ops);
 
 
 --
--- Name: name_lower_unacent_simple_name_gin_trgm; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: name_lower_unacent_simple_name_gin_trgm; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX name_lower_unacent_simple_name_gin_trgm ON name USING gin (lower(f_unaccent((simple_name)::text)) gin_trgm_ops);
 
 
 --
--- Name: name_name_element_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: name_name_element_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX name_name_element_index ON name USING btree (name_element);
 
 
 --
--- Name: name_parent_id_ndx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: name_parent_id_ndx; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX name_parent_id_ndx ON name USING btree (parent_id);
 
 
 --
--- Name: name_part_name_id_ndx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: name_part_name_id_ndx; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX name_part_name_id_ndx ON name_part USING btree (name_id);
 
 
 --
--- Name: name_rank_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: name_rank_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX name_rank_index ON name USING btree (name_rank_id);
 
 
 --
--- Name: name_rank_rdfid; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: name_rank_rdfid; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX name_rank_rdfid ON name_rank USING btree (rdf_id);
 
 
 --
--- Name: name_sanctioningauthor_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: name_sanctioningauthor_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX name_sanctioningauthor_index ON name USING btree (sanctioning_author_id);
 
 
 --
--- Name: name_second_parent_id_ndx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: name_second_parent_id_ndx; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX name_second_parent_id_ndx ON name USING btree (second_parent_id);
 
 
 --
--- Name: name_simple_name_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: name_simple_name_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX name_simple_name_index ON name USING btree (simple_name);
 
 
 --
--- Name: name_source_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: name_source_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX name_source_index ON name USING btree (namespace_id, source_id, source_system);
 
 
 --
--- Name: name_source_string_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: name_source_string_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX name_source_string_index ON name USING btree (source_id_string);
 
 
 --
--- Name: name_status_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: name_status_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX name_status_index ON name USING btree (name_status_id);
 
 
 --
--- Name: name_status_rdfid; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: name_status_rdfid; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX name_status_rdfid ON name_status USING btree (rdf_id);
 
 
 --
--- Name: name_system_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: name_system_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX name_system_index ON name USING btree (source_system);
 
 
 --
--- Name: name_tag_name_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: name_tag_name_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX name_tag_name_index ON name_tag_name USING btree (name_id);
 
 
 --
--- Name: name_tag_tag_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: name_tag_tag_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX name_tag_tag_index ON name_tag_name USING btree (tag_id);
 
 
 --
--- Name: name_tree_path_family_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: name_tree_path_family_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX name_tree_path_family_index ON name_tree_path USING btree (family_id);
 
 
 --
--- Name: name_tree_path_treename_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: name_tree_path_treename_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX name_tree_path_treename_index ON name_tree_path USING btree (name_id, tree_id);
 
 
 --
--- Name: name_type_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: name_type_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX name_type_index ON name USING btree (name_type_id);
 
 
 --
--- Name: name_type_rdfid; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: name_type_rdfid; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX name_type_rdfid ON name_type USING btree (rdf_id);
 
 
 --
--- Name: name_whyisthishere_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: name_whyisthishere_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX name_whyisthishere_index ON name USING btree (why_is_this_here_id);
 
 
 --
--- Name: namespace_rdfid; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: namespace_rdfid; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX namespace_rdfid ON namespace USING btree (rdf_id);
 
 
 --
--- Name: nomenclatural_event_type_rdfid; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: node_uri_index; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX node_uri_index ON tree_value_uri USING btree (node_uri_id_part, node_uri_ns_part_id, root_id);
+
+
+--
+-- Name: nomenclatural_event_type_rdfid; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX nomenclatural_event_type_rdfid ON nomenclatural_event_type USING btree (rdf_id);
 
 
 --
--- Name: note_instance_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: note_instance_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX note_instance_index ON instance_note USING btree (instance_id);
 
 
 --
--- Name: note_key_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: note_key_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX note_key_index ON instance_note USING btree (instance_note_key_id);
 
 
 --
--- Name: note_source_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: note_source_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX note_source_index ON instance_note USING btree (namespace_id, source_id, source_system);
 
 
 --
--- Name: note_source_string_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: note_source_string_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX note_source_string_index ON instance_note USING btree (source_id_string);
 
 
 --
--- Name: note_system_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: note_system_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX note_system_index ON instance_note USING btree (source_system);
 
 
 --
--- Name: preceding_name_type_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: preceding_name_type_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX preceding_name_type_index ON name_part USING btree (preceding_name_type);
 
 
 --
--- Name: ref_author_role_rdfid; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: ref_author_role_rdfid; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX ref_author_role_rdfid ON ref_author_role USING btree (rdf_id);
 
 
 --
--- Name: ref_citation_text_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: ref_citation_text_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX ref_citation_text_index ON reference USING gin (to_tsvector('english'::regconfig, f_unaccent(COALESCE((citation)::text, ''::text))));
 
 
 --
--- Name: ref_source_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: ref_source_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX ref_source_index ON reference USING btree (namespace_id, source_id, source_system);
 
 
 --
--- Name: ref_source_string_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: ref_source_string_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX ref_source_string_index ON reference USING btree (source_id_string);
 
 
 --
--- Name: ref_system_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: ref_system_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX ref_system_index ON reference USING btree (source_system);
 
 
 --
--- Name: ref_type_rdfid; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: ref_type_rdfid; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX ref_type_rdfid ON ref_type USING btree (rdf_id);
 
 
 --
--- Name: reference_author_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: reference_author_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX reference_author_index ON reference USING btree (author_id);
 
 
 --
--- Name: reference_authorrole_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: reference_authorrole_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX reference_authorrole_index ON reference USING btree (ref_author_role_id);
 
 
 --
--- Name: reference_parent_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: reference_parent_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX reference_parent_index ON reference USING btree (parent_id);
 
 
 --
--- Name: reference_type_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: reference_type_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX reference_type_index ON reference USING btree (ref_type_id);
 
 
 --
--- Name: tree_arrangement_label; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: tree_arrangement_label; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX tree_arrangement_label ON tree_arrangement USING btree (label);
 
 
 --
--- Name: tree_arrangement_node; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: tree_arrangement_node; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX tree_arrangement_node ON tree_arrangement USING btree (node_id);
 
 
 --
--- Name: tree_link_subnode; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: tree_link_subnode; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX tree_link_subnode ON tree_link USING btree (subnode_id);
 
 
 --
--- Name: tree_link_supernode; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: tree_link_supernode; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX tree_link_supernode ON tree_link USING btree (supernode_id);
 
 
 --
--- Name: tree_node_next; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: tree_node_next; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX tree_node_next ON tree_node USING btree (next_node_id);
 
 
 --
--- Name: tree_node_prev; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: tree_node_prev; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX tree_node_prev ON tree_node USING btree (prev_node_id);
@@ -3862,6 +3969,14 @@ ALTER TABLE ONLY name
 
 
 --
+-- Name: fk_djkn41tin6shkjuut9nam9xvn; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY tree_value_uri
+    ADD CONSTRAINT fk_djkn41tin6shkjuut9nam9xvn FOREIGN KEY (node_uri_ns_part_id) REFERENCES tree_uri_ns(id);
+
+
+--
 -- Name: fk_dm9y4p9xpsc8m7vljbohubl7x; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3875,6 +3990,14 @@ ALTER TABLE ONLY reference
 
 ALTER TABLE ONLY name
     ADD CONSTRAINT fk_dqhn53mdh0n77xhsw7l5dgd38 FOREIGN KEY (why_is_this_here_id) REFERENCES why_is_this_here(id);
+
+
+--
+-- Name: fk_ds3bc89iy6q3ts4ts85mqiys; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY tree_value_uri
+    ADD CONSTRAINT fk_ds3bc89iy6q3ts4ts85mqiys FOREIGN KEY (link_uri_ns_part_id) REFERENCES tree_uri_ns(id);
 
 
 --
@@ -3987,6 +4110,14 @@ ALTER TABLE ONLY instance
 
 ALTER TABLE ONLY tree_node
     ADD CONSTRAINT fk_nlq0qddnhgx65iojhj2xm8tay FOREIGN KEY (checked_in_at_id) REFERENCES tree_event(id);
+
+
+--
+-- Name: fk_nw785lqesvg8ntfaper0tw2vs; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY tree_value_uri
+    ADD CONSTRAINT fk_nw785lqesvg8ntfaper0tw2vs FOREIGN KEY (root_id) REFERENCES tree_arrangement(id);
 
 
 --
@@ -4177,5 +4308,5 @@ ALTER TABLE ONLY tree_event
 -- PostgreSQL database dump complete
 --
 
-SET search_path TO "$user",public;
+SET search_path TO "$user", public;
 

@@ -30,6 +30,7 @@ class Tree::Workspace < ActiveRecord::Base
     name_in_tree(name)
   end
 
+  # Was find_placement_of_name
   def name_in_workspace(name)
     link_id = TreeArrangement.sp_find_name_in_tree(name.id, id)
     link_id ? TreeLink.find(link_id) : nil
@@ -37,9 +38,10 @@ class Tree::Workspace < ActiveRecord::Base
 
   # Find the link for the node in this tree for a particular name
   # This could be attached to the base tree
-  # or, if mods occurred, it could be to the workspace.
+  # or, if mods occurred, it could be attached to the workspace.
+  #
+  # Therefore you call the tree-system stored procedure to work it out.
   def find_name_node_link(name)
-    Rails.logger.debug("find_name_node_link: #{name.id} #{name.full_name_html}")
     link_id = TreeArrangement.sp_find_name_in_tree(name.id, id)
     link_id ? TreeLink.find(link_id) : Tree::EmptyTreeLink.new
   end
@@ -54,11 +56,6 @@ class Tree::Workspace < ActiveRecord::Base
     workspace_name.workspace_id = id
     workspace_name.link_id = ActiveRecord::Base.connection.select_value("select find_name_in_tree(#{name.id}, #{id})")
     workspace_name
-  end
-
-  def find_placement_of_name(name)
-    link_id = TreeArrangement.sp_find_name_in_tree(name.id, id)
-    link_id ? TreeLink.find(link_id) : nil
   end
 
   def user_can_edit?(user)
