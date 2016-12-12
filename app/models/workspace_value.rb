@@ -100,4 +100,14 @@ class WorkspaceValue < ActiveRecord::Base
       self.new_comment(name_id, name_node_link_id)
     end
   end
+
+  def self.new_comment(name_id, name_node_link_id)
+    record = self.new
+    record.field_name = "comment"
+    record.name_id = name_id
+    record.name_node_link_id = name_node_link_id
+    record.type_uri_id_part = "comment"
+    record.value_label = "apc-comment"
+    record
+  end
 end

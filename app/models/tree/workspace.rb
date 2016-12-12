@@ -83,14 +83,8 @@ class Tree::Workspace < ActiveRecord::Base
   end
 
   def place_instance(username, params)
-    logger.debug("place instance")
-    logger.debug(params.inspect)
-    # parent_name = resolve_parent_name(params[:parent_name])
-    logger.debug("before resolve_parent")
     parent_name_id = resolve_parent(parent_name_id: params[:parent_name_id],
                                      parent_name_typeahead_string: params[:parent_name_typeahead_string])
-    logger.debug("after resolve_parent")
-    logger.debug("parent_name_id: #{parent_name_id}")
     url = Tree::AsServices.placement_url(username: username,
                                          tree_id: id,
                                          name_id: params[:name_id],
@@ -123,10 +117,13 @@ class Tree::Workspace < ActiveRecord::Base
   end
 
   def remove_instance(username, name_id)
+    logger.debug("remove_instance for username: #{username} and name: #{name_id}")
     url = Tree::Services::Url::Remove.new(username: username,
                                           name_id: name_id,
                                           tree_id: id).url
-    RestClient.post(url, accept: :json)
+    logger.debug(url)
+    response = RestClient.post(url, accept: :json)
+    logger.debug(response.class)
   rescue RestClient::BadRequest => ex
     logger.error "remove_instance error: #{e}"
     raise

@@ -7,10 +7,10 @@
       <% else %>
         <%= f.text_field :field_value, class: "form-control", required: true, title: value.field_name.capitalize %>
       <% end %>
-      <%= f.text_field :name_id %>
-      <%= f.text_field :name_node_link_id %>
-      <%= f.text_field :type_uri_id_part %>
-      <%= f.text_field :value_label %>
+      <%= f.hidden_field :name_id %>
+      <%= f.hidden_field :name_node_link_id %>
+      <%= f.hidden_field :type_uri_id_part %>
+      <%= f.hidden_field :value_label %>
     </div>
       <%= f.submit value: "Update", class: "btn btn-primary width-6em", title: "Update #{value.field_name}" %>
       <span id="<%= value.value_label %>-message-container" class="message-container"></span>
@@ -18,4 +18,3 @@
       <%= render partial: "instances/workspace/widgets/remove_button", locals: {value: value} %>
   <% end %>
 </div>
-<%= divider %>

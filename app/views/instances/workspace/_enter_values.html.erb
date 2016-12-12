@@ -1,36 +1,12 @@
-<h5> <%= @current_workspace.title.capitalize %> Notes</h5>
 
+<div id="distribution-value-container">
+<%=
+   render partial: "instances/workspace/values/distribution"
+%>
+</div>
 
-<% if @name_node_tree_link.workspace_values.size == 2 %>
-  Both exist
-<% elsif @name_node_tree_link.workspace_values.empty? %>
-  Need both
-<% elsif @name_node_tree_link.workspace_values.first.value_label == "apc-comment" %>
-  Need distribution<br>
-  <% new_value = WorkspaceValue.new_distribution(@instance.name_id, @name_node_tree_link.id) %>
-  field_name: <%= new_value.field_name %><br>
-  name_id: <%= new_value.name_id %><br>
-  name_node_link_id: <%= new_value.name_node_link_id %><br>
-  type_uri_id_part: <%= new_value.type_uri_id_part %><br>
-  value_label: <%= new_value.value_label %><br>
-  <%=
-      render partial: "instances/workspace/forms/new_value_form",
-             locals: {value: new_value}
-  %>
-<% elsif @name_node_tree_link.workspace_values.first.value_label == "apc-distribution" %>
-  Need comment
-<% end %>
-<br>
-
-
-  <%
-      @name_node_tree_link.workspace_values
-                        .each do |value|
-  %>
-  <%=
-      render partial: "instances/workspace/forms/value_form",
-             locals: {value: value}
-  %>
-  <%
-      end
-  %>
+<div id="comment-value-container">
+<%=
+   render partial: "instances/workspace/values/comment"
+%>
+</div>

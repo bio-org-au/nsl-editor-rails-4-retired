@@ -27,6 +27,7 @@ class TreeNode < ActiveRecord::Base
   belongs_to :name, class_name: Name
   belongs_to :instance, class_name: Instance
   has_many   :sublinks, class_name: ::TreeLink, foreign_key: "supernode_id"
+  has_many   :super_links, class_name: ::TreeLink, foreign_key: "subnode_id"
   has_many   :value_links,
             (lambda do
               where("type_uri_id_part in ('distribution','comment')")

@@ -12,7 +12,8 @@ select name_node_link.id name_node_link_id,
        value_node.literal field_value,
        name_node.name_id name_id,
        name_sub_link_value.label value_label,
-       value_node.id value_node_id
+       value_node.id value_node_id,
+       name_sub_link_value.sort_order
 from tree_link name_node_link
      inner join tree_node name_node
      on name_node_link.subnode_id = name_node.id

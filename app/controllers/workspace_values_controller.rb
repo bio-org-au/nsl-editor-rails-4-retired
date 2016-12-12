@@ -42,18 +42,21 @@ class WorkspaceValuesController < ApplicationController
   def create
     logger.debug(
       "WorkspaceValuesController#create: #{workspace_value_params.inspect}")
+    # Prepare values for rendering the form afterwards
+    @name_node_tree_link = TreeLink.find(workspace_value_params[:name_node_link_id])
+    @instance = @name_node_tree_link.node.instance
     # make a new workspace value object
     @workspace_value = WorkspaceValue.new_for(
       workspace_value_params[:type_uri_id_part],
       workspace_value_params[:name_id],
-      workspace_value_params[:name_node_link_it]
+      workspace_value_params[:name_node_link_id]
     )
     # create it
     @workspace_value.update(username,
                             @current_workspace.id,
                             workspace_value_params[:name_id],
                             workspace_value_params[:field_value])
-    @message = "Created (not really)"
+    @message = "Created"
   #rescue => e
     #@message = "Error: #{e.to_s}"
     #@value_label = workspace_value_params[:value_label]
@@ -61,15 +64,17 @@ class WorkspaceValuesController < ApplicationController
   end
 
   def destroy
-    logger.debug("WorkspaceValuesController#destroy")
     logger.debug(
       "WorkspaceValuesController#destroy: #{params.inspect}")
+    # Prepare values for rendering the changed GUI afterwards
+    @name_node_tree_link = TreeLink.find(params[:name_node_link_id])
+    @instance = @name_node_tree_link.node.instance
     @workspace_value = WorkspaceValue.find(params[:name_node_link_id],
                                            params[:type_uri_id_part])
     @workspace_value.delete(username,
                             @current_workspace.id,
                             params[:name_id])
-    @message = "Deleted (Refresh to show change...)"
+    @message = "Deleted"
   #rescue => e
     #@message = "Error: #{e.to_s}"
     #render "destroy_error", status: 400

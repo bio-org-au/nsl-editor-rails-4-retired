@@ -26,6 +26,7 @@ class TreesController < ApplicationController
   end
 
   # Move name ....
+  # Update name ....
   def place_name
     placement = Tree::Workspace::Placement.new(
       username: current_user.username,
@@ -35,9 +36,23 @@ class TreesController < ApplicationController
       parent_name_typeahead: place_name_params[:parent_name_typeahead_string],
       placement_type: place_name_params[:placement_type],
       workspace_id: @current_workspace.id)
-    placement.save 
-    logger.debug(placement.inspect)
-    # @response = @current_workspace.place_instance(username, place_name_params)
+    if placement_changed?(place_name_params)
+      logger.debug("changed")
+      logger.debug("changed")
+      logger.debug("changed")
+      logger.debug("changed")
+      logger.debug("changed")
+      placement.save 
+      @message = "Changed"
+    else
+      logger.debug("not changed")
+      logger.debug("not changed")
+      logger.debug("not changed")
+      logger.debug("not changed")
+      logger.debug("not changed")
+      logger.debug("not changed")
+      @message = "No change"
+    end
   rescue => e1
     logger.error "Error in place_name: #{e1}"
     begin
@@ -55,10 +70,10 @@ class TreesController < ApplicationController
                                  remove_name_placement_params[:name_id])
   rescue => e
     e.backtrace.each { |trace| logger.error trace }
-    @message = "Services error: #{e}"
+    @message = "#{e}"
     render "remove_name_placement_error", status: 422
   end
-
+ 
   def xupdate_value
     @response = TreeArrangement.find(session[:current_classification])
                                .update_value(
@@ -98,11 +113,25 @@ class TreesController < ApplicationController
                                        :parent_name_id,
                                        :parent_name_typeahead_string,
                                        :placement_type,
-                                       :move)
+                                       :move,
+                                       :update,
+                                       :original_name_id,
+                                       :original_instance_id,
+                                       :original_parent_name_id,
+                                       :original_parent_name_typeahead_string,
+                                       :original_placement_type)
   end
 
   def remove_name_placement_params
     params.require(:remove_placement).permit(:name_id, :instance_id, :delete)
+  end
+
+  def placement_changed?(params)
+    params[:name_id] != params[:original_name_id] ||
+    params[:instance_id] != params[:original_instance_id] ||
+    params[:placement_type] != params[:original_placement_type] ||
+    params[:parent_name_typeahead_string] != params[:original_parent_name_typeahead_string] ||
+    params[:parent_name_id] != params[:original_parent_name_id]
   end
 end
 

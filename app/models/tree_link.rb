@@ -24,8 +24,17 @@ class TreeLink < ActiveRecord::Base
   belongs_to :supernode, class_name: TreeNode, foreign_key: "supernode_id"
   belongs_to :node, class_name: TreeNode, foreign_key: "subnode_id"
   belongs_to :subnode, class_name: TreeNode
-  belongs_to :namespace, class_name: "TreeUriNs", foreign_key: "type_uri_ns_part_id"
-  has_many   :workspace_values, foreign_key: "name_node_link_id"
+  belongs_to :namespace,
+             class_name: "TreeUriNs",
+             foreign_key: "type_uri_ns_part_id"
+  has_many   :workspace_values, -> { order "sort_order" },
+             foreign_key: "name_node_link_id"
+  has_one    :comment_value, -> { where " field_name = 'comment' " },
+             class_name: "WorkspaceValue",
+             foreign_key: "name_node_link_id"
+  has_one    :distribution_value, -> { where " field_name = 'distribution' " },
+             class_name: "WorkspaceValue",
+             foreign_key: "name_node_link_id"
 
   ACCEPTED_RAW = "ApcConcept".freeze
   EXCLUDED_RAW = "ApcExcluded".freeze
@@ -79,5 +88,13 @@ class TreeLink < ActiveRecord::Base
 
   def default_to_untreated?
     untreated?
+  end
+
+  def distribution_value?
+    workspace_values.collect(&:field_name).include?("distribution")
+  end
+
+  def comment_value?
+    workspace_values.collect(&:field_name).include?("comment")
   end
 end

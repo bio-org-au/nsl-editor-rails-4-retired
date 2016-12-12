@@ -1,6 +1,6 @@
 $('.message-container').addClass('hidden').html("");
 $('.error-message-container').addClass('hidden').html("");
-$('#placement-message-container').html("Sucessful move.");
+$('#placement-message-container').html('<%= escape_javascript(@message) %>');
 $('#placement-message-container').removeClass('hidden');
 $('#move-name-placement-btn').addClass('hidden');
 $('#instance-class-tab-refresh-btn').removeClass('hidden');

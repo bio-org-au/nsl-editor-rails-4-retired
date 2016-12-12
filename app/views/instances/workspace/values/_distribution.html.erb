@@ -1,0 +1,19 @@
+<%
+    if @name_node_tree_link.distribution_value? %>
+<%=
+       render partial: "instances/workspace/forms/value_form",
+              locals: { value: @name_node_tree_link.distribution_value }
+%>
+<%  else %>
+<%
+       new_value = WorkspaceValue.new_distribution(@instance.name_id,
+                                                   @name_node_tree_link.id)
+%>
+<%=
+       render partial: "instances/workspace/forms/new_value_form",
+              locals: { value: new_value }
+%>
+<%
+    end
+%>
+<%= divider %>

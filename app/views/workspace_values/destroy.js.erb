@@ -1,4 +1,6 @@
-alert('delete!!!');
 $('.message-container').html('');
 $('.error-message-container').html('');
+$('#<%= @workspace_value.field_name %>-value-container').html('<%= escape_javascript( render partial: "instances/workspace/values/#{@workspace_value.field_name}") %>');
 $('#<%= @workspace_value.value_label %>-message-container').html('<%= escape_javascript(@message) %>');
+
+
