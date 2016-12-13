@@ -38,3 +38,9 @@ select workspace.id workspace_id,
  inner join tree_node value_node
     on tree_link.subnode_id = value_node.id
  where link_value.link_uri_id_part = base_value.link_uri_id_part
+;
+
+grant select on workspace_instance_value_vw to webapni;
+
+
+
