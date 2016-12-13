@@ -37,15 +37,18 @@ class TreesController < ApplicationController
       placement_type: place_name_params[:placement_type],
       workspace_id: @current_workspace.id)
     if placement_changed?(place_name_params)
-      @placement.save 
+      result = @placement.save 
       @message = "Changed"
     else
       @message = "No change"
     end
   rescue => e
+    logger.error("place_name error handler")
+    logger.error("result: #{result}")
     begin
       @message = JSON.parse(first_error.response)["msg"]["msg"]
     rescue
+      logger.error("rescue error in error")
       @message = e.to_s
     end
     logger.error "place_name error @message: #{@message}"

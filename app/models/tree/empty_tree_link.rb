@@ -22,6 +22,10 @@ class Tree::EmptyTreeLink < ActiveRecord::Base
   self.sequence_name = "nsl_global_seq"
   default_scope { where("2 = 3") }
 
+  def empty?
+    true
+  end
+
   def supernode
     nil
   end

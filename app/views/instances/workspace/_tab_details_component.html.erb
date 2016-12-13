@@ -1,0 +1,11 @@
+<h5>Placed here in workspace <%= @current_workspace.name %></h5>
+  <span class="apc no-decoration">
+    <% if @name_node_tree_link.untreated? %>
+       <%= render partial: "instances/workspace/widgets/untreated" %>
+    <% elsif @name_node_tree_link.excluded? %>
+       <%= render partial: "instances/workspace/widgets/excluded" %>
+    <% else %>
+      <%= render partial: "instances/workspace/widgets/accepted" %>
+    <% end %>
+  </span>
+

@@ -67,5 +67,4 @@ class TreeNode < ActiveRecord::Base
 
 #    Link.where(' supernode = ? and type_uri_ns_part = ? and type_uri_id = ?', self.id, tree_value_uri.link_uri_ns_part, tree_value_uri.link_uri_id_part)
   end
-
 end

@@ -41,9 +41,6 @@ class Tree::Workspace::Placement < ActiveType::Object
     build_url
     raise errors.full_messages.first unless valid?
     RestClient.post(@url, accept: :json)
-  rescue => e
-    logger.error("Tree::Workspace::Placement.save: #{e}")
-    raise
   end
 
   def build_url

@@ -40,6 +40,11 @@
   <% end %>
 <% end %>
 
+<% if @name_node_tree_link.placed_via_instance?(@instance) %>
+  <%= render partial: "instances/workspace/tab_details_component" %>
+  <%= divider %>
+<% end %>
+
 <h5>Instance #<%= @instance.id %></h5>
 <br>
 <br>

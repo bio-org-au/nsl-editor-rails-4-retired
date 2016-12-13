@@ -26,9 +26,13 @@ class Tree::Workspace < ActiveRecord::Base
   has_many   :value_namespaces, class_name: "WorkspaceValueNamespace", foreign_key: "workspace_id"
   has_many   :workspace_instance_values, class_name: "::WorkspaceInstanceValue", foreign_key: "workspace_id"
  
-  def name(name)
-    name_in_tree(name)
+  def name
+    title
   end
+
+  #def name(name)
+    #name_in_tree(name)
+  #end
 
   # Was find_placement_of_name
   def name_in_workspace(name)

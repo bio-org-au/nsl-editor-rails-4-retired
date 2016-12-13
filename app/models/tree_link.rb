@@ -66,6 +66,10 @@ class TreeLink < ActiveRecord::Base
     end
   end
 
+  def empty?
+    false
+  end
+
   def accepted?
     placed_as == ACCEPTED
   end

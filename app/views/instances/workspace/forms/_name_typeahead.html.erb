@@ -7,12 +7,13 @@
                type="text" 
                title="Select a name from the suggestions as you type."
                placeholder="Name suggestions"
-               value="<%= @name_node_tree_link.supernode.name.full_name %>" />
+               value="<%= @name_node_tree_link.supernode.name.full_name unless @name_node_tree_link.empty? %>" />
       </section>
       <script> setUpWorkspaceParentName(); </script>
       <input type="hidden"
              id="workspace_parent_name_id"
              name="place_name[parent_name_id]"
-             value="<%= @name_node_tree_link.supernode.name.id %>" />
+             value="<%= @name_node_tree_link.supernode.name.id unless @name_node_tree_link.empty? %>" />
     </div>
+    <%= @name_node_tree_link.class %>
 

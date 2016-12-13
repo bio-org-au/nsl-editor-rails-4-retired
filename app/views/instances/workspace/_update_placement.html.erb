@@ -10,6 +10,7 @@ Update status or parent in <%= @current_workspace.title %>
     <%= hidden_field_tag("place_name[original_placement_type]", @name_node_tree_link.placed_as) %>
     <%= hidden_field_tag("place_name[original_parent_name_id]", @name_node_tree_link.supernode.name.id) %>
     <%= hidden_field_tag("place_name[original_parent_name_typeahead_string]", @name_node_tree_link.supernode.name.full_name) %>
+
     <%= render partial: "instances/workspace/forms/name_typeahead" %>
 
     <div class="form-group">
