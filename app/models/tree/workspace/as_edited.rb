@@ -16,7 +16,7 @@
 #   limitations under the License.
 #
 class Tree::Workspace::AsEdited < Name
-  include WorkspaceParentResolvable
+  include WorkspaceParentNameResolvable
   def resolve_typeahead_params(params)
     resolve_parent_name(params, "parent_name")
   end
