@@ -69,4 +69,8 @@ class Tree::EmptyTreeLink < ActiveRecord::Base
   def default_to_untreated?
     false
   end
+
+  def placed_via_instance?(instance)
+    false
+  end
 end
