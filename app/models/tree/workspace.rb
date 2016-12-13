@@ -122,10 +122,16 @@ class Tree::Workspace < ActiveRecord::Base
                                           name_id: name_id,
                                           tree_id: id).url
     logger.debug(url)
+    logger.debug('before request')
     response = RestClient.post(url, accept: :json)
-    logger.debug(response.class)
-  rescue RestClient::BadRequest => ex
-    logger.error "remove_instance error: #{e}"
+    logger.debug('after request')
+  #rescue RestClient::BadRequest => e
+    #logger.error "remove_instance bad request error: #{e}"
+    #logger.error response
+    #raise
+  rescue => e
+    logger.error("remove_instance error: #{e}")
+    logger.error("About to re-raise")
     raise
   end
 
@@ -135,10 +141,8 @@ class Tree::Workspace < ActiveRecord::Base
     url = TreeArrangement::update_value_url(username, id, name, value_uri, value)
     logger.debug url
     RestClient.post(url, accept: :json)
-
   rescue RestClient::BadRequest => ex
     ex.response
-
   end
 
 end

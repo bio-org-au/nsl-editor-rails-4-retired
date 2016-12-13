@@ -28,7 +28,7 @@ class TreesController < ApplicationController
   # Move name ....
   # Update name ....
   def place_name
-    placement = Tree::Workspace::Placement.new(
+    @placement = Tree::Workspace::Placement.new(
       username: current_user.username,
       name_id: place_name_params[:name_id],
       instance_id: place_name_params[:instance_id],
@@ -37,30 +37,18 @@ class TreesController < ApplicationController
       placement_type: place_name_params[:placement_type],
       workspace_id: @current_workspace.id)
     if placement_changed?(place_name_params)
-      logger.debug("changed")
-      logger.debug("changed")
-      logger.debug("changed")
-      logger.debug("changed")
-      logger.debug("changed")
-      placement.save 
+      @placement.save 
       @message = "Changed"
     else
-      logger.debug("not changed")
-      logger.debug("not changed")
-      logger.debug("not changed")
-      logger.debug("not changed")
-      logger.debug("not changed")
-      logger.debug("not changed")
       @message = "No change"
     end
-  rescue => e1
-    logger.error "Error in place_name: #{e1}"
+  rescue => e
     begin
       @message = JSON.parse(first_error.response)["msg"]["msg"]
     rescue
-      @message = e1.to_s
+      @message = e.to_s
     end
-    logger.error "@message: #{@message}"
+    logger.error "place_name error @message: #{@message}"
     render "place_name_error", status: 422
   end
 
@@ -69,8 +57,9 @@ class TreesController < ApplicationController
                 .remove_instance(username,
                                  remove_name_placement_params[:name_id])
   rescue => e
-    e.backtrace.each { |trace| logger.error trace }
-    @message = "#{e}"
+    logger.error("remove_name_placement error: #{e}")
+    # e.backtrace.each { |trace| logger.error trace }
+    @message = e.to_s
     render "remove_name_placement_error", status: 422
   end
  

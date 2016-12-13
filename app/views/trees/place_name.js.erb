@@ -4,3 +4,8 @@ $('#placement-message-container').html('<%= escape_javascript(@message) %>');
 $('#placement-message-container').removeClass('hidden');
 $('#move-name-placement-btn').addClass('hidden');
 $('#instance-class-tab-refresh-btn').removeClass('hidden');
+$('#place_name_original_placement_type').val('<%= @placement.placement_type %>');
+$('#place_name_original_parent_name_id').val('<%= @placement.parent_name_id %>');
+$('#place_name_original_parent_name_typeahead_string').val('<%= @placement.parent_name_typeahead %>');
+
+
