@@ -7,8 +7,18 @@
     <span>&nbsp; <%= classification.label %></span>
   </li>
   <% classification.workspaces.each  do |workspace| %>
-    <%# icon_check_class = workspace.id == session["workspace"]["id"]  ? '' : 'hidden' %>
-    <% icon_check_class = 'hidden' %>
+    <% 
+      icon_check_class = 
+        if session["workspace"].present? then
+          if workspace.id == session["workspace"]["id"]
+            ""
+          else
+            "hidden"
+          end
+        else
+          "hidden"
+        end
+    %>
     <li role="presentation" style="padding-left: 1em;">
       <%= link_to("#{icon('cirle-o')} #{workspace.title} #{fa_icon 'check', class: icon_check_class}".html_safe,
                   create_current_workspace_path(id: workspace.id),
