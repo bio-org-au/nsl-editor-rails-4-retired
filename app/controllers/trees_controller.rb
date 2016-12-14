@@ -56,9 +56,10 @@ class TreesController < ApplicationController
   end
 
   def remove_name_placement
-    @response = @current_workspace
-                .remove_instance(username,
-                                 remove_name_placement_params[:name_id])
+    response = @current_workspace
+               .remove_instance(username,
+                                remove_name_placement_params[:name_id])
+    @message = "Removed"
   rescue => e
     logger.error("remove_name_placement error: #{e}")
     # e.backtrace.each { |trace| logger.error trace }

@@ -57,10 +57,10 @@ class WorkspaceValuesController < ApplicationController
                             workspace_value_params[:name_id],
                             workspace_value_params[:field_value])
     @message = "Created"
-  #rescue => e
-    #@message = "Error: #{e.to_s}"
-    #@value_label = workspace_value_params[:value_label]
-    #render "update_error", status: 400
+  rescue => e
+    @message = "Error: #{e.to_s}"
+    @value_label = workspace_value_params[:value_label]
+    render "update_error", status: 400
   end
 
   def destroy
