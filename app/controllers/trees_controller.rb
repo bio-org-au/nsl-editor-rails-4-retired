@@ -108,6 +108,7 @@ class TreesController < ApplicationController
                                        :placement_type,
                                        :move,
                                        :update,
+                                       :place,
                                        :original_name_id,
                                        :original_instance_id,
                                        :original_parent_name_id,
