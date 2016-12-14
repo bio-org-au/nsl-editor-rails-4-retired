@@ -23,7 +23,8 @@ class InstanceDeleteServiceNotFound404Test < ActiveSupport::TestCase
   setup do
     # stub_it
     stub_request(:delete, "http://localhost:9090/nsl/services/instance/apni/404/api/delete?apiKey=test-api-key&reason=Edit")
-      .with(headers: { "Accept" => "application/json", "Accept-Encoding" => "gzip, deflate", "Host" => "localhost:9090", "User-Agent" => "rest-client/2.0.0 (darwin16.1.0 x86_64) ruby/2.3.0p0" })
+      .with(headers: { "Accept" => "application/json", "Accept-Encoding" => "gzip, deflate", "Host" => "localhost:9090",
+    "User-Agent" => /ruby/ })
       .to_return(status: 404, body: "", headers: {})
   end
 

@@ -40,10 +40,6 @@ class TreePlacementRemoveTest < ActionController::TestCase
     "&runAs=fred&tree=#{@workspace.id}"
   end
 
-  def user_agent
-    "rest-client/2.0.0 (darwin16.1.0 x86_64) ruby/2.3.0p0"
-  end
-
   def stub_it
     stub_request(:post, "#{a}#{b}#{c}")
       .with(body: { "accept" => "json" },
@@ -52,7 +48,7 @@ class TreePlacementRemoveTest < ActionController::TestCase
                        "Content-Length" => "11",
                        "Content-Type" => "application/x-www-form-urlencoded",
                        "Host" => "localhost:9090",
-                       "User-Agent" => user_agent })
+                       "User-Agent" => /ruby/ })
       .to_return(status: 200, body: "", headers: {})
   end
 

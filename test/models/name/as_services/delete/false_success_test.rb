@@ -24,7 +24,7 @@ class NameAsServicesDeleteFalseSuccessTest < ActiveSupport::TestCase
       .with(headers: { "Accept" => "application/json",
                        "Accept-Encoding" => "gzip, deflate",
                        "Host" => "localhost:9090",
-                       "User-Agent" => agent })
+                       "User-Agent" => /ruby/ })
       .to_return(status: 200, body: body, headers: {})
   end
 
@@ -36,10 +36,6 @@ class NameAsServicesDeleteFalseSuccessTest < ActiveSupport::TestCase
       ]
 
     }.to_json
-  end
-
-  def agent
-    "rest-client/2.0.0 (darwin16.1.0 x86_64) ruby/2.3.0p0"
   end
 
   def sub1

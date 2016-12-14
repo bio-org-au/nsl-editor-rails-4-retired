@@ -43,11 +43,7 @@ class TreePlacementCreateTest < ActionController::TestCase
   def d
     "tree=#{@workspace.id}"
   end
-
-  def user_agent
-    "rest-client/2.0.0 (darwin16.1.0 x86_64) ruby/2.3.0p0"
-  end
-
+ 
   def stub_it
     stub_request(:post, "#{a}#{b}#{c}#{d}")
       .with(body: { "accept" => "json" },
@@ -56,7 +52,7 @@ class TreePlacementCreateTest < ActionController::TestCase
                        "Content-Length" => "11",
                        "Content-Type" => "application/x-www-form-urlencoded",
                        "Host" => "localhost:9090",
-                       "User-Agent" => user_agent })
+                       "User-Agent" => /ruby/ })
       .to_return(status: 200, body: "", headers: {})
   end
 
@@ -67,6 +63,8 @@ class TreePlacementCreateTest < ActionController::TestCase
             place_name: { name_id: @name,
                           instance_id: @instance.id,
                           parent_name: @parent.full_name,
+                          parent_name_id: @parent,
+                          parent_name_typeahead_string: @parent.full_name,
                           placement_type: "accepted" } },
           username: "fred",
           user_full_name: "Fred Jones",

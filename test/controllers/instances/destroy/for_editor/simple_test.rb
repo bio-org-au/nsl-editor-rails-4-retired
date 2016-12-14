@@ -39,16 +39,12 @@ class InstancesDeleteForEditorTest < ActionController::TestCase
     "?apiKey=test-api-key&reason=#{@reason}"
   end
 
-  def user_agent
-    "rest-client/2.0.0 (darwin16.1.0 x86_64) ruby/2.3.0p0"
-  end
-
   def stub_it
     stub_request(:delete, "#{a}#{b}#{c}")
       .with(headers: { "Accept" => "application/json",
                        "Accept-Encoding" => "gzip, deflate",
                        "Host" => "localhost:9090",
-                       "User-Agent" => user_agent })
+                       "User-Agent" => /ruby/ })
       .to_return(status: 200, body: { "ok" => true }.to_json, headers: {})
   end
 

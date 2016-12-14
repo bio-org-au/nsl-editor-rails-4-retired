@@ -37,7 +37,7 @@ class NamesDeleteConfirmForEditorSimpleTest < ActionController::TestCase
   end
 
   def user_agent
-    "rest-client/2.0.0 (darwin16.1.0 x86_64) ruby/2.3.0p0"
+    "rest-client/2.0.0 (darwin16.1.0 x86_64) ruby/2.3.1p112"
   end
 
   def stub_it
