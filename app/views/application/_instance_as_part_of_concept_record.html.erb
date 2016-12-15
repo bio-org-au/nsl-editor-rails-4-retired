@@ -26,7 +26,17 @@
       <% end %>
     <% end %>
     <%= render(partial: 'record_debug', locals: {search_result: search_result}) if @debug %>
-  </a></td>
+    <% if @current_workspace.present? && search_result.in_workspace?(@current_workspace) %>
+      &nbsp;
+      <%= render partial: "instances/workspace/widgets/placement_indicator",
+                 locals: { name_node_tree_link: search_result
+                                                .name
+                                                .workspace_name_node_tree_link(
+                                                  @current_workspace.id),
+                           workspace: @current_workspace } %>
+    <% end %>
+  </a>
+  </td>
   <td class="takes-focus width-20-percent filler">&nbsp;</td>
 </tr>
 

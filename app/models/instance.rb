@@ -419,6 +419,18 @@ class Instance < ActiveRecord::Base
     apc_instance_is_an_excluded_name == true
   end
 
+  def in_workspace?(workspace)
+    id == name.workspace_instance_id(workspace.id)
+  end
+
+  def workspace_placement_type(workspace)
+    if in_workspace?(workspace)
+      "[placement type...] name: #{name.id}; workspace: #{workspace.id}; placed as: #{name.workspace_name_node_tree_link(workspace.id).placed_as}"
+    else
+      ""
+    end
+  end
+
   def set_defaults
     self.namespace_id = Namespace.default.id if namespace_id.blank?
   end

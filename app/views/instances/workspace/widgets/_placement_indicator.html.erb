@@ -1,0 +1,10 @@
+  <span class="workspace-container no-decoration">
+    <% if name_node_tree_link.untreated? %>
+      <%= render partial: "instances/workspace/widgets/untreated", locals: { workspace: workspace } %>
+    <% elsif name_node_tree_link.excluded? %>
+      <%= render partial: "instances/workspace/widgets/excluded", locals: { workspace: workspace } %>
+    <% else %>
+      <%= render partial: "instances/workspace/widgets/accepted", locals: { workspace: workspace } %>
+    <% end %>
+  </span>
+
