@@ -61,14 +61,26 @@ class WorkspaceValuesUpdateSimpleTest < ActionController::TestCase
   end
 
   test "place name in workspace" do
-    skip "Need to set up workspace value via mock or similar"
-    WorkspaceValue = Minitest::Mock.new
-    def WorkspaceValue.find; new WorkspaceValue; end
+    workspace = tree_arrangements.find(:for_test)
+    instance = instances(:britten_created_angophora_costata)
+    name = names(:angophora_costata)
+    workspace_value = WorkspaceValue.new
+    workspace_value.instance_id = instance.id
+    workspace_value.name_id = name.id
+    workspace_value.workspace_id = workspace.id
+    workspace_value.type_uri_id_part = "distribution"
+    name_node_link_id = 22
+    workspace_value.name_node_link_id = name_node_link_id
+    WorkspaceValue.expects(:find).with("distribution", name_node_link_id).returns(workspace_value)
+    #assert_equal workspace_value, WorkspaceValue.find(1)
+    # skip "Need to set up workspace value via mock or similar"
+    # WorkspaceValue = Minitest::Mock.new
+    # def WorkspaceValue.find; new WorkspaceValue; end
 
     @request.headers["Accept"] = "application/javascript"
     patch(:update, { workspace_value: { field_value: "new value",
-                                        name_id: @name,
-                                        name_node_link_id: 2,
+                                        name_id: @name.id,
+                                        name_node_link_id: name_node_link_id,
                                         value_label: "not important",
                                         type_uri_id_part: "accepted" } },
           username: "fred",

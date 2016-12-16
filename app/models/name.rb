@@ -137,16 +137,16 @@ class Name < ActiveRecord::Base
     category == CULTIVAR_HYBRID_CATEGORY
   end
 
-  def workspace_instance_id(workspace_id)
-    return nil unless workspace_id.present?
-    name_node_tree_link = workspace_name_node_tree_link(workspace_id)
+  def workspace_instance_id(workspace)
+    return nil unless workspace.present?
+    name_node_tree_link = workspace_name_node_tree_link(workspace)
     return nil unless name_node_tree_link.present? 
     return nil if name_node_tree_link.empty? 
     name_node_tree_link.node.instance_id
   end
 
-  def workspace_name_node_tree_link(workspace_id)
-    Tree::Workspace.find(workspace_id)
+  def workspace_name_node_tree_link(workspace)
+    Tree::Workspace.find(workspace.id)
                    .find_name_node_link(self)
   end
 

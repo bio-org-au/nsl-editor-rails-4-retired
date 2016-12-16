@@ -33,7 +33,7 @@ class InstanceTabsNotesTest < ActionController::TestCase
         user_full_name: "Fred Jones",
         groups: %w(APC edit))
     assert_response :success
-    assert_select "h5", "Add Instance Note", "Needs correct heading."
+    assert_select "h5", "Add Note", "Needs correct heading."
     assert_select "form#new_instance_note", true, "Needs insert form."
     assert_select "form#new_instance_note" do
       assert_select "select.instance-note-key-id-select", true, "Needs select."

@@ -100,6 +100,8 @@ class Instance < ActiveRecord::Base
 
   belongs_to :namespace, class_name: "Namespace", foreign_key: "namespace_id"
   belongs_to :reference
+  #belongs_to :author, through: :reference
+  belongs_to :author
   belongs_to :name
   belongs_to :instance_type
 
@@ -420,15 +422,7 @@ class Instance < ActiveRecord::Base
   end
 
   def in_workspace?(workspace)
-    id == name.workspace_instance_id(workspace.id)
-  end
-
-  def workspace_placement_type(workspace)
-    if in_workspace?(workspace)
-      "[placement type...] name: #{name.id}; workspace: #{workspace.id}; placed as: #{name.workspace_name_node_tree_link(workspace.id).placed_as}"
-    else
-      ""
-    end
+    id == name.workspace_instance_id(workspace)
   end
 
   def set_defaults

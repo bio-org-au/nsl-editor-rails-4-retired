@@ -38,7 +38,8 @@ class Instance::AsArray::ForName < Array
     debug("init #{name.full_name}")
     @results = []
     @already_shown = []
-    sorted_instances(name.instances).each do |instance|
+    # ToDo: work out why author is not eager loading.
+    sorted_instances(name.instances.includes(:reference, :instance_type, :author)).each do |instance|
       if instance.standalone?
         show_standalone_instance(instance)
       else
@@ -48,8 +49,8 @@ class Instance::AsArray::ForName < Array
   end
 
   def debug(s)
-    # Rails.logger.debug("====================================================")
-    # Rails.logger.debug("Instance::AsArray::ForName: #{s}")
+    Rails.logger.debug("====================================================")
+    Rails.logger.debug("Instance::AsArray::ForName: #{s}")
   end
 
   def sorted_instances(instances)
@@ -94,6 +95,7 @@ class Instance::AsArray::ForName < Array
   def records_cited_by_standalone(instance)
     debug("records_cited_by_standalone for instance #{instance.id}")
     Instance.joins(:instance_type, :name, :reference)
+            .includes(:instance_type)
             .where(cited_by_id: instance.id)
             .in_nested_instance_type_order
             .order("reference.year,lower(name.full_name)")

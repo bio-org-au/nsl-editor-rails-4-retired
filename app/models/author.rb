@@ -29,6 +29,7 @@ class Author < ActiveRecord::Base
   attr_accessor :display_as, :give_me_focus, :message
 
   has_many :references
+  has_many :instances, through: :references
   belongs_to :namespace, class_name: "Namespace", foreign_key: "namespace_id"
 
   has_many :names

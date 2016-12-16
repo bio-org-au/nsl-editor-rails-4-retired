@@ -224,8 +224,8 @@ Rails.application.routes.draw do
   match "tree_arrangement/:id/place_name",
         as: "tree_arrangement_place_name", to: "trees#place_name", via: [:patch, :post]
   match "trees/workspace/current",
-        as: "create_current_workspace",
-        to: "trees/workspaces/current#create",
+        as: "toggle_current_workspace",
+        to: "trees/workspaces/current#toggle",
         via: :post
 
   match "tree/value/:id",

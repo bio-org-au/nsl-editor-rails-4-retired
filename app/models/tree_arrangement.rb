@@ -21,6 +21,7 @@ class TreeArrangement < ActiveRecord::Base
   self.table_name = "tree_arrangement"
   self.primary_key = "id"
   self.sequence_name = "nsl_global_seq"
+  scope :public_ones, -> { where(tree_type: "P").order(:label) }
 
   belongs_to :base_arrangement, class_name: TreeArrangement
   belongs_to :namespace, class_name: "Namespace", foreign_key: "namespace_id"
@@ -36,6 +37,21 @@ class TreeArrangement < ActiveRecord::Base
              end),
            class_name: "TreeValueUri",
            foreign_key: "root_id"
+  has_many :workspaces,
+           class_name: "Tree::Workspace",
+           foreign_key: "base_arrangement_id"
+
+
+  def self.menu_query
+    TreeArrangement.public_ones
+                   .joins(:workspaces)
+      .select("tree_arrangement.id, tree_arrangement.label, workspaces_tree_arrangement.id as workspace_id, workspaces_tree_arrangement.title as workspace_title")
+      .order("tree_arrangement.label, workspaces_tree_arrangement.title")
+  end
+
+  def workspaces?
+    !workspaces.empty?
+  end
 
   def find_placement_of_name(name)
     link_id = TreeArrangement.sp_find_name_in_tree(name.id, id)

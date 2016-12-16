@@ -17,10 +17,10 @@
 
 #   User can choose a workspace.
 class Trees::Workspaces::CurrentController < ApplicationController
-  def create
+  def toggle
     if session[:workspace] &&
        session[:workspace]["id"] == params[:id].to_i
-      head :ok
+      unset_workspace
     else
       set_workspace
     end
@@ -35,5 +35,10 @@ class Trees::Workspaces::CurrentController < ApplicationController
   def set_workspace
     @current_workspace = Tree::Workspace.find(params[:id])
     session[:workspace] = @current_workspace
+  end
+
+  def unset_workspace
+    remove_instance_variable(:@current_workspace)
+    session[:workspace] = nil
   end
 end

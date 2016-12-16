@@ -104,7 +104,7 @@ class Ability
     can "classification",     "place"
     can "trees",               :all
     can "workspace_values",    :all
-    can "trees/workspaces/current", "create"
+    can "trees/workspaces/current", "toggle"
     can "names/typeaheads/for_workspace_parent_name", :all
   end
 

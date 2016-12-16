@@ -18,19 +18,21 @@
 require "test_helper"
 
 # Comments controller tests.
-class TreeClassificationChooseOneTest < ActionController::TestCase
+class WorkspaceCurrentToggleOffTest < ActionController::TestCase
   tests ::Trees::Workspaces::CurrentController
   setup do
     @tree = tree_arrangements(:for_test)
   end
 
-  test "choose workspace" do
+  test "toggle workspace off" do
     @request.headers["Accept"] = "application/javascript"
-    post(:create,
+    @request.session["workspace"] = @tree
+    post(:toggle,
          { id: @tree.id },
          username: "fred",
          user_full_name: "Fred Jones",
          groups: %w(edit treebuilder))
     assert_response :success
+    assert_not @request.session["workspace"].present?
   end
 end

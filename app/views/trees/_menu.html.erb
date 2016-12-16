@@ -1,32 +1,33 @@
 
 <% ws_count = 0 %>
-<% Tree::Public.all.each do |classification| %>
-  <% next unless classification.workspaces? %> 
+<% tree_headings = [] %>
+<% TreeArrangement.menu_query.each do |menu_item| %>
   <% ws_count += 1 %>
-  <li role="presentation">
-    <span>&nbsp; <%= classification.label %></span>
-  </li>
-  <% classification.workspaces.each  do |workspace| %>
+  <% unless tree_headings.include?(menu_item.label) %>
+    <li role="presentation">
+      <span>&nbsp; <%= menu_item.label %></span>
+    </li>
+    <% tree_headings << menu_item.label %>
+  <% end %>
+
     <% 
       icon_check_class = 
-        if session["workspace"].present? then
-          if workspace.id == session["workspace"]["id"]
+        if session["workspace"].present? &&
+           menu_item.workspace_id == session["workspace"]["id"]
             ""
-          else
-            "hidden"
-          end
         else
           "hidden"
         end
     %>
     <li role="presentation" style="padding-left: 1em;">
-      <%= link_to("#{icon('cirle-o')} #{workspace.title} #{fa_icon 'check', class: icon_check_class}".html_safe,
-                  create_current_workspace_path(id: workspace.id),
+      <%= link_to("#{icon('cirle-o')} #{menu_item.workspace_title} #{fa_icon 'check', class: icon_check_class}".html_safe,
+                  toggle_current_workspace_path(id: menu_item.workspace_id),
                   { remote: true,
                     method: "post",
                     title: 'Choose current workspace' }) %>
     </li>
-  <% end %>
+
+
 <% end %>
 <% if ws_count == 0 %>
   <li role="presentation">
