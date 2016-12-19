@@ -25,62 +25,67 @@ class WorkspaceValuesUpdateSimpleTest < ActionController::TestCase
     @name = names(:to_be_placed)
     @parent = names(:angophora_costata)
     @workspace = tree_arrangements(:for_test)
-    #stub_it
+    @name_to_be_updated = names(:angophora_costata)
+    @name_node_link_id = 22
+    mock_call_to_find_workspace_value
+    stub_for_post_to_update_value
   end
 
-  def a
-    "http://localhost:9090/nsl/services/treeEdit/placeNameOnTree"
+  def path
+    "http://localhost:9090/nsl/services/treeEdit"
   end
 
-  def b
-    "?apiKey=test-api-key&instance=#{@instance.id}&name=#{@name.id}"
+  def api_key
+    "apiKey=test-api-key"
   end
 
-  def c
-    "&parentName=#{@parent.id}&placementType=accepted&runAs=fred&"
+  def name_arg
+    "name=605492557"
   end
 
-  def d
+  def tree
     "tree=#{@workspace.id}"
   end
 
-  def user_agent
-    "rest-client/2.0.0 (darwin16.1.0 x86_64) ruby/2.3.0p0"
+  def value
+    "value=new%20value"
   end
 
-  def stub_it
-    stub_request(:post, "#{a}#{b}#{c}#{d}")
+  def as
+    "runAs=fred&"
+  end
+
+  def stub_for_post_to_update_value
+    params = "#{api_key}&#{name_arg}&#{tree}&#{as}&#{value}&valueUriLabel="
+    stub_request(:post, "#{path}/updateValue?#{params}")
       .with(body: { "accept" => "json" },
             headers: { "Accept" => "*/*",
                        "Accept-Encoding" => "gzip, deflate",
                        "Content-Length" => "11",
                        "Content-Type" => "application/x-www-form-urlencoded",
                        "Host" => "localhost:9090",
-                       "User-Agent" => user_agent })
+                       "User-Agent" => /ruby/ })
       .to_return(status: 200, body: "", headers: {})
   end
 
-  test "place name in workspace" do
-    workspace = tree_arrangements.find(:for_test)
+  def mock_call_to_find_workspace_value
     instance = instances(:britten_created_angophora_costata)
-    name = names(:angophora_costata)
     workspace_value = WorkspaceValue.new
     workspace_value.instance_id = instance.id
-    workspace_value.name_id = name.id
-    workspace_value.workspace_id = workspace.id
+    workspace_value.name_id = @name.id
+    workspace_value.workspace_id = @workspace.id
     workspace_value.type_uri_id_part = "distribution"
-    name_node_link_id = 22
-    workspace_value.name_node_link_id = name_node_link_id
-    WorkspaceValue.expects(:find).with("distribution", name_node_link_id).returns(workspace_value)
-    #assert_equal workspace_value, WorkspaceValue.find(1)
-    # skip "Need to set up workspace value via mock or similar"
-    # WorkspaceValue = Minitest::Mock.new
-    # def WorkspaceValue.find; new WorkspaceValue; end
+    workspace_value.name_node_link_id = @name_node_link_id
+    WorkspaceValue.expects(:find)
+                  .with(@name_node_link_id.to_s, "accepted")
+                  .returns(workspace_value)
+  end
 
+  test "place name in workspace" do
     @request.headers["Accept"] = "application/javascript"
     patch(:update, { workspace_value: { field_value: "new value",
                                         name_id: @name.id,
-                                        name_node_link_id: name_node_link_id,
+                                        name_node_link_id: @name_node_link_id,
                                         value_label: "not important",
                                         type_uri_id_part: "accepted" } },
           username: "fred",
