@@ -20,11 +20,15 @@ load "models/search/users.rb"
 
 # Single instance model test.
 class OnReferenceIdTest < ActiveSupport::TestCase
+  setup do
+    @ref = references(:paper_by_britten_on_angophora)
+  end
+
   test "instance search on Reference ID" do
     search = Search::Base
              .new(ActiveSupport::HashWithIndifferentAccess
              .new(query_string:
-                  "id:#{references(:paper_by_britten_on_angophora).id} show-instances:",
+                  "id:#{@ref.id} show-instances:",
                   query_target: "references",
                   current_user: build_edit_user))
     assert_equal Array,

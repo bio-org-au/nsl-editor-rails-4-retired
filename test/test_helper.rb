@@ -160,16 +160,12 @@ def make_sure_details_are_showing
 end
 
 def search_results_with_details?
-  if search_results?
-    if details_are_showing?
-      true
-    else
-      show_details
-      debug "sleeping...."
-      sleep(0.01)
-      false
-    end
-  end
+  return unless search_results?
+  return true if details_are_showing?
+  show_details
+  debug "sleeping...."
+  sleep(0.01)
+  false
 end
 
 def search_results?
