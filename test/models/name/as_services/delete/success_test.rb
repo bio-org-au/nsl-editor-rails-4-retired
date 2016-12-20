@@ -20,10 +20,25 @@ require "test_helper"
 # Single name model test.
 class NameAsServicesDeleteSuccessTest < ActiveSupport::TestCase
   setup do
-    stub_request(:delete, "http://localhost:9090/nsl/services/name/apni/540036697/api/delete?apiKey=test-api-key&reason=200%20this%20is%20the%20reason.....")
-      .with(headers: { "Accept" => "application/json", "Accept-Encoding" => "gzip, deflate", "Host" => "localhost:9090",
-    "User-Agent" => /ruby/ })
+    stub_request(:delete,
+                 "#{action}?apiKey=test-api-key&reason=#{reason}")
+      .with(headers: headers)
       .to_return(status: 200, body: { ok: true }.to_json, headers: {})
+  end
+
+  def action
+    "http://localhost:9090/nsl/services/name/apni/540036697/api/delete"
+  end
+
+  def reason
+    "200%20this%20is%20the%20reason....."
+  end
+
+  def headers
+    { "Accept" => "application/json",
+      "Accept-Encoding" => "gzip, deflate",
+      "Host" => "localhost:9090",
+      "User-Agent" => /ruby/ }
   end
 
   test "url" do

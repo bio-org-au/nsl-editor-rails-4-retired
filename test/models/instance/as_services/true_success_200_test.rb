@@ -21,16 +21,49 @@ require "models/instance/as_services/success_stub_helper"
 # Single instance model test.
 class InstanceAsServicesTrueSuccess200Test < ActiveSupport::TestCase
   setup do
-    stub_request(:delete, "http://localhost:9090/nsl/services/instance/apni/200/api/delete?apiKey=test-api-key&reason=Edit")
-      .with(headers: { "Accept" => "application/json", "Accept-Encoding" => "gzip, deflate", "Host" => "localhost:9090",
-    "User-Agent" => /ruby/ })
-      .to_return(status: 200, body: { "instance": { "class": "au.org.biodiversity.nsl.Instance", "_links": { "permalink": { "link": "http://localhost:8080/nsl/mapper/boa/instance/apni/819227", "preferred": true, "resources": 1 } }, "instanceType": "taxonomic synonym", "protologue": false, "citation": "Leach, G.J. (1986), A Revision of the Genus Angophora (Myrtaceae). Telopea 2(6)", "citationHtml": "Leach, G.J. (1986), A Revision of the Genus Angophora (Myrtaceae). Telopea 2(6)" }, "action": "delete", "ok": true }.to_json, headers: {})
+    stub_request(:delete,
+                 "#{action}?apiKey=test-api-key&reason=Edit")
+      .with(headers: { "Accept" => "application/json",
+                       "Accept-Encoding" => "gzip, deflate",
+                       "Host" => "localhost:9090",
+                       "User-Agent" => /ruby/ })
+      .to_return(status: 200,
+                 body: body_hash.to_json, headers: {})
+  end
+
+  def body_hash
+    { "instance":
+      { "class":
+        "au.org.biodiversity.nsl.Instance",
+        "_links": inner_hash,
+        "instanceType": "taxonomic synonym",
+        "protologue": false,
+        "citation": citation,
+        "citationHtml": citation },
+      "action": "delete", "ok": true }
+  end
+
+  def inner_hash
+    {
+      "permalink": {
+        "link": "http://localhost:8080/nsl/mapper/boa/instance/apni/819227",
+        "preferred": true,
+        "resources": 1
+      }
+    }
+  end
+
+  def citation
+    "Leach, G.J. (1986), A Rev of the Genus Angophora (Myrtaceae). Telopea 2(6)"
+  end
+
+  def action
+    "http://localhost:9090/nsl/services/instance/apni/200/api/delete"
   end
 
   test "instance delete service true success 200" do
-    assert_nothing_raised("Should not raise exception if everything is ok") do
-      # The test mock responds based on the id
-      Instance::AsServices.delete(200)
-    end
+    # The test mock responds based on the id
+    Instance::AsServices.delete(200)
+    assert :success
   end
 end

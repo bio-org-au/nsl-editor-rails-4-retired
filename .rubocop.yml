@@ -1,6 +1,7 @@
 AllCops:
   Exclude:
     - 'db/**/*'
+  TargetRubyVersion: 2.3
 Style/TrailingCommaInLiteral:
   Enabled: false
 Style/VariableNumber:

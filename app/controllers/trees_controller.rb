@@ -28,31 +28,31 @@ class TreesController < ApplicationController
   # Move name ....
   # Update name ....
   def place_name
-    @placement = Tree::Workspace::Placement.new(
-      username: current_user.username,
-      name_id: place_name_params[:name_id],
-      instance_id: place_name_params[:instance_id],
-      parent_name_id: place_name_params[:parent_name_id],
-      parent_name_typeahead: place_name_params[:parent_name_typeahead_string],
-      placement_type: place_name_params[:placement_type],
-      workspace_id: @current_workspace.id)
-    if placement_changed?(place_name_params)
-      result = @placement.save 
-      @message = "Changed"
+    @placement = new_placement_for_params
+    if new_placement_instance?(place_name_params)
+      result = @placement.save
+      @message = "Placed"
+    elsif placement_updated_in_place?(place_name_params)
+      result = @placement.save
+      @message = "Updated"
     else
       @message = "No change"
     end
-  rescue => e
-    logger.error("place_name error handler")
-    logger.error("result: #{result}")
+  rescue RestClient::ExceptionWithResponse => e
+    logger.error("==== place_name error handler #{e.class}")
     begin
-      @message = JSON.parse(first_error.response)["msg"]["msg"]
-    rescue
+      json = JSON.parse(e.http_body)
+      Rails.logger.error(ap json)
+      @message = json["msg"].first["body"]
+    rescue => e
       logger.error("rescue error in error")
       @message = e.to_s
     end
     logger.error "place_name error @message: #{@message}"
     render "place_name_error", status: 422
+  rescue => e
+    logger.error "other error"
+    @message = e.to_s
   end
 
   def remove_name_placement
@@ -62,36 +62,18 @@ class TreesController < ApplicationController
     @message = "Removed"
   rescue => e
     logger.error("remove_name_placement error: #{e}")
+    logger.error(response.body)
     # e.backtrace.each { |trace| logger.error trace }
     @message = e.to_s
     render "remove_name_placement_error", status: 422
   end
- 
-  def xupdate_value
-    @response = TreeArrangement.find(session[:current_classification])
-                               .update_value(
-                                 username,
-                                 params[:tree_arrangement][:name_id],
-                                 params[:tree_arrangement][:value_label],
-                                 params[:value]
-                               )
-  rescue => e
-    logger.error e
-    render "update_value_error", status: 422
-  end
 
   def update_value
-    logger.debug('start update_value')
-    logger.debug("params[:tree_workspace][:name_id]: #{params[:tree_workspace][:name_id]}")
-    logger.debug("params[:tree_workspace][:value_label]: #{params[:tree_workspace][:value_label]}")
-    logger.debug("params[:value]: #{params[:value]}")
-    logger.debug('update_value before call')
-    @response = @current_workspace.update_value(
-                                 username,
-                                 params[:tree_workspace][:name_id],
-                                 params[:tree_workspace][:value_label],
-                                 params[:value]
-                               )
+    @response = @current_workspace
+                .update_value(username,
+                              params[:tree_workspace][:name_id],
+                              params[:tree_workspace][:value_label],
+                              params[:value])
   rescue => e
     logger.error e
     render "update_value_error", status: 422
@@ -100,32 +82,45 @@ class TreesController < ApplicationController
   private
 
   def place_name_params
-    params.require(:place_name).permit(:name_id,
-                                       :instance_id,
-                                       :parent_name,
-                                       :parent_name_id,
-                                       :parent_name_typeahead_string,
-                                       :placement_type,
-                                       :move,
-                                       :update,
-                                       :place,
-                                       :original_name_id,
-                                       :original_instance_id,
-                                       :original_parent_name_id,
-                                       :original_parent_name_typeahead_string,
-                                       :original_placement_type)
+    params.require(:place_name)
+          .permit(:name_id, :instance_id,
+                  :parent_name, :parent_name_id,
+                  :parent_name_typeahead_string, :placement_type,
+                  :move, :update, :place, :original_name_id,
+                  :original_instance_id, :original_parent_name_id,
+                  :original_parent_name_typeahead_string,
+                  :original_placement_type)
   end
 
   def remove_name_placement_params
     params.require(:remove_placement).permit(:name_id, :instance_id, :delete)
   end
 
-  def placement_changed?(params)
+  def new_placement_instance?(params)
     params[:name_id] != params[:original_name_id] ||
-    params[:instance_id] != params[:original_instance_id] ||
+      params[:instance_id] != params[:original_instance_id] 
+  end
+
+  def placement_updated_in_place?(params)
     params[:placement_type] != params[:original_placement_type] ||
-    params[:parent_name_typeahead_string] != params[:original_parent_name_typeahead_string] ||
-    params[:parent_name_id] != params[:original_parent_name_id]
+      placement_parent_changed?(params)
+  end
+
+  def placement_parent_changed?(params)
+    params[:parent_name_typeahead_string] !=
+      params[:original_parent_name_typeahead_string] ||
+      params[:parent_name_id] != params[:original_parent_name_id]
+  end
+
+  def new_placement_for_params
+    Tree::Workspace::Placement.new(
+      username: current_user.username,
+      name_id: place_name_params[:name_id],
+      instance_id: place_name_params[:instance_id],
+      parent_name_id: place_name_params[:parent_name_id],
+      parent_name_typeahead: place_name_params[:parent_name_typeahead_string],
+      placement_type: place_name_params[:placement_type],
+      workspace_id: @current_workspace.id
+    )
   end
 end
-

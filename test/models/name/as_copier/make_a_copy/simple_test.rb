@@ -20,12 +20,26 @@ require "test_helper"
 # Single name model test.
 class NameAsCopierMakeACopySimpleTest < ActiveSupport::TestCase
   setup do
-    stub_request(:get, %r{http://localhost:9090/nsl/services/name/apni/[0-9]{8,}/api/name-strings})
-      .with(headers: { "Accept" => "*/*", "Accept-Encoding" => "gzip;q=1.0,deflate;q=0.6,identity;q=0.3", "User-Agent" => "Ruby" })
-      .to_return(status: 200, body: %({ "class": "silly name class",
-    "_links": {
-        "permalink": [ ]
-    },
+    stub_it
+    @before = Name.count
+    @master_name = Name::AsCopier.find(names(:a_genus_with_two_instances).id)
+    @dummy_name_element = "xyz"
+    @dummy_username = "fred"
+    @copied_name = @master_name.copy_with_username(
+      @dummy_name_element,
+      @dummy_username
+    )
+    @after = Name.count
+  end
+
+  def stub_it
+    stub_request(:get, %r{#{action}[0-9]{8,}/api/name-strings})
+      .with(headers: headers)
+      .to_return(status: 200, body: return_body, headers: {})
+  end
+
+  def return_body
+    %({ "class": "silly name class", "_links": { "permalink": [ ] },
     "name_element": "redundant name element for id",
     "action": "unnecessary action",
     "result": {
@@ -33,36 +47,53 @@ class NameAsCopierMakeACopySimpleTest < ActiveSupport::TestCase
         "simpleMarkedUpName": "simple marked up name for id",
         "fullName": "full name for id",
         "simpleName": "simple name for id"
-    } }), headers: {})
+    } })
+  end
+
+  def action
+    "http://localhost:9090/nsl/services/name/apni/"
+  end
+
+  def headers
+    { "Accept" => "*/*",
+      "Accept-Encoding" => "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
+      "User-Agent" => "Ruby" }
   end
 
   test "copy one name" do
-    before = Name.count
-    master_name = Name::AsCopier.find(names(:a_genus_with_two_instances).id)
-    dummy_name_element = "xyz"
-    dummy_username = "fred"
-    copied_name = master_name.copy_with_username(
-      dummy_name_element,
-      dummy_username
-    )
-    after = Name.count
-    assert_equal before + 1, after, "There should be one extra name."
-    assert_equal master_name.name_type_id, copied_name.name_type_id
-    assert_equal master_name.name_rank_id, copied_name.name_rank_id
-    assert_equal master_name.name_status_id, copied_name.name_status_id
-    assert_equal master_name.namespace_id, copied_name.namespace_id
-    assert_equal master_name.author_id, copied_name.author_id
-    assert_equal master_name.base_author_id, copied_name.base_author_id
-    assert_equal master_name.ex_author_id, copied_name.ex_author_id
-    assert_equal master_name.ex_base_author_id, copied_name.ex_base_author_id
-    assert_equal master_name.sanctioning_author_id,
-                 copied_name.sanctioning_author_id
-    assert_equal master_name.orth_var, copied_name.orth_var
-    assert_equal master_name.parent_id, copied_name.parent_id
-    assert_equal master_name.second_parent_id, copied_name.second_parent_id
-    assert_equal master_name.verbatim_rank, copied_name.verbatim_rank
-    assert_match dummy_name_element, copied_name.name_element
-    assert_equal dummy_username, copied_name.created_by
-    assert_equal dummy_username, copied_name.updated_by
+    test1
+    test2
+    test3
+    test4
+  end
+
+  def test1
+    assert_equal @before + 1, @after, "There should be one extra name."
+    assert_equal @master_name.name_type_id, @copied_name.name_type_id
+    assert_equal @master_name.name_rank_id, @copied_name.name_rank_id
+    assert_equal @master_name.name_status_id, @copied_name.name_status_id
+    assert_equal @master_name.namespace_id, @copied_name.namespace_id
+  end
+
+  def test2
+    assert_equal @master_name.author_id, @copied_name.author_id
+    assert_equal @master_name.base_author_id, @copied_name.base_author_id
+    assert_equal @master_name.ex_author_id, @copied_name.ex_author_id
+    assert_equal @master_name.ex_base_author_id, @copied_name.ex_base_author_id
+    assert_equal @master_name.sanctioning_author_id,
+                 @copied_name.sanctioning_author_id
+  end
+
+  def test3
+    assert_equal @master_name.orth_var, @copied_name.orth_var
+    assert_equal @master_name.parent_id, @copied_name.parent_id
+    assert_equal @master_name.second_parent_id, @copied_name.second_parent_id
+    assert_equal @master_name.verbatim_rank, @copied_name.verbatim_rank
+    assert_match @dummy_name_element, @copied_name.name_element
+  end
+
+  def test4
+    assert_equal @dummy_username, @copied_name.created_by
+    assert_equal @dummy_username, @copied_name.updated_by
   end
 end

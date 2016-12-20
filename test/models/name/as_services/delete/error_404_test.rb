@@ -21,11 +21,24 @@ require "models/name/as_services/delete/404_stub_helper"
 # Single name model test.
 class NameAsServicesDeleteError404Test < ActiveSupport::TestCase
   setup do
-    # stub_it
-    stub_request(:delete, "http://localhost:9090/nsl/services/name/apni/540036697/api/delete?apiKey=test-api-key&reason=404%20this%20is%20the%20reason.....")
-      .with(headers: { "Accept" => "application/json", "Accept-Encoding" => "gzip, deflate", "Host" => "localhost:9090",
-    "User-Agent" => /ruby/ })
+    stub_request(:delete, "#{action}?apiKey=test-api-key&reason=#{reason}")
+      .with(headers: headers)
       .to_return(status: 404, body: "", headers: {})
+  end
+
+  def action
+    "http://localhost:9090/nsl/services/name/apni/540036697/api/delete"
+  end
+
+  def reason
+    "404%20this%20is%20the%20reason....."
+  end
+
+  def headers
+    { "Accept" => "application/json",
+      "Accept-Encoding" => "gzip, deflate",
+      "Host" => "localhost:9090",
+      "User-Agent" => /ruby/ }
   end
 
   test "url" do

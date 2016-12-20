@@ -21,11 +21,27 @@ require "models/instance/as_services/error_stub_helper"
 # Single instance model test.
 class InstanceDeleteService200WithErrorMessageTest < ActiveSupport::TestCase
   setup do
-    # stub_it
-    stub_request(:delete, "http://localhost:9090/nsl/services/instance/apni/666/api/delete?apiKey=test-api-key&reason=Edit")
-      .with(headers: { "Accept" => "application/json", "Accept-Encoding" => "gzip, deflate", "Host" => "localhost:9090",
-    "User-Agent" => /ruby/ })
-      .to_return(status: 200, body: { "ok" => false, "errors" => ["some silly error"] }.to_json, headers: {})
+    stub_request(:delete,
+                 "#{action}?apiKey=test-api-key&reason=Edit")
+      .with(headers: headers)
+      .to_return(status: 200,
+                 body: body.to_json,
+                 headers: {})
+  end
+
+  def action
+    "http://localhost:9090/nsl/services/instance/apni/666/api/delete"
+  end
+
+  def headers
+    { "Accept" => "application/json",
+      "Accept-Encoding" => "gzip, deflate",
+      "Host" => "localhost:9090",
+      "User-Agent" => /ruby/ }
+  end
+
+  def body
+    { "ok" => false, "errors" => ["some silly error"] }
   end
 
   test "instance delete service 200 with error message" do

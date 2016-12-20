@@ -7,5 +7,7 @@ $('#instance-class-tab-refresh-btn').removeClass('hidden');
 $('#place_name_original_placement_type').val('<%= @placement.placement_type %>');
 $('#place_name_original_parent_name_id').val('<%= @placement.parent_name_id %>');
 $('#place_name_original_parent_name_typeahead_string').val('<%= @placement.parent_name_typeahead %>');
-
+  <% if @message == "Placed" %>
+    $('#instance-classification-tab').click();
+  <% end %>
 

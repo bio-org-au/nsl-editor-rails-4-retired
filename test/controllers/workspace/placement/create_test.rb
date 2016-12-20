@@ -43,7 +43,7 @@ class TreePlacementCreateTest < ActionController::TestCase
   def d
     "tree=#{@workspace.id}"
   end
- 
+
   def stub_it
     stub_request(:post, "#{a}#{b}#{c}#{d}")
       .with(body: { "accept" => "json" },
@@ -71,5 +71,8 @@ class TreePlacementCreateTest < ActionController::TestCase
           groups: %w(edit treebuilder),
           workspace: @workspace)
     assert_response :success
+    assert_equal "place_name", @controller.action_name,
+                 "Action should be 'place_name'"
+    assert_equal "Placed", @controller.instance_variable_get(:"@message")
   end
 end

@@ -34,13 +34,16 @@ class Tree::Workspace::Placement < ActiveType::Object
   validates :parent_name_typeahead, presence: true
 
   def save
-    @resolved_parent_name_id = resolve_parent_name(
-      parent_name_id: parent_name_id,
-      parent_name_typeahead: parent_name_typeahead
-    )
+    resolve_parent
     build_url
     raise errors.full_messages.first unless valid?
     RestClient.post(@url, accept: :json)
+  rescue RestClient::ExceptionWithResponse => e
+    Rails.logger.error("Tree::Workspace::Placement error: #{e}")
+    raise
+  rescue => e
+    Rails.logger.error("Tree::Workspace::Placement other error: #{e}")
+    raise
   end
 
   def build_url
@@ -50,5 +53,12 @@ class Tree::Workspace::Placement < ActiveType::Object
                                           instance_id: instance_id,
                                           parent_name: @resolved_parent_name_id,
                                           placement_type: placement_type)
+  end
+
+  def resolve_parent
+    @resolved_parent_name_id = resolve_parent_name(
+      parent_name_id: parent_name_id,
+      parent_name_typeahead: parent_name_typeahead
+    )
   end
 end
