@@ -15,6 +15,6 @@
       <%= f.submit value: "Update", class: "btn btn-primary width-6em", title: "Update #{value.field_name}" %>
       <span id="<%= value.value_label %>-message-container" class="message-container"></span>
       <span id="<%= value.value_label %>-error-message-container" class="red error-message-container"></span>
-      <%= render partial: "instances/workspace/widgets/remove_button", locals: {value: value} %>
+      <%= render partial: "instances/workspace/widgets/delete_button", locals: {value: value} %>
   <% end %>
 </div>

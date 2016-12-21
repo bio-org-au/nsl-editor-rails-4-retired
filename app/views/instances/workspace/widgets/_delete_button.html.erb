@@ -1,12 +1,12 @@
 
-<%= link_to "Remove",
+<%= link_to "Delete",
   delete_workspace_value_path(type_uri_id_part: value.type_uri_id_part,
                               name_id: value.name_id,
                               name_node_link_id: value.name_node_link_id),
-  { id: "remove_name_placement",
+  { id: "delete_name_placement",
                        class: "btn btn-primary width-6em pull-right",
-                       name: "remove_placement[delete]",
+                       name: "delete_placement[delete]",
                        tabindex: increment_tab_index,
                        method: :delete,
                        remote: true,
-                       title: "Select to remove this name."} %>
+                       title: "Select to delete this value."} %>
