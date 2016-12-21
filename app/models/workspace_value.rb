@@ -63,6 +63,7 @@ class WorkspaceValue < ActiveRecord::Base
                                            name_id,
                                            value_label,
                                            value)
+    Rails.logger.debug(url)
     RestClient.post(url, accept: :json)
   rescue RestClient::BadRequest => e
     logger.error(e.to_s)

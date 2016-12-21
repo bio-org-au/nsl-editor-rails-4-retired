@@ -41,6 +41,16 @@
 <% if @name_node_tree_link.present? && @name_node_tree_link.placed_via_instance?(@instance) %>
   <h5>Placed in workspace <%= @current_workspace.name %></h5>
   <%= render partial: "instances/workspace/widgets/placement_indicator", locals: { name_node_tree_link: @name_node_tree_link, workspace: @current_workspace } %>
+  <% if @name_node_tree_link.distribution_value? %>
+    <br>
+    <%= @name_node_tree_link.distribution_value.field_name.capitalize %>:
+    <%= @name_node_tree_link.distribution_value.field_value %>
+    <br>
+  <% end %>
+  <% if @name_node_tree_link.comment_value? %>
+    <br><%= @name_node_tree_link.comment_value.field_name.capitalize %>:
+    <%= @name_node_tree_link.comment_value.field_value %>
+  <% end %>
   <%= divider %>
 <% end %>
 
