@@ -39,7 +39,7 @@
 <% end %>
 
 <% if @name_node_tree_link.present? && @name_node_tree_link.placed_via_instance?(@instance) %>
-       <b><%= @name_node_tree_link.placed_as.capitalize %> in <%= @current_workspace.name %></b>
+  <br/><%= @name_node_tree_link.placed_as.capitalize %> in <%= @current_workspace.name %>
   <%= render partial: "instances/workspace/widgets/placement_indicator", locals: { name_node_tree_link: @name_node_tree_link, workspace: @current_workspace } %>
   <% if @name_node_tree_link.distribution_value? %>
     <br>
