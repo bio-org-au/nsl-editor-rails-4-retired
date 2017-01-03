@@ -18,7 +18,8 @@
 #   Names are central to the NSL.
 class Names::Typeaheads::ForWorkspaceParentNameController < ApplicationController
   def index
-    typeahead = Name::AsTypeahead::ForWorkspaceParentName.new(params)
+    typeahead = Name::AsTypeahead::ForWorkspaceParentName
+                .new(params, @current_workspace)
     render json: typeahead.suggestions
   end
 

@@ -21,8 +21,9 @@ class Name::AsTypeahead::ForWorkspaceParentName
               :params
   SEARCH_LIMIT = 50
 
-  def initialize(params)
+  def initialize(params, workspace)
     @params = params
+    @workspace = workspace
     @suggestions = if @params[:term].blank?
                      []
                    else
@@ -34,16 +35,44 @@ class Name::AsTypeahead::ForWorkspaceParentName
     @params[:term].tr("*", "%").downcase + "%"
   end
 
-  def query
+  def basic_query
     Name.not_a_duplicate
         .where(["lower(full_name) like lower(?)", prepared_search_term])
         .includes(:name_status)
-        .joins(:name_rank)
+        .includes(:name_rank)
+        .joins(:name_tree_paths)
+        .where(name_tree_path: { tree_id: @workspace.base_arrangement_id })
         .where("exists (select null from instance where instance.name_id = name.id)")
         .order("name_rank.sort_order, lower(full_name)")
         .limit(SEARCH_LIMIT)
-        .collect do |n|
-      { value: "#{n.full_name} - #{n.name_status.name}", id: n.id }
+  end
+
+  def query
+    if @params[:allow_higher_ranks].to_i > 0
+      higher_ranks_query
+    else
+      normal_query
+    end
+  end
+
+  def normal_query
+    basic_query
+      .includes(:name_rank)
+      .joins(:name_rank)
+      .where("name_rank.sort_order >= (select max(sort_order) from name_rank where major and sort_order < (select sort_order from name_rank where id = (select name_rank_id from name where id = ?)))",params[:name_id])
+      .where("name_rank.sort_order < (select sort_order from name_rank where id = (select name_rank_id from name where id = ?))",params[:name_id])
+      .collect do |n|
+      { value: "#{n.full_name} - #{n.name_rank.name}", id: n.id }
+    end
+  end
+
+  def higher_ranks_query
+    basic_query
+      .includes(:name_rank)
+      .joins(:name_rank)
+      .where("name_rank.sort_order < (select sort_order from name_rank where id = (select name_rank_id from name where id = ?))",params[:name_id])
+      .collect do |n|
+      { value: "#{n.full_name} - #{n.name_rank.name}", id: n.id }
     end
   end
 end

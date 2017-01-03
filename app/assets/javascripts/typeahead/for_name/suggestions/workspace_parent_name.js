@@ -5,7 +5,9 @@ workspaceParentNameSuggestions = new Bloodhound({
     remote: {url: window.relative_url_root + '/suggestions/workspace/parent_name?term=%QUERY',
         replace: function(url,query) {
             return window.relative_url_root + '/suggestions/workspace/parent_name?' +
-                'name_id=' + $('#workspace-parent-name-typeahead').attr('data-name-id') + '&' +
+                'allow_higher_ranks=' + $('#allow_higher_ranks:checked').length + '&' +
+                'name_id=' + $('#workspace_parent_name_typeahead').attr('data-name-id') + '&' +
+                'parent_name_id=' + $('#workspace_parent_name_typeahead').attr('data-parent-name-id') + '&' +
                 'term=' + encodeURIComponent(query.replace(/ -.*/,''))
         }
     },

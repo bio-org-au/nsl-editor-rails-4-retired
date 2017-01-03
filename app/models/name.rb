@@ -64,6 +64,7 @@ class Name < ActiveRecord::Base
   has_many :comments
   has_many :name_tag_names
   has_many :name_tags, through: :name_tag_names
+  has_many :name_tree_paths
 
   SEARCH_LIMIT = 50
   DECLARED_BT = "DeclaredBt".freeze

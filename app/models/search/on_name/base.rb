@@ -66,21 +66,8 @@ class Search::OnName::Base
   end
 
   def run_list_query
-    debug("run_list_query")
-    debug("run_list_query")
-    debug("run_list_query")
-    debug("run_list_query")
-    debug("run_list_query")
-    debug("run_list_query")
-    debug("run_list_query")
-    debug("run_list_query")
     list_query = Search::OnName::ListQuery.new(@parsed_request)
     @relation = list_query.sql
-    debug("run_list_query: #{@relation.to_sql}")
-    debug("run_list_query: #{@relation.to_sql}")
-    debug("run_list_query: #{@relation.to_sql}")
-    debug("run_list_query: #{@relation.to_sql}")
-    debug("run_list_query: #{@relation.to_sql}")
     @names = relation.all
     @limited = list_query.limited
     @info_for_display = list_query.info_for_display

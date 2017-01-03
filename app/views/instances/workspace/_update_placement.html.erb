@@ -1,6 +1,3 @@
-<h5>
-Update status or parent in <%= @current_workspace.title %>
-</h5>
 <% if !@instance.cited_by_id %>
   <%= form_tag({controller: 'trees', action: 'place_name'}, {method: :patch, remote: true}) do %>
     <%= hidden_field_tag("place_name[name_id]", @instance.name.id) %>
@@ -11,8 +8,6 @@ Update status or parent in <%= @current_workspace.title %>
     <%= hidden_field_tag("place_name[original_parent_name_id]", @name_node_tree_link.supernode.name.id) %>
     <%= hidden_field_tag("place_name[original_parent_name_typeahead_string]", @name_node_tree_link.supernode.name.full_name) %>
 
-    <%= render partial: "instances/workspace/forms/name_typeahead" %>
-
     <div class="form-group">
       <%= radio_button_tag(:type, "accepted", @name_node_tree_link.default_to_accepted?, name: "place_name[placement_type]") %>
       <%= label_tag(:type_accepted, "Accepted") %>
@@ -21,6 +16,8 @@ Update status or parent in <%= @current_workspace.title %>
       <%= radio_button_tag(:type, "untreated", @name_node_tree_link.default_to_untreated?, name: "place_name[placement_type]") %>
       <%= label_tag(:type_untreated, "Untreated") %>
     </div>
+
+    <%= render partial: "instances/workspace/forms/name_typeahead" %>
 
     <%= submit_tag "Update", id: "update-name-placement-btn",
                  class: "btn btn-primary width-6em",
