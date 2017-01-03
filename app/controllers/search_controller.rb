@@ -109,6 +109,7 @@ class SearchController < ApplicationController
 
   def run_local_search
     return false unless params[:query_string].present?
+    @focus_id = params[:focus_id]
     params[:current_user] = current_user
     params[:include_common_and_cultivar_session] = \
       session[:include_common_and_cultivar]
