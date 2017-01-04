@@ -2,7 +2,12 @@
 - :date: 04-Jan-2017
   :jira_id: '2118'
   :description: |-
-    Allow focus on specific search result record via focus-id param.
+    Allow focus on specific search result record via focus_id param.
+- :date: 04-Jan-2017
+  :jira_id: '2129'
+  :description: |-
+    Tree edit typeahead offers accepted names up to next higher major rank.
+    Also has checkbox to include "higher" ranks.
 - :date: 04-Jan-2017
   :jira_id: '2079'
   :description: |-
