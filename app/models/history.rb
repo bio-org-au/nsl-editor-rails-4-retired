@@ -33,4 +33,12 @@ class History
   def self.load_changes_2016
     @changes_2016 = YAML.load(File.read("config/changes-2016.yml"))
   end
+
+  def self.changes_2017
+    @changes_2017.blank? ? load_changes_2017 : @changes_2017
+  end
+
+  def self.load_changes_2017
+    @changes_2017 = YAML.load(File.read("config/changes-2017.yml"))
+  end
 end

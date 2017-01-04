@@ -1,0 +1,10 @@
+---
+- :date: 04-Jan-2017
+  :jira_id: '2118'
+  :description: |-
+    Allow focus on specific search result record via focus-id param.
+- :date: 04-Jan-2017
+  :jira_id: '2079'
+  :description: |-
+    Integrate new tree editing facilities - new Tree tab for instances, 
+    choose a workspace, show workspace status.
