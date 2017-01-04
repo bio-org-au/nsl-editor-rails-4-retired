@@ -10,8 +10,8 @@
                class="typeahead form-control width-100-percent" 
                tabindex="<%= increment_tab_index %>"
                type="text" 
-               data-name-id="<%= @name_node_tree_link.subnode.name.id %>"
-               data-parent-name-id="<%= @name_node_tree_link.supernode.name.id %>"
+               data-name-id="<%= @name_node_tree_link.subnode.name.id unless @name_node_tree_link.empty? %>"
+               data-parent-name-id="<%= @name_node_tree_link.supernode.name.id  unless @name_node_tree_link.empty? %>"
                title="Select a name from the suggestions as you type."
                required
                placeholder="Name suggestions"

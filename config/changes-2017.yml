@@ -1,5 +1,9 @@
 ---
 - :date: 04-Jan-2017
+  :jira_id: '2129'
+  :description: |-
+    Minor fix during testing to handle empty @name_node_tree_link.
+- :date: 04-Jan-2017
   :jira_id: '2118'
   :description: |-
     Allow focus on specific search result record via focus_id param.
