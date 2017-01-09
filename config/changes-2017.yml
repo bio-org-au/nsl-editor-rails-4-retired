@@ -1,4 +1,11 @@
 ---
+- :date: 10-Jan-2017
+  :jira_id: '2142'
+  :description: |-
+    Do not offer "nom. inval., nom. dub." as a nomenclatural status
+    for editing a name.
+- :date: 05-Jan-2017
+  :release: true
 - :date: 04-Jan-2017
   :jira_id: '2129'
   :description: |-

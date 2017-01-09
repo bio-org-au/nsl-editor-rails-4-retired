@@ -81,6 +81,7 @@ nom_inval_nom_dub:
   name_group_id: NameGroup.botanical
   nom_illeg: false
   nom_inval: true
+  deprecated: true
 
 nom_inval_opera_utique_oppressa:
   name: "nom. inval., opera utique oppressa

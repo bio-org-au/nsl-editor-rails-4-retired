@@ -99,12 +99,12 @@ class OptionsForScientificCategoryBTest < ActiveSupport::TestCase
            'Scientific name status should include "nom. inval., nom. confus."'
   end
 
-  test "should include  nom. inval., nom. dub." do
-    assert NameStatus
+  test "should not include nom. inval., nom. dub." do
+    assert !NameStatus
       .options_for_category(Name::SCIENTIFIC_CATEGORY)
       .collect(&:first)
       .include?("nom. inval., nom. dub."),
-           'Scientific name status should include "nom. inval., nom. dub."'
+           'Scientific name status should not include "nom. inval., nom. dub."'
   end
 
   test "should include  nom. inval., nom. nud." do
