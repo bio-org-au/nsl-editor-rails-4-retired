@@ -22,7 +22,7 @@ class NameStatus < ActiveRecord::Base
 
   scope :ordered_by_name, -> { order("replace(name,'[','zzzzzz')") }
 
-  NA = "[n/a]".freeze
+  NA = "[n/a]"
 
   has_many :names
 
@@ -74,12 +74,6 @@ class NameStatus < ActiveRecord::Base
     all.ordered_by_name.collect do |n|
       [n.name, "status: #{n.name.downcase}"]
     end.unshift(["any status", ""])
-  end
-
-  def self.xoptions(allow_delete = false)
-    all.ordered_by_name.collect do |n|
-      [n.name, n.id, disabled: (n.name == "[deleted]" && !allow_delete)]
-    end
   end
 
   def self.scientific_options(allow_delete = false)
