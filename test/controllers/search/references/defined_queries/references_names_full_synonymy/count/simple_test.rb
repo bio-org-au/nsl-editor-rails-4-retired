@@ -25,11 +25,10 @@ class SearchRefsDefinedQRefsNamesFullSynCountTest < ActionController::TestCase
   end
 
   test "count references names full synonymy" do
-
     get(:search,
         { query_target: "References, names, full synonymy",
           query_string: "count b*",
-          query_submit: "Search"},
+          query_submit: "Search" },
         username: "fred",
         user_full_name: "Fred Jones",
         groups: [])
