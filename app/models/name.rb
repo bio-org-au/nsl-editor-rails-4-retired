@@ -20,8 +20,6 @@ require "search_tools"
 
 # Name model
 class Name < ActiveRecord::Base
-  extend AdvancedSearch
-  extend SearchTools
   include NameScopable
   include AuditScopable
   include NameCategories
