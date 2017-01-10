@@ -133,6 +133,11 @@ div#search-result-details {
   padding-right: 0;
 }
 
+.no-right-margin,
+.btn.no-right-margin {
+  margin-right: 0;
+}
+
 div#footer {
   position: fixed;
   bottom: 0;

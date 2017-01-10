@@ -1,5 +1,9 @@
 ---
 - :date: 10-Jan-2017
+  :jira_id: '2128'
+  :description: |-
+    Remove requirement to confirm changes of reference for names with synonyms.
+- :date: 10-Jan-2017
   :jira_id: '2142'
   :description: |-
     Do not offer "nom. inval., nom. dub." as a nomenclatural status
