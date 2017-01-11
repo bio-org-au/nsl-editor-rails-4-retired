@@ -1,5 +1,9 @@
 ---
 - :date: 11-Jan-2017
+  :jira_id: '2143'
+  :description: |-
+   Fine tune "References, names, full synonymy" search to show more instances.
+- :date: 11-Jan-2017
   :jira_id: '2141'
   :description: |-
    Added instance searches for "ref-exact" and "parent-ref-exact".

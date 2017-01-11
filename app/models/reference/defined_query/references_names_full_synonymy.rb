@@ -61,7 +61,7 @@ class Reference::DefinedQuery::ReferencesNamesFullSynonymy
     ref_query_for_count
     @ref_query.results.each do |ref|
       @count += 1
-      ref.name_instances.each do |ni|
+      ref.instances.each do |ni|
         @count += 1
         @count += Instance::AsArray::ForName.new(ni.name).results.size
       end
@@ -84,7 +84,7 @@ class Reference::DefinedQuery::ReferencesNamesFullSynonymy
 
   def ref_list(ref)
     @results.push(ref)
-    ref.name_instances.each do |ni|
+    ref.instances.each do |ni|
       @results.push(ni.name)
       @results.concat(Instance::AsArray::ForName.new(ni.name).results)
       if results.size >= @parsed_request.limit
