@@ -204,5 +204,15 @@ where rb.sort_order >= (select sort_order from name_rank where name = 'Species')
      )
        )
 )", order: "instance.id" },
+    "ref-exact:"           => { where_clause: "exists (select null
+                                 from reference ref
+                                 where instance.reference_id = ref.id
+                                 and lower(ref.citation) like lower(?) )" },
+    "parent-ref-exact:"    => { where_clause: "exists (select null
+                                 from reference ref
+                                 where instance.reference_id = ref.id
+                                   and exists (select null from reference parent 
+                                                where ref.parent_id = parent.id
+                                                  and lower(parent.citation) like lower(?) ))" },
   }.freeze
 end
