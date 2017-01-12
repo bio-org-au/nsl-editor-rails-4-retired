@@ -31,6 +31,7 @@ gaertner_created_metrosideros_costata:
   namespace: apni
   created_by: tester
   updated_by: tester
+  source_id_string: gcmc
   page: "xx 1"
 
 # Relationship instance - synonymy
@@ -520,13 +521,14 @@ angophora_costata_in_stanley:
   page: 146
   namespace: apni
   verbatim_name_string: Angophora costata (Gaertn.) Britten
+  source_id_string: acis
   created_by: tester
   updated_by: tester
 
 metrosideros_costata_gaertn:
   bhl_url:
-  this_is_cited_by: gaertner_created_metrosideros_costata
-  this_cites: angophora_costata_in_stanley
+  this_is_cited_by: angophora_costata_in_stanley
+  this_cites: gaertner_created_metrosideros_costata
   created_at: 2011-11-29 13:00:00.000000000 Z
   created_by: CUL07D
   draft: false
@@ -535,7 +537,7 @@ metrosideros_costata_gaertn:
   page: zzzz99909
   namespace: apni
   nomenclatural_status:
-  page: '146'
+  page: exclude-from-ordering-test
   parent_id:
   reference: de_fructibus_et_seminibus_plantarum
   source_id: 177748
