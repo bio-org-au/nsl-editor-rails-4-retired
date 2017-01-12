@@ -38,7 +38,7 @@ class Instance::AsArray::ForName < Array
     debug("init #{name.full_name}")
     @results = []
     @already_shown = []
-    # ToDo: work out why author is not eager loading.
+    # TODO: work out why author is not eager loading.
     sorted_instances(name.instances.includes(:reference, :instance_type, :author)).each do |instance|
       if instance.standalone?
         show_standalone_instance(instance)
@@ -49,7 +49,6 @@ class Instance::AsArray::ForName < Array
   end
 
   def debug(s)
-    Rails.logger.debug("====================================================")
     Rails.logger.debug("Instance::AsArray::ForName: #{s}")
   end
 
