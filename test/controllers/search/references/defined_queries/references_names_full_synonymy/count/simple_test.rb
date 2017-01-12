@@ -15,16 +15,26 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-module Audit
-  private
+require "test_helper"
 
-  def audit_create
-    # Rails.logger.debug('audit create')
-    # self.created_by = @username #if self.created_by.blank?
-    # self.updated_by = @username #if self.updated_by.blank?
+# Single search controller test.
+class SearchRefsDQRefsNamesFullSynCountSimpleTest < ActionController::TestCase
+  tests SearchController
+  setup do
+    @ref = references(:bucket_reference_for_default_instances)
   end
 
-  def audit_update
-    # self.updated_by = @username #if self.updated_by.blank?
+  test "count references names full synonymy" do
+    get(:search,
+        { query_target: "References, names, full synonymy",
+          query_string: "count journal",
+          query_submit: "Search" },
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: [])
+    assert_response :success
+    assert_select "#search-results-summary",
+                  /[0-9][0-9] records\b/,
+                  "Should find some records"
   end
 end

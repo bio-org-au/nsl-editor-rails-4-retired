@@ -15,13 +15,9 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require "advanced_search"
-require "search_tools"
 
 # Instances connect Names to References.
 class Instance < ActiveRecord::Base
-  extend AdvancedSearch
-  extend SearchTools
   include ActionView::Helpers::TextHelper
   strip_attributes
   self.table_name = "instance"

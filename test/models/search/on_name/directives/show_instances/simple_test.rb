@@ -42,9 +42,9 @@ class SimpleTest < ActiveSupport::TestCase
     confirm_results_class(search.executed_query.results)
     debug = false
     show_results(search) if debug
-    assert_equal 8,
+    assert_equal 9,
                  search.executed_query.results.size,
-                 "Expected 8 results not #{search.executed_query.results.size}"
+                 "Expected 9 results not #{search.executed_query.results.size}"
   end
 
   def check_results_2(search)
@@ -64,9 +64,9 @@ class SimpleTest < ActiveSupport::TestCase
     confirm_disp(search, 5, "instance_as_part_of_concept")
     confirm_inst(search, 5, "Angophora costata (Gaertn.) Britten")
     confirm_disp(search, 6, "instance-is-cited-by")
-    confirm_inst(search, 6, "Angophora lanceolata Cav.")
+    confirm_inst(search, 7, "Angophora lanceolata Cav.")
     confirm_disp(search, 7, "instance-is-cited-by")
-    confirm_inst(search, 7, "Metrosideros costata Gaertn.")
+    confirm_inst(search, 6, "Metrosideros costata Gaertn.")
   end
 
   def show_results(search)

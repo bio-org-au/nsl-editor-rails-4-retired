@@ -15,24 +15,22 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-module SearchTools
-  # simple search because no field descriptors?
-  def search_is_simple?(raw)
-    raw.gsub(/[^:]/, "").length.zero?
-  end
+require "test_helper"
 
-  def format_search_terms(default_descriptor, raw)
-    raw.strip\
-       .gsub(/\A:/, "")\
-       .gsub(/\s([\S]+:)/, "\034" + '\1')\
-       .sub(/^\034/, "")\
-       .split("\034")\
-       .collect do |term|
-      term.include?(":") ? term\
-        .strip\
-        .split(/:/)\
-        .collect(&:strip) : [default_descriptor, term]
-    end\
-       .sort { |a, b| a[0] <=> b[0] }
+# Single search controller test.
+class SearchOnInstanceRefExact < ActionController::TestCase
+  tests SearchController
+
+  test "reader can search for an instance by ref citation exact" do
+    get(:search,
+        { query_target: "instance",
+          query_string: "ref-exact: b*" },
+        username: "fred",
+        user_full_name: "Fred Jones",
+        groups: [])
+    assert_response :success
+    assert_select "#search-results-summary",
+                  /[0-9][0-9] records\b/,
+                  "Should find some records"
   end
 end

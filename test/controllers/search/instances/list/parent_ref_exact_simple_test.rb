@@ -18,23 +18,19 @@
 require "test_helper"
 
 # Single search controller test.
-class SearchNamesWithFocusSimpleTest < ActionController::TestCase
+class SearchOnInstanceParentRefExact < ActionController::TestCase
   tests SearchController
 
-  setup do
-    @name = names(:angophora_costata)
-  end
-
-  test "search for a set of names and focus on one" do
+  test "reader can search for an instance by parent ref citation exact" do
     get(:search,
-        { query_target: "name", query_string: "a", focus_id: @name.id },
+        { query_target: "instance",
+          query_string: "parent-ref-exact: Journal*" },
         username: "fred",
         user_full_name: "Fred Jones",
         groups: [])
     assert_response :success
     assert_select "#search-results-summary",
-                  /41 names of 41/,
-                  "Should find recs for simple search on 'a'"
-    assert_select "#focus-id[value='#{@name.id}']", { count: 1 }, "One Focus"
+                  /[0-9] records\b/,
+                  "Should find some records"
   end
 end

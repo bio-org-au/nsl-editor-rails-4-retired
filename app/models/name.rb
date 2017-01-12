@@ -15,13 +15,9 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require "advanced_search"
-require "search_tools"
 
 # Name model
 class Name < ActiveRecord::Base
-  extend AdvancedSearch
-  extend SearchTools
   include NameScopable
   include AuditScopable
   include NameCategories

@@ -46,8 +46,8 @@ class OrderByPage < ActiveSupport::TestCase
            "Wrong order at the 17th value: #{results[16].page}."
     assert results[17].page == "76",
            "Wrong order at the 18th value: #{results[17].page}."
-    assert results[20].page == "xx 200,300",
-           "Wrong order at the 21st value: #{results[20].page}."
+    assert results[19].page == "xx 200,300",
+           "Wrong order at the 19th value: #{results[19].page}."
   end
 
   def run_query

@@ -96,6 +96,9 @@
   <% [
     {search_target: 'Instances', search_string: "is-novelty: y:2015",explanation: %Q(Find instances with a "primary instance" type attached to a refererence published in the year 2015.)},
     {search_target: 'Instances', search_string: "desmocladus is-novelty: y:2014",explanation: %Q(Find instances for any names containing "desmocladus", with a "primary instance" type that are in a refererence published in the year 2014.)},
+    {search_target: 'Instances', search_string: "parent-ref-exact: George, A.S. (ed.) (1990), Flora of Australia. 18",explanation: %Q(Find instances for references whose parent reference has a citation matching the string supplied - which can contain wildcards.)},
+    {search_target: 'Instances', search_string: "parent-ref-exact: George, A.S. (ed.) (1990), Flora of Australia. 18 page: *32*",explanation: %Q(Find instances for references with a parent having a citation matching the string supplied; the instances must have a page containing "32" .)},
+    {search_target: 'Instances', search_string: "ref-exact: Cavanilles, A.J. (1797), Icones et Descriptiones Plantarum*",explanation: %Q(Find instances for references with a citation matching the string supplied - which can contain wildcards, as this one does.)},
       ].each do |val| %>
   <tr>
     <td class="width-30-percent">

@@ -18,23 +18,23 @@
 require "test_helper"
 
 # Single search controller test.
-class SearchNamesWithFocusSimpleTest < ActionController::TestCase
+class SearchRefsDefinedQRefsNamesFullSynZeroTest < ActionController::TestCase
   tests SearchController
-
   setup do
-    @name = names(:angophora_costata)
+    @ref = references(:bucket_reference_for_default_instances)
   end
 
-  test "search for a set of names and focus on one" do
+  test "count references names full synonymy" do
     get(:search,
-        { query_target: "name", query_string: "a", focus_id: @name.id },
+        { query_target: "References, names, full synonymy",
+          query_string: "count b*",
+          query_submit: "Search" },
         username: "fred",
         user_full_name: "Fred Jones",
         groups: [])
     assert_response :success
     assert_select "#search-results-summary",
-                  /41 names of 41/,
-                  "Should find recs for simple search on 'a'"
-    assert_select "#focus-id[value='#{@name.id}']", { count: 1 }, "One Focus"
+                  /[0-9][0-9] records\b/,
+                  "Should find some records"
   end
 end

@@ -32,28 +32,12 @@ Change the reference for this instance and its
         <script> setUpInstanceReference(); </script>
 
     <br>
-
-    <%= link_to("Change",
-                '#',
-                id: "update-reference-id-link",
-                class: "btn btn-warning unconfirmed-delete-link pull-right",
-                title: "Change the reference. You will be asked to confirm the change to this instance and any synonyms.",
-                tabindex: increment_tab_index,
-                data: {show_this_id: "confirm-or-cancel-change-reference-id-container"}) %>
-
-    <div id="confirm-or-cancel-change-reference-id-container"
-         class="confirm-or-cancel-action-link pull-right hidden">
-      <%= link_to("Cancel change",
-                  '#',
-                  id: "cancel-delete-link",
-                  class: "btn btn-default cancel-link pull-right",
-                  title: "Cancel the change.",
-                  tabindex: increment_tab_index,
-                  data: {enable_this_id: 'update-reference-id-link',
-                  hide_this_id: 'confirm-or-cancel-change-reference-id-container'})
-      %>
-      <%= f.submit class: 'btn btn-danger pull-right', value: 'Confirm change', tabindex: increment_tab_index %>
-    </div>
+    <%=
+      f.submit class: 'btn btn-primary pull-right width-5em no-right-margin',
+               value: 'Change',
+               title: 'Save changed reference.',
+               tabindex: increment_tab_index
+    %>
 <br>
 <br>
 <% end %>

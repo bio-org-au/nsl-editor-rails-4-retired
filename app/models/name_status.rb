@@ -21,8 +21,9 @@ class NameStatus < ActiveRecord::Base
   self.sequence_name = "nsl_global_seq"
 
   scope :ordered_by_name, -> { order("replace(name,'[','zzzzzz')") }
+  scope :not_deprecated, -> { where("not deprecated") }
 
-  NA = "[n/a]".freeze
+  NA = "[n/a]"
 
   has_many :names
 
@@ -76,14 +77,9 @@ class NameStatus < ActiveRecord::Base
     end.unshift(["any status", ""])
   end
 
-  def self.xoptions(allow_delete = false)
-    all.ordered_by_name.collect do |n|
-      [n.name, n.id, disabled: (n.name == "[deleted]" && !allow_delete)]
-    end
-  end
-
   def self.scientific_options(allow_delete = false)
     where(" name not in ('nom. cult.', 'nom. cult., nom. alt.') ")
+      .not_deprecated
       .ordered_by_name.collect do |n|
         [n.name, n.id, disabled: (n.name == "[deleted]" && !allow_delete)]
       end

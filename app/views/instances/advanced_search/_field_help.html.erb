@@ -113,6 +113,8 @@
   <% [
       {field_name: 'year:', description: "Publication year (an integer e.g. 2015) for the instance reference."},
       {field_name: 'ref-type:', description: "Type of reference the instance refers to."},
+      {field_name: 'ref-exact:', description: "Matches against the reference citation - add your own wildcards."},
+      {field_name: 'parent-ref-exact:', description: "Matches against the reference parent's citation - add your own wildcards."},
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">

@@ -27,59 +27,73 @@ class Reference::DefinedQuery::ReferencesNamesFullSynonymy
               :show_csv,
               :total
 
+  TAG = "Reference::DefinedQuery::ReferencesNamesFullSynonymy"
   def initialize(parsed_request)
-    run_query(parsed_request)
+    @parsed_request = parsed_request
+    run_query
   end
 
   def debug(s)
-    tag = "Reference::DefinedQuery::ReferencesNamesFullSynonymy"
-    Rails.logger.debug("#{tag}: #{s}")
+    Rails.logger.debug("#{TAG}: #{s}")
   end
 
-  def run_query(parsed_request)
-    debug("")
-    debug("parsed_request.where_arguments: #{parsed_request.where_arguments}")
-    debug("parsed_request.defined_query_arg: #{parsed_request.defined_query_arg}")
-    debug("parsed_request.count: #{parsed_request.count}")
-    debug("parsed_request.limit: #{parsed_request.limit}")
+  def run_query
     @show_csv = false
-    if parsed_request.count
-      debug("run_query counting")
-      query = Search::OnReference::ListQuery.new(parsed_request)
-      @relation = query.sql # TODO: work out how to provide the relation and sql
-      references = relation.all
-      debug(references.size)
-      tally = 0
-      references.each do |ref|
-        debug(ref.id)
-        # tally += ref.instances.size
-        tally += Instance::AsSearchEngine.ref_usages(ref.id).size
-      end
-      debug("tally: #{tally}")
-      @limited = false
-      @common_and_cultivar_included = query.common_and_cultivar_included
-      @count = tally
+    if @parsed_request.count
+      count_query
     else
-      debug("run_query listing with limit: #{parsed_request.limit}")
-      query = Search::OnReference::Base.new(parsed_request)
-      debug(query.results.size)
-      results = []
-      @limited = false
-      query.results.each do |ref|
-        results.concat(Instance::AsSearchEngine.ref_usages(ref.id))
-        if results.size >= parsed_request.limit
-          @limited = true
-          break
+      list_query
+      @count = @results.size
+    end
+    @total = @relation = nil
+    @common_and_cultivar_included = @ref_query.common_and_cultivar_included
+    @has_relation = false
+  end
+
+  def ref_query_for_count
+    force_list = true
+    @limited = false
+    @ref_query = Search::OnReference::Base.new(@parsed_request, force_list)
+  end
+
+  def count_query
+    @count = 0
+    ref_query_for_count
+    @ref_query.results.each do |ref|
+      @count += 1
+      ref.instances.each do |instance|
+        @count += 1
+        if instance.name.present?
+          @count += Instance::AsArray::ForName.new(instance.name).results.size
         end
       end
-      debug("results.size: #{results.size}")
-      @common_and_cultivar_included = query.common_and_cultivar_included
-      @results = results
-      @count = results.size
-      @has_relation = false
-      @relation = nil
     end
-    @total = nil
+    @results = []
+  end
+
+  def list_query
+    @ref_query = Search::OnReference::Base.new(@parsed_request)
+    @results = []
+    @limited = false
+    @ref_query.results.each do |ref|
+      ref_list(ref)
+      if @results.size >= @parsed_request.limit
+        @limited = true
+        break
+      end
+    end
+  end
+  
+  def ref_list(ref)
+    @results.push(ref)
+    ref.instances.each do |instance|
+      @results.push(instance.name)
+      @results.concat(Instance::AsArray::ForName.new(instance.name).results)
+      if results.size >= @parsed_request.limit
+        @limited = true
+        break
+      end
+    end
   end
 
   def csv?

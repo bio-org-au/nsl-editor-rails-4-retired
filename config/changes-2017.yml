@@ -1,4 +1,27 @@
 ---
+- :date: 11-Jan-2017
+  :jira_id: '2143'
+  :description: |-
+   Fine tune "References, names, full synonymy" search to show more instances.
+- :date: 11-Jan-2017
+  :jira_id: '2141'
+  :description: |-
+   Added instance searches for "ref-exact" and "parent-ref-exact".
+- :date: 10-Jan-2017
+  :jira_id: '2143'
+  :description: |-
+   Fix "References, names, full synonymy" search 
+- :date: 10-Jan-2017
+  :jira_id: '2128'
+  :description: |-
+    Remove requirement to confirm changes of reference for names with synonyms.
+- :date: 10-Jan-2017
+  :jira_id: '2142'
+  :description: |-
+    Do not offer "nom. inval., nom. dub." as a nomenclatural status
+    for editing a name.
+- :date: 05-Jan-2017
+  :release: true
 - :date: 04-Jan-2017
   :jira_id: '2129'
   :description: |-

@@ -29,15 +29,16 @@ class Search::OnReference::Base
               :total,
               :full_count_known
 
-  def initialize(parsed_request)
+  def initialize(parsed_request, force_list_query = false)
     @parsed_request = parsed_request
+    @force_list_query = force_list_query
     run_query
   end
 
   def run_query
     @has_relation = true
     @rejected_pairings = []
-    if @parsed_request.count
+    if @parsed_request.count && !@force_list_query
       run_count_query
     else
       run_list_query
