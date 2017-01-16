@@ -24,6 +24,6 @@ class HerbariumAnnotationCannotHaveParentTest < ActiveSupport::TestCase
     assert ref.parent_id.present?, "Expecting a parent."
     assert_not ref.valid?, "Herbarium annotation with parent should be invalid."
     ref.parent_id = nil
-    assert ref.valid?, "Herbarium annotation without parent should be invalid."
+    assert ref.valid?, "Herbarium annotation without parent should be valid."
   end
 end

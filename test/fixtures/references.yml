@@ -1149,6 +1149,7 @@ chapter_without_parent:
   namespace: apni
   ref_author_role: dash
   ref_type: chapter
+  year: 1990
   created_by: tester
   updated_by: tester
 
@@ -1162,6 +1163,7 @@ database_record_without_parent:
   namespace: apni
   ref_author_role: dash
   ref_type: database_record
+  year: 1990
   created_by: tester
   updated_by: tester
 
@@ -1175,6 +1177,7 @@ paper_without_parent:
   namespace: apni
   ref_author_role: dash
   ref_type: paper
+  year: 1990
   created_by: tester
   updated_by: tester
 
@@ -1184,6 +1187,7 @@ section_without_parent:
   citation_html: section without parent
   display_title: section without parent
   author: unknown
+  year: 1990
   language: undetermined
   namespace: apni
   ref_author_role: dash
@@ -1241,6 +1245,7 @@ chapter_with_book_parent:
   namespace: apni
   ref_author_role: dash
   ref_type: chapter
+  year: 1990
   parent: a_book
   created_by: tester
   updated_by: tester
@@ -1284,6 +1289,7 @@ section_with_book_parent:
   ref_author_role: dash
   ref_type: section
   parent: a_book
+  year: 1990
   created_by: tester
   updated_by: tester
 
@@ -1297,6 +1303,7 @@ paper_with_journal_parent:
   namespace: apni
   ref_author_role: dash
   ref_type: paper
+  year: 1990
   parent: a_journal
   created_by: tester
   updated_by: tester
@@ -1326,6 +1333,7 @@ ref_type_is_book:
   ref_author_role: dash
   ref_type: book
   bhl_url: a_bhl_url 
+  year: 1990
   created_by: tester
   updated_by: tester
 
@@ -1339,6 +1347,7 @@ ref_type_is_chapter:
   namespace: apni
   ref_author_role: dash
   ref_type: chapter
+  year: 1990
   created_by: tester
   updated_by: tester
 
@@ -1367,6 +1376,7 @@ ref_type_is_herbarium_annotation:
   namespace: apni
   ref_author_role: dash
   ref_type: herbarium_annotation
+  year: 1990
   created_by: tester
   updated_by: tester
 
@@ -1380,6 +1390,7 @@ ref_type_is_index:
   namespace: apni
   ref_author_role: dash
   ref_type: index
+  year: 1990
   created_by: tester
   updated_by: tester
 
@@ -1419,6 +1430,7 @@ ref_type_is_personal_communication:
   namespace: apni
   ref_author_role: dash
   ref_type: personal_communication
+  year: 1990
   created_by: tester
   updated_by: tester
 
@@ -1432,6 +1444,7 @@ ref_type_is_database_record:
   namespace: apni
   ref_author_role: dash
   ref_type: database_record
+  year: 1990
   created_by: tester
   updated_by: tester
 
@@ -1445,6 +1458,7 @@ ref_type_is_paper:
   namespace: apni
   ref_author_role: dash
   ref_type: paper
+  year: 1990
   created_by: tester
   updated_by: tester
 
@@ -1458,6 +1472,22 @@ ref_type_is_section:
   namespace: apni
   ref_author_role: dash
   ref_type: section
+  year: 1990
+  created_by: tester
+  updated_by: tester
+
+ref_type_is_part: 
+  title: Ref type is part
+  citation: Ref type is part
+  citation_html: Ref type is part
+  display_title: Ref type is part
+  author: unknown
+  language: undetermined
+  parent: ref_type_is_paper
+  namespace: apni
+  ref_author_role: dash
+  ref_type: part
+  year: 1990
   created_by: tester
   updated_by: tester
 
@@ -1680,6 +1710,7 @@ database_record_with_database_parent:
   namespace: apni
   ref_author_role: dash
   ref_type: database_record
+  year: 1990
   parent: database_with_parent
   created_by: tester
   updated_by: tester
@@ -1694,6 +1725,7 @@ herbarium_annotation_with_parent:
   namespace: apni
   ref_author_role: dash
   ref_type: herbarium_annotation
+  year: 1990
   parent: book_by_brassard
   created_by: tester
   updated_by: tester
@@ -1753,6 +1785,7 @@ personal_communication_with_parent:
   namespace: apni
   ref_author_role: dash
   ref_type: personal_communication
+  year: 1990
   parent: book_by_brassard
   created_by: tester
   updated_by: tester

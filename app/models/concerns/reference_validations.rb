@@ -29,6 +29,9 @@ module ReferenceValidations
                               greater_than_or_equal_to: 1000,
                               less_than_or_equal_to: ->(_reference){ Date.current.year } },
               allow_nil: true
+    validates :year, exclusion: { in: [nil],
+                                  message: "is required",
+                                  if: :year_required?}
     validates_exclusion_of :parent_id,
                            in: ->(reference) { [reference.id] },
                            allow_blank: true,
@@ -40,6 +43,10 @@ module ReferenceValidations
     validates :language_id, presence: true
     validate :validate_parent
     validate :validate_fields_for_part
+  end
+
+  def year_required?
+    ref_type.reference_year_required?
   end
 
   def validate_parent

@@ -1,5 +1,9 @@
 ---
 - :date: 16-Jan-2017
+  :jira_id: '1741'
+  :description: |-
+   Make year mandatory for some reference types.
+- :date: 16-Jan-2017
   :jira_id: '2133'
   :description: |-
    Maximum value for a reference year is now evaluated at run time - will 

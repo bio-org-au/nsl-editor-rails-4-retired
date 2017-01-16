@@ -103,4 +103,9 @@ class RefType < ActiveRecord::Base
   def part?
     name.match(/\APart\z/)
   end
+
+  def reference_year_required?
+    %w(chapter database\ record herbarium\ annotation personal\ communication
+    paper section).include? name.downcase
+  end
 end

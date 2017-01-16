@@ -18,14 +18,13 @@
 require "test_helper"
 
 # Single Reference model test.
-class PersonalCommunicationCannotHaveParentTest < ActiveSupport::TestCase
-  test "personal communication cannot have parent" do
-    ref = references(:personal_communication_with_parent)
-    assert ref.parent_id.present?, "Expecting a parent."
-    assert_not ref.valid?,
-               "Personal communication with parent should be invalid."
-    ref.parent_id = nil
-    assert ref.valid?,
-           "Personal communication without parent should be valid."
+class RefValYearPaperMustHaveYearTest < ActiveSupport::TestCase
+  test "ref of type paper must have a year" do
+    reference = references(:ref_type_is_paper)
+    reference.year = 2000
+    assert reference.valid?, "Should start out valid"
+    reference.year = ""
+    assert_not reference.valid?, "Paper should not be valid without year"
+    assert reference.errors.full_messages.include?("Year is required")
   end
 end

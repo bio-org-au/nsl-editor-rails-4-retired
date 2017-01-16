@@ -19,7 +19,7 @@ database_record:
   parent_optional: N 
 
 herbarium_annotation: 
-  name: Herarium Annotation 
+  name: Herbarium annotation 
   parent_optional: N
 
 index: 
