@@ -1,4 +1,11 @@
 ---
+- :date: 16-Jan-2017
+  :jira_id: '2133'
+  :description: |-
+   Maximum value for a reference year is now evaluated at run time - will 
+   not need re-starting in the new year.
+- :date: 13-Jan-2017
+  :release: true
 - :date: 13-Jan-2017
   :jira_id: ''
   :description: |-

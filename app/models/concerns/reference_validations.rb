@@ -27,7 +27,7 @@ module ReferenceValidations
     validates :year,
               numericality: { only_integer: true,
                               greater_than_or_equal_to: 1000,
-                              less_than_or_equal_to: Time.now.year },
+                              less_than_or_equal_to: ->(_reference){ Date.current.year } },
               allow_nil: true
     validates_exclusion_of :parent_id,
                            in: ->(reference) { [reference.id] },
