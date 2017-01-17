@@ -1,4 +1,4 @@
 $('.message-container').addClass('hidden').html("");
 $('.error-message-container').addClass('hidden').html("");
-$('#placement-error-message-container').html("Error: <%= escape_javascript(@message) %>");
+$('#placement-error-message-container').html("Error: <%= escape_javascript(@message_array.join('<br/>').html_safe) %>");
 $('#placement-error-message-container').removeClass('hidden');
