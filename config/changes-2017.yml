@@ -1,4 +1,8 @@
 ---
+- :date: 17-Jan-2017
+  :jira_id: ''
+  :description: |-
+   Tree classification menu now has link to Tree Editor if no workspaces.
 - :date: 16-Jan-2017
   :jira_id: '1741'
   :description: |-

@@ -31,6 +31,11 @@
 <% end %>
 <% if ws_count == 0 %>
   <li role="presentation">
-    <span>&nbsp;&nbsp;[No&nbsp;workspaces&nbsp;-&nbsp;create&nbsp;one&nbsp;in&nbsp;the&nbsp;<%= link_to "Tree&nbsp;Editor".html_safe, Rails.configuration.tree_editor_url, title:'link', class: 'blue' %>.]&nbsp;</span>
+    <span>&nbsp;&nbsp;<%= link_to "[No&nbsp;workspaces&nbsp;-&nbsp;create&nbsp;one&nbsp;in&nbsp;the&nbsp;Tree&nbsp;Editor".html_safe, Rails.configuration.tree_editor_url, title:'Link to the tree editor', class: 'blue' %>.]&nbsp;</span>
+  </li>
+<% else %>
+  <li role="presentation" class="divider"></li>
+  <li role="presentation">
+    <span>&nbsp;&nbsp;<%= link_to "Tree&nbsp;Editor".html_safe, Rails.configuration.tree_editor_url, title:'Link to the tree editor', class: 'blue' %>&nbsp;</span>
   </li>
 <% end %>
