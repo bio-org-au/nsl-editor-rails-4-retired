@@ -43,7 +43,10 @@ class TreesController < ApplicationController
     begin
       json = JSON.parse(e.http_body)
       Rails.logger.error(ap json)
-      @message = json["msg"].first["body"]
+      @message_array = []
+      json["msg"].each do | msg_element |
+        @message_array.push msg_element["msg"]
+      end
     rescue => e
       logger.error("rescue error in error")
       @message = e.to_s
@@ -111,7 +114,7 @@ class TreesController < ApplicationController
       params[:original_parent_name_typeahead_string] ||
       params[:parent_name_id] != params[:original_parent_name_id]
   end
-
+ 
   def new_placement_for_params
     Tree::Workspace::Placement.new(
       username: current_user.username,
