@@ -1,4 +1,9 @@
 ---
+- :date: 18-Jan-2017
+  :jira_id: '2069'
+  :description: |-
+    The APC Tree heading for a Name on the details tab is no longer a link to
+    display the tree in the Instance Editor.
 - :date: 17-Jan-2017
   :jira_id: '2081'
   :description: |-

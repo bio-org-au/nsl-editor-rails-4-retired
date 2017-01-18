@@ -20,21 +20,17 @@ require "test_helper"
 # Single search controller test.
 class SearchRefsDefinedQRefsNamesFullSynonymyTest < ActionController::TestCase
   tests SearchController
-  setup do
-    @ref = references(:bucket_reference_for_default_instances)
-  end
-
   test "search references names full synonymy" do
     get(:search,
         { query_target: "References, names, full synonymy",
-          query_string: "b*",
+          query_string: "G*",
           query_submit: "Search" },
         username: "fred",
         user_full_name: "Fred Jones",
         groups: [])
     assert_response :success
     assert_select "#search-results-summary",
-                  /[0-9][0-9] records\b/,
+                  /[0-9] records\b/,
                   "Should find some records"
   end
 end
