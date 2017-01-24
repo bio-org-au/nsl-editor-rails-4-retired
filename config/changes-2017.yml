@@ -2,6 +2,10 @@
 - :date: 24-Jan-2017
   :jira_id: '2173'
   :description: |-
+    Don't show Delete button for Instance in APC.
+- :date: 24-Jan-2017
+  :jira_id: '2173'
+  :description: |-
     Show informative error message when instance delete fails.
 - :date: 19-Jan-2017
   :release: true

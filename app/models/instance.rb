@@ -402,11 +402,17 @@ class Instance < ActiveRecord::Base
   def allow_delete?
     instance_notes.blank? &&
       reverse_of_this_cites.blank? &&
-      reverse_of_this_is_cited_by.blank? && comments.blank?
+      reverse_of_this_is_cited_by.blank? &&
+      comments.blank? &&
+      !in_apc?
   end
 
   def anchor_id
     "Instance-#{id}"
+  end
+
+  def in_apc?
+    show_apc?
   end
 
   def show_apc?
