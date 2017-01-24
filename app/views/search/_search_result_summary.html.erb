@@ -59,7 +59,7 @@
           <%= link_to("All", search_path(query_string: "#{@search.parsed_request.query_string.sub(/limit: *\d+/i,'').sub(/$/,%Q( limit: #{@search.executed_query.total} ))}",query_target: "#{params[:query_target]}"), title: "List all.") %>
         <% else %>
           &nbsp; | &nbsp;
-          <%= link_to("List #{next_limit_max}", search_path(query_string: "#{@search.parsed_request.query_string.sub(/limit: *\d{1,}/,'').sub(/$/,%Q(limit: #{next_limit_max} ))}",query_target: "#{params[:query_target]}"), title: "List #{@search.page_increment_size} more.") %>
+          <%= link_to("List #{next_limit_max}", search_path(query_string: "#{@search.parsed_request.query_string.sub(/limit: *\d{1,}/,'').sub(/$/,%Q( limit: #{next_limit_max} ))}",query_target: "#{params[:query_target]}"), title: "List #{@search.page_increment_size} more.") %>
         <% end %>
         <% if @search.more_allowed %>
           &nbsp; | &nbsp;
