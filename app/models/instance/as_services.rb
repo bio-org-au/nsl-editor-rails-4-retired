@@ -20,25 +20,42 @@ class Instance::AsServices < Instance
     "#{Rails.configuration.name_services}#{id}/api/name-strings"
   end
 
+  def self.tag
+    "Instance::AsServices"
+  end
+
   # Service will send back 200 even if delete fails, but will also sometimes
   # send back 404, so have to look at both. Sigh.
   # The interface *should* never let a user try to delete an instance
   # that cannot be deleted, so the chances of hitting a 'meaningful' error
-  # should be small but experience has shows this happens.
+  # should be small but experience has shown this happens.
   # The service error messages are not always good for showing to users, but
-  # users need to see them, so we quote them.
+  # users need to see them, so we attribute them.
+  #
+  # RestClient throws exceptions for 403, 404 type errors and we handle those
+  # based on the structured response to extract a meaningful message.
   def self.delete(id)
-    logger.info("Instance::AsServices.delete")
-    api_key = Rails.configuration.api_key
-    url = "#{Rails.configuration.services}instance/apni/#{id}/api/delete?apiKey=#{api_key}&reason=Edit"
-    s_response = RestClient.delete(url, accept: :json)
-    json = JSON.load(s_response)
-    raise "Delete Service said: #{json['errors'].try('join')} [#{s_response.code}]" unless s_response.code == 200 && json["ok"] == true
-  rescue => e
-    logger.error("Instance::AsServices.delete exception : #{e}")
+    logger.info("#{tag}.delete")
+    url = delete_uri(id)
+    response = RestClient.delete(url, accept: :json)
+    json = JSON.parse(response)
+    unless response.code == 200 && json["ok"] == true
+      raise "Service error: #{json['errors'].try('join')} [#{response.code}]"
+    end
+  rescue RestClient::ExceptionWithResponse => rest_client_exception
     logger.error("Instance::AsServices.delete exception for url: #{url}")
-    logger.error("Instance::AsServices.delete exc s_response: #{s_response}")
-    logger.error("Instance::AsServices.delete exc errors: #{json['errors'] if json.present?}")
+    logger.error(rest_client_exception.response)
+    json = JSON.parse(rest_client_exception.response)
+    logger.error("#{tag}.delete exception response.errors: #{json['errors'].join(';')}")
+    raise json["errors"].join(";")
+  rescue
+    logger.error("#{tag}.delete exception for url: #{url}")
     raise
+  end
+
+  def self.delete_uri(id)
+    api_key = Rails.configuration.api_key
+    host_path = "#{Rails.configuration.services}instance/apni/#{id}/api/delete"
+    "#{host_path}?apiKey=#{api_key}&reason=Edit"
   end
 end
