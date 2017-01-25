@@ -1,4 +1,8 @@
 ---
+- :date: 25-Jan-2017
+  :jira_id: '2181'
+  :description: |-
+    Copy standalone instance no longer restricted to QA role.
 - :date: 24-Jan-2017
   :jira_id: '2173'
   :description: |-
