@@ -1,5 +1,9 @@
 ---
 - :date: 30-Jan-2017
+  :jira_id: '2196'
+  :description: |-
+    Change label of the first Name tab to from "Detail" to "Details".
+- :date: 30-Jan-2017
   :jira_id: '2176'
   :description: |-
     Reference search with show-instances set applies limit to the instances too.
