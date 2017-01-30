@@ -21,12 +21,12 @@ require "test_helper"
 class InstancesCopyStandaloneForbidnForEditUserTest < ActionController::TestCase
   tests InstancesController
 
-  test "editor should not be able to copy standalone instance" do
+  test "editor should be able to copy standalone instance" do
     instance = instances(:triodia_in_brassard)
     name = names(:a_species)
     reference = references(:a_book)
     @request.headers["Accept"] = "application/javascript"
-    assert_no_difference("Instance.count") do
+    assert_difference("Instance.count",1) do
       post(:copy_standalone,
            { id: instance.id,
              instance: { "reference_id" => reference.id,
@@ -36,6 +36,6 @@ class InstancesCopyStandaloneForbidnForEditUserTest < ActionController::TestCase
            user_full_name: "Fred Jones",
            groups: ["edit"])
     end
-    assert_response :forbidden
+    assert_response :success
   end
 end
