@@ -67,7 +67,7 @@ class Search::OnReference::Base
     @count = @results.size
     @show_csv = false
     calculate_total
-    @limited = @full_count_known && @total > @relation.size
+    @limited = (@full_count_known && @total > @relation.size) || !@full_count_known
   end
 
   def consider_instances
@@ -88,7 +88,8 @@ class Search::OnReference::Base
       @results << ref
       instances_query = Instance::AsArray::ForReference
                         .new(ref,
-                             instances_sort_key)
+                             instances_sort_key,
+                             @parsed_request.limit)
       instances_query.results.each { |i| @results << i }
     end
   end
