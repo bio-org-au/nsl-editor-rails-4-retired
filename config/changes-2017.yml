@@ -1,4 +1,8 @@
 ---
+- :date: 30-Jan-2017
+  :jira_id: '2176'
+  :description: |-
+    Reference search with show-instances set applies limit to the instances too.
 - :date: 25-Jan-2017
   :jira_id: '2181'
   :description: |-
