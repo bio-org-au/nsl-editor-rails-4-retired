@@ -35,8 +35,12 @@
 <div class="actions"> <%= delete_link.html_safe %> </div>
 <div class="width-100-percent"> <%= confirm_or_cancel_element.html_safe %> </div>
 <% else %>
-  You cannot delete this instance because other records use it:
-  <br>
+  You cannot delete this instance.
+    <br>
+  <% if @instance.in_apc? %>
+    Instance is in APC.
+    <br>
+  <% end %>
   <% if @instance.instance_notes.size > 0 %>
     <span title="See the Notes tab." ><%= "Instance notes: #{@instance.instance_notes.size} (see the 'Notes' tab)" %></span>
     <br>

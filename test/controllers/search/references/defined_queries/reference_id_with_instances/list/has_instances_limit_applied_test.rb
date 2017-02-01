@@ -34,7 +34,7 @@ class SrchRefsDefQueriesRefIdWInstListHasInstWLimit < ActionController::TestCase
                   /[0-9][0-9] records\b/,
                   "Should find some records"
     assert_select "#search-results-summary",
-                  /\b28 records\b/,
+                  /\b10 records of an unknown total\b/,
                   "Should say 28 records"
   end
 end

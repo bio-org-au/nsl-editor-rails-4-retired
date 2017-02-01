@@ -1,4 +1,31 @@
 ---
+- :date: 30-Jan-2017
+  :jira_id: '2195'
+  :description: |-
+    Move author options in search dropdown and new record menu. 
+    Remove brackets.
+- :date: 30-Jan-2017
+  :jira_id: '2196'
+  :description: |-
+    Change label of the first Name tab to from "Detail" to "Details".
+- :date: 30-Jan-2017
+  :jira_id: '2176'
+  :description: |-
+    Reference search with show-instances set applies limit to the instances too.
+- :date: 25-Jan-2017
+  :jira_id: '2181'
+  :description: |-
+    Copy standalone instance no longer restricted to QA role.
+- :date: 24-Jan-2017
+  :jira_id: '2173'
+  :description: |-
+    Don't show Delete button for Instance in APC.
+- :date: 24-Jan-2017
+  :jira_id: '2173'
+  :description: |-
+    Show informative error message when instance delete fails.
+- :date: 19-Jan-2017
+  :release: true
 - :date: 18-Jan-2017
   :jira_id: '2069'
   :description: |-

@@ -81,7 +81,7 @@ class Ability
     can "authors",            :all
     can "comments",           :all
     can "instances",          :all
-    cannot "instances",       "copy_standalone"
+    can "instances",          "copy_standalone"
     can "instance_notes",     :all
     can "menu",               "new"
     can "name_tag_names",     :all
@@ -92,7 +92,6 @@ class Ability
   end
 
   def qa_auth
-    can "instances",          "copy_standalone"
   end
 
   # TODO: remove this - NSL-2007

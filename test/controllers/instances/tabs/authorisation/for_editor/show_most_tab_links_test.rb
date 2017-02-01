@@ -72,7 +72,7 @@ class InstanceForEditorShowMostTabsTest < ActionController::TestCase
                   /Adnot/,
                   "Does not show 'Adnot' tab link."
     assert_select "a#instance-copy-to-new-reference-tab",
-                  false,
-                  "Should not show 'Copy' tab link."
+                  /Copy/,
+                  "Should show 'Copy' tab link."
   end
 end

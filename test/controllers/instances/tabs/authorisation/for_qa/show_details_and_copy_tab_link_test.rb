@@ -72,7 +72,7 @@ class InstancesShowQAUserDetailsAndCopyTabLinksTest < ActionController::TestCase
                   false,
                   "Should not show 'Adnot' tab link."
     assert_select "a#instance-copy-to-new-reference-tab",
-                  /Copy/,
-                  "Should show 'Copy' tab link."
+                  false,
+                  "Should not show 'Copy' tab link."
   end
 end

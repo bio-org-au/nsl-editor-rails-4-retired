@@ -18,20 +18,18 @@
 require "test_helper"
 
 # Single instance model test.
-class InstanceDeleteServiceNotFound404Test < ActiveSupport::TestCase
+class InstanceDeleteServiceNotPermitted403Test < ActiveSupport::TestCase
   setup do
-    raw = { "action": "delete",
-            "instance": {},
-            "ok": false,
-            "errors": ["Not found."] }
+    raw = { "action": "delete", "instance": {}, "ok": false,
+            "errors": ["Not permitted."] }
     stub_request(:delete,
                  "#{action}?apiKey=test-api-key&reason=Edit")
       .with(headers: headers)
-      .to_return(status: 404, body: raw.to_json, headers: {})
+      .to_return(status: 403, body: raw.to_json, headers: {})
   end
 
   def action
-    "http://localhost:9090/nsl/services/instance/apni/404/api/delete"
+    "http://localhost:9090/nsl/services/instance/apni/403/api/delete"
   end
 
   def headers
@@ -41,14 +39,14 @@ class InstanceDeleteServiceNotFound404Test < ActiveSupport::TestCase
       "User-Agent" => /ruby/ }
   end
 
-  test "instance delete service not found 404" do
+  test "instance delete service not permitted 403" do
     exception = assert_raise(
       RuntimeError,
-      "Should raise runtime exception for not found"
+      "Should raise runtime exception for not permitted"
     ) do
       # The test mock service determines response based on the id
-      Instance::AsServices.delete(404)
+      Instance::AsServices.delete(403)
     end
-    assert_match "Not found.", exception.message, "Wrong message"
+    assert_match "Not permitted.", exception.message, "Wrong message"
   end
 end

@@ -26,7 +26,7 @@ class InstancesCopyStandaloneForQAUserTest < ActionController::TestCase
     name = names(:a_species)
     reference = references(:a_book)
     @request.headers["Accept"] = "application/javascript"
-    assert_difference("Instance.count") do
+    assert_no_difference("Instance.count") do
       post(:copy_standalone,
            { id: instance.id,
              instance: { "reference_id" => reference.id,
@@ -36,6 +36,6 @@ class InstancesCopyStandaloneForQAUserTest < ActionController::TestCase
            user_full_name: "Fred Jones",
            groups: ["QA"])
     end
-    assert_response :success
+    assert_response :forbidden
   end
 end

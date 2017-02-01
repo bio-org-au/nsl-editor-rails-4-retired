@@ -6,15 +6,6 @@
        data-toggle="dropdown">New<span class="caret"></span>
     </a>
     <ul id="create-dropdown-menu" class="dropdown-menu" role="menu">
-      <li role="presentation">
-        <%= link_to "Author",
-                    author_new_row_path,
-                    title: 'Add a new Author',
-                    remote: true,
-                    tabindex: '-1' %>
-      </li>
-
-      <li role="presentation" class="divider"></li>
 
       <li role="presentation">
         <%= link_to "Scientific name",
@@ -72,6 +63,15 @@
                     tabindex: '-1' %>
       </li>
 
+      <li role="presentation" class="divider"></li>
+
+      <li role="presentation">
+        <%= link_to "Authors",
+                    author_new_row_path,
+                    title: 'Add new Author',
+                    remote: true,
+                    tabindex: '-1' %>
+      </li>
 
       <li role="presentation" class="divider"></li>
 
