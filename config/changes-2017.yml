@@ -2,7 +2,8 @@
 - :date: 30-Jan-2017
   :jira_id: '2195'
   :description: |-
-    Move author options in search dropdown and new record menu.
+    Move author options in search dropdown and new record menu. 
+    Remove brackets.
 - :date: 30-Jan-2017
   :jira_id: '2196'
   :description: |-
