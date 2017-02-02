@@ -65,6 +65,7 @@ class NameAsCopierMakeACopySimpleTest < ActiveSupport::TestCase
     test2
     test3
     test4
+    test5
   end
 
   def test1
@@ -76,23 +77,31 @@ class NameAsCopierMakeACopySimpleTest < ActiveSupport::TestCase
   end
 
   def test2
-    assert_equal @master_name.author_id, @copied_name.author_id
-    assert_equal @master_name.base_author_id, @copied_name.base_author_id
-    assert_equal @master_name.ex_author_id, @copied_name.ex_author_id
-    assert_equal @master_name.ex_base_author_id, @copied_name.ex_base_author_id
-    assert_equal @master_name.sanctioning_author_id,
-                 @copied_name.sanctioning_author_id
+    assert_nil @master_name.author_id
+    assert_nil @copied_name.author_id
+    assert_nil @master_name.base_author_id
+    assert_nil @copied_name.base_author_id
+    assert_nil @master_name.ex_author_id
+    assert_nil @copied_name.ex_author_id
   end
 
   def test3
+    assert_nil @master_name.ex_base_author_id
+    assert_nil @copied_name.ex_base_author_id
+    assert_nil @master_name.sanctioning_author_id
+    assert_nil @copied_name.sanctioning_author_id
+  end
+
+  def test4
     assert_equal @master_name.orth_var, @copied_name.orth_var
     assert_equal @master_name.parent_id, @copied_name.parent_id
-    assert_equal @master_name.second_parent_id, @copied_name.second_parent_id
+    assert_nil @master_name.second_parent_id
+    assert_nil @copied_name.second_parent_id
     assert_equal @master_name.verbatim_rank, @copied_name.verbatim_rank
     assert_match @dummy_name_element, @copied_name.name_element
   end
 
-  def test4
+  def test5
     assert_equal @dummy_username, @copied_name.created_by
     assert_equal @dummy_username, @copied_name.updated_by
   end
