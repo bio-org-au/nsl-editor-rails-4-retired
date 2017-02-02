@@ -23,7 +23,8 @@ gem "turbolinks"
 gem "jbuilder", "~> 2.0"
 # bundle exec rake doc:rails generates the API under doc/api.
 gem "sdoc", "~> 0.4.0", group: :doc
-# warbler for rake tasks to generate a WAR file
+# warbler for rake tasks to generate a WAR file and use jruby 9.1.5.0
+gem "jruby-jars", "9.1.5.0"
 gem "warbler"
 
 # Use ActiveModel has_secure_password

@@ -97,7 +97,8 @@ class NameAsCopierMakeACopySimpleTest < ActiveSupport::TestCase
     assert_equal @master_name.parent_id, @copied_name.parent_id
     assert_nil @master_name.second_parent_id
     assert_nil @copied_name.second_parent_id
-    assert_equal @master_name.verbatim_rank, @copied_name.verbatim_rank
+    assert_nil @master_name.verbatim_rank
+    assert_nil @copied_name.verbatim_rank
     assert_match @dummy_name_element, @copied_name.name_element
   end
 
