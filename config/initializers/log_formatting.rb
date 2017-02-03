@@ -35,7 +35,7 @@ class ActiveSupport::Logger::SimpleFormatter
       time.strftime("%Y-%m-%d %H:%M:%S.") << time.usec.to_s[0..2].rjust(3)
     color = SEVERITY_TO_COLOR_MAP[severity]
 
-    "\033[0;37m#{formatted_time}\033[0m [\033[#{color}m#{formatted_severity}\
+    "Editor:\033[0;37m#{formatted_time}\033[0m [\033[#{color}m#{formatted_severity}\
 \033[0m] #{msg.strip} (pid:#{$PROCESS_ID})\n"
   end
 end
