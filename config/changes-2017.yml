@@ -1,4 +1,9 @@
 ---
+- :date: 09-Feb-2017
+  :jira_id: '2186'
+  :description: |-
+    Set colour scheme for staging environment based on setting in configuration
+    file.
 - :date: 02-Feb-2017
   :release: true
 - :date: 30-Jan-2017
