@@ -7,8 +7,6 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <% badge = 'NSL Editor' %>
-      <% badge = 'Test Editor' if Rails.configuration.try('display_as_test') == true %>
       <%= link_to nav_link(badge,'The National Species List Editor'),
                   search_path,
                   class: "navbar-brand #{'active' if params[:controller].match(/search/)}",

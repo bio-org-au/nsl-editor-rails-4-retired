@@ -7,13 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>
-      <% if Rails.configuration.try('display_as_test') == true %>
-        Test
-      <% elsif Rails.env.match(/development/) %>
-        Dev
-      <% end %> NSL Editor
-    </title>
+    <title> <%= page_title %> </title>
 
     <script>
       window.relative_url_root = "<%= Rails.application.config.relative_url_root %>"
@@ -29,17 +23,7 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => false %>
     <%= csrf_meta_tags %>
     <%= favicon_link_tag 'favicon.png?v=1', :rel => 'shortcut icon' %>
-    <% if Rails.configuration.try('display_as_test') == true %>
-      <style>
-        div#big-navbar { background: #663399; }
-        div#first-navbar { background: #663399; }
-        ul.navbar-nav li.dropdown { background: #663399; }
-        ul.navbar-nav li a.dropdown-toggle { background: #663399; }
-        div#searchbar { background: #663399; }
-        div#search-summary { background: #663399; }
-      </style>
-    <% end %>
-    <% if Rails.configuration.session_key_tag.match(/dev/i) %> 
+    <% if development? %>
 <style>
 a:not([title]),
 select:not([title]),
@@ -58,7 +42,7 @@ input[type="checkbox"]:not([title]) {
     <% end %>
   </head>
  
-  <body
+  <body class="<%= Rails.configuration.try('environment') %>" 
       data-active-reference-tab="tab_show_1"
       data-active-name-tab="tab_details"
       data-active-author-tab="tab_show_1"
