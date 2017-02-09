@@ -489,3 +489,10 @@ ollegaard_with_leading_diacritic:
   namespace_id: namespace.apni
   created_by: greg
   updated_by: greg
+
+has_multiple_embedded_spaces:
+  name: mul  tipl   e embe   dded
+  name: m  ti   e ee   d
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg

@@ -57,6 +57,7 @@ class Author < ActiveRecord::Base
   DEFAULT_ORDER_BY = "name asc ".freeze
 
   before_create :set_defaults
+  before_save :compress_whitespace
 
   def save_with_username(username)
     self.created_by = self.updated_by = username
@@ -108,6 +109,11 @@ class Author < ActiveRecord::Base
 
   def set_defaults
     self.namespace_id = Namespace.default.id if namespace_id.blank?
+  end
+
+  def compress_whitespace
+    self.name = self.name.gsub(/ +/,' ') unless name.nil?
+    self.abbrev = self.abbrev.gsub(/ +/,' ') unless abbrev.nil?
   end
 
   def citation
