@@ -21,7 +21,7 @@ class Language < ActiveRecord::Base
   has_many :references
   ORDER_BY = "case name when 'Undetermined' then 'AAA' \
   when 'English' then 'AAB' when 'French' then 'AAC' when 'German' then 'AAD'\
-  when 'Latin' then 'AAD' else name end".freeze
+  when 'Latin' then 'AAE' else name end".freeze
 
   def self.unknown
     find_by(name: "Undetermined")
@@ -35,7 +35,7 @@ class Language < ActiveRecord::Base
   def self.options
     all.order(ORDER_BY).collect do |lang|
       [lang.name, lang.id]
-    end.insert(4, ["--------------", ""])
+    end.insert(5, ["──────────", "disabled"])
   end
 
   def self.english

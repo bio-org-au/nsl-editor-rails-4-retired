@@ -1,4 +1,8 @@
 ---
+- :date: 10-Feb-2017
+  :jira_id: '2226'
+  :description: |-
+    Latin now appears fifth on the drop-down list of Reference languages.
 - :date: 09-Feb-2017
   :jira_id: '2198'
   :description: |-

@@ -598,6 +598,10 @@ kutenai:
   name: Kutenai
   iso6391code: 
   iso6393code: kut
+latin:
+  name: Latin
+  iso6391code: la 
+  iso6393code: lat
 ladino:
   name: Ladino
   iso6391code: 
