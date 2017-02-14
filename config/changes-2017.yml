@@ -1,4 +1,9 @@
 ---
+- :date: 14-Feb-2017
+  :jira_id: '2240'
+  :description: |-
+    Do not offer a delete button for names that have any duplicates. Show a
+    link to the duplicates instead.
 - :date: 10-Feb-2017
   :jira_id: '2226'
   :description: |-
