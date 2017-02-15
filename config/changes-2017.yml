@@ -1,4 +1,10 @@
 ---
+- :date: 15-Feb-2017
+  :jira_id: '2245'
+  :description: |-
+    The Reference Shared Name search examples are now marked as specific to
+    APNI.  The queries now also show a sensible error message if the reference
+    IDs supplied do not exist.
 - :date: 14-Feb-2017
   :jira_id: '2240'
   :description: |-

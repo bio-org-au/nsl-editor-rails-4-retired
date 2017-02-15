@@ -28,6 +28,7 @@ class Reference::DefinedQuery::ReferencesSharedNames
               :total
 
   def initialize(parsed_request)
+    debug("start")
     @parsed_request = parsed_request
     run_query
   end
@@ -38,6 +39,7 @@ class Reference::DefinedQuery::ReferencesSharedNames
   end
 
   def run_query
+    debug("run_query")
     build_args
     validate_args
     @show_csv = false
@@ -50,15 +52,16 @@ class Reference::DefinedQuery::ReferencesSharedNames
   end
 
   def build_args
-    args = @parsed_request.where_arguments.split(",")
-    raise "Exactly 2 reference IDs are expected." unless args.size == 2
-    @ref_id_1 = args.first.to_i
-    @ref_id_2 = args.last.to_i
+    @args = @parsed_request.where_arguments.split(",")
+    raise "Exactly 2 reference IDs are expected." unless @args.size == 2
+    @ref_id_1 = @args.first.to_i
+    @ref_id_2 = @args.last.to_i
   end
 
   def validate_args
-    raise "No Reference ID:#{args.first}" unless Reference.exists?(@ref_id_1)
-    raise "No Reference ID:#{args.last}" unless Reference.exists?(@ref_id_2)
+    debug("validate_args")
+    raise "No Reference ID:#{@args.first}" unless Reference.exists?(@ref_id_1)
+    raise "No Reference ID:#{@args.last}" unless Reference.exists?(@ref_id_2)
   end
 
   def count_query
