@@ -25,17 +25,7 @@
     <%= csrf_meta_tags %>
     <%= favicon_link_tag 'favicon.png?v=1', :rel => 'shortcut icon' %>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-    <% if Rails.configuration.try('display_as_test') == true %>
-      <style>
-        div#big-navbar { background: #663399; }
-        div#first-navbar { background: #663399; }
-        ul.navbar-nav li.dropdown { background: #663399; }
-        ul.navbar-nav li a.dropdown-toggle { background: #663399; }
-        div#searchbar { background: #663399; }
-        div#search-summary { background: #663399; }
-      </style>
-    <% end %>
-    <% if Rails.configuration.session_key_tag.match(/dev/i) %> 
+    <% if development? %>
 <style>
 a:not([title]),
 select:not([title]),

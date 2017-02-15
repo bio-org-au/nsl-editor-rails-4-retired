@@ -1966,3 +1966,32 @@ to_be_placed:
   updated_by: greg
   created_by: greg
 
+deletable_apart_from_duplicate: 
+  simple_name_html: deletable apart from duplicate
+  full_name_html: deletable apart from duplicate
+  simple_name: deletable apart from duplicate
+  full_name: deletable apart from duplicate
+  name_element: deletable apart from duplicate
+  name_rank: species
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+duplicate_of_deletable_apart_from_duplicate: 
+  simple_name_html: duplicate of deletable apart from duplicate
+  full_name_html: duplicate of deletable apart from duplicate
+  simple_name: duplicate of deletable apart from duplicate
+  full_name: duplicate of deletable apart from duplicate
+  name_element: duplicate of deletable apart from duplicate
+  name_rank: species
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  duplicate_of: deletable_apart_from_duplicate
+  updated_by: greg
+  created_by: greg
+

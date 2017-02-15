@@ -26,6 +26,10 @@ $table-cell-padding: 6px;
 $padding-base-vertical: 2px; /* Bootstrap uses this to calculate input field height. Default is 6px. */
 $input-color-placeholder: rgba(156,57,255,0.3);
 
+$development-color: #696076;
+$test-color: #663399;
+$staging-color: #6699cc;
+
 @import "bootstrap-sprockets";
 @import "font-awesome";
 @import "bootstrap";
@@ -42,6 +46,7 @@ $input-color-placeholder: rgba(156,57,255,0.3);
 @import "main-content-tabs";
 @import "search-form";
 @import "tree-placement";
+@import "environment";
 
 // possibly this should not be here, instead the tree search results page should declare it as a dependency
 @import "tree-extras/tree";

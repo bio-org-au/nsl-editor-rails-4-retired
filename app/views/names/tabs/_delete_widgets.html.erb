@@ -45,6 +45,10 @@
     <br>
     <%= pluralize(@name.comments.size,'Comment') %>
   <% end %>
+  <% if @name.duplicates.size > 0  %>
+    <br>
+    <%= render partial: "names/widgets/duplicates" %>
+  <% end %>
 
 <% end %>
 <br>

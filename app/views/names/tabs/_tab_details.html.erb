@@ -39,14 +39,7 @@
   <%= "Duplicate of #{link}".html_safe %>
 <% end %>
 
-<% duplicates = @name.duplicates %>
-<% if duplicates.size > 0 %>
-  <br>
-  <%= link_to(pluralize(duplicates.size,"Duplicate"),
-                          search_path(query_target: "name", 
-                                      query_string: "master-id:#{@name.id}"),
-                          title: "Retrieve this name with its #{pluralize(duplicates.size,'duplicate')}") %>
-<% end %>
+<%= render partial: "names/widgets/duplicates" %>
 
 <% unless @name.ex_base_author.blank? %>
   <br>

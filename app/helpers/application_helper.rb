@@ -82,6 +82,29 @@ module ApplicationHelper
     # we want to replace this with data pulled from the shard config table
     %(<a href="#{Rails.configuration.mapper_root_url}#{type}/#{Rails.configuration.mapper_shard}/#{id}" title="#{type.capitalize} #{id}"><i class="fa fa-link"></i></a>).html_safe
   end
+
+  def page_title
+    case Rails.configuration.try("environment")
+    when /\Adev/i
+      "Dev Editor"
+    when /^test/i
+      "Test Editor"
+    when /^stag/i
+      "Staging Ed"
+    when /^prod/i
+      "NSL Editor"
+    else
+      "NSL Editor"
+    end
+  end
+
+  def badge
+    page_title
+  end
+
+  def development?
+    Rails.configuration.try("environment").match(/^development/i)
+  end
 end
 
 # Some specific string methods.

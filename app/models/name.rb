@@ -107,7 +107,7 @@ class Name < ActiveRecord::Base
   end
 
   def allow_delete?
-    instances.blank? && children.blank? && comments.blank?
+    instances.blank? && children.blank? && comments.blank? && duplicates.blank?
   end
 
   def migrated_from_apni?

@@ -34,11 +34,13 @@ class LanguageOptionsSimpleTest < ActiveSupport::TestCase
     try_pair(options[1], "English")
     try_pair(options[2], "French")
     try_pair(options[3], "German")
+    try_pair(options[4], "Latin")
   end
 
   def second_set(options)
-    assert options[4][0] == "--------------", "Missing dashed line separator."
-    try_pair(options[5], "Abkhazian")
+    assert options[5][0] == "──────────", "Missing line separator."
+    assert options[5][1] == "disabled", "Separator not prepared to be disabled."
+    try_pair(options[6], "Abkhazian")
     try_pair(options.last, "Zuni")
   end
 end

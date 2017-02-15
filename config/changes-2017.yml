@@ -1,4 +1,28 @@
 ---
+- :date: 15-Feb-2017
+  :jira_id: '2245'
+  :description: |-
+    The Reference Shared Name search examples are now marked as specific to
+    APNI.  The queries now also show a sensible error message if the reference
+    IDs supplied do not exist.
+- :date: 14-Feb-2017
+  :jira_id: '2240'
+  :description: |-
+    Do not offer a delete button for names that have any duplicates. Show a
+    link to the duplicates instead.
+- :date: 10-Feb-2017
+  :jira_id: '2226'
+  :description: |-
+    Latin now appears fifth on the drop-down list of Reference languages.
+- :date: 09-Feb-2017
+  :jira_id: '2198'
+  :description: |-
+    Compress multiple embedded spaces in author name and abbreviation.
+- :date: 09-Feb-2017
+  :jira_id: '2186'
+  :description: |-
+    Set colour scheme for staging environment based on setting in configuration
+    file.
 - :date: 02-Feb-2017
   :release: true
 - :date: 30-Jan-2017
