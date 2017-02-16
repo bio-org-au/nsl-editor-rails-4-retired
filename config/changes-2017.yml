@@ -1,5 +1,10 @@
 ---
 - :date: 16-Feb-2017
+  :jira_id: '2252'
+  :description: |-
+    The search for Adnot works for upper-case terms - it is now 
+    correctly case-insensitive.
+- :date: 16-Feb-2017
   :release: true
 - :date: 15-Feb-2017
   :jira_id: '2245'
