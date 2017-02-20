@@ -73,12 +73,6 @@ input[type="checkbox"]:not([title]) {
              class="main-body-container search-tab no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 sidebar hidden">
             <%= render partial: 'search/example_search_inner' %>
         </div>
-        <% unless @no_advanced_search %>
-          <div id="advanced-search-container" 
-          class="main-body-container search-tab no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 sidebar hidden">
-            <%= render partial: 'search/advanced_search_inner' %>
-          </div>
-        <% end %>
         <div id="search-reports-container" 
              class="main-body-container no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 sidebar hidden">
             <%= render partial: 'search/tab_inners/reports_inner' %>
@@ -95,9 +89,6 @@ input[type="checkbox"]:not([title]) {
         <%= render partial: 'layouts/footer' %>
       </div>
     </div>
-    <%#= render partial: 'new_instance_form' %>
-    <!-- <div id="message-container" class="popup hidden"></div> -->
-    <%= render partial: 'search/advanced_script' %>
     <script>
       var ffox = window.navigator.userAgent.match(/Firefox\/([0-9]+)\./);
       var ver = ffox ? parseInt(ffox[1]) : 99;
