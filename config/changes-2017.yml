@@ -1,10 +1,5 @@
 ---
 - :date: 16-Feb-2017
-  :jira_id: '2248'
-  :description: |-
-    Remove the Advanced search tab and forms code to concentrate on
-    the more widely used search directives.
-- :date: 16-Feb-2017
   :jira_id: '2252'
   :description: |-
     The search for Adnot works for upper-case terms - it is now 

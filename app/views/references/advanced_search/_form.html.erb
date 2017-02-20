@@ -1,0 +1,159 @@
+<table class="table advanced-form-table" class="table table-bordered" >
+  <tr><td class="width-12-percent">List/count</td> 
+    <td class="align-right width-15-percent">
+      <label class="plain" class="plain" for="list-or-count">Options</label>
+    </td>
+    <td>
+      <select id="ref-advanced-search-list-or-count" name="list_or_count" class="form-control" title="List or count the search results">
+        <option value='count'>count records</option>
+        <option value='list' selected='selected'>list results</option>
+    </select>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+    <td class="align-right width-15-percent">
+      <label class="plain" for="query-on">Size</label>
+    </td>
+    <td>
+      <input id="ref-advanced-search-set-size" name="set_size" value="100" type="number" class="form-control min-width-10em" title="Number of records for a list search" min="1" max="1000"/>
+    </td>
+  </tr>
+  <tr> <td class="width-12-percent">Citation</td>
+    <td class="align-right width-15-percent"></td>
+    <td>
+      <input id="ref-advanced-search-citation" name="ref_search_citation" value="" type="text" class="form-control min-width-20em" title="Citation string, with optional wildcard (*)"/>
+    </td>
+  </tr>
+    <tr> 
+      <td class="width-12-percent">Type</td>
+      <td class="align-left width-15-percent"></td>
+      <td><%= select_tag('ref-advanced-search-type', 
+                     options_for_select(RefType.query_form_options),
+                     title: 'Select one reference type', 
+                     include_blank: true,
+                     autocomplete: "off", 
+                     class: "form-control give-me-focus") 
+                   %>
+      </td>
+    </tr>
+  <tr>
+    <td class="width-12-percent">Fields</td>
+    <td class="width-15-percent align-right">
+      <label class="plain" for="query-on">Author</label>
+    </td>
+    <td>
+      <input type="text" class="" id="ref-advanced-search-author" placeholder="" title="Author name or part string">
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+    <td class="align-right">
+      <label class="plain" for="query-on">Year</label>
+    </td>
+    <td>
+      <input type="text" class="" id="ref-advanced-search-year" placeholder="" title="Publication year - an integer">
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+    <td class="align-right">
+      <label class="plain" for="query-on">Parent Citation</label>
+    </td>
+    <td>
+      <input type="text" class="" id="ref-advanced-search-parent-citation" title="Parent citation or part string">
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+    <td class="align-right">
+      <label class="plain" for="query-on">Parent Title</label>
+    </td>
+    <td>
+      <input type="text" class="" id="ref-advanced-search-parent-title" title="Parent title or part string">
+    </td>
+  </tr>
+  <tr> <td class="width-12-percent">Comments</td>
+    <td class="align-right width-15-percent">
+    </td>
+    <td>
+      <input id="ref-advanced-search-comments" type="text" class="form-control min-width-20em" title="Comments text to search for."/>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+    <td class="align-right width-15-percent">
+      <label class="plain" for="query-on">By</label>
+    </td>
+    <td>
+      <input id="ref-advanced-search-comments-by" type="text" class="form-control min-width-20em" title="User who made comments."/>
+    </td>
+  </tr>
+  <tr> <td class="width-12-percent">Assertions</td>
+    <td class="align-right width-15-percent">
+      <label class="plain" for="query-on">Duplication</label>
+    </td>
+    <td> <label class="plain"><input type="checkbox" 
+                                     class="ref-search-assertion" 
+                                     id="ref-is-a-duplicate" 
+                                     value="is-a-duplicate:" 
+                                     title="Restrict search to records marked as duplicates"> Is a duplicate</label> </td>
+  </tr>
+  <tr>
+    <td></td>
+    <td class="align-right width-15-percent">
+    </td>
+    <td> <label class="plain"><input type="checkbox" 
+                                     class="ref-search-assertion" 
+                                     id="ref-is-not-a-duplicate" 
+                                     value="is-not-a-duplicate:"
+                                     title="Restrict search to records not marked as duplicates"> Is not a duplicate </label></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td class="align-right width-15-percent">
+      <label class="plain" for="query-on">Parent</label>
+    </td>
+    <td> <label class="plain">
+           <input type="checkbox" 
+                  class="ref-search-assertion" 
+                  id="ref-is-a-parent" 
+                  value="is-a-parent:"
+                  title="Restrict search to records that do have a parent."> Is a parent 
+         </label></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td class="align-right width-15-percent">
+    </td>
+    <td> <label class="plain">
+           <input type="checkbox" 
+                  class="ref-search-assertion" 
+                  id="ref-is-not-a-parent" 
+                  value="is-not-a-parent:"
+                  title="Restrict search to records that do not have a parent."> Is not a parent </label></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td class="align-right width-15-percent">
+      <label class="plain" for="query-on">Child</label>
+    </td>
+    <td> <label class="plain">
+           <input type="checkbox" 
+                  class="ref-search-assertion" 
+                  id="ref-is-a-child" 
+                  value="is-a-child:"
+                  title="Restrict search to records having a parent."> Is a child </label></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td class="align-right width-15-percent">
+    </td>
+    <td> <label class="plain">
+           <input type="checkbox" 
+                  class="ref-search-assertion" 
+                  id="ref-is-not-a-child" 
+                  value="is-not-a-child:"
+                  title="Restrict search to records that have no parent."> Is not a child (Has no parent)</label></td>
+  </tr>
+  </table>

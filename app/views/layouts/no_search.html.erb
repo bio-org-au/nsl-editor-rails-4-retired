@@ -66,6 +66,7 @@ input[type="checkbox"]:not([title]) {
         <%= render partial: 'layouts/footer' %>
       </div>
     </div>
+    <%= render partial: 'search/advanced_script' %>
     <script>
       var ffox = window.navigator.userAgent.match(/Firefox\/([0-9]+)\./);
       var ver = ffox ? parseInt(ffox[1]) : 99;
