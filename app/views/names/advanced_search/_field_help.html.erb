@@ -75,7 +75,31 @@
       {field_name: 'ex-author:', description: "ex-author abbreviation"},
       {field_name: 'base-author:', description: "base author abbreviation"},
       {field_name: 'ex-base-author:', description: "ex-base author abbreviation"},
-      {field_name: 'sanctioning-author:', description: "sanctioning author abbreviation"}
+      {field_name: 'sanctioning-author:', description: "sanctioning author abbreviation"},
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+        <a href="javascript:void(0)" class="searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
+          <span class="blue"><%= val[:field_name] %></span>
+        </a>
+    </td>
+    <td><%= val[:description].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+<br>
+
+<h5>Assertions</h5>
+  <h6>Missing authorities</h6>
+<table class="table table-striped">
+  <tr><th>Field</th><th>Description</th></tr>
+  <% [
+      {field_name: 'has-no-author:', description: "has no author abbreviation"},
+      {field_name: 'has-no-ex-author:', description: "has no ex-author abbreviation"},
+      {field_name: 'has-no-base-author:', description: "has no base author abbreviation"},
+      {field_name: 'has-no-ex-base-author:', description: "has no ex-base author abbreviation"},
+      {field_name: 'has-no-sanctioning-author:', description: "has no sanctioning author abbreviation"},
+      {field_name: 'has-no-authors:', description: "has no authors of any kind"},
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">
@@ -90,7 +114,6 @@
 <br>
 
 
-<h5>Assertions</h5>
 <h6>Duplication Assertions</h6>
 <table class="table table-striped">
   <% [
