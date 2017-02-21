@@ -1,4 +1,8 @@
 ---
+- :date: 21-Feb-2017
+  :jira_id: '2248'
+  :description: |-
+    Remove the History tab.
 - :date: 20-Feb-2017
   :jira_id: '2248'
   :description: |-
