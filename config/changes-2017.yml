@@ -1,4 +1,8 @@
 ---
+- :date: 22-Feb-2017
+  :jira_id: '2263'
+  :description: |-
+    Instance tree tab parent typeahead fixed for new placement.
 - :date: 21-Feb-2017
   :jira_id: '2242'
   :description: |-
