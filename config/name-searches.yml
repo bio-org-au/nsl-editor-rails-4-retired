@@ -31,6 +31,18 @@
   :where_clause: " parent_id is null"
 'has-parent:':
   :where_clause: " parent_id is not null"
+'has-no-author:':
+  :where_clause: " author_id is null"
+'has-no-ex-author:':
+  :where_clause: " ex_author_id is null"
+'has-no-base-author:':
+  :where_clause: " base_author_id is null"
+'has-no-ex-base-author:':
+  :where_clause: " ex_base_author_id is null"
+'has-no-sanctioning-author:':
+  :where_clause: " sanctioning_author_id is null"
+'has-no-authors:':
+  :where_clause: " author_id is null and base_author_id is null and ex_author_id is null and ex_base_author_id is null and sanctioning_author_id is null"
 'is-a-child:':
   :where_clause: " parent_id is not null"
 'is-not-a-child:':

@@ -1,4 +1,27 @@
 ---
+- :date: 22-Feb-2017
+  :jira_id: '2263'
+  :description: |-
+    Instance tree tab parent typeahead fixed for new placement.
+- :date: 21-Feb-2017
+  :jira_id: '2242'
+  :description: |-
+    Added search assertions for the absence of name authors e.g. has-no-author:.
+- :date: 21-Feb-2017
+  :jira_id: '2261'
+  :description: |-
+    Remove the History tab.
+- :date: 20-Feb-2017
+  :jira_id: '2248'
+  :description: |-
+    Remove the Advanced search tab.
+- :date: 16-Feb-2017
+  :jira_id: '2252'
+  :description: |-
+    The search for Adnot works for upper-case terms - it is now 
+    correctly case-insensitive.
+- :date: 16-Feb-2017
+  :release: true
 - :date: 15-Feb-2017
   :jira_id: '2245'
   :description: |-

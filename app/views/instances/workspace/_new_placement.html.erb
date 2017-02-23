@@ -5,7 +5,7 @@
   <b>Place</b> in <%= @current_workspace.title %> referencing</br>
   <b><%= @instance.reference.citation_html.html_safe %></b><br/>
   under
-  <%= render partial: "instances/workspace/forms/name_typeahead" %>
+  <%= render partial: "instances/workspace/forms/new_placement_name_typeahead" %>
       <div class="form-group">
       <%= radio_button_tag(:type, "accepted", @name_node_tree_link.default_to_accepted?, name: "place_name[placement_type]") %>
       <%= label_tag(:type_accepted, "Accepted") %>

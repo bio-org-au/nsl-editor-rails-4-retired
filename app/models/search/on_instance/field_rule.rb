@@ -39,7 +39,7 @@ class Search::OnInstance::FieldRule
     "comments:"             => { where_clause: " exists (select null from
                                  comment
                                  where comment.instance_id = instance.id
-                                 and comment.text like ?) " },
+                                 and lower(comment.text) like ?) " },
     "comments-by:"          => { where_clause: " exists (select null
                                  from comment
                                  where comment.instance_id = instance.id
