@@ -113,7 +113,8 @@ class Search::OnName::Predicate
     )
       Search::OnName::FieldAbbrev::ABBREVS[field]
     else
-      raise "Cannot search name for: #{field}."
+      raise "Cannot search name for: #{field}. You may need to try another
+      search target."
     end
   end
 end

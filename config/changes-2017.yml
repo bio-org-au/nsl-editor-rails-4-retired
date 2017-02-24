@@ -1,4 +1,9 @@
 ---
+- :date: 24-Feb-2017
+  :jira_id: '2257'
+  :description: |-
+    Added suggestion to check search target in error message for 
+    unrecognised field name.
 - :date: 23-Feb-2017
   :release: true
 - :date: 22-Feb-2017
