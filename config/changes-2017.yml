@@ -1,4 +1,10 @@
 ---
+- :date: 27-Feb-2017
+  :jira_id: '2252'
+  :description: |-
+    Made adnot searching consistent with comments searching.
+    <br>Set up auto-wildcarding, provided new directive for adnot-exact search,
+    and added field help.
 - :date: 24-Feb-2017
   :jira_id: '2257'
   :description: |-
