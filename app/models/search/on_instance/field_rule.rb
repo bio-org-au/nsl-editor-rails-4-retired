@@ -36,7 +36,9 @@ class Search::OnInstance::FieldRule
                                  from name n
                                  where instance.name_id = n.id
                                  and lower(n.full_name) like lower(?) )" },
-    "comments:"             => { where_clause: " exists (select null from
+    "comments:"             => { trailing_wildcard: true,
+                                 leading_wildcard: true,
+                                 where_clause: " exists (select null from
                                  comment
                                  where comment.instance_id = instance.id
                                  and lower(comment.text) like ?) " },
@@ -44,7 +46,7 @@ class Search::OnInstance::FieldRule
                                  from comment
                                  where comment.instance_id = instance.id
                                  and comment.created_by like ?) " },
-
+    "comments-exact:"       => { where_clause: " exists (select null from comment where comment.instance_id = instance.id and lower(comment.text) like ?) "},
     "page:"                 => { where_clause: " lower(page) like lower(?)" },
     "page-qualifier:"       => { where_clause:
                                  " lower(page_qualifier) like lower(?)" },

@@ -18,15 +18,17 @@
 require "test_helper"
 load "test/models/search/users.rb"
 
-# Single Search model test for Reference target.
-class SearchOnReferenceCommentsSimpleTest < ActiveSupport::TestCase
-  test "search on reference comments simple" do
-    params =  ActiveSupport::HashWithIndifferentAccess
-              .new(query_target: "reference",
-                   query_string: "comments: ext",
-                   include_common_and_cultivar_session: true,
-                   current_user: build_edit_user)
+# Single Search model test on Instance search.
+class SearchOnInstanceAdnotExactNoWildCardTest < ActiveSupport::TestCase
+  test "search on instance adnot exact with no wildcards" do
+    params = ActiveSupport::HashWithIndifferentAccess.new(
+      query_target: "instance",
+      query_string: "adnot-exact: xY ",
+      include_common_and_cultivar_session: true,
+      current_user: build_edit_user
+    )
     search = Search::Base.new(params)
-    assert !search.executed_query.results.empty?, "Results expected."
+    assert search.executed_query.results.empty?,
+           "No instances with adnot expected."
   end
 end

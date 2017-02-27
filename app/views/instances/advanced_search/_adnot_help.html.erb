@@ -1,0 +1,17 @@
+<h5>Adnot</h5>
+<p>Adnot is the preferred name for Instance comments</p>
+<table class="table table-striped">
+  <% [
+      {field_name: 'adnot:', description: "adnot text, with leading and trailing wildcards added automatically"},
+      {field_name: 'adnot-exact:', description: "adnot text"},
+      {field_name: 'adnot-by:', description: "user who added or changed adnot"}
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent"><a href="javascript:void(0)" 
+                                    class="searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
+        <span class="blue"><%= val[:field_name] %></span></a>
+    </td>
+    <td><%= val[:description].html_safe %></td>
+  </tr>
+  <% end %>
+</table>

@@ -23,7 +23,7 @@ class SearchOnInstanceCommentsSimpleTest < ActiveSupport::TestCase
   test "search on instance comments simple" do
     params = ActiveSupport::HashWithIndifferentAccess.new(
       query_target: "instance",
-      query_string: "comments: *comment text",
+      query_string: "comments: instance MyText xYz",
       include_common_and_cultivar_session: true,
       current_user: build_edit_user
     )

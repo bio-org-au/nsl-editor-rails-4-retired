@@ -18,12 +18,12 @@
 require "test_helper"
 load "test/models/search/users.rb"
 
-# Single Search model test for Reference target.
-class SearchOnReferenceCommentsSimpleTest < ActiveSupport::TestCase
-  test "search on reference comments simple" do
+# Single Search model test for Name target.
+class SearchOneNameCommentsExactCaseInsensitiveTest < ActiveSupport::TestCase
+  test "search on name comments exact is case insensitive" do
     params =  ActiveSupport::HashWithIndifferentAccess
-              .new(query_target: "reference",
-                   query_string: "comments: ext",
+              .new(query_target: "name",
+                   query_string: "comments-exact: NAME mYtEXT XyZ",
                    include_common_and_cultivar_session: true,
                    current_user: build_edit_user)
     search = Search::Base.new(params)

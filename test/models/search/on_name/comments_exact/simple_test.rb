@@ -23,7 +23,7 @@ class SearchOneNameCommentsExactSimpleTest < ActiveSupport::TestCase
   test "search on name comments exact simple" do
     params =  ActiveSupport::HashWithIndifferentAccess
               .new(query_target: "name",
-                   query_string: "comments-exact: *",
+                   query_string: "comments-exact: name MyText xYz",
                    include_common_and_cultivar_session: true,
                    current_user: build_edit_user)
     search = Search::Base.new(params)

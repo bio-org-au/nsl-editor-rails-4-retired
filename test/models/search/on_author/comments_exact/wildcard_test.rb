@@ -18,15 +18,17 @@
 require "test_helper"
 load "test/models/search/users.rb"
 
-# Single Search model test for Reference target.
-class SearchOnReferenceCommentsSimpleTest < ActiveSupport::TestCase
-  test "search on reference comments simple" do
-    params =  ActiveSupport::HashWithIndifferentAccess
-              .new(query_target: "reference",
-                   query_string: "comments: ext",
-                   include_common_and_cultivar_session: true,
-                   current_user: build_edit_user)
+# Single Search model test.
+class SearchOnAuthorCommentsExactWildcardTest < ActiveSupport::TestCase
+  test "search on author comments exact wildcard" do
+    params = ActiveSupport::HashWithIndifferentAccess.new(
+      query_target: "author",
+      query_string: "comments-exact: *xy*",
+      include_common_and_cultivar_session: true,
+      current_user: build_edit_user
+    )
     search = Search::Base.new(params)
-    assert !search.executed_query.results.empty?, "Results expected."
+    assert !search.executed_query.results.empty?,
+           "Author with comment for comments-exact wildcard search expected."
   end
 end

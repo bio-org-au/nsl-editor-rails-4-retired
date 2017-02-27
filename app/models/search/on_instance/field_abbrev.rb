@@ -21,6 +21,7 @@ class Search::OnInstance::FieldAbbrev
     "n:" => "name:",
     "a:" => "abbrev:",
     "adnot:" => "comments:",
+    "adnot-exact:" => "comments-exact:",
     "adnot-by:" => "comments-by:",
     "it:" => "type:",
     "note:" => "notes:",
