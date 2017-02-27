@@ -23,17 +23,57 @@ class NameRank < ActiveRecord::Base
   has_many :names
   belongs_to :name_group
 
-  SPECIES = "Species"
-  GENUS = "Genus"
-  FAMILIA = "Familia"
-  FAMILY = FAMILIA
-  NA = "[n/a]"
-  UNRANKED = "[unranked]"
+  NEEDS_GENERIC_EPITHET = %w(Subgenus
+                             Sectio
+                             Subsectio
+                             Series
+                             Subseries
+                             Superspecies
+                             Species).freeze
+  NEEDS_SPECIFIC_EPITHET = %w(Subspecies
+                              Nothosubspecies
+                              Nothovarietas
+                              Varietas
+                              Subvarietas
+                              Forma
+                              Subforma
+                              morphological
+                              nothomorph.).freeze
 
-  scope :not_deprecated, -> { where(deprecated: false) }
+  SPECIES = "Species".freeze
+  GENUS = "Genus".freeze
+  FAMILIA = "Familia".freeze
+  FAMILY = FAMILIA.freeze
+  NA = "[n/a]".freeze
+  UNRANKED = "[unranked]".freeze
+
+  def needs_generic_epithet
+    NEEDS_GENERIC_EPITHET.include?(name)
+  end
+
+  def needs_specific_epithet
+    NEEDS_SPECIFIC_EPITHET.include?(name)
+  end
+
+  def epithet_type
+    if needs_generic_epithet
+      return "Generic"
+    elsif needs_specific_epithet
+      return "Specific"
+    else
+      return nil
+    end
+  end
 
   def self.default
     NameRank.where(abbrev: "sp.").push(NameRank.first).first
+  end
+
+  def self.sample(n = 20)
+    NameRank.first(n).each do |name_rank|
+      ap name_rank
+      puts "epithet_type: #{name_rank.epithet_type}"
+    end
   end
 
   def self.options_for_category(name_category = :unknown)
@@ -103,7 +143,8 @@ class NameRank < ActiveRecord::Base
   end
 
   def species?
-    !!name.match(/\A#{SPECIES}\z/)
+    # !!name.match(/\A#{SPECIES}\z/)
+    /\A#{SPECIES}\z/ === name
   end
 
   def genus?
