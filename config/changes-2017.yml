@@ -1,8 +1,12 @@
 ---
 - :date: 01-Mar-2017
+  :jira_id: '2064'
+  :description: |-
+    Remove phrase name from scientific name entry dropdown.
+- :date: 01-Mar-2017
   :jira_id: '2239'
   :description: |-
-    Warn on entry of more than one primary instance
+    Warn on entry of more than one primary instance.
 - :date: 27-Feb-2017
   :jira_id: '2252'
   :description: |-

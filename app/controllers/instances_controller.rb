@@ -28,6 +28,7 @@ as a synonym"
   # Sets up RHS details panel on the search results page.
   # Displays a specified or default tab.
   def show
+    logger.debug("InstancesController::show")
     @tab = tab_or_default_tab
     @tab_index = (params[:tabIndex] || "1").to_i
     @tabs_to_offer = tabs_to_offer
