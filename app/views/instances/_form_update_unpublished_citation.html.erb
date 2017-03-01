@@ -42,6 +42,8 @@
     <%= f.hidden_field :name_id, value: @instance.name_id %>
     <%= f.hidden_field :cites_id, value: @instance.cites_id %>
     <br>
+    <div id="form-update-info-message-container" class="message-container"></div>
+    <div id="form-update-error-message-container" class="message-container error-container"></div>
     <%= f.submit class: 'btn-primary pull-right', title: 'Save changes', tabindex: increment_tab_index %>
     <br>
     <br>

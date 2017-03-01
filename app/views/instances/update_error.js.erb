@@ -1,5 +1,5 @@
 $('.message-container').html('');
-$('#search-result-details-error-message-container').html('<%= escape_javascript(@message) %>');
+$('#form-update-error-message-container').html('<%= escape_javascript(@message) %>');
 <% if @multiple_primary_warning %>
   $('#extra-primary-warning').removeClass('hidden');
 <% end %>
