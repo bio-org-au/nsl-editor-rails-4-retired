@@ -57,6 +57,14 @@ class Name < ActiveRecord::Base
            foreign_key: "name_id",
            dependent: :restrict_with_error
 
+  has_many :instance_types, through: :instances
+
+  #has_many :primary_instance_types, -> { where(primary_instance: true) },   
+           #foreign_key: "name_id",
+           #class_name: "InstanceType",
+           #through: :instances,
+           #source: :instance_type
+
   has_many :comments
   has_many :name_tag_names
   has_many :name_tags, through: :name_tag_names
@@ -67,6 +75,10 @@ class Name < ActiveRecord::Base
 
   before_create :set_defaults
   before_save :validate
+
+  def primary_instances
+    instances.where( "instance_type_id in (select id from instance_type where primary_instance)")
+  end
 
   def save_with_username(username)
     self.created_by = self.updated_by = username

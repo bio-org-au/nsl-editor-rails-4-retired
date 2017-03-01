@@ -1,25 +1,25 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 author_comment:
-  text: MyText
+  text: author MyText xYz
   author: haeckel
   created_by: greg
   updated_by: greg
 
 instance_comment:
-  text: instance comment text
+  text: instance MyText xYz
   instance: triodia_in_brassard
   created_by: greg
   updated_by: greg
 
 name_comment:
-  text: MyText
+  text: name MyText xYz
   name: a_species
   created_by: greg
   updated_by: greg
 
 reference_comment:
-  text: MyText
+  text: reference MyText xYz
   reference: handbook_of_the_vascular_plants_of_sydney
   created_by: greg
   updated_by: greg

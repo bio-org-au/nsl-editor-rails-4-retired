@@ -100,7 +100,8 @@ class Search::OnReference::Predicate
     )
       Search::OnReference::FieldAbbrev::ABBREVS[field]
     else
-      raise "Cannot search references for: #{field}."
+      raise "Cannot search references for: #{field}. You may need to try another
+      search target."
     end
   end
 end

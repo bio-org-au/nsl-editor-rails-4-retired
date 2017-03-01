@@ -103,7 +103,8 @@ class Search::OnInstance::Predicate
     )
       Search::OnInstance::FieldAbbrev::ABBREVS[field]
     else
-      raise "Cannot search instances for: #{field}."
+      raise "Cannot search instances for: #{field}. You may need to try another
+      search target."
     end
   end
 end

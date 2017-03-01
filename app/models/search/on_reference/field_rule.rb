@@ -44,6 +44,9 @@ comment where comment.reference_id = reference.id and lower(comment.text)
     "comments-by:"          => { where_clause: " exists (select null from
 comment where comment.reference_id = reference.id and comment.created_by
                                  like ?) " },
+    "comments-exact:"     => { where_clause: " exists (select null from
+                               comment where comment.reference_id = reference.id
+                               and lower(comment.text) like ? ) " },
     "edition:"              => { where_clause:
                                  " lower(edition) like lower(?)" },
 

@@ -87,7 +87,7 @@
     name.id and comment.text like ?) "
 'comments-exact:':
   :where_clause: " exists       (select null       from comment       where comment.name_id
-    = name.id and comment.text like ?) "
+    = name.id and lower(comment.text) like ?) "
 'comments-by:':
   :where_clause: " exists       (select null       from comment       where comment.name_id
     = name.id and comment.created_by like ?) "

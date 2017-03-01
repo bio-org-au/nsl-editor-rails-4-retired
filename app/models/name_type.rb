@@ -94,6 +94,7 @@ class NameType < ActiveRecord::Base
   def self.scientific_1_parent_options
     where(scientific: true)
       .where(" (not hybrid or name in ('named hybrid','named hybrid autonym'))")
+      .where(" name != 'phrase name' ")
       .sort { |x, y| x.name <=> y.name }.collect { |n| [n.name, n.id] }
   end
 

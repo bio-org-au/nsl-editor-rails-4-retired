@@ -490,7 +490,7 @@ for_a_genus_with_two_instances_first:
 for_a_genus_with_two_instances_second:
   reference: telford_in_nuytsia
   name: a_genus_with_two_instances
-  instance_type: tax_nov
+  instance_type: secondary_reference
   page: zzzz99906
   namespace: apni
   created_by: tester
@@ -848,3 +848,13 @@ usage_of_name_to_be_placed:
   namespace: apni
   created_by: tester
   updated_by: tester
+
+first_instance_for_to_have_double_primary:
+  name: to_have_double_primary
+  reference: dummy
+  instance_type: tax_nov
+  page: exclude-from-ordering-test
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+

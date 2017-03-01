@@ -27,8 +27,10 @@ class Instance < ActiveRecord::Base
                 :give_me_focus,
                 :show_primary_instance_type, :data_fix_in_process,
                 :consider_apc,
-                :concept_warning_bypassed
+                :concept_warning_bypassed,
+                :extra_primary_override
   SEARCH_LIMIT = 50
+  MULTIPLE_PRIMARY_WARNING = "This would result in multiple primary instances"
   comma do
     id "Instance ID"
     name_id "Name ID"
@@ -163,6 +165,7 @@ class Instance < ActiveRecord::Base
   validate :name_cannot_be_synonym_of_itself
   validate :name_cannot_be_double_synonym
   validate :accepted_concept_cannot_be_synonym_of_accepted_concept
+  validate :only_one_primary_instance_per_name
 
   before_validation :set_defaults
   before_create :set_defaults
@@ -190,6 +193,31 @@ class Instance < ActiveRecord::Base
 
   def allowed_type_for_accepted_concept_synonym?
     instance_type.allowed_type_for_accepted_concept_synonym?
+  end
+
+  # Okay if no instance type (need instance type for next test)
+  # Okay if not a primary instance
+  # Okay if zero current primary instances
+  # Okay if 1 primary instance and this is it (updating)
+  # Okay if >1 primary instance and this is one of them and instance_type is not changing 
+  # Okay if updating but instance_type has not changed
+  # Otherwise, reject
+  def only_one_primary_instance_per_name
+    return if extra_primary_override == true
+    return if extra_primary_override == true
+    return unless instance_type.present?
+    return unless instance_type.primary?
+    return if name.primary_instances.size == 0 
+    # current record is the only primary instance (being updated)
+    if name.primary_instances.map(&:id).include?(id) &&
+       name.primary_instances.size == 1
+      return
+    end
+    # Don't reject updates that do not change instance type
+    unless new_record?
+      return unless changed.include?("instance_type_id")
+    end
+    errors[:base] << "This would result in multiple primary instances"
   end
 
   def name_cannot_be_double_synonym

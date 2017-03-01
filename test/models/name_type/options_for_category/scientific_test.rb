@@ -28,11 +28,10 @@ class ScientificTest < ActiveSupport::TestCase
     part1
     part2
     part3
-    part4
   end
 
   def part1
-    assert_equal 6,
+    assert_equal 5,
                  NameType.options_for_category(@current_category).size,
                  "Should be 6 #{@current_category} name types."
     assert NameType.options_for_category(@current_category)
@@ -61,12 +60,5 @@ class ScientificTest < ActiveSupport::TestCase
       .collect(&:first)
       .include?("named hybrid autonym"),
            "Named hybrid autonym should be a #{@current_category} name type."
-  end
-
-  def part4
-    assert NameType.options_for_category(@current_category)
-      .collect(&:first)
-      .include?("phrase name"),
-           "Phrase name should be a #{@current_category} name type."
   end
 end

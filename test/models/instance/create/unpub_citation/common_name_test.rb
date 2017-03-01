@@ -21,5 +21,6 @@ require "test_helper"
 # No message was getting to the users - this was failing without enough fuss.
 class InstCreateUnpubCitationCommonNameTest < ActiveSupport::TestCase
   test "instance create unpub citation common name" do
+    skip
   end
 end

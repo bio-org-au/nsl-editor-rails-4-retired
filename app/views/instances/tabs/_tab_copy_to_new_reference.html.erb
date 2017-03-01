@@ -134,6 +134,14 @@ The copied instance will remain attached to:
   <div id="copy-instance-error-message-container" class="error-container hidden"></div>
 </div>
 
+    <br>
+    <div id="extra-primary-warning" class="hidden form-check">
+      <br>
+      <label class="green form-check-label">
+      <%= f.check_box(:extra_primary_override,{title: "Override the warning message"}) %>
+        Ignore the warning and create the extra primary instance.
+      </label>
+    </div>
 <% end %>
 
 <br>
