@@ -42,7 +42,15 @@
     <br>
     <%= f.submit class: 'btn-primary', title: "Save changes", tabindex: increment_tab_index %>
     <br>
+    <div id="extra-primary-warning" class="hidden form-check">
+      <br>
+      <label class="green form-check-label">
+      <%= f.check_box(:extra_primary_override,{title: "Override the warning message"}) %>
+        Ignore the warning and create the extra primary instance.
+      </label>
+    </div>
     <br>
+
     <% refresh_page_link = link_to("Refresh page",
                                    '#', 
                                    id: "refresh-page-from-details-link",

@@ -21,6 +21,7 @@ class InstancesController < ApplicationController
   before_filter :find_instance, only: [:show, :tab, :destroy]
   CONCEPT_WARNING = "Validation failed: This concept includes an accepted name \
 as a synonym"
+  EXTRA_PRIMARY_WARNING = "Validation failed: This would result in multiple primary instances"
 
   # GET /instances/1
   # GET /instances/1/tab/:tab
@@ -75,6 +76,8 @@ as a synonym"
     @instance = Instance.new(the_params)
     @instance.concept_warning_bypassed =
       instance_params[:concept_warning_bypassed] == "1"
+    @instance.extra_primary_override =
+      instance_params[:extra_primary_override] == "1"
     @instance.save_with_username(current_user.username)
     render "create"
   rescue ActiveRecord::RecordNotUnique
@@ -91,8 +94,10 @@ as a synonym"
 
   def handle_other_errors(e)
     @allow_bypass = e.to_s.match(/\A#{CONCEPT_WARNING}\z/)
+    @multiple_primary_warning =
+      e.to_s.match(/#{Instance::MULTIPLE_PRIMARY_WARNING}\z/)
     @message = e.to_s
-    logger.error("Error: #{@message}")
+    logger.error("Error in handle_other_errors: #{@message}")
     render "create_error.js", status: :unprocessable_entity
   end
   private :handle_other_errors
@@ -101,10 +106,14 @@ as a synonym"
   # PUT /instances/1.json
   def update
     @instance = Instance::AsEdited.find(params[:id])
+    @instance.extra_primary_override =
+      instance_params[:extra_primary_override] == "1"
     @message = @instance.update_if_changed(instance_params,
                                            current_user.username)
     render "update.js"
   rescue => e
+    @multiple_primary_warning =
+      e.to_s.match(/#{Instance::MULTIPLE_PRIMARY_WARNING}\z/)
     @message = e.to_s
     render "update_error.js", status: :unprocessable_entity
   end
@@ -157,6 +166,8 @@ as a synonym"
   # Copy an instance with its citations
   def copy_standalone
     current_instance = Instance::AsCopier.find(params[:id])
+    current_instance.extra_primary_override =
+      instance_params[:extra_primary_override] == "1"
     @instance = current_instance.copy_with_citations_to_new_reference(
       instance_params, current_user.username
     )
@@ -164,6 +175,8 @@ as a synonym"
     render "instances/copy_standalone/success.js"
   rescue => e
     logger.error("There was a problem copying that instance: #{e}")
+    @multiple_primary_warning =
+      e.to_s.match(/#{Instance::MULTIPLE_PRIMARY_WARNING}\z/)
     @message = e.to_s
     render "instances/copy_standalone/error.js"
   end
@@ -187,7 +200,8 @@ as a synonym"
                                      :cites_id,
                                      :cited_by_id,
                                      :bhl_url,
-                                     :concept_warning_bypassed)
+                                     :concept_warning_bypassed,
+                                     :extra_primary_override)
   end
 
   def instance_name_params

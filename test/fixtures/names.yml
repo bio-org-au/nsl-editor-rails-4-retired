@@ -1995,3 +1995,30 @@ duplicate_of_deletable_apart_from_duplicate:
   updated_by: greg
   created_by: greg
 
+to_have_double_primary: 
+  simple_name: to have double primary
+  full_name: to have double primary
+  name_element: to have double primary
+  full_name_html: to have double primary
+  name_rank: species
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+
+no_instances: 
+  simple_name: no instances
+  full_name: no instances
+  name_element: no instances
+  full_name_html: no instances
+  name_rank: species
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+

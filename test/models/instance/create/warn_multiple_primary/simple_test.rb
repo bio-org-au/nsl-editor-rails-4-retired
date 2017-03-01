@@ -19,8 +19,22 @@ require "test_helper"
 
 # Single instance model test.
 # No message was getting to the users - this was failing without enough fuss.
-class InstCreateUnpubCitationCommonNameTest < ActiveSupport::TestCase
-  test "instance create unpub citation common name" do
-    skip
+class InstCreateWarnMultiplePrimarySimpleTest < ActiveSupport::TestCase
+  test "instance warning for multiple primary instance" do
+    name = names(:to_have_double_primary)
+    assert name.instances.size == 1, "Should have 1 instance"
+    assert name.instances.first.instance_type.primary?, "Should be primary"
+    i2 = name.instances.new
+    i2.instance_type = instance_types(:nom_nov)
+    i2.reference = references(:simple)
+    i2.created_by = "test"
+    i2.updated_by = "test"
+    assert_raises(ActiveRecord::RecordInvalid,
+                  "Second primary instance should be rejected") do
+      i2.save!
+    end
+    name_after = Name.find(name.id)
+    assert name_after.instances.size == 1,
+           "Should still be only 1 primary instance"
   end
 end

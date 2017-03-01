@@ -22,6 +22,7 @@ class Instance::AsEdited < Instance
     if changed?
       logger.debug("Instance has changes to: #{changed}")
       self.updated_by = username
+      self.extra_primary_override = params[:extra_primary_override] == "1"
       save!
       "Updated"
     else

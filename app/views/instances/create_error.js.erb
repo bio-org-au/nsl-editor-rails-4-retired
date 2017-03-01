@@ -4,3 +4,6 @@ $('#<%= focus_on_this_id %>').focus();
 <% if @allow_bypass %>
   $('#bypass-warning-widget').removeClass('hidden');
 <% end %>
+<% if @multiple_primary_warning %>
+  $('#extra-primary-warning').removeClass('hidden');
+<% end %>
