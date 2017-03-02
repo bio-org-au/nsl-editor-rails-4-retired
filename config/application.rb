@@ -43,3 +43,6 @@ module Ned
 end
 
 Rails.configuration.path_to_broadcast_file = "#{ENV['HOME']}/.nsl/broadcast.txt"
+
+puts "whoami: #{`whoami`}"
+puts "secret_key_base: #{ ENV["SECRET_KEY_BASE"] }"
