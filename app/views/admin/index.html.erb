@@ -86,7 +86,7 @@
 
     <tr><td>Rails.configuration.action_controller.perform_caching</td><td> <%= Rails.configuration.action_controller.try('perform_caching') %> </td></tr>
 
-    <tr><td></td><td> <%= Rails.application.secrets[:secret_key_base].reverse[0...8] %> </td></tr>
+    <tr><td></td><td> <%= Rails.application.secrets[:secret_key_base][0..6] %> </td></tr>
 
     </table>
 
