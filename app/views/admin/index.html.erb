@@ -85,7 +85,8 @@
     <tr><td>Rails.configuration.environment</td><td> <%= Rails.configuration.try('environment') %> </td></tr>
 
     <tr><td>Rails.configuration.action_controller.perform_caching</td><td> <%= Rails.configuration.action_controller.try('perform_caching') %> </td></tr>
-    <tr><td colspan="2">&nbsp;</td></tr>
+
+    <tr><td></td><td> <%= Rails.application.secrets[:secret_key_base].reverse[0...8] %> </td></tr>
 
     </table>
 
