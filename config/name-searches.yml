@@ -84,7 +84,7 @@
   :trailing_wildcard: true
   :leading_wildcard: true
   :where_clause: " exists (select null from comment       where comment.name_id =
-    name.id and comment.text like ?) "
+    name.id and lower(comment.text) like ?) "
 'comments-exact:':
   :where_clause: " exists       (select null       from comment       where comment.name_id
     = name.id and lower(comment.text) like ?) "
@@ -188,7 +188,7 @@
     like lower(?))
 'comments-but-no-instances:':
   :where_clause: exists (select null from comment where comment.name_id = name.id       and
-    comment.text like ?) and not exists       (select null from instance where name_id
+    lower(comment.text) like ?) and not exists       (select null from instance where name_id
     = name.id)
 'is-orth-var-and-non-primary-ref-first:':
   :where_clause: "ID IN (SELECT n.id\n                FROM   instance i\n                       INNER
