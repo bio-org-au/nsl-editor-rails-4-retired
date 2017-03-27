@@ -47,6 +47,18 @@ metrosideros_costata_is_basionym_of_angophora_costata:
   updated_by: tester
   page: "xx,20,900"
 
+# Standalone instance
+some_part_to_do_with_metrosideros_costata:
+  reference: part_about_metrosideros_costata
+  name: metrosideros_costata
+  instance_type: comb_nov
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  source_id_string: gcmc
+  page: exclude-from-ordering-test
+
 # Relationship instance - synonymy
 xyz_costata_is_synonym_of_angophora_costata:
   reference: paper_by_britten_on_angophora

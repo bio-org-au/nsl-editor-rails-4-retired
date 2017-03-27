@@ -122,4 +122,9 @@ class Reference < ActiveRecord::Base
       RefType.options_for_parent_of(children.collect(&:ref_type))
     end
   end
+
+  def part_parent_year
+    return nil unless ref_type.part?
+    parent.year
+  end
 end
