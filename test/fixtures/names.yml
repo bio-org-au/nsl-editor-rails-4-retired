@@ -950,7 +950,7 @@ metrosideros_costata_gaertn:
   full_name_html: "<scientific><name id='110181'><scientific><name id='109596'><element><i>Metrosideros</i></element></name></scientific> <element><i>costata</i></element> <authors><author id='7066' title='Gaertner, J.'>Gaertn.</author></authors></name></scientific>"
   name_element: costata
   name_rank: species
-  name_status: legitimate
+  name_status: orth_var
   name_type: scientific
   namespace: apni
   orth_var: false

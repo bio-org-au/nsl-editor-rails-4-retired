@@ -1,4 +1,8 @@
 ---
+- :date: 27-Mar-2017
+  :jira_id: '2302'
+  :description: |-
+   Show non-legitimate nomenclatural status after names in reference listing 
 - :date: 24-Mar-2017
   :jira_id: '2285'
   :description: |-
