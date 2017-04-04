@@ -45,6 +45,8 @@
   <%= "<br>with verbatim name<br> #{@instance.verbatim_name_string}".html_safe if @instance.verbatim_name_string.present? %>
   <br>
   <%= link_to("and BHL entry #{icon('external-link')}".html_safe,@instance.bhl_url, title: "Follow this link to the BHL entry.") if @instance.bhl_url.present? %>
+  <br>
+  <%= "[DRAFT]" if @instance.draft? %>
 
 
 

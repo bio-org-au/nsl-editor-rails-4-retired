@@ -1,5 +1,9 @@
 ---
 - :date: 04-Apr-2017
+  :jira_id: '2058'
+  :description: |-
+   Allow draft instances to be created.  Indicate draft in the display.
+- :date: 04-Apr-2017
   :jira_id: '2276'
   :description: |-
    Do not hide details panel when drop-down menus at top of page are opened.

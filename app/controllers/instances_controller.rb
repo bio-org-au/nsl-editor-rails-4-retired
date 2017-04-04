@@ -202,7 +202,8 @@ as a synonym"
                                      :cited_by_id,
                                      :bhl_url,
                                      :concept_warning_bypassed,
-                                     :extra_primary_override)
+                                     :extra_primary_override,
+                                     :draft)
   end
 
   def instance_name_params
@@ -283,6 +284,7 @@ as a synonym"
       instance_type_id: instance_params[:instance_type_id],
       verbatim_name_string: instance_params[:verbatim_name_string],
       bhl_url: instance_params[:bhl_url],
+      draft: instance_params[:draft],
       page: instance_params[:page] }
   end
 

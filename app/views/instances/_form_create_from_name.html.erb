@@ -37,6 +37,11 @@
     and BHL URL
     <%= f.text_field :bhl_url, class: "form-control", title: "Enter BHL URL", tabindex: increment_tab_index %>
     <br>
+    <label class="form-check-label plain" title="Mark this instance as a draft">
+    <%= f.check_box(:draft,{tabindex: increment_tab_index }) %>
+      as a draft
+    </label>
+    <br>
     <%= f.hidden_field :name_id %>
     <%= f.hidden_field :reference_id %>
     <br>
