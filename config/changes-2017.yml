@@ -1,4 +1,8 @@
 ---
+- :date: 04-Apr-2017
+  :jira_id: '2276'
+  :description: |-
+   Do not hide details panel when drop-down menus at top of page are opened.
 - :date: 27-Mar-2017
   :jira_id: '2205'
   :description: |-
