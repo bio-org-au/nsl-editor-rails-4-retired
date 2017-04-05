@@ -1,4 +1,8 @@
 ---
+- :date: 05-Apr-2017
+  :jira_id: '2315'
+  :description: |-
+    Name search now respects embedded spaces e.g. * sp. * type: scientific
 - :date: 04-Apr-2017
   :jira_id: '2058'
   :description: |-

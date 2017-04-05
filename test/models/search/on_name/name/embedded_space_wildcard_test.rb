@@ -32,7 +32,7 @@ class SearchOnNameNameEmbeddedSpaceWildcardTest < ActiveSupport::TestCase
     )
     search = Search::Base.new(params)
     confirm_results_class(search.executed_query.results)
-    assert !search.executed_query.results.empty?,
-           "Expected at least one search result"
+    assert search.executed_query.results.empty?,
+           "Expected no search results due to embedded space"
   end
 end
