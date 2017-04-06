@@ -1,5 +1,9 @@
 ---
 - :date: 06-Apr-2017
+  :jira_id: '2325'
+  :description: |-
+    Cursor now starts in name field on tab for creating synonym from Reference.
+- :date: 06-Apr-2017
   :release: true
 - :date: 06-Apr-2017
   :jira_id: '2328'
