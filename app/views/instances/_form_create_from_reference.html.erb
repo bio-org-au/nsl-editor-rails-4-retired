@@ -42,14 +42,9 @@
     <%= f.text_field :verbatim_name_string, class: "form-control", title: "The verbatim or literal name as it occurs, if non-standard.", tabindex: increment_tab_index %>
     with BHL URL
     <%= f.text_field :bhl_url, class: "form-control", title: "Biodiversity Heritage Library link address", tabindex: increment_tab_index %>
-    <br>
-    <label class="form-check-label plain" title="Mark this instance as a draft">
-    <%= f.check_box(:draft,{tabindex: increment_tab_index }) %>
-      as a draft
-    </label>
+    <%= render partial: "instances/widgets/as_a_draft", locals: {f: f} %>
     <br>
     <%= f.hidden_field :name_id %>
-    <br>
     <%= f.hidden_field :reference_id, value: @reference.id %>
     <br>
     <%= f.submit class: 'btn-primary', title: "Create the new instance", tabindex: increment_tab_index %>
