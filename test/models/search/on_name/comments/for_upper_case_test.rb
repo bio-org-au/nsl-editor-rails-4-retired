@@ -1,6 +1,4 @@
-#   encoding: utf-8
 # frozen_string_literal: true
-
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -17,22 +15,18 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-
 require "test_helper"
 load "test/models/search/users.rb"
-load "test/models/search/on_name/test_helper.rb"
 
-# Single Search model test.
-class SearchOnNameNameEmbeddedSpaceWildcardTest < ActiveSupport::TestCase
-  test "search on name name embedded space wildcard" do
-    params = ActiveSupport::HashWithIndifferentAccess.new(
-      query_target: "name",
-      query_string: "name: ang hora",
-      current_user: build_edit_user
-    )
+# Single Search model test for Name target.
+class SearchOneNameCommentsForUpperCaseTest < ActiveSupport::TestCase
+  test "search on name for upper case comments" do
+    params =  ActiveSupport::HashWithIndifferentAccess
+              .new(query_target: "name",
+                   query_string: "comments: name MyText xYz",
+                   include_common_and_cultivar_session: true,
+                   current_user: build_edit_user)
     search = Search::Base.new(params)
-    confirm_results_class(search.executed_query.results)
-    assert search.executed_query.results.empty?,
-           "Expected no search results due to embedded space"
+    assert !search.executed_query.results.empty?, "Results expected."
   end
 end

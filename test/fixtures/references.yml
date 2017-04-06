@@ -1487,7 +1487,6 @@ ref_type_is_part:
   namespace: apni
   ref_author_role: dash
   ref_type: part
-  year: 1990
   created_by: tester
   updated_by: tester
 
@@ -2219,3 +2218,33 @@ for_name_to_be_placed:
   ref_type: book
   created_by: tester
   updated_by: tester
+
+part_about_metrosideros_costata: 
+  title: part about metrosideros costata
+  citation: part about metrosideros costata parent year is 1900
+  citation_html: part about metrosideros costata
+  display_title: part about metrosideros costata
+  author: unknown
+  language: undetermined
+  parent: paper_has_part_about_metrosideros_costata
+  namespace: apni
+  ref_author_role: dash
+  ref_type: part
+  created_by: tester
+  updated_by: tester
+
+
+paper_has_part_about_metrosideros_costata: 
+  title: paper has part about metrosideros costata
+  citation: paper has part about metrosideros costata
+  citation_html: paper has part about metrosideros costata
+  display_title: paper has part about metrosideros costata
+  author: unknown
+  language: undetermined
+  year: 1900
+  namespace: apni
+  ref_author_role: dash
+  ref_type: paper
+  created_by: tester
+  updated_by: tester
+

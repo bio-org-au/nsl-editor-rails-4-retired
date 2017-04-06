@@ -25,14 +25,6 @@ class InstanceType < ActiveRecord::Base
     InstanceType.find_by(name: "[unknown]")
   end
 
-  def matching_preposition
-    if name.downcase =~ /misapplied/
-      "to"
-    else
-      "of"
-    end
-  end
-
   def name_as_a_noun
     name.gsub(/misapplied/i, "misapplication")
   end

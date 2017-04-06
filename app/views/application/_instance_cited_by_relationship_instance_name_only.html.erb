@@ -18,8 +18,9 @@
       title="Instance record. Select to show details."
       tabindex="<%= increment_tab_index %>" 
       >
-    <%= %Q(#{ search_result.expanded_instance_type || search_result.instance_type.name} #{search_result.instance_type.matching_preposition}
-    <span class="full-name-within-instance">#{search_result.this_is_cited_by.name.try("full_name_html")}</span>).html_safe %>
+      <%= search_result.instance_type.of_label %>
+      <%= %Q(<span class="full-name-within-instance">#{search_result.this_is_cited_by.name.try("full_name_html")}</span>).html_safe %>
+      <%= "[DRAFT]" if search_result.draft? %>
     <%= render(partial: 'record_debug', locals: {search_result: search_result}) if @debug %>
  </a> </td>
   <td class="takes-focus width-10-percent filler">&nbsp;</td>

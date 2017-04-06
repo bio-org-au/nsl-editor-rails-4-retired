@@ -48,16 +48,9 @@
     with BHL URL
     <%= f.text_field :bhl_url, class: "form-control", title: 'Enter BHL URL', tabindex: increment_tab_index %>
     <br>
-    <br>
-    <br>
-    <br>
-    <br>
     <%= f.hidden_field :name_id %>
-    <br>
     <%= f.hidden_field :reference_id, value: @instance.reference_id %>
-    <br>
     <%= f.hidden_field :cited_by_id, value: @instance.id %>
-    <br>
     <%= f.hidden_field :cites_id %>
     <br>
     <%= f.submit class: 'btn-primary', title: 'Save changes', tabindex: increment_tab_index %>

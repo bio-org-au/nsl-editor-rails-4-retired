@@ -1,6 +1,4 @@
-#   encoding: utf-8
 # frozen_string_literal: true
-
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -17,22 +15,17 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-
 require "test_helper"
-load "test/models/search/users.rb"
-load "test/models/search/on_name/test_helper.rb"
 
-# Single Search model test.
-class SearchOnNameNameEmbeddedSpaceWildcardTest < ActiveSupport::TestCase
-  test "search on name name embedded space wildcard" do
-    params = ActiveSupport::HashWithIndifferentAccess.new(
-      query_target: "name",
-      query_string: "name: ang hora",
-      current_user: build_edit_user
-    )
-    search = Search::Base.new(params)
-    confirm_results_class(search.executed_query.results)
-    assert search.executed_query.results.empty?,
-           "Expected no search results due to embedded space"
+# Single instance model test.
+class InstanceAsArrayForNameSortingRefIsAPartTest < ActiveSupport::TestCase
+  test "instance as array for name sorting ref is a part" do
+    name = names(:metrosideros_costata)
+    part_instance = instances(:some_part_to_do_with_metrosideros_costata)
+    i = Instance::AsArray::ForName.new(name)
+    assert i.results.class == Array,
+           "InstanceAsArray::ForName should produce an array."
+    assert i.results[4].id == part_instance.id,
+           "Instance for the ref of type part should be fifth entry in order."
   end
 end

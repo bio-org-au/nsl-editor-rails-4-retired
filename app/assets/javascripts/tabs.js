@@ -147,7 +147,5 @@ $( "select#name-advanced-search-name-type-options" )
 
   setActiveHelpOnLoad();
   setActiveExamplesOnLoad();
-  setActiveAdvancedOnLoad();
-    
 });
 

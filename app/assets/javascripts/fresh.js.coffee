@@ -42,7 +42,6 @@ jQuery ->
   $('body').on('click','.build-query-button', (event) ->                   buildQueryString(event,$(this)))
   $('#search-field').change (event) ->                                     searchFieldChanged(event,$(this))
   $('body').on('change','select#query-on', (event) ->                      queryonSelectChanged(event,$(this)))
-  $('body').on('click','li.dropdown', (event) ->                           dropdownClick(event,$(this)))
   # $('body').on('click','li.dropdown-submenu a', (event) ->                 dropdownSubmenuClick(event,$(this)))
   $('body').on('click','a.unconfirmed-delete-link', (event) ->             unconfirmedActionLinkClick(event,$(this)))
   $('body').on('click','a.unconfirmed-action-link', (event) ->             unconfirmedActionLinkClick(event,$(this)))
@@ -129,12 +128,6 @@ nameRankIdChanged = (event,$element) ->
     $('.requires-rank').removeAttr('disabled')
     $('input.requires-rank').removeClass('disabled').addClass('enabled')
     $('.hide-if-rank').addClass('hidden')
-
-dropdownClick = (event,$element) ->
-  setTimeout (->
-    hideSearchResultDetailsIfMenusOpen()
-    return
-  ), 600
 
 # Do NOT close the menu when submenu is clicked.
 dropdownSubmenuClick = (event,$element) ->

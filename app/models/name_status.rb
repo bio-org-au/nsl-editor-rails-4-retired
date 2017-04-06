@@ -43,6 +43,10 @@ class NameStatus < ActiveRecord::Base
     name =~ %r{\A\[n/a\]\z}
   end
 
+  def unknown?
+    name =~ %r{\A\[unknown\]\z}
+  end
+
   def bracketed_non_legitimate_status
     legitimate? ? "" : "[#{name_without_brackets}]"
   end
@@ -53,6 +57,10 @@ class NameStatus < ActiveRecord::Base
 
   def name_for_instance_display
     legitimate? || na? ? "" : name
+  end
+
+  def name_for_instance_display_within_reference
+    legitimate? || na? || unknown? ? "" : name
   end
 
   def self.not_applicable

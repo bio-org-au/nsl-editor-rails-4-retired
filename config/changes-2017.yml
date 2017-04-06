@@ -1,4 +1,30 @@
 ---
+- :date: 05-Apr-2017
+  :jira_id: '2315'
+  :description: |-
+    Name search now respects embedded spaces e.g. * sp. * type: scientific
+- :date: 04-Apr-2017
+  :jira_id: '2058'
+  :description: |-
+   Allow draft instances to be created.  Indicate draft in the display.
+- :date: 04-Apr-2017
+  :jira_id: '2276'
+  :description: |-
+   Do not hide details panel when drop-down menus at top of page are opened.
+- :date: 27-Mar-2017
+  :jira_id: '2205'
+  :description: |-
+   Improve sorting for references of type part - use year of parent reference.
+- :date: 27-Mar-2017
+  :jira_id: '2302'
+  :description: |-
+   Show non-legitimate nomenclatural status after names in reference listing 
+- :date: 24-Mar-2017
+  :jira_id: '2285'
+  :description: |-
+    Name comment search is now case-insensitive.
+- :date: 02-Mar-2017
+  :release: true
 - :date: 01-Mar-2017
   :jira_id: '2064'
   :description: |-

@@ -170,6 +170,10 @@ class Instance < ActiveRecord::Base
   before_validation :set_defaults
   before_create :set_defaults
 
+  def draft?
+    draft
+  end
+
   def accepted_concept_cannot_be_synonym_of_accepted_concept
     return if concept_warning_bypassed?
     return if standalone?

@@ -18,8 +18,14 @@
       title="Instance within a reference record.  Select to show details."
       id="<%= %Q(#{search_result.class}-#{search_result.id}) %>">
     <%= "#{search_result.name.full_name}" if search_result.name %>  
+    <% if search_result.name && search_result.name.name_status.name_for_instance_display_within_reference.present? %>
+      <span class="non-legit-name-status">
+      <%= "#{search_result.name.name_status.name_for_instance_display_within_reference}" %>  
+      </span>
+    <% end %>
     : <%= "#{search_result.page}" %>
     <%= "[#{search_result.instance_type.name}]" %>
+    <%= "[DRAFT]" if search_result.draft? %>
     <%= render(partial: 'record_debug', locals: {search_result: search_result}) if @debug %>
   </a></td>
   <td class="takes-focus width-20-percent filler">&nbsp;</td>
@@ -45,6 +51,7 @@
     <span class="indent-level-1">&nbsp;</span>
     <%= "#{search_result.instance_type.name.downcase} of #{search_result.this_is_cited_by.name.simple_name}" %>
     <%= "</td><td>this is cited by: #{ search_result.try('display_as') || search_result.this_is_cited_by.class.to_s};#{search_result.this_is_cited_by.id }-2nd part --- #{Pathname.new(__FILE__).basename}".html_safe if true %>
+    <%= "[DRAFT]" if search_result.this_is_cited_by.draft? %>
   </td>
   <td class="takes-focus width-10-percent filler">&nbsp;</td>
   
