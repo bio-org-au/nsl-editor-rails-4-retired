@@ -1,4 +1,8 @@
 ---
+- :date: 07-Apr-2017
+  :jira_id: '2329'
+  :description: |-
+    Add comma between name and status in reference listing.
 - :date: 06-Apr-2017
   :jira_id: '2320'
   :description: |-
