@@ -1,4 +1,12 @@
 ---
+- :date: 06-Apr-2017
+  :release: true
+- :date: 06-Apr-2017
+  :jira_id: '2328'
+  :description: |-
+    Fix problem creating synonym due to null value in instance.draft
+- :date: 06-Apr-2017
+  :release: true
 - :date: 05-Apr-2017
   :jira_id: '2315'
   :description: |-
