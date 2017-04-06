@@ -461,6 +461,7 @@ class Instance < ActiveRecord::Base
 
   def set_defaults
     self.namespace_id = Namespace.default.id if namespace_id.blank?
+    self.draft = 'f' if draft.blank?
   end
 
   # simple i.e. not a relationship instance
