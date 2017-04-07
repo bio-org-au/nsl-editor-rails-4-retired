@@ -1,5 +1,10 @@
 ---
 - :date: 07-Apr-2017
+  :jira_id: '2319'
+  :description: |-
+    A "Show instances for name" button appears after you create an instance for
+    a name record on the "New instances" tab.
+- :date: 07-Apr-2017
   :jira_id: '2321'
   :description: |-
     Prevent near duplicate instances by removing create button after success.
