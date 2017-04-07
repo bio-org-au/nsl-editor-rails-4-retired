@@ -61,7 +61,7 @@
     <%= f.hidden_field :cited_by_id, value: @instance.id %>
     <%= f.hidden_field :cites_id %>
     <br>
-<div id="bypass-warning-widget" class="hidden form-check">
+<div id="extra-primary-warning" class="form-check hidden">
   <br>
   <label class="green form-check-label">
     <%= f.check_box(:concept_warning_bypassed,{title: "Over-ride the warning message"}) %>
