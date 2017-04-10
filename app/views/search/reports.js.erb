@@ -1,0 +1,7 @@
+$('#search-reports-container').removeClass('hidden');
+$('ul#search-results-tabset li').removeClass('active');
+if (!$('#search-reports-container').hasClass('has-data')){
+  $('#search-reports-container').html("<%= j render(:partial => 'search/tab_inners/reports_inner') %>")
+  $('#search-reports-container').addClass('has-data');
+}
+

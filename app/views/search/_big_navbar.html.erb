@@ -59,13 +59,12 @@
                data-load-context=""
                >Examples</a></li>
           <li role="presentation" class="">
-            <a id="search-reports-tab-container-link" 
-               class="main-body-tab-link search-non-default-tab-link" 
-               title="Reports" 
-               href="#"
-               data-target-element="#search-reports-container"
-               data-load-context=""
-               >Reports</a></li>
+            <%= link_to "Reports",
+                search_reports_path,
+                class: "main-body-tab-link",
+                remote: true,
+                title: "Reports" %>
+          </li>
         </ul>
       <% end %>
     </div>
