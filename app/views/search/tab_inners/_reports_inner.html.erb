@@ -82,17 +82,12 @@
   <% end %>
 </table>
 
-<h5>Other</h5>
+<h5>Name reports</h5>
 <table class="example-searches table table-striped">
   <% [
       {search_target: 'Names',
        search_string: "is-a-parent: has-no-instances:",
        explanation: %Q(Names that have children but no instances.)},
-      {search_target: "Names",
-       search_string: "autonym-name-mismatch:",
-       explanation:
-       %Q(Autonyms for which the final epithet is not identical to the final \
-       epithet of the parent name.)},
       {search_target: 'Names',
        search_string: "with-exactly-one-instance:",
        explanation: %Q(Names that have exactly one instance. Note: can be slow
@@ -117,6 +112,34 @@
       {search_target: 'Names',
        search_string: "earliest-instance-not-primary:",
        explanation: %Q(Names whose first instance is not a primary reference)},
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent">
+      <%= link_to(val[:search_string],
+                  search_path(query_string: val[:search_string],
+                              query_target: val[:search_target]),
+                  class:'blue',
+                  title: "Run the report.") %>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+
+<h6>Autonym reports</h6>
+<table class="example-searches table table-striped">
+  <% [
+      {search_target: "Names",
+       search_string: "autonym-name-mismatch:",
+       explanation:
+       %Q(Autonyms for which the final epithet is not identical to the final \
+       epithet of the parent name.)},
+      {search_target: 'Names',
+       search_string: "autonym-does-not-exist:",
+       explanation: %Q(Names which: are of the type autonym also have instances AND have the status manuscript OR their parent taxon has the status manuscript OR nom. illeg. [any of the options thereof] OR nom. inval. [any of the options thereof] OR any of the children of their parent taxon has the status manuscript OR nom. illeg. [any of the options thereof] OR nom. inval. [any of the options thereof]?  )},
+      {search_target: 'Names',
+       search_string: "autonym-has-invalid-rank:",
+       explanation: %Q(Autonyms are only possible for taxa with a rank: (a) below genus but above species or (b) below species)},
       ].each do |val| %>
   <tr>
     <td class="width-30-percent">

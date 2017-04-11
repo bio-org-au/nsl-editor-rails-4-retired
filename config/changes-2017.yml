@@ -1,4 +1,12 @@
 ---
+- :date: 11-Apr-2017
+  :jira_id: '2324'
+  :description: |-
+    Added report for autonym-has-invalid-rank.
+- :date: 11-Apr-2017
+  :jira_id: '2324'
+  :description: |-
+    Added report for autonym-does-not-exist.
 - :date: 07-Apr-2017
   :jira_id: '2319'
   :description: |-

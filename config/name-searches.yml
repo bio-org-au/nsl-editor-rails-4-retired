@@ -396,3 +396,72 @@
     on n.id = ntp.name_id where cast(name_id as text) = name_id_path and tree_id =
     (select id from tree_arrangement where label = (select value from shard_config
     where name = 'tree label')))
+'autonym-does-not-exist:':
+  :where_clause: " name.id in (select id from name
+ where name_type_id in (
+    select id
+      from name_type
+ where autonym
+       )
+       and exists (
+    select null
+      from instance
+ where name_id         = name.id
+       )
+   and (
+        name_status_id  = (
+      select id
+        from name_status
+  where name            = 'manuscript'
+        )
+      or exists (
+      select null
+        from name parent
+      where name.parent_id  = parent.id
+        and parent.name_status_id in (
+          select id
+            from name_status
+          where name            = 'manuscript'
+              or name like 'nom. illeg.%'
+              or name like 'nom. inval.%'
+        )
+        )
+      or exists (
+      select null
+        from name sibling
+      where sibling.parent_id = name.parent_id
+        and sibling.name_status_id in (
+          select id
+            from name_status
+          where name            = 'manuscript'
+              or name like 'nom. illeg.%'
+              or name like 'nom. inval.%'
+        )
+       )
+       )
+       )"
+  :allow_common_and_cultivar: true
+  :order: name.sort_name
+'autonym-has-invalid-rank:':
+  :where_clause: " name.id in (select id from name
+ where name_type_id in (
+    select id
+      from name_type
+ where autonym
+       )
+   and name_status_id  in (
+      select id
+    from name_rank
+ where sort_order >  (
+    select sort_order
+      from name_rank
+ where name       =  'Genus'
+       )
+   and sort_order <  (
+    select sort_order
+      from name_rank
+ where name       =  '[unranked]'
+       )
+   and name       != 'Species') )"
+  :allow_common_and_cultivar: true
+  :order: name.sort_name
