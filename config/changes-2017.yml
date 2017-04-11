@@ -1,5 +1,10 @@
 ---
 - :date: 11-Apr-2017
+  :jira_id: '2311'
+  :description: |-
+    Fixed bug preventing author being marked as a duplicate if more than one
+    author name matches the selected master author's name.
+- :date: 11-Apr-2017
   :jira_id: '2324'
   :description: |-
     Added report for autonym-has-invalid-rank.

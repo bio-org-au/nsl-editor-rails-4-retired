@@ -87,7 +87,7 @@ class Author::AsResolvedTypeahead::ForDuplicateOf
   def two_or_more_possibles_for_id_and_text
     possibles_with_id = Author
                         .where(id: @id_string.to_i)
-                        .lower_full_name_like(@text)
+                        .lower_name_like(@text)
     if possibles_with_id.size == 1
       @value = possibles_with_id.first.id
     else
@@ -95,3 +95,4 @@ class Author::AsResolvedTypeahead::ForDuplicateOf
     end
   end
 end
+
