@@ -153,7 +153,7 @@ as a synonym"
   end
 
   def typeahead_for_synonymy
-    instances = Instance::AsTypeahead.for_synonymy(params[:term])
+    instances = Instance::AsTypeahead.for_synonymy(params[:term], params[:name_id])
     render json: instances
   end
 

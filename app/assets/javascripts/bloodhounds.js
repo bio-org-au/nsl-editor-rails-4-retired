@@ -16,11 +16,16 @@ instanceForNameShowingReference = new Bloodhound({
 // kicks off the loading/processing of `local` and `prefetch`
 instanceForNameShowingReference.initialize();
 
-// Get a list of references in instances of the name
+// Get a list of instances for a name
 instanceForSynonymy = new Bloodhound({
     datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
     queryTokenizer: Bloodhound.tokenizers.whitespace,
     remote: {url: window.relative_url_root + '/instances/for_synonymy?term=%QUERY',
+        replace: function(url,query) {
+            return window.relative_url_root + '/instances/for_synonymy?name_id=' +
+                $('#instance-name-id').val() +
+                '&term=' + query
+        }
     },
     limit: 100
 }); 

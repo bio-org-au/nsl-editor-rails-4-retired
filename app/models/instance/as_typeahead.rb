@@ -39,22 +39,69 @@ class Instance::AsTypeahead < Instance
             " reference.pages, instance.id, instance.source_system, "\
             " instance_type.name as instance_type_name".freeze
 
-  def self.for_synonymy(terms)
+  def self.for_synonymy(terms, name_id)
     @name_binds = []
     terms_without_year = terms.gsub(/[0-9]/, "").strip.gsub(/  /, " ")
     return [] if terms_without_year.blank?
     @name_binds.push(" lower(full_name) like lower(?) ")
     @name_binds.push(terms_without_year.tr("*", "%") + "%")
-    run_query(terms)
+    run_query(terms, name_id)
   end
 
-  def self.run_query(terms)
-    Instance.select(COLUMNS)
-            .joins(:name).where(@name_binds)\
+  def self.build_query(terms, name_id)
+    query = Instance.select(COLUMNS)
+            .joins(:name).where(@name_binds).where(rank_restriction(name_id))\
             .joins(:reference).where(reference_binds(terms))\
             .joins(:instance_type)\
-            .order("full_name, year").limit(SEARCH_LIMIT)\
-            .collect do |i|
+            .order("full_name, year").limit(SEARCH_LIMIT)
+    query
+  end
+
+  # Only offer names of equal or lesser rank than that of the name of which
+  # they are synonyms, but also limit the list to names that rank above the
+  # next major rank.
+  #
+  # For example, adding synonymy in an instance in which Nothofagus (a genus)
+  # appears I would prefer to only be offered other genera and other subgeneric
+  # names (e.g. sections), but NOT families (higher rank) or above, and NOT
+  # species (next lowest major rank) or below.
+  #
+  # Unranked doesn't fit this pattern, so treat it differenty.
+  #
+  def self.rank_restriction(name_id)
+    name = Name.find(name_id)
+    if name.name_rank.unranked?
+      "1=1"
+    else [" name.name_rank_id in (
+select id
+  from name_rank
+ where sort_order        >= (
+    select name_rank.sort_order
+      from name
+    inner join name_rank
+        on name.name_rank_id =  name_rank.id
+ where simple_name       =  ?
+       )
+   and sort_order < (
+    select min(sort_order)
+      from name_rank
+    where (
+            major
+        or name              = '[unknown]'
+          )
+      and sort_order        > (
+        select name_rank.sort_order
+          from name
+        inner join name_rank
+            on name.name_rank_id = name_rank.id
+    where simple_name       = ?
+       )
+       ) )",name.simple_name, name.simple_name]
+    end
+  end
+
+  def self.run_query(terms, name_id)
+    build_query(terms, name_id).collect do |i|
       { value: display_value(i), id: i.id }
     end
   end
