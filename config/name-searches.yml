@@ -449,7 +449,7 @@
       from name_type
  where autonym
        )
-   and name_status_id  in (
+   and name_rank_id  in (
       select id
     from name_rank
  where sort_order >  (
