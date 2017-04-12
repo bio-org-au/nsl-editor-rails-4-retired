@@ -52,6 +52,9 @@ class SearchController < ApplicationController
     render partial: mapper.partial
   end
 
+  def reports
+  end
+
   private
 
   def trim_session_searches

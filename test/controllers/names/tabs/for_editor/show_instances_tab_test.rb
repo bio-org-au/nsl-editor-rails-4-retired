@@ -33,7 +33,7 @@ class NameShowInstanceTabForReadOnlyTest < ActionController::TestCase
         groups: ["edit"])
     assert_response :success
     assert_select "li.active a#name-instances-tab",
-                  "Instance",
+                  "New instance",
                   "Should show 'Instance' tab."
   end
 end

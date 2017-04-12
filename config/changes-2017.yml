@@ -1,4 +1,54 @@
 ---
+- :date: 12-Apr-2017
+  :jira_id: '2333'
+  :description: |-
+    Can now search Author notes field.
+- :date: 11-Apr-2017
+  :jira_id: '2311'
+  :description: |-
+    Fixed bug preventing author being marked as a duplicate if more than one
+    author name matches the selected master author's name.
+- :date: 11-Apr-2017
+  :jira_id: '2324'
+  :description: |-
+    Added report for autonym-has-invalid-rank.
+- :date: 11-Apr-2017
+  :jira_id: '2324'
+  :description: |-
+    Added report for autonym-does-not-exist.
+- :date: 07-Apr-2017
+  :jira_id: '2319'
+  :description: |-
+    A "Show instances for name" button appears after you create an instance for
+    a name record on the "New instances" tab.
+- :date: 07-Apr-2017
+  :jira_id: '2321'
+  :description: |-
+    Prevent near duplicate instances by removing create button after success.
+- :date: 07-Apr-2017
+  :jira_id: '2331'
+  :description: |-
+    Hide the "extra primary instance" warning and checkbox on successful save.
+- :date: 07-Apr-2017
+  :jira_id: '2329'
+  :description: |-
+    Add comma between name and status in reference listing.
+- :date: 06-Apr-2017
+  :jira_id: '2320'
+  :description: |-
+    Change name details tab heading of "Instance" to "New instance".
+- :date: 06-Apr-2017
+  :jira_id: '2325'
+  :description: |-
+    Cursor now starts in name field on tab for creating synonym from Reference.
+- :date: 06-Apr-2017
+  :release: true
+- :date: 06-Apr-2017
+  :jira_id: '2328'
+  :description: |-
+    Fix problem creating synonym due to null value in instance.draft
+- :date: 06-Apr-2017
+  :release: true
 - :date: 05-Apr-2017
   :jira_id: '2315'
   :description: |-

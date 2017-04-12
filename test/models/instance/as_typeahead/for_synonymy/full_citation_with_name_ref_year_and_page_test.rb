@@ -24,7 +24,8 @@ class ForFullCitationWithNameRefYearPageTest < ActiveSupport::TestCase
     results = Instance::AsTypeahead::AsTypeahead
               .for_synonymy("Panicum brownei Hughes in Hughes, D.K. (1923), \
               The genus Panicum of the Flora Australiensis. Bulletin of \
-              Miscellaneous Information 1923(9):1923 [305-332]")
+              Miscellaneous Information 1923(9):1923 [305-332]",
+              names(:a_species).id)
     assert results.class == Array, "Results should be an array."
     assert results.size.zero?,
            "No results expected but also no exception should be thrown."

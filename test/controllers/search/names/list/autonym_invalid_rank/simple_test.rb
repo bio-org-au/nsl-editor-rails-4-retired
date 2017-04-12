@@ -17,17 +17,19 @@
 #
 require "test_helper"
 
-# Single controller test.
-class InstancesTypeaheadForSynonymyForEditorTest < ActionController::TestCase
-  tests InstancesController
+# Single search controller test.
+class NamesSearchAutonymWrongRank < ActionController::TestCase
+  tests SearchController
 
-  test "editor should be able to typehead for synonymy instance" do
-    @request.headers["Accept"] = "application/javascript"
-    get(:typeahead_for_synonymy,
-        { term: "abc", name_id: names(:a_species).id },
+  test "search for autonyms that do not exist" do
+    get(:search,
+        { query_target: "Names",
+          query_string: "autonym-has-invalid-rank:" },
         username: "fred",
         user_full_name: "Fred Jones",
-        groups: ["edit"])
+        groups: [])
     assert_response :success
+    assert_select "#search-results-summary", true
+                  "Should run"
   end
 end

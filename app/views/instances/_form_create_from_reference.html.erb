@@ -47,7 +47,8 @@
     <%= f.hidden_field :name_id %>
     <%= f.hidden_field :reference_id, value: @reference.id %>
     <br>
-    <%= f.submit class: 'btn-primary', title: "Create the new instance", tabindex: increment_tab_index %>
+    <%= f.submit id: "save-new-instance-btn", class: 'btn-primary', title: "Create the new instance", tabindex: increment_tab_index %>
+    
     <br>
     <br>
     <% refresh_page_link = link_to("Refresh page",

@@ -18,16 +18,21 @@
 require "test_helper"
 
 # Single controller test.
-class InstancesTypeaheadForSynonymyForEditorTest < ActionController::TestCase
-  tests InstancesController
+class AuthorEditMarkAsDuplicateOfTwoMatchesTest < ActionController::TestCase
+  tests AuthorsController
 
-  test "editor should be able to typehead for synonymy instance" do
+  test "update author to be duplicate of one of two matches" do
     @request.headers["Accept"] = "application/javascript"
-    get(:typeahead_for_synonymy,
-        { term: "abc", name_id: names(:a_species).id },
-        username: "fred",
-        user_full_name: "Fred Jones",
-        groups: ["edit"])
+    author = authors(:hesp_1)
+    intended_dupe = authors(:hesp_3)
+    patch(:update,
+          { id: intended_dupe.id,
+            author: { "name" => "Hesp",
+                      "duplicate_of_typeahead" => "Hesp",
+                      "duplicate_of_id" => author }, },
+          username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
     assert_response :success
+    expected_dupe = Author.find(intended_dupe.id)
+    assert_equal author.id, expected_dupe.duplicate_of_id, "Should be equal."
   end
 end

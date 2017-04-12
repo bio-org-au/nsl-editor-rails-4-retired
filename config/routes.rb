@@ -249,6 +249,11 @@ Rails.application.routes.draw do
         to: "workspace_values#destroy",
         via: :delete
 
+  match "search/reports",
+        as: "search_reports",
+        to: "search#reports",
+        via: :get
+
   root to: "search#search"
   match "/*random", to: "search#search", via: [:get, :post, :delete, :patch]
 end

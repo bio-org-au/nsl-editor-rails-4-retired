@@ -16,18 +16,19 @@
 #   limitations under the License.
 #
 require "test_helper"
+load "test/models/search/users.rb"
 
-# Single controller test.
-class InstancesTypeaheadForSynonymyForEditorTest < ActionController::TestCase
-  tests InstancesController
-
-  test "editor should be able to typehead for synonymy instance" do
-    @request.headers["Accept"] = "application/javascript"
-    get(:typeahead_for_synonymy,
-        { term: "abc", name_id: names(:a_species).id },
-        username: "fred",
-        user_full_name: "Fred Jones",
-        groups: ["edit"])
-    assert_response :success
+# Single Search model test.
+class SearchOnAuthorNotesSimpleTest < ActiveSupport::TestCase
+  test "search on author notes simple" do
+    params = ActiveSupport::HashWithIndifferentAccess.new(
+      query_target: "author",
+      query_string: "notes: abc",
+      include_common_and_cultivar_session: true,
+      current_user: build_edit_user
+    )
+    search = Search::Base.new(params)
+    assert !search.executed_query.results.empty?,
+           "Authors with notes expected."
   end
 end
