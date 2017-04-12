@@ -449,7 +449,7 @@
       from name_type
  where autonym
        )
-   and name_rank_id  in (
+   and name_rank_id not in (
       select id
     from name_rank
  where sort_order >  (
@@ -462,6 +462,6 @@
       from name_rank
  where name       =  '[unranked]'
        )
-   and name       != 'Species') )"
+   or name       = 'Species') )"
   :allow_common_and_cultivar: true
   :order: name.sort_name
