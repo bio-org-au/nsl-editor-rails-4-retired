@@ -48,9 +48,10 @@ class Instance::AsTypeahead < Instance
     run_query(terms, name_id)
   end
 
+  #    .where(rank_restriction(name_id))\
   def self.build_query(terms, name_id)
     query = Instance.select(COLUMNS)
-            .joins(:name).where(@name_binds).where(rank_restriction(name_id))\
+            .joins(:name).where(@name_binds)
             .joins(:reference).where(reference_binds(terms))\
             .joins(:instance_type)\
             .order("full_name, year").limit(SEARCH_LIMIT)
