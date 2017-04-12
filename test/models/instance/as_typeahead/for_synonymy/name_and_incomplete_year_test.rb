@@ -22,7 +22,7 @@ require "models/instance/as_typeahead/for_synonymy/test_helper.rb"
 class ForNameAndReferenceYearTest < ActiveSupport::TestCase
   def setup
     @results = Instance::AsTypeahead::AsTypeahead
-               .for_synonymy("angophora costata 178")
+               .for_synonymy("angophora costata 178", names(:a_species).id)
   end
 
   test "name and incomplete year search" do

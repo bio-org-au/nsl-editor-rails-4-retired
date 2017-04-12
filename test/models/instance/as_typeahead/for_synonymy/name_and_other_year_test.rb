@@ -21,7 +21,8 @@ require "models/instance/as_typeahead/for_synonymy/test_helper.rb"
 # Single instance typeahead search.
 class ForNameAndReferenceYearTest < ActiveSupport::TestCase
   test "name and other year search" do
-    results = Instance::AsTypeahead.for_synonymy("angophora costata 1788")
+    results = Instance::AsTypeahead.for_synonymy("angophora costata 1788",
+                                                 names(:a_species).id)
     assert results.class == Array, "Results should be an array."
     assert results.size == 1, "Results should include just one record."
     assert results
