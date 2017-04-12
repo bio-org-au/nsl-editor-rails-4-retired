@@ -500,18 +500,21 @@ has_multiple_embedded_spaces:
 clarke_1:
   name: clarke
   namespace_id: namespace.apni
+  notes: xyz
   created_by: greg
   updated_by: greg
 
 clarke_2:
   name: clarke
   namespace_id: namespace.apni
+  notes: abc
   created_by: greg
   updated_by: greg
 
 hesp_1:
   name: hesp
   namespace_id: namespace.apni
+  notes: def
   created_by: greg
   updated_by: greg
 

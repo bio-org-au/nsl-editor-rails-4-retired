@@ -15,9 +15,10 @@
       {search_target: 'Authors', search_string: "abbrev: hook bent", explanation: %Q(Authors with abbrev text that includes 'hook' and 'bent' in any order.)},
       {search_target: 'Authors', search_string: "full-name:*", explanation: %Q(Authors with full or extra name text.)},
       {search_target: 'Authors', search_string: "full-name: bald*greg", explanation: %Q(Authors with full or extra name text that include "bald" and "greg" in that order.)},
-      {search_target: 'Authors', search_string: "comments:*", explanation: %Q(Count commented authors by turning a text field into an assertion.)},
+      {search_target: 'Authors', search_string: "comments:*", explanation: %Q(List authors with a comment.)},
       {search_target: 'Authors', search_string: "comments-by:*", explanation: %Q(Count authors with a comment by someone.)},
       {search_target: 'Authors', search_string: "...", explanation: %Q(Currently no authors with comments, so difficult to give more examples.)},
+      {search_target: 'Authors', search_string: "notes:*", explanation: %Q(List authors with notes.)},
       ].each do |val| %>
   <tr>
     <td class="width-30-percent">

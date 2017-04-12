@@ -1,5 +1,9 @@
 ---
 - :date: 12-Apr-2017
+  :jira_id: '2333'
+  :description: |-
+    Can now search Author notes field.
+- :date: 12-Apr-2017
   :jira_id: '474'
   :description: |-
     Restrict synonyms offered to appropriate ranks.

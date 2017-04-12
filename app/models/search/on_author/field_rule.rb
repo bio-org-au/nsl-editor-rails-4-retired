@@ -88,6 +88,6 @@ class Search::OnAuthor::FieldRule
                                where_clause: " id = ?",
                                multiple_values_where_clause: " id in (?)" },
     "duplicate-of-id:"    => { where_clause: "duplicate_of_id = ? " },
-
+    "notes:" => { where_clause: " lower(notes) like lower(?) " },
   }.freeze
 end
