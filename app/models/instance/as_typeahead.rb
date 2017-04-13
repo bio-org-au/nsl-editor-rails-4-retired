@@ -48,10 +48,10 @@ class Instance::AsTypeahead < Instance
     run_query(terms, name_id)
   end
 
-  #    .where(rank_restriction(name_id))\
   def self.build_query(terms, name_id)
     query = Instance.select(COLUMNS)
             .joins(:name).where(@name_binds)
+            .where(rank_restriction(name_id))\
             .joins(:reference).where(reference_binds(terms))\
             .joins(:instance_type)\
             .order("full_name, year").limit(SEARCH_LIMIT)
@@ -78,10 +78,10 @@ select id
   from name_rank
  where sort_order        >= (
     select name_rank.sort_order
-      from name
+      from name n2
     inner join name_rank
-        on name.name_rank_id =  name_rank.id
- where simple_name       =  ?
+        on n2.name_rank_id =  name_rank.id
+ where n2.id       =  ?
        )
    and sort_order < (
     select min(sort_order)
@@ -92,12 +92,12 @@ select id
           )
       and sort_order        > (
         select name_rank.sort_order
-          from name
+          from name n3
         inner join name_rank
-            on name.name_rank_id = name_rank.id
-    where simple_name       = ?
+            on n3.name_rank_id = name_rank.id
+    where n3.id       = ?
        )
-       ) )",name.simple_name, name.simple_name]
+       ) )",name.id, name.id]
     end
   end
 

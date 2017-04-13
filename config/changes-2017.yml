@@ -1,5 +1,9 @@
 ---
 - :date: 13-Apr-2017
+  :jira_id: '474'
+  :description: |-
+    Restrict synonyms offered to those of appropriate ranks.
+- :date: 13-Apr-2017
   :release: true
 - :date: 12-Apr-2017
   :jira_id: '2333'
