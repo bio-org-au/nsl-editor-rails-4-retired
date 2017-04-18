@@ -1,4 +1,8 @@
 ---
+- :date: 18-Apr-2017
+  :jira_id: '2324'
+  :description: |-
+    Autonym reports: autonym-does-not-exist, autonym-does-not-exist-sibling-rule.
 - :date: 13-Apr-2017
   :jira_id: '474'
   :description: |-
