@@ -1,4 +1,9 @@
 ---
+- :date: 19-Apr-2017
+  :jira_id: '2339'
+  :description: |-
+    Common name with a colour in its name (e.g. 'red') no longer appears in that
+    colour.
 - :date: 18-Apr-2017
   :jira_id: '2324'
   :description: |-

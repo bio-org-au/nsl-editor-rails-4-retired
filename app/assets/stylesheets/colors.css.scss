@@ -15,6 +15,58 @@
 *.white          { color: white; }
 *.yellow         { color: yellow; }
 
+/* Prevent full_name_html class setting color */
+common element.blue {color: $nsl-theme-color;}
+common element.brown {color: $nsl-theme-color;}
+common element.gray {color: $nsl-theme-color;}
+common element.green {color: $nsl-theme-color;}
+common element.orange {color: $nsl-theme-color;}
+common element.purple {color: $nsl-theme-color;}
+common element.red {color: $nsl-theme-color;}
+common element.sienna {color: $nsl-theme-color;}
+common element.white {color: $nsl-theme-color;}
+common element.yellow {color: $nsl-theme-color;}
+
+.showing-details common element.blue {
+  color: white;
+  background-color: $nsl-showing-details-background;
+}
+.showing-details common element.brown {
+  color: white;
+  background-color: $nsl-showing-details-background;
+}
+.showing-details common element.gray {
+  color: white;
+  background-color: $nsl-showing-details-background;
+}
+.showing-details common element.green {
+  color: white;
+  background-color: $nsl-showing-details-background;
+}
+.showing-details common element.orange {
+  color: white;
+  background-color: $nsl-showing-details-background;
+}
+.showing-details common element.purple {
+  color: white;
+  background-color: $nsl-showing-details-background;
+}
+.showing-details common element.red {
+  color: white;
+  background-color: $nsl-showing-details-background;
+}
+.showing-details common element.sienna {
+  color: white;
+  background-color: $nsl-showing-details-background;
+}
+.showing-details common element.white {
+  color: white;
+  background-color: $nsl-showing-details-background;
+}
+.showing-details common element.yellow {
+  color: white;
+  background-color: $nsl-showing-details-background;
+}
 
 *.bgblue           { background-color: blue; }
 *.bgbrown          { background-color: brown; }
