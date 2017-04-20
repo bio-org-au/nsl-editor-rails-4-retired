@@ -1,5 +1,10 @@
 ---
 - :date: 20-Apr-2017
+  :jira_id: '1061'
+  :description: |-
+    Added rules to restrict possible ranks for parents of [infrafamily],
+    [infragenus] and [infraspecies] names.
+- :date: 20-Apr-2017
   :release: true
 - :date: 19-Apr-2017
   :jira_id: '2339'

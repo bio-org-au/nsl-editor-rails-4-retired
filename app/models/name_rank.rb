@@ -29,6 +29,9 @@ class NameRank < ActiveRecord::Base
   FAMILY = FAMILIA
   NA = "[n/a]"
   UNRANKED = "[unranked]"
+  INFRAFAMILY = "[infrafamily]"
+  INFRAGENUS = "[infragenus]"
+  INFRASPECIES = "[infraspecies]"
 
   scope :not_deprecated, -> { where(deprecated: false) }
 
@@ -120,6 +123,18 @@ class NameRank < ActiveRecord::Base
 
   def unranked?
     !!name.match(/\A#{Regexp.escape(UNRANKED)}\z/)
+  end
+
+  def infrafamily?
+    !!name.match(/\A#{Regexp.escape(INFRAFAMILY)}\z/)
+  end
+
+  def infragenus?
+    !!name.match(/\A#{Regexp.escape(INFRAGENUS)}\z/)
+  end
+
+  def infraspecies?
+    !!name.match(/\A#{Regexp.escape(INFRASPECIES)}\z/)
   end
 
   def self.genus

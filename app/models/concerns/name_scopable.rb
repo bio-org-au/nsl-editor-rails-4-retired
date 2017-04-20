@@ -97,5 +97,29 @@ module NameScopable
                    parent_id, parent_id)
            end)
     scope :for_id, ->(id) { where("name.id = ?", id) }
+    scope :parent_ranks_for_infrafamily,
+          (lambda do
+             joins(:name_rank)
+              .where("name_rank.id in (select id from name_rank where
+             sort_order >= (select sort_order from name_rank where name =
+             'Familia') and sort_order < (select sort_order from name_rank where
+             name = 'Genus') ) ")
+           end)
+    scope :parent_ranks_for_infragenus,
+          (lambda do
+             joins(:name_rank)
+              .where("name_rank.id in (select id from name_rank where
+             sort_order >= (select sort_order from name_rank where name =
+             'Genus') and sort_order < (select sort_order from name_rank where
+             name = 'Species') ) ")
+           end)
+    scope :parent_ranks_for_infraspecies,
+          (lambda do
+             joins(:name_rank)
+              .where("name_rank.id in (select id from name_rank where
+             sort_order >= (select sort_order from name_rank where name =
+             'Species') and sort_order <=(select sort_order from name_rank where
+             name = 'Subforma') ) ")
+           end)
   end
 end
