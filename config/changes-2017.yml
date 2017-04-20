@@ -1,4 +1,19 @@
 ---
+- :date: 19-Apr-2017
+  :jira_id: '2339'
+  :description: |-
+    Common name with a colour in its name (e.g. 'red') no longer appears in that
+    colour.
+- :date: 18-Apr-2017
+  :jira_id: '2324'
+  :description: |-
+    Autonym reports: autonym-does-not-exist, autonym-does-not-exist-sibling-rule.
+- :date: 13-Apr-2017
+  :jira_id: '474'
+  :description: |-
+    Restrict synonyms offered to those of appropriate ranks.
+- :date: 13-Apr-2017
+  :release: true
 - :date: 12-Apr-2017
   :jira_id: '2333'
   :description: |-

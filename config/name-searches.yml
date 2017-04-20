@@ -426,11 +426,40 @@
               or name like 'nom. inval.%'
         )
         )
-      or exists (
+      or not exists (
       select null
         from name sibling
       where sibling.parent_id = name.parent_id
-        and sibling.name_status_id in (
+        and sibling.name_status_id not in (
+          select id
+            from name_status
+          where name            = 'manuscript'
+              or name like 'nom. illeg.%'
+              or name like 'nom. inval.%'
+        )
+       )
+       )
+       )"
+  :allow_common_and_cultivar: true
+  :order: name.sort_name
+'autonym-does-not-exist-sibling-rule:':
+  :where_clause: " name.id in (select id from name
+ where name_type_id in (
+    select id
+      from name_type
+ where autonym
+       )
+       and exists (
+    select null
+      from instance
+ where name_id         = name.id
+       )
+   and (
+      not exists (
+      select null
+        from name sibling
+      where sibling.parent_id = name.parent_id
+        and sibling.name_status_id not in (
           select id
             from name_status
           where name            = 'manuscript'
