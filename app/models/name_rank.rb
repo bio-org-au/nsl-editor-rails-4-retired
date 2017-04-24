@@ -29,8 +29,15 @@ class NameRank < ActiveRecord::Base
   FAMILY = FAMILIA
   NA = "[n/a]"
   UNRANKED = "[unranked]"
+  INFRAFAMILY = "[infrafamily]"
+  INFRAGENUS = "[infragenus]"
+  INFRASPECIES = "[infraspecies]"
 
   scope :not_deprecated, -> { where(deprecated: false) }
+  scope :species_or_below, -> { where("name_rank.sort_order >= (select species.sort_order from name_rank species where name = 'Species')") }
+  scope :above_unranked, -> { where("name_rank.sort_order < (select unranked.sort_order from name_rank unranked where name = '[unranked]')") }
+  scope :at_or_below_this, ->(this_id) { where("name_rank.sort_order >= (select this_one.sort_order from name_rank this_one where id = ?)", this_id)}
+  scope :within_level, ->(this_id) { where("name_rank.sort_order < (select min(above.sort_order) from name_rank above where ((major and name != 'Tribus') or name = '[unknown]') and sort_order > (select n4.sort_order from name_rank n4 where n4.id = ?) )", this_id)}
 
   def self.default
     NameRank.where(abbrev: "sp.").push(NameRank.first).first
@@ -120,6 +127,18 @@ class NameRank < ActiveRecord::Base
 
   def unranked?
     !!name.match(/\A#{Regexp.escape(UNRANKED)}\z/)
+  end
+
+  def infrafamily?
+    !!name.match(/\A#{Regexp.escape(INFRAFAMILY)}\z/)
+  end
+
+  def infragenus?
+    !!name.match(/\A#{Regexp.escape(INFRAGENUS)}\z/)
+  end
+
+  def infraspecies?
+    !!name.match(/\A#{Regexp.escape(INFRASPECIES)}\z/)
   end
 
   def self.genus

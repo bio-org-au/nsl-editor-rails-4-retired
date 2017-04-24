@@ -62,12 +62,18 @@ class Name::AsTypeahead::ForParent
   end
 
   def rank_query
-    rank_id = @params[:rank_id]
-    if rank_id != "undefined" && NameRank.id_is_unranked?(rank_id.to_i)
+    rank = NameRank.find(@params[:rank_id])
+    if rank.unranked?
       @qry = @qry.ranks_for_unranked
+    elsif rank.infrafamily?
+      @qry = @qry.parent_ranks_for_infrafamily
+    elsif rank.infragenus?
+      @qry = @qry.parent_ranks_for_infragenus
+    elsif rank.infraspecies?
+      @qry = @qry.parent_ranks_for_infraspecies
     else
-      @qry = @qry.from_a_higher_rank(rank_id)
-      @qry = @qry.but_rank_not_too_high(rank_id)
+      @qry = @qry.from_a_higher_rank(@params[:rank_id])
+      @qry = @qry.but_rank_not_too_high(@params[:rank_id])
     end
   end
 

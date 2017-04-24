@@ -6,8 +6,7 @@ instanceForNameShowingReference = new Bloodhound({
         replace: function(url,query) {
             return window.relative_url_root + '/instances/for_name_showing_reference?name_id=' +
                 $('#instance_name_id').val() +
-                '&term=' + query
-                //$('#instance-instance-for-name-showing-reference-typeahead').val().replace(/%/,'%25')
+                '&term=' + encodeURIComponent(query)
         }
     },
     limit: 100
@@ -24,7 +23,7 @@ instanceForSynonymy = new Bloodhound({
         replace: function(url,query) {
             return window.relative_url_root + '/instances/for_synonymy?name_id=' +
                 $('#instance-name-id').val() +
-                '&term=' + query
+                '&term=' + encodeURIComponent(query)
         }
     },
     limit: 100
