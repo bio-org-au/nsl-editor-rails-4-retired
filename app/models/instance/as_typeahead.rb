@@ -37,7 +37,7 @@
 class Instance::AsTypeahead < Instance
   COLUMNS = " name.full_name, reference.citation, reference.year, " \
             " reference.pages, instance.id, instance.source_system, "\
-            " instance_type.name as instance_type_name".freeze
+            " instance_type.name as instance_type_name"
 
   def self.for_synonymy(terms, name_id)
     @name_binds = []
@@ -48,14 +48,15 @@ class Instance::AsTypeahead < Instance
     run_query(terms, name_id)
   end
 
+  #         .where(rank_restriction(name_id))\
   def self.build_query(terms, name_id)
     query = Instance.select(COLUMNS)
-            .joins(:name).where(@name_binds)
-            .where(rank_restriction(name_id))\
-            .joins(:reference).where(reference_binds(terms))\
-            .joins(:instance_type)\
+            .joins(name: :name_rank).where(@name_binds)
+            .merge(NameRank.not_deprecated)
+            .joins(:reference).where(reference_binds(terms))
+            .joins(:instance_type)
             .order("full_name, year").limit(SEARCH_LIMIT)
-    query
+    restrict_ranks(query, name_id)
   end
 
   # Only offer names of equal or lesser rank than that of the name of which
@@ -69,7 +70,51 @@ class Instance::AsTypeahead < Instance
   #
   # Unranked doesn't fit this pattern, so treat it differenty.
   #
-  def self.rank_restriction(name_id)
+  def self.restrict_ranks(query,name_id)
+    name = Name.find(name_id)
+    if name.name_rank.unranked?
+      query
+    elsif name.name_rank.below_species?
+      query.merge(NameRank.species_or_below)
+        .merge(NameRank.above_unranked)
+    else # Species or above 
+      query.merge(NameRank.at_or_below_this(name.name_rank_id))
+        .merge(NameRank.within_level(name.name_rank_id))
+    end
+  end
+
+  def self.xrank_restriction(name_id)
+    name = Name.find(name_id)
+    if name.name_rank.unranked?
+      "1=1"
+    else [" name.name_rank_id in (
+select id
+  from name_rank
+ where sort_order        >= (
+    select name_rank.sort_order
+      from name n2
+    inner join name_rank
+        on n2.name_rank_id =  name_rank.id
+ where n2.id       =  ?
+       )
+   and sort_order < (
+    select min(sort_order)
+      from name_rank
+    where (
+            major
+        or name              = '[unknown]'
+          )
+      and sort_order        > (
+        select name_rank.sort_order
+          from name n3
+        inner join name_rank
+            on n3.name_rank_id = name_rank.id
+    where n3.id       = ?
+       )
+       ) )",name.id, name.id]
+    end
+  end
+  def self.rank_restriction_orig(name_id)
     name = Name.find(name_id)
     if name.name_rank.unranked?
       "1=1"

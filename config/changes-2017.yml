@@ -1,5 +1,9 @@
 ---
 - :date: 24-Apr-2017
+  :jira_id: '474'
+  :description: |-
+    Adjusted synonymy typeahead - partial fix, but definite improvement.
+- :date: 24-Apr-2017
   :jira_id: '2340'
   :description: |-
     Synonymy typeahead now working with wildcards.
