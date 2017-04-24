@@ -1,4 +1,8 @@
 ---
+- :date: 24-Apr-2017
+  :jira_id: '2340'
+  :description: |-
+    Synonymy typeahead now working with wildcards.
 - :date: 20-Apr-2017
   :jira_id: '1061'
   :description: |-
