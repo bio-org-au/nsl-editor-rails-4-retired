@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-#   Copyright 2015 Australian National Botanic Gardens
+#   Copyright 2017 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
 #
@@ -15,7 +15,6 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-
 # Return array of instances based primarily on full_name
 # but additionally on reference.year.
 #
@@ -34,28 +33,36 @@
 # matched fragments.
 #
 # Ordering: NSL-1103: added ordering by year.
-class Instance::AsTypeahead < Instance
+class Instance::AsTypeahead::ForSynonymy
+  attr_reader :results
   COLUMNS = " name.full_name, reference.citation, reference.year, " \
             " reference.pages, instance.id, instance.source_system, "\
             " instance_type.name as instance_type_name"
+  SEARCH_LIMIT = 50
 
-  def self.for_synonymy(terms, name_id)
+  def initialize(terms, name_id)
+    @results = []
     @name_binds = []
     terms_without_year = terms.gsub(/[0-9]/, "").strip.gsub(/  /, " ")
-    return [] if terms_without_year.blank?
+    return if terms_without_year.blank?
     @name_binds.push(" lower(full_name) like lower(?) ")
     @name_binds.push(terms_without_year.tr("*", "%") + "%")
-    run_query(terms, name_id)
+    @results = run_query(terms, name_id)
   end
 
-  #         .where(rank_restriction(name_id))\
-  def self.build_query(terms, name_id)
+  def run_query(terms, name_id)
+    build_query(terms, name_id).collect do |i|
+      { value: display_value(i), id: i.id }
+    end
+  end
+
+  def build_query(terms, name_id)
     query = Instance.select(COLUMNS)
-            .joins(name: :name_rank).where(@name_binds)
-            .merge(NameRank.not_deprecated)
-            .joins(:reference).where(reference_binds(terms))
-            .joins(:instance_type)
-            .order("full_name, year").limit(SEARCH_LIMIT)
+                    .joins(name: :name_rank).where(@name_binds)
+                    .merge(NameRank.not_deprecated)
+                    .joins(:reference).where(reference_binds(terms))
+                    .joins(:instance_type)
+                    .order("full_name, year").limit(SEARCH_LIMIT)
     restrict_ranks(query, name_id)
   end
 
@@ -70,89 +77,20 @@ class Instance::AsTypeahead < Instance
   #
   # Unranked doesn't fit this pattern, so treat it differenty.
   #
-  def self.restrict_ranks(query,name_id)
+  def restrict_ranks(query, name_id)
     name = Name.find(name_id)
     if name.name_rank.unranked?
       query
     elsif name.name_rank.below_species?
       query.merge(NameRank.species_or_below)
-        .merge(NameRank.above_unranked)
-    else # Species or above 
+           .merge(NameRank.above_unranked)
+    else # Species or above
       query.merge(NameRank.at_or_below_this(name.name_rank_id))
-        .merge(NameRank.within_level(name.name_rank_id))
+           .merge(NameRank.within_level(name.name_rank_id))
     end
   end
 
-  def self.xrank_restriction(name_id)
-    name = Name.find(name_id)
-    if name.name_rank.unranked?
-      "1=1"
-    else [" name.name_rank_id in (
-select id
-  from name_rank
- where sort_order        >= (
-    select name_rank.sort_order
-      from name n2
-    inner join name_rank
-        on n2.name_rank_id =  name_rank.id
- where n2.id       =  ?
-       )
-   and sort_order < (
-    select min(sort_order)
-      from name_rank
-    where (
-            major
-        or name              = '[unknown]'
-          )
-      and sort_order        > (
-        select name_rank.sort_order
-          from name n3
-        inner join name_rank
-            on n3.name_rank_id = name_rank.id
-    where n3.id       = ?
-       )
-       ) )",name.id, name.id]
-    end
-  end
-  def self.rank_restriction_orig(name_id)
-    name = Name.find(name_id)
-    if name.name_rank.unranked?
-      "1=1"
-    else [" name.name_rank_id in (
-select id
-  from name_rank
- where sort_order        >= (
-    select name_rank.sort_order
-      from name n2
-    inner join name_rank
-        on n2.name_rank_id =  name_rank.id
- where n2.id       =  ?
-       )
-   and sort_order < (
-    select min(sort_order)
-      from name_rank
-    where (
-            major
-        or name              = '[unknown]'
-          )
-      and sort_order        > (
-        select name_rank.sort_order
-          from name n3
-        inner join name_rank
-            on n3.name_rank_id = name_rank.id
-    where n3.id       = ?
-       )
-       ) )",name.id, name.id]
-    end
-  end
-
-  def self.run_query(terms, name_id)
-    build_query(terms, name_id).collect do |i|
-      { value: display_value(i), id: i.id }
-    end
-  end
-
-  def self.display_value(i)
+  def display_value(i)
     value = "#{i.full_name} in #{i.citation}:#{i.year}"
     unless i.pages.blank? || i.pages.match(/null - null/)
       value += " [#{i.pages}]"
@@ -163,7 +101,7 @@ select id
     value
   end
 
-  def self.reference_binds(terms)
+  def reference_binds(terms)
     reference_binds = []
     reference_year = terms.gsub(/[^0-9]/, "")
     if reference_year.present? &&

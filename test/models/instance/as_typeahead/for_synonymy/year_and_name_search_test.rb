@@ -21,12 +21,12 @@ require "models/instance/as_typeahead/for_synonymy/test_helper.rb"
 # Single instance typeahead search.
 class ForNameAndReferenceYearTest < ActiveSupport::TestCase
   test "year and name search" do
-    results = Instance::AsTypeahead.for_synonymy("1916 angophora costata",
-                                                 names(:a_species).id)
-    assert results.class == Array, "Results should be an array."
-    assert results.size == 1, "Results should include just one record."
-    assert results
-      .collect { |r| r[:value] }
+    ta = Instance::AsTypeahead::ForSynonymy.new("1916 angophora costata",
+                                                names(:a_species).id)
+    assert ta.results.class == Array, "Results should be an array."
+    assert ta.results.size == 1, "Results should include just one record."
+    assert ta.results
+             .collect { |r| r[:value] }
       .include?(ANGOPHORA_COSTATA_JOURNAL_1916_STRING),
            ANGOPHORA_COSTATA_JOURNAL_1916_ERROR
   end
