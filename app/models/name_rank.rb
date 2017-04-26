@@ -25,6 +25,13 @@ class NameRank < ActiveRecord::Base
 
   SPECIES = "Species"
   GENUS = "Genus"
+  SUBGENUS = "Subgenus"
+  SECTIO = "Sectio"
+  SUBSECTIO = "Subsectio"
+  SERIES = "Series"
+  SUBSERIES = "Subseries"
+  SUPERSPECIES = "Superspecies"
+
   FAMILIA = "Familia"
   FAMILY = FAMILIA
   NA = "[n/a]"
@@ -38,6 +45,18 @@ class NameRank < ActiveRecord::Base
   scope :above_unranked, -> { where("name_rank.sort_order < (select unranked.sort_order from name_rank unranked where name = '[unranked]')") }
   scope :at_or_below_this, ->(this_id) { where("name_rank.sort_order >= (select this_one.sort_order from name_rank this_one where id = ?)", this_id)}
   scope :within_level, ->(this_id) { where("name_rank.sort_order < (select min(above.sort_order) from name_rank above where ((major and name != 'Tribus') or name = '[unknown]') and sort_order > (select n4.sort_order from name_rank n4 where n4.id = ?) )", this_id)}
+
+  scope :infrageneric,
+    (lambda do
+      where("(name_rank.sort_order >= (select iga.sort_order
+                                        from name_rank iga
+                                       where name = 'Genus')
+             and
+             name_rank.sort_order < (select species.sort_order
+                                       from name_rank species
+                                      where name = 'Species') )
+            or name_rank.name = '[infragenus]' ")
+     end)
 
   def self.default
     NameRank.where(abbrev: "sp.").push(NameRank.first).first
@@ -139,6 +158,17 @@ class NameRank < ActiveRecord::Base
 
   def infraspecies?
     !!name.match(/\A#{Regexp.escape(INFRASPECIES)}\z/)
+  end
+
+  def infrageneric?
+    !!(name.match(/\A#{Regexp.escape(GENUS)}\z/) ||
+    name.match(/\A#{Regexp.escape(SUBGENUS)}\z/) ||
+    name.match(/\A#{Regexp.escape(SECTIO)}\z/) ||
+    name.match(/\A#{Regexp.escape(SUBSECTIO)}\z/) ||
+    name.match(/\A#{Regexp.escape(SERIES)}\z/) ||
+    name.match(/\A#{Regexp.escape(SUBSERIES)}\z/) ||
+    name.match(/\A#{Regexp.escape(SUPERSPECIES)}\z/) ||
+    name.match(/\A#{Regexp.escape(INFRAGENUS)}\z/))
   end
 
   def self.genus
