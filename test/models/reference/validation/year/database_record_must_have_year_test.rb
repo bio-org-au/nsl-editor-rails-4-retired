@@ -24,6 +24,6 @@ class RefValYearDatabaseRecordMustHaveYearTest < ActiveSupport::TestCase
     reference.year = 2000
     assert reference.valid?, "Should start out valid"
     reference.year = ""
-    assert_not reference.valid?, "Database Record should not be valid without year"
+    assert_not reference.valid?, "Record should be invalid without year"
   end
 end

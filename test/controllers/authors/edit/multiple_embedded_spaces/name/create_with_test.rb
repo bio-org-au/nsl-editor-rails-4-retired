@@ -25,20 +25,19 @@ class AuthorEditMESpacesNameCreateWithTest < ActionController::TestCase
     @request.headers["Accept"] = "application/javascript"
     author_name = "j   jjjjjj"
     author_abbrev = "ff  x    r"
-    diff = assert_difference("Author.count",1) do
+    assert_difference("Author.count", 1) do
       post(:create,
            { author: { "name" => author_name,
-                       "abbrev" => author_abbrev} },
-             username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
+                       "abbrev" => author_abbrev } },
+           username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
       assert_not_nil assigns(:author), "Should assign author"
-      new_author = Author.find_by(name: author_name.gsub(/  +/,' '))
-      assert_match author_name.gsub(/  +/,' '),
-                   new_author.name
+      new_author = Author.find_by(name: author_name.gsub(/  +/, " "))
+      assert_match author_name.gsub(/  +/, " "),
+                   new_author.name,
                    "New author name should not have embedded spaces"
-      assert_match author_abbrev.gsub(/  +/,' '),
-                   new_author.abbrev
+      assert_match author_abbrev.gsub(/  +/, " "),
+                   new_author.abbrev,
                    "New author abbrev should not have embedded spaces"
     end
   end
 end
-

@@ -24,21 +24,20 @@ class AuthorEditMESpacesNameUpdateWithTest < ActionController::TestCase
   test "name updated with multiple embedded spaces to single space" do
     @request.headers["Accept"] = "application/javascript"
     author = authors(:has_multiple_embedded_spaces)
-    new_name = 'as  asd    x'
-    new_abbrev = 'as   sd  x'
+    new_name = "as  asd    x"
+    new_abbrev = "as   sd  x"
     patch(:update,
-          {id: author.id,
-           author: { "name" => new_name,
-                     "abbrev" => new_abbrev} },
+          { id: author.id,
+            author: { "name" => new_name,
+                      "abbrev" => new_abbrev } },
           username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
     assert_not_nil assigns(:author), "Should assign author"
     updated_author = Author.find(author.id)
-    assert_equal new_name.gsub(/ +/,' '),
-                 updated_author.name
+    assert_equal new_name.gsub(/ +/, " "),
+                 updated_author.name,
                  "Updated author name should not have embedded spaces"
-    assert_match new_abbrev.gsub(/ +/,' '),
+    assert_match new_abbrev.gsub(/ +/, " "),
                  updated_author.abbrev,
                  "Updated author abbrev should not have embedded spaces"
   end
 end
-

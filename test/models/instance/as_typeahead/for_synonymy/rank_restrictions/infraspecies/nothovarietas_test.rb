@@ -16,7 +16,8 @@
 #   limitations under the License.
 #
 require "test_helper"
-require "models/instance/as_typeahead/for_synonymy/rank_restrictions/infraspecies/infraspecies_helper"
+require "models/instance/as_typeahead/for_synonymy/rank_restrictions/\
+infraspecies/infraspecies_helper"
 
 # Single instance typeahead search.
 class TypeaheadForSynonymyNothovarietasTest < ActiveSupport::TestCase

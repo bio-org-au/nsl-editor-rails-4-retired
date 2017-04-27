@@ -66,6 +66,7 @@ class NameAsCopierMakeACopySimpleTest < ActiveSupport::TestCase
     test3
     test4
     test5
+    test6
   end
 
   def test1
@@ -96,13 +97,16 @@ class NameAsCopierMakeACopySimpleTest < ActiveSupport::TestCase
     assert_equal @master_name.orth_var, @copied_name.orth_var
     assert_equal @master_name.parent_id, @copied_name.parent_id
     assert_nil @master_name.second_parent_id
+  end
+
+  def test5
     assert_nil @copied_name.second_parent_id
     assert_nil @master_name.verbatim_rank
     assert_nil @copied_name.verbatim_rank
     assert_match @dummy_name_element, @copied_name.name_element
   end
 
-  def test5
+  def test6
     assert_equal @dummy_username, @copied_name.created_by
     assert_equal @dummy_username, @copied_name.updated_by
   end

@@ -26,7 +26,7 @@ class InstancesCopyStandaloneForbidnForEditUserTest < ActionController::TestCase
     name = names(:a_species)
     reference = references(:a_book)
     @request.headers["Accept"] = "application/javascript"
-    assert_difference("Instance.count",1) do
+    assert_difference("Instance.count", 1) do
       post(:copy_standalone,
            { id: instance.id,
              instance: { "reference_id" => reference.id,

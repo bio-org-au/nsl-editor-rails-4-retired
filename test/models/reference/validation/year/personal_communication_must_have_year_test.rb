@@ -24,7 +24,7 @@ class RefValYearPersCommMustHaveYearTest < ActiveSupport::TestCase
     reference.year = 2000
     assert reference.valid?, "Should start out valid"
     reference.year = ""
-    assert_not reference.valid?, "Personal communication should not be valid without year"
+    assert_not reference.valid?, "Personal comm. should be invalid without year"
     assert reference.errors.full_messages.include?("Year is required")
   end
 end

@@ -26,7 +26,7 @@ class ForAnyRankTest < ActiveSupport::TestCase
       suggestions,
       "Forma",
       %w(Forma Subforma Subvarietas Varietas Nothovarietas Subspecies Species
-      [infraspecies])
+         [infraspecies])
     )
   end
 end
