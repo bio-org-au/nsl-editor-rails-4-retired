@@ -26,7 +26,8 @@ class CultivarParentForFormaRankTest < ActiveSupport::TestCase
       suggestions,
       "Forma",
       %w(Genus Subgenus Sectio Subsectio Series Subseries Superspecies Species \
-         Subspecies Varietas Nothovarietas Subvarietas Forma Subforma )
+         Subspecies Varietas Nothovarietas Subvarietas Forma Subforma
+      [infraspecies])
     )
   end
 end

@@ -39,7 +39,7 @@ class SearchRefsOutputFormatWithInstancesTest < ActionController::TestCase
                   "Orth var. name formatted incorrectly"
     end
     assert_select "#search-results-summary",
-                  /28 records\b/,
-                  "Should find 28 records"
+                  /34 records\b/,
+                  "Should find 34 records"
   end
 end

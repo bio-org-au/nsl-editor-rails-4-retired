@@ -25,7 +25,8 @@ class ForAnyRankTest < ActiveSupport::TestCase
     hybrid_parent_suggestions_should_only_include(
       suggestions,
       "Forma",
-      %w(Forma Subforma Subvarietas Varietas Nothovarietas Subspecies Species)
+      %w(Forma Subforma Subvarietas Varietas Nothovarietas Subspecies Species
+      [infraspecies])
     )
   end
 end

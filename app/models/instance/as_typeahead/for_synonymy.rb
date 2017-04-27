@@ -59,7 +59,6 @@ class Instance::AsTypeahead::ForSynonymy
   def build_query(terms, name_id)
     query = Instance.select(COLUMNS)
                     .joins(name: :name_rank).where(@name_binds)
-                    .merge(NameRank.not_deprecated)
                     .joins(:reference).where(reference_binds(terms))
                     .joins(:instance_type)
                     .order("full_name, year").limit(SEARCH_LIMIT)
@@ -81,11 +80,12 @@ class Instance::AsTypeahead::ForSynonymy
     name = Name.find(name_id)
     if name.name_rank.unranked?
       query
-    elsif name.name_rank.below_species?
-      query.merge(NameRank.species_or_below)
-           .merge(NameRank.above_unranked)
+    elsif name.name_rank.infraspecific?
+      query.merge(NameRank.infraspecific)
     elsif name.name_rank.infrageneric?
       query.merge(NameRank.infrageneric)
+    elsif name.name_rank.infrafamilial?
+      query.merge(NameRank.infrafamilial)
     else # Species or above
       query.merge(NameRank.at_or_below_this(name.name_rank_id))
            .merge(NameRank.within_level(name.name_rank_id))

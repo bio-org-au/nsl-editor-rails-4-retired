@@ -22,7 +22,7 @@ require "models/name/as_typeahead/name_parent/name_parent_test_helper"
 class NameParentUnrankedIsOfferedForUnrankedTest < ActiveSupport::TestCase
   test "name parent suggestion for unranked include unranked" do
     typeahead = Name::AsTypeahead::ForParent.new(
-      term: "an_unranked",
+      term: "a_an_unranked",
       avoid_id: 1,
       rank_id: NameRank.find_by(name: "[unranked]").id
     )

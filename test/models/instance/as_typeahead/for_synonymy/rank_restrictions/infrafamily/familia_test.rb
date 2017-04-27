@@ -18,13 +18,13 @@
 require "test_helper"
 
 # Single instance typeahead search.
-class TypeaheadForSynonymySubsectioTest < ActiveSupport::TestCase
+class TypeaheadForSynonymyFamiliaTest < ActiveSupport::TestCase
   def setup
     @ta = Instance::AsTypeahead::ForSynonymy.new("*",
-                                                 names(:a_subsectio).id)
+                                                 names(:a_family).id)
   end
 
-  test "instance typeahead for synonymy rank restriction for a subsectio" do
+  test "instance typeahead for synonymy rank restriction for a familia" do
     assert @ta.results.size >= 2, "Should be at least 2 synonyms for angophora"
     @rank_names = @ta.results.collect do |result|
       Instance.find(result[:id]).name.name_rank.name
@@ -34,8 +34,9 @@ class TypeaheadForSynonymySubsectioTest < ActiveSupport::TestCase
   end
 
   def bulk_test_1
-    %w(Regio Regnum Division Classis Subclassis Superordo Ordo Subordo Familia
-       Subfamilia Tribus Subtribus Species Subspecies Nothovarietas Varietas
+    %w(Regio Regnum Division Classis Subclassis Superordo Ordo Subordo Genus
+       Subgenus Sectio Subsectio Series Subseries Superspecies Species
+       Subspecies Nothovarietas Varietas
        Subvarietas Forma Subforma).each do |rank_string|
       assert @rank_names.select { |e| e.match(/\A#{rank_string}\z/) }.empty?,
              "Expect no #{rank_string} to be suggested"
@@ -43,10 +44,9 @@ class TypeaheadForSynonymySubsectioTest < ActiveSupport::TestCase
   end
 
   def bulk_test_2
-    assert @rank_names.select { |e| e.match(/\AGenus\z/) }.size >= 6,
+    assert @rank_names.select { |e| e.match(/\AFamilia\z/) }.size == 1,
            "Expect correct number of genera to be suggested"
-    %w(Subgenus Sectio Subsectio Series
-       Subseries Superspecies).each do |rank_string|
+    %w(Familia Subfamilia Tribus Subtribus).each do |rank_string|
       assert @rank_names.select { |e| e.match(/\A#{rank_string}\z/) }.size == 1,
              "Expect one #{rank_string} to be suggested"
     end

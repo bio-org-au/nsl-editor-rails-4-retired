@@ -16,16 +16,19 @@
 #   limitations under the License.
 #
 require "test_helper"
-require "models/instance/as_typeahead/for_synonymy/rank_restrictions/infraspecies/infraspecies_helper"
+require "models/instance/as_typeahead/for_synonymy/rank_restrictions/\
+infraspecies/infraspecies_helper"
 
 # Single instance typeahead search.
-class TypeaheadForSynonymySpeciesTest < ActiveSupport::TestCase
+class TypeaheadForSynonymyMorphologicalVarTest < ActiveSupport::TestCase
   def setup
-    @ta = Instance::AsTypeahead::ForSynonymy.new("a",
-                                                 names(:a_species).id)
+    @ta = Instance::AsTypeahead::ForSynonymy.new(
+      "a",
+      names(:a_morphological_var_with_an_instance).id
+    )
   end
 
-  test "instance typeahead for synonymy rank restriction for species" do
+  test "instance typeahead for synonymy rank restriction for morph var" do
     assert @ta.results.size >= 2, "Should be at least 2 synonyms"
     @rank_names = @ta.results.collect do |result|
       Instance.find(result[:id]).name.name_rank.name

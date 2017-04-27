@@ -37,7 +37,7 @@ class TypeaheadForSynonymySectioTest < ActiveSupport::TestCase
     %w(Regio Regnum Division Classis Subclassis Superordo Ordo Subordo Familia
        Subfamilia Tribus Subtribus Species Subspecies Nothovarietas Varietas
        Subvarietas Forma Subforma).each do |rank_string|
-      assert @rank_names.select { |e| e.match(/\A#{rank_string}\z/) }.size == 0,
+      assert @rank_names.select { |e| e.match(/\A#{rank_string}\z/) }.empty?,
              "Expect no #{rank_string} to be suggested"
     end
   end
