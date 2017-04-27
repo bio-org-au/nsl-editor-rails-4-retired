@@ -1,4 +1,10 @@
 ---
+- :date: 26-Apr-2017
+  :jira_id: '474'
+  :description: |-
+    Added basic infrageneric functions for synonymy typeahead rank restrictions
+- :date: 24-Apr-2017
+  :release: true
 - :date: 24-Apr-2017
   :jira_id: '474'
   :description: |-

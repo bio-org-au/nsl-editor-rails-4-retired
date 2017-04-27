@@ -153,8 +153,9 @@ as a synonym"
   end
 
   def typeahead_for_synonymy
-    instances = Instance::AsTypeahead.for_synonymy(params[:term], params[:name_id])
-    render json: instances
+    instances = Instance::AsTypeahead::ForSynonymy.new(params[:term],
+                                                       params[:name_id])
+    render json: instances.results
   end
 
   # Expect instance id - of the instance user is updating.

@@ -21,18 +21,19 @@ require "models/instance/as_typeahead/for_synonymy/test_helper.rb"
 # Single instance typeahead search.
 class ForNameAndReferenceYearTest < ActiveSupport::TestCase
   def setup
-    @results = Instance::AsTypeahead::AsTypeahead
-               .for_synonymy("angophora costata 178", names(:a_species).id)
+    @typeahead = Instance::AsTypeahead::ForSynonymy.new("angophora costata 178",
+                                                        names(:a_species).id)
   end
 
   test "name and incomplete year search" do
-    assert @results.class == Array, "Results should be an array."
-    assert @results.size >= 2, "Incomplete year should be ignored."
-    assert @results.collect { |r| r[:value] }
+    assert @typeahead.results.class == Array, "Results should be an array."
+    assert @typeahead.results.size >= 2, "Incomplete year should be ignored."
+    assert @typeahead.results
+                     .collect { |r| r[:value] }
       .include?(ANGOPHORA_COSTATA_DE_FRUCT_1788_STRING),
            ANGOPHORA_COSTATA_DE_FRUCT_1788_ERROR
-    assert @results
-      .collect { |r| r[:value] }
+    assert @typeahead.results
+                     .collect { |r| r[:value] }
       .include?(ANGOPHORA_COSTATA_JOURNAL_1916_STRING),
            ANGOPHORA_COSTATA_JOURNAL_1916_ERROR
   end
