@@ -15,33 +15,23 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-def check_infraspecific_exclusions
+def check_infrageneric_exclusions
   %w(Regio Regnum Division Classis Subclassis Superordo Ordo Subordo Familia
-     Subfamilia Tribus Subtribus Genus Subgenus Sectio Subsectio Series
-     Subseries Superspecies).each do |rank_string|
-    assert @rank_names.select { |e| e.match(/\A#{rank_string}\z/) }.empty?,
-           "Expect no #{Regexp.escape(rank_string)} to be suggested"
+     Subfamilia Tribus Subtribus Species Subspecies Nothovarietas Varietas
+     Subvarietas Forma Subforma).each do |rank_string|
+    escaped_s = Regexp.escape(rank_string)
+    assert @rank_names.select { |e| e.match(/\A#{escaped_s}\z/) }.empty?,
+           "Expect no #{rank_string} to be suggested"
   end
 end
 
-def check_infraspecific_inclusions
-  check_species
-  check_the_rest
-end
-
-def check_species
-  assert @rank_names.select { |e| e.match(/\ASpecies\z/) }.size >= 6,
-         "Expect correct number of species to be suggested"
-end
-
-def check_the_rest
-  %w(Subspecies Nothovarietas Varietas Subvarietas Forma Subforma [n/a]
-     [unknown] [unranked] [infraspecies] morphological\ var. nothomorph.)
-    .each do |rank_string|
-    matches = @rank_names.select do |e|
-      e.match(/\A#{Regexp.escape(rank_string)}\z/)
-    end
-    assert matches.size >= 1,
+def check_infrageneric_inclusions
+  assert @rank_names.select { |e| e.match(/\AGenus\z/) }.size >= 5,
+         "Expect correct number of genera to be suggested"
+  %w(Subgenus Sectio Subsectio Series
+     Subseries Superspecies [infragenus]).each do |rank_string|
+    escaped_s = Regexp.escape(rank_string)
+    assert @rank_names.select { |e| e.match(/\A#{escaped_s}\z/) }.size >= 1,
            "Expect at least one #{rank_string} to be suggested"
   end
 end

@@ -928,6 +928,20 @@ an_infraspecies_with_an_instance:
   updated_by: greg
   created_by: greg
 
+an_infragenus_with_an_instance:
+  simple_name: a an infragenus with an instance
+  simple_name_html: a an infragenus with an instance
+  name_element: a an infragenus with an instance
+  full_name: a an infragenus with an instance
+  full_name_html: a an infragenus with an instance
+  name_rank: infragenus
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
 belonia_korb_with_diacrit:
   simple_name: Belonia Körb.
   simple_name_html: Belonia Körb.

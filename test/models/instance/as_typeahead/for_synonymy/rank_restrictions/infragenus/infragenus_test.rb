@@ -17,21 +17,23 @@
 #
 require "test_helper"
 require "models/instance/as_typeahead/for_synonymy/rank_restrictions/\
-infraspecies/infraspecies_helper"
+infragenus/infragenus_helper"
 
 # Single instance typeahead search.
-class TypeaheadForSynonymySubspeciesTest < ActiveSupport::TestCase
+class TypeaheadForSynonymyInfragenusTest < ActiveSupport::TestCase
   def setup
-    @ta = Instance::AsTypeahead::ForSynonymy.new("*",
-                                                 names(:a_subspecies).id)
+    @ta = Instance::AsTypeahead::ForSynonymy.new(
+      "a",
+      names(:an_infragenus_with_an_instance).id
+    )
   end
 
-  test "instance typeahead for synonymy rank restriction for subspecies" do
-    assert @ta.results.size >= 2, "Should be at least 2 synonyms for angophora"
+  test "instance typeahead for synonymy rank restriction for an infragenus" do
+    assert @ta.results.size >= 2, "Should be at least 2 synonyms"
     @rank_names = @ta.results.collect do |result|
       Instance.find(result[:id]).name.name_rank.name
     end
-    check_infraspecific_exclusions
-    check_infraspecific_inclusions
+    check_infrageneric_exclusions
+    check_infrageneric_inclusions
   end
 end

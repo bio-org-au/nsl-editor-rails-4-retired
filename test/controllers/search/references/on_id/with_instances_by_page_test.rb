@@ -31,7 +31,7 @@ class SearchRefsOnIdWithInstancesByPageTest < ActionController::TestCase
         groups: [])
     assert_response :success
     assert_select "#search-results-summary",
-                  /34 records\b/,
-                  "Should find 34 records"
+                  /35 records\b/,
+                  "Should find 35 records"
   end
 end

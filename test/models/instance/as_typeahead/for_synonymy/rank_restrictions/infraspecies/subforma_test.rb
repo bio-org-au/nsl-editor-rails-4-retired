@@ -31,7 +31,7 @@ class TypeaheadForSynonymySubformaTest < ActiveSupport::TestCase
     @rank_names = @ta.results.collect do |result|
       Instance.find(result[:id]).name.name_rank.name
     end
-    check_exclusions
-    check_inclusions
+    check_infraspecific_exclusions
+    check_infraspecific_inclusions
   end
 end

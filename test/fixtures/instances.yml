@@ -500,6 +500,17 @@ default_instance_for_an_infraspecies:
   updated_by: tester
   page: zzzz99901
 
+# Default instance so name can be offered as parent
+default_instance_for_an_infragenus:
+  reference: bucket_reference_for_default_instances
+  name: an_infragenus_with_an_instance
+  instance_type: unknown
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: zzzz99901
+
 casuarina_inophloia_by_mueller:
   reference: mueller_1882_section
   name: casuarina_inophloia
