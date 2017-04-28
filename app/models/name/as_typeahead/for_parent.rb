@@ -36,7 +36,7 @@ class Name::AsTypeahead::ForParent
               :params
   SEARCH_LIMIT = 50
   GROUP_BY = "name.id,name.full_name,name_rank.name,name_status.name,"\
-             "name_rank.sort_order".freeze
+             "name_rank.sort_order"
 
   def initialize(params)
     @params = params

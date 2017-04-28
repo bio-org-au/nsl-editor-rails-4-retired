@@ -53,8 +53,8 @@ class Author < ActiveRecord::Base
   scope :lower_abbrev_equals,
         ->(string) { where("lower(abbrev) = lower(?) ", string) }
 
-  DEFAULT_DESCRIPTOR = "n".freeze # for name
-  DEFAULT_ORDER_BY = "name asc ".freeze
+  DEFAULT_DESCRIPTOR = "n" # for name
+  DEFAULT_ORDER_BY = "name asc "
 
   before_create :set_defaults
   before_save :compress_whitespace

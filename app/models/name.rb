@@ -71,7 +71,7 @@ class Name < ActiveRecord::Base
   has_many :name_tree_paths
 
   SEARCH_LIMIT = 50
-  DECLARED_BT = "DeclaredBt".freeze
+  DECLARED_BT = "DeclaredBt"
 
   before_create :set_defaults
   before_save :validate
