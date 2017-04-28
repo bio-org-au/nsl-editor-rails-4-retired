@@ -16,6 +16,8 @@
 #   limitations under the License.
 #
 require "test_helper"
+require "models/instance/as_typeahead/for_synonymy/rank_restrictions/\
+infrafamily/infrafamily_helper"
 
 # Single instance typeahead search.
 class TypeaheadForSynonymySubfamiliaTest < ActiveSupport::TestCase
@@ -29,26 +31,7 @@ class TypeaheadForSynonymySubfamiliaTest < ActiveSupport::TestCase
     @rank_names = @ta.results.collect do |result|
       Instance.find(result[:id]).name.name_rank.name
     end
-    bulk_test_1
-    bulk_test_2
-  end
-
-  def bulk_test_1
-    %w(Regio Regnum Division Classis Subclassis Superordo Ordo Subordo Genus
-       Subgenus Sectio Subsectio Series Subseries Superspecies Species
-       Subspecies Nothovarietas Varietas
-       Subvarietas Forma Subforma).each do |rank_string|
-      assert @rank_names.select { |e| e.match(/\A#{rank_string}\z/) }.empty?,
-             "Expect no #{rank_string} to be suggested"
-    end
-  end
-
-  def bulk_test_2
-    assert @rank_names.select { |e| e.match(/\ASubfamilia\z/) }.size == 1,
-           "Expect correct number of genera to be suggested"
-    %w(Familia Subfamilia Tribus Subtribus).each do |rank_string|
-      assert @rank_names.select { |e| e.match(/\A#{rank_string}\z/) }.size == 1,
-             "Expect one #{rank_string} to be suggested"
-    end
+    check_infrafamily_exclusions
+    check_infrafamily_inclusions
   end
 end

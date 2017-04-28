@@ -20,13 +20,15 @@ require "models/instance/as_typeahead/for_synonymy/rank_restrictions/\
 infrafamily/infrafamily_helper"
 
 # Single instance typeahead search.
-class TypeaheadForSynonymyTribusTest < ActiveSupport::TestCase
+class TypeaheadForSynonymyInfrafamilyTest < ActiveSupport::TestCase
   def setup
-    @ta = Instance::AsTypeahead::ForSynonymy.new("*",
-                                                 names(:a_family).id)
+    @ta = Instance::AsTypeahead::ForSynonymy.new(
+      "*",
+      names(:an_infrafamily_with_an_instance).id
+    )
   end
 
-  test "instance typeahead for synonymy rank restriction for a tribus" do
+  test "instance typeahead for synonymy rank restriction for an infrafamily" do
     assert @ta.results.size >= 2, "Should be at least 2 synonyms for angophora"
     @rank_names = @ta.results.collect do |result|
       Instance.find(result[:id]).name.name_rank.name

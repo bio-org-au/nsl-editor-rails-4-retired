@@ -56,57 +56,59 @@ def test5
   assert_with_args(@results, 21, "xx 200,300 - Triodia basedowii E.Pritz")
   assert_with_args(@results, 22, "zzzz99906 - a genus with two instances")
   assert_with_args(@results, 23,
-                   "zzzz99901 - a an infragenus with an instance")
+                   "zzzz99901 - a an infrafamily with an instance")
   assert_with_args(@results, 24,
+                   "zzzz99901 - a an infragenus with an instance")
+  assert_with_args(@results, 25,
                    "zzzz99901 - a an infraspecies with an instance")
-  assert_with_args(@results, 25, "zzzz99901 - a an na with an instance")
-  assert_with_args(@results, 26, "999 - a an unknown with an instance")
-  assert_with_args(@results, 27, "999 - a an unranked with an instance")
+  assert_with_args(@results, 26, "zzzz99901 - a an na with an instance")
 end
 
 def test6
-  assert_with_args(@results, 28, "999 - a duplicate genus")
-  assert_with_args(@results, 29, "999 - a morphological var with an instance")
-  assert_with_args(@results, 30, "999 - a nothomorph with an instance")
-  assert_with_args(@results, 31, "999 - a_family")
-  assert_with_args(@results, 32, "999 - a_forma")
-  assert_with_args(@results, 33, "999 - a_genus")
-  assert_with_args(@results, 34, "999 - a_nothovarietas")
-  assert_with_args(@results, 35, "999 - a_sectio")
-  assert_with_args(@results, 36, "999 - a_series")
+  assert_with_args(@results, 27, "999 - a an unknown with an instance")
+  assert_with_args(@results, 28, "999 - a an unranked with an instance")
+  assert_with_args(@results, 29, "999 - a duplicate genus")
+  assert_with_args(@results, 30, "999 - a morphological var with an instance")
+  assert_with_args(@results, 31, "999 - a nothomorph with an instance")
+  assert_with_args(@results, 32, "999 - a_family")
+  assert_with_args(@results, 33, "999 - a_forma")
+  assert_with_args(@results, 34, "999 - a_genus")
+  assert_with_args(@results, 35, "999 - a_nothovarietas")
 end
 
 def test7
-  assert_with_args(@results, 37, "999 - a_species")
-  assert_with_args(@results, 38, "74, t. 100 - a_subclassis")
-  assert_with_args(@results, 39, "999 - a_subfamilia")
-  assert_with_args(@results, 40, "999 - a_subforma")
-  assert_with_args(@results, 41, "999 - a_subgenus")
-  assert_with_args(@results, 42, "999 - a_subordo")
+  assert_with_args(@results, 36, "999 - a_sectio")
+  assert_with_args(@results, 37, "999 - a_series")
+  assert_with_args(@results, 38, "999 - a_species")
+  assert_with_args(@results, 39, "74, t. 100 - a_subclassis")
+  assert_with_args(@results, 40, "999 - a_subfamilia")
+  assert_with_args(@results, 41, "999 - a_subforma")
+  assert_with_args(@results, 42, "999 - a_subgenus")
+  assert_with_args(@results, 43, "999 - a_subordo")
 end
 
 def test8
-  assert_with_args(@results, 43, "999 - a_subsectio")
-  assert_with_args(@results, 44, "999 - a_subseries")
-  assert_with_args(@results, 45, "999 - a_subspecies")
-  assert_with_args(@results, 46, "999 - a_subtribus")
-  assert_with_args(@results, 47, "999 - a_subvarietas")
+  assert_with_args(@results, 44, "999 - a_subsectio")
+  assert_with_args(@results, 45, "999 - a_subseries")
+  assert_with_args(@results, 46, "999 - a_subspecies")
+  assert_with_args(@results, 47, "999 - a_subtribus")
+  assert_with_args(@results, 48, "999 - a_subvarietas")
 end
 
 def test9
-  assert_with_args(@results, 48, "74, t. 99 - a_superordo")
-  assert_with_args(@results, 49, "999 - a_superspecies")
-  assert_with_args(@results, 50, "999 - a_tribus")
-  assert_with_args(@results, 51, "999 - a_varietas")
+  assert_with_args(@results, 49, "74, t. 99 - a_superordo")
+  assert_with_args(@results, 50, "999 - a_superspecies")
+  assert_with_args(@results, 51, "999 - a_tribus")
+  assert_with_args(@results, 52, "999 - a_varietas")
 end
 
 def test10
-  assert_with_args(@results, 52, "999 - an_ordo")
+  assert_with_args(@results, 53, "999 - an_ordo")
   assert_with_args(@results,
-                   55,
+                   56,
                    "75, t. 102 - Magnoliopsida Brongn. a_classis")
-  assert_with_args(@results, 56, "75, t. 101 - Metrosideros costata Gaertn.")
-  assert_with_args(@results, 57, "76 - Metrosideros costata Gaertn.")
-  assert_with_args(@results, 58, "9999999999 - orth var for tax nov")
-  assert_with_args(@results, 59, "19-20 - Plantae Haeckel")
+  assert_with_args(@results, 57, "75, t. 101 - Metrosideros costata Gaertn.")
+  assert_with_args(@results, 58, "76 - Metrosideros costata Gaertn.")
+  assert_with_args(@results, 59, "9999999999 - orth var for tax nov")
+  assert_with_args(@results, 60, "19-20 - Plantae Haeckel")
 end
