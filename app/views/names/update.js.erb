@@ -16,4 +16,5 @@ $('#search-result-details-info-message-container2').html('<%= @message %>');
   $('input#base-author-by-abbrev').val('<%= escape_javascript(@name.try('base_author').try('abbrev').try('html_safe')) %>');
 
   $('input#sanctioning-author-by-abbrev').val('<%= escape_javascript(@name.try('sanctioning_author').try('abbrev').try('html_safe')) %>');
+  $('#change-category-widgets').html('<%= escape_javascript(render partial: 'change_category_widgets') %>');
 <% end %>

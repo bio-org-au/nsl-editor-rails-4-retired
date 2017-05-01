@@ -1,4 +1,8 @@
 ---
+- :date: 01-May-2017
+  :jira_id: '2140'
+  :description: |-
+    Added button to convert scientific name to phrase name.
 - :date: 27-Apr-2017
   :jira_id: '474'
   :description: |-

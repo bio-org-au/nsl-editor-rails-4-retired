@@ -1,4 +1,5 @@
 
+<div id="change-category-widgets">
 <%= "Current category is: <em>#{@name.raw_category.capitalize}</em>".html_safe unless @name.raw_category == @name.category %>
 
 
@@ -44,13 +45,8 @@
                                                                 new_category: Name::CULTIVAR_HYBRID_CATEGORY)}) %>
   <% elsif @name.category == Name::SCIENTIFIC_CATEGORY %>
 
-    <%= link_to('Convert to phrase name', 
-                    '#', 
-                    class: "change-name-category-on-edit-tab btn btn-default", 
-                    title: "Convert to phrase name",
-                    data: {edit_url: name_edit_as_category_path(id: @name.id,
-                                                                tab: 'edit_name',
-                                                                new_category: Name::CULTIVAR_HYBRID_CATEGORY)}) %>
+    <%= render partial: "names/widgets/conditional_convert_sci_to_phrase_widget" %>
   <% end %>
 
 <% end %>
+</div>
