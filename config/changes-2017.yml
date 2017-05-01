@@ -1,5 +1,9 @@
 ---
 - :date: 01-May-2017
+  :jira_id: '2243'
+  :description: |-
+    Name parent rank restriction can be switched off by shard configuration.
+- :date: 01-May-2017
   :jira_id: '2321'
   :description: |-
     Disable new instance fields after create to avoid near duplicates.

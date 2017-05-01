@@ -62,10 +62,17 @@ class Name::AsTypeahead::ForParent
   end
 
   def rank_query
+    return @qry.joins(:name_rank) unless ShardConfig.name_parent_rank_restriction?
     rank = NameRank.find(@params[:rank_id])
     if rank.unranked?
       @qry = @qry.ranks_for_unranked
-    elsif rank.infrafamily?
+    else
+      more_rank_queries(rank)
+    end
+  end
+
+  def more_rank_queries(rank)
+    if rank.infrafamily?
       @qry = @qry.parent_ranks_for_infrafamily
     elsif rank.infragenus?
       @qry = @qry.parent_ranks_for_infragenus
