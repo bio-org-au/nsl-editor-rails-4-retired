@@ -1,4 +1,4 @@
 $('.message-container').html('');
-$('#search-result-details-error-message-container').html("Error: <%= @message %> ");
-$('#search-result-details-error-message-container2').html("Error: <%= @message %> ");
+$('#search-result-details-error-message-container').html("Error: <%= escape_javascript(@message) %> ");
+$('#search-result-details-error-message-container2').html("Error: <%= escape_javascript(@message) %> ");
 
