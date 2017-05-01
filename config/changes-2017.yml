@@ -1,5 +1,9 @@
 ---
 - :date: 01-May-2017
+  :jira_id: '2321'
+  :description: |-
+    Disable new instance fields after create to avoid near duplicates.
+- :date: 01-May-2017
   :jira_id: '2263'
   :description: |-
     Parent options now work consistently on APC Tree tab.
