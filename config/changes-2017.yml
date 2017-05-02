@@ -1,4 +1,9 @@
 ---
+- :date: 02-May-2017
+  :jira_id: '2296'
+  :description: |-
+    Corrected reference field help by changing "pub-date-matches-year" to 
+    the correct directive "pub-date-is-year:".
 - :date: 01-May-2017
   :jira_id: '2243'
   :description: |-
