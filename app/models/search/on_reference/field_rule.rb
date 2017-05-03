@@ -140,5 +140,24 @@ inner join ref_type xcrt on xrt.id = xcrt.parent_id))" },
       where_clause: "publication_date ~ '^\\(*[0-9][0-9][0-9][0-9]\\)*$' "
     },
     "pub-date-matches:" => { where_clause: " publication_date ~* ? " },
+    "has-no-direct-or-child-instances:" => { where_clause: " reference.id not in
+        (select id
+           from reference ref1
+      where exists (
+          select null
+            from instance i1
+      where ref1.id         = i1.reference_id
+            )
+          or exists (
+          select null
+            from reference refchild
+          where refchild.parent_id = ref1.id
+            and exists (
+                  select null
+                    from instance i2
+              where i2.reference_id = refchild.id
+                )
+            )
+        ) "},
   }.freeze
 end
