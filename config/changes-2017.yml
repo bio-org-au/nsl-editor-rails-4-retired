@@ -1,5 +1,10 @@
 ---
 - :date: 03-May-2017
+  :jira_id: '2288'
+  :description: |-
+    Added new search directives on names for duplicate simple names and
+    duplicate full names.
+- :date: 03-May-2017
   :jira_id: '2297'
   :description: |-
     Added 'has-no-direct-or-child-instances:' query which finds all references
