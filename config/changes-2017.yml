@@ -1,4 +1,8 @@
 ---
+- :date: 04-May-2017
+  :jira_id: '2140'
+  :description: |-
+    Phrase name status now defaults to n/a.
 - :date: 03-May-2017
   :jira_id: '2288'
   :description: |-

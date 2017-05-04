@@ -1,7 +1,19 @@
-
   <div class="form-group">
     <label for="name_status_id">Status*</label>
-    <%= select('name','name_status_id',@name.status_options,{include_blank: false}, title: 'Select status', tabindex: increment_tab_index, autocomplete: "off", class:"form-control", disabled: false, required: true) %>
+    <%# prompt is required below to prevent include_blank being forced true %>
+    <%# "When :include_blank or :prompt are not [BOTH!!!] present,
+    :include_blank is forced true if the select attribute required is true,
+    display size is one and multiple is not true." %>
+    <%# http://guides.rubyonrails.org/form_helpers.html#the-select-and-option-tags %>
+    <%= select('name',
+               'name_status_id',
+               @name.status_options,
+               {include_blank: @name.status_options.size > 1,
+                prompt: ''},
+               title: 'Select status',
+               tabindex: increment_tab_index,
+               autocomplete: "off",
+               class:"form-control",
+               disabled: false,
+               required: true) %>
   </div>
-
-
