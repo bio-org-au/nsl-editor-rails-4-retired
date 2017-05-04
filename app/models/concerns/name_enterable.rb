@@ -8,7 +8,7 @@ module NameEnterable
   end
 
   def status_options
-    NameStatus.options_for_category(category, allow_delete?)
+    NameStatus.options_for_category(category)
   end
 
   def takes_name_element?
