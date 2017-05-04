@@ -19,26 +19,11 @@ require "test_helper"
 
 # Name Status tests.
 class NameStatusTest < ActiveSupport::TestCase
-  test "select options for na and deleted with delete allowed" do
-    delete_allowed = true
-    options = NameStatus.na_and_deleted_options(delete_allowed)
+  test "select options for na" do
+    options = NameStatus.na_option
     assert options.class == Array, "Options should be an array."
-    assert options.size == 2,
-           "Options should have 2 entries, but it has #{options.size} entries."
-    assert options.first.first == "[deleted]"
-    assert options.second.first == "[n/a]"
-    assert options.first.third[:disabled] == false,
-           "Option should not be disabled."
-  end
-
-  test "select options for na and deleted with delete not allowed" do
-    delete_allowed = false
-    options = NameStatus.na_and_deleted_options(delete_allowed)
-    assert options.class == Array, "Options should be an array."
-    assert options.size == 2,
-           "Options should have 2 entries, but it has #{options.size} entries."
-    assert options.first.first == "[deleted]"
-    assert options.second.first == "[n/a]"
-    assert options.first.third[:disabled] == true, "Option should be disabled."
+    assert options.size == 1,
+           "Options should have 1 entry, but it has #{options.size} entries."
+    assert options.first.first == "[n/a]"
   end
 end

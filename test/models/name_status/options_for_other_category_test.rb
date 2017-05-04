@@ -19,13 +19,6 @@ require "test_helper"
 
 # Name status options tests.
 class OptionsForOtherCategoryTest < ActiveSupport::TestCase
-  test "should include [deleted]" do
-    assert NameStatus
-      .options_for_category(Name::OTHER_CATEGORY)
-      .collect(&:first)
-      .include?("[deleted]"),
-           'Other category name status options should include "[deleted]"'
-  end
 
   test "should include  [n/a]" do
     assert NameStatus
@@ -35,8 +28,8 @@ class OptionsForOtherCategoryTest < ActiveSupport::TestCase
            'Other category name status options should include "[n/a]"'
   end
 
-  test "should have only two entries" do
-    assert_equal 2,
+  test "should have only one entry" do
+    assert_equal 1,
                  NameStatus.options_for_category(Name::OTHER_CATEGORY).size,
                  "Wrong number of name status options for other category"
   end
