@@ -51,7 +51,7 @@ comment where comment.reference_id = reference.id and comment.created_by
                                  " lower(edition) like lower(?)" },
 
     "publication-date:"     => { where_clause: " lower(publication_date)
-                                 like ?" },
+                                 like lower(?)" },
 
     "type:"                 => { multiple_values: true,
                                  where_clause: " ref_type_id in (select id
@@ -76,6 +76,7 @@ from ref_type where lower(name) like lower(?))" },
     "publisher:"            => { where_clause:
                                  " lower(publisher) like lower(?)" },
     "volume:"               => { where_clause: " lower(volume) like lower(?)" },
+    "pages:"                => { where_clause: " lower(pages) like lower(?)" },
     "bhl:"                  => { where_clause:
                                  " lower(bhl_url) like lower(?)" },
     "doi:"                  => { where_clause: " lower(doi) like lower(?)" },
