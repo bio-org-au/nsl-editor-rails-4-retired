@@ -16,29 +16,25 @@
 #   limitations under the License.
 #
 require "test_helper"
+require "models/name/as_typeahead/name_parent/name_parent_test_helper"
 
 # Single Name typeahead test.
-class MustNotExcludeNamesWithoutAnInstanceTest < ActiveSupport::TestCase
-  def set_up
-    restriction = ShardConfig.find_by(name: 'name parent rank restriction')
-    restriction.value = 'off'
-    restriction.save!
+class ForSpeciesFullyRestrictedTest < ActiveSupport::TestCase
+  def setup
+    set_name_parent_rank_restrictions_on
   end
 
-  test "name parent suggestions should not exclude names without an instance" do
-    name = Name.find_by(full_name: "a genus without an instance")
-    assert name.present?,
-           'The name "a genus without an instance" should be found.'
-    assert name.instances.size.zero?,
-           "The name 'a genus without an instance' should have no instances."
+  test "name parent suggestion for species" do
     typeahead = Name::AsTypeahead::ForParent.new(
-      term: "a genus without an instance",
+      term: "%",
       avoid_id: 1,
       rank_id: NameRank.species.id
     )
-    assert(typeahead.suggestions.is_a?(Array),
-           "suggestions should be an array")
-    assert(typeahead.suggestions.size == 1,
-           'suggestions for "a genus without an instance" should have a record')
+    suggestions_should_only_include(
+      typeahead.suggestions,
+      "Species",
+      %w(Genus Subgenus Sectio Subsectio Series Subseries Superseries \
+         Superspecies)
+    )
   end
 end

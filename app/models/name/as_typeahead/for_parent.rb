@@ -62,22 +62,41 @@ class Name::AsTypeahead::ForParent
   end
 
   def rank_query
-    return @qry.joins(:name_rank) unless ShardConfig.name_parent_rank_restriction?
+    @qry = @qry.joins(:name_rank)
     rank = NameRank.find(@params[:rank_id])
     if rank.unranked?
-      @qry = @qry.ranks_for_unranked
-    else
-      more_rank_queries(rank)
+      return @qry
+    elsif rank.species?
+      return species_are_always_restricted
+    elsif rank.infraspecific?
+      return infraspecies_are_always_restricted(rank)
     end
+    if fully_restricted 
+      full_rank_restrictions(rank)
+    else
+      @qry = @qry.from_a_higher_rank(@params[:rank_id])
+    end
+    @qry
   end
 
-  def more_rank_queries(rank)
+  def fully_restricted
+    ShardConfig.name_parent_rank_restriction?
+  end
+
+  def species_are_always_restricted
+    @qry = @qry.parent_ranks_for_species
+  end
+
+  def infraspecies_are_always_restricted(rank)
+    @qry = @qry.parent_ranks_for_infraspecies
+  end
+
+  def full_rank_restrictions(rank)
     if rank.infrafamily?
       @qry = @qry.parent_ranks_for_infrafamily
     elsif rank.infragenus?
       @qry = @qry.parent_ranks_for_infragenus
-    elsif rank.infraspecies?
-      @qry = @qry.parent_ranks_for_infraspecies
+      @qry = @qry.from_a_higher_rank(@params[:rank_id])
     else
       @qry = @qry.from_a_higher_rank(@params[:rank_id])
       @qry = @qry.but_rank_not_too_high(@params[:rank_id])
