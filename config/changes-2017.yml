@@ -1,5 +1,9 @@
 ---
 - :date: 08-May-2017
+  :jira_id: '474'
+  :description: |-
+    Synonyms offered to unranked names can come from any rank.
+- :date: 08-May-2017
   :jira_id: '2243'
   :description: |-
     Name parent rank restriction can now be configured off only for ranks of

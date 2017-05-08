@@ -106,8 +106,10 @@ def test10
   assert_with_args(@results, 53, "999 - an_ordo")
   assert_with_args(@results,
                    56,
+                   "75, t. 101 - Magnoliophyta Cronquist, Takht. & W.Zimm. ex Reveal a_division")
+  assert_with_args(@results,
+                   57,
                    "75, t. 102 - Magnoliopsida Brongn. a_classis")
-  assert_with_args(@results, 57, "75, t. 101 - Metrosideros costata Gaertn.")
   assert_with_args(@results, 58, "76 - Metrosideros costata Gaertn.")
   assert_with_args(@results, 59, "9999999999 - orth var for tax nov")
   assert_with_args(@results, 60, "19-20 - Plantae Haeckel")

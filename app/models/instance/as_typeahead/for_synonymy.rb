@@ -79,7 +79,7 @@ class Instance::AsTypeahead::ForSynonymy
   def restrict_ranks(query, name_id)
     name = Name.find(name_id)
     if name.name_rank.unranked?
-      query
+      query.merge(NameRank.not_deprecated)
     elsif name.name_rank.infraspecific?
       query.merge(NameRank.infraspecific)
     elsif name.name_rank.infrageneric?

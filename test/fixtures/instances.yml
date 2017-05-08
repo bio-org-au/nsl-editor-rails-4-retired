@@ -134,7 +134,7 @@ default_instance_for_the_regnum:
 
 default_instance_for_a_division:
   reference: bucket_reference_for_default_instances
-  name: metrosideros_costata_gaertn
+  name: a_division
   instance_type: comb_nov
   verbatim_name_string: verbatim
   namespace: apni
