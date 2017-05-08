@@ -25,6 +25,8 @@ class ForGenusPartiallyRestrictedTest < ActiveSupport::TestCase
   end
 
   test "partially restricted name parent suggestions for genus" do
+    assert !ShardConfig.name_parent_rank_restriction?,
+           "Name parent rank restriction should be off for this test."
     typeahead = Name::AsTypeahead::ForParent.new(
       term: "%",
       avoid_id: 1,

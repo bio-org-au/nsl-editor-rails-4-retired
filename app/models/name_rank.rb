@@ -169,6 +169,10 @@ class NameRank < ActiveRecord::Base
     deprecated
   end
 
+  def family?
+    !!name.match(/\A#{FAMILY}\z/)
+  end
+
   def species?
     !!name.match(/\A#{SPECIES}\z/)
   end

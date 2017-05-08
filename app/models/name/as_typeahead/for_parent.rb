@@ -66,6 +66,10 @@ class Name::AsTypeahead::ForParent
     rank = NameRank.find(@params[:rank_id])
     if rank.unranked?
       return @qry
+    elsif rank.infrageneric? && !rank.genus?
+      @qry = @qry.parent_ranks_for_infragenus
+      @qry = @qry.from_a_higher_rank(@params[:rank_id])
+      return @qry
     elsif rank.species?
       return species_are_always_restricted
     elsif rank.infraspecific?
@@ -74,7 +78,7 @@ class Name::AsTypeahead::ForParent
     if fully_restricted 
       full_rank_restrictions(rank)
     else
-      @qry = @qry.from_a_higher_rank(@params[:rank_id])
+      rank_must_be_higher(rank)
     end
     @qry
   end
@@ -92,14 +96,24 @@ class Name::AsTypeahead::ForParent
   end
 
   def full_rank_restrictions(rank)
-    if rank.infrafamily?
+    if rank.family?
+      @qry = @qry.parent_ranks_for_family
+    elsif rank.infrafamilial?
       @qry = @qry.parent_ranks_for_infrafamily
-    elsif rank.infragenus?
-      @qry = @qry.parent_ranks_for_infragenus
       @qry = @qry.from_a_higher_rank(@params[:rank_id])
+    elsif rank.genus?
+      @qry = @qry.parent_ranks_for_genus
     else
       @qry = @qry.from_a_higher_rank(@params[:rank_id])
       @qry = @qry.but_rank_not_too_high(@params[:rank_id])
+    end
+  end
+
+  def rank_must_be_higher(rank)
+    if rank.infrafamily?
+      @qry = @qry.from_a_higher_rank(NameRank.find_by(name: 'Genus'))
+    else
+      @qry = @qry.from_a_higher_rank(@params[:rank_id])
     end
   end
 

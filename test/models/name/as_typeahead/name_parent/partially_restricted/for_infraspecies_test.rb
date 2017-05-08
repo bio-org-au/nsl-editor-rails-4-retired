@@ -21,10 +21,12 @@ require "models/name/as_typeahead/name_parent/name_parent_test_helper"
 # Single Name typeahead test.
 class ForInfraspeciesPartiallyRestrictedTest < ActiveSupport::TestCase
   def setup
-    set_name_parent_rank_restrictions_on
+    set_name_parent_rank_restrictions_off
   end
 
   test "name parent suggestion for infraspecies" do
+    assert !ShardConfig.name_parent_rank_restriction?,
+           "Name parent rank restriction should be off for this test."
     typeahead = Name::AsTypeahead::ForParent.new(
       term: "a_",
       avoid_id: 1,

@@ -21,10 +21,12 @@ require "models/name/as_typeahead/name_parent/name_parent_test_helper"
 # Single Name typeahead test.
 class ForTribusPartiallyRestrictedTest < ActiveSupport::TestCase
   def setup
-    set_name_parent_rank_restrictions_on
+    set_name_parent_rank_restrictions_off
   end
 
   test "name parent suggestion for tribus" do
+    assert !ShardConfig.name_parent_rank_restriction?,
+           "Name parent rank restriction should be off for this test."
     typeahead = Name::AsTypeahead::ForParent.new(
       term: "%",
       avoid_id: 1,
@@ -33,7 +35,8 @@ class ForTribusPartiallyRestrictedTest < ActiveSupport::TestCase
     suggestions_should_only_include(
       typeahead.suggestions,
       "Tribus",
-      %w(Familia Subfamilia)
+      %w(Regio Regnum Division Classis Subclassis Superordo Ordo Subordo
+         Familia Subfamilia)
     )
   end
 end

@@ -122,6 +122,22 @@ module NameScopable
              'Species') and sort_order >=(select sort_order from name_rank where
              name = 'Genus') ) ")
            end)
+    scope :parent_ranks_for_genus,
+          (lambda do
+             joins(:name_rank)
+              .where("name_rank.id in (select id from name_rank where
+             sort_order < (select sort_order from name_rank where name =
+             'Genus') and sort_order >=(select sort_order from name_rank where
+             name = 'Familia') ) ")
+           end)
+    scope :parent_ranks_for_family,
+          (lambda do
+             joins(:name_rank)
+              .where("name_rank.id in (select id from name_rank where
+             sort_order < (select sort_order from name_rank where name =
+             'Familia') and sort_order >=(select sort_order from name_rank where
+             name = 'Ordo') ) ")
+           end)
     scope :parent_ranks_for_infraspecies,
           (lambda do
              joins(:name_rank)
