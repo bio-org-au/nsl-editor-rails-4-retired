@@ -2,7 +2,8 @@
 - :date: 08-May-2017
   :jira_id: '474'
   :description: |-
-    Synonyms offered to unranked names can come from any rank.
+    Synonyms offered to unranked names can come from any rank.  Unranked names
+    are offered as synonyms to all ranks.
 - :date: 08-May-2017
   :jira_id: '2243'
   :description: |-

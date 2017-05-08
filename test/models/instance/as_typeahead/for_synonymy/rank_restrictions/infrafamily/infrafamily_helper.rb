@@ -28,7 +28,7 @@ def check_infrafamily_exclusions
 end
 
 def check_infrafamily_inclusions
-  %w(Familia Subfamilia Tribus Subtribus [infrafamily]).each do |rank_string|
+  %w(Familia Subfamilia Tribus Subtribus [infrafamily] [unranked]).each do |rank_string|
     escape_s = Regexp.escape(rank_string)
     assert @rank_names.select { |e| e.match(/\A#{escape_s}\z/) }.size >= 1,
            "Expect one #{rank_string} to be suggested"

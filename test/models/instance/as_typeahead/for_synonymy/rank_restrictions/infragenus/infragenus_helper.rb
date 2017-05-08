@@ -29,7 +29,7 @@ def check_infrageneric_inclusions
   assert @rank_names.select { |e| e.match(/\AGenus\z/) }.size >= 5,
          "Expect correct number of genera to be suggested"
   %w(Subgenus Sectio Subsectio Series
-     Subseries Superspecies [infragenus]).each do |rank_string|
+     Subseries Superspecies [infragenus] [unranked]).each do |rank_string|
     escaped_s = Regexp.escape(rank_string)
     assert @rank_names.select { |e| e.match(/\A#{escaped_s}\z/) }.size >= 1,
            "Expect at least one #{rank_string} to be suggested"

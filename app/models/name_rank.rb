@@ -84,7 +84,8 @@ class NameRank < ActiveRecord::Base
              name_rank.sort_order < (select species.sort_order
                                        from name_rank species
                                       where name = 'Species') )
-            or name_rank.name = '[infragenus]' ")
+            or name_rank.name = '[infragenus]'
+            or name_rank.name = '[unranked]' ")
      end)
 
   scope :infrafamilial,
@@ -96,7 +97,8 @@ class NameRank < ActiveRecord::Base
              name_rank.sort_order < (select species.sort_order
                                        from name_rank species
                                       where name = 'Genus') )
-            or name_rank.name = '[infrafamily]' ")
+            or name_rank.name = '[infrafamily]'
+            or name_rank.name = '[unranked]' ")
      end)
 
   def self.default
