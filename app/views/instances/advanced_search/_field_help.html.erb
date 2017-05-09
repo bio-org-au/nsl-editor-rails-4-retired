@@ -4,14 +4,15 @@
   <tr><th>Field</th><th>Description</th></tr>
   <% [
     {field_name: '', description: "default instance search is on name, see the next line for details"},
-      {field_name: 'name:', description: "name, with leading and trailing wildcards added automatically and all embedded spaces treated as wildcards"},
-      {field_name: 'name-exact:', description: "full name, supply your own wildcards"},
-      {field_name: 'page:', description: "page"},
-      {field_name: 'page-qualifier:', description: "page-qualifier"},
-      {field_name: 'note:', description: "note, leading and trailing wildcards added automatically"},
-      {field_name: 'note-exact:', description: "note"},
-      {field_name: 'verbatim-name:', description: "Verbatim name string, leading and trailing wildcards added automatically"},
-      {field_name: 'verbatim-name-exact:', description: "Verbatim name string"},
+    {field_name: 'name:', description: "name, with leading and trailing wildcards added automatically and all embedded spaces treated as wildcards *"},
+      {field_name: 'name-exact:', description: "full name, supply your own wildcards *"},
+      {field_name: 'page:', description: "page *"},
+      {field_name: 'page-qualifier:', description: "page-qualifier *"},
+      {field_name: 'note:', description: "note, leading and trailing wildcards added automatically  **"},
+      {field_name: 'note-exact:', description: "note  **"},
+      {field_name: 'verbatim-name:', description: "Verbatim name string, leading and trailing wildcards added automatically *"},
+      {field_name: 'verbatim-name-exact:', description: "Verbatim name string *"},
+      {field_name: 'bhl:', description: "bhl *"},
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">
@@ -28,6 +29,11 @@
   </tr>
   <% end %>
 </table>
+
+<p>* Supports search for empty fields.</p>
+<p>** Supports search for non-existing field.</p>
+<br/>
+<br/>
 
   <h5>Special Note Searches</h5>
 <table class="table table-striped">

@@ -50,8 +50,6 @@ class Search::OnReference::WhereClauses
   def add_clause(field, value)
     if field.blank? && value.blank?
       @sql
-    elsif value.blank?
-      add_is_null_clause(field, value)
     else
       add_field_clause(field, value)
     end
@@ -63,17 +61,6 @@ class Search::OnReference::WhereClauses
                                               value)
     apply_rule(rule)
     apply_order(rule)
-  end
-
-  def add_is_null_clause(field, value)
-    field_or_default = field.blank? ? DEFAULT_FIELD : field
-    rule = Search::OnReference::Predicate.new(field_or_default,
-                                              value)
-    predicate = rule.predicate.dup
-    modified_predicate = predicate.gsub(/= \?/, "is null")
-                                  .gsub(/like lower\(\?\)/, "is null")
-    @sql = @sql.where(modified_predicate)
-    @sql
   end
 
   def apply_rule(rule)

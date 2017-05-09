@@ -39,12 +39,14 @@ reference child where child.parent_id = reference.id) " },
                                  leading_wildcard: true,
                                  where_clause: " exists (select null from
 comment where comment.reference_id = reference.id and lower(comment.text)
-                                 like lower(?)) " },
+                                 like lower(?)) ",
+                                 not_exists_clause: " not exists (select null
+from comment where comment.reference_id = reference.id)" },
 
     "comments-by:"          => { where_clause: " exists (select null from
 comment where comment.reference_id = reference.id and comment.created_by
                                  like ?) " },
-    "comments-exact:"     => { where_clause: " exists (select null from
+    "comments-exact:" => { where_clause: " exists (select null from
                                comment where comment.reference_id = reference.id
                                and lower(comment.text) like ? ) " },
     "edition:"              => { where_clause:
@@ -159,6 +161,6 @@ inner join ref_type xcrt on xrt.id = xcrt.parent_id))" },
               where i2.reference_id = refchild.id
                 )
             )
-        ) "},
+        ) " },
   }.freeze
 end

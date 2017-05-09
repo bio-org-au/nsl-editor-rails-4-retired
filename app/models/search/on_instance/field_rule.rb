@@ -38,6 +38,8 @@ class Search::OnInstance::FieldRule
                                  and lower(n.full_name) like lower(?) )" },
     "comments:"             => { trailing_wildcard: true,
                                  leading_wildcard: true,
+                                 not_exists_clause: " not exists (select null
+from comment where comment.instance_id = instance.id)",
                                  where_clause: " exists (select null from
                                  comment
                                  where comment.instance_id = instance.id
@@ -47,6 +49,7 @@ class Search::OnInstance::FieldRule
                                  where comment.instance_id = instance.id
                                  and comment.created_by like ?) " },
     "comments-exact:"       => { where_clause: " exists (select null from comment where comment.instance_id = instance.id and lower(comment.text) like ?) "},
+    "bhl:"                 => { where_clause: " lower(bhl_url) like lower(?)" },
     "page:"                 => { where_clause: " lower(page) like lower(?)" },
     "page-qualifier:"       => { where_clause:
                                  " lower(page_qualifier) like lower(?)" },
