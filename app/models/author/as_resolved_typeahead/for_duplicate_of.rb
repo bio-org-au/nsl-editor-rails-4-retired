@@ -95,4 +95,3 @@ class Author::AsResolvedTypeahead::ForDuplicateOf
     end
   end
 end
-

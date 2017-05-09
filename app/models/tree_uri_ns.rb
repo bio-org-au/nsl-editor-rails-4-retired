@@ -15,10 +15,9 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
+# Model for Tree_uri_ns.
 class TreeUriNs < ActiveRecord::Base
   self.table_name = "tree_uri_ns"
   self.primary_key = "id"
   self.sequence_name = "nsl_global_seq"
-
-
 end

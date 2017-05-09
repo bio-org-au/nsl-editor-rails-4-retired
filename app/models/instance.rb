@@ -203,7 +203,8 @@ class Instance < ActiveRecord::Base
   # Okay if not a primary instance
   # Okay if zero current primary instances
   # Okay if 1 primary instance and this is it (updating)
-  # Okay if >1 primary instance and this is one of them and instance_type is not changing 
+  # Okay if >1 primary instance and this is one of them and instance_type is
+  #      not changing
   # Okay if updating but instance_type has not changed
   # Otherwise, reject
   def only_one_primary_instance_per_name
@@ -211,7 +212,7 @@ class Instance < ActiveRecord::Base
     return if extra_primary_override == true
     return unless instance_type.present?
     return unless instance_type.primary?
-    return if name.primary_instances.size == 0 
+    return if name.primary_instances.size == 0
     # current record is the only primary instance (being updated)
     if name.primary_instances.map(&:id).include?(id) &&
        name.primary_instances.size == 1

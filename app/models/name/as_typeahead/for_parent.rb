@@ -75,7 +75,7 @@ class Name::AsTypeahead::ForParent
     elsif rank.infraspecific?
       return infraspecies_are_always_restricted(rank)
     end
-    if fully_restricted 
+    if fully_restricted
       full_rank_restrictions(rank)
     else
       rank_must_be_higher(rank)

@@ -95,7 +95,6 @@ class InstanceType < ActiveRecord::Base
 
   scope :primaries, -> { where(primary_instance: true) }
 
-
   def self.query_form_options
     all.sort { |x, y| x.name <=> y.name }
        .collect { |n| [n.name, n.name.downcase, class: ""] }

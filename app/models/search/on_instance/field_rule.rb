@@ -46,7 +46,7 @@ class Search::OnInstance::FieldRule
                                  from comment
                                  where comment.instance_id = instance.id
                                  and comment.created_by like ?) " },
-    "comments-exact:"       => { where_clause: " exists (select null from comment where comment.instance_id = instance.id and lower(comment.text) like ?) "},
+    "comments-exact:"       => { where_clause: " exists (select null from comment where comment.instance_id = instance.id and lower(comment.text) like ?) " },
     "page:"                 => { where_clause: " lower(page) like lower(?)" },
     "page-qualifier:"       => { where_clause:
                                  " lower(page_qualifier) like lower(?)" },
@@ -213,9 +213,9 @@ where rb.sort_order >= (select sort_order from name_rank where name = 'Species')
     "parent-ref-exact:"    => { where_clause: "exists (select null
                                  from reference ref
                                  where instance.reference_id = ref.id
-                                   and exists (select null from reference parent 
+                                   and exists (select null from reference parent
                                                 where ref.parent_id = parent.id
                                                   and lower(parent.citation) like lower(?) ))" },
-    "draft:"                  => { where_clause: " draft "},
+    "draft:"                => { where_clause: " draft " },
   }.freeze
 end

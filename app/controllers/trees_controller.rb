@@ -30,10 +30,10 @@ class TreesController < ApplicationController
   def place_name
     @placement = new_placement_for_params
     if new_placement_instance?(place_name_params)
-      result = @placement.save
+      @placement.save
       @message = "Placed"
     elsif placement_updated_in_place?(place_name_params)
-      result = @placement.save
+      @placement.save
       @message = "Updated"
     else
       @message = "No change"
@@ -44,7 +44,7 @@ class TreesController < ApplicationController
       json = JSON.parse(e.http_body)
       Rails.logger.error(ap json)
       @message_array = []
-      json["msg"].each do | msg_element |
+      json["msg"].each do |msg_element|
         @message_array.push msg_element["msg"]
       end
     rescue => e
@@ -101,7 +101,7 @@ class TreesController < ApplicationController
 
   def new_placement_instance?(params)
     params[:name_id] != params[:original_name_id] ||
-      params[:instance_id] != params[:original_instance_id] 
+      params[:instance_id] != params[:original_instance_id]
   end
 
   def placement_updated_in_place?(params)
@@ -114,7 +114,7 @@ class TreesController < ApplicationController
       params[:original_parent_name_typeahead_string] ||
       params[:parent_name_id] != params[:original_parent_name_id]
   end
- 
+
   def new_placement_for_params
     Tree::Workspace::Placement.new(
       username: current_user.username,
