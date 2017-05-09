@@ -1,4 +1,8 @@
 ---
+- :date: 09-May-2017
+  :jira_id: '2334'
+  :description: |-
+    Added generalised search for empty fields.
 - :date: 08-May-2017
   :jira_id: '474'
   :description: |-
