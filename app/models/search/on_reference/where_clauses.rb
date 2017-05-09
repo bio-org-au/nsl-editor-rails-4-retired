@@ -48,16 +48,19 @@ class Search::OnReference::WhereClauses
   end
 
   def add_clause(field, value)
-    debug("add_clause for field: #{field}; value: #{value}")
     if field.blank? && value.blank?
       @sql
     else
-      field_or_default = field.blank? ? DEFAULT_FIELD : field
-      rule = Search::OnReference::Predicate.new(field_or_default,
-                                                value)
-      apply_rule(rule)
-      apply_order(rule)
+      add_field_clause(field, value)
     end
+  end
+
+  def add_field_clause(field, value)
+    field_or_default = field.blank? ? DEFAULT_FIELD : field
+    rule = Search::OnReference::Predicate.new(field_or_default,
+                                              value)
+    apply_rule(rule)
+    apply_order(rule)
   end
 
   def apply_rule(rule)

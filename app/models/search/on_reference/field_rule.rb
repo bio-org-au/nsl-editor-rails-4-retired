@@ -39,19 +39,21 @@ reference child where child.parent_id = reference.id) " },
                                  leading_wildcard: true,
                                  where_clause: " exists (select null from
 comment where comment.reference_id = reference.id and lower(comment.text)
-                                 like lower(?)) " },
+                                 like lower(?)) ",
+                                 not_exists_clause: " not exists (select null
+from comment where comment.reference_id = reference.id)" },
 
     "comments-by:"          => { where_clause: " exists (select null from
 comment where comment.reference_id = reference.id and comment.created_by
                                  like ?) " },
-    "comments-exact:"     => { where_clause: " exists (select null from
+    "comments-exact:" => { where_clause: " exists (select null from
                                comment where comment.reference_id = reference.id
                                and lower(comment.text) like ? ) " },
     "edition:"              => { where_clause:
                                  " lower(edition) like lower(?)" },
 
     "publication-date:"     => { where_clause: " lower(publication_date)
-                                 like ?" },
+                                 like lower(?)" },
 
     "type:"                 => { multiple_values: true,
                                  where_clause: " ref_type_id in (select id
@@ -76,6 +78,7 @@ from ref_type where lower(name) like lower(?))" },
     "publisher:"            => { where_clause:
                                  " lower(publisher) like lower(?)" },
     "volume:"               => { where_clause: " lower(volume) like lower(?)" },
+    "pages:"                => { where_clause: " lower(pages) like lower(?)" },
     "bhl:"                  => { where_clause:
                                  " lower(bhl_url) like lower(?)" },
     "doi:"                  => { where_clause: " lower(doi) like lower(?)" },
@@ -158,6 +161,6 @@ inner join ref_type xcrt on xrt.id = xcrt.parent_id))" },
               where i2.reference_id = refchild.id
                 )
             )
-        ) "},
+        ) " },
   }.freeze
 end
