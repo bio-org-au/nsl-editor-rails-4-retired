@@ -15,27 +15,8 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-def check_unranked_exclusions
-  #%w().each do |rank_string|
-    #escaped_s = Regexp.escape(rank_string)
-    #assert @rank_names.select { |e| e.match(/\A#{escaped_s}\z/) }.empty?,
-           #"Expect no #{rank_string} to be suggested"
-  #end
-end
-
-def check_unranked_inclusions
-  %w(Regio Regnum Division Classis Subclassis Superordo Ordo Subordo Familia
-     Subfamilia Tribus Subtribus Genus Subgenus Sectio Subsectio Series
-     Subseries Superspecies Species Subspecies Nothovarietas Varietas
-     Subvarietas Forma Subforma).each do |rank_string|
-    escaped_s = Regexp.escape(rank_string)
-    assert @rank_names.select { |e| e.match(/\A#{escaped_s}\z/) }.size >= 1,
-           "Expect at least one #{rank_string} to be suggested"
-  end
-end
-
 def check_unranked_inclusion(rank_string)
-    escaped_s = Regexp.escape(rank_string)
-    assert @rank_names.select { |e| e.match(/\A#{escaped_s}\z/) }.size >= 1,
-           "Expect at least one #{rank_string} to be suggested"
+  escaped_s = Regexp.escape(rank_string)
+  assert @rank_names.select { |e| e.match(/\A#{escaped_s}\z/) }.size >= 1,
+         "Expect at least one #{rank_string} to be suggested"
 end

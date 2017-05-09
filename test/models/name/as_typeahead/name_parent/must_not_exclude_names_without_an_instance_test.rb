@@ -20,8 +20,8 @@ require "test_helper"
 # Single Name typeahead test.
 class MustNotExcludeNamesWithoutAnInstanceTest < ActiveSupport::TestCase
   def set_up
-    restriction = ShardConfig.find_by(name: 'name parent rank restriction')
-    restriction.value = 'off'
+    restriction = ShardConfig.find_by(name: "name parent rank restriction")
+    restriction.value = "off"
     restriction.save!
   end
 

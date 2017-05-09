@@ -32,7 +32,8 @@ class ForSubfamiliaPartiallyRestrictedTest < ActiveSupport::TestCase
       avoid_id: 1,
       rank_id: NameRank.find_by(name: "Subfamilia").id
     )
-    suggestions_should_only_include(typeahead.suggestions,
+    suggestions_should_only_include(
+      typeahead.suggestions,
       "Subfamilia",
       %w(Regio Regnum Division Classis Subclassis Superordo Ordo Subordo
          Familia)

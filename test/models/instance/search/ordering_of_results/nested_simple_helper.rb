@@ -100,13 +100,14 @@ def test9
   assert_with_args(@results, 50, "999 - a_superspecies")
   assert_with_args(@results, 51, "999 - a_tribus")
   assert_with_args(@results, 52, "999 - a_varietas")
+  assert_with_args(@results, 53, "999 - an_ordo")
 end
 
 def test10
-  assert_with_args(@results, 53, "999 - an_ordo")
   assert_with_args(@results,
                    56,
-                   "75, t. 101 - Magnoliophyta Cronquist, Takht. & W.Zimm. ex Reveal a_division")
+                   "75, t. 101 - Magnoliophyta Cronquist, Takht. & W.Zimm. ex\
+ Reveal a_division")
   assert_with_args(@results,
                    57,
                    "75, t. 102 - Magnoliopsida Brongn. a_classis")

@@ -74,13 +74,13 @@ def suggestion_rank_should_be_at_or_below(suggestion,
 end
 
 def set_name_parent_rank_restrictions_off
-  restriction = ShardConfig.find_by(name: 'name parent rank restriction')
-  restriction.value = 'off'
+  restriction = ShardConfig.find_by(name: "name parent rank restriction")
+  restriction.value = "off"
   restriction.save!
 end
 
 def set_name_parent_rank_restrictions_on
-  restriction = ShardConfig.find_by(name: 'name parent rank restriction')
-  restriction.value = 'on'
+  restriction = ShardConfig.find_by(name: "name parent rank restriction")
+  restriction.value = "on"
   restriction.save!
 end

@@ -22,8 +22,10 @@ unranked/unranked_helper"
 # Single instance typeahead search.
 class TypeaheadForSynonymyUnrankedGetDivisionTest < ActiveSupport::TestCase
   def setup
-    @ta = Instance::AsTypeahead::ForSynonymy.new("magnolio",
-                                                 names(:an_unranked_with_an_instance).id)
+    @ta = Instance::AsTypeahead::ForSynonymy.new(
+      "magnolio",
+      names(:an_unranked_with_an_instance).id
+    )
   end
 
   test "instance typeahead synonymy rank restriction unranked get division" do
@@ -31,7 +33,7 @@ class TypeaheadForSynonymyUnrankedGetDivisionTest < ActiveSupport::TestCase
       Instance.find(result[:id]).name.name_rank.name
     end
     assert_equal 2, @rank_names.size, "Expect exactly 2 suggestions"
-    check_unranked_inclusion('Division')
-    check_unranked_inclusion('Classis')
+    check_unranked_inclusion("Division")
+    check_unranked_inclusion("Classis")
   end
 end

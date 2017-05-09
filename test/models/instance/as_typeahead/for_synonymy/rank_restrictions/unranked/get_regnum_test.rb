@@ -22,14 +22,16 @@ unranked/unranked_helper"
 # Single instance typeahead search.
 class TypeaheadForSynonymyUnrankedGetRegnumTest < ActiveSupport::TestCase
   def setup
-    @ta = Instance::AsTypeahead::ForSynonymy.new("pla",
-                                                 names(:an_unranked_with_an_instance).id)
+    @ta = Instance::AsTypeahead::ForSynonymy.new(
+      "pla",
+      names(:an_unranked_with_an_instance).id
+    )
   end
 
   test "instance typeahead synonymy rank restriction unranked get regnum" do
     @rank_names = @ta.results.collect do |result|
       Instance.find(result[:id]).name.name_rank.name
     end
-    check_unranked_inclusion('Regnum')
+    check_unranked_inclusion("Regnum")
   end
 end

@@ -35,7 +35,8 @@ class ForGenusPartiallyRestrictedTest < ActiveSupport::TestCase
     suggestions_should_only_include(
       typeahead.suggestions,
       "Genus",
-      %w(Regnum Division Subordo Classis Subclassis Superordo Ordo Familia Subfamilia Tribus Subtribus)
+      %w(Regnum Division Subordo Classis Subclassis Superordo Ordo Familia
+         Subfamilia Tribus Subtribus)
     )
   end
 end
