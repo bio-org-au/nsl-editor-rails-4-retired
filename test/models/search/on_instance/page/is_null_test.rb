@@ -33,4 +33,3 @@ class SearchOnInstanceAuthorIsNullTest < ActiveSupport::TestCase
     end
   end
 end
-
