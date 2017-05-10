@@ -25,7 +25,7 @@ class TwoAuthorsSameNameWithRefCount < ActiveSupport::TestCase
     values = result.collect { |author| author[:value] }
     assert values.include?("Maslin, B.R. | 1 ref"),
            "Expecting Maslin with 1 ref."
-    assert values.include?("Maslin, B.R."),
+    assert values.include?("Maslin, B.R. | Maslin"),
            "Expecting Maslin with 0 refs mentioned."
   end
 end
