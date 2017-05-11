@@ -46,6 +46,9 @@ class TreesController < ApplicationController
       @message_array = []
       json["msg"].each do |msg_element|
         @message_array.push msg_element["msg"]
+        if msg_element["body"]
+          @message_array.push msg_element["body"]
+        end
       end
     rescue => e
       logger.error("rescue error in error")

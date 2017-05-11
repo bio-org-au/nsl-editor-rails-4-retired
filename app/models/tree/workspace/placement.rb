@@ -31,7 +31,6 @@ class Tree::Workspace::Placement < ActiveType::Object
   validates :placement_type, presence: true
   validates :workspace_id, presence: true
   validates :username, presence: true
-  validates :parent_name_typeahead, presence: true
 
   def save
     resolve_parent
