@@ -1,4 +1,14 @@
 ---
+- :date: 10-May-2017
+  :jira_id: '2342'
+  :description: |-
+    Make it easier to tell duplicate authors apart by adding abbrev to 
+    suggestions.
+- :date: 09-May-2017
+  :jira_id: '2352'
+  :description: |-
+    Added bhl search directive for instances. It understands how to search for
+    empty fields too.
 - :date: 09-May-2017
   :jira_id: '2334'
   :description: |-

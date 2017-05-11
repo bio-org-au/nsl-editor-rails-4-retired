@@ -98,27 +98,28 @@
 
 
 <% unless @reference.doi.blank? %>
-  <%= link_to('DOI',@reference.doi) %>
+  <br/>
+  <%= link_to('DOI',@reference.doi, title: "Link to the DOI entry.") %>
 <% end %>
 
 <% unless @reference.isbn.blank? %>
-  <br>
-  <%= link_to('ISBN',@reference.isbn) %>
+  <br/>
+  <%= link_to('ISBN',@reference.isbn, title: "Link to the ISBN entry.") %>
 <% end %>
 
 <% unless @reference.issn.blank? %>
-  <br>
-  <%= link_to('ISSN',@reference.issn) %>
+  <br/>
+  <%= link_to('ISSN',@reference.issn, title: "Link to the ISSN entry.") %>
 <% end %>
 
 <% unless @reference.bhl_url.blank? %>
-  <br>
-  <%= link_to('BHL',@reference.bhl_url) %>
+  <br/>
+  <%= link_to("BHL #{icon('external-link')}".html_safe ,@reference.bhl_url, title: "Link to the BHL entry.") %>
 <% end %>
 
 <% unless @reference.tl2.blank? %>
-  <br>
-  <%= link_to('TL2',@reference.tl2) %>
+  <br/>
+  <%= link_to('TL2',@reference.tl2, title: "Link to the TL2 entry.") %>
 <% end %>
 
 <% if @reference.comments.size > 0  %>

@@ -53,20 +53,12 @@ class Author::AsTypeahead < Author
     Author.not_duplicate
           .where(binds.unshift(where))
           .joins("left outer join reference on reference.author_id = author.id")
-          .select("author.name as name, author.id as id, "\
-              "count(reference.id) as ref_count")
+          .select("author.name as name, author.id as id, author.abbrev as \
+abbrev, count(reference.id) as ref_count")
           .group("lower(author.name),author.id")
           .order("author.name")
           .limit(SEARCH_LIMIT)
           .collect { |n| { value: formatted_search_result(n), id: n.id.to_s } }
-  end
-
-  def self.formatted_search_result(auth)
-    if auth.ref_count.zero?
-      auth.name
-    else
-      "#{auth.name} | #{auth.ref_count} #{'ref'.pluralize(auth.ref_count)}"
-    end
   end
 
   # Based on the on_name method, but also excludes :id passed in.
@@ -80,11 +72,22 @@ class Author::AsTypeahead < Author
             .where([" author.id <> ?", excluded_id])
             .joins("left outer join reference on "\
                "reference.author_id = author.id")
-            .select("author.name as name, author.id as id, "\
-                "count(reference.id) as ref_count")
+            .select("author.name as name, author.id as id, author.abbrev as \
+abbrev, count(reference.id) as ref_count")
             .group("lower(author.name),author.id")
             .order("author.name").limit(SEARCH_LIMIT)
-            .collect { |n| { value: formatted_search_result(n), id: n.id.to_s } }
+            .collect do |n|
+              { value: formatted_search_result(n), id: n.id.to_s }
+            end
     end
+  end
+
+  def self.formatted_search_result(auth)
+    result = auth.name
+    unless auth.ref_count.zero?
+      result << " | #{auth.ref_count} #{'ref'.pluralize(auth.ref_count)}"
+    end
+    result << " | #{auth.abbrev}" if auth.abbrev.present?
+    result
   end
 end
