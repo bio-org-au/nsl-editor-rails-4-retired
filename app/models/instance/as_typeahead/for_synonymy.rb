@@ -86,9 +86,8 @@ class Instance::AsTypeahead::ForSynonymy
       query.merge(NameRank.infrageneric)
     elsif name.name_rank.infrafamilial?
       query.merge(NameRank.infrafamilial)
-    else # Species or above
-      query.merge(NameRank.at_or_below_this(name.name_rank_id))
-           .merge(NameRank.within_level(name.name_rank_id))
+    else # not restricted
+      query
     end
   end
 
