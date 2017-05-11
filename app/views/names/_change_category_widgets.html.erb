@@ -1,4 +1,5 @@
 
+<div id="change-category-widgets">
 <%= "Current category is: <em>#{@name.raw_category.capitalize}</em>".html_safe unless @name.raw_category == @name.category %>
 
 
@@ -9,6 +10,7 @@
     <%= link_to('Convert to scientific name', 
                     '#', 
                     class: "change-name-category-on-edit-tab btn btn-default", 
+                    title: "Convert to scientific",
                     data: {edit_url: name_edit_as_category_path(id: @name.id,
                                                                 tab: 'edit_name',
                                                                 new_category: Name::SCIENTIFIC_CATEGORY)}) %>
@@ -18,6 +20,7 @@
     <%= link_to('Convert to scientific hybrid with 2 parents', 
                     '#', 
                     class: "change-name-category-on-edit-tab btn btn-default", 
+                    title: "Convert to scientific hybrid with two parents",
                     data: {edit_url: name_edit_as_category_path(id: @name.id,
                                                                 tab: 'edit_name',
                                                                 new_category: Name::SCIENTIFIC_HYBRID_FORMULA_CATEGORY)}) %>
@@ -27,6 +30,7 @@
     <%= link_to('Convert to cultivar', 
                     '#', 
                     class: "change-name-category-on-edit-tab btn btn-default", 
+                    title: "Convert to cultivar",
                     data: {edit_url: name_edit_as_category_path(id: @name.id,
                                                                 tab: 'edit_name',
                                                                 new_category: Name::CULTIVAR_CATEGORY)}) %>
@@ -35,10 +39,14 @@
     <%= link_to('Convert to cultivar hybrid', 
                     '#', 
                     class: "change-name-category-on-edit-tab btn btn-default", 
+                    title: "Convert to cultivar hybrid",
                     data: {edit_url: name_edit_as_category_path(id: @name.id,
                                                                 tab: 'edit_name',
                                                                 new_category: Name::CULTIVAR_HYBRID_CATEGORY)}) %>
+  <% elsif @name.category == Name::SCIENTIFIC_CATEGORY %>
+
+    <%= render partial: "names/widgets/conditional_convert_sci_to_phrase_widget" %>
   <% end %>
 
 <% end %>
-
+</div>

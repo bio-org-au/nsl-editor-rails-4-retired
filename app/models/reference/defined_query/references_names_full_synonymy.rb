@@ -83,7 +83,7 @@ class Reference::DefinedQuery::ReferencesNamesFullSynonymy
       end
     end
   end
-  
+
   def ref_list(ref)
     @results.push(ref)
     ref.instances.each do |instance|

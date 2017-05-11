@@ -36,7 +36,7 @@ class Name::AsTypeahead::ForParent
               :params
   SEARCH_LIMIT = 50
   GROUP_BY = "name.id,name.full_name,name_rank.name,name_status.name,"\
-             "name_rank.sort_order".freeze
+             "name_rank.sort_order"
 
   def initialize(params)
     @params = params
@@ -62,18 +62,58 @@ class Name::AsTypeahead::ForParent
   end
 
   def rank_query
+    @qry = @qry.joins(:name_rank)
     rank = NameRank.find(@params[:rank_id])
     if rank.unranked?
-      @qry = @qry.ranks_for_unranked
-    elsif rank.infrafamily?
-      @qry = @qry.parent_ranks_for_infrafamily
-    elsif rank.infragenus?
+      return @qry
+    elsif rank.infrageneric? && !rank.genus?
       @qry = @qry.parent_ranks_for_infragenus
-    elsif rank.infraspecies?
-      @qry = @qry.parent_ranks_for_infraspecies
+      @qry = @qry.from_a_higher_rank(@params[:rank_id])
+      return @qry
+    elsif rank.species?
+      return species_are_always_restricted
+    elsif rank.infraspecific?
+      return infraspecies_are_always_restricted(rank)
+    end
+    if fully_restricted
+      full_rank_restrictions(rank)
+    else
+      rank_must_be_higher(rank)
+    end
+    @qry
+  end
+
+  def fully_restricted
+    ShardConfig.name_parent_rank_restriction?
+  end
+
+  def species_are_always_restricted
+    @qry = @qry.parent_ranks_for_species
+  end
+
+  def infraspecies_are_always_restricted(rank)
+    @qry = @qry.parent_ranks_for_infraspecies
+  end
+
+  def full_rank_restrictions(rank)
+    if rank.family?
+      @qry = @qry.parent_ranks_for_family
+    elsif rank.infrafamilial?
+      @qry = @qry.parent_ranks_for_infrafamily
+      @qry = @qry.from_a_higher_rank(@params[:rank_id])
+    elsif rank.genus?
+      @qry = @qry.parent_ranks_for_genus
     else
       @qry = @qry.from_a_higher_rank(@params[:rank_id])
       @qry = @qry.but_rank_not_too_high(@params[:rank_id])
+    end
+  end
+
+  def rank_must_be_higher(rank)
+    if rank.infrafamily?
+      @qry = @qry.from_a_higher_rank(NameRank.find_by(name: 'Genus'))
+    else
+      @qry = @qry.from_a_higher_rank(@params[:rank_id])
     end
   end
 

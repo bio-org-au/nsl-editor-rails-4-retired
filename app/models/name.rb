@@ -58,26 +58,19 @@ class Name < ActiveRecord::Base
            dependent: :restrict_with_error
 
   has_many :instance_types, through: :instances
-
-  #has_many :primary_instance_types, -> { where(primary_instance: true) },   
-           #foreign_key: "name_id",
-           #class_name: "InstanceType",
-           #through: :instances,
-           #source: :instance_type
-
   has_many :comments
   has_many :name_tag_names
   has_many :name_tags, through: :name_tag_names
   has_many :name_tree_paths
 
   SEARCH_LIMIT = 50
-  DECLARED_BT = "DeclaredBt".freeze
+  DECLARED_BT = "DeclaredBt"
 
   before_create :set_defaults
   before_save :validate
 
   def primary_instances
-    instances.where( "instance_type_id in (select id from instance_type where primary_instance)")
+    instances.where("instance_type_id in (select id from instance_type where primary_instance)")
   end
 
   def save_with_username(username)
@@ -149,8 +142,8 @@ class Name < ActiveRecord::Base
   def workspace_instance_id(workspace)
     return nil unless workspace.present?
     name_node_tree_link = workspace_name_node_tree_link(workspace)
-    return nil unless name_node_tree_link.present? 
-    return nil if name_node_tree_link.empty? 
+    return nil unless name_node_tree_link.present?
+    return nil if name_node_tree_link.empty?
     name_node_tree_link.node.instance_id
   end
 

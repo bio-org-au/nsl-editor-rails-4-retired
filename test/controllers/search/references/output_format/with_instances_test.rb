@@ -35,11 +35,11 @@ class SearchRefsOutputFormatWithInstancesTest < ActionController::TestCase
                   "Need Metrosideros costata Gaertn. for the orth. var. test"
     assert_select "a.show-details-link.indent-level-1" do
       assert_select "span.non-legit-name-status",
-                  /orth. var./,
-                  "Orth var. name formatted incorrectly"
+                    /orth. var./,
+                    "Orth var. name formatted incorrectly"
     end
     assert_select "#search-results-summary",
-                  /28 records\b/,
-                  "Should find 28 records"
+                  /36 records\b/,
+                  "Should find 36 records"
   end
 end

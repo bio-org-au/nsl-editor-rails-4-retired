@@ -494,3 +494,11 @@
    or name       = 'Species') )"
   :allow_common_and_cultivar: true
   :order: name.sort_name
+'duplicate-simple-names:':
+  :where_clause: " simple_name in (select simple_name from name inner_name group by  inner_name.simple_name having count(*) > 1) "
+  :order: name.simple_name
+  :allow_common_and_cultivar: true
+'duplicate-full-names:':
+  :where_clause: " full_name in (select full_name from name inner_name group by  inner_name.full_name having count(*) > 1) "
+  :order: name.full_name
+  :allow_common_and_cultivar: true

@@ -29,7 +29,6 @@ class NamesSearchAutonymDoesNotExist < ActionController::TestCase
         user_full_name: "Fred Jones",
         groups: [])
     assert_response :success
-    assert_select "#search-results-summary", true
-                  "Should run"
+    assert_select "#search-results-summary", true, "Should run"
   end
 end

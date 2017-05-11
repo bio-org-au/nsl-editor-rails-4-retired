@@ -134,7 +134,7 @@ default_instance_for_the_regnum:
 
 default_instance_for_a_division:
   reference: bucket_reference_for_default_instances
-  name: metrosideros_costata_gaertn
+  name: a_division
   instance_type: comb_nov
   verbatim_name_string: verbatim
   namespace: apni
@@ -225,9 +225,9 @@ default_instance_for_a_family:
   page: 999
 
 # Default instance so name can be offered as parent
-default_instance_for_a_subfamily:
+default_instance_for_a_subfamilia:
   reference: bucket_reference_for_default_instances
-  name: a_subfamily
+  name: a_subfamilia
   instance_type: comb_nov
   verbatim_name_string: verbatim
   namespace: apni
@@ -444,6 +444,83 @@ default_instance_for_an_unranked:
   created_by: tester
   updated_by: tester
   page: 999
+
+# Default instance so name can be offered as parent
+default_instance_for_a_morphological_var:
+  reference: bucket_reference_for_default_instances
+  name: a_morphological_var_with_an_instance
+  instance_type: unknown
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: 999
+
+# Default instance so name can be offered as parent
+default_instance_for_a_nothomorph:
+  reference: bucket_reference_for_default_instances
+  name: a_nothomorph_with_an_instance
+  instance_type: unknown
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: 999
+
+# Default instance so name can be offered as parent
+default_instance_for_an_na:
+  reference: bucket_reference_for_default_instances
+  name: an_na_with_an_instance
+  instance_type: unknown
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: zzzz99901
+
+# Default instance so name can be offered as parent
+default_instance_for_an_unknown:
+  reference: bucket_reference_for_default_instances
+  name: an_unknown_with_an_instance
+  instance_type: unknown
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: 999
+
+# Default instance so name can be offered as parent
+default_instance_for_an_infraspecies:
+  reference: bucket_reference_for_default_instances
+  name: an_infraspecies_with_an_instance
+  instance_type: unknown
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: zzzz99901
+
+# Default instance so name can be offered as parent
+default_instance_for_an_infragenus:
+  reference: bucket_reference_for_default_instances
+  name: an_infragenus_with_an_instance
+  instance_type: unknown
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: zzzz99901
+
+# Default instance so name can be offered as parent
+default_instance_for_an_infrafamily:
+  reference: bucket_reference_for_default_instances
+  name: an_infrafamily_with_an_instance
+  instance_type: unknown
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: zzzz99901
 
 casuarina_inophloia_by_mueller:
   reference: mueller_1882_section

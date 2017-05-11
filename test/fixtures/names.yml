@@ -119,7 +119,6 @@ a_family:
 a_subfamilia: 
   full_name: 'a_subfamilia'
   simple_name: 'a_subfamilia'
-  simple_name: 'a_subfamilia'
   name_element: 'a_subfamilia'
   name_rank: subfamilia
   name_status: unknown
@@ -131,7 +130,6 @@ a_subfamilia:
 
 a_tribus: 
   full_name: 'a_tribus'
-  simple_name: 'a_tribus'
   simple_name: 'a_tribus'
   name_element: 'a_tribus'
   name_rank: tribus
@@ -145,7 +143,6 @@ a_tribus:
 a_subtribus: 
   full_name: 'a_subtribus'
   simple_name: 'a_subtribus'
-  simple_name: 'a_subtribus'
   name_element: 'a_subtribus'
   name_rank: subtribus
   name_status: unknown
@@ -156,6 +153,7 @@ a_subtribus:
   created_by: greg
 
 unknown_species: 
+  full_name: 'unknown-species'
   simple_name: 'unknown-species'
   name_element: 'unknown-species'
   name_rank: species
@@ -167,9 +165,9 @@ unknown_species:
   created_by: greg
 
 another_species: 
+  full_name: another-species
   simple_name: 'another-species'
   name_element: 'another-species'
-  full_name: another-species
   name_rank: species
   name_status: unknown
   name_type: scientific
@@ -316,18 +314,6 @@ a_varietas:
   name_element: 'a_varietas'
   full_name: 'a_varietas'
   name_rank: varietas
-  name_status: legitimate
-  name_type: scientific
-  namespace: apni
-  parent: a_family
-  updated_by: greg
-  created_by: greg
-
-a_subvarietas: 
-  simple_name: 'a_subvarietas'
-  name_element: 'a_subvarietas'
-  full_name: 'a_subvarietas'
-  name_rank: subvarietas
   name_status: legitimate
   name_type: scientific
   namespace: apni
@@ -858,13 +844,111 @@ a_species_without_an_instance:
   updated_by: greg
   created_by: greg
 
+a_morphological_var_with_an_instance:
+  simple_name: a morphological var with an instance
+  simple_name_html: a morphological var with an instance
+  name_element: a morphological var with an instance
+  full_name: a morphological var with an instance
+  full_name_html: a morphological var with an instance
+  name_rank: morphological_var
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+a_nothomorph_with_an_instance:
+  simple_name: a nothomorph with an instance
+  simple_name_html: a nothomorph with an instance
+  name_element: a nothomorph with an instance
+  full_name: a nothomorph with an instance
+  full_name_html: a nothomorph with an instance
+  name_rank: nothomorph
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
 an_unranked_with_an_instance:
-  simple_name: an unranked with an instance
-  simple_name_html: an unranked with an instance
-  name_element: an unranked with an instance
-  full_name: an unranked with an instance
-  full_name_html: an unranked with an instance
+  simple_name: a an unranked with an instance
+  simple_name_html: a an unranked with an instance
+  name_element: a an unranked with an instance
+  full_name: a an unranked with an instance
+  full_name_html: a an unranked with an instance
   name_rank: unranked
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+an_na_with_an_instance:
+  simple_name: a an na with an instance
+  simple_name_html: a an na with an instance
+  name_element: a an na with an instance
+  full_name: a an na with an instance
+  full_name_html: a an na with an instance
+  name_rank: na
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+an_unknown_with_an_instance:
+  simple_name: a an unknown with an instance
+  simple_name_html: a an unknown with an instance
+  name_element: a an unknown with an instance
+  full_name: a an unknown with an instance
+  full_name_html: a an unknown with an instance
+  name_rank: unknown
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+an_infraspecies_with_an_instance:
+  simple_name: a an infraspecies with an instance
+  simple_name_html: a an infraspecies with an instance
+  name_element: a an infraspecies with an instance
+  full_name: a an infraspecies with an instance
+  full_name_html: a an infraspecies with an instance
+  name_rank: infraspecies
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+an_infragenus_with_an_instance:
+  simple_name: a an infragenus with an instance
+  simple_name_html: a an infragenus with an instance
+  name_element: a an infragenus with an instance
+  full_name: a an infragenus with an instance
+  full_name_html: a an infragenus with an instance
+  name_rank: infragenus
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
+
+an_infrafamily_with_an_instance:
+  simple_name: a an infrafamily with an instance
+  simple_name_html: a an infrafamily with an instance
+  name_element: a an infrafamily with an instance
+  full_name: a an infrafamily with an instance
+  full_name_html: a an infrafamily with an instance
+  name_rank: infrafamily
   name_status: legitimate
   name_type: scientific
   namespace: apni

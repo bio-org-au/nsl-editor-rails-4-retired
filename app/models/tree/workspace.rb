@@ -15,24 +15,27 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-#  A workspace is an unpublished tree (formally a tree arrangement) that can be edited.
+#  A workspace is an unpublished tree (formally a tree arrangement) that can
+#  be edited.
 class Tree::Workspace < ActiveRecord::Base
   self.table_name = "tree_arrangement"
   self.primary_key = "id"
   default_scope { where(tree_type: "U") }
   belongs_to :base_arrangement, class_name: TreeArrangement
-  belongs_to :base_tree, class_name: TreeArrangement, foreign_key: "base_arrangement_id"
+  belongs_to :base_tree,
+             class_name: TreeArrangement,
+             foreign_key: "base_arrangement_id"
   belongs_to :namespace, class_name: "Namespace", foreign_key: "namespace_id"
-  has_many   :value_namespaces, class_name: "WorkspaceValueNamespace", foreign_key: "workspace_id"
-  has_many   :workspace_instance_values, class_name: "::WorkspaceInstanceValue", foreign_key: "workspace_id"
- 
+  has_many   :value_namespaces,
+             class_name: "WorkspaceValueNamespace",
+             foreign_key: "workspace_id"
+  has_many   :workspace_instance_values,
+             class_name: "::WorkspaceInstanceValue",
+             foreign_key: "workspace_id"
+
   def name
     title
   end
-
-  #def name(name)
-    #name_in_tree(name)
-  #end
 
   # Was find_placement_of_name
   def name_in_workspace(name)
@@ -126,13 +129,9 @@ class Tree::Workspace < ActiveRecord::Base
                                           name_id: name_id,
                                           tree_id: id).url
     logger.debug(url)
-    logger.debug('before request')
+    logger.debug("before request")
     response = RestClient.post(url, accept: :json)
-    logger.debug('after request')
-  #rescue RestClient::BadRequest => e
-    #logger.error "remove_instance bad request error: #{e}"
-    #logger.error response
-    #raise
+    logger.debug("after request")
   rescue => e
     logger.error("remove_instance error: #{e}")
     logger.error("About to re-raise")
@@ -140,13 +139,11 @@ class Tree::Workspace < ActiveRecord::Base
   end
 
   def update_value(username, name, value_uri, value)
-    logger.debug "update_value #{id} ,#{username}, #{name}, #{value_uri} ,'#{value}'"
-
-    url = TreeArrangement::update_value_url(username, id, name, value_uri, value)
+    url = TreeArrangement::update_value_url(username,
+                                            id, name, value_uri, value)
     logger.debug url
     RestClient.post(url, accept: :json)
   rescue RestClient::BadRequest => ex
     ex.response
   end
-
 end

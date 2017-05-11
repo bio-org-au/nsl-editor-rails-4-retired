@@ -36,12 +36,12 @@ class Search::OnAuthor::Predicate
     @value = value
     @canon_field = build_canon_field(field)
     rule = Search::OnAuthor::FieldRule::RULES[@canon_field] || EMPTY_RULE
+    @is_null = value.blank?
     apply_rule(rule)
     @canon_value = build_canon_value(value)
     apply_scope
     @order = rule[:order] || "name"
     process_value
-    @tokenize = rule[:tokenize] || false
   end
 
   def debug(s)
@@ -56,8 +56,13 @@ class Search::OnAuthor::Predicate
     @scope_ = rule[:scope_] || ""
     @trailing_wildcard = rule[:trailing_wildcard] || false
     @leading_wildcard = rule[:leading_wildcard] || false
+    apply_rule_overflow(rule)
+  end
+
+  def apply_rule_overflow(rule)
     @multiple_values = rule[:multiple_values] || false
     @predicate = build_predicate(rule)
+    @tokenize = rule[:tokenize] && !@is_null || false
   end
 
   def apply_scope
@@ -76,11 +81,28 @@ class Search::OnAuthor::Predicate
   end
 
   def build_predicate(rule)
-    debug("build_predicate")
     if @multiple_values && @value.split(/,/).size > 1
       rule[:multiple_values_where_clause]
     else
+      build_scalar_predicate(rule)
+    end
+  end
+
+  def build_scalar_predicate(rule)
+    if @is_null
+      build_is_null_predicate(rule)
+    else
       rule[:where_clause]
+    end
+  end
+
+  def build_is_null_predicate(rule)
+    if rule[:not_exists_clause].present?
+      rule[:not_exists_clause]
+    else
+      rule[:where_clause].gsub(/= \?/, "is null")
+                         .gsub(/like lower\(\?\)/, "is null")
+                         .gsub(/like lower\(f_unaccent\(\?\)\)/, "is null")
     end
   end
 

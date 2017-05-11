@@ -22,4 +22,16 @@ class ShardConfig < ActiveRecord::Base
   def self.name_space
     ShardConfig.find_by(name: "name space").value
   end
+
+  # On by default
+  def self.name_parent_rank_restriction
+    results = ShardConfig.where(name: 'name parent rank restriction')
+    return true if results.blank?
+    return true if results.first.value == 'on'
+    return false
+  end
+
+  def self.name_parent_rank_restriction?
+    name_parent_rank_restriction
+  end
 end

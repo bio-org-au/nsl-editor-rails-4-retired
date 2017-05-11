@@ -79,7 +79,7 @@ class NameStatus < ActiveRecord::Base
          Name::CULTIVAR_CATEGORY
       na_default_and_deleted_options(allow_delete)
     else
-      na_and_deleted_options(allow_delete)
+      na_option
     end
   end
 
@@ -97,10 +97,9 @@ class NameStatus < ActiveRecord::Base
       end
   end
 
-  def self.na_and_deleted_options(allow_delete)
-    where(" name = '[n/a]' or name = '[deleted]' ")
-      .order("name").collect do |n|
-        [n.name, n.id, disabled: n.name == "[deleted]" && !allow_delete]
+  def self.na_option
+    where(" name = '[n/a]' ").collect do |n|
+        [n.name, n.id]
       end
   end
 

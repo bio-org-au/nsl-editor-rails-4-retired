@@ -25,7 +25,7 @@ class SearchRefsDQRefSharedNamesListOnly1RefIDTest < ActionController::TestCase
     ref_1 = -1
     get(:search,
         { query_target: "references shared names",
-          query_string: "#{ref_1}" },
+          query_string: ref_1.to_s },
         username: "fred",
         user_full_name: "Fred Jones",
         groups: [])

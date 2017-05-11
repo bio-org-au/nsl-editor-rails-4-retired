@@ -16,11 +16,13 @@
 #   limitations under the License.
 #
 require "test_helper"
+require "models/instance/as_typeahead/for_synonymy/rank_restrictions/\
+infragenus/infragenus_helper"
 
 # Single instance typeahead search.
 class TypeaheadForSynonymySubgenusTest < ActiveSupport::TestCase
   def setup
-    @ta = Instance::AsTypeahead::ForSynonymy.new("*",
+    @ta = Instance::AsTypeahead::ForSynonymy.new("a",
                                                  names(:a_subgenus).id)
   end
 
@@ -29,26 +31,7 @@ class TypeaheadForSynonymySubgenusTest < ActiveSupport::TestCase
     @rank_names = @ta.results.collect do |result|
       Instance.find(result[:id]).name.name_rank.name
     end
-    bulk_test_1
-    bulk_test_2
-  end
-
-  def bulk_test_1
-    %w(Regio Regnum Division Classis Subclassis Superordo Ordo Subordo Familia
-       Subfamilia Tribus Subtribus Species Subspecies Nothovarietas Varietas
-       Subvarietas Forma Subforma).each do |rank_string|
-      assert @rank_names.select { |e| e.match(/\A#{rank_string}\z/) }.size == 0,
-             "Expect no #{rank_string} to be suggested"
-    end
-  end
-
-  def bulk_test_2
-    assert @rank_names.select { |e| e.match(/\AGenus\z/) }.size >= 6,
-           "Expect correct number of genera to be suggested"
-    %w(Subgenus Sectio Subsectio Series
-       Subseries Superspecies).each do |rank_string|
-      assert @rank_names.select { |e| e.match(/\A#{rank_string}\z/) }.size == 1,
-             "Expect one #{rank_string} to be suggested"
-    end
+    check_infrageneric_exclusions
+    check_infrageneric_inclusions
   end
 end

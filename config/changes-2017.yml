@@ -1,4 +1,74 @@
 ---
+- :date: 11-May-2017
+  :jira_id: '474'
+  :description: |-
+    Do not restrict synonym suggestions by rank for names ranked above family.
+- :date: 10-May-2017
+  :jira_id: '2342'
+  :description: |-
+    Make it easier to tell duplicate authors apart by adding abbrev to 
+    suggestions.
+- :date: 09-May-2017
+  :jira_id: '2352'
+  :description: |-
+    Added bhl search directive for instances. It understands how to search for
+    empty fields too.
+- :date: 09-May-2017
+  :jira_id: '2334'
+  :description: |-
+    Added generalised search for empty fields.
+- :date: 08-May-2017
+  :jira_id: '474'
+  :description: |-
+    Synonyms offered to unranked names can come from any rank.  Unranked names
+    are offered as synonyms to all ranks.
+- :date: 08-May-2017
+  :jira_id: '2243'
+  :description: |-
+    Name parent rank restriction can now be configured off only for ranks of
+    genus and above.
+- :date: 04-May-2017
+  :jira_id: '2140'
+  :description: |-
+    Phrase name status now defaults to n/a.
+- :date: 03-May-2017
+  :jira_id: '2288'
+  :description: |-
+    Added new search directives on names for duplicate simple names and
+    duplicate full names.
+- :date: 03-May-2017
+  :jira_id: '2297'
+  :description: |-
+    Added 'has-no-direct-or-child-instances:' query which finds all references
+    with no instances and with no direct children that have instances.
+- :date: 02-May-2017
+  :jira_id: '2296'
+  :description: |-
+    Corrected reference field help by changing "pub-date-matches-year" to 
+    the correct directive "pub-date-is-year:".
+- :date: 01-May-2017
+  :jira_id: '2243'
+  :description: |-
+    Name parent rank restriction can be switched off by shard configuration.
+- :date: 01-May-2017
+  :jira_id: '2321'
+  :description: |-
+    Disable new instance fields after create to avoid near duplicates.
+- :date: 01-May-2017
+  :jira_id: '2263'
+  :description: |-
+    Parent options now work consistently on APC Tree tab.
+- :date: 01-May-2017
+  :jira_id: '2140'
+  :description: |-
+    Added button to convert scientific name to phrase name.
+- :date: 27-Apr-2017
+  :jira_id: '474'
+  :description: |-
+    Infraspecies, infragenera, infrafamilies synonym options match latest
+    requirement.
+- :date: 27-Apr-2017
+  :release: true
 - :date: 26-Apr-2017
   :jira_id: '474'
   :description: |-

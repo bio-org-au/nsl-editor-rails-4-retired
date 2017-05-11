@@ -36,13 +36,13 @@ class TreeLink < ActiveRecord::Base
              class_name: "WorkspaceValue",
              foreign_key: "name_node_link_id"
 
-  ACCEPTED_RAW = "ApcConcept".freeze
-  EXCLUDED_RAW = "ApcExcluded".freeze
-  UNTREATED_RAW = "DeclaredBt".freeze
+  ACCEPTED_RAW = "ApcConcept"
+  EXCLUDED_RAW = "ApcExcluded"
+  UNTREATED_RAW = "DeclaredBt"
 
-  ACCEPTED = "accepted".freeze
-  EXCLUDED = "excluded".freeze
-  UNTREATED = "untreated".freeze
+  ACCEPTED = "accepted"
+  EXCLUDED = "excluded"
+  UNTREATED = "untreated"
 
   def placed?
     true

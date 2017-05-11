@@ -19,15 +19,6 @@ require "test_helper"
 
 # Name status options tests.
 class OptionsForSciHybFormUnk2ndParCatTest < ActiveSupport::TestCase
-  test "should include [deleted]" do
-    cat = Name::SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY
-    assert NameStatus.options_for_category(cat)
-      .collect(&:first)
-      .include?("[deleted]"),
-           'Scientific hybrid formula unknown 2nd parent name status
-           options should include "[deleted]"'
-  end
-
   test "should include  [n/a]" do
     cat = Name::SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY
     assert NameStatus.options_for_category(cat)
@@ -37,9 +28,9 @@ class OptionsForSciHybFormUnk2ndParCatTest < ActiveSupport::TestCase
            options should include "[n/a]"'
   end
 
-  test "should have only two entries" do
+  test "should have only one entry" do
     cat = Name::SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY
-    assert_equal(NameStatus.options_for_category(cat).size, 2,
+    assert_equal(NameStatus.options_for_category(cat).size, 1,
                  "Wrong number of name status options for scientific
                  hybrid formula unknown 2nd parent  category")
   end

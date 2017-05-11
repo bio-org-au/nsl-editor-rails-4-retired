@@ -19,7 +19,7 @@
 class Search::OnAuthor::WhereClauses
   attr_reader :sql
 
-  DEFAULT_FIELD = "name-or-abbrev:".freeze
+  DEFAULT_FIELD = "name-or-abbrev:"
 
   def initialize(parsed_request, incoming_sql)
     @parsed_request = parsed_request

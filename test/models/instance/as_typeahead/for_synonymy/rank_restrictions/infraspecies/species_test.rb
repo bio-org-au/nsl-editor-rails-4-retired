@@ -16,39 +16,22 @@
 #   limitations under the License.
 #
 require "test_helper"
+require "models/instance/as_typeahead/for_synonymy/rank_restrictions/\
+infraspecies/infraspecies_helper"
 
 # Single instance typeahead search.
 class TypeaheadForSynonymySpeciesTest < ActiveSupport::TestCase
   def setup
-    @ta = Instance::AsTypeahead::ForSynonymy.new("*",
+    @ta = Instance::AsTypeahead::ForSynonymy.new("a",
                                                  names(:a_species).id)
   end
 
   test "instance typeahead for synonymy rank restriction for species" do
-    assert @ta.results.size >= 2, "Should be at least 2 synonyms for angophora"
+    assert @ta.results.size >= 2, "Should be at least 2 synonyms"
     @rank_names = @ta.results.collect do |result|
       Instance.find(result[:id]).name.name_rank.name
     end
-    bulk_test_1
-    bulk_test_2
-  end
-
-  def bulk_test_1
-    %w(Regio Regnum Division Classis Subclassis Superordo Ordo Subordo Familia
-       Subfamilia Tribus Subtribus Genus Subgenus Sectio Subsectio Series
-       Subseries Superspecies).each do |rank_string|
-      assert @rank_names.select { |e| e.match(/\A#{rank_string}\z/) }.size == 0,
-             "Expect no #{rank_string} to be suggested"
-    end
-  end
-
-  def bulk_test_2
-    assert @rank_names.select { |e| e.match(/\ASpecies\z/) }.size >= 38,
-           "Expect correct number of species to be suggested"
-    %w(Subspecies Nothovarietas Varietas
-       Subvarietas Forma Subforma).each do |rank_string|
-      assert @rank_names.select { |e| e.match(/\A#{rank_string}\z/) }.size == 1,
-             "Expect one #{rank_string} to be suggested"
-    end
+    check_infraspecific_exclusions
+    check_infraspecific_inclusions
   end
 end

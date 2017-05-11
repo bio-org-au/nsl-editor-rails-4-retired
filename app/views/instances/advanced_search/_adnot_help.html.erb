@@ -2,9 +2,9 @@
 <p>Adnot is the preferred name for Instance comments</p>
 <table class="table table-striped">
   <% [
-      {field_name: 'adnot:', description: "adnot text, with leading and trailing wildcards added automatically"},
-      {field_name: 'adnot-exact:', description: "adnot text"},
-      {field_name: 'adnot-by:', description: "user who added or changed adnot"}
+      {field_name: 'adnot:', description: "adnot text, with leading and trailing wildcards added automatically  **"},
+      {field_name: 'adnot-exact:', description: "adnot text  **"},
+      {field_name: 'adnot-by:', description: "user who added or changed adnot *"}
       ].each do |val| %>
   <tr>
     <td class="width-20-percent"><a href="javascript:void(0)" 
@@ -15,3 +15,5 @@
   </tr>
   <% end %>
 </table>
+<p>* Supports search for empty fields.</p>
+<p>** Supports search for non-existing field.</p>

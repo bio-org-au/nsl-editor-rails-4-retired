@@ -37,8 +37,8 @@ class WorkspaceValue < ActiveRecord::Base
   belongs_to :tree_link, foreign_key: "name_node_link_id"
   belongs_to :workspace, class_name: "tree/workspace"
 
-  COMMENT = "comment".freeze
-  DISTRIBUTION = "distribution".freeze
+  COMMENT = "comment"
+  DISTRIBUTION = "distribution"
 
   # See class comment
   def multiline?

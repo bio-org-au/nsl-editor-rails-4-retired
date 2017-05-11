@@ -31,7 +31,7 @@ class SearchRefsOnCitationWithInstancesTest < ActionController::TestCase
         groups: [])
     assert_response :success
     assert_select "#search-results-summary",
-                  /28 records\b/,
-                  "Should find 28 records"
+                  /36 records\b/,
+                  "Should find 36 records"
   end
 end

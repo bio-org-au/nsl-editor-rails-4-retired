@@ -23,7 +23,6 @@ class NameRank < ActiveRecord::Base
   has_many :names
   belongs_to :name_group
 
-  SPECIES = "Species"
   GENUS = "Genus"
   SUBGENUS = "Subgenus"
   SECTIO = "Sectio"
@@ -34,6 +33,21 @@ class NameRank < ActiveRecord::Base
 
   FAMILIA = "Familia"
   FAMILY = FAMILIA
+  SUBFAMILIA = "Subfamilia"
+  TRIBUS = "Tribus"
+  SUBTRIBUS = "Subtribus"
+
+  SPECIES = "Species"
+  SUBSPECIES = "Subspecies"
+  NOTHOVARIETAS = "Nothovarietas"
+  VARIETAS = "Varietas"
+  SUBVARIETAS = "Subvarietas"
+  FORMA = "Forma"
+  SUBFORMA = "Subforma"
+
+  MORPHOLOGICAL_VAR = "morphological var."
+  NOTHOMORPH = "nothomorph."
+
   NA = "[n/a]"
   UNRANKED = "[unranked]"
   INFRAFAMILY = "[infrafamily]"
@@ -46,6 +60,21 @@ class NameRank < ActiveRecord::Base
   scope :at_or_below_this, ->(this_id) { where("name_rank.sort_order >= (select this_one.sort_order from name_rank this_one where id = ?)", this_id)}
   scope :within_level, ->(this_id) { where("name_rank.sort_order < (select min(above.sort_order) from name_rank above where ((major and name != 'Tribus') or name = '[unknown]') and sort_order > (select n4.sort_order from name_rank n4 where n4.id = ?) )", this_id)}
 
+  scope :infraspecific,
+    (lambda do
+      where("(name_rank.sort_order >= (select iga.sort_order
+                                        from name_rank iga
+                                       where name = 'Species')
+             and
+             name_rank.sort_order <= (select species.sort_order
+                                       from name_rank species
+                                      where name = 'nothomorph.') )
+            or name_rank.name = '[infraspecies]'
+            or name_rank.name = '[n/a]'
+            or name_rank.name = '[unknown]'
+            or name_rank.name = '[unranked]' ")
+     end)
+
   scope :infrageneric,
     (lambda do
       where("(name_rank.sort_order >= (select iga.sort_order
@@ -55,7 +84,21 @@ class NameRank < ActiveRecord::Base
              name_rank.sort_order < (select species.sort_order
                                        from name_rank species
                                       where name = 'Species') )
-            or name_rank.name = '[infragenus]' ")
+            or name_rank.name = '[infragenus]'
+            or name_rank.name = '[unranked]' ")
+     end)
+
+  scope :infrafamilial,
+    (lambda do
+      where("(name_rank.sort_order >= (select iga.sort_order
+                                        from name_rank iga
+                                       where name = 'Familia')
+             and
+             name_rank.sort_order < (select species.sort_order
+                                       from name_rank species
+                                      where name = 'Genus') )
+            or name_rank.name = '[infrafamily]'
+            or name_rank.name = '[unranked]' ")
      end)
 
   def self.default
@@ -128,6 +171,10 @@ class NameRank < ActiveRecord::Base
     deprecated
   end
 
+  def family?
+    !!name.match(/\A#{FAMILY}\z/)
+  end
+
   def species?
     !!name.match(/\A#{SPECIES}\z/)
   end
@@ -160,6 +207,19 @@ class NameRank < ActiveRecord::Base
     !!name.match(/\A#{Regexp.escape(INFRASPECIES)}\z/)
   end
 
+  def infraspecific?
+    !!(name.match(/\A#{Regexp.escape(SPECIES)}\z/) ||
+    name.match(/\A#{Regexp.escape(SUBSPECIES)}\z/) ||
+    name.match(/\A#{Regexp.escape(NOTHOVARIETAS)}\z/) ||
+    name.match(/\A#{Regexp.escape(VARIETAS)}\z/) ||
+    name.match(/\A#{Regexp.escape(SUBVARIETAS)}\z/) ||
+    name.match(/\A#{Regexp.escape(FORMA)}\z/) ||
+    name.match(/\A#{Regexp.escape(SUBFORMA)}\z/) ||
+    name.match(/\A#{Regexp.escape(INFRASPECIES)}\z/) ||
+    name.match(/\A#{Regexp.escape(NOTHOMORPH)}\z/) ||
+    name.match(/\A#{Regexp.escape(MORPHOLOGICAL_VAR)}\z/))
+  end
+
   def infrageneric?
     !!(name.match(/\A#{Regexp.escape(GENUS)}\z/) ||
     name.match(/\A#{Regexp.escape(SUBGENUS)}\z/) ||
@@ -169,6 +229,14 @@ class NameRank < ActiveRecord::Base
     name.match(/\A#{Regexp.escape(SUBSERIES)}\z/) ||
     name.match(/\A#{Regexp.escape(SUPERSPECIES)}\z/) ||
     name.match(/\A#{Regexp.escape(INFRAGENUS)}\z/))
+  end
+
+  def infrafamilial?
+    !!(name.match(/\A#{Regexp.escape(FAMILIA)}\z/) ||
+    name.match(/\A#{Regexp.escape(SUBFAMILIA)}\z/) ||
+    name.match(/\A#{Regexp.escape(TRIBUS)}\z/) ||
+    name.match(/\A#{Regexp.escape(SUBTRIBUS)}\z/) ||
+    name.match(/\A#{Regexp.escape(INFRAFAMILY)}\z/))
   end
 
   def self.genus

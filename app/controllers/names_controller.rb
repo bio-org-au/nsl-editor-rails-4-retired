@@ -86,7 +86,6 @@ class NamesController < ApplicationController
     @tab = "tab_edit"
     @tab_index = 1
     if params[:new_category].present?
-      logger.debug("there is a params[:new_category]: #{params[:new_category]}")
       @name.change_category_to = params[:new_category]
     end
     render "show", layout: false

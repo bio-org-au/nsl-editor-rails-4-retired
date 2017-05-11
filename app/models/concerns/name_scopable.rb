@@ -47,7 +47,8 @@ module NameScopable
            end)
     scope :from_a_higher_rank,
           (lambda do |rank_id|
-             joins(:name_rank).where("name_rank.sort_order < (select sort_order
+          joins(:name_rank).where("not name_rank.deprecated and
+                                     name_rank.sort_order < (select sort_order
                                      from name_rank where id = ?)", rank_id)
            end)
     scope :ranks_for_unranked,
@@ -112,6 +113,30 @@ module NameScopable
              sort_order >= (select sort_order from name_rank where name =
              'Genus') and sort_order < (select sort_order from name_rank where
              name = 'Species') ) ")
+           end)
+    scope :parent_ranks_for_species,
+          (lambda do
+             joins(:name_rank)
+              .where("name_rank.id in (select id from name_rank where
+             sort_order < (select sort_order from name_rank where name =
+             'Species') and sort_order >=(select sort_order from name_rank where
+             name = 'Genus') ) ")
+           end)
+    scope :parent_ranks_for_genus,
+          (lambda do
+             joins(:name_rank)
+              .where("name_rank.id in (select id from name_rank where
+             sort_order < (select sort_order from name_rank where name =
+             'Genus') and sort_order >=(select sort_order from name_rank where
+             name = 'Familia') ) ")
+           end)
+    scope :parent_ranks_for_family,
+          (lambda do
+             joins(:name_rank)
+              .where("name_rank.id in (select id from name_rank where
+             sort_order < (select sort_order from name_rank where name =
+             'Familia') and sort_order >=(select sort_order from name_rank where
+             name = 'Ordo') ) ")
            end)
     scope :parent_ranks_for_infraspecies,
           (lambda do

@@ -26,9 +26,8 @@ class AuthorCreateSimpleTest < ActionController::TestCase
     assert_difference("Author.count") do
       post(:create,
            { author: { "name" => "newauthor",
-                       "abbrev" => "na"} },
-             username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
+                       "abbrev" => "na" } },
+           username: "fred", user_full_name: "Fred Jones", groups: ["edit"])
     end
   end
 end
-

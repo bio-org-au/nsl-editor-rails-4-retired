@@ -37,7 +37,7 @@ def suggestions_should_not_include(suggestions,
     rank = h[:value].split("|")[1].strip
     rank =~ /\A#{Regexp.quote(unexpected_rank_name)}\z/ ? 1 : 0
   end.sum.positive?,
-             "#{given_rank_name} shld not suggest #{unexpected_rank_name}")
+             "#{given_rank_name} should not suggest #{unexpected_rank_name}")
 end
 
 def suggestions_should_only_include(suggestions,
@@ -71,4 +71,16 @@ def suggestion_rank_should_be_at_or_below(suggestion,
   rank = rank_from_suggestion(suggestion)
   assert rank.sort_order >= upper_rank.sort_order,
          "#{rank.name} is higher than #{upper_rank.name}"
+end
+
+def set_name_parent_rank_restrictions_off
+  restriction = ShardConfig.find_by(name: "name parent rank restriction")
+  restriction.value = "off"
+  restriction.save!
+end
+
+def set_name_parent_rank_restrictions_on
+  restriction = ShardConfig.find_by(name: "name parent rank restriction")
+  restriction.value = "on"
+  restriction.save!
 end

@@ -1,0 +1,27 @@
+<% if @name.ex_author_id.present? ||
+        @name.base_author_id.present? ||
+        @name.ex_base_author_id.present? ||
+        @name.sanctioning_author_id.present? %>
+    <% if @name.ex_author_id.present? %>
+      <br/>Remove ex-author and save if you want to convert to phrase name.
+    <% end %>
+    <% if @name.base_author_id.present? %>
+      <br/>Remove base-author and save if you want to convert to phrase name.
+    <% end %>
+    <% if @name.ex_base_author_id.present? %>
+      <br/>Remove ex-base-author and save if you want to convert to phrase name.
+    <% end %>
+    <% if @name.sanctioning_author_id.present? %>
+      <br/>Remove sanctioning-author and save if you want to convert to phrase name.
+    <% end %>
+  <% else %>
+
+  <%= link_to('Convert to phrase name', 
+                  '#', 
+                  class: "change-name-category-on-edit-tab btn btn-default", 
+                  title: "Convert to phrase name",
+                  data: {edit_url: name_edit_as_category_path(id: @name.id,
+                                                              tab: 'edit_name',
+                                                              new_category: Name::PHRASE)}) %>
+<% end %>
+

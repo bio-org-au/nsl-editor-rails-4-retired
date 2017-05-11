@@ -9,24 +9,24 @@
      class='purple'>name</span>, see more about name search below."},
     {field_name: 'name:',
      description: "Name refers to the fully qualified name, with authorities.
-     <br>Leading and trailing wildcards are added to your search term."},
+     <br>Leading and trailing wildcards are added to your search term. *"},
     {field_name: 'name-exact:',
      description: "This searches the same fully qualified name field as name: \
-     (above), but no wildcards are added."},
+     (above), but no wildcards are added. *"},
     {field_name: 'simple-name:',
      description: %Q(Simple name is the full name without the authorities. e.g.
      "Acacia" in "Acacia Mill.", "Banksia paludosa" in "Banksia paludosa R.Br.".
-     <br>Leading and trailing wildcards are added to your search term.)},
+     <br>Leading and trailing wildcards are added to your search term. *)},
     {field_name: 'simple-name-exact:',
      description: "This searches the same fully qualified name field as \
-     simple-name: (above), but no wildcards are added."},
+     simple-name: (above), but no wildcards are added. *"},
     {field_name: 'name-element:',
      description: %Q(Name element is the unique part of the name. e.g. \
      "Acacia" in "Acacia Mill.", "paludosa" in "Banksia paludosa R.Br.".
-     <br>Leading and trailing wildcards are added to your search term.)},
+     <br>Leading and trailing wildcards are added to your search term. *)},
     {field_name: 'name-element-exact:',
      description: "This searches the same fully qualified name field as \
-     name-element: (above), but no wildcards are added."},
+     name-element: (above), but no wildcards are added. *"},
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">
@@ -43,6 +43,10 @@
   </tr>
   <% end %>
 </table>
+
+<p>* Supports search for empty fields.</p>
+<p>** Supports search for non-existing field.</p>
+
   <h5>Coded fields</h5>
 <table class="table table-striped">
   <tr><th>Field</th><th>Description</th><th>Values</th></tr>
@@ -66,16 +70,17 @@
   </tr>
   <% end %>
 </table>
-
+<p>Rank, status and type are mandatory fields so there is no point searching for empty values.</p>
+<br/>
   <h5>Authorities</h5>
 <table class="table table-striped">
   <tr><th>Field</th><th>Description</th></tr>
   <% [
-      {field_name: 'author:', description: "author abbreviation"},
-      {field_name: 'ex-author:', description: "ex-author abbreviation"},
-      {field_name: 'base-author:', description: "base author abbreviation"},
-      {field_name: 'ex-base-author:', description: "ex-base author abbreviation"},
-      {field_name: 'sanctioning-author:', description: "sanctioning author abbreviation"},
+      {field_name: 'author:', description: "author abbreviation *"},
+      {field_name: 'ex-author:', description: "ex-author abbreviation *"},
+      {field_name: 'base-author:', description: "base author abbreviation *"},
+      {field_name: 'ex-base-author:', description: "ex-base author abbreviation *"},
+      {field_name: 'sanctioning-author:', description: "sanctioning author abbreviation *"},
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">
@@ -87,7 +92,8 @@
   </tr>
   <% end %>
 </table>
-<br>
+<p>* Supports search for empty fields - use the -id version e.g. author-id:.</p>
+<br/>
 
 <h5>Assertions</h5>
   <h6>Missing authorities</h6>
@@ -119,6 +125,8 @@
   <% [
       {field_name: 'is-a-duplicate:', description: "marked as a duplicate"},
       {field_name: 'is-not-a-duplicate:', description: "not marked as a duplicate"},
+      {field_name: 'duplicate-simple-names:', description: "not actually an assertion, but related: more than one name with the same 'simple' name value"},
+      {field_name: 'duplicate-full-names:', description: "not actually an assertion, but related: more than one name with the same 'full' name value"},
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">

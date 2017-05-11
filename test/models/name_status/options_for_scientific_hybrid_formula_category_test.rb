@@ -19,14 +19,6 @@ require "test_helper"
 
 # Name status options tests.
 class OptionsForScientificHybridFormulaCategoryTest < ActiveSupport::TestCase
-  test "should include [deleted]" do
-    assert NameStatus
-      .options_for_category(Name::SCIENTIFIC_HYBRID_FORMULA_CATEGORY)
-      .collect(&:first).include?("[deleted]"),
-           'Scientific hybrid formula name status options should
-           include "[deleted]"'
-  end
-
   test "should include  [n/a]" do
     assert NameStatus
       .options_for_category(Name::SCIENTIFIC_HYBRID_FORMULA_CATEGORY)
@@ -34,8 +26,8 @@ class OptionsForScientificHybridFormulaCategoryTest < ActiveSupport::TestCase
            'Scientific hybrid formula name status opts should include "[n/a]"'
   end
 
-  test "should have only two entries" do
-    assert_equal(2,
+  test "should have only one entry" do
+    assert_equal(1,
                  NameStatus
       .options_for_category(Name::SCIENTIFIC_HYBRID_FORMULA_CATEGORY).size,
                  "Wrong number of name status options for scientific
