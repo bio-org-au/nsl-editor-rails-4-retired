@@ -55,51 +55,47 @@ class NameRank < ActiveRecord::Base
   INFRASPECIES = "[infraspecies]"
 
   scope :not_deprecated, -> { where(deprecated: false) }
-  scope :species_or_below, -> { where("name_rank.sort_order >= (select species.sort_order from name_rank species where name = 'Species')") }
-  scope :above_unranked, -> { where("name_rank.sort_order < (select unranked.sort_order from name_rank unranked where name = '[unranked]')") }
-  scope :at_or_below_this, ->(this_id) { where("name_rank.sort_order >= (select this_one.sort_order from name_rank this_one where id = ?)", this_id)}
-  scope :within_level, ->(this_id) { where("name_rank.sort_order < (select min(above.sort_order) from name_rank above where ((major and name != 'Tribus') or name = '[unknown]') and sort_order > (select n4.sort_order from name_rank n4 where n4.id = ?) )", this_id)}
 
   scope :infraspecific,
-    (lambda do
-      where("(name_rank.sort_order >= (select iga.sort_order
-                                        from name_rank iga
-                                       where name = 'Species')
-             and
-             name_rank.sort_order <= (select species.sort_order
-                                       from name_rank species
-                                      where name = 'nothomorph.') )
-            or name_rank.name = '[infraspecies]'
-            or name_rank.name = '[n/a]'
-            or name_rank.name = '[unknown]'
-            or name_rank.name = '[unranked]' ")
-     end)
+        (lambda do
+          where("(name_rank.sort_order >= (select iga.sort_order
+                                             from name_rank iga
+                                            where name = 'Species')
+                  and
+                  name_rank.sort_order <= (select species.sort_order
+                                             from name_rank species
+                                            where name = 'nothomorph.') )
+                  or name_rank.name = '[infraspecies]'
+                  or name_rank.name = '[n/a]'
+                  or name_rank.name = '[unknown]'
+                  or name_rank.name = '[unranked]' ")
+        end)
 
   scope :infrageneric,
-    (lambda do
-      where("(name_rank.sort_order >= (select iga.sort_order
-                                        from name_rank iga
-                                       where name = 'Genus')
-             and
-             name_rank.sort_order < (select species.sort_order
-                                       from name_rank species
-                                      where name = 'Species') )
-            or name_rank.name = '[infragenus]'
-            or name_rank.name = '[unranked]' ")
-     end)
+        (lambda do
+          where("(name_rank.sort_order >= (select iga.sort_order
+                                             from name_rank iga
+                                            where name = 'Genus')
+                  and
+                  name_rank.sort_order < (select species.sort_order
+                                            from name_rank species
+                                           where name = 'Species') )
+                  or name_rank.name = '[infragenus]'
+                  or name_rank.name = '[unranked]' ")
+        end)
 
   scope :infrafamilial,
-    (lambda do
-      where("(name_rank.sort_order >= (select iga.sort_order
-                                        from name_rank iga
-                                       where name = 'Familia')
-             and
-             name_rank.sort_order < (select species.sort_order
-                                       from name_rank species
-                                      where name = 'Genus') )
-            or name_rank.name = '[infrafamily]'
-            or name_rank.name = '[unranked]' ")
-     end)
+        (lambda do
+          where("(name_rank.sort_order >= (select iga.sort_order
+                                             from name_rank iga
+                                            where name = 'Familia')
+                  and
+                  name_rank.sort_order < (select species.sort_order
+                                            from name_rank species
+                                           where name = 'Genus') )
+                 or name_rank.name = '[infrafamily]'
+                 or name_rank.name = '[unranked]' ")
+        end)
 
   def self.default
     NameRank.where(abbrev: "sp.").push(NameRank.first).first
@@ -107,10 +103,6 @@ class NameRank < ActiveRecord::Base
 
   def self.options_for_category(name_category = :unknown)
     case name_category
-    when Name::SCIENTIFIC_CATEGORY
-      options
-    when Name::SCIENTIFIC_HYBRID_FORMULA_CATEGORY
-      options
     when Name::CULTIVAR_HYBRID_CATEGORY
       cultivar_hybrid_options
     when Name::CULTIVAR_CATEGORY
@@ -138,7 +130,7 @@ class NameRank < ActiveRecord::Base
       .collect { |n| [n.name, "below-rank: #{n.name.downcase}"] }
   end
 
-  def self.query_form_ranked_above_options
+  def self.xquery_form_ranked_above_options
     where("deprecated is false")
       .order(:sort_order)
       .collect { |n| [n.name, "above-rank: #{n.name.downcase}"] }
@@ -172,15 +164,15 @@ class NameRank < ActiveRecord::Base
   end
 
   def family?
-    !!name.match(/\A#{FAMILY}\z/)
+    !name.match(/\A#{FAMILY}\z/).nil?
   end
 
   def species?
-    !!name.match(/\A#{SPECIES}\z/)
+    !name.match(/\A#{SPECIES}\z/).nil?
   end
 
   def genus?
-    !!name.match(/\A#{GENUS}\z/)
+    !name.match(/\A#{GENUS}\z/).nil?
   end
 
   def self.not_applicable
@@ -188,81 +180,64 @@ class NameRank < ActiveRecord::Base
   end
 
   def na?
-    !!name.match(/\A#{Regexp.escape(NA)}\z/)
+    !name.match(/\A#{Regexp.escape(NA)}\z/).nil?
   end
 
   def unranked?
-    !!name.match(/\A#{Regexp.escape(UNRANKED)}\z/)
+    !name.match(/\A#{Regexp.escape(UNRANKED)}\z/).nil?
   end
 
   def infrafamily?
-    !!name.match(/\A#{Regexp.escape(INFRAFAMILY)}\z/)
+    !name.match(/\A#{Regexp.escape(INFRAFAMILY)}\z/).nil?
   end
 
   def infragenus?
-    !!name.match(/\A#{Regexp.escape(INFRAGENUS)}\z/)
+    !name.match(/\A#{Regexp.escape(INFRAGENUS)}\z/).nil?
   end
 
   def infraspecies?
-    !!name.match(/\A#{Regexp.escape(INFRASPECIES)}\z/)
+    uname.match(/\A#{Regexp.escape(INFRASPECIES)}\z/).nil?
   end
 
   def infraspecific?
-    !!(name.match(/\A#{Regexp.escape(SPECIES)}\z/) ||
-    name.match(/\A#{Regexp.escape(SUBSPECIES)}\z/) ||
-    name.match(/\A#{Regexp.escape(NOTHOVARIETAS)}\z/) ||
-    name.match(/\A#{Regexp.escape(VARIETAS)}\z/) ||
-    name.match(/\A#{Regexp.escape(SUBVARIETAS)}\z/) ||
-    name.match(/\A#{Regexp.escape(FORMA)}\z/) ||
-    name.match(/\A#{Regexp.escape(SUBFORMA)}\z/) ||
-    name.match(/\A#{Regexp.escape(INFRASPECIES)}\z/) ||
-    name.match(/\A#{Regexp.escape(NOTHOMORPH)}\z/) ||
-    name.match(/\A#{Regexp.escape(MORPHOLOGICAL_VAR)}\z/))
+    [SPECIES, SUBSPECIES, NOTHOVARIETAS, VARIETAS, SUBVARIETAS, FORMA, SUBFORMA,
+     INFRASPECIES, NOTHOMORPH, MORPHOLOGICAL_VAR].include?(name)
   end
 
   def infrageneric?
-    !!(name.match(/\A#{Regexp.escape(GENUS)}\z/) ||
-    name.match(/\A#{Regexp.escape(SUBGENUS)}\z/) ||
-    name.match(/\A#{Regexp.escape(SECTIO)}\z/) ||
-    name.match(/\A#{Regexp.escape(SUBSECTIO)}\z/) ||
-    name.match(/\A#{Regexp.escape(SERIES)}\z/) ||
-    name.match(/\A#{Regexp.escape(SUBSERIES)}\z/) ||
-    name.match(/\A#{Regexp.escape(SUPERSPECIES)}\z/) ||
-    name.match(/\A#{Regexp.escape(INFRAGENUS)}\z/))
+    [GENUS, SUBGENUS, SECTIO, SUBSECTIO, SERIES, SUBSERIES, SUPERSPECIES,
+     INFRAGENUS].include?(name)
   end
 
   def infrafamilial?
-    !!(name.match(/\A#{Regexp.escape(FAMILIA)}\z/) ||
-    name.match(/\A#{Regexp.escape(SUBFAMILIA)}\z/) ||
-    name.match(/\A#{Regexp.escape(TRIBUS)}\z/) ||
-    name.match(/\A#{Regexp.escape(SUBTRIBUS)}\z/) ||
-    name.match(/\A#{Regexp.escape(INFRAFAMILY)}\z/))
+    [FAMILIA, SUBFAMILIA, TRIBUS, SUBTRIBUS, INFRAFAMILY].include?(name)
   end
 
   def self.genus
     NameRank.find_by(name: GENUS)
   end
 
-  # if rank below species, species
-  # elsif rank below genus, genus
-  # elsif rank genus, nil
-  # elsif rank below family, family
-  # else (rank above family), nil
   def parent
     if deprecated?
       DeprecatedNoParent.new
     elsif na?
       NoParent.new
-    elsif below_species?
+    elsif below_family?
+      parent_of_below_family
+    else
+      NoParent.new
+    end
+  end
+
+  def parent_of_below_family
+    if below_species?
       NameRank.species
     elsif below_genus?
       NameRank.genus
     elsif genus?
       NameRank.family
-    elsif below_family?
-      NameRank.family
     else
-      NoParent.new
+      NameRank.family
     end
   end
 
@@ -289,7 +264,7 @@ class NameRank < ActiveRecord::Base
     find_by(name: FAMILY)
   end
 
-  def self.print_parent_divisions
+  def self.xprint_parent_divisions
     NameRank.all.each do |name_rank|
       if name_rank.below_species?
         puts "#{name_rank.name} is below species"
@@ -300,14 +275,14 @@ class NameRank < ActiveRecord::Base
     ""
   end
 
-  def self.print_parents
+  def self.xprint_parents
     NameRank.all.each do |name_rank|
       printf("%20s:  %s\n", name_rank.name, name_rank.parent.try("name"))
     end
     ""
   end
 
-  def self.print_takes_parent
+  def self.xprint_takes_parent
     NameRank.all.each do |name_rank|
       printf("%20s:  %s\n",
              name_rank.name,
@@ -332,8 +307,8 @@ class NameRank < ActiveRecord::Base
     sort_order < other_name_rank.sort_order
   end
 
-  def has_parent?
-    sort_order > NameRank.minimum(:sort_order)
+  def top_rank?
+    sort_order == NameRank.minimum(:sort_order)
   end
 end
 

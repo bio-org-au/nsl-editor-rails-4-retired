@@ -98,7 +98,6 @@ class Instance < ActiveRecord::Base
 
   belongs_to :namespace, class_name: "Namespace", foreign_key: "namespace_id"
   belongs_to :reference
-  #belongs_to :author, through: :reference
   belongs_to :author
   belongs_to :name
   belongs_to :instance_type
@@ -176,8 +175,7 @@ class Instance < ActiveRecord::Base
 
   def accepted_concept_cannot_be_synonym_of_accepted_concept
     return if concept_warning_bypassed?
-    return if standalone?
-    return if unpublished_citation?
+    return if standalone_or_unpublished_citation?
     return if allowed_type_for_accepted_concept_synonym?
     return unless both_names_are_accepted_concepts?
     return unless this_is_cited_by.name.accepted_concept.instance_id ==
@@ -209,20 +207,30 @@ class Instance < ActiveRecord::Base
   # Otherwise, reject
   def only_one_primary_instance_per_name
     return if extra_primary_override == true
-    return if extra_primary_override == true
-    return unless instance_type.present?
-    return unless instance_type.primary?
-    return if name.primary_instances.size == 0
-    # current record is the only primary instance (being updated)
-    if name.primary_instances.map(&:id).include?(id) &&
-       name.primary_instances.size == 1
-      return
-    end
-    # Don't reject updates that do not change instance type
-    unless new_record?
-      return unless changed.include?("instance_type_id")
-    end
+    return unless instance_type_is_primary?
+    return if name.primary_instances.empty?
+    return if current_record_is_the_only_primary_instance?
+    return if an_update_not_changing_type?
     errors[:base] << "This would result in multiple primary instances"
+  end
+
+  def instance_type_is_primary?
+    instance_type.present? && instance_type.primary?
+  end
+
+  # current record is the only primary instance (being updated)
+  def current_record_is_the_only_primary_instance?
+    name.primary_instances.map(&:id).include?(id) &&
+      name.primary_instances.size == 1
+  end
+
+  # Don't reject updates that do not change instance type
+  def an_update_not_changing_type?
+    if new_record?
+      false
+    else
+      !changed.include?("instance_type_id")
+    end
   end
 
   def name_cannot_be_double_synonym
@@ -394,6 +402,10 @@ class Instance < ActiveRecord::Base
     cited_by_id.nil? && cites_id.present?
   end
 
+  def standalone_or_unpublished_citation?
+    standalone? || unpublished_citation?
+  end
+
   def type_of_instance
     if standalone? then "Standalone"
     elsif synonymy? then "Synonymy"
@@ -462,7 +474,7 @@ class Instance < ActiveRecord::Base
 
   def set_defaults
     self.namespace_id = Namespace.default.id if namespace_id.blank?
-    self.draft = 'f' if draft.blank?
+    self.draft = "f" if draft.blank?
   end
 
   # simple i.e. not a relationship instance
@@ -514,52 +526,6 @@ class Instance < ActiveRecord::Base
     id
   end
 
-  def self.instance_context(instance_id)
-    results = []
-    instance = find(instance_id)
-    instance.name.display_as_part_of_concept
-    results.push(instance.name)
-    instance.display_as = "instance-for-expansion"
-    results.push(instance)
-    instance.is_cited_by.each do |cited_by|
-      cited_by.expanded_instance_type = cited_by.instance_type.name
-      results.push(cited_by)
-    end
-    results.push(instance.cites_this) unless instance.cites_this.nil?
-    results
-  end
-
-  # Instances targetted in nsl-720
-  def self.nsl_720
-    logger.debug("nsl_720")
-    Instance.where("id in (?) ",
-                   [3_593_450, 3_455_690, 3_455_747, 3_587_295, 3_534_663,
-                    3_454_920, 3_454_936, 3_536_329, 3_456_370, 3_454_931,
-                    3_454_850, 3_454_945, 3_498_251, 3_454_966, 3_456_380,
-                    3_480_899, 3_524_687, 3_456_385, 3_458_910, 3_454_921,
-                    3_454_961, 3_526_347, 3_456_333, 3_506_487, 3_455_711,
-                    3_508_136, 3_454_956, 3_455_757, 3_454_975, 3_456_353,
-                    3_454_976, 3_545_422, 3_489_094, 3_456_371, 3_456_350,
-                    3_509_786, 3_463_066, 3_547_132, 3_511_437, 3_516_396,
-                    3_503_189, 3_479_256, 3_480_890, 3_548_842, 3_504_839,
-                    3_454_926, 3_513_089, 3_455_691, 3_514_742, 3_480_894,
-                    3_480_902, 3_484_174, 3_454_950, 3_552_262, 3_484_176,
-                    3_454_910, 3_454_896, 3_518_051, 3_484_178, 3_455_692,
-                    3_585_418, 3_454_869, 3_559_102, 3_455_752, 3_485_815,
-                    3_456_351, 3_454_901, 3_482_538, 3_454_895, 3_487_453,
-                    3_503_192, 3_553_972, 3_455_732, 3_555_682, 3_456_373,
-                    3_454_951, 3_529_670, 3_455_742, 3_563_245, 3_490_734,
-                    3_562_028, 3_455_699, 3_519_710, 3_454_911, 3_455_766,
-                    3_492_375, 3_492_378, 3_454_870, 3_518_054, 3_455_729,
-                    3_586_356, 3_455_767, 3_455_702, 3_499_895, 3_455_712,
-                    3_550_552, 3_501_540, 3_519_713, 3_454_867, 3_460_541,
-                    3_531_333, 3_501_543, 3_588_277, 3_454_830, 3_455_730,
-                    3_560_812, 3_456_352, 3_456_372, 3_480_893, 3_557_392,
-                    3_521_370, 3_456_328, 3_523_028, 3_454_868, 3_528_008,
-                    3_454_885, 3_455_731, 3_460_547, 3_455_741, 3_455_689,
-                    3_454_886])
-  end
-
   def self.reverse_of_cites_id_query(instance_id)
     instance = Instance.find_by(id: instance_id.to_i)
     instance.present? ? instance.reverse_of_this_cites : []
@@ -583,70 +549,6 @@ class Instance < ActiveRecord::Base
   def display_as_citing_instance_within_name_search
     self.display_as = :citing_instance_within_name_search
     self
-  end
-
-  # For NSL-720
-  def self.synonyms_that_should_be_unpublished_citations
-    long_sql = <<-EOT
-      SELECT     i.id,
-                 i.cites_id,
-                 i.created_by,
-                 To_char(i.created_at,'dd-Mon-yyyy') created,
-                 i.updated_by,
-                 To_char(i.updated_at,'dd-Mon-yyyy') updated,
-                 t.NAME,
-                 n.full_name,
-                 r.id "reference",
-                 cites_ref.id "cites_ref",
-                 r.citation
-      FROM       instance i
-      INNER JOIN instance_type t
-      ON         i.instance_type_id = t.id
-      INNER JOIN NAME n
-      ON         i.name_id = n.id
-      INNER JOIN reference r
-      ON         i.reference_id = r.id
-      INNER JOIN instance cites
-      ON         i.cites_id = cites.id
-      INNER JOIN reference cites_ref
-      ON         cites.reference_id = cites_ref.id
-      WHERE      i.created_at > Now() - interval '40 days'
-      AND        t.NAME = 'common name'
-      AND        r.id = cites_ref.id
-      ORDER BY   i.id
-      EOT
-    Instance.find_by_sql(long_sql)
-  end
-
-  # Call with argument :commit to commit; any other argument will rollback.
-  def change_synonymy_to_unpublished_citation(commit_or_not = :or_not)
-    raise "Expected synonymy but this is not synonymy!" unless synonymy?
-    redundant_instance = Instance.find(cites_id)
-    same_reference = this_is_cited_by.reference.id == reference.id
-    raise "Expected same reference but that is not true!" unless same_reference
-    Instance.transaction do
-      # bypass a validation that would prevent this change
-      self.data_fix_in_process = true
-      # remove the foreign key then delete the record
-      self.cites_id = nil
-      save!
-      redundant_instance.destroy!
-      raise ActiveRecord::Rollback unless unpublished_citation?
-      raise ActiveRecord::Rollback unless commit_or_not == :commit
-    end
-    self
-  end
-
-  # Call with argument :commit to commit; any other argument will rollback.
-  def self.nsl_720_data_change(commit_or_not = :or_not, how_many = 1)
-    done = 0
-    Instance.synonyms_that_should_be_unpublished_citations.each do |rec|
-      relationship = Instance.find(rec.id)
-      relationship.change_synonymy_to_unpublished_citation(commit_or_not)
-      done += 1
-      break if done == how_many
-    end
-    done
   end
 
   # Notes:
