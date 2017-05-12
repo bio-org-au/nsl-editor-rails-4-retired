@@ -1,5 +1,7 @@
 ---
 - :date: 11-May-2017
+  :release: true
+- :date: 11-May-2017
   :jira_id: '474'
   :description: |-
     Do not restrict synonym suggestions by rank for names ranked above family.
