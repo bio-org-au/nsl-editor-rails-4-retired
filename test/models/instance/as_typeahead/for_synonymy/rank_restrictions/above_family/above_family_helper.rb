@@ -16,7 +16,7 @@
 #   limitations under the License.
 #
 
-def check_exclusions(array_of_rank_names)
+def check_rank_names_exclusions(array_of_rank_names)
   array_of_rank_names.each do |rank_string|
     escape_s = Regexp.escape(rank_string)
     assert @rank_names.select { |e| e.match(/\A#{escape_s}\z/) }.empty?,
@@ -24,10 +24,10 @@ def check_exclusions(array_of_rank_names)
   end
 end
 
-def check_inclusions(array_of_rank_names)
+def check_rank_names_inclusions(array_of_rank_names)
   array_of_rank_names.each do |rank_string|
     escape_s = Regexp.escape(rank_string)
     assert @rank_names.select { |e| e.match(/\A#{escape_s}\z/) }.size >= 1,
-           "Expect one #{rank_string} to be suggested"
+           "Expect at least one #{rank_string} to be suggested"
   end
 end
