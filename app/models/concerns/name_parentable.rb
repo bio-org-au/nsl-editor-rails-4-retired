@@ -25,7 +25,7 @@ module NameParentable
   def requires_parent?
     category != NameCategories::OTHER_CATEGORY &&
       name_rank.present? &&
-      name_rank.has_parent?
+      !name_rank.top_rank?
   end
 
   def requires_parent_1?

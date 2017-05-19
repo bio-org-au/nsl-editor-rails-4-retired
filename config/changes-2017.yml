@@ -1,5 +1,11 @@
 ---
 - :date: 11-May-2017
+  :jira_id: '2362'
+  :description: |-
+    Instance tree tab typeahead now checks for names in the current workspace.
+- :date: 11-May-2017
+  :release: true
+- :date: 11-May-2017
   :jira_id: '474'
   :description: |-
     Do not restrict synonym suggestions by rank for names ranked above family.

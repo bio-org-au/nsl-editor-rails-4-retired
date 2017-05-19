@@ -20,17 +20,17 @@ require "models/instance/as_typeahead/for_synonymy/rank_restrictions/\
 above_family/above_family_helper"
 
 # Single instance typeahead search.
-class TypeaheadForSynonymySubordoTest < ActiveSupport::TestCase
+class TypeaheadForSynonymyOrdoTest < ActiveSupport::TestCase
   def setup
     @ta = Instance::AsTypeahead::ForSynonymy.new("a*",
-                                                 names(:a_subordo).id)
+                                                 names(:an_ordo).id)
     @tb = Instance::AsTypeahead::ForSynonymy.new("plantae",
-                                                 names(:a_subordo).id)
+                                                 names(:an_ordo).id)
     @tc = Instance::AsTypeahead::ForSynonymy.new("magnolio",
-                                                 names(:a_subordo).id)
+                                                 names(:an_ordo).id)
   end
 
-  test "instance typeahead for synonymy rank restriction for a subordo" do
+  test "instance typeahead for synonymy rank restriction for an ordo" do
     assert @ta.results.size >= 2, "Should be at least 2 synonyms"
     @rank_names = @ta.results.collect do |result|
       Instance.find(result[:id]).name.name_rank.name
@@ -42,7 +42,7 @@ class TypeaheadForSynonymySubordoTest < ActiveSupport::TestCase
     check_rank_names_inclusions(inclusions)
   end
 
-  test "instance typeahead for synonymy rank restriction subordo regnum" do
+  test "instance typeahead for synonymy rank restriction ordo regnum" do
     assert @tb.results.size >= 1, "Should be at least 1 synonym"
     @rank_names = @tb.results.collect do |result|
       Instance.find(result[:id]).name.name_rank.name
@@ -50,7 +50,7 @@ class TypeaheadForSynonymySubordoTest < ActiveSupport::TestCase
     check_rank_names_inclusions(["Regnum"])
   end
 
-  test "instance typeahead for synonymy rank restriction subordo division" do
+  test "instance typeahead for synonymy rank restriction ordo division" do
     assert @tc.results.size >= 1, "Should be at least 1 synonym"
     @rank_names = @tc.results.collect do |result|
       Instance.find(result[:id]).name.name_rank.name
