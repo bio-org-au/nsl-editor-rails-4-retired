@@ -25,6 +25,11 @@ class SearchController < ApplicationController
       format.html
       format.csv
     end
+  rescue ActiveRecord::StatementInvalid => e
+    params[:error_message] = "That query did not work. Please check the \
+    search directives and arguments."
+    logger.error("Search error: #{e.to_s}")
+    @search = Search::Error.new(params) unless @search.present?
   rescue => e
     params[:error_message] = e.to_s
     @search = Search::Error.new(params) unless @search.present?
