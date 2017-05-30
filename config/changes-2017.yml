@@ -1,4 +1,10 @@
 ---
+- :date: 23-May-2017
+  :jira_id: '2380'
+  :description: |-
+    Hide search error messages that show database details.
+- :date: 19-May-2017
+  :release: true
 - :date: 11-May-2017
   :jira_id: '2362'
   :description: |-
