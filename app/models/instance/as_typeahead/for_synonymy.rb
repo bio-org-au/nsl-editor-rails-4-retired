@@ -61,6 +61,7 @@ class Instance::AsTypeahead::ForSynonymy
                     .joins(name: :name_rank).where(@name_binds)
                     .joins(:reference).where(reference_binds(terms))
                     .joins(:instance_type)
+                    .where("cited_by_id is null")
                     .order("lower(f_unaccent(full_name)), year")
                     .limit(SEARCH_LIMIT)
     restrict_ranks(query, name_id)

@@ -30,7 +30,7 @@ def check_infraspecific_inclusions
 end
 
 def check_species
-  assert @rank_names.select { |e| e.match(/\ASpecies\z/) }.size >= 6,
+  assert @rank_names.select { |e| e.match(/\ASpecies\z/) }.size >= 5,
          "Expect correct number of species to be suggested"
 end
 

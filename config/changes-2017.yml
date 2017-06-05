@@ -1,5 +1,11 @@
 ---
 - :date: 05-Jun-2017
+  :jira_id: '2384'
+  :description: |-
+    Synonym typeahead suggestions now only include names with standalone
+    instances.  That is, names that are just recorded as synonyms are not 
+    suggested.
+- :date: 05-Jun-2017
   :jira_id: '2391'
   :description: |-
     Speed up synonym typeahead suggestions.

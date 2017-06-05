@@ -22,8 +22,7 @@ infraspecies/infraspecies_helper"
 # Single instance typeahead search.
 class TypeaheadForSynonymyFormaTest < ActiveSupport::TestCase
   def setup
-    @ta = Instance::AsTypeahead::ForSynonymy.new("a",
-                                                 names(:a_forma).id)
+    @ta = Instance::AsTypeahead::ForSynonymy.new("a", names(:a_forma).id)
   end
 
   test "instance typeahead for synonymy rank restriction for forma" do
