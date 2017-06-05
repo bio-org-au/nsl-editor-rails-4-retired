@@ -1,5 +1,9 @@
 ---
 - :date: 05-Jun-2017
+  :jira_id: '2391'
+  :description: |-
+    Speed up synonym typeahead suggestions.
+- :date: 05-Jun-2017
   :jira_id: '2383'
   :description: |-
     Slight change to search error message for unknown field (directive).
