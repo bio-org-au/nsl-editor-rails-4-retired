@@ -160,6 +160,10 @@ class NameType < ActiveRecord::Base
     scientific == true
   end
 
+  def phrase_name?
+    name == "phrase name"
+  end
+
   def category
     case name
     when "[default]"                         then "other"
