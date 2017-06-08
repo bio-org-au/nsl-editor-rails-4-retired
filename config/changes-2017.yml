@@ -2,7 +2,8 @@
 - :date: 08-Jun-2017
   :jira_id: '2393'
   :description: |-
-    Suppress verbatim rank field on phrase name entry form.
+    Suppress verbatim rank field on phrase name entry form; also add
+    verbatim-rank query directive.
 - :date: 05-Jun-2017
   :jira_id: '2384'
   :description: |-

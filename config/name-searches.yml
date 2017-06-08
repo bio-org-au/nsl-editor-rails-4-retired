@@ -502,3 +502,7 @@
   :where_clause: " full_name in (select full_name from name inner_name group by  inner_name.full_name having count(*) > 1) "
   :order: name.full_name
   :allow_common_and_cultivar: true
+'verbatim-rank:':
+  :where_clause: 'lower(verbatim_rank) like lower(?) '
+  :leading_wildcard: true
+  :trailing_wildcard: true
