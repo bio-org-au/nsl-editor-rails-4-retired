@@ -1,0 +1,11 @@
+
+<% increment_tab_index(0) %>
+Make a copy to edit here and save.
+<%= link_to("Copy", copy_reference_path(id: @reference.id), class: 'btn btn-primary', title: "Copy current reference", remote: true, method: :post) %>
+<br>
+<div id="search-result-details-info-message-container" class="message-container"></div>
+<div id="search-result-details-error-message-container" class="message-container"></div>
+<br>
+<div id="cloned-reference-form-container"></div>
+<div class="hidden instance-form-success-message"> </div>
+<div class="error-message-container"></div>

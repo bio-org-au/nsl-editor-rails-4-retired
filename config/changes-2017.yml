@@ -1,5 +1,11 @@
 ---
 - :date: 08-Jun-2017
+  :jira_id: '2394'
+  :description: |-
+    Add a detail tab for references that lets you copy the current reference
+    and save it with changes, and lets you repeatedly create new edited copies
+    of the reference in place.
+- :date: 08-Jun-2017
   :jira_id: '2393'
   :description: |-
     Suppress verbatim rank field on phrase name entry form; also add

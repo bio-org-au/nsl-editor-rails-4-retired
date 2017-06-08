@@ -196,6 +196,10 @@ Rails.application.routes.draw do
         to: "references#tab",
         via: :get,
         defaults: { tab: "tab_show_1" }
+  match "references/:id/copy",
+        as: "copy_reference",
+        to: "references#copy",
+        via: :post
 
   match "/admin", as: "admin", to: "admin#index", via: :get
   match "/admin/throw", as: "throw", to: "admin#throw", via: :get
