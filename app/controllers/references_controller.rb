@@ -24,6 +24,7 @@ class ReferencesController < ApplicationController
   def show
     pick_a_tab
     pick_a_tab_index
+    copy_reference if @tab == 'tab_copy'
     render "show", layout: false
   end
 
@@ -163,5 +164,10 @@ class ReferencesController < ApplicationController
     @message = @reference.update_if_changed(reference_params,
                                             typeahead_params,
                                             current_user.username)
+  end
+
+  def copy_reference
+    reference = @reference
+    @reference = Reference.new reference.attributes
   end
 end
