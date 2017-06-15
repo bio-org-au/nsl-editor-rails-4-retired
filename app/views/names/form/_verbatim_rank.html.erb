@@ -1,4 +1,6 @@
+<% if @name.takes_verbatim_rank? %>
   <div class="form-group">
     <label for="verbatim_rank">Verbatim rank</label><br>
     <%= f.text_field :verbatim_rank, class: 'form-control', tabindex: increment_tab_index, title: 'Enter verbatim rank' %>
   </div>
+<% end %>

@@ -24,6 +24,7 @@ class ReferencesController < ApplicationController
   def show
     pick_a_tab
     pick_a_tab_index
+    copy_reference if @tab == 'tab_copy'
     render "show", layout: false
   end
 
@@ -78,6 +79,12 @@ class ReferencesController < ApplicationController
     else
       render js: "alert('Could not delete that record.');"
     end
+  end
+
+  def copy
+    reference = Reference.find(params[:id])
+    @reference = Reference.new reference.attributes
+    render :copy
   end
 
   # Columns such as duplicate_of_id use a typeahead search.
@@ -157,5 +164,10 @@ class ReferencesController < ApplicationController
     @message = @reference.update_if_changed(reference_params,
                                             typeahead_params,
                                             current_user.username)
+  end
+
+  def copy_reference
+    reference = @reference
+    @reference = Reference.new reference.attributes
   end
 end

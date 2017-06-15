@@ -38,6 +38,10 @@ module NameEnterable
     category == NameCategories::PHRASE
   end
 
+  def takes_verbatim_rank?
+    !name_type.phrase_name?
+  end
+
   def requires_name_element?
     category == NameCategories::SCIENTIFIC_CATEGORY ||
       category == NameCategories::CULTIVAR_CATEGORY ||

@@ -45,7 +45,7 @@ class Instance::AsTypeahead::ForSynonymy
     @name_binds = []
     terms_without_year = terms.gsub(/[0-9]/, "").strip.gsub(/  /, " ")
     return if terms_without_year.blank?
-    @name_binds.push(" lower(full_name) like lower(?) ")
+    @name_binds.push(" lower(f_unaccent(full_name)) like lower(f_unaccent(?)) ")
     @name_binds.push(terms_without_year.tr("*", "%") + "%")
     @results = run_query(terms, name_id)
   end
@@ -61,7 +61,9 @@ class Instance::AsTypeahead::ForSynonymy
                     .joins(name: :name_rank).where(@name_binds)
                     .joins(:reference).where(reference_binds(terms))
                     .joins(:instance_type)
-                    .order("full_name, year").limit(SEARCH_LIMIT)
+                    .where("cited_by_id is null")
+                    .order("lower(f_unaccent(full_name)), year")
+                    .limit(SEARCH_LIMIT)
     restrict_ranks(query, name_id)
   end
 

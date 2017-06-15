@@ -123,7 +123,7 @@ class Search::OnAuthor::Predicate
       Search::OnAuthor::FieldAbbrev::ABBREVS[field]
     else
       raise "Cannot search authors for: #{field}. You may need to try another
-      search target."
+      search term or target."
     end
   end
 end

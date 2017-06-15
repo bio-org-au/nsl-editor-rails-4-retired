@@ -62,14 +62,28 @@
       <% if can? 'instances', 'create' %>
   
         <%= render partial: 'references/tabs/tab', locals: {first: false,
-                                            last: true,
+                                            last: false,
                                             this_tab: 'tab_new_instance',
                                             link_text: 'New instance'.html_safe,
                                             link_id: 'reference-new-instance-tab',
                                             link_title: 'New instance form for the reference.',
                                             tab_index: increment_tab_index,
                                             prev_tab: '', 
-                                            next_tab: '.search-result.showing-details'} %>
+                                            next_tab: ''} %>
+      <% end %>
+
+      <% if can? 'references', 'copy' %>
+  
+        <%= render partial: 'references/tabs/tab',
+                   locals: {first: false,
+                            last: true,
+                            this_tab: 'tab_copy',
+                            link_text: 'Copy'.html_safe,
+                            link_id: 'reference-copy-tab',
+                            link_title: 'Copy the reference to a new reference ready to modify and save.',
+                            tab_index: increment_tab_index,
+                            prev_tab: '', 
+                            next_tab: '.search-result.showing-details'} %>
       <% end %>
   
     </ul>
