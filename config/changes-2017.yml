@@ -1,4 +1,25 @@
 ---
+- :date: 21-Jun-2017
+  :jira_id: '2401'
+  :description: |-
+    Allow phrase names to be changed to scientific names so additional authors
+    can be edited or removed.
+- :date: 21-Jun-2017
+  :jira_id: '2403'
+  :description: |-
+    Allow search for references with a match on a language or on a list of
+    languages.  Also allow search on not-language i.e references that don't
+    match on a language or on a list of languages.
+- :date: 21-Jun-2017
+  :jira_id: '2402'
+  :description: |-
+    Change default reference language to Undetermined.
+- :date: 16-Jun-2017
+  :jira_id: '2398'
+  :description: |-
+    Do not allow duplicate references to be created or to result from editing.
+- :date: 16-Jun-2017
+  :release: true
 - :date: 08-Jun-2017
   :jira_id: '2394'
   :description: |-

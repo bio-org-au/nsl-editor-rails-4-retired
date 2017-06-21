@@ -363,7 +363,7 @@ book_with_ellipses_in_title:
   citation_html: "  book... with ellipses in title...  "
   display_title: "Book... With Ellipses in Title..."
   author: brassard
-  language: undetermined
+  language: french
   namespace: apni
   ref_author_role: author
   ref_type: book
@@ -378,7 +378,7 @@ paper_within_journal_title_has_full_stop:
   citation_html: "  paper within journal title has full stop.  "
   display_title: Paper Within Journal
   author: brassard
-  language: undetermined
+  language: english
   namespace: apni
   ref_author_role: dash
   ref_type: paper
