@@ -28,7 +28,7 @@ class Language < ActiveRecord::Base
   end
 
   def self.default
-    find_by(name: "English")
+    find_by(name: "Undetermined")
   end
 
   # For any language select list.
