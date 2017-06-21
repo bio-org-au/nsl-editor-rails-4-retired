@@ -1,5 +1,10 @@
 ---
 - :date: 21-Jun-2017
+  :jira_id: '2401'
+  :description: |-
+    Allow phrase names to be changed to scientific names so additional authors
+    can be edited or removed.
+- :date: 21-Jun-2017
   :jira_id: '2403'
   :description: |-
     Allow search for references with a match on a language or on a list of

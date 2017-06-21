@@ -46,6 +46,17 @@
   <% elsif @name.category == Name::SCIENTIFIC_CATEGORY %>
 
     <%= render partial: "names/widgets/conditional_convert_sci_to_phrase_widget" %>
+
+  <% elsif @name.category == Name::PHRASE %>
+
+    <%= link_to('Convert to scientific', 
+                    '#', 
+                    class: "change-name-category-on-edit-tab btn btn-default", 
+                    title: "Convert to scientific",
+                    data: {edit_url: name_edit_as_category_path(id: @name.id,
+                                                                tab: 'edit_name',
+                                                                new_category: Name::SCIENTIFIC_CATEGORY)}) %>
+
   <% end %>
 
 <% end %>
