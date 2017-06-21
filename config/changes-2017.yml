@@ -1,5 +1,11 @@
 ---
 - :date: 21-Jun-2017
+  :jira_id: '2403'
+  :description: |-
+    Allow search for references with a match on a language or on a list of
+    languages.  Also allow search on not-language i.e references that don't
+    match on a language or on a list of languages.
+- :date: 21-Jun-2017
   :jira_id: '2402'
   :description: |-
     Change default reference language to Undetermined.
