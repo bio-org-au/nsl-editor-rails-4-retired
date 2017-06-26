@@ -23,6 +23,10 @@ class ShardConfig < ActiveRecord::Base
     ShardConfig.find_by(name: "name space").value
   end
 
+  def self.classification_tree_key
+    ShardConfig.find_by(name: "classification tree key").value
+  end
+
   # On by default
   def self.name_parent_rank_restriction
     results = ShardConfig.where(name: 'name parent rank restriction')

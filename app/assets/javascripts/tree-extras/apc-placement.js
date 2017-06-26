@@ -35,7 +35,7 @@ function ApcTabController($scope, $http, $element, $sce) {
     $scope.error = false;
     $scope.data = null;
 
-    $scope.treeLabel = 'APC';
+    $scope.treeLabel = taxoTree;
 
     $scope.placeParams = {
         superName: null,
