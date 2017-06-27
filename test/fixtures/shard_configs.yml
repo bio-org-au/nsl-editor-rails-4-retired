@@ -9,3 +9,6 @@
 name-parent-rank-restriction: 
   name: name parent rank restriction 
   value: "on"
+classification-tree-key:
+  name: classification tree key
+  value: APC

@@ -1,4 +1,9 @@
 ---
+- :date: 28-Jun-2017
+  :jira_id: '2256'
+  :description: |-
+    Make the taxonomic tree for the APC tab configurable so that ABRSL can be
+    edited with the current instance editor.
 - :date: 22-Jun-2017
   :release: true
 - :date: 21-Jun-2017
