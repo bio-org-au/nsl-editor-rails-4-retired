@@ -49,8 +49,9 @@ class Search::OnAuthor::FieldRule
                                where_clause: " exists (select null from
                                comment where comment.author_id =
                                author.id and lower(comment.text)
-                               like lower(?) ) " },
-
+                               like lower(?) ) ",
+                               not_exists_clause: " not exists (select null
+from comment where comment.author_id = author.id)" },
     "comments-by:"        => { where_clause: " exists (select null from
                                comment where comment.author_id =
                                author.id and lower(comment.created_by)

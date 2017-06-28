@@ -1,5 +1,9 @@
 ---
 - :date: 28-Jun-2017
+  :jira_id: '2289'
+  :description: |-
+    Search for no data in author, instance, name and reference comments/adnots.
+- :date: 28-Jun-2017
   :jira_id: '2256'
   :description: |-
     Make the taxonomic tree for the APC tab configurable so that ABRSL can be

@@ -85,6 +85,8 @@
   :leading_wildcard: true
   :where_clause: " exists (select null from comment       where comment.name_id =
     name.id and lower(comment.text) like ?) "
+  :not_exists_clause: " not exists (select null
+from comment where comment.name_id = name.id)"
 'comments-exact:':
   :where_clause: " exists       (select null       from comment       where comment.name_id
     = name.id and lower(comment.text) like ?) "
