@@ -1,5 +1,9 @@
 ---
 - :date: 05-Jul-2017
+  :jira_id: '2399'
+  :description: |-
+   Relax locking of fields on Unpub tab to allow rapid entry of common names.
+- :date: 05-Jul-2017
   :jira_id: '2416'
   :description: |-
    Show nomenclatural status tags in synonym (cross reference) instances,
