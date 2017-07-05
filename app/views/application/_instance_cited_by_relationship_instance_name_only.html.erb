@@ -21,7 +21,7 @@
       <%= search_result.instance_type.of_label %>
       <span class="full-name-within-instance">
         <%= search_result.this_is_cited_by.name.try("full_name_html").try("html_safe") %>
-        <%= search_result.this_is_cited_by.name.try("name_status").try("bracketed_non_legitimate_status") %>
+        <%= search_result.this_is_cited_by.name.try("name_status").try("name_for_instance_display_within_reference") %>
       </span>
       <%= "[DRAFT]" if search_result.draft? %>
     <%= render(partial: 'record_debug', locals: {search_result: search_result}) if @debug %>

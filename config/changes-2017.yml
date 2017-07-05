@@ -2,7 +2,8 @@
 - :date: 05-Jul-2017
   :jira_id: '2416'
   :description: |-
-   Show nomenclatural status tags in synonym (cross reference) instances.
+   Show nomenclatural status tags in synonym (cross reference) instances
+   - without brackets!
 - :date: 28-Jun-2017
   :jira_id: '2289'
   :description: |-
