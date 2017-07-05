@@ -19,7 +19,10 @@
       tabindex="<%= increment_tab_index %>" 
       >
       <%= search_result.instance_type.of_label %>
-      <%= %Q(<span class="full-name-within-instance">#{search_result.this_is_cited_by.name.try("full_name_html")}</span>).html_safe %>
+      <span class="full-name-within-instance">
+        <%= search_result.this_is_cited_by.name.try("full_name_html").try("html_safe") %>
+        <%= search_result.this_is_cited_by.name.try("name_status").try("bracketed_non_legitimate_status") %>
+      </span>
       <%= "[DRAFT]" if search_result.draft? %>
     <%= render(partial: 'record_debug', locals: {search_result: search_result}) if @debug %>
  </a> </td>
