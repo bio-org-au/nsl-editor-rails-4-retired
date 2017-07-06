@@ -44,6 +44,7 @@ as a synonym"
 
   # Create the lesser version of relationship instance.
   def create_cited_by
+    logger.debug("create_cited_by")
     resolve_unpub_citation_name_id(instance_params[:name_id],
                                    instance_name_params[:name_typeahead])
     if instance_params[:name_id].blank?
@@ -53,6 +54,7 @@ as a synonym"
                           "instance_instance_type_id")
     else
       create
+      render "create_unpub"
     end
   rescue => e
     render_create_error(e.to_s, "instance-name-typeahead")
@@ -60,6 +62,7 @@ as a synonym"
 
   # Create full synonymy instance.
   def create_cites_and_cited_by
+    logger.debug("create_cites_and_cited_by")
     if instance_params[:cites_id].blank?
       render_cites_id_error
     elsif instance_params[:cited_by_id].blank?
@@ -68,6 +71,7 @@ as a synonym"
       render_instance_type_id_error
     else
       create(build_the_params)
+      render "create"
     end
   end
 
@@ -80,7 +84,6 @@ as a synonym"
     @instance.extra_primary_override =
       instance_params[:extra_primary_override] == "1"
     @instance.save_with_username(current_user.username)
-    render "create"
   rescue ActiveRecord::RecordNotUnique
     handle_not_unique
   rescue => e

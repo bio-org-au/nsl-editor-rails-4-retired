@@ -1,4 +1,24 @@
 ---
+- :date: 05-Jul-2017
+  :jira_id: '2399'
+  :description: |-
+   Relax locking of fields on Unpub tab to allow rapid entry of common names.
+- :date: 05-Jul-2017
+  :jira_id: '2416'
+  :description: |-
+   Show nomenclatural status tags in synonym (cross reference) instances,
+   without brackets!
+- :date: 28-Jun-2017
+  :jira_id: '2289'
+  :description: |-
+    Search for no data in author, instance, name and reference comments/adnots.
+- :date: 28-Jun-2017
+  :jira_id: '2256'
+  :description: |-
+    Make the taxonomic tree for the APC tab configurable so that ABRSL can be
+    edited with the current instance editor.
+- :date: 22-Jun-2017
+  :release: true
 - :date: 21-Jun-2017
   :jira_id: '2401'
   :description: |-

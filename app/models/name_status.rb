@@ -63,6 +63,10 @@ class NameStatus < ActiveRecord::Base
     legitimate? || na? || unknown? ? "" : name
   end
 
+  def name_and_comma_for_instance_display
+    legitimate? || na? || unknown? ? "" : ", #{name}"
+  end
+
   def show_name_for_instance_display_within_reference?
     !(legitimate? || na? || unknown?)
   end
