@@ -1,4 +1,9 @@
 ---
+- :date: 12-Jul-2017
+  :jira_id: '2430'
+  :description: |-
+   Do not include references marked as duplicates in the validation of
+   uniqueness
 - :date: 06-Jul-2017
   :release: true
 - :date: 05-Jul-2017
