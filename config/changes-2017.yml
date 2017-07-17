@@ -1,4 +1,9 @@
 ---
+- :date: 17-Jul-2017
+  :jira_id: '2460'
+  :description: |-
+   Unsourced misapplication now does not cause display error when showing
+   instances
 - :date: 12-Jul-2017
   :jira_id: '2430'
   :description: |-
