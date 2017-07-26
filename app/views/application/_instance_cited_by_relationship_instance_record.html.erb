@@ -20,7 +20,7 @@
     <%= search_result.instance_type.of_label %>
     <%= "<b>#{search_result.this_is_cited_by.name.full_name}</b>".html_safe %>
     <%= "[#{search_result.this_is_cited_by.name.name_status.name}]" unless search_result.this_is_cited_by.name.name_status.blank? %>  by  
-    <%= "#{search_result.this_cites.reference.try('citation')}" %> 
+    <%= "#{search_result.this_cites.try('reference').try('citation')}" %> 
     <%= "#{search_result.page}" %>
     <%= "[DRAFT]" if search_result.draft? %>
     </a>

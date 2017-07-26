@@ -64,6 +64,7 @@ module ReferenceValidations
                        .where(["coalesce(publication_date,'no publication date data') = coalesce(?,'no publication date data')",publication_date])
                        .where(["coalesce(notes,'no notes data') = coalesce(?,'no notes data')",notes])
                        .where.not(id: id)
+                       .where("duplicate_of_id is null")
                        .count == 0
     errors.add(:base, "Reference is not unique")
   end

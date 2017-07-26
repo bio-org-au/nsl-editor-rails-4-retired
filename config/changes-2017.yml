@@ -1,4 +1,16 @@
 ---
+- :date: 17-Jul-2017
+  :jira_id: '2460'
+  :description: |-
+   Unsourced misapplication now does not cause display error when showing
+   instances
+- :date: 12-Jul-2017
+  :jira_id: '2430'
+  :description: |-
+   Do not include references marked as duplicates in the validation of
+   uniqueness
+- :date: 06-Jul-2017
+  :release: true
 - :date: 05-Jul-2017
   :jira_id: '2399'
   :description: |-
