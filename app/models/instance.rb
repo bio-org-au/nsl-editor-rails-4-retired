@@ -40,6 +40,33 @@ class Instance < ActiveRecord::Base
     instance_notes size: "Number of Notes"
     instance_notes { |note| note.collect { |n| { n.instance_note_key.name => n.value } } }
   end
+  def self.to_csv
+    attributes = %w(id)
+    headings = ["Instance ID", "Name ID", "Full Name", "Reference ID", 
+                "Reference Citation", "Number of Notes","Instance notes"]
+    CSV.generate(headers: true) do |csv|
+      csv << headings
+      all.each do |instance|
+        csv << [instance.id,
+                instance.name.id,
+                instance.name.full_name,
+                instance.reference_id,
+                instance.reference.citation,
+                instance.instance_notes.size,
+                instance.collected_notes
+        ]
+      end
+    end
+  rescue => e
+    logger.error("Could not create CSV file for instance")
+    logger.error(e.to_s)
+    raise
+  end
+
+  def collected_notes
+    instance_notes.map {|note| "#{note.instance_note_key.name}: #{note.value}"}.join(',')
+  end
+
   scope :ordered_by_name, -> { joins(:name).order("simple_name asc") }
   scope :ordered_by_page, lambda {
     order("Lpad(

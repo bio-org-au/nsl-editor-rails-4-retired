@@ -111,8 +111,8 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    comma (4.0.1)
-      activesupport (>= 4.0.0, < 5.1)
+    comma (4.1.0)
+      activesupport (>= 4.0.0, < 5.2)
     composite_primary_keys (8.1.5)
       activerecord (~> 4.2.0)
     crack (0.4.3)
@@ -385,7 +385,7 @@ DEPENDENCIES
   capybara-webkit
   capybara_minitest_spec
   coffee-rails (~> 4.0.0)
-  comma (~> 4.0.0)
+  comma (~> 4.1)
   composite_primary_keys
   delayed_job_active_record
   exception_notification

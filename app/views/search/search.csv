@@ -1,3 +1,0 @@
-<%= @search.executed_query.results.sort {|x,y| x.id <=> y.id}.to_comma.html_safe %>
-
-
