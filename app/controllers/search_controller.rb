@@ -21,9 +21,16 @@ class SearchController < ApplicationController
   def search
     handle_old
     run_tree_search || run_local_search || run_empty_search
+    logger.debug('==========================================')
+    logger.debug('==========================================')
+    logger.debug("size:  #{@search.executed_query.results.size}")
+    logger.debug("first:  #{@search.executed_query.results.first}")
+    logger.debug("first.class:  #{@search.executed_query.results.first.class}")
+    logger.debug('==========================================')
+    logger.debug('==========================================')
     respond_to do |format|
       format.html
-      format.csv
+      format.csv { send_data @search.executed_query.results.to_csv }
     end
   rescue ActiveRecord::StatementInvalid => e
     params[:error_message] = "That query did not work. Please check the \

@@ -24,13 +24,13 @@ class SearchInstanceCsvSimpleTest < ActionController::TestCase
   test "instance search result in csv format" do
     get(:search,
         { query_target: "instance",
-          query_string: "*",
+          query_string: "*angophora costata*",
           format: "csv" },
         username: "fred",
         user_full_name: "Fred Jones",
         groups: [])
     assert_response :success
-    s1 = "Instance ID,Name ID,Full name,Reference ID,Reference Citation"
+    s1 = "Instance ID,Name ID,Full Name,Reference ID,Reference Citation"
     s2 = ",Number of Notes,Instance notes"
     assert_match(/#{s1}#{s2}/,
                  response.body.to_s,

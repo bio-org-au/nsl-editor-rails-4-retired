@@ -1,4 +1,8 @@
 ---
+- :date: 02-Aug-2017
+  :jira_id: '2469'
+  :description: |-
+   Fix Instance search CSV error.
 - :date: 27-Jul-2017
   :release: true
 - :date: 17-Jul-2017
