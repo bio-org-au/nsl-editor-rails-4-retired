@@ -21,16 +21,21 @@ class SearchController < ApplicationController
   def search
     handle_old
     run_tree_search || run_local_search || run_empty_search
-    logger.debug('==========================================')
-    logger.debug('==========================================')
-    logger.debug("size:  #{@search.executed_query.results.size}")
-    logger.debug("first:  #{@search.executed_query.results.first}")
-    logger.debug("first.class:  #{@search.executed_query.results.first.class}")
-    logger.debug('==========================================')
-    logger.debug('==========================================')
     respond_to do |format|
       format.html
-      format.csv { send_data @search.executed_query.results.to_csv }
+      format.csv do
+        data = @search.executed_query.results.to_csv
+        begin
+          data = data.unicode_normalize(:nfc).encode('UTF-16LE')
+          data = "\xFF\xFE".dup.force_encoding('UTF-16LE') + data
+        rescue => encoding_error
+          logger.error(encoding_error.to_s)
+          logger.error("This CSV error in the SearchController does not")
+          logger.error("prevent CSV data being created but it does indicate")
+          logger.error("failure to encode the CSV as UTF-16LE")
+        end
+        send_data data
+      end
     end
   rescue ActiveRecord::StatementInvalid => e
     params[:error_message] = "That query did not work. Please check the \
