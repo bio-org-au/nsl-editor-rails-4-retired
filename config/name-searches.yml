@@ -122,7 +122,18 @@ from comment where comment.name_id = name.id)"
   :where_clause: 'id = ? or parent_id = ? or second_parent_id = ? '
   :order: case when parent_id is null then 'A' else 'B' end, full_name
   :allow_common_and_cultivar: true
+'regex-name:':
+  :where_clause: 'lower((full_name)) ~ (?) '
+  :wildcard_embedded_spaces: false
 'name:':
+  :where_clause: "lower(f_unaccent(full_name)) like lower(f_unaccent(?))
+   or lower(f_unaccent(full_name)) like lower(f_unaccent('x '||?))
+   or lower(f_unaccent(full_name)) like
+   lower(f_unaccent(regexp_replace(?,'^x','x ')))"
+  :wildcard_embedded_spaces: false
+  :trailing_wildcard: true
+  :convert_×_to_x: true
+'plain-name:':
   :where_clause: 'lower(f_unaccent(full_name)) like lower(f_unaccent(?)) '
   :wildcard_embedded_spaces: false
   :trailing_wildcard: true

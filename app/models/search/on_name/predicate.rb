@@ -66,6 +66,7 @@ class Search::OnName::Predicate
     @predicate = build_predicate(rule)
     @allow_common_and_cultivar = rule[:allow_common_and_cultivar] || false
     @tokenize = rule[:tokenize] || false
+    @convert_symbol_to_x = rule[:convert_×_to_x] || false
   end
 
   def apply_scope
@@ -81,6 +82,7 @@ class Search::OnName::Predicate
     @processed_value = @canon_value
     @processed_value = "%#{@processed_value}" if @leading_wildcard
     @processed_value = "#{@processed_value}%" if @trailing_wildcard
+    @processed_value = @processed_value.gsub('×','x') if @convert_symbol_to_x
     return unless @wildcard_embedded_spaces
     @processed_value = @processed_value.gsub(/  */, "%").to_s
   end

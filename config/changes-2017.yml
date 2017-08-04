@@ -1,5 +1,10 @@
 ---
 - :date: 04-Aug-2017
+  :jira_id: '2470'
+  :description: |-
+   Name search should now return named hybrids regardless of whether you supply
+   the leading 'x'.
+- :date: 04-Aug-2017
   :jira_id: '2432'
   :description: |-
    Apply UTF-16LE encoding and byte order marker to csv files.
