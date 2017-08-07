@@ -1,8 +1,16 @@
 ---
 - :date: 07-Aug-2017
+  :jira_id: '2472'
+  :description: |-
+    Add search directive on names for associated instance note text.
+- :date: 07-Aug-2017
+  :jira_id: '2472'
+  :description: |-
+    Add search directive on names for name-status-nom-illeg.
+- :date: 07-Aug-2017
   :jira_id: '2471'
   :description: |-
-   Trying to create a duplicate synonym now produces an error message.
+   Trying to create a duplicate synonym now an error message.
 - :date: 04-Aug-2017
   :jira_id: '2470'
   :description: |-

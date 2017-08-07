@@ -226,6 +226,39 @@
 </table>
 <br>
 
+<h5>Accepted Instance Note Search</h5>
+<table class="table table-striped">
+  <% [
+      {field_name: 'instance-note:', description: "look for names with at least one instance note containing the string you enter after the directive"},
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+        <a href="javascript:void(0)" class="searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
+          <span class="blue"><%= val[:field_name] %></span>
+        </a>
+    </td>
+    <td><%= val[:description].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+
+<h5>Name Status Assertion or Category Search</h5>
+<table class="table table-striped">
+  <% [
+      {field_name: 'name-status-nom-illeg:', description: "look for names with a status in the category 'nom. illeg.'"},
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+        <a href="javascript:void(0)" class="searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
+          <span class="blue"><%= val[:field_name] %></span>
+        </a>
+    </td>
+    <td><%= val[:description].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+<br>
+
 <h5>Accepted Tree Search</h5>
 <table class="table table-striped">
   <% [

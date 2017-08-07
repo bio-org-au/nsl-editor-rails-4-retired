@@ -83,8 +83,8 @@
 'comments:':
   :trailing_wildcard: true
   :leading_wildcard: true
-  :where_clause: " exists (select null from comment       where comment.name_id =
-    name.id and lower(comment.text) like ?) "
+  :where_clause: " exists (select null from comment where comment.name_id =
+    name.id and lower(comment.text) like lower(?)) "
   :not_exists_clause: " not exists (select null
 from comment where comment.name_id = name.id)"
 'comments-exact:':
@@ -519,3 +519,21 @@ from comment where comment.name_id = name.id)"
   :where_clause: 'lower(verbatim_rank) like lower(?) '
   :leading_wildcard: true
   :trailing_wildcard: true
+'instance-note:':
+  :where_clause: "name.id in (
+    select name_id
+      from instance
+    where instance.id in (
+        select instance_id
+          from instance_note
+    where lower(value) like lower(?)
+       )
+       )"
+  :leading_wildcard: true
+  :trailing_wildcard: true
+'name-status-nom-illeg:':
+  :where_clause: "name_status_id in (
+    select id
+      from name_status
+ where nom_illeg
+       )"
