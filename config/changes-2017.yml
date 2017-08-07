@@ -1,4 +1,8 @@
 ---
+- :date: 07-Aug-2017
+  :jira_id: '2471'
+  :description: |-
+   Trying to create a duplicate synonym now produces an error message.
 - :date: 04-Aug-2017
   :jira_id: '2470'
   :description: |-
