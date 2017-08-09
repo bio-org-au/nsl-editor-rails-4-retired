@@ -104,6 +104,7 @@ class Search::ParsedRequest
 
   # Before splitting on spaces, make sure every colon has at least 1 space
   # after it.
+  # Convert multiplication sign to x.
   def normalise_query_string
     @query_string.strip.gsub(/:/, ": ").gsub(/:  /, ": ")
   end

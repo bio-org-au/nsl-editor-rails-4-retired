@@ -83,8 +83,8 @@
 'comments:':
   :trailing_wildcard: true
   :leading_wildcard: true
-  :where_clause: " exists (select null from comment       where comment.name_id =
-    name.id and lower(comment.text) like ?) "
+  :where_clause: " exists (select null from comment where comment.name_id =
+    name.id and lower(comment.text) like lower(?)) "
   :not_exists_clause: " not exists (select null
 from comment where comment.name_id = name.id)"
 'comments-exact:':
@@ -122,7 +122,18 @@ from comment where comment.name_id = name.id)"
   :where_clause: 'id = ? or parent_id = ? or second_parent_id = ? '
   :order: case when parent_id is null then 'A' else 'B' end, full_name
   :allow_common_and_cultivar: true
+'regex-name:':
+  :where_clause: 'lower((full_name)) ~ (?) '
+  :wildcard_embedded_spaces: false
 'name:':
+  :where_clause: "lower(f_unaccent(full_name)) like lower(f_unaccent(?))
+   or lower(f_unaccent(full_name)) like lower(f_unaccent('x '||?))
+   or lower(f_unaccent(full_name)) like
+   lower(f_unaccent(regexp_replace(?,'^x','x ')))"
+  :wildcard_embedded_spaces: false
+  :trailing_wildcard: true
+  :convert_multiply_to_x: true
+'plain-name:':
   :where_clause: 'lower(f_unaccent(full_name)) like lower(f_unaccent(?)) '
   :wildcard_embedded_spaces: false
   :trailing_wildcard: true
@@ -508,3 +519,21 @@ from comment where comment.name_id = name.id)"
   :where_clause: 'lower(verbatim_rank) like lower(?) '
   :leading_wildcard: true
   :trailing_wildcard: true
+'instance-note:':
+  :where_clause: "name.id in (
+    select name_id
+      from instance
+    where instance.id in (
+        select instance_id
+          from instance_note
+    where lower(value) like lower(?)
+       )
+       )"
+  :leading_wildcard: true
+  :trailing_wildcard: true
+'name-status-nom-illeg:':
+  :where_clause: "name_status_id in (
+    select id
+      from name_status
+ where nom_illeg
+       )"

@@ -2106,3 +2106,15 @@ no_instances:
   updated_by: greg
   created_by: greg
 
+x_vappaculum:
+  simple_name: x Vappaculum x lavarackianum
+  full_name: x Vappaculum x lavarackianum (M.A.Clem.) M.A.Clem. & D.L.Jones
+  name_element: lavarackianum
+  full_name: x Vappaculum x lavarackianum (M.A.Clem.) M.A.Clem. & D.L.Jones
+  name_rank: species
+  name_status: legitimate
+  name_type: named_hybrid
+  namespace: apni
+  parent: a_family
+  updated_by: greg
+  created_by: greg
