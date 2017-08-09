@@ -1,4 +1,9 @@
 ---
+- :date: 09-Aug-2017
+  :jira_id: '2470'
+  :description: |-
+   Name search should now return named hybrids regardless of whether you supply
+   the leading 'x'.
 - :date: 07-Aug-2017
   :jira_id: '2472'
   :description: |-
@@ -11,11 +16,6 @@
   :jira_id: '2471'
   :description: |-
    Trying to create a duplicate synonym now an error message.
-- :date: 04-Aug-2017
-  :jira_id: '2470'
-  :description: |-
-   Name search should now return named hybrids regardless of whether you supply
-   the leading 'x'.
 - :date: 04-Aug-2017
   :jira_id: '2432'
   :description: |-

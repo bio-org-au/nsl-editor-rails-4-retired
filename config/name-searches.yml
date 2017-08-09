@@ -132,7 +132,7 @@ from comment where comment.name_id = name.id)"
    lower(f_unaccent(regexp_replace(?,'^x','x ')))"
   :wildcard_embedded_spaces: false
   :trailing_wildcard: true
-  :convert_×_to_x: true
+  :convert_multiply_to_x: true
 'plain-name:':
   :where_clause: 'lower(f_unaccent(full_name)) like lower(f_unaccent(?)) '
   :wildcard_embedded_spaces: false

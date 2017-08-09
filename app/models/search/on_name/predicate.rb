@@ -66,7 +66,7 @@ class Search::OnName::Predicate
     @predicate = build_predicate(rule)
     @allow_common_and_cultivar = rule[:allow_common_and_cultivar] || false
     @tokenize = rule[:tokenize] || false
-    @convert_symbol_to_x = rule[:convert_×_to_x] || false
+    @convert_symbol_to_x = rule[:convert_multiply_to_x] || false
   end
 
   def apply_scope
@@ -77,7 +77,7 @@ class Search::OnName::Predicate
                          @predicate.count("?")
                        end
   end
-
+  
   def process_value
     @processed_value = @canon_value
     @processed_value = "%#{@processed_value}" if @leading_wildcard
