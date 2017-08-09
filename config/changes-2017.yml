@@ -1,5 +1,7 @@
 ---
 - :date: 09-Aug-2017
+  :release: true
+- :date: 09-Aug-2017
   :jira_id: '2470'
   :description: |-
    Name search should now return named hybrids regardless of whether you supply
