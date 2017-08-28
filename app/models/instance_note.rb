@@ -52,6 +52,7 @@ class InstanceNote < ActiveRecord::Base
   end
 
   def create_one_apc_dist_per_instance
+    return unless InstanceNoteKey.apc_dist.present?
     return unless instance_note_key_id == InstanceNoteKey.apc_dist.first.id
     return if instance.can_have_apc_dist?
     errors.add(:instance_note_key_id,

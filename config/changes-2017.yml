@@ -1,4 +1,8 @@
 ---
+- :date: 28-Aug-2017
+  :jira_id: '2485'
+  :description: |-
+   Moss shard can now create instance notes.
 - :date: 09-Aug-2017
   :release: true
 - :date: 09-Aug-2017
