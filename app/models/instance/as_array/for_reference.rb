@@ -33,7 +33,7 @@
 class Instance::AsArray::ForReference < Array
   attr_reader :results
 
-  def initialize(reference, sort_by = "name", limit = 1000)
+  def initialize(reference, sort_by = "name", limit = 1000, offset = 0)
     debug("init #{reference.citation}")
     @results = []
     @already_shown = []
@@ -41,6 +41,10 @@ class Instance::AsArray::ForReference < Array
     @count = 0
     @limit = limit
     @sort_by = sort_by
+    @offset = offset || 0
+    if @limit < @offset
+      @limit = @limit + @offset
+    end
     find_instances
   end
 
@@ -69,9 +73,11 @@ class Instance::AsArray::ForReference < Array
 
   def find_instances_for_ref
     built_query.each do |instance|
-      if @count < @limit
+      if @count < @offset
+        @count += 1
+      elsif @count < @limit
+        @count += 1
         if instance.cited_by_id.blank?
-          @count += 1
           include_standalone_instance(instance)
           include_synonym(instance) unless instance.cites_this.nil?
         end
