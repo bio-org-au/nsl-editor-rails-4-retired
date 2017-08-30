@@ -89,7 +89,8 @@ class Search::OnReference::Base
       instances_query = Instance::AsArray::ForReference
                         .new(ref,
                              instances_sort_key,
-                             @parsed_request.limit)
+                             @parsed_request.limit,
+                             @parsed_request.instance_offset)
       instances_query.results.each { |i| @results << i }
     end
   end

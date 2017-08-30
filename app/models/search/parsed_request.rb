@@ -35,6 +35,7 @@ class Search::ParsedRequest
               :limited,
               :offset,
               :offsetted,
+              :instance_offset,
               :list,
               :order,
               :order_instances_by_page,
@@ -95,6 +96,7 @@ class Search::ParsedRequest
     @target_button_text = parsed_defined_query.target_button_text
     unused_qs_tokens = parse_count_or_list(unused_qs_tokens)
     unused_qs_tokens = parse_limit(unused_qs_tokens)
+    unused_qs_tokens = parse_instance_offset(unused_qs_tokens)
     unused_qs_tokens = parse_offset(unused_qs_tokens)
     unused_qs_tokens = parse_target(unused_qs_tokens)
     unused_qs_tokens = parse_common_and_cultivar(unused_qs_tokens)
@@ -182,6 +184,15 @@ class Search::ParsedRequest
     filter_bad_offset(joined_tokens).split(" ")
   end
 
+  # TODO: Refactor - to avoid limit being confused with an ID.
+  #       Make limit a field limit: 999
+  def parse_instance_offset(tokens)
+    @instance_offsetted = @list
+    joined_tokens = tokens.join(" ")
+    joined_tokens = apply_list_instance_offset(joined_tokens) if @list
+    filter_bad_instance_offset(joined_tokens).split(" ")
+  end
+
   def apply_list_offset(joined_tokens)
     if joined_tokens =~ /offset: \d{1,}/i
       @offset = joined_tokens.match(/offset: (\d{1,})/i)[1].to_i
@@ -197,6 +208,25 @@ class Search::ParsedRequest
     if joined_tokens.match(/offset: *[^\s\\]{1,}/i).present?
       bad_offset = joined_tokens.match(/offset: *([^\s\\]{1,})/i)[1]
       raise "Invalid offset: #{bad_offset}"
+    end
+    joined_tokens
+  end
+
+  def apply_list_instance_offset(joined_tokens)
+    if joined_tokens =~ /instance-offset: \d{1,}/i
+      @instance_offset = joined_tokens.match(/instance-offset: (\d{1,})/i)[1].to_i
+      joined_tokens = joined_tokens.gsub(/instance-offset: *\d{1,}/i, "")
+    else
+      @instance_offset = nil
+      @instance_offsetted = false
+    end
+    joined_tokens
+  end
+
+  def filter_bad_instance_offset(joined_tokens)
+    if joined_tokens.match(/instance-offset: *[^\s\\]{1,}/i).present?
+      bad_instance_offset = joined_tokens.match(/instance-offset: *([^\s\\]{1,})/i)[1]
+      raise "Invalid instance offset: #{bad_instance_offset}"
     end
     joined_tokens
   end
