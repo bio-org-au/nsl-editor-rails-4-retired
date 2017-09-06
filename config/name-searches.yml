@@ -537,3 +537,29 @@ from comment where comment.name_id = name.id)"
       from name_status
  where nom_illeg
        )"
+'nom-illeg:':
+  :where_clause: "name_status_id in (
+    select id
+      from name_status
+ where nom_illeg
+       )"
+'name-status-nom-inval:':
+  :where_clause: "name_status_id in (
+    select id
+      from name_status
+ where nom_inval
+       )"
+'nom-inval:':
+  :where_clause: "name_status_id in (
+    select id
+      from name_status
+ where nom_inval
+       )"
+'nom-inval-with-orth-var:':
+  :where_clause: "name_status_id in (
+  select id
+    from name_status
+  where nom_inval)
+  and exists (select null
+  from instance i where name.id = i.name_id
+   and i.instance_type_id in (select id from instance_type where name like '%orth%var%'))"

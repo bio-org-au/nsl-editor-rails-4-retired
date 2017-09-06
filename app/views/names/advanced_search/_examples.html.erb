@@ -156,6 +156,30 @@
   </tr>
   <% end %>
 </table>
+
+<h5 class="">Associated Instance searches</h5>
+<table class="example-searches table table-striped">
+  <% [
+      {search_target: 'Names',
+       search_string: "nom-inval-with-orth-var:",
+       explanation: %Q(Invalid names identified as orthographic variant.)},
+      {search_target: 'Names',
+       search_string: "c* nom-inval-with-orth-var:",
+       explanation: %Q(Invalid names starting with 'c' identified as orthographic variant.)},
+     ].each do |val| %>
+  <tr>
+    <td class="width-30-percent">
+      <%= link_to(val[:search_string],
+                  search_path(query_string: val[:search_string],
+                  query_target: val[:search_target]),
+                  class:'blue',
+                  title: "Run the described search.")
+      %>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
 <br>
 
 

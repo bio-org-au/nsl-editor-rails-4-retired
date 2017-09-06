@@ -1,4 +1,10 @@
 ---
+- :date: 06-Sep-2017
+  :jira_id: '1488'
+  :description: |-
+    Added new search directives for names: nom-inval, name-nom-inval, nom-inval-with-orth-var, nom-illeg
+- :date: 31-Aug-2017
+  :release: true
 - :date: 29-Aug-2017
   :jira_id: '2482'
   :description: |-
