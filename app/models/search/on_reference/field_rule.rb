@@ -162,11 +162,11 @@ inner join ref_type xcrt on xrt.id = xcrt.parent_id))" },
                 )
             )
         ) " },
-    "language:"                   => { multiple_values: true,
-                                 where_clause: " language_id = (select id from language where lower(name) = lower(?) ) ",
-                                 multiple_values_where_clause: " language_id in (select id from language where lower(name) in (?))" },
-    "not-language:"                   => { multiple_values: true,
-                                 where_clause: " language_id != (select id from language where lower(name) = lower(?) ) ",
-                                 multiple_values_where_clause: " language_id not in (select id from language where lower(name) in (?))" },
+    "language:" => { multiple_values: true,
+                     where_clause: " language_id = (select id from language where lower(name) = lower(?) ) ",
+                     multiple_values_where_clause: " language_id in (select id from language where lower(name) in (?))" },
+    "not-language:" => { multiple_values: true,
+                         where_clause: " language_id != (select id from language where lower(name) = lower(?) ) ",
+                         multiple_values_where_clause: " language_id not in (select id from language where lower(name) in (?))" },
   }.freeze
 end

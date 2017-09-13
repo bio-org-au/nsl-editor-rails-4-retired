@@ -42,9 +42,7 @@ class Instance::AsArray::ForReference < Array
     @limit = limit
     @sort_by = sort_by
     @offset = offset || 0
-    if @limit < @offset
-      @limit = @limit + @offset
-    end
+    @limit += @offset if @limit < @offset
     find_instances
   end
 

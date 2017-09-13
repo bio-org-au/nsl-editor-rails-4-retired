@@ -91,7 +91,7 @@ class Tree::Workspace < ActiveRecord::Base
 
   def place_instance(username, params)
     parent_name_id = resolve_parent(parent_name_id: params[:parent_name_id],
-                                     parent_name_typeahead_string: params[:parent_name_typeahead_string])
+                                    parent_name_typeahead_string: params[:parent_name_typeahead_string])
     url = Tree::AsServices.placement_url(username: username,
                                          tree_id: id,
                                          name_id: params[:name_id],
@@ -139,8 +139,8 @@ class Tree::Workspace < ActiveRecord::Base
   end
 
   def update_value(username, name, value_uri, value)
-    url = TreeArrangement::update_value_url(username,
-                                            id, name, value_uri, value)
+    url = TreeArrangement.update_value_url(username,
+                                           id, name, value_uri, value)
     logger.debug url
     RestClient.post(url, accept: :json)
   rescue RestClient::BadRequest => ex

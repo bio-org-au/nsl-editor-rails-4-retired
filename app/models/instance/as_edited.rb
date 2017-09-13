@@ -40,13 +40,13 @@ class Instance::AsEdited < Instance
   # columns.
   def clean(param)
     if param == ""
-      return nil
+      nil
     elsif param.nil?
-      return nil
+      nil
     elsif param.rstrip == ""
-      return nil
+      nil
     else
-      return param
+      param
     end
   end
 

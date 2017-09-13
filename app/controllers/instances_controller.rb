@@ -53,7 +53,7 @@ as a synonym"
       render_create_error("You must choose an instance type.",
                           "instance_instance_type_id")
     else
-      create(instance_params, 'create_unpub')
+      create(instance_params, "create_unpub")
     end
   rescue => e
     render_create_error(e.to_s, "instance-name-typeahead")
@@ -69,13 +69,13 @@ as a synonym"
     elsif instance_params[:instance_type_id].blank?
       render_instance_type_id_error
     else
-      create(build_the_params, 'create')
+      create(build_the_params, "create")
     end
   end
 
   # Core create action.
   # Sometimes we need to massage the params (safely) before calling this create.
-  def create(the_params = instance_params, view_to_render = 'create')
+  def create(the_params = instance_params, view_to_render = "create")
     @instance = Instance.new(the_params)
     @instance.concept_warning_bypassed =
       instance_params[:concept_warning_bypassed] == "1"

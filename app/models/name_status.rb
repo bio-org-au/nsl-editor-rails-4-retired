@@ -44,7 +44,7 @@ class NameStatus < ActiveRecord::Base
   end
 
   def unknown?
-    name =~ %r{\A\[unknown\]\z}
+    name =~ /\A\[unknown\]\z/
   end
 
   def bracketed_non_legitimate_status
@@ -103,8 +103,8 @@ class NameStatus < ActiveRecord::Base
 
   def self.na_option
     where(" name = '[n/a]' ").collect do |n|
-        [n.name, n.id]
-      end
+      [n.name, n.id]
+    end
   end
 
   def self.na_default_and_deleted_options(allow_delete)

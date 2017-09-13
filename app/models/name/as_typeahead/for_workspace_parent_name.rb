@@ -59,8 +59,8 @@ class Name::AsTypeahead::ForWorkspaceParentName
     basic_query
       .includes(:name_rank)
       .joins(:name_rank)
-      .where("name_rank.sort_order >= (select max(sort_order) from name_rank where major and name != 'Tribus' and sort_order < (select sort_order from name_rank where id = (select name_rank_id from name where id = ?)))",params[:name_id])
-      .where("name_rank.sort_order < (select sort_order from name_rank where id = (select name_rank_id from name where id = ?))",params[:name_id])
+      .where("name_rank.sort_order >= (select max(sort_order) from name_rank where major and name != 'Tribus' and sort_order < (select sort_order from name_rank where id = (select name_rank_id from name where id = ?)))", params[:name_id])
+      .where("name_rank.sort_order < (select sort_order from name_rank where id = (select name_rank_id from name where id = ?))", params[:name_id])
       .collect do |n|
       { value: "#{n.full_name} - #{n.name_rank.name}", id: n.id }
     end
@@ -70,7 +70,7 @@ class Name::AsTypeahead::ForWorkspaceParentName
     basic_query
       .includes(:name_rank)
       .joins(:name_rank)
-      .where("name_rank.sort_order < (select sort_order from name_rank where id = (select name_rank_id from name where id = ?))",params[:name_id])
+      .where("name_rank.sort_order < (select sort_order from name_rank where id = (select name_rank_id from name where id = ?))", params[:name_id])
       .collect do |n|
       { value: "#{n.full_name} - #{n.name_rank.name}", id: n.id }
     end

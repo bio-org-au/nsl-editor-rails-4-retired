@@ -77,12 +77,12 @@ class Search::OnName::Predicate
                          @predicate.count("?")
                        end
   end
-  
+
   def process_value
     @processed_value = @canon_value
     @processed_value = "%#{@processed_value}" if @leading_wildcard
     @processed_value = "#{@processed_value}%" if @trailing_wildcard
-    @processed_value = @processed_value.gsub('×','x') if @convert_symbol_to_x
+    @processed_value = @processed_value.tr("\u00D7", "x") if @convert_symbol_to_x
     return unless @wildcard_embedded_spaces
     @processed_value = @processed_value.gsub(/  */, "%").to_s
   end

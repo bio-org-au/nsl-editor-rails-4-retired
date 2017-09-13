@@ -72,7 +72,7 @@ class WorkspaceValue < ActiveRecord::Base
 
   # Delete by sending an empty value to the update service.
   def delete(username, current_workspace_id, name_id)
-    update(username, current_workspace_id, name_id, '')
+    update(username, current_workspace_id, name_id, "")
   end
 
   def self.find(name_node_link_id, type_uri_id_part)
@@ -84,7 +84,7 @@ class WorkspaceValue < ActiveRecord::Base
   end
 
   def self.new_distribution(name_id, name_node_link_id)
-    record = self.new
+    record = new
     record.field_name = "distribution"
     record.name_id = name_id
     record.name_node_link_id = name_node_link_id
@@ -95,15 +95,15 @@ class WorkspaceValue < ActiveRecord::Base
 
   def self.new_for(type_value_id_part, name_id, name_node_link_id)
     if type_value_id_part == "distribution"
-      self.new_distribution(name_id, name_node_link_id)
+      new_distribution(name_id, name_node_link_id)
     else
-      # ToDo: build method
-      self.new_comment(name_id, name_node_link_id)
+      # TODO: build method
+      new_comment(name_id, name_node_link_id)
     end
   end
 
   def self.new_comment(name_id, name_node_link_id)
-    record = self.new
+    record = new
     record.field_name = "comment"
     record.name_id = name_id
     record.name_node_link_id = name_node_link_id

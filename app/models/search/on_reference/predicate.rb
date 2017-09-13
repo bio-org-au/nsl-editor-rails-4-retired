@@ -126,4 +126,3 @@ class Search::OnReference::Predicate
     end
   end
 end
-

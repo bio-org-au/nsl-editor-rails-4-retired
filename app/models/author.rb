@@ -112,8 +112,8 @@ class Author < ActiveRecord::Base
   end
 
   def compress_whitespace
-    self.name = self.name.gsub(/ +/,' ') unless name.nil?
-    self.abbrev = self.abbrev.gsub(/ +/,' ') unless abbrev.nil?
+    self.name = name.gsub(/ +/, " ") unless name.nil?
+    self.abbrev = abbrev.gsub(/ +/, " ") unless abbrev.nil?
   end
 
   def citation
