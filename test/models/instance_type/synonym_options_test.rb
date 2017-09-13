@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -22,111 +23,19 @@ class InstanceTypeSynonymOptionsTest < ActiveSupport::TestCase
   setup do
     options = InstanceType.synonym_options
     assert options.class == Array, "Should be an array."
-    assert_equal 16, options.size, "Should be 16 of them."
+    assert_equal 13, options.size, "Should be 13 of them."
     @names = options.collect(&:first)
+    @expected = %w[basionym doubtful\ misapplied doubtful\ pro\ parte\ misapplied doubtful\ pro\ parte\ taxonomic\ synonym doubtful\ taxonomic\ synonym isonym misapplied nomenclatural\ synonym pro\ parte\ misapplied pro\ parte\ taxonomic\ synonym replaced\ synonym taxonomic\ synonym trade\ name]
   end
 
   test "instance type synonym options" do
-    test1
-    test2
-    test3
-    test4
-    test5
-    test6
-    test7
-    test8
-  end
-
-  def test1
-    assert @names.include?("basionym"), "Should include basionym"
-    assert @names.include?("common name"), "Should include common name"
-    assert @names.include?("doubtful misapplied"),
-           "Should include doubtful misapplied"
-    assert @names.include?("doubtful pro parte misapplied"),
-           "Should include doubtful pro parte misapplied"
-    assert_not @names.include?("doubtful pro parte synonym"),
-               "Should not include doubtful pro parte synonym"
-    assert @names.include?("doubtful pro parte taxonomic synonym"),
-           "Should include doubtful pro parte taxonomic synonym"
-  end
-
-  def test2
-    assert_not @names.include?("doubtful synonym"),
-               "Should not include doubtful synonym"
-    assert @names.include?("doubtful taxonomic synonym"),
-           "Should include doubtful taxonomic synonym"
-    assert @names.include?("isonym"), "Should include isonym"
-    assert @names.include?("misapplied"), "Should include misapplied"
-    assert @names.include?("nomenclatural synonym"),
-           "Should include nomenclatural synonym"
-    assert @names.include?("orthographic variant"),
-           "Should include orthographic variant"
-  end
-
-  def test3
-    assert @names.include?("pro parte misapplied"),
-           "Should include pro parte misapplied"
-    assert_not @names.include?("pro parte synonym"),
-               "Should not include pro parte synonym"
-    assert @names.include?("pro parte taxonomic synonym"),
-           "Should include pro parte taxonomic synonym"
-    assert @names.include?("replaced synonym"),
-           "Should include replaced synonym"
-    assert_not @names.include?("synonym"), "Should not include synonym"
-  end
-
-  def test4
-    assert @names.include?("taxonomic synonym"),
-           "Should include taxonomic synonym"
-    assert @names.include?("trade name"), "Should include trade name"
-    assert @names.include?("vernacular name"), "Should include vernacular name"
-
-    assert_not @names.include?("[default]"), "Should not include [default]"
-    assert_not @names.include?("[n/a]"), "Should not include [n/a]"
-    assert_not @names.include?("[unknown]"), "Should not include [unknown]"
-    assert_not @names.include?("autonym"), "Should not include autonym"
-  end
-
-  def test5
-    assert_not @names.include?("comb. et nom. nov."),
-               "Should not include comb. et nom. nov."
-    assert_not @names.include?("comb. et stat. nov."),
-               "Should not include comb. et stat. nov."
-    assert_not @names.include?("comb. nov."), "Should not include comb. nov."
-    assert_not @names.include?("doubtful invalid publication"),
-               "Should not include doubtful invalid publication"
-    assert_not @names.include?("doubtful nomenclatural synonym"),
-               "Should not include doubtful nomenclatural synonym"
-  end
-
-  def test6
-    assert_not @names.include?("excluded name"),
-               "Should not include excluded name"
-    assert_not @names.include?("homonym"), "Should not include homonym"
-    assert_not @names.include?("implicit autonym"),
-               "Should not include implicit autonym"
-    assert_not @names.include?("invalid publication"),
-               "Should not include invalid publication"
-    assert_not @names.include?("nom. et stat. nov."),
-               "Should not include nom. et stat. nov."
-  end
-
-  def test7
-    assert_not @names.include?("nom. nov."), "Should not include nom. nov."
-    assert_not @names.include?("primary reference"),
-               "Should not include primary reference"
-    assert_not @names.include?("pro parte nomenclatural synonym"),
-               "Should not include pro parte nomenclatural synonym"
-    assert_not @names.include?("pro parte replaced synonym"),
-               "Should not include pro parte replaced synonym"
-    assert_not @names.include?("secondary reference"),
-               "Should not include secondary reference"
-  end
-
-  def test8
-    assert_not @names.include?("sens. lat."), "Should not include sens. lat."
-    assert_not @names.include?("tax. nov."), "Should not include tax. nov."
-    assert_not @names.include?("comb. et nom. nov."),
-               "Should not include comb. et stat. nov."
+    @expected.each do |expected|
+      assert @names.include?(expected),
+             "Synonym type options should include #{expected}"
+    end
+    @names.each do |name|
+      assert @expected.include?(name),
+             "#{name} is unexpected as a synonym type option"
+    end
   end
 end

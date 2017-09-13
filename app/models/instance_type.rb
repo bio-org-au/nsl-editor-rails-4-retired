@@ -44,21 +44,22 @@ class InstanceType < ActiveRecord::Base
   # For new records: just the standard set.
   def self.standalone_options
     where("standalone").where.not("deprecated")
-                       .sort { |x, y| x.name <=> y.name }
+                       .sort_by(&:name)
                        .collect { |i| [i.name, i.id] }
   end
 
   # For new records: just the standard set.
   def self.synonym_options
     where("citing").where.not("deprecated")
-                   .sort { |x, y| x.name <=> y.name }
+                   .where.not("unsourced")
+                   .sort_by(&:name)
                    .collect { |i| [i.name, i.id] }
   end
 
   # For new records: just the standard set.
   def self.unpublished_citation_options
     where("unsourced").where.not("deprecated")
-                      .sort { |x, y| x.name <=> y.name }
+                      .sort_by(&:name)
                       .collect { |i| [i.name, i.id] }
   end
 
@@ -96,7 +97,7 @@ class InstanceType < ActiveRecord::Base
   scope :primaries, -> { where(primary_instance: true) }
 
   def self.query_form_options
-    all.sort { |x, y| x.name <=> y.name }
+    all.sort_by(&:name)
        .collect { |n| [n.name, n.name.downcase, class: ""] }
   end
 

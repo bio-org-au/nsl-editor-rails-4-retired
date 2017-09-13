@@ -6,6 +6,7 @@ primary_reference:
   name: "primary reference"
   nomenclatural: false
   primary_instance: true
+  pro_parte: false
   relationship: false
   secondary_instance: false
   sort_order: 100
@@ -21,6 +22,7 @@ default:
   name: "[default]"
   nomenclatural: false
   primary_instance: false
+  pro_parte: false
   relationship: false
   secondary_instance: false
   sort_order: 100
@@ -36,6 +38,7 @@ na:
   name: "[n/a]"
   nomenclatural: false
   primary_instance: false
+  pro_parte: false
   relationship: false
   secondary_instance: false
   sort_order: 100
@@ -51,6 +54,7 @@ unknown:
   name: "[unknown]"
   nomenclatural: false
   primary_instance: false
+  pro_parte: false
   relationship: false
   secondary_instance: false
   sort_order: 100
@@ -66,6 +70,23 @@ autonym:
   name: "autonym"
   nomenclatural: false
   primary_instance: false
+  pro_parte: false
+  relationship: false
+  secondary_instance: false
+  sort_order: 100
+  standalone: true
+  synonym: false
+  taxonomic: false
+  unsourced: false
+
+explicit_autonym:
+  citing: false
+  deprecated: false
+  misapplied: false
+  name: "explicit autonym"
+  nomenclatural: false
+  primary_instance: false
+  pro_parte: false
   relationship: false
   secondary_instance: false
   sort_order: 100
@@ -81,6 +102,7 @@ implicit_autonym:
   name: "implicit autonym"
   nomenclatural: false
   primary_instance: false
+  pro_parte: false
   relationship: false
   secondary_instance: false
   sort_order: 100
@@ -96,6 +118,7 @@ synonym:
   name: "synonym"
   nomenclatural: false
   primary_instance: false
+  pro_parte: false
   relationship: false
   secondary_instance: false
   sort_order: 14
@@ -111,25 +134,11 @@ basionym:
   name: "basionym"
   nomenclatural: false
   primary_instance: false
+  pro_parte: false
   relationship: false
   secondary_instance: false
   sort_order: 1
   standalone: false
-  synonym: false
-  taxonomic: false
-  unsourced: false
-
-comb_et_nom_nov:
-  citing: false
-  deprecated: true
-  misapplied: false
-  name: "comb. et nom. nov."
-  nomenclatural: false
-  primary_instance: true
-  relationship: false
-  secondary_instance: false
-  sort_order: 100
-  standalone: true
   synonym: false
   taxonomic: false
   unsourced: false
@@ -141,6 +150,7 @@ comb_et_stat_nov:
   name: "comb. et stat. nov."
   nomenclatural: false
   primary_instance: false
+  pro_parte: false
   relationship: false
   secondary_instance: false
   sort_order: 100
@@ -156,6 +166,7 @@ comb_nov:
   name: "comb. nov."
   nomenclatural: false
   primary_instance: true
+  pro_parte: false
   relationship: false
   secondary_instance: false
   sort_order: 100
@@ -171,6 +182,7 @@ common_name:
   name: "common name"
   nomenclatural: false
   primary_instance: false
+  pro_parte: false
   relationship: false
   secondary_instance: false
   sort_order: 100
@@ -186,6 +198,7 @@ doubtful_invalid_publication:
   name: "doubtful invalid publication"
   nomenclatural: false
   primary_instance: false
+  pro_parte: false
   relationship: false
   secondary_instance: false
   sort_order: 100
@@ -201,6 +214,7 @@ misapplied:
   name: "misapplied"
   nomenclatural: false
   primary_instance: false
+  pro_parte: false
   relationship: false
   secondary_instance: false
   sort_order: 100
@@ -216,6 +230,7 @@ doubtful_misapplied:
   name: "doubtful misapplied"
   nomenclatural: false
   primary_instance: false
+  pro_parte: false
   relationship: false
   secondary_instance: false
   sort_order: 8
@@ -231,6 +246,7 @@ doubtful_synonym:
   name: "doubtful synonym"
   nomenclatural: false
   primary_instance: false
+  pro_parte: false
   relationship: false
   secondary_instance: false
   sort_order: 16
@@ -246,6 +262,7 @@ doubtful_nomenclatural_synonym:
   name: "doubtful nomenclatural synonym"
   nomenclatural: false
   primary_instance: false
+  pro_parte: false
   relationship: false
   secondary_instance: false
   sort_order: 4
@@ -261,6 +278,7 @@ doubtful_pro_parte_misapplied:
   name: "doubtful pro parte misapplied"
   nomenclatural: false
   primary_instance: false
+  pro_parte: true
   relationship: false
   secondary_instance: false
   sort_order: 9
@@ -276,6 +294,7 @@ doubtful_pro_parte_synonym:
   name: "doubtful pro parte synonym"
   nomenclatural: false
   primary_instance: false
+  pro_parte: true
   relationship: false
   secondary_instance: false
   sort_order: 17
@@ -291,6 +310,7 @@ doubtful_pro_parte_taxonomic_synonym:
   name: "doubtful pro parte taxonomic synonym"
   nomenclatural: false
   primary_instance: false
+  pro_parte: true
   relationship: false
   secondary_instance: false
   sort_order: 13
@@ -306,6 +326,7 @@ doubtful_taxonomic_synonym:
   name: "doubtful taxonomic synonym"
   nomenclatural: false
   primary_instance: false
+  pro_parte: false
   relationship: false
   secondary_instance: false
   sort_order: 12
@@ -321,6 +342,7 @@ excluded_name:
   name: "excluded name"
   nomenclatural: false
   primary_instance: false
+  pro_parte: false
   relationship: false
   secondary_instance: false
   sort_order: 100
@@ -331,11 +353,12 @@ excluded_name:
 
 homonym:
   citing: false
-  deprecated: false
+  deprecated: true
   misapplied: false
   name: "homonym"
   nomenclatural: false
   primary_instance: false
+  pro_parte: false
   relationship: false
   secondary_instance: false
   sort_order: 100
@@ -351,6 +374,7 @@ invalid_publication:
   name: "invalid publication"
   nomenclatural: false
   primary_instance: false
+  pro_parte: false
   relationship: false
   secondary_instance: false
   sort_order: 100
@@ -366,6 +390,7 @@ isonym:
   name: "isonym"
   nomenclatural: false
   primary_instance: false
+  pro_parte: false
   relationship: false
   secondary_instance: false
   sort_order: 100
@@ -381,6 +406,7 @@ nom_et_stat_nov:
   name: "nom. et stat. nov."
   nomenclatural: false
   primary_instance: true
+  pro_parte: false
   relationship: false
   secondary_instance: false
   sort_order: 100
@@ -396,6 +422,7 @@ nom_nov:
   name: "nom. nov."
   nomenclatural: false
   primary_instance: true
+  pro_parte: false
   relationship: false
   secondary_instance: false
   sort_order: 100
@@ -411,6 +438,7 @@ nomenclatural_synonym:
   name: "nomenclatural synonym"
   nomenclatural: false
   primary_instance: false
+  pro_parte: false
   relationship: false
   secondary_instance: false
   sort_order: 3
@@ -426,6 +454,7 @@ orthographic_variant:
   name: orthographic variant
   nomenclatural: false
   primary_instance: false
+  pro_parte: false
   relationship: false
   secondary_instance: false
   sort_order: 100
@@ -441,6 +470,7 @@ pro_parte_misapplied:
   name: "pro parte misapplied"
   nomenclatural: false
   primary_instance: false
+  pro_parte: false
   relationship: false
   secondary_instance: false
   sort_order: 7
@@ -456,6 +486,7 @@ pro_parte_nomenclatural_synonym:
   name: "pro parte nomenclatural synonym"
   nomenclatural: false
   primary_instance: false
+  pro_parte: false
   relationship: false
   secondary_instance: false
   sort_order: 5
@@ -471,6 +502,7 @@ pro_parte_replaced_synonym:
   name: "pro parte replaced synonym"
   nomenclatural: false
   primary_instance: false
+  pro_parte: false
   relationship: false
   secondary_instance: false
   sort_order: 2
@@ -486,6 +518,7 @@ pro_parte_synonym:
   name: "pro parte synonym"
   nomenclatural: false
   primary_instance: false
+  pro_parte: false
   relationship: false
   secondary_instance: false
   sort_order: 15
@@ -501,6 +534,7 @@ pro_parte_taxonomic_synonym:
   name: "pro parte taxonomic synonym"
   nomenclatural: false
   primary_instance: false
+  pro_parte: false
   relationship: false
   secondary_instance: false
   sort_order: 3
@@ -516,6 +550,7 @@ replaced_synonym:
   name: replaced synonym
   nomenclatural: false
   primary_instance: false
+  pro_parte: false
   relationship: false
   secondary_instance: false
   sort_order: 1
@@ -531,6 +566,7 @@ secondary_reference:
   name: secondary reference
   nomenclatural: false
   primary_instance: false
+  pro_parte: false
   relationship: false
   secondary_instance: true
   sort_order: 100
@@ -546,6 +582,7 @@ sens_lat:
   name: "sens. lat."
   nomenclatural: false
   primary_instance: false
+  pro_parte: false
   relationship: false
   secondary_instance: false
   sort_order: 100
@@ -561,6 +598,7 @@ tax_nov:
   name: "tax. nov."
   nomenclatural: false
   primary_instance: true
+  pro_parte: false
   relationship: false
   secondary_instance: false
   sort_order: 100
@@ -576,6 +614,7 @@ taxonomic_synonym:
   name: "taxonomic synonym"
   nomenclatural: false
   primary_instance: false
+  pro_parte: false
   relationship: false
   secondary_instance: false
   sort_order: 10
@@ -591,6 +630,7 @@ trade_name:
   name: "trade name"
   nomenclatural: false
   primary_instance: false
+  pro_parte: false
   relationship: false
   secondary_instance: false
   sort_order: 100
@@ -606,7 +646,76 @@ vernacular_name:
   name: vernacular name
   nomenclatural: false
   primary_instance: false
+  pro_parte: false
   relationship: false
+  secondary_instance: false
+  sort_order: 100
+  standalone: false
+  synonym: false
+  taxonomic: false
+  unsourced: true
+
+
+unsourced_doubtful_misapplied:
+  citing: true
+  deprecated: false
+  misapplied: false
+  name: unsourced doubtful misapplied
+  nomenclatural: false
+  primary_instance: false
+  pro_parte: false
+  relationship: true
+  secondary_instance: false
+  sort_order: 100
+  standalone: false
+  synonym: false
+  taxonomic: false
+  unsourced: true
+
+
+unsourced_doubtful_pro_parte_misapplied:
+  citing: true
+  deprecated: false
+  misapplied: false
+  name: unsourced doubtful pro parte misapplied
+  nomenclatural: false
+  primary_instance: false
+  pro_parte: true
+  relationship: true
+  secondary_instance: false
+  sort_order: 100
+  standalone: false
+  synonym: false
+  taxonomic: false
+  unsourced: true
+
+
+unsourced_misapplied:
+  citing: true
+  deprecated: false
+  misapplied: false
+  name: unsourced misapplied
+  nomenclatural: false
+  primary_instance: false
+  pro_parte: false
+  relationship: true
+  secondary_instance: false
+  sort_order: 100
+  standalone: false
+  synonym: false
+  taxonomic: false
+  unsourced: true
+
+
+unsourced_pro_parte_misapplied:
+  citing: true
+  deprecated: false
+  misapplied: false
+  name: unsourced pro parte misapplied
+  nomenclatural: false
+  primary_instance: false
+  pro_parte: true
+  relationship: true
   secondary_instance: false
   sort_order: 100
   standalone: false
