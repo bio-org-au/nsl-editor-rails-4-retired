@@ -91,7 +91,7 @@ class Name::AsTypeahead::ForParent
     @qry = @qry.parent_ranks_for_species
   end
 
-  def infraspecies_are_always_restricted(rank)
+  def infraspecies_are_always_restricted(_rank)
     @qry = @qry.parent_ranks_for_infraspecies
   end
 
@@ -110,11 +110,11 @@ class Name::AsTypeahead::ForParent
   end
 
   def rank_must_be_higher(rank)
-    if rank.infrafamily?
-      @qry = @qry.from_a_higher_rank(NameRank.find_by(name: 'Genus'))
-    else
-      @qry = @qry.from_a_higher_rank(@params[:rank_id])
-    end
+    @qry = if rank.infrafamily?
+             @qry.from_a_higher_rank(NameRank.find_by(name: "Genus"))
+           else
+             @qry.from_a_higher_rank(@params[:rank_id])
+           end
   end
 
   def instance_phrase(count)

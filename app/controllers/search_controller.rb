@@ -26,8 +26,8 @@ class SearchController < ApplicationController
       format.csv do
         data = @search.executed_query.results.to_csv
         begin
-          data = data.unicode_normalize(:nfc).encode('UTF-16LE')
-          data = "\xFF\xFE".dup.force_encoding('UTF-16LE') + data
+          data = data.unicode_normalize(:nfc).encode("UTF-16LE")
+          data = "\xFF\xFE".dup.force_encoding("UTF-16LE") + data
         rescue => encoding_error
           logger.error(encoding_error.to_s)
           logger.error("This CSV error in the SearchController does not")
@@ -40,7 +40,7 @@ class SearchController < ApplicationController
   rescue ActiveRecord::StatementInvalid => e
     params[:error_message] = "That query did not work. Please check the \
     search directives and arguments."
-    logger.error("Search error: #{e.to_s}")
+    logger.error("Search error: #{e}")
     @search = Search::Error.new(params) unless @search.present?
   rescue => e
     params[:error_message] = e.to_s

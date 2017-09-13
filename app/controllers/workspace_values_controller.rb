@@ -20,7 +20,8 @@
 class WorkspaceValuesController < ApplicationController
   def update
     logger.debug(
-      "WorkspaceValuesController#update: #{workspace_value_params.inspect}")
+      "WorkspaceValuesController#update: #{workspace_value_params.inspect}"
+    )
     @workspace_value = WorkspaceValue.find(workspace_value_params[:name_node_link_id],
                                            workspace_value_params[:type_uri_id_part])
     if @workspace_value.field_value == workspace_value_params[:field_value]
@@ -33,15 +34,16 @@ class WorkspaceValuesController < ApplicationController
                               workspace_value_params[:field_value])
       @message = "Updated"
     end
-  #rescue => e
-    #@message = "Error: #{e.to_s}"
-    #@value_label = workspace_value_params[:value_label]
-    #render "update_error", status: 400
+    # rescue => e
+    # @message = "Error: #{e.to_s}"
+    # @value_label = workspace_value_params[:value_label]
+    # render "update_error", status: 400
   end
 
   def create
     logger.debug(
-      "WorkspaceValuesController#create: #{workspace_value_params.inspect}")
+      "WorkspaceValuesController#create: #{workspace_value_params.inspect}"
+    )
     # Prepare values for rendering the form afterwards
     @name_node_tree_link = TreeLink.find(workspace_value_params[:name_node_link_id])
     @instance = @name_node_tree_link.node.instance
@@ -58,14 +60,15 @@ class WorkspaceValuesController < ApplicationController
                             workspace_value_params[:field_value])
     @message = "Created"
   rescue => e
-    @message = "Error: #{e.to_s}"
+    @message = "Error: #{e}"
     @value_label = workspace_value_params[:value_label]
     render "update_error", status: 400
   end
 
   def destroy
     logger.debug(
-      "WorkspaceValuesController#destroy: #{params.inspect}")
+      "WorkspaceValuesController#destroy: #{params.inspect}"
+    )
     # Prepare values for rendering the changed GUI afterwards
     @name_node_tree_link = TreeLink.find(params[:name_node_link_id])
     @instance = @name_node_tree_link.node.instance
@@ -75,29 +78,30 @@ class WorkspaceValuesController < ApplicationController
                             @current_workspace.id,
                             params[:name_id])
     @message = "Deleted"
-  #rescue => e
-    #@message = "Error: #{e.to_s}"
-    #render "destroy_error", status: 400
+    # rescue => e
+    # @message = "Error: #{e.to_s}"
+    # render "destroy_error", status: 400
   end
 
   def old_update
-    logger.debug('start update_value')
+    logger.debug("start update_value")
     logger.debug("params[:tree_workspace][:name_id]: #{params[:tree_workspace][:name_id]}")
     logger.debug("params[:tree_workspace][:value_label]: #{params[:tree_workspace][:value_label]}")
     logger.debug("params[:value]: #{params[:value]}")
-    logger.debug('update_value before call')
+    logger.debug("update_value before call")
     @response = @current_workspace.update_value(
-                                 username,
-                                 params[:tree_workspace][:name_id],
-                                 params[:tree_workspace][:value_label],
-                                 params[:value]
-                               )
+      username,
+      params[:tree_workspace][:name_id],
+      params[:tree_workspace][:value_label],
+      params[:value]
+    )
   rescue => e
     logger.error e
     render "update_value_error", status: 422
   end
 
-private
+  private
+
   def workspace_value_params
     params.require(:workspace_value).permit(:field_value,
                                             :name_id,

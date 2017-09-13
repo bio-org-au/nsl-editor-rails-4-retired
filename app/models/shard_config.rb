@@ -29,10 +29,10 @@ class ShardConfig < ActiveRecord::Base
 
   # On by default
   def self.name_parent_rank_restriction
-    results = ShardConfig.where(name: 'name parent rank restriction')
+    results = ShardConfig.where(name: "name parent rank restriction")
     return true if results.blank?
-    return true if results.first.value == 'on'
-    return false
+    return true if results.first.value == "on"
+    false
   end
 
   def self.name_parent_rank_restriction?

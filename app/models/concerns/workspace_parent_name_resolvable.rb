@@ -11,7 +11,7 @@ module WorkspaceParentNameResolvable
     if params.key?(key_field)
       send("#{key_field}=", Name::AsResolvedTypeahead::ForWorkspaceParent.new(
         params[key_field],
-        params[ta_field].sub(/  *- *$/,'')
+        params[ta_field].sub(/  *- *$/, "")
       ).value)
     else
       raise "Could not find key field: #{key_field}"

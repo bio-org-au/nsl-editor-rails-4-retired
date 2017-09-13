@@ -31,11 +31,11 @@ class Instance < ActiveRecord::Base
                 :extra_primary_override
   SEARCH_LIMIT = 50
   MULTIPLE_PRIMARY_WARNING = "This would result in multiple primary instances"
-  
+
   def self.to_csv
     attributes = %w(id)
-    headings = ["Instance ID", "Name ID", "Full Name", "Reference ID", 
-                "Reference Citation", "Number of Notes","Instance notes"]
+    headings = ["Instance ID", "Name ID", "Full Name", "Reference ID",
+                "Reference Citation", "Number of Notes", "Instance notes"]
     CSV.generate(headers: true) do |csv|
       csv << headings
       all.each do |instance|
@@ -45,8 +45,7 @@ class Instance < ActiveRecord::Base
                 instance.reference_id,
                 instance.reference.citation,
                 instance.instance_notes.size,
-                instance.collected_notes
-        ]
+                instance.collected_notes]
       end
     end
   rescue => e
@@ -54,9 +53,9 @@ class Instance < ActiveRecord::Base
     logger.error(e.to_s)
     raise
   end
-  
+
   def collected_notes
-    instance_notes.map {|note| "#{note.instance_note_key.name}: #{note.value}"}.join(',')
+    instance_notes.map { |note| "#{note.instance_note_key.name}: #{note.value}" }.join(",")
   end
 
   scope :ordered_by_name, -> { joins(:name).order("simple_name asc") }

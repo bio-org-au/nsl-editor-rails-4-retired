@@ -24,7 +24,7 @@ class ReferencesController < ApplicationController
   def show
     pick_a_tab
     pick_a_tab_index
-    copy_reference if @tab == 'tab_copy'
+    copy_reference if @tab == "tab_copy"
     render "show", layout: false
   end
 

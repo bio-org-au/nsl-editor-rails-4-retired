@@ -73,7 +73,7 @@ class RefType < ActiveRecord::Base
   end
 
   def self.query_form_options
-    all.sort { |x, y| x.name <=> y.name }
+    all.sort_by(&:name)
        .collect { |n| [n.name, n.name.downcase, class: ""] }
   end
 
@@ -106,6 +106,6 @@ class RefType < ActiveRecord::Base
 
   def reference_year_required?
     %w(chapter database\ record herbarium\ annotation personal\ communication
-    paper section).include? name.downcase
+       paper section).include? name.downcase
   end
 end

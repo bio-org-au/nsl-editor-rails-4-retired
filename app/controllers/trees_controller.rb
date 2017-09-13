@@ -42,13 +42,11 @@ class TreesController < ApplicationController
     logger.error("==== place_name error handler #{e.class}")
     begin
       json = JSON.parse(e.http_body)
-      Rails.logger.error(ap json)
+      Rails.logger.error(ap(json))
       @message_array = []
       json["msg"].each do |msg_element|
         @message_array.push msg_element["msg"]
-        if msg_element["body"]
-          @message_array.push msg_element["body"]
-        end
+        @message_array.push msg_element["body"] if msg_element["body"]
       end
     rescue => e
       logger.error("rescue error in error")

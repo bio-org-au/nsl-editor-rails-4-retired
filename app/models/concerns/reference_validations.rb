@@ -27,11 +27,11 @@ module ReferenceValidations
     validates :year,
               numericality: { only_integer: true,
                               greater_than_or_equal_to: 1000,
-                              less_than_or_equal_to: ->(_reference){ Date.current.year } },
+                              less_than_or_equal_to: ->(_reference) { Date.current.year } },
               allow_nil: true
     validates :year, exclusion: { in: [nil],
                                   message: "is required",
-                                  if: :year_required?}
+                                  if: :year_required? }
     validates_exclusion_of :parent_id,
                            in: ->(reference) { [reference.id] },
                            allow_blank: true,
@@ -51,24 +51,23 @@ module ReferenceValidations
   end
 
   def validate_uniqueness
-    return if Reference.where(["coalesce(lower(title),'no title') = coalesce(lower(?),'no title')",title]) 
+    return if Reference.where(["coalesce(lower(title),'no title') = coalesce(lower(?),'no title')", title])
                        .where(ref_type_id: ref_type_id)
-                       .where(["coalesce(parent_id,0) = coalesce(?,0)",parent_id])
+                       .where(["coalesce(parent_id,0) = coalesce(?,0)", parent_id])
                        .where(published: published)
                        .where(author_id: author_id)
                        .where(ref_author_role_id: ref_author_role_id)
-                       .where(["coalesce(edition,'no edition data') = coalesce(?,'no edition data')",edition])
-                       .where(["coalesce(volume,'no volume data') = coalesce(?,'no volume data')",volume])
-                       .where(["coalesce(pages,'no pages data') = coalesce(?,'no pages data')",pages])
-                       .where(["coalesce(year,0) = coalesce(?,0)",year])
-                       .where(["coalesce(publication_date,'no publication date data') = coalesce(?,'no publication date data')",publication_date])
-                       .where(["coalesce(notes,'no notes data') = coalesce(?,'no notes data')",notes])
+                       .where(["coalesce(edition,'no edition data') = coalesce(?,'no edition data')", edition])
+                       .where(["coalesce(volume,'no volume data') = coalesce(?,'no volume data')", volume])
+                       .where(["coalesce(pages,'no pages data') = coalesce(?,'no pages data')", pages])
+                       .where(["coalesce(year,0) = coalesce(?,0)", year])
+                       .where(["coalesce(publication_date,'no publication date data') = coalesce(?,'no publication date data')", publication_date])
+                       .where(["coalesce(notes,'no notes data') = coalesce(?,'no notes data')", notes])
                        .where.not(id: id)
                        .where("duplicate_of_id is null")
                        .count == 0
     errors.add(:base, "Reference is not unique")
   end
-  
 
   def validate_parent
     return if parent_id.blank?

@@ -29,9 +29,9 @@ class TreeNode < ActiveRecord::Base
   has_many   :sublinks, class_name: ::TreeLink, foreign_key: "supernode_id"
   has_many   :super_links, class_name: ::TreeLink, foreign_key: "subnode_id"
   has_many   :value_links,
-            (lambda do
-               where("type_uri_id_part in ('distribution','comment')")
-             end),
+             (lambda do
+                where("type_uri_id_part in ('distribution','comment')")
+              end),
              class_name: ::TreeLink,
              foreign_key: "supernode_id"
 
@@ -46,7 +46,7 @@ class TreeNode < ActiveRecord::Base
   def valueLink(tree_value_uri)
     if tree_value_uri.is_multi_valued
       TreeLink.where(" supernode_id = ? and type_uri_ns_part_id = ? and type_uri_id_part = ?",
-                     self.id,
+                     id,
                      tree_value_uri.link_uri_ns_part.id,
                      tree_value_uri.link_uri_id_part)
     else
@@ -60,7 +60,7 @@ class TreeNode < ActiveRecord::Base
       # Tree_link.type_uri_id_part is a string.
       #
       TreeLink.where(" supernode_id = ? and type_uri_ns_part_id = ? and type_uri_id_part = ?",
-                     self.id,
+                     id,
                      tree_value_uri.link_uri_ns_part.id,
                      tree_value_uri.link_uri_id_part).first
     end

@@ -41,6 +41,6 @@ class RefAuthorRole < ActiveRecord::Base
   end
 
   def self.query_form_options
-    all.sort { |x, y| x.name <=> y.name }.collect { |n| [n.name, n.name.downcase, class: ""] }
+    all.sort_by(&:name).collect { |n| [n.name, n.name.downcase, class: ""] }
   end
 end

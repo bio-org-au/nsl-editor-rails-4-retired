@@ -47,9 +47,9 @@ module NameScopable
            end)
     scope :from_a_higher_rank,
           (lambda do |rank_id|
-          joins(:name_rank).where("not name_rank.deprecated and
-                                     name_rank.sort_order < (select sort_order
-                                     from name_rank where id = ?)", rank_id)
+             joins(:name_rank).where("not name_rank.deprecated and
+                                        name_rank.sort_order < (select sort_order
+                                        from name_rank where id = ?)", rank_id)
            end)
     scope :ranks_for_unranked,
           (lambda do

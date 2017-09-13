@@ -53,14 +53,14 @@ class NameType < ActiveRecord::Base
   end
 
   def self.query_form_options
-    not_deprecated.sort { |x, y| x.name <=> y.name }
+    not_deprecated.sort_by(&:name)
                   .collect { |n| [n.capitalised_name, n.name.to_s, class: ""] }
                   .unshift(["Include common, cultivars", "type:*"])
                   .unshift(["Exclude common, cultivars", ""])
   end
 
   def self.options
-    all.sort { |x, y| x.name <=> y.name }
+    all.sort_by(&:name)
        .collect { |n| [n.capitalised_name, n.id, class: ""] }
   end
 
@@ -95,7 +95,7 @@ class NameType < ActiveRecord::Base
     where(scientific: true)
       .where(" (not hybrid or name in ('named hybrid','named hybrid autonym'))")
       .where(" name != 'phrase name' ")
-      .sort { |x, y| x.name <=> y.name }.collect { |n| [n.name, n.id] }
+      .sort_by(&:name).collect { |n| [n.name, n.id] }
   end
 
   def self.scientific_2_parent_options
@@ -103,12 +103,12 @@ class NameType < ActiveRecord::Base
           or (scientific and hybrid and name not in
           ('hybrid formula unknown 2nd parent','named hybrid',
           'named hybrid autonym'))")
-      .sort { |x, y| x.name <=> y.name }.collect { |n| [n.name, n.id] }
+      .sort_by(&:name).collect { |n| [n.name, n.id] }
   end
 
   def self.scientific_hybrid_formula_unknown_2nd_parent_options
     where(" name in ('hybrid formula unknown 2nd parent')")
-      .sort { |x, y| x.name <=> y.name }.collect { |n| [n.name, n.id] }
+      .sort_by(&:name).collect { |n| [n.name, n.id] }
   end
 
   def self.phrase_options
@@ -122,7 +122,7 @@ class NameType < ActiveRecord::Base
       .where(cultivar: true)
       .where(hybrid: true)
       .where(" name not in ('cultivar hybrid formula', 'graft/chimera')")
-      .sort { |x, y| x.name <=> y.name }
+      .sort_by(&:name)
       .collect do |n|
       [n.name, n.id, class: "cultivar_hybrid"]
     end
@@ -134,7 +134,7 @@ class NameType < ActiveRecord::Base
       .where(cultivar: true)
       .where(hybrid: false)
       .where(" name not in ('cultivar hybrid formula', 'graft/chimera')")
-      .sort { |x, y| x.name <=> y.name }
+      .sort_by(&:name)
       .collect do |n|
       [n.name, n.id, class: "cultivar"]
     end
@@ -142,7 +142,7 @@ class NameType < ActiveRecord::Base
 
   def self.other_options
     where(scientific: false).where(cultivar: false)
-                            .sort { |x, y| x.name <=> y.name }
+                            .sort_by(&:name)
                             .collect do |n|
       [n.name, n.id, class: "other"]
     end
