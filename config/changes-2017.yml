@@ -1,4 +1,8 @@
 ---
+- :date: 20-Sep-2017
+  :jira_id: '2476'
+  :description: |-
+    Added assertion query for names with multiple basionyms.
 - :date: 14-Sep-2017
   :release: true
 - :date: 13-Sep-2017
