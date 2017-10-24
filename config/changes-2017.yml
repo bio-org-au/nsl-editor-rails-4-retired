@@ -1,5 +1,9 @@
 ---
 - :date: 24-Oct-2017
+  :jira_id: '2177'
+  :description: |-
+    Add a page-sort directive for instance searches.
+- :date: 24-Oct-2017
   :jira_id: '2361'
   :description: |-
     Prevent author with an abbreviation being marked as a duplicate of an author without an abbreviation.

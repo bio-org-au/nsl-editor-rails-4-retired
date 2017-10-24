@@ -37,7 +37,11 @@ class Search::OnInstance::ListQuery
     if @parsed_request.limited
       prepared_query = prepared_query.limit(@parsed_request.limit)
     end
-    prepared_query = prepared_query.order("instance.id")
+    if @parsed_request.order_instance_query_by_page
+      prepared_query = prepared_query.joins(:name).ordered_by_page
+    else
+      prepared_query = prepared_query.order("instance.id")
+    end
     @sql = prepared_query
   end
 end
