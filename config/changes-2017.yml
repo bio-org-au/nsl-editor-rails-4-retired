@@ -1,4 +1,8 @@
 ---
+- :date: 24-Oct-2017
+  :jira_id: '2361'
+  :description: |-
+    Prevent author with an abbreviation being marked as a duplicate of an author without an abbreviation.
 - :date: 20-Sep-2017
   :jira_id: '2476'
   :description: |-

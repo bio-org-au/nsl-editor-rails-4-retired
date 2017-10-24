@@ -530,10 +530,34 @@ hesp_3:
   created_by: greg
   updated_by: greg
 
+hesp_3:
+  name: hesp
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
 
+duplicate_with_abbrev:
+  name: dupe with abbrev
+  abbrev: duwab
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
 
+master_without_abbrev:
+  name: master without abbrev
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
 
+duplicate_without_abbrev:
+  name: dupe without abbrev
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
 
-
-
-
+master_with_abbrev:
+  name: master with abbrev
+  abbrev: muwab
+  namespace_id: namespace.apni
+  created_by: greg
+  updated_by: greg
