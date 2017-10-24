@@ -39,5 +39,14 @@ module AuthorValidations
                            in: ->(author) { [author.id] },
                            allow_blank: true,
                            message: "and master cannot be the same record"
+    validate :master_has_abbrev_if_needed, on: :update
+  end
+
+  def master_has_abbrev_if_needed
+    return if abbrev.blank?
+    return unless changed.include?('duplicate_of_id')
+    return unless duplicate?
+    return if duplicate_of.abbrev.present?
+    errors[:base] << "Cannot make this a duplicate of an author that has no abbreviation."
   end
 end
