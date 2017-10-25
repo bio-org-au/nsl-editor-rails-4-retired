@@ -35,11 +35,9 @@ class Instance::AsArray::ForName < Array
   NO_YEAR = 0
 
   def initialize(name)
-    debug("init #{name.full_name}")
     @results = []
     @already_shown = []
-    # TODO: work out why author is not eager loading.
-    sorted_instances(name.instances.includes(:reference, :instance_type, :author)).each do |instance|
+    sorted_instances(name.instances.includes([{reference: :author}, :instance_type])).each do |instance|
       if instance.standalone?
         show_standalone_instance(instance)
       else
