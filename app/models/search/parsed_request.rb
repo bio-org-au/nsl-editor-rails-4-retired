@@ -45,7 +45,8 @@ class Search::ParsedRequest
               :target_table,
               :target_button_text,
               :user,
-              :where_arguments
+              :where_arguments,
+              :order_instance_query_by_page
 
   DEFAULT_LIST_LIMIT = 100
   SIMPLE_QUERY_TARGETS = {
@@ -101,6 +102,7 @@ class Search::ParsedRequest
     unused_qs_tokens = parse_target(unused_qs_tokens)
     unused_qs_tokens = parse_common_and_cultivar(unused_qs_tokens)
     unused_qs_tokens = parse_show_instances(unused_qs_tokens)
+    unused_qs_tokens = parse_order_instances(unused_qs_tokens)
     @where_arguments = unused_qs_tokens.join(" ")
   end
 
@@ -263,6 +265,16 @@ class Search::ParsedRequest
       tokens.delete_if { |x| x.match(/show-instances-by-page:/) }
     else
       @show_instances = false
+    end
+    tokens
+  end
+
+  def parse_order_instances(tokens)
+    if tokens.include?("page-sort:")
+      @order_instance_query_by_page = true
+      tokens.delete_if { |x| x.match(/page-sort:/) }
+    else
+      @order_instance_query_by_page = false
     end
     tokens
   end

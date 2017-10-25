@@ -21,11 +21,11 @@
 ENV["RAILS_ENV"] = "test"
 require File.expand_path("../../config/environment", __FILE__)
 require "rails/test_help"
-require "capybara/rails"
+# require "capybara/rails"
 require "minitest"
 require "minitest/rails"
-require "minitest/capybara"
-require "minitest/rails/capybara"
+# require "minitest/capybara"
+# require "minitest/rails/capybara"
 require "minitest/unit"
 require "mocha"
 require "mocha/setup"
@@ -37,12 +37,12 @@ require "webmock/minitest"
 # require "minitest/rails/capybara"
 
 # Uncomment for awesome colorful output
-require "minitest/pride"
+# require "minitest/pride"
 
-require "capybara-webkit"
-# Capybara.default_driver = :webkit
-Capybara.default_driver = :selenium
-# Capybara.default_wait_time = 5
+# require "capybara-webkit"
+## Capybara.default_driver = :webkit
+# Capybara.default_driver = :selenium
+## Capybara.default_wait_time = 5
 
 # Set up tests
 class ActiveSupport::TestCase
@@ -231,7 +231,7 @@ def set_name_parent_to_a_genus
 end
 
 def configure_for_webkit
-  page.driver.block_unknown_urls if Capybara.default_driver == :webkit
+  # page.driver.block_unknown_urls if Capybara.default_driver == :webkit
 end
 
 def visit_home_page
