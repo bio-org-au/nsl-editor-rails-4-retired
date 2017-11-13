@@ -72,9 +72,9 @@ class ApplicationController < ActionController::Base
   def ask_user_to_sign_in
     session[:url_after_sign_in] = request.url
     respond_to do |format|
-      format.html { redirect_to start_sign_in_url, notice: "Please sign in." }
-      format.json { render partial: "layouts/no_session.js" }
-      format.js   { render partial: "layouts/no_session.js" }
+      format.html {redirect_to start_sign_in_url, notice: "Please sign in."}
+      format.json {render partial: "layouts/no_session.js"}
+      format.js {render partial: "layouts/no_session.js"}
     end
   end
 
@@ -83,11 +83,11 @@ class ApplicationController < ActionController::Base
                              full_name: session[:user_full_name],
                              groups: session[:groups])
     logger.info("User is known: #{@current_user.username}")
-    @current_workspace = if session[:workspace].blank?
-                           nil
-                         else
-                           Tree::Workspace.find(session[:workspace]["id"])
-                         end
+    @working_draft = if session[:draft].present? && Tree::TreeVersion.exists?(session[:draft]["id"])
+                       Tree::TreeVersion.find(session[:draft]["id"])
+                     else
+                       nil
+                     end
   end
 
   def set_debug

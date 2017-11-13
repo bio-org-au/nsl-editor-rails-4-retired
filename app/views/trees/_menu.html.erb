@@ -1,41 +1,26 @@
+<% Tree.menu_query.each do |menu_item| %>
 
-<% ws_count = 0 %>
-<% tree_headings = [] %>
-<% TreeArrangement.menu_query.each do |menu_item| %>
-  <% ws_count += 1 %>
-  <% unless tree_headings.include?(menu_item.label) %>
-    <li role="presentation">
-      <span>&nbsp; <%= menu_item.label %></span>
-    </li>
-    <% tree_headings << menu_item.label %>
-  <% end %>
-
-    <% 
-      icon_check_class = 
-        if session["workspace"].present? &&
-           menu_item.workspace_id == session["workspace"]["id"]
+    <%
+      icon_check_class =
+          if session["draft"].present? &&
+              menu_item.default_draft_tree_version_id == session["draft"]["id"]
             ""
-        else
-          "hidden"
-        end
+          else
+            "hidden"
+          end
     %>
-    <li role="presentation" style="padding-left: 1em;">
-      <%= link_to("#{icon('cirle-o')} #{menu_item.workspace_title} #{fa_icon 'check', class: icon_check_class}".html_safe,
-                  toggle_current_workspace_path(id: menu_item.workspace_id),
-                  { remote: true,
-                    method: "post",
-                    title: 'Choose current workspace' }) %>
+
+    <li role="presentation">
+      <% if menu_item.default_draft_tree_version_id %>
+          <%= link_to("#{menu_item.name} #{menu_item.draft_name}
+                      #{fa_icon 'check', class: icon_check_class}".html_safe,
+                      toggle_current_workspace_path(id: menu_item.default_draft_tree_version_id),
+                      {remote: true,
+                       method: "post",
+                       title: 'Choose draft'}) %>
+      <% else %>
+          <%= "#{menu_item.name} (No draft)".html_safe %>
+      <% end %>
     </li>
 
-
-<% end %>
-<% if ws_count == 0 %>
-  <li role="presentation">
-    <span>&nbsp;&nbsp;<%= link_to "[No&nbsp;workspaces&nbsp;-&nbsp;create&nbsp;one&nbsp;in&nbsp;the&nbsp;Tree&nbsp;Editor".html_safe, Rails.configuration.tree_editor_url, title:'Link to the tree editor', class: 'blue' %>.]&nbsp;</span>
-  </li>
-<% else %>
-  <li role="presentation" class="divider"></li>
-  <li role="presentation">
-    <span>&nbsp;&nbsp;<%= link_to "Tree&nbsp;Editor".html_safe, Rails.configuration.tree_editor_url, title:'Link to the tree editor', class: 'blue' %>&nbsp;</span>
-  </li>
 <% end %>

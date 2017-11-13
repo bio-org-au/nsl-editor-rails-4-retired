@@ -24,7 +24,6 @@ class Tree::Workspace::Placement < ActiveType::Object
   attribute :workspace_id, :integer
   attribute :placement_type, :string
   attribute :username, :string
-  attr_reader :resolved_parent_name_id, :integer
 
   validates :name_id, presence: true
   validates :instance_id, presence: true
@@ -54,10 +53,4 @@ class Tree::Workspace::Placement < ActiveType::Object
                                           placement_type: placement_type)
   end
 
-  def resolve_parent
-    @resolved_parent_name_id = resolve_parent_name(
-      parent_name_id: parent_name_id,
-      parent_name_typeahead: parent_name_typeahead
-    )
-  end
 end

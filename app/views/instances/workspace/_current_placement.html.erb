@@ -1,8 +1,37 @@
-      <div>
-        <b><%= @name_node_tree_link.node.name.full_name_html.html_safe %> name</b><br>
-        <b><%= @name_node_tree_link.placed_as.capitalize %> name</b> based on<br>
-        <b><%= @name_node_tree_link.node.instance.reference.citation %></b> under<br>
-        <b><%= @name_node_tree_link.supernode.instance.name.full_name_html.html_safe %></b> in workspace<br>
-        <b> <%= @name_node_tree_link.node.tree.title %> </b>
-      </div>
-      <%= divider %>
+<div>
+  <%= render partial: "instances/workspace/widgets/placement_indicator", locals: {tree_version_element: @tree_version_element} %>
+
+  <%= render partial: 'detail_line',
+             locals: {info: @tree_version_element.tree_element.name.full_name_html.html_safe,
+                      label: "Full Name"}
+  %>
+  <%= render partial: 'detail_line',
+             locals: {info: @tree_version_element.count_children,
+                      label: "Sub taxa"}
+  %>
+  <%= render partial: 'detail_line',
+             locals: {info: @tree_version_element.tree_element.instance.reference.citation,
+                      label: "Reference"}
+  %>
+  <%= render partial: 'detail_line',
+             locals: {info: @tree_version_element.tree_element.parent_element&.name&.full_name_html&.html_safe,
+                      label: "Under"}
+  %>
+  <%= render partial: 'detail_line',
+             locals: {info: @tree_version_element.tree_version.tree.name,
+                      label: "Tree"}
+  %>
+  <%= render partial: 'detail_line',
+             locals: {info: '<a href="' + @tree_version_element.element_link +
+                 '" title="Tree element link id"><i class="fa fa-code-fork"></i> ...'+
+                 @tree_version_element.element_link[/\/tree.*$/] + '</a>',
+                      label: "Element link"}
+  %>
+  <%= render partial: 'detail_line',
+             locals: {info: '<a href="' + @tree_version_element.taxon_link +
+                 '" title="Taxon link id"><i class="fa fa-tree"></i> ...' +
+                 @tree_version_element.taxon_link[-18..-1] + '</a>',
+                      label: "Taxon link"}
+  %>
+</div>
+<%= divider %>

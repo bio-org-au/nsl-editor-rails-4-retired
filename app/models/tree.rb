@@ -14,18 +14,24 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#
-#   Names are central to the NSL.
-class Names::Typeaheads::ForWorkspaceParentNameController < ApplicationController
-  def index
-    typeahead = Name::AsTypeahead::ForWorkspaceParentName
-                .new(params, @working_draft)
-    render json: typeahead.suggestions
-  end
 
-  private
+#  A tree - usually a classification
+class Tree < ActiveRecord::Base
+  self.table_name = "tree"
+  self.primary_key = "id"
+  self.sequence_name = "nsl_global_seq"
 
-  def typeahead_params
-    params.permit(:term)
+  belongs_to :default_draft_version,
+             class_name: TreeVersion,
+             foreign_key: "default_draft_tree_version_id"
+  
+  has_many :tree_versions,
+           foreign_key: "tree_id"
+
+  def self.menu_query
+    Tree.joins("LEFT OUTER JOIN tree_version draft_version on draft_version.id = default_draft_tree_version_id")
+        .select("tree.id, name, default_draft_tree_version_id, draft_version.draft_name")
+        .order("tree.name")
   end
+  
 end

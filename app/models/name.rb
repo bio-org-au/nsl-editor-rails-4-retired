@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -99,9 +100,9 @@ class Name < ActiveRecord::Base
 
   def only_one_type?
     category == CULTIVAR_CATEGORY ||
-      category == CULTIVAR_HYBRID_CATEGORY ||
-      category == SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY ||
-      category == PHRASE
+        category == CULTIVAR_HYBRID_CATEGORY ||
+        category == SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY ||
+        category == PHRASE
   end
 
   def full_name_or_default
@@ -140,17 +141,26 @@ class Name < ActiveRecord::Base
     category == CULTIVAR_HYBRID_CATEGORY
   end
 
-  def workspace_instance_id(workspace)
-    return nil unless workspace.present?
-    name_node_tree_link = workspace_name_node_tree_link(workspace)
-    return nil unless name_node_tree_link.present?
-    return nil if name_node_tree_link.empty?
-    name_node_tree_link.node.instance_id
+  def name_path
+    parents = []
+    name = self
+    while name.parent
+      name = name.parent
+      parents.push(name)
+    end
+    parents
   end
 
-  def workspace_name_node_tree_link(workspace)
-    Tree::Workspace.find(workspace.id)
-                   .find_name_node_link(self)
+  def draft_instance_id(draft_version)
+    return nil unless draft_version.present?
+    tree_version_element = draft_version.name_in_version(self)
+    return nil unless tree_version_element.present?
+    # return nil if tree_version_element.empty?
+    tree_version_element.tree_element.instance.id
+  end
+
+  def draft_tree_version_element(draft_version)
+    TreeVersion.find(draft_version.id).name_in_version(self)
   end
 
   private

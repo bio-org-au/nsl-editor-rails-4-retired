@@ -14,18 +14,28 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#
-#   Names are central to the NSL.
-class Names::Typeaheads::ForWorkspaceParentNameController < ApplicationController
-  def index
-    typeahead = Name::AsTypeahead::ForWorkspaceParentName
-                .new(params, @working_draft)
-    render json: typeahead.suggestions
+
+#  A workspace is an unpublished tree (formally a tree arrangement) that can
+#  be edited.
+class Tree::DraftVersion < ActiveRecord::Base
+  self.table_name = "tree_version"
+  self.primary_key = "id"
+  default_scope {where(published: false)}
+
+  belongs_to :tree,
+             class_name: Tree
+
+  has_many :tree_version_elements,
+           foreign_key: "tree_version_id",
+           class_name: TreeVersionElement
+
+  def name
+    name
   end
 
-  private
-
-  def typeahead_params
-    params.permit(:term)
+  def name_in_version(name)
+    tree_version_elements.joins(:tree_element)
+        .where(tree_element: { name: name }).first
   end
+
 end

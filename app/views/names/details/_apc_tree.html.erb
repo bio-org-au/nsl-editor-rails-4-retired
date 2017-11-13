@@ -1,8 +1,8 @@
-<% if @name.apc_tree_path.present? %>
+<% if @name.accepted_tree_version_element %>
   <%= divider %>
   APC Tree
 <ul class="tree">
-<% @name.apc_tree_path.tree_ordered_names.each do |step| %>
+<% @name.accepted_tree_version_element.tree_element.tree_ordered_names.each do |step| %>
   <li>
     <%= link_to(%Q(#{step.full_name}<span class="pull-right">#{step.name_rank.name}</span>).html_safe,
                           search_path(query_string: "id: #{step.id}",query_target: 'names'),

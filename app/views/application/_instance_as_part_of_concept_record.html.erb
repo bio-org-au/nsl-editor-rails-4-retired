@@ -26,14 +26,10 @@
       <% end %>
     <% end %>
     <%= render(partial: 'record_debug', locals: {search_result: search_result}) if @debug %>
-    <% if @current_workspace.present? && search_result.in_workspace?(@current_workspace) %>
+    <% if @working_draft.present? && search_result.in_workspace?(@working_draft) %>
       &nbsp;
       <%= render partial: "instances/workspace/widgets/placement_indicator",
-                 locals: { name_node_tree_link: search_result
-                                                .name
-                                                .workspace_name_node_tree_link(
-                                                  @current_workspace),
-                           workspace: @current_workspace } %>
+                 locals: { tree_version_element: @working_draft.name_in_version(search_result.name) } %>
     <% end %>
   </a>
   </td>

@@ -1,34 +1,22 @@
 <% if !@instance.cited_by_id %>
-  <%= form_tag({controller: 'trees', action: 'place_name'}, {method: :patch, remote: true}) do %>
-    <%= hidden_field_tag("place_name[name_id]", @instance.name.id) %>
-    <%= hidden_field_tag("place_name[original_name_id]", @instance.name.id) %>
-    <%= hidden_field_tag("place_name[instance_id]", @instance.id) %>
-    <%= hidden_field_tag("place_name[original_instance_id]", @instance.id) %>
-    <%= hidden_field_tag("place_name[original_placement_type]", @name_node_tree_link.placed_as) %>
-    <%= hidden_field_tag("place_name[original_parent_name_id]", @name_node_tree_link.supernode.name.id) %>
-    <%= hidden_field_tag("place_name[original_parent_name_typeahead_string]", @name_node_tree_link.supernode.name.full_name) %>
+    <%= form_tag({controller: 'trees', action: 'move_placement'}, {method: :patch, remote: true}) do %>
+        <%= hidden_field_tag("move_placement[taxon_uri]", @tree_version_element.element_link) %>
 
-    <div class="form-group">
-      <%= radio_button_tag(:type, "accepted", @name_node_tree_link.default_to_accepted?, name: "place_name[placement_type]") %>
-      <%= label_tag(:type_accepted, "Accepted") %>
-      <%= radio_button_tag(:type, "excluded", @name_node_tree_link.default_to_excluded?, name: "place_name[placement_type]") %>
-      <%= label_tag(:type_excluded, "Excluded") %>
-      <%= radio_button_tag(:type, "untreated", @name_node_tree_link.default_to_untreated?, name: "place_name[placement_type]") %>
-      <%= label_tag(:type_untreated, "Untreated") %>
-    </div>
+        <%= render partial: "instances/workspace/forms/name_typeahead" %>
 
-    <%= render partial: "instances/workspace/forms/name_typeahead" %>
+        <button type="submit"
+                id="update-name-placement-btn"
+                class="btn btn-primary"
+                name="move_placement[update]"
+                tabindex="<%= increment_tab_index %>"
+                title="Update the name on the tree."
+                onclick="$('#update-name-placement-btn').find('i.fa').addClass('fa-spin');"
+        >Update <i class="fa fa-refresh"></i></button>
 
-    <%= submit_tag "Update", id: "update-name-placement-btn",
-                 class: "btn btn-primary width-6em",
-                 name: "place_name[update]",
-                 tabindex: increment_tab_index,
-                 title: "Update the name in the workspace."
-                 %>
-    <span id="placement-message-container"
-          class="message-container green hidden"></span>
-    <div id="placement-error-message-container"
-         class="error-message-container red hidden"></div>
-  <% end %>
+        <span id="movement-message-container"
+              class="message-container green hidden"></span>
+        <div id="movement-error-message-container"
+             class="error-message-container red hidden"></div>
+    <% end %>
 <% end %>
 

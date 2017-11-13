@@ -18,25 +18,20 @@
 #  Tree services
 class Tree::AsServices
   SERVICES_ADDRESS = Rails.configuration.services
-  PLACEMENT_PATH = "treeEdit/placeNameOnTree"
+  PLACEMENT_PATH = "api/treeElement/placeTaxon"
+  MOVE_PLACEMENT = "api/treeElement/moveTaxon"
+  REMOVE_PLACEMENT = "api/treeElement/removeTaxon"
 
   def self.placement_url(params)
     @params = params
-    "#{SERVICES_ADDRESS}#{PLACEMENT_PATH}?#{params1}&#{params2}"
+    "#{SERVICES_ADDRESS}#{PLACEMENT_PATH}?apiKey=#{Rails.configuration.api_key}"
   end
 
-  def self.params1
-    key = "apiKey=#{Rails.configuration.api_key}"
-    run_as = "runAs=#{ERB::Util.url_encode(@params[:username])}"
-    tree = "tree=#{@params[:tree_id]}"
-    name = "name=#{@params[:name_id]}"
-    "#{key}&#{run_as}&#{tree}&#{name}"
+  def self.move_placement_url(username)
+    "#{SERVICES_ADDRESS}#{MOVE_PLACEMENT}?apiKey=#{Rails.configuration.api_key}&as=#{username}"
   end
 
-  def self.params2
-    instance = "instance=#{@params[:instance_id]}"
-    parent = "parentName=#{ERB::Util.url_encode(@params[:parent_name])}"
-    type = "placementType=#{ERB::Util.url_encode(@params[:placement_type])}"
-    "#{instance}&#{parent}&#{type}"
+  def self.remove_placement_url(username)
+    "#{SERVICES_ADDRESS}#{REMOVE_PLACEMENT}?apiKey=#{Rails.configuration.api_key}&as=#{username}"
   end
 end

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -15,17 +16,25 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-#   Names are central to the NSL.
-class Names::Typeaheads::ForWorkspaceParentNameController < ApplicationController
-  def index
-    typeahead = Name::AsTypeahead::ForWorkspaceParentName
-                .new(params, @working_draft)
-    render json: typeahead.suggestions
+class Tree::Workspace::Removement < ActiveType::Object
+  attribute :target, :TreeVersionElement
+  attribute :username, :string
+
+  validates :target, presence: true
+
+  def remove
+    url = build_url
+    payload = {taxonUri: target.element_link}
+    logger.info "Calling #{url}"
+    raise errors.full_messages.first unless valid?
+    RestClient.post(url, payload.to_json, {content_type: :json, accept: :json})
+  rescue => e
+    Rails.logger.error("Tree::Workspace::Removement error: #{e}")
+    raise
   end
 
-  private
-
-  def typeahead_params
-    params.permit(:term)
+  def build_url
+    Tree::AsServices.remove_placement_url(username)
   end
+
 end

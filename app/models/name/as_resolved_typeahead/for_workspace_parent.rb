@@ -30,68 +30,22 @@ class Name::AsResolvedTypeahead::ForWorkspaceParent
   end
 
   def run
-    case resolve(@id_string, @text)
-    when NO_ID_OR_TEXT, ID_ONLY # assume delete
-      @value = ""
-    when TEXT_ONLY
-      text_only
-    when ID_AND_TEXT
-      id_and_text
-    else
-      raise "Please check the #{@field_name}"
+    if @id_string.blank?
+      no_found
+    end
+
+    tree_version_element = TreeVersionElement.find(@id_string)
+    if tree_version_element.present?
+      if @text != tree_version_element.tree_element.simple_name
+        no_found
+      end
+      @value = tree_version_element.element_link
     end
   end
 
-  def text_only
-    possibles = ::Name.lower_full_name_like(@text)
-    case possibles.size
-    when 0
-      zero_possibles_for_text
-    when 1
-      @value = possibles.first.id
-    else
-      raise "More than one match for #{@text}."
-    end
+  def no_found
+    @value = ""
+    raise "please choose #{@field_name} from suggestions, match not found."
   end
 
-  def zero_possibles_for_text
-    zero_possibles
-  end
-
-  def zero_possibles
-    possibles = ::Name.lower_full_name_like(@text + "%")
-    case possibles.size
-    when 1
-      @value = possibles.first.id
-    else
-      raise "No matches for '#{@text}'"
-    end
-  end
-
-  def id_and_text
-    possibles = ::Name.lower_full_name_like(@text)
-    case possibles.size
-    when 0
-      zero_possibles_for_id_and_text
-    when 1
-      @value = possibles.first.id
-    else
-      two_or_more_possibles_for_id_and_text
-    end
-  end
-
-  def zero_possibles_for_id_and_text
-    zero_possibles
-  end
-
-  def two_or_more_possibles_for_id_and_text
-    possibles_with_id = Name
-                        .where(id: @id_string.to_i)
-                        .lower_full_name_equals(@text)
-    if possibles_with_id.size == 1
-      @value = possibles_with_id.first.id
-    else
-      raise "More than one match for #{@field_name}: #{@text}."
-    end
-  end
 end

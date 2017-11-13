@@ -34,8 +34,8 @@ as a synonym"
     @tabs_to_offer = tabs_to_offer
     # Really only need to do this if the "class" tab is chosen.
     # ToDo: do this only when needed.
-    unless @current_workspace.blank?
-      @name_node_tree_link = @current_workspace.find_name_node_link(@instance.name)
+    unless @working_draft.blank?
+      @tree_version_element = @working_draft.name_in_version(@instance.name)
     end
     render "show", layout: false
   end
@@ -227,8 +227,6 @@ as a synonym"
     if @instance.simple?
       offer << "tab_synonymy"
       offer << "tab_unpublished_citation"
-      # TODO: remove apc placement tab
-      offer << "tab_apc_placement"
       offer << "tab_classification"
     end
     offer << "tab_comments"

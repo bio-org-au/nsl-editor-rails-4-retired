@@ -21,9 +21,9 @@ class Name::AsTypeahead::ForWorkspaceParentName
               :params
   SEARCH_LIMIT = 50
 
-  def initialize(params, workspace)
+  def initialize(params, working_draft)
     @params = params
-    @workspace = workspace
+    @workspace = working_draft
     @suggestions = if @params[:term].blank?
                      []
                    else
@@ -36,15 +36,7 @@ class Name::AsTypeahead::ForWorkspaceParentName
   end
 
   def basic_query
-    Name.not_a_duplicate
-        .where(["lower(full_name) like lower(?)", prepared_search_term])
-        .includes(:name_status)
-        .includes(:name_rank)
-        .joins(:tree_nodes)
-        .where(["tree_node.tree_arrangement_id in (?,?)", @workspace.id, @workspace.base_arrangement_id])
-        .where("exists (select null from instance where instance.name_id = name.id)")
-        .order("name_rank.sort_order, lower(full_name)")
-        .limit(SEARCH_LIMIT)
+    @workspace.query_name_in_version(prepared_search_term)
   end
 
   def query
@@ -56,23 +48,25 @@ class Name::AsTypeahead::ForWorkspaceParentName
   end
 
   def normal_query
-    basic_query
-      .includes(:name_rank)
-      .joins(:name_rank)
-      .where("name_rank.sort_order >= (select max(sort_order) from name_rank where major and name != 'Tribus' and sort_order < (select sort_order from name_rank where id = (select name_rank_id from name where id = ?)))", params[:name_id])
-      .where("name_rank.sort_order < (select sort_order from name_rank where id = (select name_rank_id from name where id = ?))", params[:name_id])
-      .collect do |n|
-      { value: "#{n.full_name} - #{n.name_rank.name}", id: n.id }
+    this_name = TreeVersionElement.find(@params[:name_id]).tree_element.name
+    rank_names = this_name.ranks_up_to_next_major.collect {|rank| rank.name}
+    @workspace.query_name_version_ranks(prepared_search_term, rank_names)
+        .includes(:tree_element)
+        .collect do |n|
+      begin
+        excl = n.tree_element.excluded ? '<i class="fa fa-ban red"></i>' : ''
+        {value: "#{n.tree_element.name.full_name} #{excl} - #{n.tree_element.rank}", id: n.element_link}
+      end
     end
   end
 
   def higher_ranks_query
+    this_name = TreeVersionElement.find(@params[:name_id]).tree_element.name
     basic_query
-      .includes(:name_rank)
-      .joins(:name_rank)
-      .where("name_rank.sort_order < (select sort_order from name_rank where id = (select name_rank_id from name where id = ?))", params[:name_id])
-      .collect do |n|
-      { value: "#{n.full_name} - #{n.name_rank.name}", id: n.id }
+        .joins(tree_element: {name: :name_rank})
+        .where(["name_rank.sort_order < ?", this_name.name_rank.sort_order])
+        .collect do |n|
+      {value: "#{n.tree_element.name.simple_name} - #{n.tree_element.name.name_rank.name}", id: n.element_link}
     end
   end
 end

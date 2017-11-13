@@ -1,27 +1,27 @@
-    <div class="typeahead-container">
-      <section class='block width-100-percent'>
-        <label class="custom-control">Parent</label>
-        <label class="custom-control custom-checkbox pull-right">
-          Allow higher ranks
-        <input type="checkbox" id="allow_higher_ranks" value="false" />
-        </label>
-        <input id="workspace_parent_name_typeahead"
-               name="place_name[parent_name_typeahead_string]"
-               class="typeahead form-control width-100-percent" 
-               tabindex="<%= increment_tab_index %>"
-               type="text" 
-               data-name-id="<%= @name_node_tree_link.subnode.name.id unless @name_node_tree_link.empty? %>"
-               data-parent-name-id="<%= @name_node_tree_link.supernode.name.id  unless @name_node_tree_link.empty? %>"
-               title="Select a name from the suggestions as you type."
-               required
-               placeholder="Name suggestions"
-               value="<%= @name_node_tree_link.supernode.name.full_name unless @name_node_tree_link.empty? %>" />
-      </section>
+<div class="typeahead-container">
+  <section class='block width-100-percent'>
+    <label class="custom-control">Parent</label>
+    <label class="custom-control custom-checkbox pull-right">
+      Allow higher ranks
+      <input type="checkbox" id="allow_higher_ranks" value="false"/>
+    </label>
+    <input id="workspace_parent_name_typeahead"
+           name="move_placement[parent_name_typeahead_string]"
+           class="typeahead form-control width-100-percent"
+           tabindex="<%= increment_tab_index %>"
+           type="text"
+           data-name-id="<%= @tree_version_element&.element_link %>"
+           data-parent-name-id="<%= @tree_version_element&.parent&.element_link %>"
+           title="Select a name from the suggestions as you type."
+           required
+           placeholder="Name suggestions"
+           value="<%= @tree_version_element&.tree_element&.parent_element&.simple_name %>"/>
+  </section>
 
-      <script> setUpWorkspaceParentName(); </script>
-      <input type="hidden"
-             id="workspace_parent_name_id"
-             name="place_name[parent_name_id]"
-             value="<%= @name_node_tree_link.supernode.name.id unless @name_node_tree_link.empty? %>" />
-    </div>
+  <script> setUpWorkspaceParentName(); </script>
+  <input type="hidden"
+         id="workspace_parent_name_id"
+         name="move_placement[parent_element_link]"
+         value="<%= @tree_version_element&.parent&.element_link %>"/>
+</div>
 

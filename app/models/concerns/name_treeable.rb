@@ -4,21 +4,7 @@
 module NameTreeable
   extend ActiveSupport::Concern
   included do
-    # TODO: Needs a test
-    has_one :apc_tree_path,
-            (lambda do
-               where "exists (select null from tree_arrangement ta where
-             tree_id = ta.id and ta.description = 'Australian Plant Census')"
-             end),
-            class_name: "NameTreePath"
-    # TODO: Needs a test
-    has_one :apni_tree_path,
-            (lambda do
-               where "exists (select null from tree_arrangement ta where
-               tree_id = ta.id and ta.description =
-               'APNI names classification')"
-             end),
-            class_name: "NameTreePath"
+
     has_one :accepted_in_some_way, foreign_key: "id"
     has_one :accepted_concept, foreign_key: "id"
   end
@@ -30,6 +16,15 @@ module NameTreeable
   rescue => e
     logger.error("apc_as_json: #{e} for : #{Name::AsServices.in_apc_url(id)}")
     "[unknown - service error]"
+  end
+
+  def accepted_tree_version_element
+    TreeVersionElement.find_by_sql(["SELECT tve.*
+FROM tree_version_element tve
+  JOIN tree t ON tve.tree_version_id = t.current_tree_version_id
+  JOIN shard_config config ON t.name = config.value AND config.name = 'tree label'
+  JOIN tree_element te ON tve.tree_element_id = te.id
+WHERE te.name_id = :id", id: id]).first
   end
 
   def accepted_in_some_way?

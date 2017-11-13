@@ -487,7 +487,7 @@ class Instance < ActiveRecord::Base
   end
 
   def in_workspace?(workspace)
-    id == name.workspace_instance_id(workspace)
+    id == name.draft_instance_id(workspace)
   end
 
   def set_defaults

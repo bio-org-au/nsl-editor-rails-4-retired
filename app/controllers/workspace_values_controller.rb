@@ -29,7 +29,7 @@ class WorkspaceValuesController < ApplicationController
       @message = "No change"
     else
       @workspace_value.update(username,
-                              @current_workspace.id,
+                              @working_draft.id,
                               workspace_value_params[:name_id],
                               workspace_value_params[:field_value])
       @message = "Updated"
@@ -45,8 +45,8 @@ class WorkspaceValuesController < ApplicationController
       "WorkspaceValuesController#create: #{workspace_value_params.inspect}"
     )
     # Prepare values for rendering the form afterwards
-    @name_node_tree_link = TreeLink.find(workspace_value_params[:name_node_link_id])
-    @instance = @name_node_tree_link.node.instance
+    @tree_version_element = TreeLink.find(workspace_value_params[:name_node_link_id])
+    @instance = @tree_version_element.node.instance
     # make a new workspace value object
     @workspace_value = WorkspaceValue.new_for(
       workspace_value_params[:type_uri_id_part],
@@ -55,7 +55,7 @@ class WorkspaceValuesController < ApplicationController
     )
     # create it
     @workspace_value.update(username,
-                            @current_workspace.id,
+                            @working_draft.id,
                             workspace_value_params[:name_id],
                             workspace_value_params[:field_value])
     @message = "Created"
@@ -70,12 +70,12 @@ class WorkspaceValuesController < ApplicationController
       "WorkspaceValuesController#destroy: #{params.inspect}"
     )
     # Prepare values for rendering the changed GUI afterwards
-    @name_node_tree_link = TreeLink.find(params[:name_node_link_id])
-    @instance = @name_node_tree_link.node.instance
+    @tree_version_element = TreeLink.find(params[:name_node_link_id])
+    @instance = @tree_version_element.node.instance
     @workspace_value = WorkspaceValue.find(params[:name_node_link_id],
                                            params[:type_uri_id_part])
     @workspace_value.delete(username,
-                            @current_workspace.id,
+                            @working_draft.id,
                             params[:name_id])
     @message = "Deleted"
     # rescue => e
@@ -89,7 +89,7 @@ class WorkspaceValuesController < ApplicationController
     logger.debug("params[:tree_workspace][:value_label]: #{params[:tree_workspace][:value_label]}")
     logger.debug("params[:value]: #{params[:value]}")
     logger.debug("update_value before call")
-    @response = @current_workspace.update_value(
+    @response = @working_draft.update_value(
       username,
       params[:tree_workspace][:name_id],
       params[:tree_workspace][:value_label],

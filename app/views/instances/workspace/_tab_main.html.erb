@@ -1,13 +1,13 @@
-    <% if @name_node_tree_link.placed? %>
+    <% if @tree_version_element.present? %>
       <%= render partial: "instances/workspace/current_placement" %>
-      <% if @name_node_tree_link.placed_via_instance?(@instance) %>
+      <% if @tree_version_element.tree_element.instance == @instance %>
         <%= render partial: "instances/workspace/update_placement" %>
         <%= divider %>
         <%= render partial: "instances/workspace/remove_placement" %>
         <%= divider %>
-        <%= render partial: "instances/workspace/enter_values" %>
+        <!-- %= render partial: "instances/workspace/enter_values" % -->
       <% else %>
-        <%= render partial: "instances/workspace/move_placement_here" %>
+        <!-- %= render partial: "instances/workspace/move_placement_here" % -->
       <% end %>
     <% else %>
         <%= render partial: "instances/workspace/new_placement" %>

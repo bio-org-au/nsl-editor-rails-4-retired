@@ -60,7 +60,7 @@ class TreeLink < ActiveRecord::Base
       EXCLUDED
     when UNTREATED_RAW then
       UNTREATED
-      # "non-#{@current_workspace.label } parent"
+      # "non-#{@@working_draft.label } parent"
     else
       node.node_type_uri_id_part
     end

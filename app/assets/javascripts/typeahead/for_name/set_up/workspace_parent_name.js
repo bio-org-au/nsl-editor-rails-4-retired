@@ -3,7 +3,9 @@ function setUpWorkspaceParentName() {
 
     $('#workspace_parent_name_typeahead').typeahead({highlight: true}, {
         name: 'workspace-parent-name-id',
-        displayKey: 'value',
+        displayKey: function(obj) {
+            return 'choice' + obj.value;
+        },
         source: workspaceParentNameSuggestions.ttAdapter()})
         .on('typeahead:opened', function($e,datum) {
             // Start afresh. Do not clear the hidden field on this event

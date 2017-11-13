@@ -9,9 +9,9 @@ module NameRankable
 
   def parent_rank_above?
     parent.present? &&
-      parent.name_rank.present? &&
-      name_rank.present? &&
-      parent.name_rank.above?(name_rank)
+        parent.name_rank.present? &&
+        name_rank.present? &&
+        parent.name_rank.above?(name_rank)
   end
 
   def both_unranked?
@@ -34,5 +34,14 @@ module NameRankable
 
   def parent_name_rank
     name_rank.parent
+  end
+
+  def ranks_up_to_next_major
+    next_major = next_major_rank
+    NameRank.where(["sort_order < :this_rank and sort_order >= :major_rank", this_rank: self.name_rank.sort_order, major_rank: next_major.sort_order])
+  end
+  def next_major_rank
+    NameRank.where(["sort_order < :this_rank and major", this_rank: self.name_rank.sort_order])
+        .order(:sort_order).reverse_order.first
   end
 end

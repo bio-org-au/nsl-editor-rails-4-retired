@@ -18,8 +18,8 @@
 #   User can choose a workspace.
 class Trees::Workspaces::CurrentController < ApplicationController
   def toggle
-    if session[:workspace] &&
-       session[:workspace]["id"] == params[:id].to_i
+    if session[:draft] &&
+       session[:draft]["id"] == params[:id].to_i
       unset_workspace
     else
       set_workspace
@@ -33,12 +33,12 @@ class Trees::Workspaces::CurrentController < ApplicationController
   # Need both because session variable loses ActiveRecord features
   # but activerecord variable dies after the request.
   def set_workspace
-    @current_workspace = Tree::Workspace.find(params[:id])
-    session[:workspace] = @current_workspace
+    @working_draft = TreeVersion.find(params[:id])
+    session[:draft] = @working_draft
   end
 
   def unset_workspace
-    remove_instance_variable(:@current_workspace)
-    session[:workspace] = nil
+    remove_instance_variable(:@working_draft)
+    session[:draft] = nil
   end
 end

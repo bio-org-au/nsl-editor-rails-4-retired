@@ -56,10 +56,6 @@
 //= require typeahead/for_reference/author.js
 //= require typeahead/for_reference/duplicate.js
 //= require typeahead/for_reference/parent.js
-//= require tree-extras/apc-placement.js
 //= require underscore
 //= require new-search
 //= require tabs
-
-// possibly this should not be here, instead the tree search results page should declare it as a dependency
-//= require tree-extras/tree-view.js

@@ -1,32 +1,32 @@
 <% if !@instance.cited_by_id %>
-  <%= form_tag({ controller: 'trees', action: 'place_name' }, { method: :post, remote: true }) do %>
-  <%= hidden_field_tag("place_name[name_id]", @instance.name.id) %>
-  <%= hidden_field_tag("place_name[instance_id]", @instance.id) %>
-  <b>Place</b> in <%= @current_workspace.title %> referencing</br>
-  <b><%= @instance.reference.citation_html.html_safe %></b><br/>
-  under
-  <%= render partial: "instances/workspace/forms/new_placement_name_typeahead" %>
-      <div class="form-group">
-      <%= radio_button_tag(:type, "accepted", @name_node_tree_link.default_to_accepted?, name: "place_name[placement_type]") %>
-      <%= label_tag(:type_accepted, "Accepted") %>
-      <%= radio_button_tag(:type, "excluded", @name_node_tree_link.default_to_excluded?, name: "place_name[placement_type]") %>
-      <%= label_tag(:type_excluded, "Excluded") %>
-      <%= radio_button_tag(:type, "untreated", @name_node_tree_link.default_to_untreated?, name: "place_name[placement_type]") %>
-      <%= label_tag(:type_untreated, "Untreated") %>
-    </div>
+    <%= form_tag({controller: 'trees', action: 'place_name'}, {method: :post, remote: true}) do %>
+        <%= hidden_field_tag("place_name[instance_id]", @instance.id) %>
 
-    <%= submit_tag "Place",
-                   id: "new_name_placement_btn",
-                   class: "btn btn-primary width-6em",
-                   name: "place_name[place]",
-                   tabindex: increment_tab_index,
-                   title: "Place the name in the workspace."
-    %>
+        <b>Place</b> in <%= "#{@working_draft.tree.name}: #{@working_draft.draft_name}" %> referencing</br>
 
+        <b><%= @instance.reference.citation_html.html_safe %></b><br/>
+        under
+        <%= render partial: "instances/workspace/forms/new_placement_name_typeahead" %>
+<!-- todo pick a default parent from the tree -->
+        <div class="form-group">
+          <%= radio_button_tag(:type, "accepted", checked: "checked", name: "place_name[placement_type]") %>
+          <%= label_tag(:type_accepted, "Accepted") %>
+          <%= radio_button_tag(:type, "excluded", name: "place_name[placement_type]") %>
+          <%= label_tag(:type_excluded, "Excluded") %>
+        </div>
 
-   <span id="placement-message-container" class="message-container green hidden"></span>
-   <div id="placement-error-message-container" class="error-message-container red hidden"></div>
-  <% end %>
+        <button type="submit"
+                id="new_name_placement_btn"
+                class="btn btn-primary"
+                name="place_name[place]"
+                tabindex="<%= increment_tab_index %>"
+                title="Place the name on the tree."
+                onclick="$('#new_name_placement_btn').find('i.fa').addClass('fa-spin');"
+        >Save <i class="fa fa-refresh"></i></button>
+
+        <span id="placement-message-container" class="message-container green hidden"></span>
+        <div id="placement-error-message-container" class="error-message-container red hidden"></div>
+    <% end %>
 <% end %>
 
 
