@@ -33,11 +33,9 @@ class Search::OnName::ListQuery
   end
 
   def prepare_query
-    Rails.logger.debug("Search::OnName::ListQuery#prepare_query")
-    # prepared_query = Name.includes(:ref_type)
-    prepared_query = Name.includes(:name_status).includes(:name_tags)
+    seed_query = Name.includes(:name_status).includes(:name_tags) 
     where_clauses = Search::OnName::WhereClauses.new(@parsed_request,
-                                                     prepared_query)
+                                                     seed_query)
     prepared_query = where_clauses.sql
     if @parsed_request.limited
       prepared_query = prepared_query.limit(@parsed_request.limit)
