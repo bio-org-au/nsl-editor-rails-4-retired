@@ -18,20 +18,28 @@
 #  Tree services
 class Tree::AsServices
   SERVICES_ADDRESS = Rails.configuration.services
-  PLACEMENT_PATH = "api/treeElement/placeTaxon"
-  MOVE_PLACEMENT = "api/treeElement/moveTaxon"
-  REMOVE_PLACEMENT = "api/treeElement/removeTaxon"
+  LINKER_ADDRESS = Rails.configuration.nsl_linker
+  PLACEMENT_PATH = "api/treeElement/placeElement"
+  REPLACE_ELEMENT = "api/treeElement/replaceElement"
+  REMOVE_PLACEMENT = "api/treeElement/removeElement"
+  API_KEY = "apiKey=#{Rails.configuration.api_key}"
+  PREFERRED_LINK = "broker/preferredLink"
 
-  def self.placement_url(params)
-    @params = params
-    "#{SERVICES_ADDRESS}#{PLACEMENT_PATH}?apiKey=#{Rails.configuration.api_key}"
+  def self.placement_url(username)
+    "#{SERVICES_ADDRESS}#{PLACEMENT_PATH}?#{API_KEY}&as=#{username}"
   end
 
-  def self.move_placement_url(username)
-    "#{SERVICES_ADDRESS}#{MOVE_PLACEMENT}?apiKey=#{Rails.configuration.api_key}&as=#{username}"
+  def self.replace_placement_url(username)
+    "#{SERVICES_ADDRESS}#{REPLACE_ELEMENT}?#{API_KEY}&as=#{username}"
   end
 
   def self.remove_placement_url(username)
-    "#{SERVICES_ADDRESS}#{REMOVE_PLACEMENT}?apiKey=#{Rails.configuration.api_key}&as=#{username}"
+    "#{SERVICES_ADDRESS}#{REMOVE_PLACEMENT}?#{API_KEY}&as=#{username}"
+  end
+
+  def self.preferred_link_url(instance_id)
+    ShardConfig.name_space
+    target = "nameSpace=#{ShardConfig.name_space.downcase}&objectType=instance&idNumber=#{instance_id}"
+    "#{LINKER_ADDRESS}#{PREFERRED_LINK}?#{target}"
   end
 end

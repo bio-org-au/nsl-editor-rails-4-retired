@@ -15,17 +15,23 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-class Tree::Workspace::Movement < ActiveType::Object
+class Tree::Workspace::Replacement < ActiveType::Object
   attribute :target, :TreeVersionElement
   attribute :parent, :TreeVersionElement
+  attribute :instance_id, :integer
   attribute :username, :string
 
   validates :target, presence: true
   validates :parent, presence: true
+  validates :instance_id, presence: true
 
-  def move
+  def replace
     url = build_url
-    payload = {taxonUri: target.element_link, newParentTaxonUri: parent.element_link}
+    payload = {
+        currentElementUri: target.element_link,
+        newParentElementUri: parent.element_link,
+        instanceUri: instance_url
+    }
     logger.info "Calling #{url}"
     raise errors.full_messages.first unless valid?
     RestClient.put(url, payload.to_json,
@@ -38,9 +44,21 @@ class Tree::Workspace::Movement < ActiveType::Object
     raise
   end
 
+  def instance_url
+    url = Tree::AsServices.preferred_link_url(instance_id)
+    Rails.logger.info "calling #{url}"
+    response = RestClient.get(url, {content_type: :json, accept: :json})
+    json = JSON.parse(response.body, object_class: OpenStruct)
+    json.link
+  rescue => e
+    Rails.logger.error("Tree::Workspace::Placement error: #{e}")
+    raise
+
+  end
+
 
   def build_url
-    Tree::AsServices.move_placement_url(username)
+    Tree::AsServices.replace_placement_url(username)
   end
 
 end

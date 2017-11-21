@@ -1,6 +1,8 @@
 <% if !@instance.cited_by_id %>
-    <%= form_tag({controller: 'trees', action: 'move_placement'}, {method: :patch, remote: true}) do %>
-        <%= hidden_field_tag("move_placement[taxon_uri]", @tree_version_element.element_link) %>
+    <div>
+    <%= form_tag({controller: 'trees', action: 'replace_placement'}, {method: :patch, remote: true}) do %>
+        <%= hidden_field_tag("move_placement[element_link]", @tree_version_element.element_link) %>
+        <%= hidden_field_tag("move_placement[instance_id]", @instance.id) %>
 
         <%= render partial: "instances/workspace/forms/name_typeahead" %>
 
@@ -13,10 +15,16 @@
                 onclick="$('#update-name-placement-btn').find('i.fa').addClass('fa-spin');"
         >Update <i class="fa fa-refresh"></i></button>
 
-        <span id="movement-message-container"
-              class="message-container green hidden"></span>
+        <div id="movement-message-container"
+              class="message-container text-success hidden">
+
+        </div>
         <div id="movement-error-message-container"
-             class="error-message-container red hidden"></div>
+             class="error-message-container text-danger hidden">
+          <h4>Errors found.</h4>
+          <div id="movement-error-message"></div>
+        </div>
     <% end %>
+    </div>
 <% end %>
 

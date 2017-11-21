@@ -1,5 +1,4 @@
-$('.message-container').addClass('hidden').html("");
-$('.error-message-container').addClass('hidden').html("");
-$('#placement-error-message-container')
-    .html("Error: <%= escape_javascript(@message? @message.to_s.html_safe : '') %>")
-    .removeClass('hidden');
+$('#placement-message-container').addClass('hidden').html("");
+$('#placement-error-message-container').removeClass('hidden').html("<%= @message %>");
+$('#new_name_placement_btn').find('i.fa').removeClass('fa-spin');
+

@@ -48,20 +48,20 @@ class Name::AsTypeahead::ForWorkspaceParentName
   end
 
   def normal_query
-    this_name = TreeVersionElement.find(@params[:name_id]).tree_element.name
+    this_name = Name.find(@params[:name_id])
     rank_names = this_name.ranks_up_to_next_major.collect {|rank| rank.name}
     @workspace.query_name_version_ranks(prepared_search_term, rank_names)
         .includes(:tree_element)
         .collect do |n|
       begin
-        excl = n.tree_element.excluded ? '<i class="fa fa-ban red"></i>' : ''
-        {value: "#{n.tree_element.name.full_name} #{excl} - #{n.tree_element.rank}", id: n.element_link}
+        excl = n.tree_element.excluded ? '<i class="fa fa-ban red"></i> ' : ''
+        {value: "#{excl}#{n.tree_element.name.full_name} - #{n.tree_element.rank}", id: n.element_link}
       end
     end
   end
 
   def higher_ranks_query
-    this_name = TreeVersionElement.find(@params[:name_id]).tree_element.name
+    this_name = Name.find(@params[:name_id])
     basic_query
         .joins(tree_element: {name: :name_rank})
         .where(["name_rank.sort_order < ?", this_name.name_rank.sort_order])

@@ -49,6 +49,8 @@ class Name < ActiveRecord::Base
   belongs_to :namespace, class_name: "Namespace", foreign_key: "namespace_id"
 
   belongs_to :duplicate_of, class_name: "Name", foreign_key: "duplicate_of_id"
+  belongs_to :family, class_name: "Name"
+
   has_many :duplicates,
            class_name: "Name",
            foreign_key: "duplicate_of_id",

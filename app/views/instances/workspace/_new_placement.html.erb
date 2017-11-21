@@ -2,18 +2,22 @@
     <%= form_tag({controller: 'trees', action: 'place_name'}, {method: :post, remote: true}) do %>
         <%= hidden_field_tag("place_name[instance_id]", @instance.id) %>
 
-        <b>Place</b> in <%= "#{@working_draft.tree.name}: #{@working_draft.draft_name}" %> referencing</br>
-
-        <b><%= @instance.reference.citation_html.html_safe %></b><br/>
-        under
-        <%= render partial: "instances/workspace/forms/new_placement_name_typeahead" %>
-<!-- todo pick a default parent from the tree -->
-        <div class="form-group">
-          <%= radio_button_tag(:type, "accepted", checked: "checked", name: "place_name[placement_type]") %>
-          <%= label_tag(:type_accepted, "Accepted") %>
-          <%= radio_button_tag(:type, "excluded", name: "place_name[placement_type]") %>
-          <%= label_tag(:type_excluded, "Excluded") %>
+        <strong>Place in <%= "#{@working_draft.tree.name}: #{@working_draft.draft_name}" %></strong>
+        <div>
+          <dl class="dl-horizontal">
+            <dt>Full Name</dt>
+            <dd><%=@instance.name.full_name_html.html_safe %></dd>
+            <dt>Reference</dt>
+            <dd><%= @instance.reference.citation %></dd>
+          </dl>
         </div>
+
+        <div class="form-group">
+          <%= check_box_tag("excluded", name: "place_name[excluded]") %>
+          <%= label_tag("excluded", "Excluded?") %>
+        </div>
+
+        <%= render partial: "instances/workspace/forms/new_placement_name_typeahead" %>
 
         <button type="submit"
                 id="new_name_placement_btn"

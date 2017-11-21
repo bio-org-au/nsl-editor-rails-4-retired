@@ -1,37 +1,34 @@
 <div>
   <%= render partial: "instances/workspace/widgets/placement_indicator", locals: {tree_version_element: @tree_version_element} %>
 
-  <%= render partial: 'detail_line',
-             locals: {info: @tree_version_element.tree_element.name.full_name_html.html_safe,
-                      label: "Full Name"}
-  %>
-  <%= render partial: 'detail_line',
-             locals: {info: @tree_version_element.count_children,
-                      label: "Sub taxa"}
-  %>
-  <%= render partial: 'detail_line',
-             locals: {info: @tree_version_element.tree_element.instance.reference.citation,
-                      label: "Reference"}
-  %>
-  <%= render partial: 'detail_line',
-             locals: {info: @tree_version_element.tree_element.parent_element&.name&.full_name_html&.html_safe,
-                      label: "Under"}
-  %>
-  <%= render partial: 'detail_line',
-             locals: {info: @tree_version_element.tree_version.tree.name,
-                      label: "Tree"}
-  %>
-  <%= render partial: 'detail_line',
-             locals: {info: '<a href="' + @tree_version_element.element_link +
-                 '" title="Tree element link id"><i class="fa fa-code-fork"></i> ...'+
-                 @tree_version_element.element_link[/\/tree.*$/] + '</a>',
-                      label: "Element link"}
-  %>
-  <%= render partial: 'detail_line',
-             locals: {info: '<a href="' + @tree_version_element.taxon_link +
-                 '" title="Taxon link id"><i class="fa fa-tree"></i> ...' +
-                 @tree_version_element.taxon_link[-18..-1] + '</a>',
-                      label: "Taxon link"}
-  %>
+  <dl class="dl-horizontal">
+    <dt>Full Name</dt>
+    <dd><%= @tree_version_element.tree_element.name.full_name_html.html_safe %></dd>
+    <dt>Reference</dt>
+    <dd><%= @tree_version_element.tree_element.instance.reference.citation %></dd>
+    <dt>Under</dt>
+    <dd>
+      <%= link_to("<i class=\"fa fa-sitemap\"></i> #{search_icon_on_tab}
+                  #{@tree_version_element.tree_element.parent_element.instance.name.try('full_name')}"
+                      .html_safe,
+                  search_path(query_target: 'name',
+                              query_string: "id: #{@tree_version_element.tree_element.parent_element.name_id} show-instances:"),
+                  title: 'Search for the parent with its instances',
+                  class: 'name') %>
+    </dd>
+    <dt>Element link</dt>
+    <dd>
+      <a href="<%= @tree_version_element.element_link %>" title="Tree element link id">
+        <i class="fa fa-code-fork"></i> ... <%= @tree_version_element.element_link[/\/tree.*$/] %>
+      </a>
+    </dd>
+    <dt>Taxon link</dt>
+    <dd>
+      <a href="<%= @tree_version_element.taxon_link %>" title="Taxon link id">
+        <i class="fa fa-tree"></i> ... <%= @tree_version_element.taxon_link[-18..-1] %>
+      </a>
+    </dd>
+  </dl>
 </div>
-<%= divider %>
+
+<%= "<strong>#{@tree_version_element.count_children} Sub taxa</strong>".html_safe %>

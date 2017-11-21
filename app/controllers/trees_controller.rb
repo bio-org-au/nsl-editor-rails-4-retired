@@ -27,15 +27,16 @@ class TreesController < ApplicationController
   end
 
   # Move an existing taxon (inc children) under a different parent
-  def move_placement
-    logger.info("In move placement!")
-    target = TreeVersionElement.find(move_name_params[:taxon_uri])
+  def replace_placement
+    logger.info("In replace placement!")
+    target = TreeVersionElement.find(move_name_params[:element_link])
     parent = TreeVersionElement.find(move_name_params[:parent_element_link])
-    movement = Tree::Workspace::Movement.new(username: current_user.username,
-                                             target: target,
-                                             parent: parent)
-    movement.move
-    @message = "Moved"
+    replacement = Tree::Workspace::Replacement.new(username: current_user.username,
+                                                   target: target,
+                                                   parent: parent,
+                                                   instance_id: move_name_params[:instance_id])
+    response = replacement.replace
+    @html_out = process_problems(replacement_json_result(response))
     render "moved_placement.js"
   rescue RestClient::Unauthorized, RestClient::Forbidden => e
     @message = json_error(e)
@@ -45,15 +46,28 @@ class TreesController < ApplicationController
     render "move_placement_error.js"
   end
 
-  # Update name ....
+  # Place and instance on the draft tree version
   def place_name
-    # TODO this
+    excluded = place_name_params[:excluded] ? true : false
+    placement = Tree::Workspace::Placement.new(username: current_user.username,
+                                               parent_element_link: place_name_params[:parent_element_link],
+                                               instance_id: place_name_params[:instance_id],
+                                               excluded: excluded)
+    response = placement.place
+    @message = placement_json_result(response)
+    render "place_name.js"
+  rescue RestClient::Unauthorized, RestClient::Forbidden => e
+    @message = json_error(e)
+    render "place_name_error.js"
+  rescue RestClient::ExceptionWithResponse => e
+    @message = json_error(e)
+    render "place_name_error.js"
   end
 
   def remove_name_placement
     target = TreeVersionElement.find(remove_name_placement_params[:taxon_uri])
     removement = Tree::Workspace::Removement.new(username: current_user.username,
-                                             target: target)
+                                                 target: target)
     response = removement.remove
     @message = json_result(response)
     render "removed_placement.js"
@@ -81,7 +95,11 @@ class TreesController < ApplicationController
   def json_error(err)
     Rails.logger.error(err)
     json = JSON.parse(err.http_body, object_class: OpenStruct)
-    json&.error || json&.to_s || err.to_s
+    if json&.error
+      json.error.gsub(/\n/,'<br>')
+    else
+      json&.to_s || err.to_s
+    end
   rescue
     err.to_s
   end
@@ -93,59 +111,55 @@ class TreesController < ApplicationController
     result.to_s
   end
 
+  def placement_json_result(result)
+    json = JSON.parse(result.body, object_class: OpenStruct)
+    msg = json&.payload&.message
+    "#{msg} Warnings: #{json&.payload&.warnings}" if json&.payload&.warnings
+  rescue
+    result.to_s
+  end
+
+  def replacement_json_result(result)
+    JSON.parse(result.body)['payload']
+  rescue
+    result.to_s
+  end
+
+  def process_problems(payload)
+    html_out = '<div class="text-info"><h4>Problems Found</h4>'
+    if payload['problems']
+      for key in payload['problems'].keys
+        html_out += list_problems(key, payload['problems'][key])
+      end
+    end
+    html_out + "</div>"
+  end
+
+  def list_problems(key, problems)
+    return '' if problems.nil? || problems.empty?
+    "<strong>#{key}:</strong><ul><li>" +
+        problems.join("</li><li>") +
+        "</li></ul>"
+  end
+
   def move_name_params
     params.require(:move_placement)
-        .permit(:taxon_uri,
-                :parent_element_link)
+        .permit(:element_link,
+                :parent_element_link,
+                :instance_id
+        )
   end
 
   def place_name_params
     params.require(:place_name)
         .permit(:name_id,
                 :instance_id,
-                :parent_name,
-                :parent_name_id,
-                :parent_name_typeahead_string,
-                :placement_type,
-                :move,
-                :update,
-                :place,
-                :original_name_id,
-                :original_instance_id,
-                :original_parent_name_id,
-                :original_parent_name_typeahead_string,
-                :original_placement_type)
+                :parent_element_link,
+                :excluded)
   end
 
   def remove_name_placement_params
     params.require(:remove_placement).permit(:taxon_uri, :delete)
   end
 
-  def new_placement_instance?(params)
-    params[:name_id] != params[:original_name_id] ||
-        params[:instance_id] != params[:original_instance_id]
-  end
-
-  def placement_updated_in_place?(params)
-    params[:placement_type] != params[:original_placement_type] ||
-        placement_parent_changed?(params)
-  end
-
-  def placement_parent_changed?(params)
-    params[:parent_name_typeahead_string] !=
-        params[:original_parent_name_typeahead_string] ||
-        params[:parent_name_id] != params[:original_parent_name_id]
-  end
-
-  def new_placement_for_params
-    Tree::Workspace::Placement.new(
-        username: current_user.username,
-        name_id: place_name_params[:name_id],
-        instance_id: place_name_params[:instance_id],
-        parent_name_id: place_name_params[:parent_name_id],
-        parent_name_typeahead: place_name_params[:parent_name_typeahead_string],
-        placement_type: place_name_params[:placement_type],
-        workspace_id: @working_draft.id
-    )
-  end
 end

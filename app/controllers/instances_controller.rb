@@ -36,9 +36,11 @@ as a synonym"
     # ToDo: do this only when needed.
     unless @working_draft.blank?
       @tree_version_element = @working_draft.name_in_version(@instance.name)
+      @parent_tve = find_a_parent(@instance.name)
     end
     render "show", layout: false
   end
+
 
   alias tab show
 
@@ -293,4 +295,14 @@ as a synonym"
     return unless instance_params[:name_id].blank?
     params[:instance][:name_id] = Name::AsResolvedTypeahead::ForUnpubCitationInstance.new(name_id, name_typeahead).value
   end
+
+  def find_a_parent(parent)
+    while parent
+      parent_tve = @working_draft.name_in_version(parent)
+      return parent_tve if parent_tve
+      parent = parent.parent
+    end
+    @working_draft.tree_version_elements.order(tree_element_id: 'asc').first
+  end
+
 end

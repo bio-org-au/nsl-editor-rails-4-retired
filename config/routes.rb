@@ -228,8 +228,8 @@ Rails.application.routes.draw do
         to: "trees#remove_name_placement", via: :delete
   match "tree_arrangement/:id/place_name",
         as: "tree_arrangement_place_name", to: "trees#place_name", via: [:patch, :post]
-  match "tree_arrangement/:id/move_placement",
-        as: "tree_arrangement_move_placement", to: "trees#move_placement", via: [:patch, :post]
+  match "tree_arrangement/:id/replace_placement",
+        as: "tree_arrangement_move_placement", to: "trees#replace_placement", via: [:patch, :post]
   match "trees/workspace/current",
         as: "toggle_current_workspace",
         to: "trees/workspaces/current#toggle",
