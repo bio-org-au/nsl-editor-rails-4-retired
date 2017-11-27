@@ -24,6 +24,7 @@ class Trees::Workspaces::CurrentController < ApplicationController
     else
       set_workspace
     end
+    render js: "window.location.reload(true)"
   end
 
   private

@@ -32,13 +32,14 @@ class TreeElement < ActiveRecord::Base
            foreign_key: "tree_element_id"
 
   def ordered_rank_path
-    ranks = NameRank.where("name in (:keyset)", keyset: rank_path.keys).order("sort_order").select("name")
-    ranks.collect {|key| rank_path[key.name]['id']}
+    ranks = NameRank.where("name in (:keyset)", keyset: rank_path.keys)
+                .order("sort_order").select("name")
+    ranks.collect { |key| rank_path[key.name]["id"] }
   end
 
   # Aim is to supply name objects in tree order while avoiding n-queries.
   def tree_ordered_names
-    ordered_rank_path.collect {|item| Name.includes(:name_rank).find(item)}
+    ordered_rank_path.collect { |item| Name.includes(:name_rank).find(item) }
   end
 
   def distribution_value
@@ -48,7 +49,6 @@ class TreeElement < ActiveRecord::Base
   def distribution?
     distribution_key.present?
   end
-
 
   def distribution_key
     profile_key(/Dist/)
@@ -67,6 +67,6 @@ class TreeElement < ActiveRecord::Base
   end
 
   def profile_key(regex)
-    profile.keys.find {|key| !(regex =~ key).nil?} if profile.present?
+    profile.keys.find { |key| !(regex =~ key).nil? } if profile.present?
   end
 end

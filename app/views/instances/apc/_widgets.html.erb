@@ -1,7 +1,5 @@
       <span class="apc-container no-decoration">
-      <% if instance.name.apc_declared_bt? %>
-         <span class='apc small strong' title="Declared Broader Term for APC">Untreated APC</span>
-      <% elsif instance.name.apc_excluded? %>
+      <% if instance.name.apc_excluded? %>
         <%= icon('ban','',class: 'apc') %>
         <span class='apc small strong' title="Excluded from APC">APC</span>
       <% else %>

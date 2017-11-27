@@ -6,6 +6,15 @@
     <dd><%= @tree_version_element.tree_element.name.full_name_html.html_safe %></dd>
     <dt>Reference</dt>
     <dd><%= @tree_version_element.tree_element.instance.reference.citation %></dd>
+    <% if @tree_version_element.tree_element.comment? %>
+        <dt><%= @tree_version_element.tree_element.comment_key %></dt>
+        <dd><%= @tree_version_element.tree_element.comment_value.html_safe %></dd>
+
+    <% end %>
+    <% if @tree_version_element.tree_element.distribution? %>
+        <dt><%= @tree_version_element.tree_element.distribution_key %></dt>
+        <dd><%= @tree_version_element.tree_element.distribution_value %></dd>
+    <% end %>
     <dt>Under</dt>
     <dd>
       <%= link_to("<i class=\"fa fa-sitemap\"></i> #{search_icon_on_tab}

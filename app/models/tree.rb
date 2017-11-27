@@ -24,14 +24,24 @@ class Tree < ActiveRecord::Base
   belongs_to :default_draft_version,
              class_name: TreeVersion,
              foreign_key: "default_draft_tree_version_id"
-  
+
+  belongs_to :current_tree_version,
+             class_name: TreeVersion,
+             foreign_key: "current_tree_version_id"
+
   has_many :tree_versions,
            foreign_key: "tree_id"
 
+  scope :accepted,
+        (lambda do
+          where(name: ShardConfig.classification_tree_key)
+        end)
+
   def self.menu_query
-    Tree.joins("LEFT OUTER JOIN tree_version draft_version on draft_version.id = default_draft_tree_version_id")
-        .select("tree.id, name, default_draft_tree_version_id, draft_version.draft_name")
+    Tree.joins("LEFT OUTER JOIN tree_version draft_version on draft_version.tree_id = tree.id")
+        .where("draft_version.published = false")
+        .select("tree.id, name, draft_version.id as draft_id, draft_version.draft_name")
         .order("tree.name")
   end
-  
+
 end

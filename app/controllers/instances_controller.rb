@@ -33,11 +33,11 @@ as a synonym"
     @tab_index = (params[:tabIndex] || "1").to_i
     @tabs_to_offer = tabs_to_offer
     # Really only need to do this if the "class" tab is chosen.
-    # ToDo: do this only when needed.
     unless @working_draft.blank?
       @tree_version_element = @working_draft.name_in_version(@instance.name)
       @parent_tve = find_a_parent(@instance.name)
     end
+    @accepted_tve = @instance.name.accepted_tree_version_element
     render "show", layout: false
   end
 

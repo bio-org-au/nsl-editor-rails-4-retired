@@ -3,7 +3,7 @@
     <%
       icon_check_class =
           if session["draft"].present? &&
-              menu_item.default_draft_tree_version_id == session["draft"]["id"]
+              menu_item.draft_id == session["draft"]["id"]
             ""
           else
             "hidden"
@@ -11,10 +11,10 @@
     %>
 
     <li role="presentation">
-      <% if menu_item.default_draft_tree_version_id %>
+      <% if menu_item.draft_id %>
           <%= link_to("#{menu_item.name} #{menu_item.draft_name}
                       #{fa_icon 'check', class: icon_check_class}".html_safe,
-                      toggle_current_workspace_path(id: menu_item.default_draft_tree_version_id),
+                      toggle_current_workspace_path(id: menu_item.draft_id),
                       {remote: true,
                        method: "post",
                        title: 'Choose draft'}) %>
