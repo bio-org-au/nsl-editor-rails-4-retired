@@ -1,52 +1,53 @@
-
-<%= link_to("#{@instance.name.try('full_name')} #{search_icon_on_tab}".html_safe,search_path(query_target: 'name', query_string: "id: #{@instance.name_id} show-instances:"), title: 'Search for the name with its instances',class: 'name') %>
-    <% if @instance.name.apc? %>
-      <%= render(partial: 'instances/apc/widgets', locals: {instance: @instance}) %>
-    <% end %>
-    &nbsp;
-  <span class="apni-format-link-on-details"> 
-  <%= link_to("APNI #{icon('external-link-square')}".html_safe, 
+<%= link_to("#{@instance.name.try('full_name')} #{search_icon_on_tab}".html_safe, search_path(query_target: 'name', query_string: "id: #{@instance.name_id} show-instances:"), title: 'Search for the name with its instances', class: 'name') %>
+<% if @instance.name.apc? %>
+    <%= render(partial: 'instances/apc/widgets', locals: { instance: @instance }) %>
+<% end %>
+&nbsp;
+<span class="apni-format-link-on-details">
+  <%= link_to("APNI #{icon('external-link-square')}".html_safe,
               "#{Rails.configuration.nsl_links}apni-format/display/#{@instance.name_id}",
               title: "APNI search. Opens in another named tab or window.",
               class: 'rebeccapurple',
               target: "_editor_to_apni",
               tabindex: increment_tab_index) %>
   </span>
-  <br>
-  <% if @instance.cites_id %>
+<br>
+<% if @instance.cites_id %>
     in
 
     <%= link_to("#{@instance.this_cites.try('reference').try('citation')}:#{ @instance.this_cites.page} #{search_icon_on_tab}".html_safe,
-                            search_path(query_string: "id: #{@instance.this_cites.reference_id}",query_target: 'reference',class: 'ref'),
-                            title: 'Search for the reference.') %>
+                search_path(query_string: "id: #{@instance.this_cites.reference_id}", query_target: 'reference', class: 'ref'),
+                title: 'Search for the reference.') %>
     <%= link_to("[cited instance #{search_icon_on_tab}]".html_safe,
-                            search_path(query_string: "id: #{@instance.this_cites.id.to_s}",query_target: 'instance',class: 'ref'),
-                            title: 'Search for the instance this cites.') %>
-  <% end %>
-    <br>
-  is cited under
-  <br>
-  <%= link_to("#{@instance.this_is_cited_by.name.full_name} #{@instance.this_is_cited_by.name.name_status.bracketed_non_legitimate_status} #{search_icon_on_tab}".html_safe,
-                                      search_path(query_string: "id: #{@instance.this_is_cited_by.name_id} show-instances:", query_target: 'name'),
-              title:'Search for the instance this is cited under.') %>
-  <% if @instance.this_is_cited_by.name.apc? %>
-    <%= render(partial: 'instances/apc/widgets', locals: {instance: @instance.this_is_cited_by}) %>
-  <% end %>
-  <br>
-  by
-  <br>
-  <%= link_to("#{@instance.reference.citation}#{":" if @instance.page.present?}#{@instance.page} #{search_icon_on_tab}".html_safe,
-                                              search_path(query_string: "id: #{@instance.reference_id}",query_target: 'reference'),title: 'Search for the reference this is cited by.') %>
-  <br>
+                search_path(query_string: "id: #{@instance.this_cites.id.to_s}", query_target: 'instance', class: 'ref'),
+                title: 'Search for the instance this cites.') %>
+<% end %>
+<br>
+is cited under
+<br>
+<%= link_to("#{@instance.this_is_cited_by.name.full_name} #{@instance.this_is_cited_by.name.name_status.bracketed_non_legitimate_status} #{search_icon_on_tab}".html_safe,
+            search_path(query_string: "id: #{@instance.this_is_cited_by.name_id} show-instances:", query_target: 'name'),
+            title: 'Search for the instance this is cited under.') %>
+<% if @instance.this_is_cited_by.name.apc? %>
+    <%= render(partial: 'instances/apc/widgets', locals: { instance: @instance.this_is_cited_by }) %>
+<% end %>
+<br>
+by
+<br>
+<%= link_to("#{@instance.reference.citation}#{":" if @instance.page.present?}#{@instance.page} #{search_icon_on_tab}".html_safe,
+            search_path(query_string: "id: #{@instance.reference_id}",
+                        query_target: 'reference'), title: 'Search for the reference this is cited by.') %>
+<br>
 
-  as
-  <%= @instance.instance_type.name_with_indefinite_article.sub(/ /,'<br>').html_safe %>
-  <%= "<br>on page #{@instance.page}".html_safe if @instance.page.present? %>
-  <%= "<br>with verbatim name<br> #{@instance.verbatim_name_string}".html_safe if @instance.verbatim_name_string.present? %>
-  <br>
-  <%= link_to("and BHL entry #{icon('external-link')}".html_safe,@instance.bhl_url, title: "Follow this link to the BHL entry.") if @instance.bhl_url.present? %>
-  <br>
-  <%= "[DRAFT]" if @instance.draft? %>
+as
+<%= @instance.instance_type.name_with_indefinite_article.sub(/ /, '<br>').html_safe %>
+<%= "<br>on page #{@instance.page}".html_safe if @instance.page.present? %>
+<%= "<br>with verbatim name<br> #{@instance.verbatim_name_string}".html_safe if @instance.verbatim_name_string.present? %>
+<br>
+<%= link_to("and BHL entry #{icon('external-link')}".html_safe,
+            @instance.bhl_url, title: "Follow this link to the BHL entry.") if @instance.bhl_url.present? %>
+
+<%= "<br>[DRAFT]".html_safe if @instance.draft? %>
 
 
 

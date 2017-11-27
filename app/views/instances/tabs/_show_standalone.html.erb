@@ -34,6 +34,6 @@ as <%= @instance.instance_type.name_with_indefinite_article.sub(/ /, '<br>').htm
 <%= link_to("and BHL entry #{icon('external-link')}".html_safe,
             @instance.bhl_url,
             title: "Follow this link to the BHL entry.") if @instance.bhl_url.present? %>
-<br>
-<%= "[DRAFT]" if @instance.draft? %>
+
+<%= "<br>[DRAFT]".html_safe if @instance.draft? %>
 
