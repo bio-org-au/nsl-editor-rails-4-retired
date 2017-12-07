@@ -5,6 +5,9 @@ gem "rails", "~> 4.2"
 
 platform :jruby do
   gem "activerecord-jdbcpostgresql-adapter"
+  # warbler for rake tasks to generate a WAR file and use jruby 9.1.5.0
+  gem "jruby-jars", "9.1.5.0"
+  gem "warbler"
 end
 
 platform :ruby do
@@ -23,9 +26,6 @@ gem "turbolinks"
 gem "jbuilder", "~> 2.0"
 # bundle exec rake doc:rails generates the API under doc/api.
 gem "sdoc", "~> 0.4.0", group: :doc
-# warbler for rake tasks to generate a WAR file and use jruby 9.1.5.0
-gem "jruby-jars", "9.1.5.0"
-gem "warbler"
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
