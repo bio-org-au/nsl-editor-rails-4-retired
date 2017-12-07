@@ -1,20 +1,24 @@
 <div>
-  <%= render partial: "instances/workspace/widgets/placement_indicator", locals: {tree_version_element: @tree_version_element} %>
+  <%= render partial: "instances/workspace/widgets/placement_indicator", locals: { tree_version_element: @tree_version_element } %>
 
   <dl class="dl-horizontal">
     <dt>Full Name</dt>
     <dd><%= @tree_version_element.tree_element.name.full_name_html.html_safe %></dd>
     <dt>Reference</dt>
     <dd><%= @tree_version_element.tree_element.instance.reference.citation %></dd>
-    <% if @tree_version_element.tree_element.comment? %>
-        <dt><%= @tree_version_element.tree_element.comment_key %></dt>
-        <dd><%= @tree_version_element.tree_element.comment_value.html_safe %></dd>
-
-    <% end %>
-    <% if @tree_version_element.tree_element.distribution? %>
-        <dt><%= @tree_version_element.tree_element.distribution_key %></dt>
-        <dd><%= @tree_version_element.tree_element.distribution_value %></dd>
-    <% end %>
+    <dt><%= @tree_version_element.comment_key %></dt>
+    <!-- important don't indent the comment line below -->
+    <dd>
+      <div id="treecomment" title="click to edit" data-pk="<%= @tree_version_element.id %>">
+<%= @tree_version_element.comment&.html_safe %>
+      </div>
+    </dd>
+    <dt><%= @tree_version_element.distribution_key %></dt>
+    <dd>
+      <div id="treedistribution" title="click to edit" data-pk="<%= @tree_version_element.id %>">
+<%= @tree_version_element.distribution %>
+      </div>
+    </dd>
     <dt>Under</dt>
     <dd>
       <%= link_to("<i class=\"fa fa-sitemap\"></i> #{search_icon_on_tab}
@@ -41,3 +45,25 @@
 </div>
 
 <%= "<strong>#{@tree_version_element.count_children} Sub taxa</strong>".html_safe %>
+<script>
+  $.fn.editable.defaults.mode = 'inline';
+  $.fn.editableform.buttons =
+      '<button type="submit" class="btn btn-success editable-submit btn-mini">Save <i class="fa fa-check"></i></button>' +
+      '<button type="button" class="btn editable-cancel btn-mini">Close <i class="fa fa-close"></i></button>';
+  $('#treecomment').editable({
+      type: 'textarea',
+      title: 'Edit comment',
+      url: '/trees/update_comment',
+      tpl: '<textarea title="edit comment"></textarea>',
+      showbuttons: 'bottom',
+      rows: 5
+  });
+  $('#treedistribution').editable({
+      type: 'textarea',
+      title: 'Edit distribution',
+      url: '/trees/update_distribution',
+      tpl: '<textarea title="edit distribution"></textarea>',
+      showbuttons: 'bottom',
+      rows: 5
+  });
+</script>

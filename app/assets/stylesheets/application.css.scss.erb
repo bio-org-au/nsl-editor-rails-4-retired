@@ -1,11 +1,9 @@
-
 $light-slate-blue-hex: #8470ff;
 $slate-blue-hex: #6A5ACD;
 $nsl-theme-color: #606060;
 $nsl-highlight-color: $nsl-theme-color;
 $nsl-main-background-color: white;
 $font-size-base: 14px;
-
 
 $nsl-navbar-active-background: white;
 $nsl-navbar-background: gray;
@@ -16,7 +14,6 @@ $body-bg: white;
 
 $nsl-showing-details-background: #808080;
 
-
 $grid-columns: 12;
 $brand-primary: $nsl-theme-color;
 $nsl-toolbar-color: lightgray;
@@ -24,7 +21,7 @@ $table-condensed-cell-padding: 5px;
 $table-cell-padding: 6px;
 
 $padding-base-vertical: 2px; /* Bootstrap uses this to calculate input field height. Default is 6px. */
-$input-color-placeholder: rgba(156,57,255,0.3);
+$input-color-placeholder: rgba(156, 57, 255, 0.3);
 
 $development-color: #696076;
 $test-color: #663399;
@@ -35,7 +32,7 @@ $staging-color: #6699cc;
 @import "bootstrap";
 @import "dashboard";
 @import "layout-using-dashboard";
-@import "search-result-details"; 
+@import "search-result-details";
 @import "stylish";
 @import "media";
 @import "width-primitives";
@@ -47,12 +44,13 @@ $staging-color: #6699cc;
 @import "search-form";
 @import "tree-placement";
 @import "environment";
+@import "bootstrap-editable";
 
 // possibly this should not be here, instead the tree search results page should declare it as a dependency
 @import "tree-extras/tree";
 
 // @import "debug";
- 
+
 .btn {
   height: 1.8em;
   padding-top: 2px;
@@ -169,7 +167,7 @@ div.dropdown {
 
 #searchbar div.dropdown ul.dropdown-menu li a,
 #searchbar li a,
-#searchbar li  {
+#searchbar li {
   color: black;
 }
 
@@ -179,7 +177,7 @@ div.dropdown {
   color: grey;
 }
 
-.dropdown-menu > li a{
+.dropdown-menu > li a {
   padding: 0;
 }
 
@@ -187,14 +185,38 @@ div.dropdown {
 // http://www.bootply.com/86684# 
 // via: http://stackoverflow.com/questions/18023493/bootstrap-3-dropdown-sub-menu-missing
 
-.dropdown-submenu{position:relative;}
-.dropdown-submenu>.dropdown-menu{top:0;left:100%;margin-top:-6px;margin-left:-1px;-webkit-border-radius:0 6px 6px 6px;-moz-border-radius:0 6px 6px 6px;border-radius:0 6px 6px 6px;}
+.dropdown-submenu {
+  position: relative;
+}
 
+.dropdown-submenu > .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  -webkit-border-radius: 0 6px 6px 6px;
+  -moz-border-radius: 0 6px 6px 6px;
+  border-radius: 0 6px 6px 6px;
+}
 
-.dropdown-submenu:hover>.dropdown-menu{display:block;}
+.dropdown-submenu:hover > .dropdown-menu {
+  display: block;
+}
 
+.dropdown-submenu > a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
 
-.dropdown-submenu>a:after{display:block;content:" ";float:right;width:0;height:0;border-color:transparent;border-style:solid;border-width:5px 0 5px 5px;border-left-color:#cccccc;margin-top:5px;margin-right:-10px;}
 li.dropdown-submenu ul.dropdown-menu {
   max-height: 30em;
   overflow-y: scroll;
@@ -228,6 +250,7 @@ table.search-results td.text a {
   padding-top: 4px;
   font-size: 13px;
 }
+
 table.search-results td.nsl-tiny-icon-container {
   padding-bottom: 0;
   padding-top: 11px;
@@ -314,7 +337,7 @@ div#query-form-container {
 }
 
 tr.search-result.fresh td.main-content {
-  background: rgb(238,238,255);
+  background: rgb(238, 238, 255);
 }
 
 .message-container {
@@ -404,6 +427,7 @@ ul.nav-tabs li.active a.tab {
   border-right: 1px solid lightgray;
   border-left: 1px solid lightgray;
 }
+
 ul.nav-tabs li.semi-active a.tab {
   border-top: 1px solid lightgray;
   border-right: 1px solid lightgray;
@@ -442,7 +466,6 @@ div.focus-details span.twitter-typeahead {
   font-weight: bold;
 }
 
-
 .message-container {
   color: green;
 }
@@ -460,11 +483,12 @@ table.rules-table td {
   vertical-align: top;
   padding: 0 0.5em 0 0.5em;
 }
+
 table.rules-table td.fill-to-show-not-relevant {
   background: lightgray
 }
 
-li.dropdown span.information  {
+li.dropdown span.information {
   padding-left: 1em;
 }
 
@@ -523,7 +547,7 @@ div#navbar-header a.navbar-brand {
   margin: 0;
 }
 
-div#xflash{
+div#xflash {
   position: fixed;
   top: 85px;
   left: 16px;
@@ -551,7 +575,7 @@ a.dropdown-toggle:focus {
 }
 
 a.disabled {
-    pointer-events: none;
+  pointer-events: none;
 }
 
 .margin-top-1em {
@@ -592,4 +616,31 @@ a.disabled {
 
 .typeahead-container {
   margin-bottom: 1em;
+}
+
+// editable input overrides
+
+.editable-container.editable-inline,
+.editableform .control-group,
+.editable-input {
+  display: block;
+  width: 100%;
+}
+
+.form-control.input-large {
+  width: 100%;
+}
+
+.editable.editable-pre-wrapped {
+  white-space: normal;
+}
+
+.editable-click {
+  margin-bottom: 0.5em;
+  border-bottom: none;
+}
+
+.editable-click:hover {
+  margin-bottom: 0.4em;
+  border-bottom:  dashed 0.1em #696076;
 }

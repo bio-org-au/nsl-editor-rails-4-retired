@@ -66,7 +66,16 @@ class TreeElement < ActiveRecord::Base
     profile[comment_key]["value"]
   end
 
-  def profile_key(regex)
-    profile.keys.find { |key| !(regex =~ key).nil? } if profile.present?
+  def profile_value(key_string)
+    key = profile_key(key_string)
+    if key
+      profile[key]["value"]
+    else
+      ""
+    end
+  end
+
+  def profile_key(key_string)
+    profile.keys.find { |key| key_string == key } if profile.present?
   end
 end

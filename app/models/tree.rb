@@ -44,4 +44,10 @@ class Tree < ActiveRecord::Base
         .order("tree.name")
   end
 
+  def config?
+    self.config.present?
+  end
+
+
+
 end

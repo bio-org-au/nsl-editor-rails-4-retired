@@ -50,6 +50,30 @@ where tve.tree_version_id = ?
   and te.tree_path ~ ?", tree_version_id, pattern]).first['c']
   end
 
+  def comment_key
+    tree_version.tree.config["comment_key"]
+  end
+
+  def comment?
+    tree_element.profile_key(comment_key).present?
+  end
+
+  def comment
+    tree_element.profile_value(comment_key)
+  end
+
+  def distribution_key
+    tree_version.tree.config? ? tree_version.tree.config["distribution_key"] : "Dist."
+  end
+
+  def distribution?
+    tree_element.profile_key(distribution_key).present?
+  end
+
+  def distribution
+    tree_element.profile_value(distribution_key)
+  end
+
   # returns a record containing identifying information to edit the distribution
   def distribution_record
     record = {}

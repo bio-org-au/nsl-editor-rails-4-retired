@@ -28,6 +28,7 @@
 //= require recursionhelper.js
 //= require typeahead.bundle.js
 //= require bloodhounds.js
+//= require bootstrap-editable.js
 //= require typeahead/for_name/author_by_abbrev/author.js
 //= require typeahead/for_name/author_by_abbrev/base_author.js
 //= require typeahead/for_name/author_by_abbrev/ex_author.js

@@ -79,24 +79,59 @@ class TreesController < ApplicationController
     render "remove_placement_error.js"
   end
 
-  def update_value
-    @response = @working_draft
-                    .update_value(username,
-                                  params[:tree_workspace][:name_id],
-                                  params[:tree_workspace][:value_label],
-                                  params[:value])
-  rescue => e
-    logger.error e
-    render "update_value_error", status: 422
+  def update_comment
+    logger.info "update comment #{params[:pk]} #{params[:value]}"
+    tve = TreeVersionElement.find(params[:pk])
+    profile = if tve.comment?
+                update_profile tve, tve.comment_key
+              else
+                add_to_profile tve, tve.comment_key
+              end
+    profile.update
+  rescue RestClient::Unauthorized, RestClient::Forbidden, RestClient::ExceptionWithResponse => e
+    @message = json_error(e)
+    render :text => @message, :status => 401
+  end
+
+  def update_distribution
+    logger.info "update distribution #{params[:pk]} #{params[:value]}"
+    tve = TreeVersionElement.find(params[:pk])
+    profile = update_profile tve, tve.distribution_key
+    profile.update
+  rescue RestClient::Unauthorized, RestClient::Forbidden, RestClient::ExceptionWithResponse => e
+    @message = json_error(e)
+    render :text => @message, :status => 401
   end
 
   private
+
+  def update_profile(tve, key)
+    data = tve.tree_element.profile
+    current_key_data = data[key]
+    data[key] = { value: params[:value],
+                  updated_by: current_user.username,
+                  updated_at: Time.now.utc.iso8601,
+                  previous: current_key_data }
+    Tree::Workspace::Profile.new(username: current_user.username,
+                                 element_link: tve.element_link,
+                                 profile_data: data)
+  end
+
+  def add_to_profile(tve, key)
+    profile_data = tve.tree_element.profile
+    profile_data[key] = { value: params[:value],
+                          updated_by: current_user.username,
+                          updated_at: Time.now.utc.iso8601 }
+    Tree::Workspace::Profile.new(username: current_user.username,
+                                 element_link: tve.element_link,
+                                 profile_data: profile_data)
+  end
 
   def json_error(err)
     Rails.logger.error(err)
     json = JSON.parse(err.http_body, object_class: OpenStruct)
     if json&.error
-      json.error.gsub(/\n/,'<br>')
+      json.error.gsub(/\n/, '<br>')
     else
       json&.to_s || err.to_s
     end
@@ -146,8 +181,7 @@ class TreesController < ApplicationController
     params.require(:move_placement)
         .permit(:element_link,
                 :parent_element_link,
-                :instance_id
-        )
+                :instance_id)
   end
 
   def place_name_params
@@ -161,5 +195,9 @@ class TreesController < ApplicationController
   def remove_name_placement_params
     params.require(:remove_placement).permit(:taxon_uri, :delete)
   end
+
+  def comment_params
+  end
+
 
 end

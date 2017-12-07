@@ -45,15 +45,25 @@
                  locals: { tree_version_element: @accepted_tve }
       %>
       <dl class="dl-horizontal">
-        <% if @accepted_tve.tree_element.comment? %>
-            <dt><%= @accepted_tve.tree_element.comment_key %></dt>
-            <dd><%= @accepted_tve.tree_element.comment_value.html_safe %></dd>
+        <dt><%= @accepted_tve.comment_key %></dt>
+        <dd><%= @accepted_tve.comment.html_safe %></dd>
 
-        <% end %>
-        <% if @accepted_tve.tree_element.distribution? %>
-            <dt><%= @accepted_tve.tree_element.distribution_key %></dt>
-            <dd><%= @accepted_tve.tree_element.distribution_value %></dd>
-        <% end %>
+        <dt><%= @accepted_tve.distribution_key %></dt>
+        <dd><%= @accepted_tve.distribution %></dd>
+
+        <dt>Element link</dt>
+        <dd>
+          <a href="<%= @accepted_tve.element_link %>" title="Tree element link id">
+            <i class="fa fa-code-fork"></i> ... <%= @accepted_tve.element_link[/\/tree.*$/] %>
+          </a>
+        </dd>
+
+        <dt>Taxon link</dt>
+        <dd>
+          <a href="<%= @accepted_tve.taxon_link %>" title="Taxon link id">
+            <i class="fa fa-tree"></i> ... <%= @accepted_tve.taxon_link[-18..-1] %>
+          </a>
+        </dd>
       </dl>
     </div>
 <% end %>

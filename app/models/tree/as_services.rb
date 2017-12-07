@@ -22,6 +22,7 @@ class Tree::AsServices
   PLACEMENT_PATH = "api/treeElement/placeElement"
   REPLACE_ELEMENT = "api/treeElement/replaceElement"
   REMOVE_PLACEMENT = "api/treeElement/removeElement"
+  UPDATE_PROFILE ="api/treeElement/editElementProfile"
   API_KEY = "apiKey=#{Rails.configuration.api_key}"
   PREFERRED_LINK = "broker/preferredLink"
 
@@ -41,5 +42,9 @@ class Tree::AsServices
     ShardConfig.name_space
     target = "nameSpace=#{ShardConfig.name_space.downcase}&objectType=instance&idNumber=#{instance_id}"
     "#{LINKER_ADDRESS}#{PREFERRED_LINK}?#{target}"
+  end
+
+  def self.profile_url(username)
+    "#{SERVICES_ADDRESS}#{UPDATE_PROFILE}?#{API_KEY}&as=#{username}"
   end
 end

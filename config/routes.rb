@@ -166,8 +166,8 @@ Rails.application.routes.draw do
   match "authors/:id/tab/:tab", as: "author_tab", to: "authors#tab", via: :get
   resources :authors, only: [:new, :create, :update, :destroy]
   match "authors/:id", as: "author_show",
-                       to: "authors#show",
-                       via: :get, defaults: { tab: "tab_show_1" }
+        to: "authors#show",
+        via: :get, defaults: { tab: "tab_show_1" }
 
   match "references/typeahead/on_citation/duplicate_of/:id",
         as: "references_typeahead_on_citation_duplicate_of_current",
@@ -223,22 +223,36 @@ Rails.application.routes.draw do
         via: :post
 
   match "trees/ng/:template", as: "tree_ng", to: "trees#ng", via: :get
-  match "tree_arrangement/:id/remove_name_placement",
-        as: "tree_arrangement_remove_name",
-        to: "trees#remove_name_placement", via: :delete
-  match "tree_arrangement/:id/place_name",
-        as: "tree_arrangement_place_name", to: "trees#place_name", via: [:patch, :post]
-  match "tree_arrangement/:id/replace_placement",
-        as: "tree_arrangement_move_placement", to: "trees#replace_placement", via: [:patch, :post]
+
+  match "trees/:id/remove_name_placement",
+        as: "tree_remove_name",
+        to: "trees#remove_name_placement",
+        via: :delete
+
+  match "trees/:id/place_name",
+        as: "tree_place_name",
+        to: "trees#place_name",
+        via: [:patch, :post]
+
+  match "trees/:id/replace_placement",
+        as: "tree_replace_placement",
+        to: "trees#replace_placement",
+        via: [:patch, :post]
+
   match "trees/workspace/current",
         as: "toggle_current_workspace",
         to: "trees/workspaces/current#toggle",
         via: :post
 
-  match "tree/value/:id",
-        as: "update_tree_value",
-        to: "workspace_values#old_update",
-        via: :patch
+  match "trees/update_comment",
+        as: "tree_update_comment",
+        to: "trees#update_comment",
+        via: :post
+
+  match "trees/update_distribution",
+        as: "tree_update_distribution",
+        to: "trees#update_distribution",
+        via: :post
 
   match "workspace/value",
         as: "workspace_value",
