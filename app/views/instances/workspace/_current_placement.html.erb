@@ -53,7 +53,7 @@
   $('#treecomment').editable({
       type: 'textarea',
       title: 'Edit comment',
-      url: '/trees/update_comment',
+      url: window.relative_url_root + '/trees/update_comment',
       tpl: '<textarea title="edit comment"></textarea>',
       showbuttons: 'bottom',
       rows: 5
@@ -61,7 +61,7 @@
   $('#treedistribution').editable({
       type: 'textarea',
       title: 'Edit distribution',
-      url: '/trees/update_distribution',
+      url: window.relative_url_root + '/trees/update_distribution',
       tpl: '<textarea title="edit distribution"></textarea>',
       showbuttons: 'bottom',
       rows: 5
