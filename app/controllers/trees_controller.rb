@@ -96,8 +96,23 @@ class TreesController < ApplicationController
   def update_distribution
     logger.info "update distribution #{params[:pk]} #{params[:value]}"
     tve = TreeVersionElement.find(params[:pk])
-    profile = update_profile tve, tve.distribution_key
+    profile = if tve.distribution?
+                update_profile tve, tve.distribution_key
+              else
+                add_to_profile tve, tve.distribution_key
+              end
+
     profile.update
+  rescue RestClient::Unauthorized, RestClient::Forbidden, RestClient::ExceptionWithResponse => e
+    @message = json_error(e)
+    render :text => @message, :status => 401
+  end
+
+  def update_excluded
+    logger.info "update excluded #{params[:taxonUri]} #{params[:excluded]}"
+    Tree::Workspace::Excluded.new(username: current_user.username,
+                                 element_link: params[:taxonUri],
+                                 excluded: params[:excluded]).update
   rescue RestClient::Unauthorized, RestClient::Forbidden, RestClient::ExceptionWithResponse => e
     @message = json_error(e)
     render :text => @message, :status => 401
@@ -118,7 +133,7 @@ class TreesController < ApplicationController
   end
 
   def add_to_profile(tve, key)
-    profile_data = tve.tree_element.profile
+    profile_data = tve.tree_element.profile || {}
     profile_data[key] = { value: params[:value],
                           updated_by: current_user.username,
                           updated_at: Time.now.utc.iso8601 }

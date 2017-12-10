@@ -2,6 +2,12 @@
   <%= render partial: "instances/workspace/widgets/placement_indicator", locals: { tree_version_element: @tree_version_element } %>
 
   <dl class="dl-horizontal">
+    <dt>Excluded</dt>
+    <dd>
+      <input type="checkbox" title="Excluded" name="ExcludedElement"
+             <%= (@tree_version_element.tree_element.excluded ? 'checked' : '').html_safe %>
+             onchange="updateExcluded(this, '<%= @tree_version_element.element_link %>');"/>
+    </dd>
     <dt>Full Name</dt>
     <dd><%= @tree_version_element.tree_element.name.full_name_html.html_safe %></dd>
     <dt>Reference</dt>
@@ -66,4 +72,12 @@
       showbuttons: 'bottom',
       rows: 5
   });
+  function updateExcluded(input, taxonUri) {
+      var data = {
+          excluded: input.checked,
+          taxonUri: taxonUri
+      };
+      $(input).replaceWith("<i class='fa fa-refresh fa-spin'></i>");
+      send(data, "POST", window.relative_url_root + "/trees/update_excluded");
+  }
 </script>

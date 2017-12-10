@@ -23,6 +23,7 @@ class Tree::AsServices
   REPLACE_ELEMENT = "api/treeElement/replaceElement"
   REMOVE_PLACEMENT = "api/treeElement/removeElement"
   UPDATE_PROFILE ="api/treeElement/editElementProfile"
+  UPDATE_EXCLUDED = "api/treeElement/editElementStatus"
   API_KEY = "apiKey=#{Rails.configuration.api_key}"
   PREFERRED_LINK = "broker/preferredLink"
 
@@ -46,5 +47,9 @@ class Tree::AsServices
 
   def self.profile_url(username)
     "#{SERVICES_ADDRESS}#{UPDATE_PROFILE}?#{API_KEY}&as=#{username}"
+  end
+
+  def self.excluded_url(username)
+    "#{SERVICES_ADDRESS}#{UPDATE_EXCLUDED}?#{API_KEY}&as=#{username}"
   end
 end

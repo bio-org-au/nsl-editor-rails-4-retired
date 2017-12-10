@@ -254,6 +254,11 @@ Rails.application.routes.draw do
         to: "trees#update_distribution",
         via: :post
 
+  match "trees/update_excluded",
+        as: "tree_update_excluded",
+        to: "trees#update_excluded",
+        via: :post
+
   match "workspace/value",
         as: "workspace_value",
         to: "workspace_values#update",
