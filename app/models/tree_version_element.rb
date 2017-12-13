@@ -41,13 +41,12 @@ class TreeVersionElement < ActiveRecord::Base
   end
 
   def count_children
-    pattern = "^#{tree_element.tree_path}/.*"
+    pattern = "^#{tree_path}/.*"
 
     TreeVersionElement.find_by_sql(["select count(tve) c
 from tree_version_element tve
-  join tree_element te on tve.tree_element_id = te.id
 where tve.tree_version_id = ?
-  and te.tree_path ~ ?", tree_version_id, pattern]).first['c']
+  and tve.tree_path ~ ?", tree_version_id, pattern]).first['c']
   end
 
   def comment_key

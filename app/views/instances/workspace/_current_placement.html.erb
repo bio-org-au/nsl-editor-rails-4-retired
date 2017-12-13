@@ -16,24 +16,28 @@
     <!-- important don't indent the comment line below -->
     <dd>
       <div id="treecomment" title="click to edit" data-pk="<%= @tree_version_element.id %>">
-<%= @tree_version_element.comment&.html_safe %>
+        <%= @tree_version_element.comment&.html_safe %>
       </div>
     </dd>
     <dt><%= @tree_version_element.distribution_key %></dt>
     <dd>
       <div id="treedistribution" title="click to edit" data-pk="<%= @tree_version_element.id %>">
-<%= @tree_version_element.distribution %>
+        <%= @tree_version_element.distribution %>
       </div>
     </dd>
+    <dt>Path</dt>
+    <dd><%= @tree_version_element.tree_element.name_path %></dd>
     <dt>Under</dt>
     <dd>
-      <%= link_to("<i class=\"fa fa-sitemap\"></i> #{search_icon_on_tab}
-                  #{@tree_version_element.tree_element.parent_element.instance.name.try('full_name')}"
-                      .html_safe,
-                  search_path(query_target: 'name',
-                              query_string: "id: #{@tree_version_element.tree_element.parent_element.name_id} show-instances:"),
-                  title: 'Search for the parent with its instances',
-                  class: 'name') %>
+      <% if @tree_version_element.tree_element.parent_element %>
+        <%= link_to("<i class=\"fa fa-sitemap\"></i> #{search_icon_on_tab}
+                    #{@tree_version_element.tree_element&.parent_element&.instance&.name&.try('full_name')}"
+                        .html_safe,
+                    search_path(query_target: 'name',
+                                query_string: "id: #{@tree_version_element.tree_element.parent_element.name_id} show-instances:"),
+                    title: 'Search for the parent with its instances',
+                    class: 'name') %>
+      <% end %>
     </dd>
     <dt>Element link</dt>
     <dd>
@@ -52,32 +56,35 @@
 
 <%= "<strong>#{@tree_version_element.count_children} Sub taxa</strong>".html_safe %>
 <script>
-  $.fn.editable.defaults.mode = 'inline';
-  $.fn.editableform.buttons =
-      '<button type="submit" class="btn btn-success editable-submit btn-mini">Save <i class="fa fa-check"></i></button>' +
-      '<button type="button" class="btn editable-cancel btn-mini">Close <i class="fa fa-close"></i></button>';
-  $('#treecomment').editable({
-      type: 'textarea',
-      title: 'Edit comment',
-      url: window.relative_url_root + '/trees/update_comment',
-      tpl: '<textarea title="edit comment"></textarea>',
-      showbuttons: 'bottom',
-      rows: 5
-  });
-  $('#treedistribution').editable({
-      type: 'textarea',
-      title: 'Edit distribution',
-      url: window.relative_url_root + '/trees/update_distribution',
-      tpl: '<textarea title="edit distribution"></textarea>',
-      showbuttons: 'bottom',
-      rows: 5
-  });
-  function updateExcluded(input, taxonUri) {
-      var data = {
-          excluded: input.checked,
-          taxonUri: taxonUri
-      };
-      $(input).replaceWith("<i class='fa fa-refresh fa-spin'></i>");
-      send(data, "POST", window.relative_url_root + "/trees/update_excluded");
-  }
+    $.fn.editable.defaults.mode = 'inline';
+    $.fn.editableform.buttons =
+        '<button type="submit" class="btn btn-success editable-submit btn-mini">Save <i class="fa fa-check"></i></button>' +
+        '<button type="button" class="btn editable-cancel btn-mini">Close <i class="fa fa-close"></i></button>';
+    $('#treecomment').editable({
+        type: 'textarea',
+        title: 'Edit comment',
+        url: window.relative_url_root + '/trees/update_comment',
+        tpl: '<textarea title="edit comment"></textarea>',
+        showbuttons: 'bottom',
+        rows: 5,
+        success : function() {$('#instance-classification-tab').click();}
+    });
+    $('#treedistribution').editable({
+        type: 'textarea',
+        title: 'Edit distribution',
+        url: window.relative_url_root + '/trees/update_distribution',
+        tpl: '<textarea title="edit distribution"></textarea>',
+        showbuttons: 'bottom',
+        rows: 5,
+        success : function() {$('#instance-classification-tab').click();}
+    });
+
+    function updateExcluded(input, taxonUri) {
+        var data = {
+            excluded: input.checked,
+            taxonUri: taxonUri
+        };
+        $(input).replaceWith("<i class='fa fa-refresh fa-spin'></i>");
+        send(data, "POST", window.relative_url_root + "/trees/update_excluded");
+    }
 </script>

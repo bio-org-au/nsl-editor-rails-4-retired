@@ -122,6 +122,19 @@ class TreesController < ApplicationController
 
   def update_profile(tve, key)
     data = tve.tree_element.profile
+    if params[:value].present?
+      data[key] = { value: params[:value] }
+    else
+      data.delete(key)
+    end
+    Tree::Workspace::Profile.new(username: current_user.username,
+                                 element_link: tve.element_link,
+                                 profile_data: data)
+  end
+
+  # todo determine if this should be removed.
+  def minor_update_profile(tve, key)
+    data = tve.tree_element.profile
     current_key_data = data[key]
     data[key] = { value: params[:value],
                   updated_by: current_user.username,

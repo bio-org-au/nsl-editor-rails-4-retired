@@ -45,11 +45,26 @@
                  locals: { tree_version_element: @accepted_tve }
       %>
       <dl class="dl-horizontal">
+        <dt>Path</dt>
+        <dd><%= @accepted_tve.tree_element.name_path %></dd>
         <dt><%= @accepted_tve.comment_key %></dt>
         <dd><%= @accepted_tve.comment.html_safe %></dd>
 
         <dt><%= @accepted_tve.distribution_key %></dt>
         <dd><%= @accepted_tve.distribution %></dd>
+
+        <dt>Under</dt>
+        <dd>
+          <% if @accepted_tve.tree_element.parent_element %>
+            <%= link_to("<i class=\"fa fa-sitemap\"></i> #{search_icon_on_tab}
+                        #{@accepted_tve.tree_element.parent_element.instance.name.try('full_name')}"
+                            .html_safe,
+                        search_path(query_target: 'name',
+                                    query_string: "id: #{@accepted_tve.tree_element.parent_element.name_id} show-instances:"),
+                        title: 'Search for the parent with its instances',
+                        class: 'name') %>
+          <% end %>
+        </dd>
 
         <dt>Element link</dt>
         <dd>
