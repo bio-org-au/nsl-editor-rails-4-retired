@@ -11,7 +11,7 @@
            title="Select a name from the suggestions as you type."
            required
            placeholder="Name suggestions"
-           value="<%= @tree_version_element&.tree_element&.parent_element&.name&.full_name %>"/>
+           value="<%= @tree_version_element&.parent&.tree_element&.name&.full_name %>"/>
     <span class="small">You must select from the drop down list.</span>
     <label class="custom-control custom-checkbox pull-right">
       Allow higher ranks

@@ -29,12 +29,12 @@
     <dd><%= @tree_version_element.tree_element.name_path %></dd>
     <dt>Under</dt>
     <dd>
-      <% if @tree_version_element.tree_element.parent_element %>
+      <% if @tree_version_element.parent %>
         <%= link_to("<i class=\"fa fa-sitemap\"></i> #{search_icon_on_tab}
-                    #{@tree_version_element.tree_element&.parent_element&.instance&.name&.try('full_name')}"
+                    #{@tree_version_element.parent&.tree_element&.instance&.name&.try('full_name')}"
                         .html_safe,
                     search_path(query_target: 'name',
-                                query_string: "id: #{@tree_version_element.tree_element.parent_element.name_id} show-instances:"),
+                                query_string: "id: #{@tree_version_element.parent.tree_element.name_id} show-instances:"),
                     title: 'Search for the parent with its instances',
                     class: 'name') %>
       <% end %>

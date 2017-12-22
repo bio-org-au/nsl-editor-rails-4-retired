@@ -55,12 +55,12 @@
 
         <dt>Under</dt>
         <dd>
-          <% if @accepted_tve.tree_element.parent_element %>
+          <% if @accepted_tve.parent.tree_element %>
             <%= link_to("<i class=\"fa fa-sitemap\"></i> #{search_icon_on_tab}
-                        #{@accepted_tve.tree_element.parent_element.instance.name.try('full_name')}"
+                        #{@accepted_tve.parent.tree_element.instance.name.try('full_name')}"
                             .html_safe,
                         search_path(query_target: 'name',
-                                    query_string: "id: #{@accepted_tve.tree_element.parent_element.name_id} show-instances:"),
+                                    query_string: "id: #{@accepted_tve.parent.tree_element.name_id} show-instances:"),
                         title: 'Search for the parent with its instances',
                         class: 'name') %>
           <% end %>
