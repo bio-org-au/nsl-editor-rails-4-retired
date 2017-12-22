@@ -22,25 +22,12 @@ class TreeElement < ActiveRecord::Base
   self.primary_key = "id"
   self.sequence_name = "nsl_global_seq"
 
-  belongs_to :parent_element, class_name: "TreeElement"
-
   belongs_to :instance, class_name: "Instance"
 
   belongs_to :name, class_name: "Name"
 
   has_many :tree_version_elements,
            foreign_key: "tree_element_id"
-
-  def ordered_rank_path
-    ranks = NameRank.where("name in (:keyset)", keyset: rank_path.keys)
-                .order("sort_order").select("name")
-    ranks.collect { |key| rank_path[key.name]["id"] }
-  end
-
-  # Aim is to supply name objects in tree order while avoiding n-queries.
-  def tree_ordered_names
-    ordered_rank_path.collect { |item| Name.includes(:name_rank).find(item) }
-  end
 
   def distribution_value
     profile[distribution_key]["value"]

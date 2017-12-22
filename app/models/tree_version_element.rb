@@ -48,6 +48,32 @@ where tve.tree_version_id = ?
   and tve.tree_path ~ ?", tree_version_id, pattern]).first['c']
   end
 
+  # Aim is to supply name objects in tree order while avoiding n-queries.
+  def tree_ordered_name_ids
+    Name.find_by_sql(["
+with RECURSIVE walk (name_id, rank, parent_id) as (
+  SELECT
+    te.name_id,
+    te.rank,
+    tve.parent_id
+  from tree_version_element tve join tree_element te on tve.tree_element_id = te.id
+  where element_link = ?
+  UNION ALL
+  SELECT
+    te.name_id,
+    te.rank,
+    tve.parent_id
+  from walk, tree_version_element tve join tree_element te on tve.tree_element_id = te.id
+  where element_link = walk.parent_id
+)
+select name_id from walk", element_link])
+  end
+
+  def tree_ordered_names
+    name_ids = tree_ordered_name_ids
+    name_ids.collect {|nameId| Name.includes(:name_rank).find(nameId.name_id)}
+  end
+
   def comment_key
     tree_version.tree.config["comment_key"]
   end

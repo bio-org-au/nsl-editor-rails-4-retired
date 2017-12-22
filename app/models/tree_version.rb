@@ -52,7 +52,7 @@ class TreeVersion < ActiveRecord::Base
     tree_version_elements
         .joins(:tree_element)
         .where(["lower(tree_element.simple_name) like lower(?) and tree_element.rank in (?)", term, rank_names])
-        .merge(TreeElement.order(:name_path))
+        .order(:name_path)
         .limit(15)
   end
 
