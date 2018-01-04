@@ -123,7 +123,7 @@ class TreesController < ApplicationController
   def update_profile(tve, key)
     data = tve.tree_element.profile
     if params[:value].present?
-      data[key] = { value: params[:value] }
+      data[key]['value'] = params[:value]
     else
       data.delete(key)
     end

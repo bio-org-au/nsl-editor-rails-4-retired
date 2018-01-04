@@ -57,6 +57,7 @@
 <%= "<strong>#{@tree_version_element.count_children} Sub taxa</strong>".html_safe %>
 <script>
     $.fn.editable.defaults.mode = 'inline';
+    $.fn.editable.defaults.escape = false;
     $.fn.editableform.buttons =
         '<button type="submit" class="btn btn-success editable-submit btn-mini">Save <i class="fa fa-check"></i></button>' +
         '<button type="button" class="btn editable-cancel btn-mini">Close <i class="fa fa-close"></i></button>';
