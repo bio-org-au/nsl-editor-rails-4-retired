@@ -16,6 +16,7 @@
 //= require jquery_ujs
 //= require bootstrap-sprockets
 //= require fresh.js
+//= require showdown.min.js
 //= require main.js
 //= require navigation.js
 //= require keymaster.js

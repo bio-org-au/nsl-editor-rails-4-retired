@@ -95,3 +95,8 @@ function send(data, method, url) {
         }
     });
 }
+
+function markdown(text) {
+    var converter = new showdown.Converter();
+    return converter.makeHtml(text);
+}

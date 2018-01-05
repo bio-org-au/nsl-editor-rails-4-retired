@@ -1,4 +1,8 @@
 $('#placement-message-container').addClass('hidden').html("");
-$('#placement-error-message-container').removeClass('hidden').html("<%= @message %>");
+
+var html_source = markdown("<%= @message.html_safe.gsub(/\n/, '\\n') %>");
+console.log(html_source);
+
+$('#placement-error-message-container').removeClass('hidden').html(html_source);
 $('#new_name_placement_btn').find('i.fa').removeClass('fa-spin');
 

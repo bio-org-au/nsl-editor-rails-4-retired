@@ -111,8 +111,8 @@ class TreesController < ApplicationController
   def update_excluded
     logger.info "update excluded #{params[:taxonUri]} #{params[:excluded]}"
     Tree::Workspace::Excluded.new(username: current_user.username,
-                                 element_link: params[:taxonUri],
-                                 excluded: params[:excluded]).update
+                                  element_link: params[:taxonUri],
+                                  excluded: params[:excluded]).update
   rescue RestClient::Unauthorized, RestClient::Forbidden, RestClient::ExceptionWithResponse => e
     @message = json_error(e)
     render :text => @message, :status => 401
@@ -156,10 +156,11 @@ class TreesController < ApplicationController
   end
 
   def json_error(err)
-    Rails.logger.error(err)
+    logger.error(err)
     json = JSON.parse(err.http_body, object_class: OpenStruct)
     if json&.error
-      json.error.gsub(/\n/, '<br>')
+      logger.error(json.error)
+      json.error
     else
       json&.to_s || err.to_s
     end
@@ -177,7 +178,11 @@ class TreesController < ApplicationController
   def placement_json_result(result)
     json = JSON.parse(result.body, object_class: OpenStruct)
     msg = json&.payload&.message
-    "#{msg} Warnings: #{json&.payload&.warnings}" if json&.payload&.warnings
+    if json&.payload&.warnings && !json.payload.warnings.empty?
+      "#{msg}\n -- Warnings:\n\n #{json&.payload&.warnings}"
+    else
+      msg
+    end
   rescue
     result.to_s
   end

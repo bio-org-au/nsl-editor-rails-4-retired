@@ -1,5 +1,7 @@
 $('#placement-error-message-container').addClass('hidden').html("");
-$('#placement-message-container').removeClass('hidden').html('<%= "#{@message} - Refreshing tab." %>');
+var html_source = markdown("<%= @message.html_safe.gsub(/\n/, '\\n') %>");
+console.log(html_source);
+$('#placement-message-container').removeClass('hidden').html(html_source + '<p>...Refreshing tab.</p>');
 $('#new_name_placement_btn').find('i.fa').removeClass('fa-spin');
 window.setTimeout(function() {
     $('#instance-classification-tab').click();
