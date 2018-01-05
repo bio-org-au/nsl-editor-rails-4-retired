@@ -2382,7 +2382,7 @@ To create your own input you can inherit from this class.
         @returns {mixed}
        **/
        html2value: function(html) {
-           return $('<div>').html(html).text();
+           return $('<div>').html(html)[this.options.escape ? 'text' : 'html']();
        },
 
        /**
