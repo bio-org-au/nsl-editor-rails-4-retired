@@ -20,6 +20,7 @@ class Tree::AsServices
   SERVICES_ADDRESS = Rails.configuration.services
   LINKER_ADDRESS = Rails.configuration.nsl_linker
   PLACEMENT_PATH = "api/treeElement/placeElement"
+  TOP_PLACEMENT_PATH = "api/treeElement/placeTopElement"
   REPLACE_ELEMENT = "api/treeElement/replaceElement"
   REMOVE_PLACEMENT = "api/treeElement/removeElement"
   UPDATE_PROFILE ="api/treeElement/editElementProfile"
@@ -27,8 +28,12 @@ class Tree::AsServices
   API_KEY = "apiKey=#{Rails.configuration.api_key}"
   PREFERRED_LINK = "broker/preferredLink"
 
-  def self.placement_url(username)
-    "#{SERVICES_ADDRESS}#{PLACEMENT_PATH}?#{API_KEY}&as=#{username}"
+  def self.placement_url(username, top)
+    if top
+      "#{SERVICES_ADDRESS}#{TOP_PLACEMENT_PATH}?#{API_KEY}&as=#{username}"
+    else
+      "#{SERVICES_ADDRESS}#{PLACEMENT_PATH}?#{API_KEY}&as=#{username}"
+    end
   end
 
   def self.replace_placement_url(username)

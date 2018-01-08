@@ -21,17 +21,21 @@ class Tree::Workspace::Placement < ActiveType::Object
   attribute :parent_element_link, :string
   attribute :excluded, :boolean
   attribute :username, :string
+  attribute :version_id, :integer
 
   validates :instance_id, presence: true
-  validates :parent_element_link, presence: true
+  # validates :parent_element_link, presence: true
   validates :username, presence: true
+  validates :version_id, presence: true
 
   def place
 
     url = build_url
     payload = {instanceUri: instance_url,
                parentElementUri: parent_element_link,
-               excluded: excluded}
+               excluded: excluded,
+               versionId: version_id
+    }
     logger.info "Calling #{url} with #{payload}"
     raise errors.full_messages.first unless valid?
     RestClient.put(url, payload.to_json,
@@ -46,7 +50,7 @@ class Tree::Workspace::Placement < ActiveType::Object
 
 
   def build_url
-    Tree::AsServices.placement_url(username)
+    Tree::AsServices.placement_url(username, parent_element_link.blank?)
   end
 
   def instance_url

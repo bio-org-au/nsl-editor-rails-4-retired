@@ -12,16 +12,20 @@
            tabindex="<%= increment_tab_index %>"
            type="text"
            data-name-id="<%= @instance.name.id %>"
-           data-parent-element-id="<%= @parent_tve.element_link %>"
+           data-parent-element-id="<%= @parent_tve&.element_link %>"
            title="Select a name from the suggestions as you type."
            placeholder="Name suggestions"
-           value="<%= @parent_tve.tree_element.name.full_name %>"/>
+           value="<%= @parent_tve&.tree_element&.name&.full_name %>"/>
   </section>
 
   <script> setUpWorkspaceParentName(); </script>
   <input type="hidden"
          id="workspace_parent_name_id"
          name="place_name[parent_element_link]"
-         value="<%= @parent_tve.element_link %>"/>
+         value="<%= @parent_tve&.element_link %>"/>
+  <input type="hidden"
+         id="workspace_id"
+         name="place_name[version_id]"
+         value="<%= @working_draft.id %>"/>
 </div>
 

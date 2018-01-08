@@ -52,7 +52,8 @@ class TreesController < ApplicationController
     placement = Tree::Workspace::Placement.new(username: current_user.username,
                                                parent_element_link: place_name_params[:parent_element_link],
                                                instance_id: place_name_params[:instance_id],
-                                               excluded: excluded)
+                                               excluded: excluded,
+                                               version_id: place_name_params[:version_id])
     response = placement.place
     @message = placement_json_result(response)
     render "place_name.js"
@@ -222,7 +223,8 @@ class TreesController < ApplicationController
         .permit(:name_id,
                 :instance_id,
                 :parent_element_link,
-                :excluded)
+                :excluded,
+                :version_id)
   end
 
   def remove_name_placement_params
