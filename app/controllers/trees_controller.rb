@@ -49,8 +49,14 @@ class TreesController < ApplicationController
   # Place and instance on the draft tree version
   def place_name
     excluded = place_name_params[:excluded] ? true : false
+    parent_element_link = if place_name_params[:parent_name_typeahead_string].blank?
+                            nil
+                          else
+                            place_name_params[:parent_element_link]
+                          end
+
     placement = Tree::Workspace::Placement.new(username: current_user.username,
-                                               parent_element_link: place_name_params[:parent_element_link],
+                                               parent_element_link: parent_element_link,
                                                instance_id: place_name_params[:instance_id],
                                                excluded: excluded,
                                                version_id: place_name_params[:version_id])
@@ -137,10 +143,10 @@ class TreesController < ApplicationController
   def minor_update_profile(tve, key)
     data = tve.tree_element.profile
     current_key_data = data[key]
-    data[key] = { value: params[:value],
-                  updated_by: current_user.username,
-                  updated_at: Time.now.utc.iso8601,
-                  previous: current_key_data }
+    data[key] = {value: params[:value],
+                 updated_by: current_user.username,
+                 updated_at: Time.now.utc.iso8601,
+                 previous: current_key_data}
     Tree::Workspace::Profile.new(username: current_user.username,
                                  element_link: tve.element_link,
                                  profile_data: data)
@@ -148,9 +154,9 @@ class TreesController < ApplicationController
 
   def add_to_profile(tve, key)
     profile_data = tve.tree_element.profile || {}
-    profile_data[key] = { value: params[:value],
-                          updated_by: current_user.username,
-                          updated_at: Time.now.utc.iso8601 }
+    profile_data[key] = {value: params[:value],
+                         updated_by: current_user.username,
+                         updated_at: Time.now.utc.iso8601}
     Tree::Workspace::Profile.new(username: current_user.username,
                                  element_link: tve.element_link,
                                  profile_data: profile_data)
@@ -224,7 +230,8 @@ class TreesController < ApplicationController
                 :instance_id,
                 :parent_element_link,
                 :excluded,
-                :version_id)
+                :version_id,
+                :parent_name_typeahead_string)
   end
 
   def remove_name_placement_params
