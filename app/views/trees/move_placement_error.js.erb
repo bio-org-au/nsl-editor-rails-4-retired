@@ -1,4 +1,6 @@
 $('#movement-error-message-container').removeClass('hidden');
-$('#movement-error-message').html("<%= @message.html_safe %>");
+var html_source = markdown("<%= @message.html_safe.gsub(/\n/, '\\n') %>");
+console.log(html_source);
+$('#movement-error-message').html(html_source);
 $('#update-name-placement-btn').find('i.fa').removeClass('fa-spin');
 

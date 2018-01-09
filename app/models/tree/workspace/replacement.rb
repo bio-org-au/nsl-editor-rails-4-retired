@@ -37,10 +37,10 @@ class Tree::Workspace::Replacement < ActiveType::Object
     RestClient.put(url, payload.to_json,
                    {content_type: :json, accept: :json})
   rescue RestClient::ExceptionWithResponse => e
-    Rails.logger.error("Tree::Workspace::Movement error: #{e}")
+    Rails.logger.error("Tree::Workspace::Replacement error: #{e}")
     raise
   rescue => e
-    Rails.logger.error("Tree::Workspace::Movement other error: #{e}")
+    Rails.logger.error("Tree::Workspace::Replacement other error: #{e}")
     raise
   end
 
@@ -51,11 +51,9 @@ class Tree::Workspace::Replacement < ActiveType::Object
     json = JSON.parse(response.body, object_class: OpenStruct)
     json.link
   rescue => e
-    Rails.logger.error("Tree::Workspace::Placement error: #{e}")
+    Rails.logger.error("Tree::Workspace::Replacement error: #{e}")
     raise
-
   end
-
 
   def build_url
     Tree::AsServices.replace_placement_url(username)

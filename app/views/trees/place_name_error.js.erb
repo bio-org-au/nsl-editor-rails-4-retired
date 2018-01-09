@@ -1,6 +1,6 @@
 $('#placement-message-container').addClass('hidden').html("");
 
-var html_source = markdown("<%= @message.html_safe.gsub(/\n/, '\\n') %>");
+var html_source = markdown("<%= escape_javascript(@message.html_safe) %>");
 console.log(html_source);
 
 $('#placement-error-message-container').removeClass('hidden').html(html_source);
