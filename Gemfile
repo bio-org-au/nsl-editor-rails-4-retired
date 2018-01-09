@@ -75,7 +75,7 @@ gem "figaro"
 gem "rest-client"
 
 gem "active_type"
-gem "net-ldap"
+gem "net-ldap", "~> 0.16.0"
 
 gem "strip_attributes"
 gem "exception_notification"
