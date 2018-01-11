@@ -1,6 +1,8 @@
 <div>
-  <%= render partial: "instances/workspace/widgets/placement_indicator", locals: { tree_version_element: @tree_version_element } %>
-
+  <%= render partial: "instances/workspace/widgets/placement_indicator", locals: {tree_version_element: @tree_version_element} %>
+  <% if @accepted_tve.tree_element_id != @tree_version_element.tree_element_id %>
+  (changed)
+  <% end %>
   <dl class="dl-horizontal">
     <dt>Excluded</dt>
     <dd>
@@ -51,6 +53,14 @@
         <i class="fa fa-tree"></i> ... <%= @tree_version_element.taxon_link[-18..-1] %>
       </a>
     </dd>
+    <dt>apni format</dt>
+    <dd>
+      <a href="<%= "#{Rails.configuration.nsl_links}apni-format/display/#{@instance.name_id}?versionId=#{@tree_version_element.tree_version.id}" %>"
+         title="apni format" target="_blank">
+        <i class="fa fa-external-link-square"></i>
+        ... <%= "apni-format/display/#{@instance.name_id}" %>
+      </a>
+    </dd>
   </dl>
 </div>
 
@@ -69,7 +79,9 @@
         showbuttons: 'bottom',
         rows: 5,
         escape: false,
-        success : function() {$('#instance-classification-tab').click();}
+        success: function () {
+            $('#instance-classification-tab').click();
+        }
     });
     $('#treedistribution').editable({
         type: 'textarea',
@@ -78,7 +90,9 @@
         tpl: '<textarea title="edit distribution"></textarea>',
         showbuttons: 'bottom',
         rows: 5,
-        success : function() {$('#instance-classification-tab').click();}
+        success: function () {
+            $('#instance-classification-tab').click();
+        }
     });
 
     function updateExcluded(input, taxonUri) {
