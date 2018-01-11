@@ -83,8 +83,8 @@ class ApplicationController < ActionController::Base
                              full_name: session[:user_full_name],
                              groups: session[:groups])
     logger.info("User is known: #{@current_user.username}")
-    @working_draft = if session[:draft].present? && Tree::TreeVersion.exists?(session[:draft]["id"])
-                       Tree::TreeVersion.find(session[:draft]["id"])
+    @working_draft = if session[:draft].present? && TreeVersion.exists?(session[:draft]["id"])
+                       TreeVersion.find(session[:draft]["id"])
                      else
                        nil
                      end

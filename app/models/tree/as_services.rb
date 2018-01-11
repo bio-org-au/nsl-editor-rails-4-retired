@@ -23,10 +23,11 @@ class Tree::AsServices
   TOP_PLACEMENT_PATH = "api/treeElement/placeTopElement"
   REPLACE_ELEMENT = "api/treeElement/replaceElement"
   REMOVE_PLACEMENT = "api/treeElement/removeElement"
-  UPDATE_PROFILE ="api/treeElement/editElementProfile"
+  UPDATE_PROFILE = "api/treeElement/editElementProfile"
   UPDATE_EXCLUDED = "api/treeElement/editElementStatus"
   API_KEY = "apiKey=#{Rails.configuration.api_key}"
   PREFERRED_LINK = "broker/preferredLink"
+  ADD_IDENTIFIER = "admin/addIdentifier"
 
   def self.placement_url(username, top)
     if top
@@ -57,4 +58,40 @@ class Tree::AsServices
   def self.excluded_url(username)
     "#{SERVICES_ADDRESS}#{UPDATE_EXCLUDED}?#{API_KEY}&as=#{username}"
   end
+
+  def self.add_instance_identifier_url(instance_id)
+    "#{LINKER_ADDRESS}#{ADD_IDENTIFIER}?#{API_KEY}&#{add_identity_param_string(instance_id)}"
+  end
+
+  def self.add_identity_param_string(instance_id)
+    "nameSpace=#{ShardConfig.name_space.downcase}&objectType=instance&idNumber=#{instance_id}&versionNumber=&uri="
+  end
+
+  def self.instance_url(instance_id)
+    url = preferred_link_url(instance_id)
+    Rails.logger.info "calling #{url}"
+    response = RestClient.get(url, {content_type: :json, accept: :json})
+    json = JSON.parse(response.body, object_class: OpenStruct)
+    json.link
+  rescue RestClient::ExceptionWithResponse => rest_client_exception
+    Rails.logger.warn("Tree::Workspace::Placement error: #{rest_client_exception.response}")
+    if rest_client_exception.response.code == 404
+      add_instance_link(instance_id)
+    end
+  rescue => e
+    Rails.logger.error("Tree::Workspace::Placement error: #{e}")
+    raise
+  end
+
+  def self.add_instance_link(instance_id)
+    url = add_instance_identifier_url(instance_id)
+    Rails.logger.info "calling #{url}"
+    response = RestClient.put(url, {content_type: :json, accept: :json})
+    json = JSON.parse(response.body, object_class: OpenStruct)
+    json.preferredURI
+  rescue => e
+    Rails.logger.error("Tree::Workspace::Placement error: #{e.response}")
+    raise
+  end
+
 end

@@ -26,7 +26,7 @@ module NameTreeable
     accepted_in_some_way?
   end
 
-  def apc_instance_id
+  def accepted_instance_id
     return nil unless accepted_in_some_way?
     accepted_tree_version_element.tree_element.instance_id
   end

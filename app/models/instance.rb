@@ -196,7 +196,7 @@ class Instance < ActiveRecord::Base
     return if standalone_or_unpublished_citation?
     return if allowed_type_for_accepted_concept_synonym?
     return unless both_names_are_accepted_concepts?
-    return unless this_is_cited_by.name.accepted_concept.instance_id ==
+    return unless this_is_cited_by.name.accepted_instance_id ==
                   this_is_cited_by.id
     errors[:base] << "This concept includes an accepted name as a synonym"
   end
@@ -479,7 +479,7 @@ class Instance < ActiveRecord::Base
   end
 
   def show_apc?
-    name.apc? && id == name.apc_instance_id
+    name.apc? && id == name.accepted_instance_id
   end
 
   def apc_excluded?
