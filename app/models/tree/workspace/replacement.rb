@@ -45,14 +45,7 @@ class Tree::Workspace::Replacement < ActiveType::Object
   end
 
   def instance_url
-    url = Tree::AsServices.preferred_link_url(instance_id)
-    Rails.logger.info "calling #{url}"
-    response = RestClient.get(url, {content_type: :json, accept: :json})
-    json = JSON.parse(response.body, object_class: OpenStruct)
-    json.link
-  rescue => e
-    Rails.logger.error("Tree::Workspace::Replacement error: #{e}")
-    raise
+    Tree::AsServices.instance_url(instance_id)
   end
 
   def build_url
