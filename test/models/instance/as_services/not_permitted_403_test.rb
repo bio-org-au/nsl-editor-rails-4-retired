@@ -29,7 +29,7 @@ class InstanceDeleteServiceNotPermitted403Test < ActiveSupport::TestCase
   end
 
   def action
-    "http://localhost:9090/nsl/services/instance/apni/403/api/delete"
+    "http://localhost:9090/nsl/services/rest/instance/apni/403/api/delete"
   end
 
   def headers

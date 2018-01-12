@@ -22,7 +22,7 @@ def a
 end
 
 def b
-  "/nsl/services/instance/apni/200/api/delete?apiKey=test-api-key&reason=Edit"
+  "/nsl/services/rest/instance/apni/200/api/delete?apiKey=test-api-key&reason=Edit"
 end
 
 def agent

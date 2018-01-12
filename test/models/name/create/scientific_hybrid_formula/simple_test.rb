@@ -36,7 +36,7 @@ class NameCreateScientificHybridFormulaTest < ActiveSupport::TestCase
   end
 
   def address
-    "http://localhost:9090/nsl/services/name/apni/"
+    "http://localhost:9090/nsl/services/rest/name/apni/"
   end
 
   def setup2

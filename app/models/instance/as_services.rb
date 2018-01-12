@@ -61,7 +61,7 @@ class Instance::AsServices < Instance
 
   def self.delete_uri(id)
     api_key = Rails.configuration.api_key
-    host_path = "#{Rails.configuration.services}instance/apni/#{id}/api/delete"
+    host_path = "#{Rails.configuration.services}rest/instance/apni/#{id}/api/delete"
     "#{host_path}?apiKey=#{api_key}&reason=Edit"
   end
 end

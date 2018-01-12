@@ -1,6 +1,6 @@
 <div>
   <%= render partial: "instances/workspace/widgets/placement_indicator", locals: {tree_version_element: @tree_version_element} %>
-  <% if @accepted_tve.tree_element_id != @tree_version_element.tree_element_id %>
+  <% if @accepted_tve&.tree_element_id != @tree_version_element.tree_element_id %>
   (changed)
   <% end %>
   <dl class="dl-horizontal">
@@ -55,7 +55,7 @@
     </dd>
     <dt>apni format</dt>
     <dd>
-      <a href="<%= "#{Rails.configuration.nsl_links}apni-format/display/#{@instance.name_id}?versionId=#{@tree_version_element.tree_version.id}" %>"
+      <a href="<%= "#{Rails.configuration.nsl_links}apni-format/display/#{@instance.name_id}?versionId=#{@tree_version_element.tree_version.id}&drafts=true" %>"
          title="apni format" target="_blank">
         <i class="fa fa-external-link-square"></i>
         ... <%= "apni-format/display/#{@instance.name_id}" %>

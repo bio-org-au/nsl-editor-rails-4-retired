@@ -38,7 +38,7 @@ class ForAChangedVolumeTest < ActiveSupport::TestCase
 
   def stub_it
     stub_request(:get,
-                 %r{http://#{a}/nsl/services/#{b}/apni/[0-9][0-9]*/api/#{c}})
+                 %r{http://#{a}/nsl/services/rest/#{b}/apni/[0-9][0-9]*/api/#{c}})
       .with(headers: { "Accept" => "*/*",
                        "Accept-Encoding" =>
                        "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
