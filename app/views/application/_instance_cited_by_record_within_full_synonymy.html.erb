@@ -1,33 +1,34 @@
-<tr id="search-result-<%= search_result.id %>" 
-  class="search-result instance-cited-by-record-within-full-synonymy <%= 'fresh' if search_result.fresh? %>"
-  data-get-url="<%= instance_path(search_result.id) %>"
-  data-edit-url="<%= instance_path(search_result.id) %>"
-  data-base-url="<%= instance_path(search_result.id) %>"
-  data-tab-url="<%= instance_tab_path(id:search_result.id,tab: 'active_tab_goes_here') %>"
-  data-record-id="<%= search_result.id %>"
-  data-record-type="instance"
-  data-instance-type="<%= search_result.type %>"
-  data-row-type="instance_cited_by_record_within_full_synonymy"
-  tabindex="<%= increment_tab_index(100) %>" 
-    >
+<tr id="search-result-<%= search_result.id %>"
+    class="search-result instance-cited-by-record-within-full-synonymy <%= 'fresh' if search_result.fresh? %>"
+    data-get-url="<%= instance_path(search_result.id) %>"
+    data-edit-url="<%= instance_path(search_result.id) %>"
+    data-base-url="<%= instance_path(search_result.id) %>"
+    data-tab-url="<%= instance_tab_path(id: search_result.id, tab: 'active_tab_goes_here') %>"
+    data-record-id="<%= search_result.id %>"
+    data-record-type="instance"
+    data-instance-type="<%= search_result.type %>"
+    data-row-type="instance_cited_by_record_within_full_synonymy"
+    tabindex="<%= increment_tab_index(100) %>"
+>
   <td class="nsl-tiny-icon-container width-1-percent"><%= record_icon('instance') %></td>
   <td class="text main-content takes-focus width-90-percent indent-level-1">
-    <a 
-      id="<%= %Q(#{search_result.class}-#{search_result.id}) %>"
-      class="show-details-link indent-level-1 cited-by-instance-within-full-synonymy"
-      tabindex="<%= increment_tab_index %>" 
-      >
-    <%= "#{search_result.expanded_instance_type || search_result.instance_type.name}:
+    <a
+    id="<%= %Q(#{search_result.class}-#{search_result.id}) %>"
+    class="show-details-link indent-level-1 cited-by-instance-within-full-synonymy"
+    tabindex="<%= increment_tab_index %>"
+    >
+      <%= "[DRAFT]".html_safe if search_result.draft? %>
+      <%= "#{search_result.expanded_instance_type || search_result.instance_type.name}:
      <b>#{search_result.name.full_name}</b>".html_safe %>
-     <%= "[#{search_result.name.name_status.name}]" unless search_result.name.name_status.blank? %> 
-     <% if search_result.misapplied? %>  
-       by  
-       <%= "#{search_result.this_cites.reference.try('citation')}" %>
-       <%= "#{search_result.this_cites.page}" if search_result.this_cites %>
-     <% end %> </a>
+      <%= "[#{search_result.name.name_status.name}]" unless search_result.name.name_status.blank? %>
+      <% if search_result.misapplied? %>
+        by
+        <%= "#{search_result.this_cites.reference.try('citation')}" %>
+        <%= "#{search_result.this_cites.page}" if search_result.this_cites %>
+      <% end %> </a>
     <%= "</td><td>[#{search_result.type}]::#{ search_result.try('display_as') || search_result.class.to_s};#{search_result.id }(by)- #{Pathname.new(__FILE__).basename}".html_safe if @debug %>
 
-      </td>
+  </td>
   <td class="takes-focus width-20-percent filler">&nbsp;</td>
 </tr>
 
