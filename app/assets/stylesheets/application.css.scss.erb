@@ -643,3 +643,31 @@ a.disabled {
   margin-bottom: 0.4em;
   border-bottom:  dashed 0.1em #696076;
 }
+
+.draft:after {
+  content: " [DRAFT]";
+  color: #730E15;
+}
+
+.draft {
+  color: darkolivegreen;
+}
+
+.pulse {
+  animation: opacityPulse 2s ease-out;
+  animation-iteration-count: infinite;
+  animation-name: pulse;
+  opacity: 1;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1.0;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}

@@ -220,5 +220,6 @@ where rb.sort_order >= (select sort_order from name_rank where name = 'Species')
                                                 where ref.parent_id = parent.id
                                                   and lower(parent.citation) like lower(?) ))" },
     "draft:" => { where_clause: " draft " },
+    "not-draft:" => { where_clause: " draft = false " },
   }.freeze
 end

@@ -61,4 +61,13 @@ class TreeVersion < ActiveRecord::Base
     user && user.groups.include?(tree.group_name)
   end
 
+  def comment_key
+    tree.config["comment_key"]
+  end
+
+  def distribution_key
+    tree.config["distribution_key"]
+  end
+
+
 end

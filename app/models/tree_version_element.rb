@@ -75,7 +75,7 @@ select name_id from walk", element_link])
   end
 
   def comment_key
-    tree_version.tree.config["comment_key"]
+    tree_version.comment_key
   end
 
   def comment?
@@ -87,7 +87,7 @@ select name_id from walk", element_link])
   end
 
   def distribution_key
-    tree_version.tree.config? ? tree_version.tree.config["distribution_key"] : "Dist."
+    tree_version.distribution_key
   end
 
   def distribution?

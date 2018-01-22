@@ -14,10 +14,9 @@
   <td class="text main-content takes-focus width-90-percent">
     <a
     id="<%= %Q(#{search_result.class}-#{search_result.id}) %>"
-    class="show-details-link indent-level-2"
+    class="show-details-link indent-level-2 <%= "draft" if search_result.draft? %>"
     title="Instance cited by relationship instance record.  Select to show details."
     tabindex="<%= increment_tab_index %>">
-      <%= "[DRAFT]".html_safe if search_result.draft? %>
       <%= search_result.instance_type.of_label %>
       <%= "<b>#{search_result.this_is_cited_by.name.full_name}</b>".html_safe %>
       <%= "[#{search_result.this_is_cited_by.name.name_status.name}]" unless search_result.this_is_cited_by.name.name_status.blank? %>

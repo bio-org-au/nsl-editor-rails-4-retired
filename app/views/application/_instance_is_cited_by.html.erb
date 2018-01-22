@@ -14,10 +14,9 @@
   <td colspan="1" class="text main-content takes-focus width-90-percent indent-level-1 <%= 'give-me-focus' if give_me_focus %> ">
     <a
     id="<%= %Q(#{search_result.class}-#{search_result.id}) %>"
-    class="show-details-link indent-level-2"
+    class="show-details-link indent-level-2 <%= "draft" if search_result.draft? %>"
     title="Instance is cited by record.  Select to show details."
     tabindex="<%= increment_tab_index %>">
-      <%= "[DRAFT]".html_safe if search_result.draft? %>
       <%= "#{search_result.expanded_instance_type || search_result.instance_type.name}: <b>#{search_result.name.full_name_html}</b>".html_safe %>
       <%= "#{search_result.page}" %>
       <%= " #{search_result.name.name_status.name_for_instance_display}" %>

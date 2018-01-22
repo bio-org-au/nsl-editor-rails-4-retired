@@ -11,11 +11,10 @@
   <td class="nsl-tiny-icon-container width-1-percent"><%= record_icon('instance') %></td>
   <td colspan="4" class="text takes-focus width-80-percent indent-level-1">
     <a id="<%= %Q(#{search_result.class.name}-#{search_result.id}) %>"
-       class="indent-level-2 show-details-link"
+       class="indent-level-2 show-details-link <%= "draft" if search_result.draft? %>"
        title="Instance cited by record.  Select to show details."
        tabindex="<%= increment_tab_index %>"
     >
-      <%= "[DRAFT]".html_safe if search_result.draft? %>
       <%= "#{search_result.expanded_instance_type || search_result.instance_type.name}: #{search_result.name.full_name}" %>
       <%= "#{search_result.page}" %>
     </a>
