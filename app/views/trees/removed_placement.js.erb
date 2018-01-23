@@ -1,9 +1,7 @@
 $('#remove-placement-error-message-container').addClass('hidden').html("");
-var html_source = markdown("<%= @message.html_safe.gsub(/\n/, '\\n') %>");
-console.log(html_source);
-$('#remove-placement-message-container').removeClass('hidden').html(html_source + '<p>...Refreshing tab.</p>');
+$('#remove-placement-message-container')
+    .removeClass('hidden')
+    .html(markdown("<%= escape_javascript(@message.html_safe) %>"))
+    .append('<button onclick="refreshTreeTab(event)">refresh</button>');
 $('#remove_name_placement').find('i.fa').removeClass('fa-spin');
-window.setTimeout(function() {
-    $('#instance-classification-tab').click();
-}, 5000);
 

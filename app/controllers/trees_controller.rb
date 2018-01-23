@@ -31,10 +31,17 @@ class TreesController < ApplicationController
     logger.info("In replace placement!")
     target = TreeVersionElement.find(move_name_params[:element_link])
     parent = TreeVersionElement.find(move_name_params[:parent_element_link])
+
+    profile = Tree::ProfileData.new(current_user, target.tree_version, {})
+    profile.update_comment(move_name_params[:comment])
+    profile.update_distribution(move_name_params[:distribution])
+
     replacement = Tree::Workspace::Replacement.new(username: current_user.username,
                                                    target: target,
                                                    parent: parent,
-                                                   instance_id: move_name_params[:instance_id])
+                                                   instance_id: move_name_params[:instance_id],
+                                                   excluded: move_name_params[:excluded],
+                                                   profile: profile.profile_data)
     response = replacement.replace
     @html_out = process_problems(replacement_json_result(response))
     render "moved_placement.js"
@@ -49,16 +56,18 @@ class TreesController < ApplicationController
   # Place and instance on the draft tree version
   def place_name
     excluded = place_name_params[:excluded] ? true : false
-    parent_element_link = if place_name_params[:parent_name_typeahead_string].blank?
-                            nil
-                          else
-                            place_name_params[:parent_element_link]
-                          end
+    parent_element_link = place_name_params[:parent_name_typeahead_string].blank? ? nil : place_name_params[:parent_element_link]
+    tree_version = TreeVersion.find(place_name_params[:version_id])
+
+    profile = Tree::ProfileData.new(current_user, tree_version, {})
+    profile.update_comment(place_name_params[:comment])
+    profile.update_distribution(place_name_params[:distribution])
 
     placement = Tree::Workspace::Placement.new(username: current_user.username,
                                                parent_element_link: parent_element_link,
                                                instance_id: place_name_params[:instance_id],
                                                excluded: excluded,
+                                               profile: profile.profile_data,
                                                version_id: place_name_params[:version_id])
     response = placement.place
     @message = placement_json_result(response)
@@ -89,12 +98,13 @@ class TreesController < ApplicationController
   def update_comment
     logger.info "update comment #{params[:pk]} #{params[:value]}"
     tve = TreeVersionElement.find(params[:pk])
-    profile = if tve.comment?
-                update_profile tve, tve.comment_key
-              else
-                add_to_profile tve, tve.comment_key
-              end
+    profile_data = Tree::ProfileData.new(current_user, tve.tree_version, tve.tree_element.profile || {})
+    profile_data.update_comment(params[:value])
+    profile = Tree::Workspace::Profile.new(username: current_user.username,
+                                           element_link: tve.element_link,
+                                           profile_data: profile_data)
     profile.update
+
   rescue RestClient::Unauthorized, RestClient::Forbidden, RestClient::ExceptionWithResponse => e
     @message = json_error(e)
     render :text => @message, :status => 401
@@ -103,13 +113,13 @@ class TreesController < ApplicationController
   def update_distribution
     logger.info "update distribution #{params[:pk]} #{params[:value]}"
     tve = TreeVersionElement.find(params[:pk])
-    profile = if tve.distribution?
-                update_profile tve, tve.distribution_key
-              else
-                add_to_profile tve, tve.distribution_key
-              end
-
+    profile_data = Tree::ProfileData.new(current_user, tve.tree_version, tve.tree_element.profile || {})
+    profile_data.update_distribution(params[:value])
+    profile = Tree::Workspace::Profile.new(username: current_user.username,
+                                           element_link: tve.element_link,
+                                           profile_data: profile_data)
     profile.update
+
   rescue RestClient::Unauthorized, RestClient::Forbidden, RestClient::ExceptionWithResponse => e
     @message = json_error(e)
     render :text => @message, :status => 401
@@ -127,40 +137,18 @@ class TreesController < ApplicationController
 
   private
 
-  def update_profile(tve, key)
-    data = tve.tree_element.profile
-    if params[:value].present?
-      data[key]['value'] = params[:value]
-    else
-      data.delete(key)
-    end
-    Tree::Workspace::Profile.new(username: current_user.username,
-                                 element_link: tve.element_link,
-                                 profile_data: data)
-  end
-
   # todo determine if this should be removed.
-  def minor_update_profile(tve, key)
-    data = tve.tree_element.profile
-    current_key_data = data[key]
-    data[key] = {value: params[:value],
-                 updated_by: current_user.username,
-                 updated_at: Time.now.utc.iso8601,
-                 previous: current_key_data}
-    Tree::Workspace::Profile.new(username: current_user.username,
-                                 element_link: tve.element_link,
-                                 profile_data: data)
-  end
-
-  def add_to_profile(tve, key)
-    profile_data = tve.tree_element.profile || {}
-    profile_data[key] = {value: params[:value],
-                         updated_by: current_user.username,
-                         updated_at: Time.now.utc.iso8601}
-    Tree::Workspace::Profile.new(username: current_user.username,
-                                 element_link: tve.element_link,
-                                 profile_data: profile_data)
-  end
+  # def minor_update_profile(tve, key)
+  #   data = tve.tree_element.profile
+  #   current_key_data = data[key]
+  #   data[key] = { value: params[:value],
+  #                 updated_by: current_user.username,
+  #                 updated_at: Time.now.utc.iso8601,
+  #                 previous: current_key_data }
+  #   Tree::Workspace::Profile.new(username: current_user.username,
+  #                                element_link: tve.element_link,
+  #                                profile_data: data)
+  # end
 
   def json_error(err)
     logger.error(err)
@@ -184,12 +172,7 @@ class TreesController < ApplicationController
 
   def placement_json_result(result)
     json = JSON.parse(result.body, object_class: OpenStruct)
-    msg = json&.payload&.message
-    if json&.payload&.warnings && !json.payload.warnings.empty?
-      "#{msg}\n -- Warnings:\n\n #{json&.payload&.warnings}"
-    else
-      msg
-    end
+    json&.payload&.message || result.to_s
   rescue
     result.to_s
   end
@@ -201,13 +184,7 @@ class TreesController < ApplicationController
   end
 
   def process_problems(payload)
-    html_out = '<div class="text-info"><h4>Problems Found</h4>'
-    if payload['problems']
-      for key in payload['problems'].keys
-        html_out += list_problems(key, payload['problems'][key])
-      end
-    end
-    html_out + "</div>"
+    payload['problems']
   end
 
   def list_problems(key, problems)
@@ -221,7 +198,10 @@ class TreesController < ApplicationController
     params.require(:move_placement)
         .permit(:element_link,
                 :parent_element_link,
-                :instance_id)
+                :instance_id,
+                :comment,
+                :distribution,
+                :excluded)
   end
 
   def place_name_params
@@ -229,6 +209,8 @@ class TreesController < ApplicationController
         .permit(:name_id,
                 :instance_id,
                 :parent_element_link,
+                :comment,
+                :distribution,
                 :excluded,
                 :version_id,
                 :parent_name_typeahead_string)

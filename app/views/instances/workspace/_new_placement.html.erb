@@ -1,36 +1,52 @@
 <% if !@instance.cited_by_id %>
+  <div>
+    <h1>Place instance:
+      <span class="workspace-container no-decoration">
+        <span class='workspace name accepted strong' title="in workspace">
+          <%= "#{@working_draft.tree.name} #{@working_draft.draft_name}" %>.
+        </span>
+      </span>
+    </h1>
     <%= form_tag({controller: 'trees', action: 'place_name'}, {method: :post, remote: true}) do %>
-        <%= hidden_field_tag("place_name[instance_id]", @instance.id) %>
+      <%= hidden_field_tag("place_name[instance_id]", @instance.id) %>
 
-        <strong>Place in <%= "#{@working_draft.tree.name}: #{@working_draft.draft_name}" %></strong>
-        <div>
-          <dl class="dl-horizontal">
-            <dt>Full Name</dt>
-            <dd><%=@instance.name.full_name_html.html_safe %></dd>
-            <dt>Reference</dt>
-            <dd><%= @instance.reference.citation %></dd>
-          </dl>
-        </div>
+      <div>
+        <dl class="dl-horizontal">
+          <dt>Full Name</dt>
+          <dd><%= @instance.name.full_name_html.html_safe %></dd>
+          <dt>Reference</dt>
+          <dd><%= @instance.reference.citation %></dd>
+          <dt>Excluded</dt>
+          <dd>
+            <%= check_box_tag("place_name[excluded]", true, false, title: 'Exclude this', class: 'exclude-checkbox') %>
+            <label for="place_name_excluded" class="exclude-label">exclude</label>
+          </dd>
+          <dt><%= @working_draft.comment_key %></dt>
+          <dd>
+            <%= text_area_tag("place_name[comment]", '', escaped: false, title: 'Edit comment', rows: 5, class: 'form-control') %>
+          </dd>
+          <dt><%= @working_draft.distribution_key %></dt>
+          <dd>
+            <%= text_area_tag("place_name[distribution]", '', title: 'Edit distribution', rows: 5, class: 'form-control') %>
+          </dd>
+        </dl>
+      </div>
 
-        <div class="form-group">
-          <%= check_box_tag("place_name[excluded]") %>
-          <%= label_tag("excluded", "Excluded?") %>
-        </div>
+      <%= render partial: "instances/workspace/forms/new_placement_name_typeahead" %>
 
-        <%= render partial: "instances/workspace/forms/new_placement_name_typeahead" %>
+      <button type="submit"
+              id="new_name_placement_btn"
+              class="btn btn-primary"
+              name="place_name[place]"
+              tabindex="<%= increment_tab_index %>"
+              title="Place the name on the tree."
+              onclick="$('#new_name_placement_btn').find('i.fa').addClass('fa-spin');"
+      >Place <i class="fa fa-refresh"></i></button>
 
-        <button type="submit"
-                id="new_name_placement_btn"
-                class="btn btn-primary"
-                name="place_name[place]"
-                tabindex="<%= increment_tab_index %>"
-                title="Place the name on the tree."
-                onclick="$('#new_name_placement_btn').find('i.fa').addClass('fa-spin');"
-        >Place <i class="fa fa-refresh"></i></button>
-
-        <div id="placement-message-container" class="message-container hidden"></div>
-        <div id="placement-error-message-container" class="message-container error hidden"></div>
+      <div id="placement-message-container" class="message-container hidden"></div>
+      <div id="placement-error-message-container" class="message-container error hidden"></div>
     <% end %>
+  </div>
 <% end %>
 
 

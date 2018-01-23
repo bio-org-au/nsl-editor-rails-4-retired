@@ -21,6 +21,7 @@ class Tree::Workspace::Placement < ActiveType::Object
   attribute :parent_element_link, :string
   attribute :excluded, :boolean
   attribute :username, :string
+  attribute :profile, :hash
   attribute :version_id, :integer
 
   validates :instance_id, presence: true
@@ -34,6 +35,7 @@ class Tree::Workspace::Placement < ActiveType::Object
     payload = {instanceUri: instance_url,
                parentElementUri: parent_element_link,
                excluded: excluded,
+               profile: profile,
                versionId: version_id
     }
     logger.info "Calling #{url} with #{payload}"

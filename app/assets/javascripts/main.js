@@ -81,7 +81,6 @@ function send(data, method, url) {
         dataType: "json"
     }).done(function (respData) {
         debug(respData);
-        location.reload(true);
     }).fail(function (jqxhr, statusText) {
         if (jqxhr.status === 403) {
             debug("status 403 forbidden");
@@ -99,4 +98,10 @@ function send(data, method, url) {
 function markdown(text) {
     var converter = new showdown.Converter();
     return converter.makeHtml(text);
+}
+
+function refreshTreeTab(event) {
+    $('#instance-classification-tab').click();
+    event.preventDefault();
+    return false;
 }

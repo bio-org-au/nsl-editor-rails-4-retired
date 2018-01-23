@@ -19,6 +19,8 @@ class Tree::Workspace::Replacement < ActiveType::Object
   attribute :target, :TreeVersionElement
   attribute :parent, :TreeVersionElement
   attribute :instance_id, :integer
+  attribute :profile, :hash
+  attribute :excluded, :boolean
   attribute :username, :string
 
   validates :target, presence: true
@@ -30,7 +32,9 @@ class Tree::Workspace::Replacement < ActiveType::Object
     payload = {
         currentElementUri: target.element_link,
         newParentElementUri: parent.element_link,
-        instanceUri: instance_url
+        instanceUri: instance_url,
+        excluded: excluded,
+        profile: profile
     }
     logger.info "Calling #{url}"
     raise errors.full_messages.first unless valid?

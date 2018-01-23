@@ -1,15 +1,12 @@
 <% if @tree_version_element.present? %>
-    <%= render partial: "instances/workspace/current_placement" %>
     <% if @tree_version_element&.tree_element&.instance == @instance %>
+    <%= render partial: "instances/workspace/current_placement" %>
         <%= divider %>
         <%= render partial: "instances/workspace/remove_placement" %>
         <%= divider %>
-        <!-- %= render partial: "instances/workspace/enter_values" % -->
     <% else %>
-        <%= divider %>
         <%= render partial: "instances/workspace/replace_placement" %>
     <% end %>
 <% else %>
     <%= render partial: "instances/workspace/new_placement" %>
 <% end %>
-

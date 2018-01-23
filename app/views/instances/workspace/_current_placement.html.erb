@@ -1,14 +1,20 @@
 <div>
-  <%= render partial: "instances/workspace/widgets/placement_indicator", locals: {tree_version_element: @tree_version_element} %>
-  <% if @accepted_tve&.tree_element_id != @tree_version_element.tree_element_id %>
-  (changed)
+  <h1>Edit placement:
+    <%= render partial: "instances/workspace/widgets/placement_indicator", locals: {tree_version_element: @tree_version_element} %>
+  </h1>
+  <% if @accepted_tve && @accepted_tve&.tree_element_id != @tree_version_element.tree_element_id %>
+    (changed from <%= @accepted_tve&.tree_version&.tree&.name %>)
   <% end %>
   <dl class="dl-horizontal">
     <dt>Excluded</dt>
     <dd>
-      <input type="checkbox" title="Excluded" name="ExcludedElement"
-             <%= (@tree_version_element.tree_element.excluded ? 'checked' : '').html_safe %>
-             onchange="updateExcluded(this, '<%= @tree_version_element.element_link %>');"/>
+
+      <%= check_box_tag("ExcludedElement", true, @tree_version_element.tree_element.excluded,
+                        title: "Exclude this",
+                        class: "exclude-checkbox",
+                        onchange: "updateExcluded(this,'" + @tree_version_element.element_link + "');") %>
+      <label for="ExcludedElement" class="exclude-label">exclude</label>
+
     </dd>
     <dt>Full Name</dt>
     <dd><%= @tree_version_element.tree_element.name.full_name_html.html_safe %></dd>
@@ -69,8 +75,8 @@
     $.fn.editable.defaults.mode = 'inline';
     $.fn.editable.defaults.escape = false;
     $.fn.editableform.buttons =
-        '<button type="submit" class="btn btn-success editable-submit btn-mini">Save <i class="fa fa-check"></i></button>' +
-        '<button type="button" class="btn editable-cancel btn-mini">Close <i class="fa fa-close"></i></button>';
+        '<button type="submit" class="btn btn-success editable-submit btn-mini left">Save <i class="fa fa-check"></i></button>' +
+        '<button type="button" class="btn editable-cancel btn-mini right">Cancel <i class="fa fa-close"></i></button>';
     $('#treecomment').editable({
         type: 'textarea',
         title: 'Edit comment',
@@ -102,5 +108,6 @@
         };
         $(input).replaceWith("<i class='fa fa-refresh fa-spin'></i>");
         send(data, "POST", window.relative_url_root + "/trees/update_excluded");
+        $('#instance-classification-tab').click();
     }
 </script>

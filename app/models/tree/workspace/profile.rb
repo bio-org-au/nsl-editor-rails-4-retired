@@ -17,18 +17,17 @@
 #
 class Tree::Workspace::Profile < ActiveType::Object
   attribute :element_link, :string
-  attribute :profile_data, :hash
   attribute :username, :string
+  attribute :profile_data, :ProfileData
 
   def update
-
     url = build_url
-    payload = {taxonUri: element_link,
-               profile: profile_data}
+    payload = {taxonUri: element_link, profile: profile_data.profile_data}
+
     logger.info "Calling #{url} with #{payload}"
     raise errors.full_messages.first unless valid?
     RestClient.post(url, payload.to_json,
-                   {content_type: :json, accept: :json})
+                    {content_type: :json, accept: :json})
   rescue RestClient::ExceptionWithResponse => e
     Rails.logger.error("Tree::Workspace::Profile error: #{e}")
     raise
