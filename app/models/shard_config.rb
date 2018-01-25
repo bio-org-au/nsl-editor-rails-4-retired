@@ -39,7 +39,10 @@ class ShardConfig < ActiveRecord::Base
     name_parent_rank_restriction
   end
 
-  def self.shard_group_name?
-      ShardConfig.find_by(name: "shard group name").value
-    end
+  def self.shard_group_name
+    results = ShardConfig.find_by(name: "shard group name")
+    return "NSL" if results.nil?
+    results.value
+
+  end
 end

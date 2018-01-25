@@ -92,9 +92,9 @@ module ApplicationHelper
     when /^stag/i
       "Staging Ed"
     when /^prod/i
-      ShardConfig.shard_group_name?+" Editor"
+      "#{ShardConfig.shard_group_name} Editor"
     else
-      ShardConfig.shard_group_name?+" Editor"
+      "#{ShardConfig.shard_group_name} Editor"
     end
   end
 
