@@ -3,84 +3,92 @@
 <% increment_tab_index(0) %>
 <% if @instance.relationship? %>
 
-    <%= render 'instances/tabs/show_relationship' %>
+  <%= render 'instances/tabs/show_relationship' %>
 
 <% else %> <%# standalone instance %>
 
-    <%= render 'instances/tabs/show_standalone' %>
+  <%= render 'instances/tabs/show_standalone' %>
 
 <% end %>
 <% if @instance.cites_id.present? || @instance.cited_by_id.present? %>
-    <dl class="dl-horizontal">
-      <dt>cites id</dt>
-      <dd><%= @instance.cites_id %></dd>
-      <dt>cited by id</dt>
-      <dd><%= @instance.cited_by_id %></dd>
-    </dl>
+  <dl class="dl-horizontal">
+    <dt>cites id</dt>
+    <dd><%= @instance.cites_id %></dd>
+    <dt>cited by id</dt>
+    <dd><%= @instance.cited_by_id %></dd>
+  </dl>
 <% else %>
-    <%= divider %>
+  <%= divider %>
 <% end %>
 
 <% if @instance.instance_notes.size > 0 %>
-    <h5>Notes</h5>
-    <dl class="dl-horizontal">
-      <% @instance.instance_notes.non_apc.sort { |x, y| [x.instance_note_key.sort_order, x.value.downcase] <=> [y.instance_note_key.sort_order, y.value.downcase] }.each do |instance_note| %>
-          <dt><%= instance_note.instance_note_key.name %></dt>
-          <dd><%= instance_note.value.html_safe %></dd>
-      <% end %>
-    </dl>
+  <h5>Notes</h5>
+  <dl class="dl-horizontal">
+    <% @instance.instance_notes.non_apc.sort {|x, y| [x.instance_note_key.sort_order, x.value.downcase] <=> [y.instance_note_key.sort_order, y.value.downcase]}.each do |instance_note| %>
+      <dt><%= instance_note.instance_note_key.name %></dt>
+      <dd><%= instance_note.value.html_safe %></dd>
+    <% end %>
+  </dl>
 <% end %>
 
 <% if @instance.comments.size > 0 %>
-    <h5><%= pluralize(@instance.comments.size, 'Comment') %></h5>
-    <% @instance.comments.sort { |x, y| x.created_at <=> y.created_at }.each do |comment| %>
-        <%= render partial: 'comments/show', locals: { comment: comment } %>
-        <%= divider %>
-    <% end %>
+  <h5><%= pluralize(@instance.comments.size, 'Comment') %></h5>
+  <% @instance.comments.sort {|x, y| x.created_at <=> y.created_at}.each do |comment| %>
+    <%= render partial: 'comments/show', locals: {comment: comment} %>
+    <%= divider %>
+  <% end %>
 <% end %>
 
+<% if @instance.in_local_trees? %>
+  <div>
+    <dl class="dl-horizontal">
+      <dt>Local trees</dt>
+      <dd><%= @instance.in_local_tree_names %></dd>
+    </dl>
+  </div>
+<% end %>
 <% if @accepted_tve.present? && @accepted_tve.tree_element.instance.id == @instance.id %>
-    <div>
-      <%= render partial: "instances/workspace/widgets/accepted_placement_indicator",
-                 locals: { tree_version_element: @accepted_tve }
-      %>
-      <dl class="dl-horizontal">
-        <dt>Path</dt>
-        <dd><%= @accepted_tve.name_path %></dd>
-        <dt><%= @accepted_tve.comment_key %></dt>
-        <dd><%= @accepted_tve.comment.html_safe %></dd>
+  <div>
+    <%= render partial: "instances/workspace/widgets/accepted_placement_indicator",
+               locals: {tree_version_element: @accepted_tve}
+    %>
+    <dl class="dl-horizontal">
+      <dt>Path</dt>
+      <dd><%= @accepted_tve.name_path %></dd>
+      <dt><%= @accepted_tve.comment_key %></dt>
+      <dd><%= @accepted_tve.comment.html_safe %></dd>
 
-        <dt><%= @accepted_tve.distribution_key %></dt>
-        <dd><%= @accepted_tve.distribution %></dd>
+      <dt><%= @accepted_tve.distribution_key %></dt>
+      <dd><%= @accepted_tve.distribution %></dd>
 
-        <dt>Under</dt>
-        <dd>
-          <% if @accepted_tve.parent.tree_element %>
-            <%= link_to("<i class=\"fa fa-sitemap\"></i> #{search_icon_on_tab}
-                        #{@accepted_tve.parent.tree_element.instance.name.try('full_name')}"
-                            .html_safe,
-                        search_path(query_target: 'name',
-                                    query_string: "id: #{@accepted_tve.parent.tree_element.name_id} show-instances:"),
-                        title: 'Search for the parent with its instances',
-                        class: 'name') %>
-          <% end %>
-        </dd>
+      <dt>Under</dt>
+      <dd>
+        <% if @accepted_tve.parent.tree_element %>
+          <%= link_to("<i class=\"fa fa-sitemap\"></i> #{search_icon_on_tab}
+                      #{@accepted_tve.parent.tree_element.instance.name.try('full_name')}"
+                          .html_safe,
+                      search_path(query_target: 'name',
+                                  query_string: "id: #{@accepted_tve.parent.tree_element.name_id} show-instances:"),
+                      title: 'Search for the parent with its instances',
+                      class: 'name') %>
+        <% end %>
+      </dd>
 
-        <dt>Element link</dt>
-        <dd>
-          <a href="<%= @accepted_tve.element_link %>" title="Tree element link id">
-            <i class="fa fa-code-fork"></i> ... <%= @accepted_tve.element_link[/\/tree.*$/] %>
-          </a>
-        </dd>
+      <dt>Element link</dt>
+      <dd>
+        <a href="<%= @accepted_tve.element_link %>" title="Tree element link id">
+          <i class="fa fa-code-fork"></i> ... <%= @accepted_tve.element_link[/\/tree.*$/] %>
+        </a>
+      </dd>
 
-        <dt>Taxon link</dt>
-        <dd>
-          <a href="<%= @accepted_tve.taxon_link %>" title="Taxon link id">
-            <i class="fa fa-tree"></i> ... <%= @accepted_tve.taxon_link[-18..-1] %>
-          </a>
-        </dd>
-      </dl>
-    </div>
+      <dt>Taxon link</dt>
+      <dd>
+        <a href="<%= @accepted_tve.taxon_link %>" title="Taxon link id">
+          <i class="fa fa-tree"></i> ... <%= @accepted_tve.taxon_link[-18..-1] %>
+        </a>
+      </dd>
+    </dl>
+  </div>
 <% end %>
 
 <h5>Instance #<%= @instance.id %></h5>
@@ -89,5 +97,5 @@
 <%= created_by_whom_and_when(@instance).html_safe %>
 <br>
 <%= updated_by_whom_and_when(@instance).html_safe %>
-<%= render partial: 'detail_line', locals: { label: 'System', info: "#{@instance.namespace.name}#{%Q(.#{@instance.source_system.downcase}.#{@instance.source_id}) if @instance.source_system}" } %>
+<%= render partial: 'detail_line', locals: {label: 'System', info: "#{@instance.namespace.name}#{%Q(.#{@instance.source_system.downcase}.#{@instance.source_id}) if @instance.source_system}"} %>
 

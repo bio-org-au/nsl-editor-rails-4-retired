@@ -21,12 +21,9 @@
 //= require navigation.js
 //= require keymaster.js
 //= require keys.js
-//= require angular.js
-//= require angular-sanitize.js
 //= require ui-bootstrap-tpls-0.9.0.js
 //= require services/environment.js
 //= require jquery.scrollintoview.js
-//= require recursionhelper.js
 //= require typeahead.bundle.js
 //= require bloodhounds.js
 //= require bootstrap-editable.js

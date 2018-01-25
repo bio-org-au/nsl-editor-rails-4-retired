@@ -1,6 +1,6 @@
 <% if @name.accepted_tree_version_element %>
   <%= divider %>
-  APC Tree
+  <%= @name.accepted_tree_version_element.tree_version.tree.name %> Tree
 <ul class="tree">
 <% @name.accepted_tree_version_element.tree_ordered_names.each do |step| %>
   <li>

@@ -37,7 +37,6 @@ class Tree::Workspace::Excluded < ActiveType::Object
     raise
   end
 
-
   def build_url
     Tree::AsServices.excluded_url(username)
   end
