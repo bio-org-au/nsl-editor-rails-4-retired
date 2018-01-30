@@ -96,33 +96,33 @@ class TreesController < ApplicationController
   end
 
   def update_comment
-    logger.info "update comment #{params[:pk]} #{params[:value]}"
-    tve = TreeVersionElement.find(params[:pk])
+    logger.info "update comment #{update_comment_params[:element_link]} #{update_comment_params[:comment]}"
+    tve = TreeVersionElement.find(update_comment_params[:element_link])
     profile_data = Tree::ProfileData.new(current_user, tve.tree_version, tve.tree_element.profile || {})
-    profile_data.update_comment(params[:value])
+    profile_data.update_comment(update_comment_params[:comment])
     profile = Tree::Workspace::Profile.new(username: current_user.username,
                                            element_link: tve.element_link,
                                            profile_data: profile_data)
     profile.update
-
+    render "update_comment.js"
   rescue RestClient::Unauthorized, RestClient::Forbidden, RestClient::ExceptionWithResponse => e
     @message = json_error(e)
-    render :text => @message, :status => 401
+    render "update_comment_error.js"
   end
 
   def update_distribution
-    logger.info "update distribution #{params[:pk]} #{params[:value]}"
-    tve = TreeVersionElement.find(params[:pk])
+    logger.info "update distribution #{update_distribution_params[:element_link]} #{update_distribution_params[:distribution]}"
+    tve = TreeVersionElement.find(update_distribution_params[:element_link])
     profile_data = Tree::ProfileData.new(current_user, tve.tree_version, tve.tree_element.profile || {})
-    profile_data.update_distribution(params[:value])
+    profile_data.update_distribution(update_distribution_params[:distribution])
     profile = Tree::Workspace::Profile.new(username: current_user.username,
                                            element_link: tve.element_link,
                                            profile_data: profile_data)
     profile.update
-
+    render "update_distribution.js"
   rescue RestClient::Unauthorized, RestClient::Forbidden, RestClient::ExceptionWithResponse => e
     @message = json_error(e)
-    render :text => @message, :status => 401
+    render "update_distribution_error.js"
   end
 
   def update_excluded
@@ -214,6 +214,22 @@ class TreesController < ApplicationController
                 :excluded,
                 :version_id,
                 :parent_name_typeahead_string)
+  end
+
+  def update_comment_params
+    params.require(:update_comment)
+        .permit(:element_link,
+                :comment,
+                :update,
+                :delete)
+  end
+
+  def update_distribution_params
+    params.require(:update_distribution)
+        .permit(:element_link,
+                :distribution,
+                :update,
+                :delete)
   end
 
   def remove_name_placement_params

@@ -1,0 +1,11 @@
+<%= text_area_tag("update_distribution[distribution]", @tree_version_element.distribution, escaped: false, title: 'Edit distribution', rows: 3, class: 'form-control', tabindex: increment_tab_index) %>
+
+<button type="submit"
+        id="update_distribution_btn"
+        class="btn btn-primary left"
+        name="update_distribution[update]"
+        tabindex="<%= increment_tab_index %>"
+        title="Update this distribution"
+        onclick="$('#update_distribution_btn').find('i.fa').addClass('fa-spin');"
+>Add distribution <i class="fa fa-refresh"></i>
+</button>

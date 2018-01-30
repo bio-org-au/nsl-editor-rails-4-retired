@@ -16,7 +16,6 @@
 #   limitations under the License.
 #
 class Tree::Workspace::Placement < ActiveType::Object
-  include WorkspaceParentNameResolvable
   attribute :instance_id, :integer
   attribute :parent_element_link, :string
   attribute :excluded, :boolean

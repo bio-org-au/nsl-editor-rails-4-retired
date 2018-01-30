@@ -15,16 +15,16 @@
 
         <dt>Excluded</dt>
         <dd>
-          <%= check_box_tag("move_placement[excluded]", true, @tree_version_element.tree_element.excluded, title: 'Exclude this', class: 'exclude-checkbox') %>
+          <%= check_box_tag("move_placement[excluded]", true, @tree_version_element.tree_element.excluded, title: 'Exclude this') %>
           <label for="move_placement_excluded" class="exclude-label">exclude</label>
         </dd>
         <dt><%= @tree_version_element.comment_key %></dt>
         <dd>
-          <%= text_area_tag("move_placement[comment]", @tree_version_element.comment, escaped: false, title: 'Edit comment', rows: 5, class: 'form-control') %>
+          <%= text_area_tag("move_placement[comment]", @tree_version_element.comment, escaped: false, title: 'Edit comment', rows: 4, class: 'form-control') %>
         </dd>
         <dt><%= @tree_version_element.distribution_key %></dt>
         <dd>
-          <%= text_area_tag("move_placement[distribution]", @tree_version_element.distribution, title: 'Edit distribution', rows: 5, class: 'form-control') %>
+          <%= text_area_tag("move_placement[distribution]", @tree_version_element.distribution, title: 'Edit distribution', rows: 3, class: 'form-control') %>
         </dd>
       </dl>
 

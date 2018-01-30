@@ -34,6 +34,11 @@ module ApplicationHelper
     @tab_index += increment
   end
 
+  def tab_index(offset = 0)
+    tabi = @tab_index || 1
+    tabi + offset
+  end
+
   def treated_label(label, treatment = :description)
     case treatment
     when :description

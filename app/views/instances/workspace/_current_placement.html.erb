@@ -5,36 +5,53 @@
   <% if @accepted_tve && @accepted_tve&.tree_element_id != @tree_version_element.tree_element_id %>
     (changed from <%= @accepted_tve&.tree_version&.tree&.name %>)
   <% end %>
+
   <dl class="dl-horizontal">
-    <dt>Excluded</dt>
-    <dd>
-
-      <%= check_box_tag("ExcludedElement", true, @tree_version_element.tree_element.excluded,
-                        title: "Exclude this",
-                        class: "exclude-checkbox",
-                        onchange: "updateExcluded(this,'" + @tree_version_element.element_link + "');") %>
-      <label for="ExcludedElement" class="exclude-label">exclude</label>
-
-    </dd>
     <dt>Full Name</dt>
     <dd><%= @tree_version_element.tree_element.name.full_name_html.html_safe %></dd>
     <dt>Reference</dt>
     <dd><%= @tree_version_element.tree_element.instance.reference.citation %></dd>
-    <dt><%= @tree_version_element.comment_key %></dt>
-    <!-- important don't indent the comment line below -->
+
+    <dt>Excluded</dt>
     <dd>
-      <div id="treecomment" title="click to edit" data-pk="<%= @tree_version_element.id %>">
-        <%= @tree_version_element.comment&.html_safe %>
-      </div>
+      <%= check_box_tag("ExcludedElement", true, @tree_version_element.tree_element.excluded,
+                        title: "Exclude this",
+                        onchange: "updateExcluded(this,'" + @tree_version_element.element_link + "');") %>
+      <label for="ExcludedElement" class="exclude-label">exclude</label>
+
     </dd>
+
+    <dt><%= @tree_version_element.comment_key %></dt>
+    <dd>
+      <div>
+        <%= form_tag({controller: 'trees', action: 'update_comment'}, {method: :post, remote: true}) do %>
+          <%= hidden_field_tag("update_comment[element_link]", @tree_version_element.element_link) %>
+          <% if @tree_version_element.comment.blank? %>
+            <%= render partial: "trees/add_comment", locals: {tree_version_element: @tree_version_element} %>
+          <% else %>
+            <%= render partial: "trees/update_comment", locals: {tree_version_element: @tree_version_element} %>
+          <% end %>
+        <% end %>
+      </div>
+      <div id="tree_comment_message" class="message-container inline hidden"></div>
+    </dd>
+
     <dt><%= @tree_version_element.distribution_key %></dt>
     <dd>
-      <div id="treedistribution" title="click to edit" data-pk="<%= @tree_version_element.id %>">
-        <%= @tree_version_element.distribution %>
-      </div>
+      <%= form_tag({controller: 'trees', action: 'update_distribution'}, {method: :post, remote: true}) do %>
+        <%= hidden_field_tag("update_distribution[element_link]", @tree_version_element.element_link) %>
+        <% if @tree_version_element.distribution.blank? %>
+          <%= render partial: "trees/add_distribution", locals: {tree_version_element: @tree_version_element} %>
+        <% else %>
+          <%= render partial: "trees/update_distribution", locals: {tree_version_element: @tree_version_element} %>
+        <% end %>
+      <% end %>
+      <div id="tree_distribution_message" class="message-container inline hidden"></div>
     </dd>
+
     <dt>Path</dt>
     <dd><%= @tree_version_element.name_path %></dd>
+
     <dt>Under</dt>
     <dd>
       <% if @tree_version_element.parent %>
@@ -47,12 +64,14 @@
                     class: 'name') %>
       <% end %>
     </dd>
+
     <dt>Element link</dt>
     <dd>
       <a href="<%= @tree_version_element.element_link %>" title="Tree element link id">
         <i class="fa fa-code-fork"></i> ... <%= @tree_version_element.element_link[/\/tree.*$/] %>
       </a>
     </dd>
+
     <dt>Taxon link</dt>
     <dd>
       <a href="<%= @tree_version_element.taxon_link %>" title="Taxon link id">
@@ -72,35 +91,6 @@
 
 <%= "<strong>#{@tree_version_element.count_children} Sub taxa</strong>".html_safe %>
 <script>
-    $.fn.editable.defaults.mode = 'inline';
-    $.fn.editable.defaults.escape = false;
-    $.fn.editableform.buttons =
-        '<button type="submit" class="btn btn-success editable-submit btn-mini left">Save <i class="fa fa-check"></i></button>' +
-        '<button type="button" class="btn editable-cancel btn-mini right">Cancel <i class="fa fa-close"></i></button>';
-    $('#treecomment').editable({
-        type: 'textarea',
-        title: 'Edit comment',
-        url: window.relative_url_root + '/trees/update_comment',
-        tpl: '<textarea title="edit comment"></textarea>',
-        showbuttons: 'bottom',
-        rows: 5,
-        escape: false,
-        success: function () {
-            $('#instance-classification-tab').click();
-        }
-    });
-    $('#treedistribution').editable({
-        type: 'textarea',
-        title: 'Edit distribution',
-        url: window.relative_url_root + '/trees/update_distribution',
-        tpl: '<textarea title="edit distribution"></textarea>',
-        showbuttons: 'bottom',
-        rows: 5,
-        success: function () {
-            $('#instance-classification-tab').click();
-        }
-    });
-
     function updateExcluded(input, taxonUri) {
         var data = {
             excluded: input.checked,
