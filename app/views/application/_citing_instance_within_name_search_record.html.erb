@@ -26,7 +26,9 @@
         <% end %>
       <% end %>
       <%= render(partial: 'record_debug', locals: {search_result: search_result}) if @debug %>
-    </a></td>
+      <%= render(partial: 'draft', locals: { search_result: search_result }) %>
+    </a>
+  </td>
   <td class="takes-focus width-20-percent filler">&nbsp;</td>
 </tr>
 

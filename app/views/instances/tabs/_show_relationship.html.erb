@@ -47,7 +47,7 @@ as
 <%= link_to("and BHL entry #{icon('external-link')}".html_safe,
             @instance.bhl_url, title: "Follow this link to the BHL entry.") if @instance.bhl_url.present? %>
 
-<%= "<div class=\"draft\"></div>".html_safe if @instance.draft? %>
+<%= "<div class=\"draft\">[DRAFT]</div>".html_safe if @instance.draft? %>
 
 
 
