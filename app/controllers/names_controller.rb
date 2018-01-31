@@ -243,6 +243,8 @@ class NamesController < ApplicationController
                                  :base_author_typeahead,
                                  :ex_base_author_typeahead,
                                  :sanctioning_author_typeahead,
+                                 :family_id,
+                                 :family_typeahead,
                                  :parent_id,
                                  :second_parent_id,
                                  :parent_typeahead,

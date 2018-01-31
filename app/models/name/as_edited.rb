@@ -18,11 +18,17 @@
 class Name::AsEdited < Name::AsTypeahead
   include NameAuthorResolvable
   include NameParentResolvable
+  include NameFamilyResolvable
   include NameDuplicateOfResolvable
 
   def self.create(params, typeahead_params, username)
     name = Name::AsEdited.new(params)
     name.resolve_typeahead_params(typeahead_params)
+    if name.parent
+      name.name_path = name.parent.name_path + '/' + name.name_element
+    else
+      name.name_path = name.name_element
+    end
     if name.save_with_username(username)
       name.set_names!
     else
@@ -57,6 +63,7 @@ class Name::AsEdited < Name::AsTypeahead
     resolve_author(params, "sanctioning_author")
     resolve_parent(params, "parent")
     resolve_parent(params, "second_parent")
+    resolve_family(params, "family")
     resolve_duplicate_of(params)
   end
 end

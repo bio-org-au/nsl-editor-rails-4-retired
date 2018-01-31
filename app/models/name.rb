@@ -142,7 +142,7 @@ class Name < ActiveRecord::Base
     category == CULTIVAR_HYBRID_CATEGORY
   end
 
-  def name_path
+  def names_in_path
     parents = []
     name = self
     while name.parent

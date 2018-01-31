@@ -5,7 +5,7 @@ function setUpNameFamilyTypeahead() {
             displayKey: function (obj) {
                 return obj.value;
             },
-            source: nameFamilySuggestionsl.ttAdapter()
+            source: nameFamilySuggestions.ttAdapter()
         })
             .on('typeahead:opened', function ($e, datum) {
                 debug('typeahead:opened');
