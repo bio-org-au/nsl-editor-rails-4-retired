@@ -58,6 +58,11 @@ class NamesController < ApplicationController
     render json: typeahead.suggestions
   end
 
+  def name_family_suggestions
+    typeahead = Name::AsTypeahead::ForFamily.new(params)
+    render json: typeahead.suggestions
+  end
+
   # Columns such as parent and duplicate_of_id use a typeahead search.
   def cultivar_parent_suggestions
     render json: [] if params[:term].blank?

@@ -21,7 +21,6 @@
 //= require navigation.js
 //= require keymaster.js
 //= require keys.js
-//= require ui-bootstrap-tpls-0.9.0.js
 //= require services/environment.js
 //= require jquery.scrollintoview.js
 //= require typeahead.bundle.js
@@ -39,6 +38,7 @@
 //= require typeahead/for_name/set_up/workspace_parent_name.js
 //= require typeahead/for_name/suggestions/workspace_parent_name.js
 //= require typeahead/for_name/hybrid_parent.js
+//= require typeahead/for_name/family.js
 //= require typeahead/for_name/parent.js
 //= require typeahead/for_name/second_parent.js
 //

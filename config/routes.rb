@@ -105,6 +105,11 @@ Rails.application.routes.draw do
         to: "names#name_parent_suggestions",
         via: :get
 
+  match "names/name_family_suggestions",
+        as: "name_name_family_suggestions",
+        to: "names#name_family_suggestions",
+        via: :get
+
   match "suggestions/name/hybrid_parent",
         as: "name_hybrid_parent_suggestions",
         to: "names#hybrid_parent_suggestions",

@@ -87,6 +87,30 @@ nameParentSuggestionsForCultivar = new Bloodhound({
     limit: 100
 });
 
+//---------------------------------------------------------------------------------------------------------------//
+
+// Provides a way to inject the current name id into the URL.
+// Using the replace function to strip off the Name's rank, which
+// is delimited by a pipe symbol (|).
+nameFamilySuggestions = new Bloodhound({
+    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    remote: {
+        url: window.relative_url_root + '/names/name_family_suggestions?term=%QUERY',
+        replace: function (url, query) {
+            return window.relative_url_root + '/names/name_family_suggestions?' +
+                'name_id=' + $('#name-family-typeahead').attr('data-name-id') + '&' +
+                'rank_id=' + $('#name_name_rank_id').val() + '&' +
+                'term=' + encodeURIComponent(query.replace(/\|.*/, ''))
+        }
+    },
+    limit: 100
+});
+
+nameFamilySuggestions.initialize();
+
+//---------------------------------------------------------------------------------------------------------------//
+
 // kicks off the loading/processing of `local` and `prefetch`
 nameParentSuggestionsForCultivar.initialize();
 
