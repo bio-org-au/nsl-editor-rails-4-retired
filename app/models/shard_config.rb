@@ -40,9 +40,6 @@ class ShardConfig < ActiveRecord::Base
   end
 
   def self.shard_group_name
-    results = ShardConfig.find_by(name: "shard group name")
-    return "NSL" if results.nil?
-    results.value
-
+    ShardConfig.find_by(name: 'shard group name').try('value') || 'NSL'
   end
 end
