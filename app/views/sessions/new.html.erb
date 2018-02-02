@@ -1,7 +1,7 @@
 <style>div#broadcast {width: 97%; text-align: center;} </style>
 <div id="sign-in-form-container">
 
-  <h1>NSL Editor</h1>
+  <h1><%= ShardConfig.shard_group_name %> Editor</h1>
 
   <div class="firefox-notice purple hidden">App developed on Firefox.</div>
   <div id="sign-in-form">
@@ -22,12 +22,12 @@
 
       <div class="form-group">
         <%= form.label :username, 'Username*' %>
-        <%= form.text_field :username, required: true, autofocus: true, title: "Enter your NSL Editor username" %>
+        <%= form.text_field :username, required: true, autofocus: true, title: "Enter your #{ShardConfig.shard_group_name} Editor username" %>
       </div>
 
       <div class="form-group">
         <%= form.label :password, 'Password*' %>
-        <%= form.password_field :password, required: true, title: "Enter your NSL Editor password" %>
+        <%= form.password_field :password, required: true, title: "Enter your #{ShardConfig.shard_group_name} Editor password" %>
       </div>
 
       <%= form.submit 'Sign in', title: 'Select this to sign in' %>
