@@ -59,6 +59,8 @@ class Instance < ActiveRecord::Base
   end
 
   scope :ordered_by_name, -> { joins(:name).order("simple_name asc") }
+  # The page ordering aims to emulate a numeric ordering process that
+  # handles assorted text and page ranges in the character data.
   scope :ordered_by_page, lambda {
     order("Lpad(
             Regexp_replace(
@@ -66,8 +68,10 @@ class Instance < ActiveRecord::Base
             '[^0-9]*([0-9][0-9]*).*', '\\1')
             ||
             Regexp_replace(
+              Regexp_replace(
                 Regexp_replace(page, '.*-.*', '~'),
-            '[^~].*','0'),
+              '[^~].*','0'),
+              '~','Z'),
           12,'0'),
           page,
           name.full_name")

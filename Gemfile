@@ -5,6 +5,9 @@ gem "rails", "~> 4.2"
 
 platform :jruby do
   gem "activerecord-jdbcpostgresql-adapter"
+  # warbler for rake tasks to generate a WAR file and use jruby 9.1.5.0
+  gem "jruby-jars", "9.1.5.0"
+  gem "warbler"
 end
 
 platform :ruby do
@@ -23,9 +26,6 @@ gem "turbolinks"
 gem "jbuilder", "~> 2.0"
 # bundle exec rake doc:rails generates the API under doc/api.
 gem "sdoc", "~> 0.4.0", group: :doc
-# warbler for rake tasks to generate a WAR file and use jruby 9.1.5.0
-gem "jruby-jars", "9.1.5.0"
-gem "warbler"
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -58,22 +58,10 @@ end
 
 platform :ruby do
   group :test do
-    gem "capybara"
-    gem "capybara-rails"
     gem "minitest"
     gem "minitest-rails"
-    gem "minitest-capybara"
-    gem "minitest-rails-capybara"
-    gem "capybara_minitest_spec"
-    gem "selenium-webdriver", "~> 2.45", require: false
     gem "launchy"
     gem "mocha", "~> 1.1.0"
-  end
-end
-
-platform :ruby do
-  group :test do
-    gem "capybara-webkit", require: false
   end
 end
 
@@ -87,7 +75,7 @@ gem "figaro"
 gem "rest-client"
 
 gem "active_type"
-gem "net-ldap"
+gem "net-ldap", "~> 0.16.0"
 
 gem "strip_attributes"
 gem "exception_notification"
