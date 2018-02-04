@@ -25,16 +25,16 @@
           <dd>
             <%= text_area_tag("place_name[comment]", '', escaped: false, title: 'Edit comment', rows: 4, class: 'form-control') %>
             <button type="button"
-                    class="btn btn-default clear-area"
-                    onclick="$('#place_name_comment').val('');">Clear
+                    class="btn btn-warning clear-area"
+                    onclick="$('#place_name_comment').val('');">Clear comment
             </button>
           </dd>
           <dt><%= @working_draft.distribution_key %></dt>
           <dd>
-            <%= text_area_tag("place_name[distribution]", '', title: 'Edit distribution', rows: 3, class: 'form-control') %>
+            <%= text_area_tag("place_name[distribution]", '', title: 'Edit distribution', rows: 2, class: 'form-control') %>
             <button type="button"
-                    class="btn btn-default clear-area"
-                    onclick="$('#place_name_distribution').val('');">Clear
+                    class="btn btn-warning clear-area"
+                    onclick="$('#place_name_distribution').val('');">Clear distribution
             </button>
           </dd>
         </dl>

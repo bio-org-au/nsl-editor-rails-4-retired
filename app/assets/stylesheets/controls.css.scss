@@ -264,7 +264,8 @@ input[type=checkbox].exclude-checkbox:checked + label.exclude-label:before {
 }
 
 button.clear-area {
-  margin-top: -23px;
-  margin-left: 80%;
+  margin-top: 0px;
+  margin-bottom: 3px;
   display: inline-block;
+  float: right;
 }

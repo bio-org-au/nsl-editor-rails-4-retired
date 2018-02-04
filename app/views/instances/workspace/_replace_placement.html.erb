@@ -22,16 +22,16 @@
         <dd>
           <%= text_area_tag("move_placement[comment]", @tree_version_element.comment, escaped: false, title: 'Edit comment', rows: 4, class: 'form-control') %>
           <button type="button"
-                  class="btn btn-default clear-area"
-                  onclick="$('#move_placement_comment').val('');">Clear
+                  class="btn btn-warning clear-area"
+                  onclick="$('#move_placement_comment').val('');">Clear comment
           </button>
         </dd>
         <dt><%= @tree_version_element.distribution_key %></dt>
         <dd>
-          <%= text_area_tag("move_placement[distribution]", @tree_version_element.distribution, title: 'Edit distribution', rows: 3, class: 'form-control') %>
+          <%= text_area_tag("move_placement[distribution]", @tree_version_element.distribution, title: 'Edit distribution', rows: 2, class: 'form-control') %>
           <button type="button"
-                  class="btn btn-default clear-area"
-                  onclick="$('#move_placement_distribution').val('');">Clear
+                  class="btn btn-warning clear-area"
+                  onclick="$('#move_placement_distribution').val('');">Clear distribution
           </button>
         </dd>
       </dl>
