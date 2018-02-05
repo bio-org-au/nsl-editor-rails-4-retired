@@ -9,7 +9,9 @@
             </ul>
         </div>
     <% end %>
-    <%= link_to(@instance.name.try('full_name'),
+  <%= render partial: "instances/widgets/edit_draft", locals: {f: f} %>
+
+  <%= link_to(@instance.name.try('full_name'),
                 search_path(query_string:
                             "id: #{@instance.name_id} show-instances:",
                             query_target: "name"),
