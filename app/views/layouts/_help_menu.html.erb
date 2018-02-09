@@ -38,12 +38,14 @@
       <li role="presentation">
         <%= link_to "Changes 2015", history_2015_path, title: 'Changes to the editor recorded from May 2015 to the end of 2015', tabindex: '-1' %>
       </li>
+      <% if Rails.configuration.try('offer_feedback_link') %>
       <li role="presentation" class="divider"></li>
       <li role="presentation">
         <%= link_to "Feedback", feedback_path,
                     title: "Send feedback comments and questions",
                     tabindex: '-1' %>
       </li>
+    <% end %>
     </ul>
 </li>
 

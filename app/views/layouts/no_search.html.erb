@@ -42,7 +42,7 @@ input[type="checkbox"]:not([title]) {
     <% end %>
   </head>
  
-  <body
+  <body  class="<%= Rails.configuration.try('environment') %>"
       data-active-reference-tab="tab_show_1"
       data-active-name-tab="tab_details"
       data-active-author-tab="tab_show_1"

@@ -1,4 +1,16 @@
 ---
+- :date: 09-Feb-2018
+  :jira_id: '2638'
+  :description: |-
+    Add feedback on/off configuration switch.
+- :date: 02-Feb-2018
+  :jira_id: ''
+  :description: |-
+    Remove hard-coded references to 'NSL' etc with pull-request from Arnab for DAWR.
+- :date: 09-Feb-2018
+  :jira_id: '2638'
+  :description: |-
+    Add feedback on/off configuration switch.
 - :date: 02-Feb-2018
   :release: true
 - :date: 25-Jan-2018
