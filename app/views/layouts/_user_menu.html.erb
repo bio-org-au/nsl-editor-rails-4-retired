@@ -33,15 +33,6 @@
       </li>
     <% end %>
 
-    <li class="dropdown-submenu">
-      <a tabindex="-1"
-         href="#"
-         title="Available classification workspaces">Classifications</a>
-      <ul id="classifications-menu" class="dropdown-menu">
-        <%= render partial: "trees/menu" %>
-      </ul>
-    </li>
-
     <li class="" role="presentation">
       <%= link_to "#{icon('sign-out')} Sign out".html_safe, sign_out_path, method: :delete, title: 'Select this to sign out from the NSL Editor'%>
     </li>

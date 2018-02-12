@@ -264,20 +264,15 @@ Rails.application.routes.draw do
         to: "trees#update_excluded",
         via: :post
 
-  match "workspace/value",
-        as: "workspace_value",
-        to: "workspace_values#update",
-        via: :patch
+  match "trees/new_draft",
+        as: "trees_new_draft",
+        to: "trees#new_draft",
+        via: :get
 
-  match "workspace/value",
-        as: "create_workspace_value",
-        to: "workspace_values#create",
+  match "trees/create_draft",
+        as: "trees_create_draft",
+        to: "trees#create_draft",
         via: :post
-
-  match "workspace/value/:name_id/:type_uri_id_part/:name_node_link_id",
-        as: "delete_workspace_value",
-        to: "workspace_values#destroy",
-        via: :delete
 
   match "search/reports",
         as: "search_reports",

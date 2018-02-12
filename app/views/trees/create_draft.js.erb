@@ -1,0 +1,6 @@
+$('#create-draft-error-message-container').addClass('hidden').html("");
+$('#create-draft-message-container')
+    .removeClass('hidden')
+    .html(markdown("<%= escape_javascript(@message.html_safe) %>"))
+    .append("<%= escape_javascript(render('refresh')) %>");
+$('#create-draft-submit').find('i.fa').removeClass('fa-spin');

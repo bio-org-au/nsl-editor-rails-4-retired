@@ -37,7 +37,7 @@ class Tree < ActiveRecord::Base
           where(name: ShardConfig.classification_tree_key)
         end)
 
-  def self.menu_query
+  def self.menu_drafts
     Tree.joins("LEFT OUTER JOIN tree_version draft_version on draft_version.tree_id = tree.id")
         .where("draft_version.published = false")
         .select("tree.id, name, draft_version.id as draft_id, draft_version.draft_name")

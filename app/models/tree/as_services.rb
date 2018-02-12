@@ -25,6 +25,8 @@ class Tree::AsServices
   REMOVE_PLACEMENT = "api/treeElement/removeElement"
   UPDATE_PROFILE = "api/treeElement/editElementProfile"
   UPDATE_EXCLUDED = "api/treeElement/editElementStatus"
+  CREATE_VERSION = "api/tree/createVersion"
+
   API_KEY = "apiKey=#{Rails.configuration.api_key}"
   PREFERRED_LINK = "broker/preferredLink"
   ADD_IDENTIFIER = "admin/addIdentifier"
@@ -57,6 +59,10 @@ class Tree::AsServices
 
   def self.excluded_url(username)
     "#{SERVICES_ADDRESS}#{UPDATE_EXCLUDED}?#{API_KEY}&as=#{username}"
+  end
+
+  def self.create_version_url(username)
+    "#{SERVICES_ADDRESS}#{CREATE_VERSION}?#{API_KEY}&as=#{username}"
   end
 
   def self.add_instance_identifier_url(instance_id)

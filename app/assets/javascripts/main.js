@@ -105,3 +105,7 @@ function refreshTreeTab(event) {
     event.preventDefault();
     return false;
 }
+
+function refreshPage() {
+    location.reload();
+}

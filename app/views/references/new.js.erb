@@ -1,4 +1,4 @@
-debug('ref new for '+<%= params[:random_id] %>+'');
+debug('ref new for ' + <%= params[:random_id] %> +'');
 $('div#search-result-details').html("<%= escape_javascript(h(render partial: 'new')) %>");
 debug('ref new');
 $('.showing-details').removeClass('showing-details');

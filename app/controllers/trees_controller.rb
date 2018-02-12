@@ -22,8 +22,37 @@ class TreesController < ApplicationController
   def index;
   end
 
-  def ng
-    render "trees/#{params[:template]}", layout: false
+  # New draft tree
+  # This just collects the details and posts to the services
+  def new_draft
+    @no_search_result_details = true
+    @tab_index = (params[:tabIndex] || "40").to_i
+    render "new_draft.js"
+  end
+
+  def create_draft
+    logger.info "Create a draft tree"
+    response = Tree::DraftVersion.create(params[:tree_id],
+                                         nil,
+                                         params[:draft_name],
+                                         params[:draft_log],
+                                         params[:default_draft],
+                                         current_user.username)
+    payload = json_payload(response)
+    if payload
+      @message = "#{payload.draftName} created."
+      @created_version = TreeVersion.find(payload.versionNumber)
+      render "create_draft.js"
+    else
+      @message = "Something went wrong, no payload."
+      render "create_draft_error.js"
+    end
+  rescue RestClient::Unauthorized, RestClient::Forbidden => e
+    @message = json_error(e)
+    render "create_draft_error.js"
+  rescue RestClient::ExceptionWithResponse => e
+    @message = json_error(e)
+    render "create_draft_error.js"
   end
 
   # Move an existing taxon (inc children) under a different parent
@@ -163,24 +192,28 @@ class TreesController < ApplicationController
     err.to_s
   end
 
-  def json_result(result)
+  def json_payload(result)
     json = JSON.parse(result.body, object_class: OpenStruct)
-    json&.payload&.message || result.to_s
+    json&.payload
+  end
+
+  def json_result(result)
+    json_payload(result)&.message || result.to_s
   rescue
     result.to_s
+  end
+
+  def get_version_from_response(result)
+    payload = json_payload(result)
+    TreeVersion.find(payload.versionNumber) if payload&.versionNumber
   end
 
   def placement_json_result(result)
-    json = JSON.parse(result.body, object_class: OpenStruct)
-    json&.payload&.message || result.to_s
-  rescue
-    result.to_s
+    json_result(result)
   end
 
   def replacement_json_result(result)
-    JSON.parse(result.body)['payload']
-  rescue
-    result.to_s
+    json_payload(result) || result.to_s
   end
 
   def process_problems(payload)
