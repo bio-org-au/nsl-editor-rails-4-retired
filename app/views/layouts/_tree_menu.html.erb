@@ -18,21 +18,28 @@
     <ul id="tree-dropdown-menu" class="dropdown-menu" role="menu">
       <%= render partial: "trees/drafts_menu" %>
       <li>
-
-        <%= link_to "Add draft tree",
+        <%= link_to "<i class='fa fa-plus'></i> draft tree".html_safe,
                     trees_new_draft_path,
                     title: 'Add a new draft tree',
                     remote: true,
                     tabindex: '-1' %>
       </li>
-      <li>
-        <a tabindex="-1"
-           href="#"
-           title="Edit the draft tree">Edit current draft</a></li>
-      <li>
-        <a tabindex="-1"
-           href="#"
-           title="Publish the draft tree">Publish current draft</a></li>
+      <% if @working_draft %>
+        <li>
+          <%= link_to "<i class='fa fa-edit'></i> #{@working_draft.tree.name} #{@working_draft.draft_name}".html_safe,
+                      trees_edit_draft_path,
+                      title: 'Edit draft tree',
+                      remote: true,
+                      tabindex: '-1' %>
+        </li>
+        <li>
+          <%= link_to "<i class='fa fa-file-text green'></i> #{@working_draft.tree.name} #{@working_draft.draft_name}".html_safe,
+                      trees_publish_draft_path,
+                      title: 'Publish draft tree',
+                      remote: true,
+                      tabindex: '-1' %>
+        </li>
+      <% end %>
     </ul>
   </li>
 

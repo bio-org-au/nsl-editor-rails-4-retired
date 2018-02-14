@@ -274,6 +274,26 @@ Rails.application.routes.draw do
         to: "trees#create_draft",
         via: :post
 
+  match "trees/edit_draft",
+        as: "trees_edit_draft",
+        to: "trees#edit_draft",
+        via: :get
+
+  match "trees/update_draft",
+        as: "trees_update_draft",
+        to: "trees#update_draft",
+        via: :post
+
+  match "trees/publish_draft",
+        as: "trees_publish_draft",
+        to: "trees#publish_draft",
+        via: :get
+
+  match "trees/publish",
+        as: "trees_publish",
+        to: "trees#publish_version",
+        via: :post
+
   match "search/reports",
         as: "search_reports",
         to: "search#reports",

@@ -26,6 +26,7 @@ class Tree::AsServices
   UPDATE_PROFILE = "api/treeElement/editElementProfile"
   UPDATE_EXCLUDED = "api/treeElement/editElementStatus"
   CREATE_VERSION = "api/tree/createVersion"
+  PUBLISH_VERSION = "api/treeVersion/publish"
 
   API_KEY = "apiKey=#{Rails.configuration.api_key}"
   PREFERRED_LINK = "broker/preferredLink"
@@ -63,6 +64,10 @@ class Tree::AsServices
 
   def self.create_version_url(username)
     "#{SERVICES_ADDRESS}#{CREATE_VERSION}?#{API_KEY}&as=#{username}"
+  end
+
+  def self.publish_version_url(username)
+    "#{SERVICES_ADDRESS}#{PUBLISH_VERSION}?#{API_KEY}&as=#{username}"
   end
 
   def self.add_instance_identifier_url(instance_id)

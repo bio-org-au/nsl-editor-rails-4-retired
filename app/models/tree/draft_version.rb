@@ -19,7 +19,7 @@
 class Tree::DraftVersion < ActiveRecord::Base
   self.table_name = "tree_version"
   self.primary_key = "id"
-  default_scope {where(published: false)}
+  default_scope { where(published: false) }
 
   belongs_to :tree,
              class_name: Tree
@@ -34,23 +34,38 @@ class Tree::DraftVersion < ActiveRecord::Base
 
   def name_in_version(name)
     tree_version_elements.joins(:tree_element)
-        .where(tree_element: {name: name}).first
+        .where(tree_element: { name: name }).first
   end
 
   def self.create(tree_id, from_version_id, draft_name, draft_log, default_draft, username)
     url = Tree::AsServices.create_version_url(username)
-    payload = {treeId: tree_id,
-               fromVersionId: from_version_id,
-               draftName: draft_name,
-               log: draft_log,
-               defaultDraft: default_draft
+    payload = { treeId: tree_id,
+                fromVersionId: from_version_id,
+                draftName: draft_name,
+                log: draft_log,
+                defaultDraft: default_draft
     }
     logger.info "Calling #{url} with #{payload}"
     RestClient::Request.execute(method: :put,
                                 url: url,
                                 payload: payload.to_json,
-                                headers: {content_type: :json, accept: :json},
+                                headers: { content_type: :json, accept: :json },
                                 timeout: 240)
+  rescue RestClient::ExceptionWithResponse => e
+    Rails.logger.error("Tree::Workspace::Placement error: #{e}")
+    raise
+  rescue => e
+    Rails.logger.error("Tree::Workspace::Placement other error: #{e}")
+    raise
+  end
+
+  def publish(username)
+    url = Tree::AsServices.publish_version_url(username)
+    payload = { versionId: id,
+                logEntry: log_entry }
+    logger.info "Calling #{url} with #{payload}"
+    RestClient.put(url, payload.to_json,
+                   { content_type: :json, accept: :json })
   rescue RestClient::ExceptionWithResponse => e
     Rails.logger.error("Tree::Workspace::Placement error: #{e}")
     raise

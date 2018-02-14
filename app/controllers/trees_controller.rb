@@ -55,6 +55,50 @@ class TreesController < ApplicationController
     render "create_draft_error.js"
   end
 
+  def edit_draft
+    @no_search_result_details = true
+    @tab_index = (params[:tabIndex] || "40").to_i
+    render "edit_draft.js"
+  end
+
+  def update_draft
+    logger.info "Update a draft tree"
+    target = Tree::DraftVersion.find(params[:version_id])
+    target.draft_name = params[:draft_name]
+    target.log_entry = params[:draft_log]
+    target.save!
+    @working_draft = target
+    render "update_draft.js"
+  end
+
+  def publish_draft
+    @no_search_result_details = true
+    @tab_index = (params[:tabIndex] || "40").to_i
+    render "publish_draft.js"
+  end
+
+  def publish_version
+    logger.info "Publish a draft tree"
+    target = Tree::DraftVersion.find(params[:version_id])
+    target.log_entry = params[:draft_log]
+    response = target.publish(current_user.username)
+    json = json(response)
+    if json&.ok
+      @message = "#### #{target.draft_name} published as #{target.tree.name} version #{target.id} ####"
+      @working_draft = nil
+      render "publish_version.js"
+    else
+      @message = json_result(response)
+      render "publish_version_error.js"
+    end
+  rescue RestClient::Unauthorized, RestClient::Forbidden => e
+    @message = json_error(e)
+    render "publish_version_error.js"
+  rescue RestClient::ExceptionWithResponse => e
+    @message = json_error(e)
+    render "publish_version_error.js"
+  end
+
   # Move an existing taxon (inc children) under a different parent
   def replace_placement
     logger.info("In replace placement!")
@@ -192,8 +236,12 @@ class TreesController < ApplicationController
     err.to_s
   end
 
+  def json(result)
+    JSON.parse(result.body, object_class: OpenStruct)
+  end
+
   def json_payload(result)
-    json = JSON.parse(result.body, object_class: OpenStruct)
+    json = json(result)
     json&.payload
   end
 
