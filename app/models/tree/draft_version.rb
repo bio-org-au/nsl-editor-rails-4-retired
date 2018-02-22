@@ -73,4 +73,8 @@ class Tree::DraftVersion < ActiveRecord::Base
     Rails.logger.error("Tree::Workspace::Placement other error: #{e}")
     raise
   end
+
+  def last_update
+    self.tree_version_elements.order(updated_at: :desc).first
+  end
 end

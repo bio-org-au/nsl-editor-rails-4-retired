@@ -109,3 +109,38 @@ function refreshTreeTab(event) {
 function refreshPage() {
     location.reload();
 }
+
+function replaceDates() {
+    $('date').each(function (element) {
+        var d = $(this).html();
+        debug(d);
+        $(this).html(jQuery.format.prettyDate(d));
+    });
+}
+
+function loadHtml(element, url) {
+    $.ajax({
+        url: url,
+        contentType: "text/html",
+        beforeSend: function (jqXHR, settings) {
+            jqXHR.setRequestHeader("Accept", "text/html");
+        },
+        complete: function (jqXHR, textStatus) {
+            debug(textStatus);
+        },
+        success: function (data) {
+            element.html(data);
+            replaceDates();
+        },
+        error: function (jqXHR) {
+            element.html("Data not available.")
+        }
+    });
+}
+
+function linkNames(startElement) {
+    $('name').on('click', function () {
+        var nameId = $(this).data('name-id');
+        // http://127.0.0.1:3000/search?query_string=id%3A+71063+show-instances%3A&query_target=name
+    });
+}

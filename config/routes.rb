@@ -294,6 +294,11 @@ Rails.application.routes.draw do
         to: "trees#publish_version",
         via: :post
 
+  match "tree/reports",
+        as: "tree_reports",
+        to: "trees#reports",
+        via: :get
+
   match "search/reports",
         as: "search_reports",
         to: "search#reports",

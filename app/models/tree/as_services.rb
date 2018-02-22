@@ -28,6 +28,8 @@ class Tree::AsServices
   CREATE_VERSION = "api/tree/createVersion"
   PUBLISH_VERSION = "api/treeVersion/publish"
 
+  DIFF_LINK = "treeVersion/diff"
+
   API_KEY = "apiKey=#{Rails.configuration.api_key}"
   PREFERRED_LINK = "broker/preferredLink"
   ADD_IDENTIFIER = "admin/addIdentifier"
@@ -103,6 +105,10 @@ class Tree::AsServices
   rescue => e
     Rails.logger.error("Tree::Workspace::Placement error: #{e.response}")
     raise
+  end
+
+  def self.diff_link(v1, v2)
+    "#{SERVICES_ADDRESS}#{DIFF_LINK}?v1=#{v1}&v2=#{v2}&embed=true"
   end
 
 end

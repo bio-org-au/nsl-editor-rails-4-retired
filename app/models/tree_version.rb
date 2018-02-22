@@ -56,6 +56,9 @@ class TreeVersion < ActiveRecord::Base
         .limit(15)
   end
 
+  def last_update
+    self.tree_version_elements.order(updated_at: :desc).first
+  end
 
   def user_can_edit?(user)
     user && user.groups.include?(tree.group_name)

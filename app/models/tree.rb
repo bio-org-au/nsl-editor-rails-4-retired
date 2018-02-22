@@ -40,7 +40,7 @@ class Tree < ActiveRecord::Base
   def self.menu_drafts
     Tree.joins("LEFT OUTER JOIN tree_version draft_version on draft_version.tree_id = tree.id")
         .where("draft_version.published = false")
-        .select("tree.id, name, draft_version.id as draft_id, draft_version.draft_name")
+        .select("tree.id, name, draft_version.id as draft_id, draft_version.draft_name, draft_version.log_entry")
         .order("tree.name")
   end
 

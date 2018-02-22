@@ -15,9 +15,9 @@
           <%= link_to("#{menu_item.name} #{menu_item.draft_name}
                       #{fa_icon 'check', class: icon_check_class}".html_safe,
                       toggle_current_workspace_path(id: menu_item.draft_id),
-                      {remote: true,
-                       method: "post",
-                       title: 'Choose draft'}) %>
+                      { remote: true,
+                        method: "post",
+                        title: menu_item.log_entry }) %>
       <% else %>
           <%= "#{menu_item.name} (No draft)".html_safe %>
       <% end %>

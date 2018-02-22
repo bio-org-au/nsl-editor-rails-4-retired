@@ -58,6 +58,7 @@ class TreesController < ApplicationController
   def edit_draft
     @no_search_result_details = true
     @tab_index = (params[:tabIndex] || "40").to_i
+    @diff_link = Tree::AsServices.diff_link(@working_draft.tree.current_tree_version_id, @working_draft.id)
     render "edit_draft.js"
   end
 
@@ -97,6 +98,10 @@ class TreesController < ApplicationController
   rescue RestClient::ExceptionWithResponse => e
     @message = json_error(e)
     render "publish_version_error.js"
+  end
+
+  def reports
+    @diff_link = Tree::AsServices.diff_link(@working_draft.tree.current_tree_version_id, @working_draft.id)
   end
 
   # Move an existing taxon (inc children) under a different parent
@@ -316,9 +321,5 @@ class TreesController < ApplicationController
   def remove_name_placement_params
     params.require(:remove_placement).permit(:taxon_uri, :delete)
   end
-
-  def comment_params
-  end
-
 
 end
