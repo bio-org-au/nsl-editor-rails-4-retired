@@ -7,7 +7,15 @@ create table bulk_name_raw (
   authority varchar,
   preferred_authority varchar,
   page varchar,
-  page_extra varchar
+  act_page varchar,
+  nsw_page varchar,
+  nt_page varchar,
+  qld_page varchar,
+  sa_page varchar,
+  tas_page varchar,
+  vic_page varchar,
+  wa_page varchar,
+  ait_page varchar
 );
 
 --export spreadsheet to csv
@@ -18,6 +26,8 @@ select count(*) from bulk_name_raw;
 
 \copy bulk_name_raw from '~/Downloads/orchid-checklist.csv' delimiter ',' csv;
 
+
+-- remove heading if it was loaded.
 delete from bulk_name_raw
  where genus = 'Genus'
    and species = 'sp.'

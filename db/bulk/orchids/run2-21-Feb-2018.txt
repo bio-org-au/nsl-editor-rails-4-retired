@@ -1,0 +1,1271 @@
+ gregc-imac Wed Feb 21 17:33:43  gregc  [jruby-9.1.5.0 (set by /Users/gregc/Dropbox/anbg/rails/ned/.ruby-version)]  ~/Dropbox/anbg/rails/ned/db/bulk/orchids
+$ psql plants_dev
+CREATE FUNCTION
+psql (9.5.6)
+Type "help" for help.
+
+plants_dev=# \i setup.sql
+DROP TABLE
+CREATE TABLE
+ count
+-------
+     0
+(1 row)
+
+COPY 1941
+DELETE 0
+DELETE 99
+ count
+-------
+  1842
+(1 row)
+
+plants_dev=# \i load.sql
+DROP TABLE
+CREATE TABLE
+load data into processing table
+INSERT 0 1842
+set inferred rank
+UPDATE 25
+UPDATE 84
+UPDATE 1733
+construct species names
+UPDATE 390
+construct species names with a preferred authority
+UPDATE 1343
+construct non-autonym variety names
+UPDATE 20
+construct autonym variety names
+UPDATE 5
+construct non-autonym subspecies variety names - e.g. subsp. x var. y
+UPDATE 1
+construct autonymic subspecies variety names - e.g. subsp. x var. y
+UPDATE 0
+construct non-autonym subspecies names
+UPDATE 51
+construct autonym subspecies names
+UPDATE 27
+construct names without authority
+UPDATE 5
+all records should now have constructed names
+ count
+-------
+     0
+(1 row)
+
+run a simple match
+UPDATE 1455
+run a match on unmatched that excludes non-instance names
+UPDATE 1
+run a match on unmatched that excludes nom_inval names
+
+UPDATE 8
+run a match on unmatched that excludes nom_inval and no-instance names
+
+UPDATE 1
+run a min(id) match on leftovers
+
+UPDATE 36
+summary
+
+ inferred_rank | matched_name_count | count
+---------------+--------------------+-------
+ species       |                  0 |   334
+ species       |                  1 |  1363
+ species       |                  2 |    17
+ species       |                  3 |    19
+ subspecies    |                  0 |     7
+ subspecies    |                  1 |    77
+ variety       |                  1 |    25
+(7 rows)
+
+ inferred_rank | matched_name_count | count
+---------------+--------------------+-------
+ species       |                  0 |   334
+ species       |                  1 |  1363
+ species       |                  2 |    17
+ species       |                  3 |    19
+ subspecies    |                  0 |     7
+ subspecies    |                  1 |    77
+ variety       |                  1 |    25
+(7 rows)
+
+Non-matched names with a matching legitimate simple name
+
+    genus     |   species    |                  authority                  |           preferred_authority            |                            full_name
+--------------+--------------+---------------------------------------------+------------------------------------------+------------------------------------------------------------------
+ Caladenia    | barbarella   | Hopper & A.P.Br.                            | Schltdl.                                 | Caladenia barbarella Hopper & A.P.Br.
+ Caladenia    | behrii       | Schldl.                                     |                                          | Caladenia behrii Schltdl.
+ Caladenia    | brownii      | Hopper                                      | Hopper & A.P.Br                          | Caladenia brownii Hopper & A.P.Br.
+ Caladenia    | longicauda   |                                             |                                          | Caladenia longicauda Lindl.
+ Caladenia    | transitoria  |                                             |                                          | Caladenia transitoria D.L.Jones
+ Calochilus   | caeruleus    | L.O. Williams                               |                                          | Calochilus caeruleus L.O.Williams
+ Calochilus   | caeruleus    | L.O. Williams                               |                                          | Calochilus caeruleus
+ Corunastylis | alticola     | (D.L.Jones & B. Gray) D.L.Jones & M.A.Clem. |                                          | Corunastylis alticola (D.L.Jones & B.Gray) D.L.Jones & M.A.Clem.
+ Corunastylis | tepperi      | (F.Muell. ex. Tepper) D.L.Jones & M.A.Clem. |                                          | Corunastylis tepperi (F.Muell. ex Tepper) D.L.Jones & M.A.Clem.
+ Dendrobium   | discolor     | Liddle & P.I. Forst.                        |                                          | Dendrobium discolor Lindl.
+ Dendrobium   | johannis     | Rchb.f.                                     | Rchb.f. ex Bateman                       | Dendrobium johannis Rchb.f.
+ Dendrobium   | tetragonum   | P.B.Adams, S.D.Lawson and G.A.Paterson      | Peter B.Adams, S.D.Lawson & G.A.Paterson | Dendrobium tetragonum A.Cunn.
+ Dendrobium   | tetragonum   | P.B.Adams, S.D.Lawson and G.A.Paterson      | Peter B.Adams, S.D.Lawson & G.A.Paterson | Dendrobium tetragonum
+ Phaius       | pictus       | T.E.Hunt                                    | Hook.                                    | Phaius pictus T.E.Hunt
+ Phalaenopsis | rosenstromii | F.M.Bailey                                  | (Rchb.f.) Rchb.f. ex Kraenzl.            | Phalaenopsis rosenstromii F.M.Bailey
+ Pholidota    | imbricata    | Hook                                        |                                          | Pholidota imbricata
+ Pholidota    | imbricata    | Hook                                        |                                          | Pholidota imbricata Hook.
+ Phreatia     | paleata      | (Rchb.f.) Rchb.f.                           |                                          | Phreatia paleata (Rchb.f.) Rchb.f. ex Kraenzl.
+ Pterostylis  | robusta      |                                             |                                          | Pterostylis robusta R.S.Rogers
+ Thelymitra   | brevifolia   |                                             |                                          | Thelymitra brevifolia Jeanes
+ Thelymitra   | odora        |                                             |                                          | Thelymitra odora R.J.Bates
+(21 rows)
+
+match leftovers on simple name
+
+UPDATE 0
+Review results
+
+ inferred_rank | matched_name_count | count
+---------------+--------------------+-------
+ species       |                  0 |   334
+ species       |                  1 |  1363
+ species       |                  2 |    17
+ species       |                  3 |    19
+ subspecies    |                  0 |     7
+ subspecies    |                  1 |    77
+ variety       |                  1 |    25
+(7 rows)
+
+Non-matched names
+
+    genus     |              species              |        subsp_var         |                  authority                  |           preferred_authority            |                                 constructed_name
+--------------+-----------------------------------+--------------------------+---------------------------------------------+------------------------------------------+----------------------------------------------------------------------------------
+ Acianthus    | sp. 'Gibraltar Range'             |                          |                                             |                                          | Acianthus sp. 'Gibraltar Range'
+ Acianthus    | sp. 'NSW Northern Tablelands'     |                          |                                             |                                          | Acianthus sp. 'NSW Northern Tablelands'
+ Acianthus    | sp. 'Tathra'                      |                          |                                             |                                          | Acianthus sp. 'Tathra'
+ Arthrochilus | sp. 'Bradshaw Station'            |                          |                                             |                                          | Arthrochilus sp. 'Bradshaw Station'
+ Arthrochilus | sp. 'spinifex dweller'            |                          |                                             |                                          | Arthrochilus sp. 'spinifex dweller'
+ Caladenia    | barbarella                        |                          | Hopper & A.P.Br.                            | Schltdl.                                 | Caladenia barbarella Schltdl.
+ Caladenia    | behrii                            |                          | Schldl.                                     |                                          | Caladenia behrii Schldl.
+ Caladenia    | brownii                           |                          | Hopper                                      | Hopper & A.P.Br                          | Caladenia brownii Hopper & A.P.Br
+ Caladenia    | longicauda                        | subsp. 'Bulbarnet'       |                                             |                                          | Caladenia longicauda subsp. 'Bulbarnet'
+ Caladenia    | sp. 'Ararat hills'                |                          |                                             |                                          | Caladenia sp. 'Ararat hills'
+ Caladenia    | sp. 'Bindoon'                     |                          |                                             |                                          | Caladenia sp. 'Bindoon'
+ Caladenia    | sp. 'Buchan'                      |                          |                                             |                                          | Caladenia sp. 'Buchan'
+ Caladenia    | sp. 'Carboor'                     |                          |                                             |                                          | Caladenia sp. 'Carboor'
+ Caladenia    | sp. 'Chapple Vale'                |                          |                                             |                                          | Caladenia sp. 'Chapple Vale'
+ Caladenia    | sp. 'Coonawarra'                  |                          |                                             |                                          | Caladenia sp. 'Coonawarra'
+ Caladenia    | sp. 'Coorong'                     |                          |                                             |                                          | Caladenia sp. 'Coorong'
+ Caladenia    | sp. 'Dorrigo'                     |                          |                                             |                                          | Caladenia sp. 'Dorrigo'
+ Caladenia    | sp. 'Earlston'                    |                          |                                             |                                          | Caladenia sp. 'Earlston'
+ Caladenia    | sp. 'Finnis'                      |                          |                                             |                                          | Caladenia sp. 'Finnis'
+ Caladenia    | sp. 'Fleurieu Peninsula'          |                          |                                             |                                          | Caladenia sp. 'Fleurieu Peninsula'
+ Caladenia    | sp. 'Flinders Ranges red'         |                          |                                             |                                          | Caladenia sp. 'Flinders Ranges red'
+ Caladenia    | sp. 'Inverleigh'                  |                          |                                             |                                          | Caladenia sp. 'Inverleigh'
+ Caladenia    | sp. 'Kangaroo Island'             |                          |                                             |                                          | Caladenia sp. 'Kangaroo Island'
+ Caladenia    | sp. 'Kaniva Giant'                |                          |                                             |                                          | Caladenia sp. 'Kaniva Giant'
+ Caladenia    | sp. 'Kaniva'                      |                          |                                             |                                          | Caladenia sp. 'Kaniva'
+ Caladenia    | sp. 'Kilkoy Creek'                |                          |                                             |                                          | Caladenia sp. 'Kilkoy Creek'
+ Caladenia    | sp. 'Kilsyth South'               |                          |                                             |                                          | Caladenia sp. 'Kilsyth South'
+ Caladenia    | sp. 'Kooyera'                     |                          |                                             |                                          | Caladenia sp. 'Kooyera'
+ Caladenia    | sp. 'Mandurang'                   |                          |                                             |                                          | Caladenia sp. 'Mandurang'
+ Caladenia    | sp. 'Monarto South'               |                          |                                             |                                          | Caladenia sp. 'Monarto South'
+ Caladenia    | sp. 'Murray mallee'               |                          |                                             |                                          | Caladenia sp. 'Murray mallee'
+ Caladenia    | sp. 'Orange'                      |                          |                                             |                                          | Caladenia sp. 'Orange'
+ Caladenia    | sp. 'Raymond Island'              |                          |                                             |                                          | Caladenia sp. 'Raymond Island'
+ Caladenia    | sp. 'Richmond River'              |                          |                                             |                                          | Caladenia sp. 'Richmond River'
+ Caladenia    | sp. 'St Andrews'                  |                          |                                             |                                          | Caladenia sp. 'St Andrews'
+ Caladenia    | sp. 'Watheroo'                    |                          |                                             |                                          | Caladenia sp. 'Watheroo'
+ Caladenia    | sp. 'Woronora Plateau'            |                          |                                             |                                          | Caladenia sp. 'Woronora Plateau'
+ Caladenia    | sp. 'Yarram'                      |                          |                                             |                                          | Caladenia sp. 'Yarram'
+ Caladenia    | sp. 'central NSW'                 |                          |                                             |                                          | Caladenia sp. 'central NSW'
+ Caladenia    | sp. 'central Victoria'            |                          |                                             |                                          | Caladenia sp. 'central Victoria'
+ Caladenia    | sp. 'coastal Eyre Peninsula'      |                          |                                             |                                          | Caladenia sp. 'coastal Eyre Peninsula'
+ Caladenia    | sp. 'coastal dunes'               |                          |                                             |                                          | Caladenia sp. 'coastal dunes'
+ Caladenia    | sp. 'crowded calli'               |                          |                                             |                                          | Caladenia sp. 'crowded calli'
+ Caladenia    | sp. 'east of Esperance'           |                          |                                             |                                          | Caladenia sp. 'east of Esperance'
+ Caladenia    | sp. 'glowing green'               |                          |                                             |                                          | Caladenia sp. 'glowing green'
+ Caladenia    | sp. 'inland NSW'                  |                          |                                             |                                          | Caladenia sp. 'inland NSW'
+ Caladenia    | sp. 'large scented'               |                          |                                             |                                          | Caladenia sp. 'large scented'
+ Caladenia    | sp. 'limestone mallee'            |                          |                                             |                                          | Caladenia sp. 'limestone mallee'
+ Caladenia    | sp. 'little clowns'               |                          |                                             |                                          | Caladenia sp. 'little clowns'
+ Caladenia    | sp. 'lowan mallee'                |                          |                                             |                                          | Caladenia sp. 'lowan mallee'
+ Caladenia    | sp. 'lower Glenelg River'         |                          |                                             |                                          | Caladenia sp. 'lower Glenelg River'
+ Caladenia    | sp. 'mallee heath'                |                          |                                             |                                          | Caladenia sp. 'mallee heath'
+ Caladenia    | sp. 'mallee'                      |                          |                                             |                                          | Caladenia sp. 'mallee'
+ Caladenia    | sp. 'pointed flowers'             |                          |                                             |                                          | Caladenia sp. 'pointed flowers'
+ Caladenia    | sp. 'sand dunes'                  |                          |                                             |                                          | Caladenia sp. 'sand dunes'
+ Caladenia    | sp. 'short yellow clubs'          |                          |                                             |                                          | Caladenia sp. 'short yellow clubs'
+ Caladenia    | sp. 'small tensa'                 |                          |                                             |                                          | Caladenia sp. 'small tensa'
+ Caladenia    | sp. 'south Gippsland'             |                          |                                             |                                          | Caladenia sp. 'south Gippsland'
+ Caladenia    | sp. 'south east'                  |                          |                                             |                                          | Caladenia sp. 'south east'
+ Caladenia    | sp. 'southern slopes'             |                          |                                             |                                          | Caladenia sp. 'southern slopes'
+ Caladenia    | sp. 'swamp heath'                 |                          |                                             |                                          | Caladenia sp. 'swamp heath'
+ Caladenia    | sp. 'tiny white'                  |                          |                                             |                                          | Caladenia sp. 'tiny white'
+ Caladenia    | sp. 'western Murray Flats'        |                          |                                             |                                          | Caladenia sp. 'western Murray Flats'
+ Caladenia    | sp. 'western wheatbelt'           |                          |                                             |                                          | Caladenia sp. 'western wheatbelt'
+ Caladenia    | transitoria                       | subsp. 'Kangaroo Island' |                                             |                                          | Caladenia transitoria subsp. 'Kangaroo Island'
+ Caladenia    | validinerva                       |                          | Hopper & A.P.Br. ex A.P.Br. & G.Brockman    |                                          | Caladenia validinerva Hopper & A.P.Br. ex A.P.Br. & G.Brockman
+ Calochilus   | caeruleus                         |                          | L.O. Williams                               |                                          | Calochilus caeruleus L.O. Williams
+ Calochilus   | sp. 'Coaldale'                    |                          |                                             |                                          | Calochilus sp. 'Coaldale'
+ Calochilus   | sp. 'Gibraltar Range'             |                          |                                             |                                          | Calochilus sp. 'Gibraltar Range'
+ Calochilus   | sp. 'Kangaroo Island'             |                          |                                             |                                          | Calochilus sp. 'Kangaroo Island'
+ Calochilus   | sp. 'Moondarra'                   |                          |                                             |                                          | Calochilus sp. 'Moondarra'
+ Calochilus   | sp. 'New England'                 |                          |                                             |                                          | Calochilus sp. 'New England'
+ Calochilus   | sp. 'Theda Station'               |                          |                                             |                                          | Calochilus sp. 'Theda Station'
+ Chiloglottis | sp. 'Bald Rock'                   |                          |                                             |                                          | Chiloglottis sp. 'Bald Rock'
+ Chiloglottis | sp. 'Barrington Tops'             |                          |                                             |                                          | Chiloglottis sp. 'Barrington Tops'
+ Chiloglottis | sp. 'Bathurst'                    |                          |                                             |                                          | Chiloglottis sp. 'Bathurst'
+ Chiloglottis | sp. 'Ebor'                        |                          |                                             |                                          | Chiloglottis sp. 'Ebor'
+ Chiloglottis | sp. 'Kybean Range'                |                          |                                             |                                          | Chiloglottis sp. 'Kybean Range'
+ Chiloglottis | sp. 'Maryborough'                 |                          |                                             |                                          | Chiloglottis sp. 'Maryborough'
+ Chiloglottis | sp. 'Weilangta'                   |                          |                                             |                                          | Chiloglottis sp. 'Weilangta'
+ Chiloglottis | sp. 'highlands'                   |                          |                                             |                                          | Chiloglottis sp. 'highlands'
+ Chiloglottis | sp. 'lowlands'                    |                          |                                             |                                          | Chiloglottis sp. 'lowlands'
+ Corunastylis | alticola                          |                          | (D.L.Jones & B. Gray) D.L.Jones & M.A.Clem. |                                          | Corunastylis alticola (D.L.Jones & B. Gray) D.L.Jones & M.A.Clem.
+ Corunastylis | sp. 'Adelaide Hills'              |                          |                                             |                                          | Corunastylis sp. 'Adelaide Hills'
+ Corunastylis | sp. 'Beechworth'                  |                          |                                             |                                          | Corunastylis sp. 'Beechworth'
+ Corunastylis | sp. 'Charmhaven'                  |                          |                                             |                                          | Corunastylis sp. 'Charmhaven'
+ Corunastylis | sp. 'Fraser Island'               |                          |                                             |                                          | Corunastylis sp. 'Fraser Island'
+ Corunastylis | sp. 'Gippsland Plains'            |                          |                                             |                                          | Corunastylis sp. 'Gippsland Plains'
+ Corunastylis | sp. 'Mount Billy'                 |                          |                                             |                                          | Corunastylis sp. 'Mount Billy'
+ Corunastylis | sp. 'Mount Kaputar'               |                          |                                             |                                          | Corunastylis sp. 'Mount Kaputar'
+ Corunastylis | sp. 'Mount Mee'                   |                          |                                             |                                          | Corunastylis sp. 'Mount Mee'
+ Corunastylis | sp. 'Pyrete Range'                |                          |                                             |                                          | Corunastylis sp. 'Pyrete Range'
+ Corunastylis | sp. 'Raby Bay'                    |                          |                                             |                                          | Corunastylis sp. 'Raby Bay'
+ Corunastylis | sp. 'Wyberba'                     |                          |                                             |                                          | Corunastylis sp. 'Wyberba'
+ Corunastylis | sp. 'dark flowers'                |                          |                                             |                                          | Corunastylis sp. 'dark flowers'
+ Corunastylis | sp. 'granite ranges'              |                          |                                             |                                          | Corunastylis sp. 'granite ranges'
+ Corunastylis | sp. 'intermediate'                |                          |                                             |                                          | Corunastylis sp. 'intermediate'
+ Corunastylis | sp. 'large bracts'                |                          |                                             |                                          | Corunastylis sp. 'large bracts'
+ Corunastylis | tepperi                           |                          | (F.Muell. ex. Tepper) D.L.Jones & M.A.Clem. |                                          | Corunastylis tepperi (F.Muell. ex. Tepper) D.L.Jones & M.A.Clem.
+ Corybas      | sp. 'Gibraltar Range'             |                          |                                             |                                          | Corybas sp. 'Gibraltar Range'
+ Corybas      | sp. 'Portland'                    |                          |                                             |                                          | Corybas sp. 'Portland'
+ Corybas      | sp. 'Woolly Tea-tree'             |                          |                                             |                                          | Corybas sp. 'Woolly Tea-tree'
+ Corybas      | sp. 'dark labellum'               |                          |                                             |                                          | Corybas sp. 'dark labellum'
+ Corybas      | sp. 'red-eyed ghost'              |                          |                                             |                                          | Corybas sp. 'red-eyed ghost'
+ Cyanicula    | gertrudiae                        |                          | (Ostenf.) Hopper & A.P.Br.                  |                                          | Cyanicula gertrudiae (Ostenf.) Hopper & A.P.Br.
+ Dendrobium   | discolor                          | subsp. incurvata         | Liddle & P.I. Forst.                        |                                          | Dendrobium discolor subsp. incurvata Liddle & P.I. Forst.
+ Dendrobium   | finniganensis                     |                          | D.L.Jones                                   |                                          | Dendrobium finniganensis D.L.Jones
+ Dendrobium   | johannis                          |                          | Rchb.f.                                     | Rchb.f. ex Bateman                       | Dendrobium johannis Rchb.f. ex Bateman
+ Dendrobium   | tetragonum                        | subsp. cataractum        | P.B.Adams, S.D.Lawson and G.A.Paterson      | Peter B.Adams, S.D.Lawson & G.A.Paterson | Dendrobium tetragonum subsp. cataractum Peter B.Adams, S.D.Lawson & G.A.Paterson
+ Dipodium     | sp. 'basalt woodland'             |                          |                                             |                                          | Dipodium sp. 'basalt woodland'
+ Dipodium     | sp. 'sandstone'                   |                          |                                             |                                          | Dipodium sp. 'sandstone'
+ Diuris       | sp. 'Byfield'                     |                          |                                             |                                          | Diuris sp. 'Byfield'
+ Diuris       | sp. 'Carnarvon'                   |                          |                                             |                                          | Diuris sp. 'Carnarvon'
+ Diuris       | sp. 'Clarencetown'                |                          |                                             |                                          | Diuris sp. 'Clarencetown'
+ Diuris       | sp. 'Colo River'                  |                          |                                             |                                          | Diuris sp. 'Colo River'
+ Diuris       | sp. 'Darling scarp'               |                          |                                             |                                          | Diuris sp. 'Darling scarp'
+ Diuris       | sp. 'Ebor'                        |                          |                                             |                                          | Diuris sp. 'Ebor'
+ Diuris       | sp. 'Gippsland plains'            |                          |                                             |                                          | Diuris sp. 'Gippsland plains'
+ Diuris       | sp. 'Grafton'                     |                          |                                             |                                          | Diuris sp. 'Grafton'
+ Diuris       | sp. 'Guyra'                       |                          |                                             |                                          | Diuris sp. 'Guyra'
+ Diuris       | sp. 'Hunter Valley'               |                          |                                             |                                          | Diuris sp. 'Hunter Valley'
+ Diuris       | sp. 'Jollys Falls'                |                          |                                             |                                          | Diuris sp. 'Jollys Falls'
+ Diuris       | sp. 'Monaro'                      |                          |                                             |                                          | Diuris sp. 'Monaro'
+ Diuris       | sp. 'NSW North Coast'             |                          |                                             |                                          | Diuris sp. 'NSW North Coast'
+ Diuris       | sp. 'New England escarpment'      |                          |                                             |                                          | Diuris sp. 'New England escarpment'
+ Diuris       | sp. 'New England swamps'          |                          |                                             |                                          | Diuris sp. 'New England swamps'
+ Diuris       | sp. 'Red Gum waterholes'          |                          |                                             |                                          | Diuris sp. 'Red Gum waterholes'
+ Diuris       | sp. 'Tenterfield/Stanthorpe'      |                          |                                             |                                          | Diuris sp. 'Tenterfield/Stanthorpe'
+ Diuris       | sp. 'Zuytdorp cliffs'             |                          |                                             |                                          | Diuris sp. 'Zuytdorp cliffs'
+ Diuris       | sp. 'sandhills'                   |                          |                                             |                                          | Diuris sp. 'sandhills'
+ Diuris       | sp. 'thick sepals'                |                          |                                             |                                          | Diuris sp. 'thick sepals'
+ Eriochilus   | sp. 'dry plains'                  |                          |                                             |                                          | Eriochilus sp. 'dry plains'
+ Eriochilus   | sp. 'smooth leaf'                 |                          |                                             |                                          | Eriochilus sp. 'smooth leaf'
+ Habenaria    | sp. 'Beverley Springs Station'    |                          |                                             |                                          | Habenaria sp. 'Beverley Springs Station'
+ Microtis     | sp. 'Flinders Ranges'             |                          |                                             |                                          | Microtis sp. 'Flinders Ranges'
+ Microtis     | sp. 'Topperwein'                  |                          |                                             |                                          | Microtis sp. 'Topperwein'
+ Microtis     | sp. 'alpine'                      |                          |                                             |                                          | Microtis sp. 'alpine'
+ Microtis     | sp. 'curved lip'                  |                          |                                             |                                          | Microtis sp. 'curved lip'
+ Microtis     | sp. 'dense spikes'                |                          |                                             |                                          | Microtis sp. 'dense spikes'
+ Microtis     | sp. 'fragrant'                    |                          |                                             |                                          | Microtis sp. 'fragrant'
+ Microtis     | sp. 'hanging bogs'                |                          |                                             |                                          | Microtis sp. 'hanging bogs'
+ Microtis     | sp. 'late flowering'              |                          |                                             |                                          | Microtis sp. 'late flowering'
+ Microtis     | sp. 'narrow lip'                  |                          |                                             |                                          | Microtis sp. 'narrow lip'
+ Microtis     | sp. 'short leaf'                  |                          |                                             |                                          | Microtis sp. 'short leaf'
+ Microtis     | sp. 'subalpine grasslands'        |                          |                                             |                                          | Microtis sp. 'subalpine grasslands'
+ Orthoceras   | sp. 'short bracts'                |                          |                                             |                                          | Orthoceras sp. 'short bracts'
+ Phaius       | pictus                            |                          | T.E.Hunt                                    | Hook.                                    | Phaius pictus Hook.
+ Phalaenopsis | rosenstromii                      |                          | F.M.Bailey                                  | (Rchb.f.) Rchb.f. ex Kraenzl.            | Phalaenopsis rosenstromii (Rchb.f.) Rchb.f. ex Kraenzl.
+ Pholidota    | imbricata                         |                          | Hook                                        |                                          | Pholidota imbricata Hook
+ Phreatia     | paleata                           |                          | (Rchb.f.) Rchb.f.                           |                                          | Phreatia paleata (Rchb.f.) Rchb.f.
+ Prasophyllum | sp. 'ACT 1'                       |                          |                                             |                                          | Prasophyllum sp. 'ACT 1'
+ Prasophyllum | sp. 'ACT 2'                       |                          |                                             |                                          | Prasophyllum sp. 'ACT 2'
+ Prasophyllum | sp. 'Alligator Gorge'             |                          |                                             |                                          | Prasophyllum sp. 'Alligator Gorge'
+ Prasophyllum | sp. 'Anglesea'                    |                          |                                             |                                          | Prasophyllum sp. 'Anglesea'
+ Prasophyllum | sp. 'Arthurs Lake'                |                          |                                             |                                          | Prasophyllum sp. 'Arthurs Lake'
+ Prasophyllum | sp. 'Barrington Tops'             |                          |                                             |                                          | Prasophyllum sp. 'Barrington Tops'
+ Prasophyllum | sp. 'Boorhaman'                   |                          |                                             |                                          | Prasophyllum sp. 'Boorhaman'
+ Prasophyllum | sp. 'Boyd Plateau'                |                          |                                             |                                          | Prasophyllum sp. 'Boyd Plateau'
+ Prasophyllum | sp. 'Bunyip'                      |                          |                                             |                                          | Prasophyllum sp. 'Bunyip'
+ Prasophyllum | sp. 'Dandenong Ranges'            |                          |                                             |                                          | Prasophyllum sp. 'Dandenong Ranges'
+ Prasophyllum | sp. 'Deep Lead'                   |                          |                                             |                                          | Prasophyllum sp. 'Deep Lead'
+ Prasophyllum | sp. 'Delegate'                    |                          |                                             |                                          | Prasophyllum sp. 'Delegate'
+ Prasophyllum | sp. 'Digby'                       |                          |                                             |                                          | Prasophyllum sp. 'Digby'
+ Prasophyllum | sp. 'Gilbert River'               |                          |                                             |                                          | Prasophyllum sp. 'Gilbert River'
+ Prasophyllum | sp. 'Inglewood'                   |                          |                                             |                                          | Prasophyllum sp. 'Inglewood'
+ Prasophyllum | sp. 'Innes'                       |                          |                                             |                                          | Prasophyllum sp. 'Innes'
+ Prasophyllum | sp. 'Inverleigh'                  |                          |                                             |                                          | Prasophyllum sp. 'Inverleigh'
+ Prasophyllum | sp. 'Jip Jip'                     |                          |                                             |                                          | Prasophyllum sp. 'Jip Jip'
+ Prasophyllum | sp. 'Lara'                        |                          |                                             |                                          | Prasophyllum sp. 'Lara'
+ Prasophyllum | sp. 'Mallacoota'                  |                          |                                             |                                          | Prasophyllum sp. 'Mallacoota'
+ Prasophyllum | sp. 'Midlands'                    |                          |                                             |                                          | Prasophyllum sp. 'Midlands'
+ Prasophyllum | sp. 'Mokota'                      |                          |                                             |                                          | Prasophyllum sp. 'Mokota'
+ Prasophyllum | sp. 'Mortlake'                    |                          |                                             |                                          | Prasophyllum sp. 'Mortlake'
+ Prasophyllum | sp. 'Mount Kaputar'               |                          |                                             |                                          | Prasophyllum sp. 'Mount Kaputar'
+ Prasophyllum | sp. 'Murchison'                   |                          |                                             |                                          | Prasophyllum sp. 'Murchison'
+ Prasophyllum | sp. 'New England batholith'       |                          |                                             |                                          | Prasophyllum sp. 'New England batholith'
+ Prasophyllum | sp. 'Noorinbee'                   |                          |                                             |                                          | Prasophyllum sp. 'Noorinbee'
+ Prasophyllum | sp. 'Nowra'                       |                          |                                             |                                          | Prasophyllum sp. 'Nowra'
+ Prasophyllum | sp. 'Nunniong'                    |                          |                                             |                                          | Prasophyllum sp. 'Nunniong'
+ Prasophyllum | sp. 'Old Bar'                     |                          |                                             |                                          | Prasophyllum sp. 'Old Bar'
+ Prasophyllum | sp. 'Otway Ranges'                |                          |                                             |                                          | Prasophyllum sp. 'Otway Ranges'
+ Prasophyllum | sp. 'Otway coast'                 |                          |                                             |                                          | Prasophyllum sp. 'Otway coast'
+ Prasophyllum | sp. 'Piccaninnie Ponds'           |                          |                                             |                                          | Prasophyllum sp. 'Piccaninnie Ponds'
+ Prasophyllum | sp. 'Pilliga Scrub'               |                          |                                             |                                          | Prasophyllum sp. 'Pilliga Scrub'
+ Prasophyllum | sp. 'Riverina grasslands'         |                          |                                             |                                          | Prasophyllum sp. 'Riverina grasslands'
+ Prasophyllum | sp. 'Smokers Gap'                 |                          |                                             |                                          | Prasophyllum sp. 'Smokers Gap'
+ Prasophyllum | sp. 'Swan region'                 |                          |                                             |                                          | Prasophyllum sp. 'Swan region'
+ Prasophyllum | sp. 'Teralba'                     |                          |                                             |                                          | Prasophyllum sp. 'Teralba'
+ Prasophyllum | sp. 'Verran Tanks'                |                          |                                             |                                          | Prasophyllum sp. 'Verran Tanks'
+ Prasophyllum | sp. 'Wilsons Promontory'          |                          |                                             |                                          | Prasophyllum sp. 'Wilsons Promontory'
+ Prasophyllum | sp. 'Wimmera woodlands'           |                          |                                             |                                          | Prasophyllum sp. 'Wimmera woodlands'
+ Prasophyllum | sp. 'basalt plains'               |                          |                                             |                                          | Prasophyllum sp. 'basalt plains'
+ Prasophyllum | sp. 'black soil plains'           |                          |                                             |                                          | Prasophyllum sp. 'black soil plains'
+ Prasophyllum | sp. 'bright shiny marooon'        |                          |                                             |                                          | Prasophyllum sp. 'bright shiny marooon'
+ Prasophyllum | sp. 'brown lip'                   |                          |                                             |                                          | Prasophyllum sp. 'brown lip'
+ Prasophyllum | sp. 'bushfires'                   |                          |                                             |                                          | Prasophyllum sp. 'bushfires'
+ Prasophyllum | sp. 'coast sandhills'             |                          |                                             |                                          | Prasophyllum sp. 'coast sandhills'
+ Prasophyllum | sp. 'desert'                      |                          |                                             |                                          | Prasophyllum sp. 'desert'
+ Prasophyllum | sp. 'eastern highlands'           |                          |                                             |                                          | Prasophyllum sp. 'eastern highlands'
+ Prasophyllum | sp. 'enigma'                      |                          |                                             |                                          | Prasophyllum sp. 'enigma'
+ Prasophyllum | sp. 'foothills'                   |                          |                                             |                                          | Prasophyllum sp. 'foothills'
+ Prasophyllum | sp. 'grassy woodlands'            |                          |                                             |                                          | Prasophyllum sp. 'grassy woodlands'
+ Prasophyllum | sp. 'inland woodlands'            |                          |                                             |                                          | Prasophyllum sp. 'inland woodlands'
+ Prasophyllum | sp. 'late coastal dunes'          |                          |                                             |                                          | Prasophyllum sp. 'late coastal dunes'
+ Prasophyllum | sp. 'late summer'                 |                          |                                             |                                          | Prasophyllum sp. 'late summer'
+ Prasophyllum | sp. 'limestone heath'             |                          |                                             |                                          | Prasophyllum sp. 'limestone heath'
+ Prasophyllum | sp. 'lower south-east'            |                          |                                             |                                          | Prasophyllum sp. 'lower south-east'
+ Prasophyllum | sp. 'mallee sands'                |                          |                                             |                                          | Prasophyllum sp. 'mallee sands'
+ Prasophyllum | sp. 'montane'                     |                          |                                             |                                          | Prasophyllum sp. 'montane'
+ Prasophyllum | sp. 'mountain bogs'               |                          |                                             |                                          | Prasophyllum sp. 'mountain bogs'
+ Prasophyllum | sp. 'needle points'               |                          |                                             |                                          | Prasophyllum sp. 'needle points'
+ Prasophyllum | sp. 'northern montane'            |                          |                                             |                                          | Prasophyllum sp. 'northern montane'
+ Prasophyllum | sp. 'pink lip'                    |                          |                                             |                                          | Prasophyllum sp. 'pink lip'
+ Prasophyllum | sp. 'purple lip'                  |                          |                                             |                                          | Prasophyllum sp. 'purple lip'
+ Prasophyllum | sp. 'sedge swamps'                |                          |                                             |                                          | Prasophyllum sp. 'sedge swamps'
+ Prasophyllum | sp. 'waterholes'                  |                          |                                             |                                          | Prasophyllum sp. 'waterholes'
+ Prasophyllum | vesuvium                          |                          | R.J.Bates                                   |                                          | Prasophyllum vesuvium R.J.Bates
+ Pterostylis  | robusta                           | subsp. 'gorges'          |                                             |                                          | Pterostylis robusta subsp. 'gorges'
+ Pterostylis  | sp. 'ACT'                         |                          |                                             |                                          | Pterostylis sp. 'ACT'
+ Pterostylis  | sp. 'Abercrombie Caves'           |                          |                                             |                                          | Pterostylis sp. 'Abercrombie Caves'
+ Pterostylis  | sp. 'Adelaide hills'              |                          |                                             |                                          | Pterostylis sp. 'Adelaide hills'
+ Pterostylis  | sp. 'Albury'                      |                          |                                             |                                          | Pterostylis sp. 'Albury'
+ Pterostylis  | sp. 'Anglesea'                    |                          |                                             |                                          | Pterostylis sp. 'Anglesea'
+ Pterostylis  | sp. 'Angourie'                    |                          |                                             |                                          | Pterostylis sp. 'Angourie'
+ Pterostylis  | sp. 'Arkaroola'                   |                          |                                             |                                          | Pterostylis sp. 'Arkaroola'
+ Pterostylis  | sp. 'Barrington Tops'             |                          |                                             |                                          | Pterostylis sp. 'Barrington Tops'
+ Pterostylis  | sp. 'Beechworth'                  |                          |                                             |                                          | Pterostylis sp. 'Beechworth'
+ Pterostylis  | sp. 'Berrook'                     |                          |                                             |                                          | Pterostylis sp. 'Berrook'
+ Pterostylis  | sp. 'Bimbowrie'                   |                          |                                             |                                          | Pterostylis sp. 'Bimbowrie'
+ Pterostylis  | sp. 'Border Ranges'               |                          |                                             |                                          | Pterostylis sp. 'Border Ranges'
+ Pterostylis  | sp. 'Broughton River'             |                          |                                             |                                          | Pterostylis sp. 'Broughton River'
+ Pterostylis  | sp. 'Buccarumbi'                  |                          |                                             |                                          | Pterostylis sp. 'Buccarumbi'
+ Pterostylis  | sp. 'Coaldale'                    |                          |                                             |                                          | Pterostylis sp. 'Coaldale'
+ Pterostylis  | sp. 'Coonabarabran'               |                          |                                             |                                          | Pterostylis sp. 'Coonabarabran'
+ Pterostylis  | sp. 'Daylesford'                  |                          |                                             |                                          | Pterostylis sp. 'Daylesford'
+ Pterostylis  | sp. 'Dorrigo'                     |                          |                                             |                                          | Pterostylis sp. 'Dorrigo'
+ Pterostylis  | sp. 'Dundonnell'                  |                          |                                             |                                          | Pterostylis sp. 'Dundonnell'
+ Pterostylis  | sp. 'East Gippsland'              |                          |                                             |                                          | Pterostylis sp. 'East Gippsland'
+ Pterostylis  | sp. 'East Kangaloon'              |                          |                                             |                                          | Pterostylis sp. 'East Kangaloon'
+ Pterostylis  | sp. 'Ebor Falls'                  |                          |                                             |                                          | Pterostylis sp. 'Ebor Falls'
+ Pterostylis  | sp. 'Everard Range'               |                          |                                             |                                          | Pterostylis sp. 'Everard Range'
+ Pterostylis  | sp. 'Eyre Peninsula'              |                          |                                             |                                          | Pterostylis sp. 'Eyre Peninsula'
+ Pterostylis  | sp. 'Flinders Island'             |                          |                                             |                                          | Pterostylis sp. 'Flinders Island'
+ Pterostylis  | sp. 'Flinders Ranges north 1'     |                          |                                             |                                          | Pterostylis sp. 'Flinders Ranges north 1'
+ Pterostylis  | sp. 'Flinders Ranges north 2'     |                          |                                             |                                          | Pterostylis sp. 'Flinders Ranges north 2'
+ Pterostylis  | sp. 'Flinders'                    |                          |                                             |                                          | Pterostylis sp. 'Flinders'
+ Pterostylis  | sp. 'Gammon Range'                |                          |                                             |                                          | Pterostylis sp. 'Gammon Range'
+ Pterostylis  | sp. 'Gippsland'                   |                          |                                             |                                          | Pterostylis sp. 'Gippsland'
+ Pterostylis  | sp. 'Goulburn'                    |                          |                                             |                                          | Pterostylis sp. 'Goulburn'
+ Pterostylis  | sp. 'Griffith'                    |                          |                                             |                                          | Pterostylis sp. 'Griffith'
+ Pterostylis  | sp. 'Guildford'                   |                          |                                             |                                          | Pterostylis sp. 'Guildford'
+ Pterostylis  | sp. 'Gundiah'                     |                          |                                             |                                          | Pterostylis sp. 'Gundiah'
+ Pterostylis  | sp. 'Joanna'                      |                          |                                             |                                          | Pterostylis sp. 'Joanna'
+ Pterostylis  | sp. 'Joiners Ridge'               |                          |                                             |                                          | Pterostylis sp. 'Joiners Ridge'
+ Pterostylis  | sp. 'Lara'                        |                          |                                             |                                          | Pterostylis sp. 'Lara'
+ Pterostylis  | sp. 'Maldon'                      |                          |                                             |                                          | Pterostylis sp. 'Maldon'
+ Pterostylis  | sp. 'Malua Bay'                   |                          |                                             |                                          | Pterostylis sp. 'Malua Bay'
+ Pterostylis  | sp. 'Mambray Creek'               |                          |                                             |                                          | Pterostylis sp. 'Mambray Creek'
+ Pterostylis  | sp. 'Mokota'                      |                          |                                             |                                          | Pterostylis sp. 'Mokota'
+ Pterostylis  | sp. 'Mount Duval'                 |                          |                                             |                                          | Pterostylis sp. 'Mount Duval'
+ Pterostylis  | sp. 'Mount Geharty'               |                          |                                             |                                          | Pterostylis sp. 'Mount Geharty'
+ Pterostylis  | sp. 'Mount Kaputar'               |                          |                                             |                                          | Pterostylis sp. 'Mount Kaputar'
+ Pterostylis  | sp. 'Mount Maroon'                |                          |                                             |                                          | Pterostylis sp. 'Mount Maroon'
+ Pterostylis  | sp. 'Mount Mee'                   |                          |                                             |                                          | Pterostylis sp. 'Mount Mee'
+ Pterostylis  | sp. 'Mount Moffat'                |                          |                                             |                                          | Pterostylis sp. 'Mount Moffat'
+ Pterostylis  | sp. 'Mount Olinthus'              |                          |                                             |                                          | Pterostylis sp. 'Mount Olinthus'
+ Pterostylis  | sp. 'Mount Victoria Uranium Mine' |                          |                                             |                                          | Pterostylis sp. 'Mount Victoria Uranium Mine'
+ Pterostylis  | sp. 'Narrandera range'            |                          |                                             |                                          | Pterostylis sp. 'Narrandera range'
+ Pterostylis  | sp. 'New England striped'         |                          |                                             |                                          | Pterostylis sp. 'New England striped'
+ Pterostylis  | sp. 'Newland Head'                |                          |                                             |                                          | Pterostylis sp. 'Newland Head'
+ Pterostylis  | sp. 'Nora Creina'                 |                          |                                             |                                          | Pterostylis sp. 'Nora Creina'
+ Pterostylis  | sp. 'Old Boolcoolmata'            |                          |                                             |                                          | Pterostylis sp. 'Old Boolcoolmata'
+ Pterostylis  | sp. 'Omeo'                        |                          |                                             |                                          | Pterostylis sp. 'Omeo'
+ Pterostylis  | sp. 'Oratan Rock'                 |                          |                                             |                                          | Pterostylis sp. 'Oratan Rock'
+ Pterostylis  | sp. 'Outback'                     |                          |                                             |                                          | Pterostylis sp. 'Outback'
+ Pterostylis  | sp. 'Ranking Springs'             |                          |                                             |                                          | Pterostylis sp. 'Ranking Springs'
+ Pterostylis  | sp. 'Spring Ridge'                |                          |                                             |                                          | Pterostylis sp. 'Spring Ridge'
+ Pterostylis  | sp. 'Torrington'                  |                          |                                             |                                          | Pterostylis sp. 'Torrington'
+ Pterostylis  | sp. 'Urbenville'                  |                          |                                             |                                          | Pterostylis sp. 'Urbenville'
+ Pterostylis  | sp. 'Warialda'                    |                          |                                             |                                          | Pterostylis sp. 'Warialda'
+ Pterostylis  | sp. 'Warren snail'                |                          |                                             |                                          | Pterostylis sp. 'Warren snail'
+ Pterostylis  | sp. 'Wauchope'                    |                          |                                             |                                          | Pterostylis sp. 'Wauchope'
+ Pterostylis  | sp. 'Werrikimbe'                  |                          |                                             |                                          | Pterostylis sp. 'Werrikimbe'
+ Pterostylis  | sp. 'Wilsons Promontory'          |                          |                                             |                                          | Pterostylis sp. 'Wilsons Promontory'
+ Pterostylis  | sp. 'Woohlpooer'                  |                          |                                             |                                          | Pterostylis sp. 'Woohlpooer'
+ Pterostylis  | sp. 'bluebush plains'             |                          |                                             |                                          | Pterostylis sp. 'bluebush plains'
+ Pterostylis  | sp. 'bristly lip'                 |                          |                                             |                                          | Pterostylis sp. 'bristly lip'
+ Pterostylis  | sp. 'canegrass'                   |                          |                                             |                                          | Pterostylis sp. 'canegrass'
+ Pterostylis  | sp. 'chunky flowers'              |                          |                                             |                                          | Pterostylis sp. 'chunky flowers'
+ Pterostylis  | sp. 'coastal SA'                  |                          |                                             |                                          | Pterostylis sp. 'coastal SA'
+ Pterostylis  | sp. 'foothill forest'             |                          |                                             |                                          | Pterostylis sp. 'foothill forest'
+ Pterostylis  | sp. 'greater Grampians'           |                          |                                             |                                          | Pterostylis sp. 'greater Grampians'
+ Pterostylis  | sp. 'hooked sepals'               |                          |                                             |                                          | Pterostylis sp. 'hooked sepals'
+ Pterostylis  | sp. 'inland'                      |                          |                                             |                                          | Pterostylis sp. 'inland'
+ Pterostylis  | sp. 'large curved flowers'        |                          |                                             |                                          | Pterostylis sp. 'large curved flowers'
+ Pterostylis  | sp. 'large striped flowers'       |                          |                                             |                                          | Pterostylis sp. 'large striped flowers'
+ Pterostylis  | sp. 'limestone sands'             |                          |                                             |                                          | Pterostylis sp. 'limestone sands'
+ Pterostylis  | sp. 'lower Murray'                |                          |                                             |                                          | Pterostylis sp. 'lower Murray'
+ Pterostylis  | sp. 'mallee heath'                |                          |                                             |                                          | Pterostylis sp. 'mallee heath'
+ Pterostylis  | sp. 'mallee snail'                |                          |                                             |                                          | Pterostylis sp. 'mallee snail'
+ Pterostylis  | sp. 'north-east Vic hills'        |                          |                                             |                                          | Pterostylis sp. 'north-east Vic hills'
+ Pterostylis  | sp. 'north-west mallee'           |                          |                                             |                                          | Pterostylis sp. 'north-west mallee'
+ Pterostylis  | sp. 'quartz'                      |                          |                                             |                                          | Pterostylis sp. 'quartz'
+ Pterostylis  | sp. 'red lip'                     |                          |                                             |                                          | Pterostylis sp. 'red lip'
+ Pterostylis  | sp. 'rock ledges'                 |                          |                                             |                                          | Pterostylis sp. 'rock ledges'
+ Pterostylis  | sp. 'rocky ranges'                |                          |                                             |                                          | Pterostylis sp. 'rocky ranges'
+ Pterostylis  | sp. 'sandheath'                   |                          |                                             |                                          | Pterostylis sp. 'sandheath'
+ Pterostylis  | sp. 'sandstone heath'             |                          |                                             |                                          | Pterostylis sp. 'sandstone heath'
+ Pterostylis  | sp. 'slender desert'              |                          |                                             |                                          | Pterostylis sp. 'slender desert'
+ Pterostylis  | sp. 'south-east Queensland'       |                          |                                             |                                          | Pterostylis sp. 'south-east Queensland'
+ Pterostylis  | sp. 'southern Eyre Peninsula'     |                          |                                             |                                          | Pterostylis sp. 'southern Eyre Peninsula'
+ Pterostylis  | sp. 'tablelands'                  |                          |                                             |                                          | Pterostylis sp. 'tablelands'
+ Pterostylis  | sp. 'tall mallee snail'           |                          |                                             |                                          | Pterostylis sp. 'tall mallee snail'
+ Pterostylis  | sp. 'tall purple'                 |                          |                                             |                                          | Pterostylis sp. 'tall purple'
+ Pterostylis  | sp. 'tall woodland'               |                          |                                             |                                          | Pterostylis sp. 'tall woodland'
+ Pterostylis  | sp. 'tiny flowers'                |                          |                                             |                                          | Pterostylis sp. 'tiny flowers'
+ Pterostylis  | sp. 'upper Spencer Gulf'          |                          |                                             |                                          | Pterostylis sp. 'upper Spencer Gulf'
+ Pterostylis  | sp. 'western Victoria'            |                          |                                             |                                          | Pterostylis sp. 'western Victoria'
+ Pterostylis  | sp. 'western woodlands'           |                          |                                             |                                          | Pterostylis sp. 'western woodlands'
+ Pterostylis  | sp. 'woodland'                    |                          |                                             |                                          | Pterostylis sp. 'woodland'
+ Pterostylis  | sp. 'woodlands'                   |                          |                                             |                                          | Pterostylis sp. 'woodlands'
+ Pterostylis  | sp. 'wrinkled lateral sepals'     |                          |                                             |                                          | Pterostylis sp. 'wrinkled lateral sepals'
+ Rhizanthella | sp. 'Munglinup'                   |                          |                                             |                                          | Rhizanthella sp. 'Munglinup'
+ Sarcochilus  | sp. 'Blue Knob'                   |                          |                                             |                                          | Sarcochilus sp. 'Blue Knob'
+ Sarcochilus  | sp. 'brittle leaves'              |                          |                                             |                                          | Sarcochilus sp. 'brittle leaves'
+ Thelymitra   | brevifolia                        | subsp. 'Porters'         |                                             |                                          | Thelymitra brevifolia subsp. 'Porters'
+ Thelymitra   | odora                             | subsp. 'horse manure'    |                                             |                                          | Thelymitra odora subsp. 'horse manure'
+ Thelymitra   | sp. 'Claire'                      |                          |                                             |                                          | Thelymitra sp. 'Claire'
+ Thelymitra   | sp. 'Gibraltar Falls'             |                          |                                             |                                          | Thelymitra sp. 'Gibraltar Falls'
+ Thelymitra   | sp. 'Glen Shera'                  |                          |                                             |                                          | Thelymitra sp. 'Glen Shera'
+ Thelymitra   | sp. 'Meadows'                     |                          |                                             |                                          | Thelymitra sp. 'Meadows'
+ Thelymitra   | sp. 'Topperwein'                  |                          |                                             |                                          | Thelymitra sp. 'Topperwein'
+ Thelymitra   | sp. 'Toy Creek'                   |                          |                                             |                                          | Thelymitra sp. 'Toy Creek'
+ Thelymitra   | sp. 'blue column'                 |                          |                                             |                                          | Thelymitra sp. 'blue column'
+ Thelymitra   | sp. 'central coast'               |                          |                                             |                                          | Thelymitra sp. 'central coast'
+ Thelymitra   | sp. 'fine spots'                  |                          |                                             |                                          | Thelymitra sp. 'fine spots'
+ Thelymitra   | sp. 'insipid'                     |                          |                                             |                                          | Thelymitra sp. 'insipid'
+ Thelymitra   | sp. 'ornate flowers'              |                          |                                             |                                          | Thelymitra sp. 'ornate flowers'
+ Thelymitra   | sp. 'papillose'                   |                          |                                             |                                          | Thelymitra sp. 'papillose'
+ Thelymitra   | sp. 'red gum swamps'              |                          |                                             |                                          | Thelymitra sp. 'red gum swamps'
+ Thelymitra   | sp. 'reed sun orchid'             |                          |                                             |                                          | Thelymitra sp. 'reed sun orchid'
+(341 rows)
+
+Non-matched names - just the raw data
+
+    genus     |              species              |        subsp_var         |                  authority                  |           preferred_authority
+--------------+-----------------------------------+--------------------------+---------------------------------------------+------------------------------------------
+ Acianthus    | sp. 'Gibraltar Range'             |                          |                                             |
+ Acianthus    | sp. 'NSW Northern Tablelands'     |                          |                                             |
+ Acianthus    | sp. 'Tathra'                      |                          |                                             |
+ Arthrochilus | sp. 'Bradshaw Station'            |                          |                                             |
+ Arthrochilus | sp. 'spinifex dweller'            |                          |                                             |
+ Caladenia    | barbarella                        |                          | Hopper & A.P.Br.                            | Schltdl.
+ Caladenia    | behrii                            |                          | Schldl.                                     |
+ Caladenia    | brownii                           |                          | Hopper                                      | Hopper & A.P.Br
+ Caladenia    | longicauda                        | subsp. 'Bulbarnet'       |                                             |
+ Caladenia    | sp. 'Ararat hills'                |                          |                                             |
+ Caladenia    | sp. 'Bindoon'                     |                          |                                             |
+ Caladenia    | sp. 'Buchan'                      |                          |                                             |
+ Caladenia    | sp. 'Carboor'                     |                          |                                             |
+ Caladenia    | sp. 'Chapple Vale'                |                          |                                             |
+ Caladenia    | sp. 'Coonawarra'                  |                          |                                             |
+ Caladenia    | sp. 'Coorong'                     |                          |                                             |
+ Caladenia    | sp. 'Dorrigo'                     |                          |                                             |
+ Caladenia    | sp. 'Earlston'                    |                          |                                             |
+ Caladenia    | sp. 'Finnis'                      |                          |                                             |
+ Caladenia    | sp. 'Fleurieu Peninsula'          |                          |                                             |
+ Caladenia    | sp. 'Flinders Ranges red'         |                          |                                             |
+ Caladenia    | sp. 'Inverleigh'                  |                          |                                             |
+ Caladenia    | sp. 'Kangaroo Island'             |                          |                                             |
+ Caladenia    | sp. 'Kaniva Giant'                |                          |                                             |
+ Caladenia    | sp. 'Kaniva'                      |                          |                                             |
+ Caladenia    | sp. 'Kilkoy Creek'                |                          |                                             |
+ Caladenia    | sp. 'Kilsyth South'               |                          |                                             |
+ Caladenia    | sp. 'Kooyera'                     |                          |                                             |
+ Caladenia    | sp. 'Mandurang'                   |                          |                                             |
+ Caladenia    | sp. 'Monarto South'               |                          |                                             |
+ Caladenia    | sp. 'Murray mallee'               |                          |                                             |
+ Caladenia    | sp. 'Orange'                      |                          |                                             |
+ Caladenia    | sp. 'Raymond Island'              |                          |                                             |
+ Caladenia    | sp. 'Richmond River'              |                          |                                             |
+ Caladenia    | sp. 'St Andrews'                  |                          |                                             |
+ Caladenia    | sp. 'Watheroo'                    |                          |                                             |
+ Caladenia    | sp. 'Woronora Plateau'            |                          |                                             |
+ Caladenia    | sp. 'Yarram'                      |                          |                                             |
+ Caladenia    | sp. 'central NSW'                 |                          |                                             |
+ Caladenia    | sp. 'central Victoria'            |                          |                                             |
+ Caladenia    | sp. 'coastal Eyre Peninsula'      |                          |                                             |
+ Caladenia    | sp. 'coastal dunes'               |                          |                                             |
+ Caladenia    | sp. 'crowded calli'               |                          |                                             |
+ Caladenia    | sp. 'east of Esperance'           |                          |                                             |
+ Caladenia    | sp. 'glowing green'               |                          |                                             |
+ Caladenia    | sp. 'inland NSW'                  |                          |                                             |
+ Caladenia    | sp. 'large scented'               |                          |                                             |
+ Caladenia    | sp. 'limestone mallee'            |                          |                                             |
+ Caladenia    | sp. 'little clowns'               |                          |                                             |
+ Caladenia    | sp. 'lowan mallee'                |                          |                                             |
+ Caladenia    | sp. 'lower Glenelg River'         |                          |                                             |
+ Caladenia    | sp. 'mallee heath'                |                          |                                             |
+ Caladenia    | sp. 'mallee'                      |                          |                                             |
+ Caladenia    | sp. 'pointed flowers'             |                          |                                             |
+ Caladenia    | sp. 'sand dunes'                  |                          |                                             |
+ Caladenia    | sp. 'short yellow clubs'          |                          |                                             |
+ Caladenia    | sp. 'small tensa'                 |                          |                                             |
+ Caladenia    | sp. 'south Gippsland'             |                          |                                             |
+ Caladenia    | sp. 'south east'                  |                          |                                             |
+ Caladenia    | sp. 'southern slopes'             |                          |                                             |
+ Caladenia    | sp. 'swamp heath'                 |                          |                                             |
+ Caladenia    | sp. 'tiny white'                  |                          |                                             |
+ Caladenia    | sp. 'western Murray Flats'        |                          |                                             |
+ Caladenia    | sp. 'western wheatbelt'           |                          |                                             |
+ Caladenia    | transitoria                       | subsp. 'Kangaroo Island' |                                             |
+ Caladenia    | validinerva                       |                          | Hopper & A.P.Br. ex A.P.Br. & G.Brockman    |
+ Calochilus   | caeruleus                         |                          | L.O. Williams                               |
+ Calochilus   | sp. 'Coaldale'                    |                          |                                             |
+ Calochilus   | sp. 'Gibraltar Range'             |                          |                                             |
+ Calochilus   | sp. 'Kangaroo Island'             |                          |                                             |
+ Calochilus   | sp. 'Moondarra'                   |                          |                                             |
+ Calochilus   | sp. 'New England'                 |                          |                                             |
+ Calochilus   | sp. 'Theda Station'               |                          |                                             |
+ Chiloglottis | sp. 'Bald Rock'                   |                          |                                             |
+ Chiloglottis | sp. 'Barrington Tops'             |                          |                                             |
+ Chiloglottis | sp. 'Bathurst'                    |                          |                                             |
+ Chiloglottis | sp. 'Ebor'                        |                          |                                             |
+ Chiloglottis | sp. 'Kybean Range'                |                          |                                             |
+ Chiloglottis | sp. 'Maryborough'                 |                          |                                             |
+ Chiloglottis | sp. 'Weilangta'                   |                          |                                             |
+ Chiloglottis | sp. 'highlands'                   |                          |                                             |
+ Chiloglottis | sp. 'lowlands'                    |                          |                                             |
+ Corunastylis | alticola                          |                          | (D.L.Jones & B. Gray) D.L.Jones & M.A.Clem. |
+ Corunastylis | sp. 'Adelaide Hills'              |                          |                                             |
+ Corunastylis | sp. 'Beechworth'                  |                          |                                             |
+ Corunastylis | sp. 'Charmhaven'                  |                          |                                             |
+ Corunastylis | sp. 'Fraser Island'               |                          |                                             |
+ Corunastylis | sp. 'Gippsland Plains'            |                          |                                             |
+ Corunastylis | sp. 'Mount Billy'                 |                          |                                             |
+ Corunastylis | sp. 'Mount Kaputar'               |                          |                                             |
+ Corunastylis | sp. 'Mount Mee'                   |                          |                                             |
+ Corunastylis | sp. 'Pyrete Range'                |                          |                                             |
+ Corunastylis | sp. 'Raby Bay'                    |                          |                                             |
+ Corunastylis | sp. 'Wyberba'                     |                          |                                             |
+ Corunastylis | sp. 'dark flowers'                |                          |                                             |
+ Corunastylis | sp. 'granite ranges'              |                          |                                             |
+ Corunastylis | sp. 'intermediate'                |                          |                                             |
+ Corunastylis | sp. 'large bracts'                |                          |                                             |
+ Corunastylis | tepperi                           |                          | (F.Muell. ex. Tepper) D.L.Jones & M.A.Clem. |
+ Corybas      | sp. 'Gibraltar Range'             |                          |                                             |
+ Corybas      | sp. 'Portland'                    |                          |                                             |
+ Corybas      | sp. 'Woolly Tea-tree'             |                          |                                             |
+ Corybas      | sp. 'dark labellum'               |                          |                                             |
+ Corybas      | sp. 'red-eyed ghost'              |                          |                                             |
+ Cyanicula    | gertrudiae                        |                          | (Ostenf.) Hopper & A.P.Br.                  |
+ Dendrobium   | discolor                          | subsp. incurvata         | Liddle & P.I. Forst.                        |
+ Dendrobium   | finniganensis                     |                          | D.L.Jones                                   |
+ Dendrobium   | johannis                          |                          | Rchb.f.                                     | Rchb.f. ex Bateman
+ Dendrobium   | tetragonum                        | subsp. cataractum        | P.B.Adams, S.D.Lawson and G.A.Paterson      | Peter B.Adams, S.D.Lawson & G.A.Paterson
+ Dipodium     | sp. 'basalt woodland'             |                          |                                             |
+ Dipodium     | sp. 'sandstone'                   |                          |                                             |
+ Diuris       | sp. 'Byfield'                     |                          |                                             |
+ Diuris       | sp. 'Carnarvon'                   |                          |                                             |
+ Diuris       | sp. 'Clarencetown'                |                          |                                             |
+ Diuris       | sp. 'Colo River'                  |                          |                                             |
+ Diuris       | sp. 'Darling scarp'               |                          |                                             |
+ Diuris       | sp. 'Ebor'                        |                          |                                             |
+ Diuris       | sp. 'Gippsland plains'            |                          |                                             |
+ Diuris       | sp. 'Grafton'                     |                          |                                             |
+ Diuris       | sp. 'Guyra'                       |                          |                                             |
+ Diuris       | sp. 'Hunter Valley'               |                          |                                             |
+ Diuris       | sp. 'Jollys Falls'                |                          |                                             |
+ Diuris       | sp. 'Monaro'                      |                          |                                             |
+ Diuris       | sp. 'NSW North Coast'             |                          |                                             |
+ Diuris       | sp. 'New England escarpment'      |                          |                                             |
+ Diuris       | sp. 'New England swamps'          |                          |                                             |
+ Diuris       | sp. 'Red Gum waterholes'          |                          |                                             |
+ Diuris       | sp. 'Tenterfield/Stanthorpe'      |                          |                                             |
+ Diuris       | sp. 'Zuytdorp cliffs'             |                          |                                             |
+ Diuris       | sp. 'sandhills'                   |                          |                                             |
+ Diuris       | sp. 'thick sepals'                |                          |                                             |
+ Eriochilus   | sp. 'dry plains'                  |                          |                                             |
+ Eriochilus   | sp. 'smooth leaf'                 |                          |                                             |
+ Habenaria    | sp. 'Beverley Springs Station'    |                          |                                             |
+ Microtis     | sp. 'Flinders Ranges'             |                          |                                             |
+ Microtis     | sp. 'Topperwein'                  |                          |                                             |
+ Microtis     | sp. 'alpine'                      |                          |                                             |
+ Microtis     | sp. 'curved lip'                  |                          |                                             |
+ Microtis     | sp. 'dense spikes'                |                          |                                             |
+ Microtis     | sp. 'fragrant'                    |                          |                                             |
+ Microtis     | sp. 'hanging bogs'                |                          |                                             |
+ Microtis     | sp. 'late flowering'              |                          |                                             |
+ Microtis     | sp. 'narrow lip'                  |                          |                                             |
+ Microtis     | sp. 'short leaf'                  |                          |                                             |
+ Microtis     | sp. 'subalpine grasslands'        |                          |                                             |
+ Orthoceras   | sp. 'short bracts'                |                          |                                             |
+ Phaius       | pictus                            |                          | T.E.Hunt                                    | Hook.
+ Phalaenopsis | rosenstromii                      |                          | F.M.Bailey                                  | (Rchb.f.) Rchb.f. ex Kraenzl.
+ Pholidota    | imbricata                         |                          | Hook                                        |
+ Phreatia     | paleata                           |                          | (Rchb.f.) Rchb.f.                           |
+ Prasophyllum | sp. 'ACT 1'                       |                          |                                             |
+ Prasophyllum | sp. 'ACT 2'                       |                          |                                             |
+ Prasophyllum | sp. 'Alligator Gorge'             |                          |                                             |
+ Prasophyllum | sp. 'Anglesea'                    |                          |                                             |
+ Prasophyllum | sp. 'Arthurs Lake'                |                          |                                             |
+ Prasophyllum | sp. 'Barrington Tops'             |                          |                                             |
+ Prasophyllum | sp. 'Boorhaman'                   |                          |                                             |
+ Prasophyllum | sp. 'Boyd Plateau'                |                          |                                             |
+ Prasophyllum | sp. 'Bunyip'                      |                          |                                             |
+ Prasophyllum | sp. 'Dandenong Ranges'            |                          |                                             |
+ Prasophyllum | sp. 'Deep Lead'                   |                          |                                             |
+ Prasophyllum | sp. 'Delegate'                    |                          |                                             |
+ Prasophyllum | sp. 'Digby'                       |                          |                                             |
+ Prasophyllum | sp. 'Gilbert River'               |                          |                                             |
+ Prasophyllum | sp. 'Inglewood'                   |                          |                                             |
+ Prasophyllum | sp. 'Innes'                       |                          |                                             |
+ Prasophyllum | sp. 'Inverleigh'                  |                          |                                             |
+ Prasophyllum | sp. 'Jip Jip'                     |                          |                                             |
+ Prasophyllum | sp. 'Lara'                        |                          |                                             |
+ Prasophyllum | sp. 'Mallacoota'                  |                          |                                             |
+ Prasophyllum | sp. 'Midlands'                    |                          |                                             |
+ Prasophyllum | sp. 'Mokota'                      |                          |                                             |
+ Prasophyllum | sp. 'Mortlake'                    |                          |                                             |
+ Prasophyllum | sp. 'Mount Kaputar'               |                          |                                             |
+ Prasophyllum | sp. 'Murchison'                   |                          |                                             |
+ Prasophyllum | sp. 'New England batholith'       |                          |                                             |
+ Prasophyllum | sp. 'Noorinbee'                   |                          |                                             |
+ Prasophyllum | sp. 'Nowra'                       |                          |                                             |
+ Prasophyllum | sp. 'Nunniong'                    |                          |                                             |
+ Prasophyllum | sp. 'Old Bar'                     |                          |                                             |
+ Prasophyllum | sp. 'Otway Ranges'                |                          |                                             |
+ Prasophyllum | sp. 'Otway coast'                 |                          |                                             |
+ Prasophyllum | sp. 'Piccaninnie Ponds'           |                          |                                             |
+ Prasophyllum | sp. 'Pilliga Scrub'               |                          |                                             |
+ Prasophyllum | sp. 'Riverina grasslands'         |                          |                                             |
+ Prasophyllum | sp. 'Smokers Gap'                 |                          |                                             |
+ Prasophyllum | sp. 'Swan region'                 |                          |                                             |
+ Prasophyllum | sp. 'Teralba'                     |                          |                                             |
+ Prasophyllum | sp. 'Verran Tanks'                |                          |                                             |
+ Prasophyllum | sp. 'Wilsons Promontory'          |                          |                                             |
+ Prasophyllum | sp. 'Wimmera woodlands'           |                          |                                             |
+ Prasophyllum | sp. 'basalt plains'               |                          |                                             |
+ Prasophyllum | sp. 'black soil plains'           |                          |                                             |
+ Prasophyllum | sp. 'bright shiny marooon'        |                          |                                             |
+ Prasophyllum | sp. 'brown lip'                   |                          |                                             |
+ Prasophyllum | sp. 'bushfires'                   |                          |                                             |
+ Prasophyllum | sp. 'coast sandhills'             |                          |                                             |
+ Prasophyllum | sp. 'desert'                      |                          |                                             |
+ Prasophyllum | sp. 'eastern highlands'           |                          |                                             |
+ Prasophyllum | sp. 'enigma'                      |                          |                                             |
+ Prasophyllum | sp. 'foothills'                   |                          |                                             |
+ Prasophyllum | sp. 'grassy woodlands'            |                          |                                             |
+ Prasophyllum | sp. 'inland woodlands'            |                          |                                             |
+ Prasophyllum | sp. 'late coastal dunes'          |                          |                                             |
+ Prasophyllum | sp. 'late summer'                 |                          |                                             |
+ Prasophyllum | sp. 'limestone heath'             |                          |                                             |
+ Prasophyllum | sp. 'lower south-east'            |                          |                                             |
+ Prasophyllum | sp. 'mallee sands'                |                          |                                             |
+ Prasophyllum | sp. 'montane'                     |                          |                                             |
+ Prasophyllum | sp. 'mountain bogs'               |                          |                                             |
+ Prasophyllum | sp. 'needle points'               |                          |                                             |
+ Prasophyllum | sp. 'northern montane'            |                          |                                             |
+ Prasophyllum | sp. 'pink lip'                    |                          |                                             |
+ Prasophyllum | sp. 'purple lip'                  |                          |                                             |
+ Prasophyllum | sp. 'sedge swamps'                |                          |                                             |
+ Prasophyllum | sp. 'waterholes'                  |                          |                                             |
+ Prasophyllum | vesuvium                          |                          | R.J.Bates                                   |
+ Pterostylis  | robusta                           | subsp. 'gorges'          |                                             |
+ Pterostylis  | sp. 'ACT'                         |                          |                                             |
+ Pterostylis  | sp. 'Abercrombie Caves'           |                          |                                             |
+ Pterostylis  | sp. 'Adelaide hills'              |                          |                                             |
+ Pterostylis  | sp. 'Albury'                      |                          |                                             |
+ Pterostylis  | sp. 'Anglesea'                    |                          |                                             |
+ Pterostylis  | sp. 'Angourie'                    |                          |                                             |
+ Pterostylis  | sp. 'Arkaroola'                   |                          |                                             |
+ Pterostylis  | sp. 'Barrington Tops'             |                          |                                             |
+ Pterostylis  | sp. 'Beechworth'                  |                          |                                             |
+ Pterostylis  | sp. 'Berrook'                     |                          |                                             |
+ Pterostylis  | sp. 'Bimbowrie'                   |                          |                                             |
+ Pterostylis  | sp. 'Border Ranges'               |                          |                                             |
+ Pterostylis  | sp. 'Broughton River'             |                          |                                             |
+ Pterostylis  | sp. 'Buccarumbi'                  |                          |                                             |
+ Pterostylis  | sp. 'Coaldale'                    |                          |                                             |
+ Pterostylis  | sp. 'Coonabarabran'               |                          |                                             |
+ Pterostylis  | sp. 'Daylesford'                  |                          |                                             |
+ Pterostylis  | sp. 'Dorrigo'                     |                          |                                             |
+ Pterostylis  | sp. 'Dundonnell'                  |                          |                                             |
+ Pterostylis  | sp. 'East Gippsland'              |                          |                                             |
+ Pterostylis  | sp. 'East Kangaloon'              |                          |                                             |
+ Pterostylis  | sp. 'Ebor Falls'                  |                          |                                             |
+ Pterostylis  | sp. 'Everard Range'               |                          |                                             |
+ Pterostylis  | sp. 'Eyre Peninsula'              |                          |                                             |
+ Pterostylis  | sp. 'Flinders Island'             |                          |                                             |
+ Pterostylis  | sp. 'Flinders Ranges north 1'     |                          |                                             |
+ Pterostylis  | sp. 'Flinders Ranges north 2'     |                          |                                             |
+ Pterostylis  | sp. 'Flinders'                    |                          |                                             |
+ Pterostylis  | sp. 'Gammon Range'                |                          |                                             |
+ Pterostylis  | sp. 'Gippsland'                   |                          |                                             |
+ Pterostylis  | sp. 'Goulburn'                    |                          |                                             |
+ Pterostylis  | sp. 'Griffith'                    |                          |                                             |
+ Pterostylis  | sp. 'Guildford'                   |                          |                                             |
+ Pterostylis  | sp. 'Gundiah'                     |                          |                                             |
+ Pterostylis  | sp. 'Joanna'                      |                          |                                             |
+ Pterostylis  | sp. 'Joiners Ridge'               |                          |                                             |
+ Pterostylis  | sp. 'Lara'                        |                          |                                             |
+ Pterostylis  | sp. 'Maldon'                      |                          |                                             |
+ Pterostylis  | sp. 'Malua Bay'                   |                          |                                             |
+ Pterostylis  | sp. 'Mambray Creek'               |                          |                                             |
+ Pterostylis  | sp. 'Mokota'                      |                          |                                             |
+ Pterostylis  | sp. 'Mount Duval'                 |                          |                                             |
+ Pterostylis  | sp. 'Mount Geharty'               |                          |                                             |
+ Pterostylis  | sp. 'Mount Kaputar'               |                          |                                             |
+ Pterostylis  | sp. 'Mount Maroon'                |                          |                                             |
+ Pterostylis  | sp. 'Mount Mee'                   |                          |                                             |
+ Pterostylis  | sp. 'Mount Moffat'                |                          |                                             |
+ Pterostylis  | sp. 'Mount Olinthus'              |                          |                                             |
+ Pterostylis  | sp. 'Mount Victoria Uranium Mine' |                          |                                             |
+ Pterostylis  | sp. 'Narrandera range'            |                          |                                             |
+ Pterostylis  | sp. 'New England striped'         |                          |                                             |
+ Pterostylis  | sp. 'Newland Head'                |                          |                                             |
+ Pterostylis  | sp. 'Nora Creina'                 |                          |                                             |
+ Pterostylis  | sp. 'Old Boolcoolmata'            |                          |                                             |
+ Pterostylis  | sp. 'Omeo'                        |                          |                                             |
+ Pterostylis  | sp. 'Oratan Rock'                 |                          |                                             |
+ Pterostylis  | sp. 'Outback'                     |                          |                                             |
+ Pterostylis  | sp. 'Ranking Springs'             |                          |                                             |
+ Pterostylis  | sp. 'Spring Ridge'                |                          |                                             |
+ Pterostylis  | sp. 'Torrington'                  |                          |                                             |
+ Pterostylis  | sp. 'Urbenville'                  |                          |                                             |
+ Pterostylis  | sp. 'Warialda'                    |                          |                                             |
+ Pterostylis  | sp. 'Warren snail'                |                          |                                             |
+ Pterostylis  | sp. 'Wauchope'                    |                          |                                             |
+ Pterostylis  | sp. 'Werrikimbe'                  |                          |                                             |
+ Pterostylis  | sp. 'Wilsons Promontory'          |                          |                                             |
+ Pterostylis  | sp. 'Woohlpooer'                  |                          |                                             |
+ Pterostylis  | sp. 'bluebush plains'             |                          |                                             |
+ Pterostylis  | sp. 'bristly lip'                 |                          |                                             |
+ Pterostylis  | sp. 'canegrass'                   |                          |                                             |
+ Pterostylis  | sp. 'chunky flowers'              |                          |                                             |
+ Pterostylis  | sp. 'coastal SA'                  |                          |                                             |
+ Pterostylis  | sp. 'foothill forest'             |                          |                                             |
+ Pterostylis  | sp. 'greater Grampians'           |                          |                                             |
+ Pterostylis  | sp. 'hooked sepals'               |                          |                                             |
+ Pterostylis  | sp. 'inland'                      |                          |                                             |
+ Pterostylis  | sp. 'large curved flowers'        |                          |                                             |
+ Pterostylis  | sp. 'large striped flowers'       |                          |                                             |
+ Pterostylis  | sp. 'limestone sands'             |                          |                                             |
+ Pterostylis  | sp. 'lower Murray'                |                          |                                             |
+ Pterostylis  | sp. 'mallee heath'                |                          |                                             |
+ Pterostylis  | sp. 'mallee snail'                |                          |                                             |
+ Pterostylis  | sp. 'north-east Vic hills'        |                          |                                             |
+ Pterostylis  | sp. 'north-west mallee'           |                          |                                             |
+ Pterostylis  | sp. 'quartz'                      |                          |                                             |
+ Pterostylis  | sp. 'red lip'                     |                          |                                             |
+ Pterostylis  | sp. 'rock ledges'                 |                          |                                             |
+ Pterostylis  | sp. 'rocky ranges'                |                          |                                             |
+ Pterostylis  | sp. 'sandheath'                   |                          |                                             |
+ Pterostylis  | sp. 'sandstone heath'             |                          |                                             |
+ Pterostylis  | sp. 'slender desert'              |                          |                                             |
+ Pterostylis  | sp. 'south-east Queensland'       |                          |                                             |
+ Pterostylis  | sp. 'southern Eyre Peninsula'     |                          |                                             |
+ Pterostylis  | sp. 'tablelands'                  |                          |                                             |
+ Pterostylis  | sp. 'tall mallee snail'           |                          |                                             |
+ Pterostylis  | sp. 'tall purple'                 |                          |                                             |
+ Pterostylis  | sp. 'tall woodland'               |                          |                                             |
+ Pterostylis  | sp. 'tiny flowers'                |                          |                                             |
+ Pterostylis  | sp. 'upper Spencer Gulf'          |                          |                                             |
+ Pterostylis  | sp. 'western Victoria'            |                          |                                             |
+ Pterostylis  | sp. 'western woodlands'           |                          |                                             |
+ Pterostylis  | sp. 'woodland'                    |                          |                                             |
+ Pterostylis  | sp. 'woodlands'                   |                          |                                             |
+ Pterostylis  | sp. 'wrinkled lateral sepals'     |                          |                                             |
+ Rhizanthella | sp. 'Munglinup'                   |                          |                                             |
+ Sarcochilus  | sp. 'Blue Knob'                   |                          |                                             |
+ Sarcochilus  | sp. 'brittle leaves'              |                          |                                             |
+ Thelymitra   | brevifolia                        | subsp. 'Porters'         |                                             |
+ Thelymitra   | odora                             | subsp. 'horse manure'    |                                             |
+ Thelymitra   | sp. 'Claire'                      |                          |                                             |
+ Thelymitra   | sp. 'Gibraltar Falls'             |                          |                                             |
+ Thelymitra   | sp. 'Glen Shera'                  |                          |                                             |
+ Thelymitra   | sp. 'Meadows'                     |                          |                                             |
+ Thelymitra   | sp. 'Topperwein'                  |                          |                                             |
+ Thelymitra   | sp. 'Toy Creek'                   |                          |                                             |
+ Thelymitra   | sp. 'blue column'                 |                          |                                             |
+ Thelymitra   | sp. 'central coast'               |                          |                                             |
+ Thelymitra   | sp. 'fine spots'                  |                          |                                             |
+ Thelymitra   | sp. 'insipid'                     |                          |                                             |
+ Thelymitra   | sp. 'ornate flowers'              |                          |                                             |
+ Thelymitra   | sp. 'papillose'                   |                          |                                             |
+ Thelymitra   | sp. 'red gum swamps'              |                          |                                             |
+ Thelymitra   | sp. 'reed sun orchid'             |                          |                                             |
+(341 rows)
+
+Non-matched names - just the constructed names
+
+                                 constructed_name
+----------------------------------------------------------------------------------
+ Acianthus sp. 'Gibraltar Range'
+ Acianthus sp. 'NSW Northern Tablelands'
+ Acianthus sp. 'Tathra'
+ Arthrochilus sp. 'Bradshaw Station'
+ Arthrochilus sp. 'spinifex dweller'
+ Caladenia barbarella Schltdl.
+ Caladenia behrii Schldl.
+ Caladenia brownii Hopper & A.P.Br
+ Caladenia longicauda subsp. 'Bulbarnet'
+ Caladenia sp. 'Ararat hills'
+ Caladenia sp. 'Bindoon'
+ Caladenia sp. 'Buchan'
+ Caladenia sp. 'Carboor'
+ Caladenia sp. 'Chapple Vale'
+ Caladenia sp. 'Coonawarra'
+ Caladenia sp. 'Coorong'
+ Caladenia sp. 'Dorrigo'
+ Caladenia sp. 'Earlston'
+ Caladenia sp. 'Finnis'
+ Caladenia sp. 'Fleurieu Peninsula'
+ Caladenia sp. 'Flinders Ranges red'
+ Caladenia sp. 'Inverleigh'
+ Caladenia sp. 'Kangaroo Island'
+ Caladenia sp. 'Kaniva Giant'
+ Caladenia sp. 'Kaniva'
+ Caladenia sp. 'Kilkoy Creek'
+ Caladenia sp. 'Kilsyth South'
+ Caladenia sp. 'Kooyera'
+ Caladenia sp. 'Mandurang'
+ Caladenia sp. 'Monarto South'
+ Caladenia sp. 'Murray mallee'
+ Caladenia sp. 'Orange'
+ Caladenia sp. 'Raymond Island'
+ Caladenia sp. 'Richmond River'
+ Caladenia sp. 'St Andrews'
+ Caladenia sp. 'Watheroo'
+ Caladenia sp. 'Woronora Plateau'
+ Caladenia sp. 'Yarram'
+ Caladenia sp. 'central NSW'
+ Caladenia sp. 'central Victoria'
+ Caladenia sp. 'coastal Eyre Peninsula'
+ Caladenia sp. 'coastal dunes'
+ Caladenia sp. 'crowded calli'
+ Caladenia sp. 'east of Esperance'
+ Caladenia sp. 'glowing green'
+ Caladenia sp. 'inland NSW'
+ Caladenia sp. 'large scented'
+ Caladenia sp. 'limestone mallee'
+ Caladenia sp. 'little clowns'
+ Caladenia sp. 'lowan mallee'
+ Caladenia sp. 'lower Glenelg River'
+ Caladenia sp. 'mallee heath'
+ Caladenia sp. 'mallee'
+ Caladenia sp. 'pointed flowers'
+ Caladenia sp. 'sand dunes'
+ Caladenia sp. 'short yellow clubs'
+ Caladenia sp. 'small tensa'
+ Caladenia sp. 'south Gippsland'
+ Caladenia sp. 'south east'
+ Caladenia sp. 'southern slopes'
+ Caladenia sp. 'swamp heath'
+ Caladenia sp. 'tiny white'
+ Caladenia sp. 'western Murray Flats'
+ Caladenia sp. 'western wheatbelt'
+ Caladenia transitoria subsp. 'Kangaroo Island'
+ Caladenia validinerva Hopper & A.P.Br. ex A.P.Br. & G.Brockman
+ Calochilus caeruleus L.O. Williams
+ Calochilus sp. 'Coaldale'
+ Calochilus sp. 'Gibraltar Range'
+ Calochilus sp. 'Kangaroo Island'
+ Calochilus sp. 'Moondarra'
+ Calochilus sp. 'New England'
+ Calochilus sp. 'Theda Station'
+ Chiloglottis sp. 'Bald Rock'
+ Chiloglottis sp. 'Barrington Tops'
+ Chiloglottis sp. 'Bathurst'
+ Chiloglottis sp. 'Ebor'
+ Chiloglottis sp. 'Kybean Range'
+ Chiloglottis sp. 'Maryborough'
+ Chiloglottis sp. 'Weilangta'
+ Chiloglottis sp. 'highlands'
+ Chiloglottis sp. 'lowlands'
+ Corunastylis alticola (D.L.Jones & B. Gray) D.L.Jones & M.A.Clem.
+ Corunastylis sp. 'Adelaide Hills'
+ Corunastylis sp. 'Beechworth'
+ Corunastylis sp. 'Charmhaven'
+ Corunastylis sp. 'Fraser Island'
+ Corunastylis sp. 'Gippsland Plains'
+ Corunastylis sp. 'Mount Billy'
+ Corunastylis sp. 'Mount Kaputar'
+ Corunastylis sp. 'Mount Mee'
+ Corunastylis sp. 'Pyrete Range'
+ Corunastylis sp. 'Raby Bay'
+ Corunastylis sp. 'Wyberba'
+ Corunastylis sp. 'dark flowers'
+ Corunastylis sp. 'granite ranges'
+ Corunastylis sp. 'intermediate'
+ Corunastylis sp. 'large bracts'
+ Corunastylis tepperi (F.Muell. ex. Tepper) D.L.Jones & M.A.Clem.
+ Corybas sp. 'Gibraltar Range'
+ Corybas sp. 'Portland'
+ Corybas sp. 'Woolly Tea-tree'
+ Corybas sp. 'dark labellum'
+ Corybas sp. 'red-eyed ghost'
+ Cyanicula gertrudiae (Ostenf.) Hopper & A.P.Br.
+ Dendrobium discolor subsp. incurvata Liddle & P.I. Forst.
+ Dendrobium finniganensis D.L.Jones
+ Dendrobium johannis Rchb.f. ex Bateman
+ Dendrobium tetragonum subsp. cataractum Peter B.Adams, S.D.Lawson & G.A.Paterson
+ Dipodium sp. 'basalt woodland'
+ Dipodium sp. 'sandstone'
+ Diuris sp. 'Byfield'
+ Diuris sp. 'Carnarvon'
+ Diuris sp. 'Clarencetown'
+ Diuris sp. 'Colo River'
+ Diuris sp. 'Darling scarp'
+ Diuris sp. 'Ebor'
+ Diuris sp. 'Gippsland plains'
+ Diuris sp. 'Grafton'
+ Diuris sp. 'Guyra'
+ Diuris sp. 'Hunter Valley'
+ Diuris sp. 'Jollys Falls'
+ Diuris sp. 'Monaro'
+ Diuris sp. 'NSW North Coast'
+ Diuris sp. 'New England escarpment'
+ Diuris sp. 'New England swamps'
+ Diuris sp. 'Red Gum waterholes'
+ Diuris sp. 'Tenterfield/Stanthorpe'
+ Diuris sp. 'Zuytdorp cliffs'
+ Diuris sp. 'sandhills'
+ Diuris sp. 'thick sepals'
+ Eriochilus sp. 'dry plains'
+ Eriochilus sp. 'smooth leaf'
+ Habenaria sp. 'Beverley Springs Station'
+ Microtis sp. 'Flinders Ranges'
+ Microtis sp. 'Topperwein'
+ Microtis sp. 'alpine'
+ Microtis sp. 'curved lip'
+ Microtis sp. 'dense spikes'
+ Microtis sp. 'fragrant'
+ Microtis sp. 'hanging bogs'
+ Microtis sp. 'late flowering'
+ Microtis sp. 'narrow lip'
+ Microtis sp. 'short leaf'
+ Microtis sp. 'subalpine grasslands'
+ Orthoceras sp. 'short bracts'
+ Phaius pictus Hook.
+ Phalaenopsis rosenstromii (Rchb.f.) Rchb.f. ex Kraenzl.
+ Pholidota imbricata Hook
+ Phreatia paleata (Rchb.f.) Rchb.f.
+ Prasophyllum sp. 'ACT 1'
+ Prasophyllum sp. 'ACT 2'
+ Prasophyllum sp. 'Alligator Gorge'
+ Prasophyllum sp. 'Anglesea'
+ Prasophyllum sp. 'Arthurs Lake'
+ Prasophyllum sp. 'Barrington Tops'
+ Prasophyllum sp. 'Boorhaman'
+ Prasophyllum sp. 'Boyd Plateau'
+ Prasophyllum sp. 'Bunyip'
+ Prasophyllum sp. 'Dandenong Ranges'
+ Prasophyllum sp. 'Deep Lead'
+ Prasophyllum sp. 'Delegate'
+ Prasophyllum sp. 'Digby'
+ Prasophyllum sp. 'Gilbert River'
+ Prasophyllum sp. 'Inglewood'
+ Prasophyllum sp. 'Innes'
+ Prasophyllum sp. 'Inverleigh'
+ Prasophyllum sp. 'Jip Jip'
+ Prasophyllum sp. 'Lara'
+ Prasophyllum sp. 'Mallacoota'
+ Prasophyllum sp. 'Midlands'
+ Prasophyllum sp. 'Mokota'
+ Prasophyllum sp. 'Mortlake'
+ Prasophyllum sp. 'Mount Kaputar'
+ Prasophyllum sp. 'Murchison'
+ Prasophyllum sp. 'New England batholith'
+ Prasophyllum sp. 'Noorinbee'
+ Prasophyllum sp. 'Nowra'
+ Prasophyllum sp. 'Nunniong'
+ Prasophyllum sp. 'Old Bar'
+ Prasophyllum sp. 'Otway Ranges'
+ Prasophyllum sp. 'Otway coast'
+ Prasophyllum sp. 'Piccaninnie Ponds'
+ Prasophyllum sp. 'Pilliga Scrub'
+ Prasophyllum sp. 'Riverina grasslands'
+ Prasophyllum sp. 'Smokers Gap'
+ Prasophyllum sp. 'Swan region'
+ Prasophyllum sp. 'Teralba'
+ Prasophyllum sp. 'Verran Tanks'
+ Prasophyllum sp. 'Wilsons Promontory'
+ Prasophyllum sp. 'Wimmera woodlands'
+ Prasophyllum sp. 'basalt plains'
+ Prasophyllum sp. 'black soil plains'
+ Prasophyllum sp. 'bright shiny marooon'
+ Prasophyllum sp. 'brown lip'
+ Prasophyllum sp. 'bushfires'
+ Prasophyllum sp. 'coast sandhills'
+ Prasophyllum sp. 'desert'
+ Prasophyllum sp. 'eastern highlands'
+ Prasophyllum sp. 'enigma'
+ Prasophyllum sp. 'foothills'
+ Prasophyllum sp. 'grassy woodlands'
+ Prasophyllum sp. 'inland woodlands'
+ Prasophyllum sp. 'late coastal dunes'
+ Prasophyllum sp. 'late summer'
+ Prasophyllum sp. 'limestone heath'
+ Prasophyllum sp. 'lower south-east'
+ Prasophyllum sp. 'mallee sands'
+ Prasophyllum sp. 'montane'
+ Prasophyllum sp. 'mountain bogs'
+ Prasophyllum sp. 'needle points'
+ Prasophyllum sp. 'northern montane'
+ Prasophyllum sp. 'pink lip'
+ Prasophyllum sp. 'purple lip'
+ Prasophyllum sp. 'sedge swamps'
+ Prasophyllum sp. 'waterholes'
+ Prasophyllum vesuvium R.J.Bates
+ Pterostylis robusta subsp. 'gorges'
+ Pterostylis sp. 'ACT'
+ Pterostylis sp. 'Abercrombie Caves'
+ Pterostylis sp. 'Adelaide hills'
+ Pterostylis sp. 'Albury'
+ Pterostylis sp. 'Anglesea'
+ Pterostylis sp. 'Angourie'
+ Pterostylis sp. 'Arkaroola'
+ Pterostylis sp. 'Barrington Tops'
+ Pterostylis sp. 'Beechworth'
+ Pterostylis sp. 'Berrook'
+ Pterostylis sp. 'Bimbowrie'
+ Pterostylis sp. 'Border Ranges'
+ Pterostylis sp. 'Broughton River'
+ Pterostylis sp. 'Buccarumbi'
+ Pterostylis sp. 'Coaldale'
+ Pterostylis sp. 'Coonabarabran'
+ Pterostylis sp. 'Daylesford'
+ Pterostylis sp. 'Dorrigo'
+ Pterostylis sp. 'Dundonnell'
+ Pterostylis sp. 'East Gippsland'
+ Pterostylis sp. 'East Kangaloon'
+ Pterostylis sp. 'Ebor Falls'
+ Pterostylis sp. 'Everard Range'
+ Pterostylis sp. 'Eyre Peninsula'
+ Pterostylis sp. 'Flinders Island'
+ Pterostylis sp. 'Flinders Ranges north 1'
+ Pterostylis sp. 'Flinders Ranges north 2'
+ Pterostylis sp. 'Flinders'
+ Pterostylis sp. 'Gammon Range'
+ Pterostylis sp. 'Gippsland'
+ Pterostylis sp. 'Goulburn'
+ Pterostylis sp. 'Griffith'
+ Pterostylis sp. 'Guildford'
+ Pterostylis sp. 'Gundiah'
+ Pterostylis sp. 'Joanna'
+ Pterostylis sp. 'Joiners Ridge'
+ Pterostylis sp. 'Lara'
+ Pterostylis sp. 'Maldon'
+ Pterostylis sp. 'Malua Bay'
+ Pterostylis sp. 'Mambray Creek'
+ Pterostylis sp. 'Mokota'
+ Pterostylis sp. 'Mount Duval'
+ Pterostylis sp. 'Mount Geharty'
+ Pterostylis sp. 'Mount Kaputar'
+ Pterostylis sp. 'Mount Maroon'
+ Pterostylis sp. 'Mount Mee'
+ Pterostylis sp. 'Mount Moffat'
+ Pterostylis sp. 'Mount Olinthus'
+ Pterostylis sp. 'Mount Victoria Uranium Mine'
+ Pterostylis sp. 'Narrandera range'
+ Pterostylis sp. 'New England striped'
+ Pterostylis sp. 'Newland Head'
+ Pterostylis sp. 'Nora Creina'
+ Pterostylis sp. 'Old Boolcoolmata'
+ Pterostylis sp. 'Omeo'
+ Pterostylis sp. 'Oratan Rock'
+ Pterostylis sp. 'Outback'
+ Pterostylis sp. 'Ranking Springs'
+ Pterostylis sp. 'Spring Ridge'
+ Pterostylis sp. 'Torrington'
+ Pterostylis sp. 'Urbenville'
+ Pterostylis sp. 'Warialda'
+ Pterostylis sp. 'Warren snail'
+ Pterostylis sp. 'Wauchope'
+ Pterostylis sp. 'Werrikimbe'
+ Pterostylis sp. 'Wilsons Promontory'
+ Pterostylis sp. 'Woohlpooer'
+ Pterostylis sp. 'bluebush plains'
+ Pterostylis sp. 'bristly lip'
+ Pterostylis sp. 'canegrass'
+ Pterostylis sp. 'chunky flowers'
+ Pterostylis sp. 'coastal SA'
+ Pterostylis sp. 'foothill forest'
+ Pterostylis sp. 'greater Grampians'
+ Pterostylis sp. 'hooked sepals'
+ Pterostylis sp. 'inland'
+ Pterostylis sp. 'large curved flowers'
+ Pterostylis sp. 'large striped flowers'
+ Pterostylis sp. 'limestone sands'
+ Pterostylis sp. 'lower Murray'
+ Pterostylis sp. 'mallee heath'
+ Pterostylis sp. 'mallee snail'
+ Pterostylis sp. 'north-east Vic hills'
+ Pterostylis sp. 'north-west mallee'
+ Pterostylis sp. 'quartz'
+ Pterostylis sp. 'red lip'
+ Pterostylis sp. 'rock ledges'
+ Pterostylis sp. 'rocky ranges'
+ Pterostylis sp. 'sandheath'
+ Pterostylis sp. 'sandstone heath'
+ Pterostylis sp. 'slender desert'
+ Pterostylis sp. 'south-east Queensland'
+ Pterostylis sp. 'southern Eyre Peninsula'
+ Pterostylis sp. 'tablelands'
+ Pterostylis sp. 'tall mallee snail'
+ Pterostylis sp. 'tall purple'
+ Pterostylis sp. 'tall woodland'
+ Pterostylis sp. 'tiny flowers'
+ Pterostylis sp. 'upper Spencer Gulf'
+ Pterostylis sp. 'western Victoria'
+ Pterostylis sp. 'western woodlands'
+ Pterostylis sp. 'woodland'
+ Pterostylis sp. 'woodlands'
+ Pterostylis sp. 'wrinkled lateral sepals'
+ Rhizanthella sp. 'Munglinup'
+ Sarcochilus sp. 'Blue Knob'
+ Sarcochilus sp. 'brittle leaves'
+ Thelymitra brevifolia subsp. 'Porters'
+ Thelymitra odora subsp. 'horse manure'
+ Thelymitra sp. 'Claire'
+ Thelymitra sp. 'Gibraltar Falls'
+ Thelymitra sp. 'Glen Shera'
+ Thelymitra sp. 'Meadows'
+ Thelymitra sp. 'Topperwein'
+ Thelymitra sp. 'Toy Creek'
+ Thelymitra sp. 'blue column'
+ Thelymitra sp. 'central coast'
+ Thelymitra sp. 'fine spots'
+ Thelymitra sp. 'insipid'
+ Thelymitra sp. 'ornate flowers'
+ Thelymitra sp. 'papillose'
+ Thelymitra sp. 'red gum swamps'
+ Thelymitra sp. 'reed sun orchid'
+(341 rows)
+
+Multi-matched names
+
+    genus     |        species         | subsp_var |      authority      | preferred_authority |             constructed_name
+--------------+------------------------+-----------+---------------------+---------------------+------------------------------------------
+ Corybas      | sp. 'Busselton'        |           |                     |                     | Corybas sp. 'Busselton'
+ Corybas      | sp. 'Hamersley Inlet'  |           |                     |                     | Corybas sp. 'Hamersley Inlet'
+ Corybas      | sp. 'Naturaliste'      |           |                     |                     | Corybas sp. 'Naturaliste'
+ Dendrobium   | falcorostrum           |           | Fitzg.              |                     | Dendrobium falcorostrum Fitzg.
+ Dendrobium   | prenticei              |           | (F.Muell.) Nicholls |                     | Dendrobium prenticei (F.Muell.) Nicholls
+ Diuris       | sp. 'Augusta'          |           |                     |                     | Diuris sp. 'Augusta'
+ Diuris       | sp. 'sandplain'        |           |                     |                     | Diuris sp. 'sandplain'
+ Diuris       | sp. 'south coast'      |           |                     |                     | Diuris sp. 'south coast'
+ Paracaleana  | sp. 'Darling Range'    |           |                     |                     | Paracaleana sp. 'Darling Range'
+ Prasophyllum | sp. 'Brookton Highway' |           |                     |                     | Prasophyllum sp. 'Brookton Highway'
+ Prasophyllum | sp. 'crowded'          |           |                     |                     | Prasophyllum sp. 'crowded'
+ Prasophyllum | sp. 'early'            |           |                     |                     | Prasophyllum sp. 'early'
+ Prasophyllum | sp. 'late swamps'      |           |                     |                     | Prasophyllum sp. 'late swamps'
+ Prasophyllum | sp. 'southern'         |           |                     |                     | Prasophyllum sp. 'southern'
+ Prasophyllum | sp. 'striped'          |           |                     |                     | Prasophyllum sp. 'striped'
+ Pterostylis  | sp. 'Boyup'            |           |                     |                     | Pterostylis sp. 'Boyup'
+ Pterostylis  | sp. 'Esperance'        |           |                     |                     | Pterostylis sp. 'Esperance'
+ Pterostylis  | sp. 'Eyre'             |           |                     |                     | Pterostylis sp. 'Eyre'
+ Pterostylis  | sp. 'Helena River'     |           |                     |                     | Pterostylis sp. 'Helena River'
+ Pterostylis  | sp. 'Murchison'        |           |                     |                     | Pterostylis sp. 'Murchison'
+ Pterostylis  | sp. 'Paynes Find'      |           |                     |                     | Pterostylis sp. 'Paynes Find'
+ Pterostylis  | sp. 'bloated'          |           |                     |                     | Pterostylis sp. 'bloated'
+ Pterostylis  | sp. 'coastal snail'    |           |                     |                     | Pterostylis sp. 'coastal snail'
+ Pterostylis  | sp. 'coastal'          |           |                     |                     | Pterostylis sp. 'coastal'
+ Pterostylis  | sp. 'dainty brown'     |           |                     |                     | Pterostylis sp. 'dainty brown'
+ Pterostylis  | sp. 'dwarf'            |           |                     |                     | Pterostylis sp. 'dwarf'
+ Pterostylis  | sp. 'greasy'           |           |                     |                     | Pterostylis sp. 'greasy'
+ Pterostylis  | sp. 'green flowers'    |           |                     |                     | Pterostylis sp. 'green flowers'
+ Pterostylis  | sp. 'large fawn'       |           |                     |                     | Pterostylis sp. 'large fawn'
+ Pterostylis  | sp. 'limestone'        |           |                     |                     | Pterostylis sp. 'limestone'
+ Pterostylis  | sp. 'northern'         |           |                     |                     | Pterostylis sp. 'northern'
+ Pterostylis  | sp. 'plumed'           |           |                     |                     | Pterostylis sp. 'plumed'
+ Pterostylis  | sp. 'robust'           |           |                     |                     | Pterostylis sp. 'robust'
+ Pterostylis  | sp. 'short sepals'     |           |                     |                     | Pterostylis sp. 'short sepals'
+ Pterostylis  | sp. 'straight tops'    |           |                     |                     | Pterostylis sp. 'straight tops'
+ Thelymitra   | sp. 'Ongerup'          |           |                     |                     | Thelymitra sp. 'Ongerup'
+(36 rows)
+
+Remaining unmatched or multi-matched
+
+ inferred_rank | matched_name_count | count
+---------------+--------------------+-------
+ species       |                  0 |   334
+ species       |                  2 |    17
+ species       |                  3 |    19
+ subspecies    |                  0 |     7
+(4 rows)
+
+Count all raw records
+ count
+-------
+  1842
+(1 row)
+
+Count all processing records: should equal previous
+ count
+-------
+  1842
+(1 row)
+
+Count records with no constructed name: 0 is a good result
+ count
+-------
+     0
+(1 row)
+
+count records with no matched name (count is 0): these will be created
+ count
+-------
+   341
+(1 row)
+
+count records with no matched name (matched_id is null): this should equal the previous count
+ count
+-------
+   341
+(1 row)
+
+big picture
+
+ matched_name_count | count
+--------------------+-------
+                  0 |   341
+                  1 |  1465
+                  2 |    17
+                  3 |    19
+(4 rows)
+
+plants_dev=#   \q
+ gregc-imac Wed Feb 21 17:34:04  gregc  [jruby-9.1.5.0 (set by /Users/gregc/Dropbox/anbg/rails/ned/.ruby-version)]  ~/Dropbox/anbg/rails/ned/db/bulk/orchids
+$

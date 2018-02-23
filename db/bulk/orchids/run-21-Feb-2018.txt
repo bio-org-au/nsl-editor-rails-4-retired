@@ -1,0 +1,306 @@
+plants_dev=#
+plants_dev=# \i setup.sql
+DROP TABLE
+CREATE TABLE
+ count
+-------
+     0
+(1 row)
+
+COPY 1941
+DELETE 0
+DELETE 99
+ count
+-------
+  1842
+(1 row)
+
+plants_dev=# \i load.sql
+DROP TABLE
+CREATE TABLE
+load data into processing table
+INSERT 0 1842
+set inferred rank
+UPDATE 25
+UPDATE 84
+UPDATE 1733
+construct species names
+UPDATE 390
+construct species names with a preferred authority
+UPDATE 1343
+construct non-autonym variety names
+UPDATE 20
+construct autonym variety names
+UPDATE 5
+construct non-autonym subspecies variety names - e.g. subsp. x var. y
+UPDATE 1
+construct autonymic subspecies variety names - e.g. subsp. x var. y
+UPDATE 0
+construct non-autonym subspecies names
+UPDATE 51
+construct autonym subspecies names
+UPDATE 27
+construct names without authority
+UPDATE 5
+all records should now have constructed names
+ count
+-------
+     0
+(1 row)
+
+run a simple match
+UPDATE 1455
+run a match on unmatched that excludes non-instance names
+UPDATE 1
+run a match on unmatched that excludes nom_inval names
+
+UPDATE 8
+run a match on unmatched that excludes nom_inval and no-instance names
+
+UPDATE 1
+run a min(id) match on leftovers
+
+UPDATE 36
+summary
+
+ inferred_rank | matched_name_count | count
+---------------+--------------------+-------
+ species       |                  0 |   334
+ species       |                  1 |  1363
+ species       |                  2 |    17
+ species       |                  3 |    19
+ subspecies    |                  0 |     7
+ subspecies    |                  1 |    77
+ variety       |                  1 |    25
+(7 rows)
+
+ inferred_rank | matched_name_count | count
+---------------+--------------------+-------
+ species       |                  0 |   334
+ species       |                  1 |  1363
+ species       |                  2 |    17
+ species       |                  3 |    19
+ subspecies    |                  0 |     7
+ subspecies    |                  1 |    77
+ variety       |                  1 |    25
+(7 rows)
+
+Non-matched names with a matching legitimate simple name
+
+    genus     |   species    |                  authority                  |           preferred_authority            |                            full_name
+--------------+--------------+---------------------------------------------+------------------------------------------+------------------------------------------------------------------
+ Caladenia    | barbarella   | Hopper & A.P.Br.                            | Schltdl.                                 | Caladenia barbarella Hopper & A.P.Br.
+ Caladenia    | behrii       | Schldl.                                     |                                          | Caladenia behrii Schltdl.
+ Caladenia    | brownii      | Hopper                                      | Hopper & A.P.Br                          | Caladenia brownii Hopper & A.P.Br.
+ Caladenia    | longicauda   |                                             |                                          | Caladenia longicauda Lindl.
+ Caladenia    | transitoria  |                                             |                                          | Caladenia transitoria D.L.Jones
+ Calochilus   | caeruleus    | L.O. Williams                               |                                          | Calochilus caeruleus L.O.Williams
+ Calochilus   | caeruleus    | L.O. Williams                               |                                          | Calochilus caeruleus
+ Corunastylis | alticola     | (D.L.Jones & B. Gray) D.L.Jones & M.A.Clem. |                                          | Corunastylis alticola (D.L.Jones & B.Gray) D.L.Jones & M.A.Clem.
+ Corunastylis | tepperi      | (F.Muell. ex. Tepper) D.L.Jones & M.A.Clem. |                                          | Corunastylis tepperi (F.Muell. ex Tepper) D.L.Jones & M.A.Clem.
+ Dendrobium   | discolor     | Liddle & P.I. Forst.                        |                                          | Dendrobium discolor Lindl.
+ Dendrobium   | johannis     | Rchb.f.                                     | Rchb.f. ex Bateman                       | Dendrobium johannis Rchb.f.
+ Dendrobium   | tetragonum   | P.B.Adams, S.D.Lawson and G.A.Paterson      | Peter B.Adams, S.D.Lawson & G.A.Paterson | Dendrobium tetragonum A.Cunn.
+ Dendrobium   | tetragonum   | P.B.Adams, S.D.Lawson and G.A.Paterson      | Peter B.Adams, S.D.Lawson & G.A.Paterson | Dendrobium tetragonum
+ Phaius       | pictus       | T.E.Hunt                                    | Hook.                                    | Phaius pictus T.E.Hunt
+ Phalaenopsis | rosenstromii | F.M.Bailey                                  | (Rchb.f.) Rchb.f. ex Kraenzl.            | Phalaenopsis rosenstromii F.M.Bailey
+ Pholidota    | imbricata    | Hook                                        |                                          | Pholidota imbricata
+ Pholidota    | imbricata    | Hook                                        |                                          | Pholidota imbricata Hook.
+ Phreatia     | paleata      | (Rchb.f.) Rchb.f.                           |                                          | Phreatia paleata (Rchb.f.) Rchb.f. ex Kraenzl.
+ Pterostylis  | robusta      |                                             |                                          | Pterostylis robusta R.S.Rogers
+ Thelymitra   | brevifolia   |                                             |                                          | Thelymitra brevifolia Jeanes
+ Thelymitra   | odora        |                                             |                                          | Thelymitra odora R.J.Bates
+(21 rows)
+
+match leftovers on simple name
+
+UPDATE 0
+Review results
+
+ inferred_rank | matched_name_count | count
+---------------+--------------------+-------
+ species       |                  0 |   334
+ species       |                  1 |  1363
+ species       |                  2 |    17
+ species       |                  3 |    19
+ subspecies    |                  0 |     7
+ subspecies    |                  1 |    77
+ variety       |                  1 |    25
+(7 rows)
+
+Non-matched names (first 20)
+
+    genus     |            species            |     subsp_var      |    authority     | preferred_authority |            constructed_name
+--------------+-------------------------------+--------------------+------------------+---------------------+-----------------------------------------
+ Acianthus    | sp. 'Gibraltar Range'         |                    |                  |                     | Acianthus sp. 'Gibraltar Range'
+ Acianthus    | sp. 'NSW Northern Tablelands' |                    |                  |                     | Acianthus sp. 'NSW Northern Tablelands'
+ Acianthus    | sp. 'Tathra'                  |                    |                  |                     | Acianthus sp. 'Tathra'
+ Arthrochilus | sp. 'Bradshaw Station'        |                    |                  |                     | Arthrochilus sp. 'Bradshaw Station'
+ Arthrochilus | sp. 'spinifex dweller'        |                    |                  |                     | Arthrochilus sp. 'spinifex dweller'
+ Caladenia    | barbarella                    |                    | Hopper & A.P.Br. | Schltdl.            | Caladenia barbarella Schltdl.
+ Caladenia    | behrii                        |                    | Schldl.          |                     | Caladenia behrii Schldl.
+ Caladenia    | brownii                       |                    | Hopper           | Hopper & A.P.Br     | Caladenia brownii Hopper & A.P.Br
+ Caladenia    | longicauda                    | subsp. 'Bulbarnet' |                  |                     | Caladenia longicauda subsp. 'Bulbarnet'
+ Caladenia    | sp. 'Ararat hills'            |                    |                  |                     | Caladenia sp. 'Ararat hills'
+ Caladenia    | sp. 'Bindoon'                 |                    |                  |                     | Caladenia sp. 'Bindoon'
+ Caladenia    | sp. 'Buchan'                  |                    |                  |                     | Caladenia sp. 'Buchan'
+ Caladenia    | sp. 'Carboor'                 |                    |                  |                     | Caladenia sp. 'Carboor'
+ Caladenia    | sp. 'Chapple Vale'            |                    |                  |                     | Caladenia sp. 'Chapple Vale'
+ Caladenia    | sp. 'Coonawarra'              |                    |                  |                     | Caladenia sp. 'Coonawarra'
+ Caladenia    | sp. 'Coorong'                 |                    |                  |                     | Caladenia sp. 'Coorong'
+ Caladenia    | sp. 'Dorrigo'                 |                    |                  |                     | Caladenia sp. 'Dorrigo'
+ Caladenia    | sp. 'Earlston'                |                    |                  |                     | Caladenia sp. 'Earlston'
+ Caladenia    | sp. 'Finnis'                  |                    |                  |                     | Caladenia sp. 'Finnis'
+ Caladenia    | sp. 'Fleurieu Peninsula'      |                    |                  |                     | Caladenia sp. 'Fleurieu Peninsula'
+(20 rows)
+
+Non-matched names - just the raw data
+
+    genus     |            species            |     subsp_var      |    authority     | preferred_authority
+--------------+-------------------------------+--------------------+------------------+---------------------
+ Acianthus    | sp. 'Gibraltar Range'         |                    |                  |
+ Acianthus    | sp. 'NSW Northern Tablelands' |                    |                  |
+ Acianthus    | sp. 'Tathra'                  |                    |                  |
+ Arthrochilus | sp. 'Bradshaw Station'        |                    |                  |
+ Arthrochilus | sp. 'spinifex dweller'        |                    |                  |
+ Caladenia    | barbarella                    |                    | Hopper & A.P.Br. | Schltdl.
+ Caladenia    | behrii                        |                    | Schldl.          |
+ Caladenia    | brownii                       |                    | Hopper           | Hopper & A.P.Br
+ Caladenia    | longicauda                    | subsp. 'Bulbarnet' |                  |
+ Caladenia    | sp. 'Ararat hills'            |                    |                  |
+ Caladenia    | sp. 'Bindoon'                 |                    |                  |
+ Caladenia    | sp. 'Buchan'                  |                    |                  |
+ Caladenia    | sp. 'Carboor'                 |                    |                  |
+ Caladenia    | sp. 'Chapple Vale'            |                    |                  |
+ Caladenia    | sp. 'Coonawarra'              |                    |                  |
+ Caladenia    | sp. 'Coorong'                 |                    |                  |
+ Caladenia    | sp. 'Dorrigo'                 |                    |                  |
+ Caladenia    | sp. 'Earlston'                |                    |                  |
+ Caladenia    | sp. 'Finnis'                  |                    |                  |
+ Caladenia    | sp. 'Fleurieu Peninsula'      |                    |                  |
+(20 rows)
+
+Non-matched names - just the constructed names
+
+            constructed_name
+-----------------------------------------
+ Acianthus sp. 'Gibraltar Range'
+ Acianthus sp. 'NSW Northern Tablelands'
+ Acianthus sp. 'Tathra'
+ Arthrochilus sp. 'Bradshaw Station'
+ Arthrochilus sp. 'spinifex dweller'
+ Caladenia barbarella Schltdl.
+ Caladenia behrii Schldl.
+ Caladenia brownii Hopper & A.P.Br
+ Caladenia longicauda subsp. 'Bulbarnet'
+ Caladenia sp. 'Ararat hills'
+ Caladenia sp. 'Bindoon'
+ Caladenia sp. 'Buchan'
+ Caladenia sp. 'Carboor'
+ Caladenia sp. 'Chapple Vale'
+ Caladenia sp. 'Coonawarra'
+ Caladenia sp. 'Coorong'
+ Caladenia sp. 'Dorrigo'
+ Caladenia sp. 'Earlston'
+ Caladenia sp. 'Finnis'
+ Caladenia sp. 'Fleurieu Peninsula'
+(20 rows)
+
+Multi-matched names
+
+    genus     |        species         | subsp_var |      authority      | preferred_authority |             constructed_name
+--------------+------------------------+-----------+---------------------+---------------------+------------------------------------------
+ Corybas      | sp. 'Busselton'        |           |                     |                     | Corybas sp. 'Busselton'
+ Corybas      | sp. 'Hamersley Inlet'  |           |                     |                     | Corybas sp. 'Hamersley Inlet'
+ Corybas      | sp. 'Naturaliste'      |           |                     |                     | Corybas sp. 'Naturaliste'
+ Dendrobium   | falcorostrum           |           | Fitzg.              |                     | Dendrobium falcorostrum Fitzg.
+ Dendrobium   | prenticei              |           | (F.Muell.) Nicholls |                     | Dendrobium prenticei (F.Muell.) Nicholls
+ Diuris       | sp. 'Augusta'          |           |                     |                     | Diuris sp. 'Augusta'
+ Diuris       | sp. 'sandplain'        |           |                     |                     | Diuris sp. 'sandplain'
+ Diuris       | sp. 'south coast'      |           |                     |                     | Diuris sp. 'south coast'
+ Paracaleana  | sp. 'Darling Range'    |           |                     |                     | Paracaleana sp. 'Darling Range'
+ Prasophyllum | sp. 'Brookton Highway' |           |                     |                     | Prasophyllum sp. 'Brookton Highway'
+ Prasophyllum | sp. 'crowded'          |           |                     |                     | Prasophyllum sp. 'crowded'
+ Prasophyllum | sp. 'early'            |           |                     |                     | Prasophyllum sp. 'early'
+ Prasophyllum | sp. 'late swamps'      |           |                     |                     | Prasophyllum sp. 'late swamps'
+ Prasophyllum | sp. 'southern'         |           |                     |                     | Prasophyllum sp. 'southern'
+ Prasophyllum | sp. 'striped'          |           |                     |                     | Prasophyllum sp. 'striped'
+ Pterostylis  | sp. 'Boyup'            |           |                     |                     | Pterostylis sp. 'Boyup'
+ Pterostylis  | sp. 'Esperance'        |           |                     |                     | Pterostylis sp. 'Esperance'
+ Pterostylis  | sp. 'Eyre'             |           |                     |                     | Pterostylis sp. 'Eyre'
+ Pterostylis  | sp. 'Helena River'     |           |                     |                     | Pterostylis sp. 'Helena River'
+ Pterostylis  | sp. 'Murchison'        |           |                     |                     | Pterostylis sp. 'Murchison'
+ Pterostylis  | sp. 'Paynes Find'      |           |                     |                     | Pterostylis sp. 'Paynes Find'
+ Pterostylis  | sp. 'bloated'          |           |                     |                     | Pterostylis sp. 'bloated'
+ Pterostylis  | sp. 'coastal snail'    |           |                     |                     | Pterostylis sp. 'coastal snail'
+ Pterostylis  | sp. 'coastal'          |           |                     |                     | Pterostylis sp. 'coastal'
+ Pterostylis  | sp. 'dainty brown'     |           |                     |                     | Pterostylis sp. 'dainty brown'
+ Pterostylis  | sp. 'dwarf'            |           |                     |                     | Pterostylis sp. 'dwarf'
+ Pterostylis  | sp. 'greasy'           |           |                     |                     | Pterostylis sp. 'greasy'
+ Pterostylis  | sp. 'green flowers'    |           |                     |                     | Pterostylis sp. 'green flowers'
+ Pterostylis  | sp. 'large fawn'       |           |                     |                     | Pterostylis sp. 'large fawn'
+ Pterostylis  | sp. 'limestone'        |           |                     |                     | Pterostylis sp. 'limestone'
+ Pterostylis  | sp. 'northern'         |           |                     |                     | Pterostylis sp. 'northern'
+ Pterostylis  | sp. 'plumed'           |           |                     |                     | Pterostylis sp. 'plumed'
+ Pterostylis  | sp. 'robust'           |           |                     |                     | Pterostylis sp. 'robust'
+ Pterostylis  | sp. 'short sepals'     |           |                     |                     | Pterostylis sp. 'short sepals'
+ Pterostylis  | sp. 'straight tops'    |           |                     |                     | Pterostylis sp. 'straight tops'
+ Thelymitra   | sp. 'Ongerup'          |           |                     |                     | Thelymitra sp. 'Ongerup'
+(36 rows)
+
+Remaining unmatched or multi-matched
+
+ inferred_rank | matched_name_count | count
+---------------+--------------------+-------
+ species       |                  0 |   334
+ species       |                  2 |    17
+ species       |                  3 |    19
+ subspecies    |                  0 |     7
+(4 rows)
+
+Count all raw records
+ count
+-------
+  1842
+(1 row)
+
+Count all processing records: should equal previous
+ count
+-------
+  1842
+(1 row)
+
+Count records with no constructed name: 0 is a good result
+ count
+-------
+     0
+(1 row)
+
+count records with no matched name (count is 0): these will be created
+ count
+-------
+   341
+(1 row)
+
+count records with no matched name (matched_id is null): this should equal the previous count
+ count
+-------
+   341
+(1 row)
+
+big picture
+
+ matched_name_count | count
+--------------------+-------
+                  0 |   341
+                  1 |  1465
+                  2 |    17
+                  3 |    19
+(4 rows)
+
+plants_dev=# select 341 + 1465 + 17 + 19
+plants_dev-# ;
+ ?column?
+----------
+     1842
+(1 row)
