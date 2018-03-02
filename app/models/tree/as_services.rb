@@ -18,6 +18,7 @@
 #  Tree services
 class Tree::AsServices
   SERVICES_ADDRESS = Rails.configuration.services
+  CLIENT_SIDE_SERVICES = Rails.configuration.services_clientside_root_url
   LINKER_ADDRESS = Rails.configuration.nsl_linker
   PLACEMENT_PATH = "api/treeElement/placeElement"
   TOP_PLACEMENT_PATH = "api/treeElement/placeTopElement"
@@ -108,7 +109,7 @@ class Tree::AsServices
   end
 
   def self.diff_link(v1, v2)
-    "#{SERVICES_ADDRESS}#{DIFF_LINK}?v1=#{v1}&v2=#{v2}&embed=true"
+    "#{CLIENT_SIDE_SERVICES}#{DIFF_LINK}?v1=#{v1}&v2=#{v2}&embed=true"
   end
 
 end

@@ -138,9 +138,9 @@ function loadHtml(element, url) {
     });
 }
 
-function linkNames(startElement) {
-    $('name').on('click', function () {
-        var nameId = $(this).data('name-id');
-        // http://127.0.0.1:3000/search?query_string=id%3A+71063+show-instances%3A&query_target=name
-    });
-}
+// function linkNames(startElement) {
+//     $('name').on('click', function () {
+//         var nameId = $(this).data('name-id');
+//         // http://127.0.0.1:3000/search?query_string=id%3A+71063+show-instances%3A&query_target=name
+//     });
+// }
