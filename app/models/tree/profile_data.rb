@@ -40,9 +40,13 @@ class Tree::ProfileData
 
   def update_profile(key, value)
     if value && key
-      @profile_data[key] = {value: value,
-                            updated_by: @current_user.username,
-                            updated_at: Time.now.utc.iso8601}
+      if value.blank?
+        @profile_data.delete(key)
+      else
+        @profile_data[key] = {value: value,
+                              updated_by: @current_user.username,
+                              updated_at: Time.now.utc.iso8601}
+      end
     end
     @profile_data
   end
