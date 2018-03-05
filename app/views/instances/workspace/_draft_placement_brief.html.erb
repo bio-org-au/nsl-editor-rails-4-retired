@@ -1,0 +1,37 @@
+<% if @tree_version_element %>
+  <div>
+    <h1>
+      <%= render partial: "instances/workspace/widgets/placement_indicator", locals: {tree_version_element: @tree_version_element} %>
+    </h1>
+
+    <dl class="dl-horizontal">
+
+      <dt>Reference</dt>
+      <dd><%= @tree_version_element.tree_element.instance.reference.citation %></dd>
+
+      <dt><%= @tree_version_element.comment_key %></dt>
+      <dd>
+        <%= @tree_version_element.comment %>
+      </dd>
+
+      <dt><%= @tree_version_element.distribution_key %></dt>
+      <dd>
+        <%= @tree_version_element.distribution %>
+      </dd>
+
+      <dt>Under</dt>
+      <dd>
+        <% if @tree_version_element.parent %>
+          <%= link_to("<i class=\"fa fa-sitemap\"></i> #{search_icon_on_tab}
+                      #{@tree_version_element.parent&.tree_element&.instance&.name&.try('full_name')}"
+                          .html_safe,
+                      search_path(query_target: 'name',
+                                  query_string: "id: #{@tree_version_element.parent.tree_element.name_id} show-instances:"),
+                      title: 'Search for the parent with its instances',
+                      class: 'name') %>
+        <% end %>
+      </dd>
+
+    </dl>
+  </div>
+<% end %>

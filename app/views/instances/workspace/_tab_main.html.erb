@@ -1,6 +1,6 @@
 <% if @tree_version_element.present? %>
     <% if @tree_version_element&.tree_element&.instance == @instance %>
-    <%= render partial: "instances/workspace/current_placement" %>
+    <%= render partial: "instances/workspace/draft_placement" %>
         <%= divider %>
         <%= render partial: "instances/workspace/remove_placement" %>
         <%= divider %>

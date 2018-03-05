@@ -56,10 +56,26 @@
       <dt>Path</dt>
       <dd><%= @accepted_tve.name_path %></dd>
       <dt><%= @accepted_tve.comment_key %></dt>
-      <dd><%= @accepted_tve.comment.html_safe %></dd>
+      <dd>
+        <%= render partial: 'instances/workspace/diff_field',
+                   locals: {
+                       v1: @accepted_tve.comment.html_safe,
+                       v2: @tree_version_element&.comment&.html_safe,
+                       attrib: @tree_version_element&.tree_version&.draft_name
+                   }
+        %>
+      </dd>
 
       <dt><%= @accepted_tve.distribution_key %></dt>
-      <dd><%= @accepted_tve.distribution %></dd>
+      <dd>
+        <%= render partial: 'instances/workspace/diff_field',
+                   locals: {
+                       v1: @accepted_tve.distribution,
+                       v2: @tree_version_element&.distribution,
+                       attrib: @tree_version_element&.tree_version&.draft_name
+                   }
+        %>
+      </dd>
 
       <dt>Under</dt>
       <dd>
