@@ -3,6 +3,12 @@
     font-size: 1.4em;
   }
 
+  .diffBefore,
+  .diffAfter {
+    max-width: 50vw;
+    overflow: auto;
+  }
+
   .diffBefore {
     background-color: rgba(235, 21, 31, 0.1);
   }
@@ -239,6 +245,7 @@
     float: left;
     width: 160px;
     clear: right;
+    margin-right: 1em;
     text-align: right;
     overflow: hidden;
     text-overflow: ellipsis;

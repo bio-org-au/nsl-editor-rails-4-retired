@@ -86,6 +86,7 @@ class TreesController < ApplicationController
     json = json(response)
     if json&.ok
       @message = "#### #{target.draft_name} published as #{target.tree.name} version #{target.id} ####"
+      @message += "\nNew draft being created (it may take a couple of minutes to show up)." if json&.autocreate
       @working_draft = nil
       render "publish_version.js"
     else
