@@ -34,12 +34,14 @@ class Instance::AsCopier < Instance
     new_reference_id_string = params[:reference_id]
     new_page = params[:page]
     new_instance_type_id = params[:instance_type_id]
+    new_is_draft = params[:draft]
     ActiveRecord::Base.transaction do
       new = dup
       new_reference_id = new_reference_id_string.to_i
       new.reference_id = new_reference_id
       new.instance_type_id = new_instance_type_id
       new.page = new_page
+      new.draft = new_is_draft
       new.created_by = new.updated_by = as_username
       new.save!
       reverse_of_this_is_cited_by.each do |citer|
