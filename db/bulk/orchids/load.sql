@@ -3,18 +3,36 @@ drop table bulk_name_processed;
 create table
        bulk_name_processed (
         id bigint not null default nextval('nsl_global_seq'::regclass) primary key,
-        genus varchar,species varchar,subsp_var varchar,authority varchar, preferred_authority varchar,
-        page varchar, page_extra varchar, constructed_name varchar,
-        matched_name_id bigint, matched_name_count bigint not null default 0,
-       inferred_rank varchar not null default 'unknown', 
-      autonym boolean not null default false,
-      phrase_name boolean not null default false
+        genus varchar,
+        species varchar,
+        subsp_var varchar,
+        authority varchar,
+        preferred_authority varchar,
+        page varchar,
+        act_page varchar,
+        nsw_page varchar,
+        nt_page varchar,
+        qld_page varchar,
+        sa_page varchar,
+        tas_page varchar,
+        vic_page varchar,
+        wa_page varchar,
+        ait_page varchar,
+        constructed_name varchar,
+        matched_name_id bigint,
+        matched_name_count bigint not null default 0,
+        inferred_rank varchar not null default 'unknown', 
+        autonym boolean not null default false,
+        phrase_name boolean not null default false,
+        constructed_page varchar
        );
 
 \echo load data into processing table
 
 insert into bulk_name_processed(genus,
-       species,subsp_var,authority, preferred_authority, page,page_extra
+       species,subsp_var,authority, preferred_authority, page,
+      act_page, nsw_page, nt_page, qld_page, sa_page, tas_page,
+      vic_page, wa_page, ait_page
      )
 select trim(
         both
@@ -32,9 +50,17 @@ select trim(
 			 trim(
 			         both
 			   from preferred_authority
-			        ),page,page_extra
+			        ),page, act_page, nsw_page, nt_page, qld_page, sa_page, tas_page,
+              vic_page, wa_page, ait_page
   from bulk_name_raw;
 
+
+\echo remove the one csv heading record from bulk table if they slipped through.
+
+delete from bulk_name_processed
+where genus = 'Genus'
+  and species = 'sp.'
+  and act_page = 'ACT';
 
 \echo set inferred rank
 
@@ -354,14 +380,13 @@ update bulk_name_processed
   order by 1,2;
 
 
-\echo Non-matched names (first 20)
+\echo Non-matched names
 \echo
 
 select genus, species, subsp_var, authority, preferred_authority, constructed_name
   from bulk_name_processed bnp
  where matched_name_count = 0
- order by genus, species
- limit 20;
+ order by genus, species;
  
 \echo Non-matched names - just the raw data
 \echo
@@ -369,8 +394,7 @@ select genus, species, subsp_var, authority, preferred_authority, constructed_na
 select genus, species, subsp_var, authority, preferred_authority
    from bulk_name_processed bnp
   where matched_name_count = 0
-  order by genus, species
-   limit 20;
+  order by genus, species;
  
 \echo Non-matched names - just the constructed names
 \echo
@@ -378,8 +402,7 @@ select genus, species, subsp_var, authority, preferred_authority
 	select constructed_name
 	  from bulk_name_processed bnp
 	 where matched_name_count = 0
-	 order by genus, species
-   limit 20;
+	 order by genus, species;
 
 \echo Multi-matched names
 \echo
