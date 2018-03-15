@@ -55,6 +55,13 @@ select trim(
   from bulk_name_raw;
 
 
+\echo remove the one csv heading record from bulk table if they slipped through.
+
+delete from bulk_name_processed
+where genus = 'Genus'
+  and species = 'sp.'
+  and act_page = 'ACT';
+
 \echo set inferred rank
 
 update bulk_name_processed
