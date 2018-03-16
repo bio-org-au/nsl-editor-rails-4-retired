@@ -42,8 +42,23 @@
       </ul>
     </li>
 
+    <li role="presentation" class="divider"></li>
     <li class="" role="presentation">
-      <%= link_to "#{icon('sign-out')} Sign out".html_safe, sign_out_path, method: :delete, title: 'Select this to sign out from the NSL Editor'%>
+      <%= link_to "Display Editor links in Search results",
+                  "#{Rails.configuration.try('search_host_and_port')}/prefs/edit-links/on",
+                  method: :get,
+                  title: 'Select this turn links to the Editor on Search pages'%>
+    </li>
+    <li class="" role="presentation">
+      <%= link_to "Do not display Editor links in Search results",
+                  "#{Rails.configuration.try('search_host_and_port')}/prefs/edit-links/off",
+                  method: :get,
+                  title: 'Select this turn links to the Editor on Search pages'%>
+    </li>
+
+    <li role="presentation" class="divider"></li>
+    <li class="" role="presentation">
+      <%= link_to "#{icon('sign-out')} Sign out".html_safe, sign_out_path, method: :get, title: 'Select this to sign out from the NSL Editor'%>
     </li>
   </ul>
 </li>

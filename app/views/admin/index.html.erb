@@ -29,6 +29,10 @@
 
     <tr><td>Rails.configuration.ldap_admin_username</td>
         <td> <%= Rails.configuration.ldap_admin_username %> </td></tr>
+    <tr><td>Rails.configuration.nsl_host_and_port</td>
+        <td> <%= Rails.configuration.try('nsl_host_and_port') %> </td></tr>
+    <tr><td>Rails.configuration.search_host_and_port</td>
+        <td> <%= Rails.configuration.try('search_host_and_port') %> </td></tr>
     <tr><td colspan="2">&nbsp;</td></tr>
     </table>
 
