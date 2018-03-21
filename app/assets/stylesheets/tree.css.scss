@@ -262,3 +262,9 @@
   }
 
 }
+
+//clean up names with citation elsewhere
+citation::before {
+  content: ' ';
+}
+
