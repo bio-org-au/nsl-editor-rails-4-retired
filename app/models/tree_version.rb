@@ -72,5 +72,8 @@ class TreeVersion < ActiveRecord::Base
     tree.config["distribution_key"]
   end
 
+  def host_part
+    "http://#{tree.host_name}"
+  end
 
 end

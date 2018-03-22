@@ -67,15 +67,15 @@
 
     <dt>Element link</dt>
     <dd>
-      <a href="<%= @tree_version_element.element_link %>" title="Tree element link id">
-        <i class="fa fa-code-fork"></i> ... <%= @tree_version_element.element_link[/\/tree.*$/] %>
+      <a href="<%= @tree_version_element.full_element_link %>" title="Tree element link id">
+        <i class="fa fa-code-fork"></i> ... <%= @tree_version_element.element_link %>
       </a>
     </dd>
 
     <dt>Taxon link</dt>
     <dd>
-      <a href="<%= @tree_version_element.taxon_link %>" title="Taxon link id">
-        <i class="fa fa-tree"></i> ... <%= @tree_version_element.taxon_link[-18..-1] %>
+      <a href="<%= @tree_version_element.full_taxon_link %>" title="Taxon link id">
+        <i class="fa fa-tree"></i> ... <%= @tree_version_element.taxon_link %>
       </a>
     </dd>
     <dt>apni format</dt>

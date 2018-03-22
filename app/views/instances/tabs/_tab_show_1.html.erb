@@ -92,15 +92,15 @@
 
       <dt>Element link</dt>
       <dd>
-        <a href="<%= @accepted_tve.element_link %>" title="Tree element link id">
-          <i class="fa fa-code-fork"></i> ... <%= @accepted_tve.element_link[/\/tree.*$/] %>
+        <a href="<%= @accepted_tve.full_element_link %>" title="Tree element link id">
+          <i class="fa fa-code-fork"></i> ... <%= @accepted_tve.element_link %>
         </a>
       </dd>
 
       <dt>Taxon link</dt>
       <dd>
-        <a href="<%= @accepted_tve.taxon_link %>" title="Taxon link id">
-          <i class="fa fa-tree"></i> ... <%= @accepted_tve.taxon_link[-18..-1] %>
+        <a href="<%= @accepted_tve.full_taxon_link %>" title="Taxon link id">
+          <i class="fa fa-tree"></i> ... <%= @accepted_tve.taxon_link %>
         </a>
       </dd>
     </dl>

@@ -97,6 +97,18 @@ select name_id from walk", element_link])
     tree_element.profile_value(distribution_key)
   end
 
+  def full_element_link
+    "#{host_part}#{element_link}"
+  end
+
+  def full_taxon_link
+    "#{host_part}#{taxon_link}"
+  end
+
+  def host_part
+    tree_version.host_part
+  end
+
   # returns a record containing identifying information to edit the distribution
   def distribution_record
     record = {}
