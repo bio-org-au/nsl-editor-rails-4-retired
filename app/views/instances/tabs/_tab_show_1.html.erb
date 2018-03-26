@@ -47,64 +47,17 @@
     </dl>
   </div>
 <% end %>
+
 <% if @accepted_tve.present? && @accepted_tve.tree_element.instance.id == @instance.id %>
-  <div>
-    <%= render partial: "instances/workspace/widgets/accepted_placement_indicator",
-               locals: {tree_version_element: @accepted_tve}
-    %>
-    <dl class="dl-horizontal">
-      <dt>Path</dt>
-      <dd><%= @accepted_tve.name_path %></dd>
-      <dt><%= @accepted_tve.comment_key %></dt>
-      <dd>
-        <%= render partial: 'instances/workspace/diff_field',
-                   locals: {
-                       v1: @accepted_tve.comment.html_safe,
-                       v2: @tree_version_element&.comment&.html_safe,
-                       attrib: @tree_version_element&.tree_version&.draft_name
-                   }
-        %>
-      </dd>
 
-      <dt><%= @accepted_tve.distribution_key %></dt>
-      <dd>
-        <%= render partial: 'instances/workspace/diff_field',
-                   locals: {
-                       v1: @accepted_tve.distribution,
-                       v2: @tree_version_element&.distribution,
-                       attrib: @tree_version_element&.tree_version&.draft_name
-                   }
-        %>
-      </dd>
+  <%= render partial: "instances/tabs/tab_show_tree", locals: {tve: @accepted_tve} %>
 
-      <dt>Under</dt>
-      <dd>
-        <% if @accepted_tve.parent.tree_element %>
-          <%= link_to("<i class=\"fa fa-sitemap\"></i> #{search_icon_on_tab}
-                      #{@accepted_tve.parent.tree_element.instance.name.try('full_name')}"
-                          .html_safe,
-                      search_path(query_target: 'name',
-                                  query_string: "id: #{@accepted_tve.parent.tree_element.name_id} show-instances:"),
-                      title: 'Search for the parent with its instances',
-                      class: 'name') %>
-        <% end %>
-      </dd>
+<% else
+     if @tree_version_element.present? && @tree_version_element.tree_element.instance.id == @instance.id %>
 
-      <dt>Element link</dt>
-      <dd>
-        <a href="<%= @accepted_tve.full_element_link %>" title="Tree element link id">
-          <i class="fa fa-code-fork"></i> ... <%= @accepted_tve.element_link %>
-        </a>
-      </dd>
+    <%= render partial: "instances/tabs/tab_show_tree", locals: {tve: @tree_version_element} %>
 
-      <dt>Taxon link</dt>
-      <dd>
-        <a href="<%= @accepted_tve.full_taxon_link %>" title="Taxon link id">
-          <i class="fa fa-tree"></i> ... <%= @accepted_tve.taxon_link %>
-        </a>
-      </dd>
-    </dl>
-  </div>
+  <% end %>
 <% end %>
 
 <h5>Instance #<%= @instance.id %></h5>

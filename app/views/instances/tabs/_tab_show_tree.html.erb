@@ -1,0 +1,57 @@
+<div>
+  <%= render partial: "instances/workspace/widgets/accepted_placement_indicator",
+             locals: {tree_version_element: tve}
+  %>
+  <dl class="dl-horizontal">
+    <dt>Path</dt>
+    <dd><%= tve.name_path %></dd>
+    <dt><%= tve.comment_key %></dt>
+    <dd>
+      <%= render partial: 'instances/workspace/diff_field',
+                 locals: {
+                     v1: tve.comment.html_safe,
+                     v2: @tree_version_element&.comment&.html_safe,
+                     attrib: @tree_version_element&.tree_version&.draft_name
+                 }
+      %>
+    </dd>
+
+    <dt><%= tve.distribution_key %></dt>
+    <dd>
+      <%= render partial: 'instances/workspace/diff_field',
+                 locals: {
+                     v1: tve.distribution,
+                     v2: @tree_version_element&.distribution,
+                     attrib: @tree_version_element&.tree_version&.draft_name
+                 }
+      %>
+    </dd>
+
+    <dt>Under</dt>
+    <dd>
+      <% if tve.parent.tree_element %>
+        <%= link_to("<i class=\"fa fa-sitemap\"></i> #{search_icon_on_tab}
+                    #{tve.parent.tree_element.instance.name.try('full_name')}"
+                        .html_safe,
+                    search_path(query_target: 'name',
+                                query_string: "id: #{tve.parent.tree_element.name_id} show-instances:"),
+                    title: 'Search for the parent with its instances',
+                    class: 'name') %>
+      <% end %>
+    </dd>
+
+    <dt>Element link</dt>
+    <dd>
+      <a href="<%= tve.full_element_link %>" title="Tree element link id">
+        <i class="fa fa-code-fork"></i> ... <%= tve.element_link %>
+      </a>
+    </dd>
+
+    <dt>Taxon link</dt>
+    <dd>
+      <a href="<%= tve.full_taxon_link %>" title="Taxon link id">
+        <i class="fa fa-tree"></i> ... <%= tve.taxon_link %>
+      </a>
+    </dd>
+  </dl>
+</div>
