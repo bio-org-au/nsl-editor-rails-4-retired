@@ -73,7 +73,7 @@ class TreeVersion < ActiveRecord::Base
   end
 
   def host_part
-    "http://#{tree.host_name}"
+    tree.host_name
   end
 
 end
