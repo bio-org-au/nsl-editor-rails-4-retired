@@ -23,6 +23,7 @@ class Tree::AsServices
   PLACEMENT_PATH = "api/treeElement/placeElement"
   TOP_PLACEMENT_PATH = "api/treeElement/placeTopElement"
   REPLACE_ELEMENT = "api/treeElement/replaceElement"
+  REPARENT_ELEMENT = "api/treeElement/changeParentElement"
   REMOVE_PLACEMENT = "api/treeElement/removeElement"
   UPDATE_PROFILE = "api/treeElement/editElementProfile"
   UPDATE_EXCLUDED = "api/treeElement/editElementStatus"
@@ -41,6 +42,10 @@ class Tree::AsServices
     else
       "#{SERVICES_ADDRESS}#{PLACEMENT_PATH}?#{API_KEY}&as=#{username}"
     end
+  end
+
+  def self.reparent_placement_url(username)
+    "#{SERVICES_ADDRESS}#{REPARENT_ELEMENT}?#{API_KEY}&as=#{username}"
   end
 
   def self.replace_placement_url(username)

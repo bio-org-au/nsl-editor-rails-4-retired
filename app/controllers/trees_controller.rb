@@ -214,6 +214,22 @@ class TreesController < ApplicationController
     render :text => @message, :status => 401
   end
 
+  def update_tree_parent
+    logger.info "update parent #{update_parent_params[:element_link]} parent #{update_parent_params[:parent_element_link]}"
+    target = TreeVersionElement.find(update_parent_params[:element_link])
+    parent = TreeVersionElement.find(update_parent_params[:parent_element_link])
+
+    reparent = Tree::Workspace::Reparent.new(username: current_user.username,
+                                             target: target,
+                                             parent: parent)
+    response = reparent.replace
+    @html_out = process_problems(replacement_json_result(response))
+    render "update_parent.js"
+  rescue RestClient::Unauthorized, RestClient::Forbidden, RestClient::ExceptionWithResponse => e
+    @message = json_error(e)
+    render "update_parent_error.js"
+  end
+
   private
 
   # todo determine if this should be removed.
@@ -317,6 +333,14 @@ class TreesController < ApplicationController
                 :distribution,
                 :update,
                 :delete)
+  end
+
+  def update_parent_params
+    params.require(:update_parent)
+        .permit(:element_link,
+                :parent_element_link,
+                :update,
+                :parent_name_typeahead_string)
   end
 
   def remove_name_placement_params

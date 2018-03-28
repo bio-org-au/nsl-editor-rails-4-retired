@@ -48,6 +48,4 @@ class Tree < ActiveRecord::Base
     self.config.present?
   end
 
-
-
 end

@@ -1,0 +1,31 @@
+<div class="typeahead-container">
+  <section class='block width-100-percent'>
+    <label class="custom-control">Parent</label>
+    <label class="custom-control custom-checkbox pull-right">
+      Allow higher ranks
+      <input type="checkbox" id="allow_higher_ranks" value="false"/>
+    </label>
+
+    <input id="workspace_parent_name_typeahead"
+           name="update_parent[parent_name_typeahead_string]"
+           class="typeahead form-control width-100-percent"
+           tabindex="<%= increment_tab_index %>"
+           type="text"
+           data-name-id="<%= @instance.name.id %>"
+           data-parent-element-id="<%= parent_tve&.element_link %>"
+           title="Select a name from the suggestions as you type."
+           placeholder="Name suggestions"
+           value="<%= parent_tve&.tree_element&.name&.full_name %>"/>
+  </section>
+
+  <script> setUpWorkspaceParentName(); </script>
+  <input type="hidden"
+         id="workspace_parent_name_id"
+         name="update_parent[parent_element_link]"
+         value="<%= parent_tve&.element_link %>"/>
+  <input type="hidden"
+         id="workspace_id"
+         name="update_parent[version_id]"
+         value="<%= @working_draft.id %>"/>
+</div>
+

@@ -52,8 +52,29 @@
     <dt>Path</dt>
     <dd><%= @tree_version_element.name_path %></dd>
 
-    <dt>Under</dt>
+    <dt></dt>
     <dd>
+      <%= form_tag({controller: 'trees', action: 'update_tree_parent'}, {method: :post, remote: true}) do %>
+        <%= hidden_field_tag("update_parent[element_link]", @tree_version_element.element_link) %>
+        <%= render partial: "trees/update_parent", locals: {parent_tve: @tree_version_element.parent} %>
+        <button type="submit"
+                id="update_parent_btn"
+                class="btn btn-primary left"
+                name="update_parent[update]"
+                tabindex="<%= increment_tab_index %>"
+                title="Update the parent of this taxon"
+                onclick="$('#update_parent_btn').find('i.fa').addClass('fa-spin');"
+        >Update parent <i class="fa fa-refresh"></i>
+        </button>
+        <div id="movement-message-container"
+             class="message-container hidden">
+        </div>
+        <div id="movement-error-message-container"
+             class="message-container error hidden">
+          <h4>Errors found.</h4>
+          <div id="movement-error-message"></div>
+        </div>
+      <% end %>
       <% if @tree_version_element.parent %>
         <%= link_to("<i class=\"fa fa-sitemap\"></i> #{search_icon_on_tab}
                     #{@tree_version_element.parent&.tree_element&.instance&.name&.try('full_name')}"

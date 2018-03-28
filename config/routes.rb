@@ -259,6 +259,12 @@ Rails.application.routes.draw do
         to: "trees#update_distribution",
         via: :post
 
+  match "trees/update_tree_parent",
+        as: "tree_update_parent",
+        to: "trees#update_tree_parent",
+        via: :post
+
+
   match "trees/update_excluded",
         as: "tree_update_excluded",
         to: "trees#update_excluded",

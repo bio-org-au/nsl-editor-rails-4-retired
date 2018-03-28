@@ -263,6 +263,10 @@
 
 }
 
+.dl-horizontal dd form {
+  clear: both;
+}
+
 //clean up names with citation elsewhere
 citation::before {
   content: ' ';
