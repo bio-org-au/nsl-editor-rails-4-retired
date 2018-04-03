@@ -76,11 +76,18 @@
 
   div.tr synonyms nom,
   div.tr synonyms tax,
-  div.tr synonyms mis {
+  div.tr synonyms mis,
+  div.tr synonyms syn {
     display: block;
     white-space: normal;
   }
 
+  div.tr synonyms syn:before {
+    content: '≜';
+    padding-right: 0.3em;
+    color: black;
+
+  }
   div.tr synonyms nom:before {
     content: '≡';
     padding-right: 0.3em;
