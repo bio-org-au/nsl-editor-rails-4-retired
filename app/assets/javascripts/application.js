@@ -59,4 +59,4 @@
 //= require new-search
 //= require tabs
 //
-//= require jquery-dateFormat.min.js
+//= require jquery-dateformat.min.js
