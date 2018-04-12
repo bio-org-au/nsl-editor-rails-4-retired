@@ -105,7 +105,4 @@ class InstanceType < ActiveRecord::Base
     InstanceType.find_by(name: "secondary reference")
   end
 
-  def allowed_type_for_accepted_concept_synonym?
-    misapplied? || name.match(/\Apro parte taxonomic synonym\z/)
-  end
 end
