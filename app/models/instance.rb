@@ -58,7 +58,7 @@ class Instance < ActiveRecord::Base
     instance_notes.map {|note| "#{note.instance_note_key.name}: #{note.value}"}.join(",")
   end
 
-  scope :ordered_by_name, -> { joins(:name).order("simple_name asc") }
+  scope :ordered_by_name, -> {joins(:name).order("simple_name asc")}
   # The page ordering aims to emulate a numeric ordering process that
   # handles assorted text and page ranges in the character data.
   scope :ordered_by_page, lambda {
