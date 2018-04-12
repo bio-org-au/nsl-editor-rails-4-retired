@@ -26,4 +26,7 @@ class HistoryController < ApplicationController
 
   def y2017
   end
+
+  def y2018
+  end
 end

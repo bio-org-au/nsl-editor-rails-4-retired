@@ -12,3 +12,6 @@ name-parent-rank-restriction:
 classification-tree-key:
   name: classification tree key
   value: APC
+name-space:
+  name: name space
+  value: anamespace

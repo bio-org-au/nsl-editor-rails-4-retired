@@ -1,0 +1,5 @@
+---
+- :date: 25-Jan-2018
+  :jira_id: '2499'
+  :description: |-
+    Correct the ordering of instances by page.

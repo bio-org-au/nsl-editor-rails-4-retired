@@ -184,7 +184,7 @@ GEM
       metaclass (~> 0.0.1)
     multi_json (1.12.1)
     nenv (0.3.0)
-    net-ldap (0.15.0)
+    net-ldap (0.16.1)
     netrc (0.11.0)
     nokogiri (1.7.0.1)
       mini_portile2 (~> 2.1.0)
@@ -357,7 +357,7 @@ DEPENDENCIES
   minitest
   minitest-rails
   mocha (~> 1.1.0)
-  net-ldap
+  net-ldap (~> 0.16.0)
   pg
   pg_search
   pry-rails
@@ -384,4 +384,4 @@ DEPENDENCIES
   webmock
 
 BUNDLED WITH
-   1.15.4
+   1.16.0
