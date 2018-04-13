@@ -19,8 +19,8 @@
 class InstancesController < ApplicationController
   include ActionView::Helpers::TextHelper
   before_filter :find_instance, only: [:show, :tab, :destroy]
-  CONCEPT_WARNING = "Validation failed: This concept includes an accepted name \
-as a synonym"
+  # todo refactor validation error checks to not rely on a copied string comparison as this is very fragile
+  CONCEPT_WARNING = "Validation failed: You are trying to change an accepted concept's synonomy."
   EXTRA_PRIMARY_WARNING = "Validation failed: This would result in multiple primary instances"
 
   # GET /instances/1
@@ -111,14 +111,14 @@ as a synonym"
   # PUT /instances/1.json
   def update
     @instance = Instance::AsEdited.find(params[:id])
-    @instance.extra_primary_override =
-      instance_params[:extra_primary_override] == "1"
+    # @instance.concept_warning_bypassed and @instance.extra_primary_override are set in AsEdited
     @message = @instance.update_if_changed(instance_params,
                                            current_user.username)
     render "update.js"
   rescue => e
     @multiple_primary_warning =
       e.to_s.match(/#{Instance::MULTIPLE_PRIMARY_WARNING}\z/)
+    @allow_bypass = e.to_s.match(/\A#{CONCEPT_WARNING}\z/)
     @message = e.to_s
     render "update_error.js", status: :unprocessable_entity
   end
