@@ -2,11 +2,11 @@ $('#placement-message-container').addClass('hidden').html("");
 $('#placement-error-message-container')
     .removeClass('hidden')
     .html(markdown("<%= escape_javascript(@message.html_safe) %>"))
-    .append('<button onclick="refreshTreeTab(event);">refresh</button>');
+  .append('<button class="btn btn-default" onclick="refreshTreeTab(event);">refresh</button>');
 $('#new_name_placement_btn').find('i.fa').removeClass('fa-spin');
 $('#placement-error-message-container').find('data > scientific > name').on('click', function () {
     var name_id = $(this).data('id');
     console.log('clicked on name: ' + name_id);
-    var search_url = '/search?query_string=id%3A+' + name_id + '+show-instances%3A&query_target=name';
-    location.replace(search_url);
+  var search_url = window.relative_url_root + '/search?query_string=id%3A+' + name_id + '+show-instances%3A&query_target=name';
+  window.open(search_url, '_blank');
 })
