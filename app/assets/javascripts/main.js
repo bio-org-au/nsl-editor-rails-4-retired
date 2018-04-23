@@ -138,9 +138,11 @@ function loadHtml(element, url) {
     });
 }
 
-// function linkNames(startElement) {
-//     $('name').on('click', function () {
-//         var nameId = $(this).data('name-id');
-//         // http://127.0.0.1:3000/search?query_string=id%3A+71063+show-instances%3A&query_target=name
-//     });
-// }
+function linkNames(selector) {
+  var container = $(selector);
+  container.find('data > scientific > name').each(function () {
+    var name_id = $(this).data('id');
+    var search_url = window.relative_url_root + '/search?query_string=id%3A+' + name_id + '+show-instances%3A&query_target=name';
+    $(this).wrap('<a href="' + search_url + '" title="search" target="_blank">');
+  });
+}
