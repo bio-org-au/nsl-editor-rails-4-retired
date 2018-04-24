@@ -17,6 +17,10 @@ module NameTreeable
     Tree.accepted.first.current_tree_version.name_in_version(self)
   end
 
+  def draft_tree_version_element
+    Tree.accepted.first.default_draft_version.name_in_version(self)
+  end
+
   def accepted_in_some_way?
     tve = accepted_tree_version_element
     tve.present?
@@ -37,7 +41,7 @@ module NameTreeable
   end
 
   def accepted_concept?
-    !apc_excluded?
+    accepted_in_some_way? && !apc_excluded?
   end
 
   def sub_tree_size(level = 0)
