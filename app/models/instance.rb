@@ -18,7 +18,10 @@
 
 # Instances connect Names to References.
 class Instance < ActiveRecord::Base
+
   include ActionView::Helpers::TextHelper
+  include InstanceTreeable
+
   strip_attributes
   self.table_name = "instance"
   self.primary_key = "id"
@@ -198,7 +201,7 @@ class Instance < ActiveRecord::Base
   def restrict_change_to_accepted_concept_synonomy
     return if concept_warning_bypassed?
     return if standalone_or_unpublished_citation?
-    return unless this_is_cited_by.name.accepted_concept?
+    return unless this_is_cited_by.accepted_concept?
     errors[:base] << "You are trying to change an accepted concept's synonomy."
   end
 
@@ -472,38 +475,6 @@ class Instance < ActiveRecord::Base
 
   def anchor_id
     "Instance-#{id}"
-  end
-
-  def in_apc?
-    show_apc?
-  end
-
-  def show_apc?
-    name.apc? && id == name.accepted_instance_id
-  end
-
-  def apc_excluded?
-    apc_instance_is_an_excluded_name == true
-  end
-
-  def in_workspace?(workspace)
-    id == name.draft_instance_id(workspace)
-  end
-
-  def in_local_trees?
-    in_local_trees.any?
-  end
-
-  def in_local_trees
-    Tree.find_by_sql(["select t.* from tree_version_element tve join tree t on t.current_tree_version_id = tve.tree_version_id
-  join tree_element te on tve.tree_element_id = te.id
-where te.instance_id = ?", id])
-  end
-
-  def in_local_tree_names
-    in_local_trees.collect do |tree|
-      tree.name
-    end.join(", ")
   end
 
   def set_defaults

@@ -27,7 +27,7 @@ class NameAPCDeclaredBTTest < ActiveSupport::TestCase
                                       "excluded" => false,
                                       "taxonId" => expected_instance_id.to_s,
                                       "type" => "DeclaredBt")
-    assert_equal true, name.apc?, "Name should be in APC"
+    assert_equal true, name.accepted_concept?, "Name should be in APC"
     assert_equal expected_instance_id,
                  name.accepted_instance_id,
                  "APC instance id should be set"

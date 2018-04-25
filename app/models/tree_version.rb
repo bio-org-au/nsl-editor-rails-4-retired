@@ -34,6 +34,12 @@ class TreeVersion < ActiveRecord::Base
         .where(tree_element: {name: name}).first
   end
 
+  # Returns a TreeVersionElement for this TreeVersion which contains the name
+  def instance_in_version(instance)
+    tree_version_elements.joins(:tree_element)
+        .where(tree_element: {instance: instance}).first
+  end
+
   def query_name_in_version(term)
     tree_version_elements
         .joins(:tree_element)

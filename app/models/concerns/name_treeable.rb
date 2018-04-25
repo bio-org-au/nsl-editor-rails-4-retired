@@ -17,31 +17,34 @@ module NameTreeable
     Tree.accepted.first.current_tree_version.name_in_version(self)
   end
 
-  def draft_tree_version_element
+  def default_draft_tree_version_element
     Tree.accepted.first.default_draft_version.name_in_version(self)
   end
 
-  def accepted_in_some_way?
-    tve = accepted_tree_version_element
-    tve.present?
+  def draft_instance_id(draft_version)
+    return nil unless draft_version.present?
+    tree_version_element = draft_version.name_in_version(self)
+    return nil unless tree_version_element.present?
+    tree_version_element.tree_element.instance.id
   end
 
-  def apc?
-    accepted_in_some_way?
-  end
-
-  def accepted_instance_id
-    return nil unless accepted_in_some_way?
-    accepted_tree_version_element.tree_element.instance_id
-  end
-
-  def apc_excluded?
-    return nil unless accepted_in_some_way?
-    accepted_tree_version_element.tree_element.excluded
+  def draft_tree_version_element(draft_version)
+    TreeVersion.find(draft_version.id).name_in_version(self)
   end
 
   def accepted_concept?
-    accepted_in_some_way? && !apc_excluded?
+    tve = accepted_tree_version_element
+    tve.present? && !tve.tree_element.excluded
+  end
+
+  def accepted_instance_id
+    tve = accepted_tree_version_element
+    tve.present? && tve.tree_element.instance_id
+  end
+
+  def excluded_concept?
+    tve = accepted_tree_version_element
+    tve.present? && tve.tree_element.excluded
   end
 
   def sub_tree_size(level = 0)

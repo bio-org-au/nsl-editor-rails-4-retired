@@ -152,18 +152,6 @@ class Name < ActiveRecord::Base
     parents
   end
 
-  def draft_instance_id(draft_version)
-    return nil unless draft_version.present?
-    tree_version_element = draft_version.name_in_version(self)
-    return nil unless tree_version_element.present?
-    # return nil if tree_version_element.empty?
-    tree_version_element.tree_element.instance.id
-  end
-
-  def draft_tree_version_element(draft_version)
-    TreeVersion.find(draft_version.id).name_in_version(self)
-  end
-
   private
 
   def set_defaults
