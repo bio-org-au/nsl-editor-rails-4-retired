@@ -31,6 +31,10 @@ class Tree::AsServices
   PUBLISH_VERSION = "api/treeVersion/publish"
 
   DIFF_LINK = "treeVersion/diff"
+  VAL_LINK = "treeVersion/validate"
+  SYN_LINK = "tree/eventReport"
+  VAL_SYN_LINK = "tree/checkCurrentSynonymy"
+  SYN_UPDATE_LINK = "tree-element/update-synonymy-by-event"
 
   API_KEY = "apiKey=#{Rails.configuration.api_key}"
   PREFERRED_LINK = "broker/preferredLink"
@@ -115,6 +119,28 @@ class Tree::AsServices
 
   def self.diff_link(v1, v2)
     "#{CLIENT_SIDE_SERVICES}#{DIFF_LINK}?v1=#{v1}&v2=#{v2}&embed=true"
+  end
+
+  def self.syn_link(tree)
+    "#{CLIENT_SIDE_SERVICES}#{SYN_LINK}?treeId=#{tree}&embed=true"
+  end
+
+  def self.syn_update_link(username)
+    "#{CLIENT_SIDE_SERVICES}#{SYN_UPDATE_LINK}?#{API_KEY}&as=#{username}"
+  end
+
+  def self.update_synonymy(events, username)
+    url = syn_update_link(username)
+    Rails.logger.info "calling #{url}"
+    RestClient.post(url, {events: events}, {accept: :json})
+  end
+
+  def self.val_syn_link(tree)
+    "#{CLIENT_SIDE_SERVICES}#{VAL_SYN_LINK}?treeId=#{tree}&embed=true"
+  end
+
+  def self.val_link(version)
+    "#{CLIENT_SIDE_SERVICES}#{VAL_LINK}?version=#{version}&embed=true"
   end
 
 end

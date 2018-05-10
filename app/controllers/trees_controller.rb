@@ -103,6 +103,22 @@ class TreesController < ApplicationController
 
   def reports
     @diff_link = Tree::AsServices.diff_link(@working_draft.tree.current_tree_version_id, @working_draft.id)
+    @syn_link = Tree::AsServices.syn_link(@working_draft.tree.id)
+    @val_link = Tree::AsServices.val_link(@working_draft.id)
+    @val_syn_link = Tree::AsServices.val_syn_link(@working_draft.tree.id)
+  end
+
+  def update_synonymy
+    logger.info "Update synonymy"
+    events = params[:events]
+    logger.info events
+    response = Tree::AsServices.update_synonymy(events, current_user.username)
+  rescue RestClient::Unauthorized, RestClient::Forbidden => e
+    @message = json_error(e)
+    render "update_synonymy_error.js"
+  rescue RestClient::Exception => e
+    @message = json_error(e)
+    render "update_synonymy_error.js"
   end
 
   # Move an existing taxon (inc children) under a different parent

@@ -301,10 +301,15 @@ Rails.application.routes.draw do
         to: "trees#publish_version",
         via: :post
 
-  match "tree/reports",
-        as: "tree_reports",
+  match "trees/reports",
+        as: "trees_reports",
         to: "trees#reports",
         via: :get
+
+  match "trees/update_synonymy",
+        as: "trees_update_synonymy",
+        to: "trees#update_synonymy",
+        via: :post
 
   match "search/reports",
         as: "search_reports",
