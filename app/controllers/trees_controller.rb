@@ -110,9 +110,8 @@ class TreesController < ApplicationController
 
   def update_synonymy
     logger.info "Update synonymy"
-    events = params[:events]
     logger.info events
-    response = Tree::AsServices.update_synonymy(events, current_user.username)
+    Tree::AsServices.update_synonymy(request.raw_post, current_user.username)
   rescue RestClient::Unauthorized, RestClient::Forbidden => e
     @message = json_error(e)
     render "update_synonymy_error.js"

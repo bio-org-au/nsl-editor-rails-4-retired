@@ -132,7 +132,7 @@ class Tree::AsServices
   def self.update_synonymy(events, username)
     url = syn_update_link(username)
     Rails.logger.info "calling #{url}"
-    RestClient.post(url, {events: events}, {accept: :json})
+    RestClient.post(url, events, {accept: :json})
   end
 
   def self.val_syn_link(tree)
