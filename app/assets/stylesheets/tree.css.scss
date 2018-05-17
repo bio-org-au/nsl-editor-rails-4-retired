@@ -55,9 +55,10 @@
     background-color: white;
   }
 
-  div.tr data scientific {
+  div.tr data scientific,
+  div.tr data scientific a {
     font-weight: bold;
-    color: black;
+    color: black !important;
   }
 
   div.tr data scientific element {
@@ -70,8 +71,9 @@
     color: slategrey;
   }
 
-  div.tr synonyms scientific {
-    color: black;
+  div.tr synonyms scientific,
+  div.tr synonyms scientific a {
+    color: black !important;;
   }
 
   div.tr synonyms nom,
@@ -293,7 +295,7 @@ tr.titleRow {
 
 .target {
   font-weight: bold;
-  background-color: #ffff0020;
+  background-color: #ffff0030;
   line-height: 2em;
   padding: 5px;
   border-radius: 0 5px 0 5px;

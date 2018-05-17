@@ -12,6 +12,7 @@ div#search-result-container.sidebar {
 
 div#main-content {
   margin-top: 100px;
+  padding-bottom: 4em;
 }
 
 a.navbar-brand {
@@ -115,14 +116,12 @@ div#search-result-details {
   position: relative;
   top: 0;
   right: 1%;
-  min-height: 200px;
-  max-height: 1000px;
   overflow: auto;
   z-index: 70;
   border: 1px solid gray;
   border-radius: 3px;
   float: right;
-  height: 78vh;
+  height: calc(98vh - 140px - 4em);
   background-color: $nsl-search-result-details-background;
 }
 
@@ -189,7 +188,6 @@ a.show-details-link {
 
 tr.search-result td.main-content {
   padding-top: 6px;
-  padding-bottom: 0;
 }
 
 div#search-result-container {

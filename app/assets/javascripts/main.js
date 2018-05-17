@@ -156,6 +156,9 @@ function linkSynonyms(selector) {
   container.find('tax > scientific > name').each(function () {
     linkName(this)
   });
+  container.find('mis > scientific > name').each(function () {
+    linkName(this)
+  });
   container.find('syn > scientific > name').each(function () {
     linkName(this)
   });
