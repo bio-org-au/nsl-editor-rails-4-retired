@@ -177,6 +177,9 @@ function loadReport(element, url) {
     replaceDates();
     linkNames(element);
     linkSynonyms(element);
+    $('.toggleNext').unbind('click').click(function () {
+      toggleNext(this);
+    });
     debug('loaded report.')
     $(this).find('i').removeClass('fa-spin');
   });
@@ -190,8 +193,16 @@ function loadAleredSynonymyReport(element, url) {
       replaceDates();
       linkNames(element);
       linkSynonyms(element);
+      $('.toggleNext').unbind('click').click(function () {
+        toggleNext(this);
+      });
       $('#update_selected_synonymy').removeClass('hidden');
     }
     debug('loaded synonymy report.')
   });
 }
+
+var toggleNext = function (el) {
+  $(el).find('i').toggle();
+  $(el).next('div').toggle(200);
+};
