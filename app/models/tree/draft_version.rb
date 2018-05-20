@@ -50,7 +50,7 @@ class Tree::DraftVersion < ActiveRecord::Base
                                 url: url,
                                 payload: payload.to_json,
                                 headers: { content_type: :json, accept: :json },
-                                timeout: 240)
+                                timeout: 360)
   rescue RestClient::ExceptionWithResponse => e
     Rails.logger.error("Tree::Workspace::Placement error: #{e}")
     raise

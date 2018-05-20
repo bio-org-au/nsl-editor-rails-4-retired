@@ -296,8 +296,8 @@ tr.titleRow {
 .target {
   display: inline-block;
   font-weight: bold;
-  background-color: #ffff0030;
-  line-height: 2em;
-  padding: 2px;
-  border-radius: 0 5px 0 5px;
+  background-color: #ffff0030 !important;
+  padding: 2px 10px 0 10px;
+  border-radius: 40px;
+  border: 3px solid red;
 }
