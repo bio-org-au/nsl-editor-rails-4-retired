@@ -41,6 +41,11 @@ input[type="checkbox"]:not([title]) {
 </style>
 
     <% end %>
+
+    <% if Rails.configuration.try('offer_feedback_link') %>
+      <%= Rails.configuration.try('feedback_script').try('html_safe') %>
+    <% end %>
+
   </head>
  
   <body class="<%= Rails.configuration.try('environment') %>" 

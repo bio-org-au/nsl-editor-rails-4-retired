@@ -10,7 +10,7 @@
       <%= link_to nav_link(badge,'The National Species List Editor'),
                   search_path,
                   class: "navbar-brand #{'active' if params[:controller].match(/search/)}",
-                  title: "NSL Editor",
+                  title: "#{ShardConfig.shard_group_name} Editor",
                   tabindex: "1",
                   data: { no_turbolink: true } %> 
     </div>

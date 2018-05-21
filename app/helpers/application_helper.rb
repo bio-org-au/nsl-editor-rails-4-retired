@@ -97,9 +97,9 @@ module ApplicationHelper
     when /^stag/i
       "Staging Ed"
     when /^prod/i
-      "NSL Editor"
+      "#{ShardConfig.shard_group_name} Editor"
     else
-      "NSL Editor"
+      "#{ShardConfig.shard_group_name} Editor"
     end
   end
 

@@ -1,4 +1,26 @@
 ---
+- :date: 29-Mar-2018
+  :jira_id: 
+  :description: |-
+    Add link to new search and add menu options to turn Editor links on and off in new search.
+- :date: 23-Feb-2018
+  :jira_id: '2638'
+  :description: |-
+    Move feedback link back to main page; move feedback JavaScript to the configuration file.
+- :date: 09-Feb-2018
+  :jira_id: '2638'
+  :description: |-
+    Add feedback on/off configuration switch.
+- :date: 02-Feb-2018
+  :jira_id: ''
+  :description: |-
+    Remove hard-coded references to 'NSL' etc with pull-request from Arnab for DAWR.
+- :date: 09-Feb-2018
+  :jira_id: '2638'
+  :description: |-
+    Add feedback on/off configuration switch.
+- :date: 02-Feb-2018
+  :release: true
 - :date: 25-Jan-2018
   :jira_id: '2499'
   :description: |-
