@@ -38,6 +38,7 @@ class FromOtherToScientficTest < ActiveSupport::TestCase
 
     name.name_type_id = NameType.find_by(name: "autonym").id
     name.parent_id = names(:a_genus).id
+    name.name_path = names(:a_genus).name_path + "/#{name.name_element}"
 
     assert name.valid?,
            "other-informal name shd be valid now as scientific name with parent"
