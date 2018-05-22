@@ -16,6 +16,10 @@ the_regnum:
   name_type: scientific
   namespace: apni
   parent_id: nil
+  family: a_family
+  name_path: ''
+  family_id: nil
+  name_path: ''
   simple_name: "Plantae"
   simple_name_html: "<scientific><name id='54717'><element>Plantae</element></name></scientific>"
   source_system: "PLANT_NAME"
@@ -33,6 +37,8 @@ a_division:
   name_type: scientific
   namespace: apni
   parent: the_regnum
+  family_id: nil
+  name_path: ''
   simple_name: "Magnoliophyta"
   simple_name_html: "<scientific><name id='217746'><element>Magnoliophyta</element></name></scientific>"
   source_system: "PLANT_NAME"
@@ -49,6 +55,8 @@ a_classis:
   name_type: scientific
   namespace: apni
   parent: a_division
+  family_id: nil
+  name_path: ''
   simple_name: "Magnoliopsida"
   simple_name_html: "<scientific><name id='214952'><element>Magnoliopsida</element></name></scientific>"
   source_system: "PLANT_NAME"
@@ -64,6 +72,8 @@ a_subclassis:
   name_type: scientific
   namespace: apni
   parent: a_classis
+  family_id: nil
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -76,6 +86,8 @@ a_superordo:
   name_type: scientific
   namespace: apni
   parent: a_subclassis
+  family_id: nil
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -88,6 +100,8 @@ an_ordo:
   name_type: scientific
   namespace: apni
   parent: a_super_ordo
+  family_id: nil
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -100,6 +114,8 @@ a_subordo:
   name_type: scientific
   namespace: apni
   parent: an_ordo
+  family_id: nil
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -113,6 +129,8 @@ a_family:
   name_type: scientific
   namespace: apni
   parent: a_super_ordo
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -125,6 +143,8 @@ a_subfamilia:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -137,6 +157,8 @@ a_tribus:
   name_type: scientific
   namespace: apni
   parent: a_subfamily
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -149,6 +171,8 @@ a_subtribus:
   name_type: scientific
   namespace: apni
   parent: a_tribus
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -161,6 +185,8 @@ unknown_species:
   name_type: scientific
   namespace: apni
   parent: acacia
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -173,6 +199,8 @@ another_species:
   name_type: scientific
   namespace: apni
   parent: acacia
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -185,6 +213,8 @@ a_genus:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -197,6 +227,8 @@ a_subgenus:
   name_type: scientific
   namespace: apni
   parent: a_genus
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -209,6 +241,8 @@ a_sectio:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -221,6 +255,8 @@ a_subsectio:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -233,6 +269,8 @@ a_series:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -245,6 +283,8 @@ a_subseries:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -257,6 +297,8 @@ a_superspecies:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -269,6 +311,8 @@ a_species:
   name_type: scientific
   namespace: apni
   parent: a_genus
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -281,6 +325,8 @@ a_duplicate_species:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   duplicate_of: a_species
   updated_by: greg
   created_by: greg
@@ -294,6 +340,8 @@ a_subspecies:
   name_type: scientific
   namespace: apni
   parent: a_species
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -306,6 +354,8 @@ a_nothovarietas:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -318,6 +368,8 @@ a_varietas:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -330,6 +382,8 @@ a_subvarietas:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -342,6 +396,8 @@ a_forma:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -354,6 +410,8 @@ a_subforma:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -366,6 +424,8 @@ triodia_basedowii:
   name_type: scientific
   namespace: apni
   parent: acacia
+  family: a_family
+  name_path: ''
   author: bentham
   updated_by: greg
   created_by: greg
@@ -379,6 +439,8 @@ crotalaria_distans:
   name_type: scientific
   namespace: apni
   parent: acacia
+  family: a_family
+  name_path: ''
   author: bentham
   updated_by: greg
   created_by: greg
@@ -392,6 +454,8 @@ acacia:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   author: bentham
   updated_by: greg
   created_by: greg
@@ -405,6 +469,8 @@ angophora:
   name_type: scientific
   namespace: apni
   parent: 
+  family: a_family
+  name_path: ''
   author: bentham
   updated_by: greg
   created_by: greg
@@ -418,6 +484,8 @@ metrosideros:
   name_type: scientific
   namespace: apni
   parent: 
+  family: a_family
+  name_path: ''
   author: bentham
   updated_by: greg
   created_by: greg
@@ -431,6 +499,8 @@ argyle_apple:
   name_type: common
   namespace: apni
   parent: a_genus
+  family: a_family
+  name_path: ''
   author: bentham
   updated_by: greg
   created_by: greg
@@ -444,6 +514,8 @@ scientific_name:
   name_type: scientific
   namespace: apni
   parent: acacia
+  family: a_family
+  name_path: ''
   author: bentham
   updated_by: greg
   created_by: greg
@@ -457,6 +529,8 @@ scientific_name_without_author:
   name_type: scientific
   namespace: apni
   parent: acacia
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -470,6 +544,8 @@ var_tuberosus:
   name_type: scientific
   namespace: apni
   parent: acacia
+  family: a_family
+  name_path: ''
   author: 
   updated_by: greg
   created_by: greg
@@ -484,6 +560,8 @@ nom_inval_prainiana:
   name_type: scientific
   namespace: apni
   parent: acacia
+  family: a_family
+  name_path: ''
   author: 
   updated_by: greg
   created_by: greg
@@ -497,6 +575,8 @@ nom_inval_andrewsianum:
   name_type: scientific
   namespace: apni
   parent: acacia
+  family: a_family
+  name_path: ''
   author: 
   updated_by: greg
   created_by: greg
@@ -521,6 +601,8 @@ metrosideros_costata:
   name_type: scientific
   namespace: apni
   parent: metrosideros
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -533,6 +615,8 @@ angophora_costata:
   name_type: scientific
   namespace: apni
   parent: angophora
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -546,6 +630,8 @@ by_authority_with_just_one_name:
   name_type: scientific
   namespace: apni
   parent: angophora
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
     
@@ -559,6 +645,8 @@ is_authored_by_the_name_authority_of_every_type:
   name_type: scientific
   namespace: apni
   parent: angophora
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
     
@@ -573,6 +661,8 @@ is_base_authored_by_the_name_authority_of_every_type:
   name_type: scientific
   namespace: apni
   parent: angophora
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
     
@@ -588,6 +678,8 @@ is_ex_base_authored_by_the_name_authority_of_every_type:
   name_type: scientific
   namespace: apni
   parent: angophora
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
     
@@ -602,6 +694,8 @@ is_ex_authored_by_the_name_authority_of_every_type:
   name_type: scientific
   namespace: apni
   parent: angophora
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
     
@@ -616,6 +710,8 @@ is_sanction_authored_by_the_name_authority_of_every_type:
   name_type: scientific
   namespace: apni
   parent: angophora
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -629,6 +725,8 @@ has_an_author_that_is_all:
   name_type: scientific
   namespace: apni
   parent: angophora
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -643,6 +741,8 @@ has_a_base_author_that_is_all:
   name_type: scientific
   namespace: apni
   parent: angophora
+  family: a_family
+  name_path: ''
   created_by: greg
   updated_by: greg
 
@@ -658,6 +758,8 @@ has_an_ex_base_author_that_is_all:
   name_type: scientific
   namespace: apni
   parent: angophora
+  family: a_family
+  name_path: ''
   created_by: greg
   updated_by: greg
 
@@ -672,6 +774,8 @@ has_an_ex_author_that_is_all:
   name_type: scientific
   namespace: apni
   parent: angophora
+  family: a_family
+  name_path: ''
   created_by: greg
   updated_by: greg
 
@@ -685,16 +789,28 @@ has_a_sanctioning_author_that_is_all:
   name_type: scientific
   namespace: apni
   parent: angophora
+  family: a_family
+  name_path: ''
   created_by: greg
   updated_by: greg
 
 hybrid_name_with_unknown_2nd_parent:
+  family: a_family
+  name_path: ''
   simple_name: Hybrid formula with unknown 2nd parent
+  family: a_family
+  name_path: ''
   full_name: Hybrid formula with unknown 2nd parent
+  family: a_family
+  name_path: ''
   name_rank: na
   name_status: na
   name_type: hybrid_formula_unknown_2nd_parent 
+  family: a_family
+  name_path: ''
   parent: a_species
+  family: a_family
+  name_path: ''
   namespace: apni
   created_by: greg
   updated_by: greg
@@ -703,10 +819,16 @@ hybrid_formula:
   simple_name: Hybrid formula
   full_name: Hybrid formula
   name_type: hybrid_formula_parents_known
+  family: a_family
+  name_path: ''
   name_rank: species
   name_status: na
   parent: a_species
+  family: a_family
+  name_path: ''
   second_parent: another_species
+  family: a_family
+  name_path: ''
   namespace: apni
   created_by: greg
   updated_by: greg
@@ -729,16 +851,22 @@ without_names_from_service:
   name_type: scientific
   namespace: apni
   parent: acacia
+  family: a_family
+  name_path: ''
   created_by: greg
   updated_by: greg
     
 cultivar_hybrid_with_one_parent: 
+  family: a_family
+  name_path: ''
   name_element: Rambocano
   name_rank: species
   name_status: na
   name_type: cultivar_hybrid
   namespace: apni
   parent: angophora
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -755,6 +883,8 @@ has_no_instances:
   name_type: scientific
   namespace: apni
   parent: angophora
+  family: a_family
+  name_path: ''
   created_by: greg
   updated_by: greg
 
@@ -773,16 +903,30 @@ unranked_name_1:
   updated_by: greg
 
 unranked_scientific_name_with_unranked_parent:
+  family: a_family
+  name_path: ''
   author: bentham
   simple_name: unranked scientific name with unranked parent
+  family: a_family
+  name_path: ''
   simple_name_html: unranked scientific name with unranked parent
+  family: a_family
+  name_path: ''
   full_name: unranked scientific name with unranked parent
+  family: a_family
+  name_path: ''
   full_name_html: unranked scientific name with unranked parent
+  family: a_family
+  name_path: ''
   name_element: unranked scientific name with unranked parent
+  family: a_family
+  name_path: ''
   name_rank: unranked
   name_status: unknown
   name_type: scientific
   parent: unranked_name_1
+  family: a_family
+  name_path: ''
   namespace: apni
   created_by: greg
   updated_by: greg
@@ -799,6 +943,8 @@ a_duplicate_genus:
   namespace: apni
   duplicate_of: a_genus
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -813,6 +959,8 @@ not_a_duplicate_genus:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -827,6 +975,8 @@ a_genus_without_an_instance:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -841,6 +991,8 @@ a_species_without_an_instance:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -855,6 +1007,8 @@ a_morphological_var_with_an_instance:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -869,6 +1023,8 @@ a_nothomorph_with_an_instance:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -883,6 +1039,8 @@ an_unranked_with_an_instance:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -897,6 +1055,8 @@ an_na_with_an_instance:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -911,6 +1071,8 @@ an_unknown_with_an_instance:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -925,6 +1087,8 @@ an_infraspecies_with_an_instance:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -939,6 +1103,8 @@ an_infragenus_with_an_instance:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -953,6 +1119,8 @@ an_infrafamily_with_an_instance:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -967,6 +1135,8 @@ belonia_korb_with_diacrit:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -994,6 +1164,8 @@ a_genus_with_one_instance:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1008,6 +1180,8 @@ a_genus_with_two_instances:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1022,6 +1196,8 @@ has_two_instances_the_same:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1039,6 +1215,8 @@ metrosideros_costata_gaertn:
   namespace: apni
   orth_var: false
   parent: a_genus
+  family: a_family
+  name_path: ''
   sanctioning_author_id: 
   simple_name: Metrosideros costata
   simple_name_html: "<scientific><name id='110181'><scientific><name id='109596'><element><i>Metrosideros</i></element></name></scientific> <element><i>costata</i></element></name></scientific>"
@@ -1065,6 +1243,8 @@ angophora_lanceolata_cav:
   namespace: apni
   orth_var: false
   parent: a_genus
+  family: a_family
+  name_path: ''
   simple_name: Angophora lanceolata
   simple_name_html: <scientific><name id='91851'><scientific><name id='91714'><element><i>Angophora</i></element></name></scientific> <element><i>lanceolata</i></element></name></scientific>
   source_id: 37859
@@ -1085,6 +1265,8 @@ nothing_name_for_invalid_instance:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1099,6 +1281,8 @@ legitimate_name_one_for_eflora:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1113,6 +1297,8 @@ default_name_one_for_eflora:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1127,6 +1313,8 @@ deleted_name_one_for_eflora:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1141,6 +1329,8 @@ na_name_one_for_eflora:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1155,6 +1345,8 @@ unknown_name_one_for_eflora:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1169,6 +1361,8 @@ isonym_name_one_for_eflora:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1183,6 +1377,8 @@ nom_cult_name_one_for_eflora:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1197,6 +1393,8 @@ nom_cult_nom_alt_name_one_for_eflora:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1211,6 +1409,8 @@ nom_et_orth_cons_name_one_for_eflora:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1225,6 +1425,8 @@ nom_illeg_name_one_for_eflora:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1239,6 +1441,8 @@ nom_illeg_nom_rej_name_one_for_eflora:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1253,6 +1457,8 @@ nom_illeg_nom_superfl_name_one_for_eflora:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1267,6 +1473,8 @@ nom_inval_name_one_for_eflora:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1281,6 +1489,8 @@ nom_inval_nom_alt_name_one_for_eflora:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1295,6 +1505,8 @@ nom_inval_nom_ambig_name_one_for_eflora:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1309,6 +1521,8 @@ nom_inval_nom_confus_name_one_for_eflora:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1323,6 +1537,8 @@ nom_inval_nom_dub_name_one_for_eflora:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1337,6 +1553,8 @@ nom_inval_nom_nud_name_one_for_eflora:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1351,6 +1569,8 @@ nom_inval_nom_prov_name_one_for_eflora:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1365,6 +1585,8 @@ nom_inval_nom_subnud_name_one_for_eflora:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1379,6 +1601,8 @@ nom_inval_opera_name_one_for_eflora:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1393,6 +1617,8 @@ nom_inval_pro_syn_name_one_for_eflora:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1407,6 +1633,8 @@ nom_inval_tautonym_name_one_for_eflora:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1421,6 +1649,8 @@ nom_rej_name_one_for_eflora:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1435,6 +1665,8 @@ nom_superfl_name_one_for_eflora:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1449,6 +1681,8 @@ nomino_utique_rejicienda_name_one_for_eflora:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1463,6 +1697,8 @@ orth_var_name_one_for_eflora:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1477,6 +1713,8 @@ name_two_for_eflora:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1491,6 +1729,8 @@ name_two_for_eflora_with_extra:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1505,6 +1745,8 @@ name_three_for_eflora:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1520,6 +1762,8 @@ name_three_for_eflora_duplicate:
   duplicate_of: name_three_for_eflora
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1535,6 +1779,8 @@ name_four_for_eflora_multi_1:
   name_type: scientific
   namespace: apni
   parent: a_genus
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1549,6 +1795,8 @@ name_four_for_eflora_multi_2:
   name_type: scientific
   namespace: apni
   parent: a_genus
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1563,15 +1811,29 @@ has_no_authors:
   name_type: scientific
   namespace: apni
   parent: a_genus
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
 has_no_parent:
+  family: a_family
+  name_path: ''
   simple_name: has no parent
+  family: a_family
+  name_path: ''
   simple_name_html: has no parent
+  family: a_family
+  name_path: ''
   name_element: has no parent
+  family: a_family
+  name_path: ''
   full_name: has no parent
+  family: a_family
+  name_path: ''
   full_name_html: has no parent
+  family: a_family
+  name_path: ''
   name_rank: species
   name_status: legitimate
   name_type: scientific
@@ -1640,6 +1902,8 @@ a_cultivar:
   name_type: cultivar
   namespace: apni
   parent: angophora
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
     
@@ -1654,7 +1918,11 @@ a_cultivar_hybrid:
   name_type: cultivar_hybrid
   namespace: apni
   parent: a_species
+  family: a_family
+  name_path: ''
   second_parent: another_species
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
     
@@ -1669,7 +1937,11 @@ a_cultivar_hybrid_formula:
   name_type: cultivar_hybrid_formula
   namespace: apni
   parent: a_species
+  family: a_family
+  name_path: ''
   second_parent: another_species
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1693,7 +1965,11 @@ dummy_name_1:
   name_type: cultivar_hybrid
   namespace: apni
   parent: a_species
+  family: a_family
+  name_path: ''
   second_parent: another_species
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1704,6 +1980,8 @@ in_apc:
   name_type: scientific
   namespace: apni
   parent: a_genus
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1731,6 +2009,8 @@ grevillea_genus:
   name_status: legitimate
   name_type: scientific
   parent: proteaceae
+  family: a_family
+  name_path: ''
   namespace: apni
   updated_by: greg
   created_by: greg
@@ -1744,7 +2024,11 @@ grevillea_cultivar_hybrid:
   name_status: na
   name_type: cultivar_hybrid
   parent: grevillea_genus
+  family: a_family
+  name_path: ''
   second_parent: grevillea_genus
+  family: a_family
+  name_path: ''
   namespace: apni
   updated_by: greg
   created_by: greg
@@ -1760,7 +2044,11 @@ dummy_name_2:
   name_type: cultivar_hybrid
   namespace: apni
   parent: a_species
+  family: a_family
+  name_path: ''
   second_parent: another_species
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1775,7 +2063,11 @@ dummy_name_3:
   name_type: cultivar_hybrid
   namespace: apni
   parent: a_species
+  family: a_family
+  name_path: ''
   second_parent: another_species
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1790,19 +2082,33 @@ orth_var_for_tax_nov:
   name_type: scientific
   namespace: apni
   parent: angophora
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
 common_with_second_parent:
+  family: a_family
+  name_path: ''
   name_element: common with second parent
+  family: a_family
+  name_path: ''
   full_name: common with second parent
+  family: a_family
+  name_path: ''
   simple_name: common with second parent
+  family: a_family
+  name_path: ''
   name_rank: unranked
   name_status: na
   name_type: common
   namespace: apni
   parent: a_genus
+  family: a_family
+  name_path: ''
   parent: a_species
+  family: a_family
+  name_path: ''
   author: bentham
   updated_by: greg
   created_by: greg
@@ -1818,6 +2124,8 @@ orth_var_with_earliest_inst_sec_ref:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1832,6 +2140,8 @@ orth_var_with_not_earliest_inst_sec_ref:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1846,6 +2156,8 @@ genus_or_above_to_be_synonymised:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1860,6 +2172,8 @@ species_or_below_to_be_synonym:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1874,6 +2188,8 @@ for_simple_name_test:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1888,6 +2204,8 @@ for_name_element_test:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1902,20 +2220,36 @@ autonym_with_mismatched_name:
   name_type: autonym
   namespace: apni
   parent: parent_of_autonym_with_mismatched_name
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
 parent_of_autonym_with_mismatched_name:
+  family: a_family
+  name_path: ''
   simple_name: parent of autonym with mismatched name
+  family: a_family
+  name_path: ''
   simple_name_html: parent of autonym with mismatched name
+  family: a_family
+  name_path: ''
   name_element: parent of autonym with mismatched name
+  family: a_family
+  name_path: ''
   full_name: parent of autonym with mismatched name
+  family: a_family
+  name_path: ''
   full_name_html: parent of autonym with mismatched name
+  family: a_family
+  name_path: ''
   name_rank: genus
   name_status: legitimate
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1930,20 +2264,36 @@ hybrid_autonym_with_mismatched_name:
   name_type: hybrid_autonym
   namespace: apni
   parent: parent_of_hybrid_autonym_with_mismatched_name
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
 parent_of_hybrid_autonym_with_mismatched_name:
+  family: a_family
+  name_path: ''
   simple_name: parent of hybrid autonym with mismatched name
+  family: a_family
+  name_path: ''
   simple_name_html: parent of hybrid autonym with mismatched name
+  family: a_family
+  name_path: ''
   name_element: parent of hybrid autonym with mismatched name
+  family: a_family
+  name_path: ''
   full_name: parent of hybrid autonym with mismatched name
+  family: a_family
+  name_path: ''
   full_name_html: parent of hybrid autonym with mismatched name
+  family: a_family
+  name_path: ''
   name_rank: genus
   name_status: legitimate
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1958,20 +2308,36 @@ named_hybrid_autonym_with_mismatched_name:
   name_type: named_hybrid_autonym
   namespace: apni
   parent: parent_of_named_hybrid_autonym_with_mismatched_name
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
 parent_of_named_hybrid_autonym_with_mismatched_name:
+  family: a_family
+  name_path: ''
   simple_name: parent of named hybrid autonym with mismatched name
+  family: a_family
+  name_path: ''
   simple_name_html: parent of named hybrid autonym with mismatched name
+  family: a_family
+  name_path: ''
   name_element: parent of named hybrid autonym with mismatched name
+  family: a_family
+  name_path: ''
   full_name: parent of named hybrid autonym with mismatched name
+  family: a_family
+  name_path: ''
   full_name_html: parent of named hybrid autonym with mismatched name
+  family: a_family
+  name_path: ''
   name_rank: genus
   name_status: legitimate
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1984,6 +2350,8 @@ a_name_without_instances:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -1996,6 +2364,8 @@ earliest_instance_not_primary:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -2008,6 +2378,8 @@ name_in_secondary_ref:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -2021,6 +2393,8 @@ to_have_a_double_synonym:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -2034,6 +2408,8 @@ to_be_a_double_synonym:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -2047,6 +2423,8 @@ to_be_placed:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -2061,6 +2439,8 @@ deletable_apart_from_duplicate:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -2075,6 +2455,8 @@ duplicate_of_deletable_apart_from_duplicate:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   duplicate_of: deletable_apart_from_duplicate
   updated_by: greg
   created_by: greg
@@ -2089,6 +2471,8 @@ to_have_double_primary:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -2103,6 +2487,8 @@ no_instances:
   name_type: scientific
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg
 
@@ -2116,5 +2502,7 @@ x_vappaculum:
   name_type: named_hybrid
   namespace: apni
   parent: a_family
+  family: a_family
+  name_path: ''
   updated_by: greg
   created_by: greg

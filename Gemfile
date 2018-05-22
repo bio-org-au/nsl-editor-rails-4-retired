@@ -60,6 +60,8 @@ platform :ruby do
   group :test do
     gem "minitest"
     gem "minitest-rails"
+    gem "minitest-reporters"
+    gem "autoprefixer-rails"
     gem "launchy"
     gem "mocha", "~> 1.1.0"
   end
