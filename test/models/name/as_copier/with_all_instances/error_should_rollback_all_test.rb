@@ -50,7 +50,7 @@ class NameAsCopWAllInstancesErrorShouldRollbackAllTest < ActiveSupport::TestCase
   end
 
   def path
-    "http://localhost:9090/nsl/services/name/apni"
+    "http://localhost:9090/nsl/services/rest/name/apni"
   end
 
   def headers

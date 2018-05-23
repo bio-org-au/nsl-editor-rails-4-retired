@@ -24,48 +24,50 @@ class TreePlacementCreateTest < ActionController::TestCase
     @instance = instances(:usage_of_name_to_be_placed)
     @name = names(:to_be_placed)
     @parent = names(:angophora_costata)
-    @workspace = tree_arrangements(:for_test)
+    @workspace = tree_version(:draft_version)
+    puts "\nworkspace_id: #{@workspace.id}"
     stub_it
-  end
-
-  def a
-    "http://localhost:9090/nsl/services/treeEdit/placeNameOnTree"
-  end
-
-  def b
-    "?apiKey=test-api-key&instance=#{@instance.id}&name=#{@name.id}"
-  end
-
-  def c
-    "&parentName=#{@parent.id}&placementType=accepted&runAs=fred&"
-  end
-
-  def d
-    "tree=#{@workspace.id}"
+    stub_mapper
   end
 
   def stub_it
-    stub_request(:post, "#{a}#{b}#{c}#{d}")
-      .with(body: { "accept" => "json" },
-            headers: { "Accept" => "*/*",
-                       "Accept-Encoding" => "gzip, deflate",
-                       "Content-Length" => "11",
-                       "Content-Type" => "application/x-www-form-urlencoded",
-                       "Host" => "localhost:9090",
-                       "User-Agent" => /ruby/ })
-      .to_return(status: 200, body: "", headers: {})
+    url = "http://localhost:9090/nsl/services/api/treeElement/placeElement"
+    params = "?apiKey=test-api-key&as=fred"
+    # removed body from stub because the timestamps change and we can't guess that from here.    # body = '{"instanceUri":"http://localhost:7070/nsl-mapper/instance/apni/481811","parentElementUri":"tree/123/456","excluded":false,"profile":{"APC Comment":{"value":"yo","updated_by":"fred","updated_at":"2018-05-23T04:32:07Z"},"APC Dist.":{"value":"ACT,Wa","updated_by":"fred","updated_at":"2018-05-23T04:32:07Z"}},"versionId":131443681}'
+    stub_request(:put, "#{url}#{params}")
+        .with(:headers => {'Accept' => 'application/json',
+                           'Accept-Encoding' => 'gzip, deflate',
+                           'Content-Length' => '328',
+                           'Content-Type' => 'application/json',
+                           'Host' => 'localhost:9090',
+                           'User-Agent' => /ruby/})
+        .to_return(status: 200, body: '{"payload": {"message":"Placed"}}', headers: {})
+  end
+
+  def stub_mapper
+    uri = "http://localhost:7070/nsl-mapper/broker/preferredLink?idNumber=#{@instance.id}&nameSpace=anamespace&objectType=instance"
+    stub_request(:get, uri)
+        .with(:headers => {"Accept" => "application/json",
+                           "Accept-Encoding" => "gzip, deflate",
+                           "Content-Type" => "application/json",
+                           "Host" => "localhost:7070",
+                           "User-Agent" => /ruby/})
+        .to_return(:status => 200, :body => '{"link":"http://localhost:7070/nsl-mapper/instance/apni/481811"}', :headers => {})
   end
 
   test "place name in workspace" do
     @request.headers["Accept"] = "application/javascript"
     patch(:place_name,
-          { id: @workspace,
-            place_name: { name_id: @name,
-                          instance_id: @instance.id,
-                          parent_name: @parent.full_name,
-                          parent_name_id: @parent,
-                          parent_name_typeahead_string: @parent.full_name,
-                          placement_type: "accepted" } },
+          {id: @workspace,
+           place_name: {name_id: @name,
+                        instance_id: @instance.id,
+                        parent_element_link: 'tree/123/456',
+                        comment: 'yo',
+                        distribution: 'ACT,Wa',
+                        excluded: false,
+                        version_id: @workspace.id,
+                        parent_name_typeahead_string: @parent.full_name
+           }},
           username: "fred",
           user_full_name: "Fred Jones",
           groups: %w(edit treebuilder),

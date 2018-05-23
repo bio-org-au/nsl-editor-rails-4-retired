@@ -90,7 +90,7 @@ class NameStatusQueryFormOptionsMatchTest < ActiveSupport::TestCase
   end
 
   def try_pair(pair, str)
-    assert pair[0] == str, "Expected #{str}, not #{pair[0]}"
+    assert pair[0] == str, "Expected '#{str}', not '#{pair[0]}'"
     assert pair[1] == "status: #{str}",
            "Expected: status #{str}, not #{pair[1]}"
   end

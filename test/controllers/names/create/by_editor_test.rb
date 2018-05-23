@@ -44,7 +44,7 @@ class NamesCreateByEditorTest < ActionController::TestCase
   end
 
   def stub_it
-    stub_request(:get, %r{#{a}.nsl/services.name.apni.[0-9][0-9]*.api.#{b}})
+    stub_request(:get, %r{#{a}.nsl/services.rest.name.apni.[0-9][0-9]*.api.#{b}})
       .with(headers: { "Accept" => "*/*", "Accept-Encoding" => /.*/,
                        "User-Agent" => user_agent })
       .to_return(status: 200, body: %({ "class": "silly name class",

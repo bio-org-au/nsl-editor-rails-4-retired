@@ -32,7 +32,7 @@ class InstanceEditorShowDetailAPCTabsTest < ActionController::TestCase
           "row-type" => "instance_as_part_of_concept_record" },
         username: "fred",
         user_full_name: "Fred Jones",
-        groups: ["APC"])
+        groups: ["treebuilder"])
     asserts
   end
 
@@ -62,9 +62,9 @@ class InstanceEditorShowDetailAPCTabsTest < ActionController::TestCase
     assert_select "a#unpublished-citation-tab",
                   false,
                   "Should not show 'Unpub' tab link."
-    assert_select "a#instance-apc-placement-tab",
-                  /APC/,
-                  "Does not show 'APC' tab link."
+    assert_select "a#instance-classification-tab",
+                  /Tree/,
+                  "Does not show 'Tree' tab link."
   end
 
   def asserts3

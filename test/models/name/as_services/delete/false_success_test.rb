@@ -39,7 +39,7 @@ class NameAsServicesDeleteFalseSuccessTest < ActiveSupport::TestCase
   end
 
   def sub1
-    "nsl.services.name.apni"
+    "nsl.services.rest.name.apni"
   end
 
   def sub2
