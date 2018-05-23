@@ -188,7 +188,7 @@ class Instance < ActiveRecord::Base
   validate :standalone_reference_id_can_change_if_no_dependents, on: :update
   validate :name_cannot_be_synonym_of_itself
   validate :name_cannot_be_double_synonym
-  validate :restrict_change_to_accepted_concept_synonomy
+  validate :restrict_change_to_accepted_concept_synonymy
   validate :only_one_primary_instance_per_name
 
   before_validation :set_defaults
@@ -198,11 +198,11 @@ class Instance < ActiveRecord::Base
     draft
   end
 
-  def restrict_change_to_accepted_concept_synonomy
+  def restrict_change_to_accepted_concept_synonymy
     return if concept_warning_bypassed?
     return if standalone_or_unpublished_citation?
     return unless this_is_cited_by.accepted_concept?
-    errors[:base] << "You are trying to change an accepted concept's synonomy."
+    errors[:base] << "You are trying to change an accepted concept's synonymy."
   end
 
   def concept_warning_bypassed?

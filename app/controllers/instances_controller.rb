@@ -20,7 +20,7 @@ class InstancesController < ApplicationController
   include ActionView::Helpers::TextHelper
   before_filter :find_instance, only: [:show, :tab, :destroy]
   # todo refactor validation error checks to not rely on a copied string comparison as this is very fragile
-  CONCEPT_WARNING = "Validation failed: You are trying to change an accepted concept's synonomy."
+  CONCEPT_WARNING = "Validation failed: You are trying to change an accepted concept's synonymy."
   EXTRA_PRIMARY_WARNING = "Validation failed: This would result in multiple primary instances"
 
   # GET /instances/1
