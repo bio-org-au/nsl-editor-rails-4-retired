@@ -1459,7 +1459,8 @@ CREATE TABLE public.distribution (
   is_extinct                boolean DEFAULT false                                       NOT NULL,
   is_native                 boolean DEFAULT false                                       NOT NULL,
   is_naturalised            boolean DEFAULT false                                       NOT NULL,
-  region                    character varying(10)                                       NOT NULL
+  region                    character varying(10)                                       NOT NULL,
+  sort_order                int DEFAULT 0                                               NOT NULL
 );
 
 --

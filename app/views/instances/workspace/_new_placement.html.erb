@@ -31,7 +31,7 @@
           </dd>
           <dt><%= @working_draft.distribution_key %></dt>
           <dd>
-            <%= text_area_tag("place_name[distribution]", '', title: 'Edit distribution', rows: 2, class: 'form-control') %>
+            <%= text_area_tag("place_name[distribution]", '', title: 'Edit distribution', rows: 2, class: 'form-control', 'data-role' => 'tagsinput') %>
             <button type="button"
                     class="btn btn-warning clear-area"
                     onclick="$('#place_name_distribution').val('');">Clear distribution
@@ -55,6 +55,15 @@
       <div id="placement-error-message-container" class="message-container error hidden"></div>
     <% end %>
   </div>
+    <script type="application/javascript">
+      var distributions = [ <%= Distribution.display_order.collect {| d | "{ id: #{d.id}, label: '#{d.description}'" }.join(', ') %> ];
+      $(function() {
+          var dist_text = $("#place_name_distribution");
+          distributions.each(function (i, d) {
+              dist_test.tagsinput('add', d.label);
+          });
+      });
+    </script>
 <% end %>
 
 

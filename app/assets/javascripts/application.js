@@ -60,3 +60,4 @@
 //= require tabs
 //
 //= require jquery-dateformat.min.js
+//= require bootstrap-tagsinput

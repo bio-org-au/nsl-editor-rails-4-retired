@@ -40,11 +40,7 @@
     <dd>
       <%= form_tag({controller: 'trees', action: 'update_distribution'}, {method: :post, remote: true}) do %>
         <%= hidden_field_tag("update_distribution[element_link]", @tree_version_element.element_link) %>
-        <% if @tree_version_element.distribution.blank? %>
-          <%= render partial: "trees/add_distribution", locals: {tree_version_element: @tree_version_element} %>
-        <% else %>
-          <%= render partial: "trees/update_distribution", locals: {tree_version_element: @tree_version_element} %>
-        <% end %>
+        <%= render partial: "trees/update_distribution", locals: {tree_version_element: @tree_version_element} %>
       <% end %>
       <div id="tree_distribution_message" class="message-container inline hidden"></div>
     </dd>

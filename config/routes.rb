@@ -311,6 +311,11 @@ Rails.application.routes.draw do
         to: "trees#update_synonymy",
         via: :post
 
+  match "trees/typeahead_on_distribution",
+        as: "trees_typeahead_on_distribution",
+        to: "trees#typeahead_on_distribution",
+        via: :get
+
   match "search/reports",
         as: "search_reports",
         to: "search#reports",

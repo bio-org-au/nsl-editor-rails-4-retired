@@ -1,0 +1,56 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+qld_native:
+  description: Qld
+  is_doubtfully_naturalised: false
+  is_extinct: false
+  is_native: true
+  is_naturalised: false
+  region: Qld
+  sort_order: 100
+
+nsw_native:
+  description: NSW
+  is_doubtfully_naturalised: false
+  is_extinct: false
+  is_native: true
+  is_naturalised: false
+  region: NSW
+  sort_order: 110
+
+nsw_naturalised:
+  description: NSW (naturalised)
+  is_doubtfully_naturalised: false
+  is_extinct: false
+  is_native: false
+  is_naturalised: true
+  region: NSW
+  sort_order: 1110
+
+qld_naturalised:
+  description: Qld (naturalised)
+  is_doubtfully_naturalised: false
+  is_extinct: false
+  is_native: false
+  is_naturalised: true
+  region: Qld
+  sort_order: 1100
+
+qld_doubtfully_naturalised:
+  description: Qld (?naturalised)
+  is_doubtfully_naturalised: true
+  is_extinct: false
+  is_native: false
+  is_naturalised: false
+  region: Qld
+  sort_order: 2100
+
+qld_extinct:
+  description: Qld (extinct)
+  is_doubtfully_naturalised: false
+  is_extinct: true
+  is_native: false
+  is_naturalised: false
+  region: Qld
+  sort_order: 3100
+

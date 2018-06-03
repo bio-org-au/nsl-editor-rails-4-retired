@@ -244,6 +244,12 @@ class TreesController < ApplicationController
     render "update_parent_error.js"
   end
 
+  def typeahead_on_distribution
+    distributions = Distribution::AsTypeahead::ForDescription.new(params[:term])
+    render json: distributions.results
+  end
+
+
   private
 
   # todo determine if this should be removed.

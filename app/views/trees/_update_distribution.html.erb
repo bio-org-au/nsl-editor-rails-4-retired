@@ -1,5 +1,58 @@
-<%= text_area_tag("update_distribution[distribution]", @tree_version_element.distribution, title: 'Edit distribution', rows: 2, class: 'form-control', tabindex: increment_tab_index) %>
+<%= text_field_tag("update_distribution[distribution]", @tree_version_element.distribution, title: 'Edit distribution', class: 'form-control', tabindex: increment_tab_index, 'data-role' => 'tagsinput') %>
+<script type="application/javascript">
+  $(function () {
+      var distributions = new Bloodhound({
+          datumTokenizer: Bloodhound.tokenizers.obj.whitespace('description'),
+          queryTokenizer: Bloodhound.tokenizers.whitespace,
+          prefetch: window.relative_url_root + '/trees/typeahead_on_distribution',
+          limit: 5
+      });
+      distributions.initialize();
 
+      function checkDistributionItem(item) {
+          return distributions.index.datums.some(function (elt) {
+              return elt.description == item;
+          });
+      }
+
+      function distributionValid(control) {
+          var items = control.tagsinput('items');
+          var valid = items.length == 0 || items.every(checkDistributionItem);
+          $("#update_distribution_btn").attr('disabled', !valid);
+      }
+
+      function distributionValidEvent(event) {
+          distributionValid($(this));
+      }
+
+      var dist_text = $("#update_distribution_distribution");
+      dist_text.tagsinput({
+          tagClass: function (item) {
+              return checkDistributionItem(item) ? 'label label-info' : 'label label-danger label-important';
+          },
+          typeaheadjs: {
+              name: 'distributions',
+              displayKey: 'description',
+              valueKey: 'description',
+              source: distributions.ttAdapter()
+          }
+      });
+      dist_text.on('itemAdded', distributionValidEvent);
+      dist_text.on('itemRemoved', distributionValidEvent);
+      distributionValid(dist_text);
+  });
+</script>
+<% if @tree_version_element.distribution.blank? %>
+    <button type="submit"
+            id="update_distribution_btn"
+            class="btn btn-primary left"
+            name="update_distribution[update]"
+            tabindex="<%= increment_tab_index %>"
+            title="Update this distribution"
+            onclick="$('#update_distribution_btn').find('i.fa').addClass('fa-spin');"
+    >Add distribution <i class="fa fa-refresh"></i>
+    </button>
+<% else %>
 <button type="submit"
         id="update_distribution_btn"
         class="btn btn-primary left"
@@ -37,5 +90,6 @@
           onclick="$('#confirm_delete_distribution').hide();$('#update_distribution_btn').show();$('#delete_distribution_btn').prop('disabled', false);$('#confirm_delete_distribution_btn').find('i.fa').removeClass('fa-spin');"
   >Cancel delete
   </button>
-  <% increment_tab_index %>
+<% end %>
+<% increment_tab_index %>
 </div>
