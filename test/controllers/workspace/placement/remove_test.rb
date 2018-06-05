@@ -24,42 +24,33 @@ class TreePlacementRemoveTest < ActionController::TestCase
     @instance = instances(:usage_of_name_to_be_placed)
     @name = names(:to_be_placed)
     @parent = names(:angophora_costata)
-    @workspace = tree_arrangements(:for_test)
+    @workspace = tree_version(:draft_version)
     stub_it
   end
 
-  def a
-    "http://localhost:9090/nsl/services/treeEdit/removeNameFromTree"
-  end
-
-  def b
-    "?apiKey=test-api-key&name=#{@name.id}"
-  end
-
-  def c
-    "&runAs=fred&tree=#{@workspace.id}"
-  end
 
   def stub_it
-    stub_request(:post, "#{a}#{b}#{c}")
-      .with(body: { "accept" => "json" },
-            headers: { "Accept" => "*/*",
-                       "Accept-Encoding" => "gzip, deflate",
-                       "Content-Length" => "11",
-                       "Content-Type" => "application/x-www-form-urlencoded",
-                       "Host" => "localhost:9090",
-                       "User-Agent" => /ruby/ })
-      .to_return(status: 200, body: "", headers: {})
+    url = "http://localhost:9090/nsl/services/api/treeElement/removeElement"
+    params = "?apiKey=test-api-key&as=fred"
+    body = '{"taxonUri":"tree/123/456"}'
+
+    stub_request(:post, "#{url}#{params}")
+        .with(body: body,
+              headers: {'Accept' => 'application/json',
+                        'Accept-Encoding' => 'gzip, deflate',
+                        'Content-Length' => '27',
+                        'Content-Type' => 'application/json',
+                        'Host' => 'localhost:9090',
+                        'User-Agent' => /ruby/})
+        .to_return(status: 200, body: '{"payload": {"message":"Removed"}}', headers: {})
   end
 
   test "remove name from workspace" do
     @request.headers["Accept"] = "application/javascript"
     delete(:remove_name_placement,
-           { id: @workspace,
-             remove_placement: { name_id: @name,
-                                 instance_id: @instance.id,
-                                 parent_name: @parent.full_name,
-                                 placement_type: "accepted" } },
+           {id: @workspace,
+            remove_placement: {taxon_uri: 'tree/123/456',
+                               delete: 'delete'}},
            username: "fred",
            user_full_name: "Fred Jones",
            groups: %w(edit treebuilder),

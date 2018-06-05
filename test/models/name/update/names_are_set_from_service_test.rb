@@ -40,7 +40,7 @@ class NamesAreSetFromServiceTest < ActiveSupport::TestCase
   end
 
   def address
-    "http://localhost:9090/nsl/services/name/apni/"
+    "http://localhost:9090/nsl/services/rest/name/apni/"
   end
 
   test "names are set from service" do

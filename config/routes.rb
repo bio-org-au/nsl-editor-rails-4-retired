@@ -105,6 +105,11 @@ Rails.application.routes.draw do
         to: "names#name_parent_suggestions",
         via: :get
 
+  match "names/name_family_suggestions",
+        as: "name_name_family_suggestions",
+        to: "names#name_family_suggestions",
+        via: :get
+
   match "suggestions/name/hybrid_parent",
         as: "name_hybrid_parent_suggestions",
         to: "names#hybrid_parent_suggestions",
@@ -166,8 +171,8 @@ Rails.application.routes.draw do
   match "authors/:id/tab/:tab", as: "author_tab", to: "authors#tab", via: :get
   resources :authors, only: [:new, :create, :update, :destroy]
   match "authors/:id", as: "author_show",
-                       to: "authors#show",
-                       via: :get, defaults: { tab: "tab_show_1" }
+        to: "authors#show",
+        via: :get, defaults: { tab: "tab_show_1" }
 
   match "references/typeahead/on_citation/duplicate_of/:id",
         as: "references_typeahead_on_citation_duplicate_of_current",
@@ -224,35 +229,87 @@ Rails.application.routes.draw do
         via: :post
 
   match "trees/ng/:template", as: "tree_ng", to: "trees#ng", via: :get
-  match "tree_arrangement/:id/remove_name_placement",
-        as: "tree_arrangement_remove_name",
-        to: "trees#remove_name_placement", via: :delete
-  match "tree_arrangement/:id/place_name",
-        as: "tree_arrangement_place_name", to: "trees#place_name", via: [:patch, :post]
+
+  match "trees/:id/remove_name_placement",
+        as: "tree_remove_name",
+        to: "trees#remove_name_placement",
+        via: :delete
+
+  match "trees/:id/place_name",
+        as: "tree_place_name",
+        to: "trees#place_name",
+        via: [:patch, :post]
+
+  match "trees/:id/replace_placement",
+        as: "tree_replace_placement",
+        to: "trees#replace_placement",
+        via: [:patch, :post]
+
   match "trees/workspace/current",
         as: "toggle_current_workspace",
         to: "trees/workspaces/current#toggle",
         via: :post
 
-  match "tree/value/:id",
-        as: "update_tree_value",
-        to: "workspace_values#old_update",
-        via: :patch
-
-  match "workspace/value",
-        as: "workspace_value",
-        to: "workspace_values#update",
-        via: :patch
-
-  match "workspace/value",
-        as: "create_workspace_value",
-        to: "workspace_values#create",
+  match "trees/update_comment",
+        as: "tree_update_comment",
+        to: "trees#update_comment",
         via: :post
 
-  match "workspace/value/:name_id/:type_uri_id_part/:name_node_link_id",
-        as: "delete_workspace_value",
-        to: "workspace_values#destroy",
-        via: :delete
+  match "trees/update_distribution",
+        as: "tree_update_distribution",
+        to: "trees#update_distribution",
+        via: :post
+
+  match "trees/update_tree_parent",
+        as: "tree_update_parent",
+        to: "trees#update_tree_parent",
+        via: :post
+
+
+  match "trees/update_excluded",
+        as: "tree_update_excluded",
+        to: "trees#update_excluded",
+        via: :post
+
+  match "trees/new_draft",
+        as: "trees_new_draft",
+        to: "trees#new_draft",
+        via: :get
+
+  match "trees/create_draft",
+        as: "trees_create_draft",
+        to: "trees#create_draft",
+        via: :post
+
+  match "trees/edit_draft",
+        as: "trees_edit_draft",
+        to: "trees#edit_draft",
+        via: :get
+
+  match "trees/update_draft",
+        as: "trees_update_draft",
+        to: "trees#update_draft",
+        via: :post
+
+  match "trees/publish_draft",
+        as: "trees_publish_draft",
+        to: "trees#publish_draft",
+        via: :get
+
+  match "trees/publish",
+        as: "trees_publish",
+        to: "trees#publish_version",
+        via: :post
+
+  match "trees/reports",
+        as: "trees_reports",
+        to: "trees#reports",
+        via: :get
+
+  match "trees/update_synonymy",
+        as: "trees_update_synonymy",
+        to: "trees#update_synonymy",
+        via: :post
 
   match "search/reports",
         as: "search_reports",

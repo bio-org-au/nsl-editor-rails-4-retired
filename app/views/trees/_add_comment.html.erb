@@ -1,0 +1,11 @@
+<%= text_area_tag("update_comment[comment]", @tree_version_element.comment, escaped: false, title: 'Edit comment', rows: 4, class: 'form-control', tabindex: increment_tab_index) %>
+
+<button type="submit"
+        id="update_comment_btn"
+        class="btn btn-primary left"
+        name="update_comment[update]"
+        tabindex="<%= increment_tab_index %>"
+        title="Update this comment"
+        onclick="$('#update_comment_btn').find('i.fa').addClass('fa-spin');"
+>Add comment <i class="fa fa-refresh"></i>
+</button>

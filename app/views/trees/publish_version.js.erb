@@ -1,0 +1,4 @@
+$('#publish-draft-message-container')
+    .html(markdown("<%= escape_javascript(@message.html_safe) %>"))
+    .append('<button onclick="refreshPage(event)">refresh</button>');
+$('#edit-draft-submit').find('i.fa').removeClass('fa-spin');

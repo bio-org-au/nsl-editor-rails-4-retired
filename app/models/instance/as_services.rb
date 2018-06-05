@@ -26,6 +26,12 @@ class Instance::AsServices < Instance
 
   # Service will send back 200 even if delete fails, but will also sometimes
   # send back 404, so have to look at both. Sigh.
+  #
+  # (PMc Note) Actually...A 404 is sent if the target is not found, but
+  # when the target of the delete *is* found but you can't delete it because
+  # it is referenced, you get a 403 Forbidden. Looking at it again we should 
+  # possibly return 409 conflict... don't you love interpreting standards (RFC 7231)
+  #
   # The interface *should* never let a user try to delete an instance
   # that cannot be deleted, so the chances of hitting a 'meaningful' error
   # should be small but experience has shown this happens.
@@ -55,7 +61,7 @@ class Instance::AsServices < Instance
 
   def self.delete_uri(id)
     api_key = Rails.configuration.api_key
-    host_path = "#{Rails.configuration.services}instance/apni/#{id}/api/delete"
+    host_path = "#{Rails.configuration.services}rest/instance/apni/#{id}/api/delete"
     "#{host_path}?apiKey=#{api_key}&reason=Edit"
   end
 end

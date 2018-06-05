@@ -1,7 +1,8 @@
 $('.message-container').addClass('hidden').html("");
 $('.error-message-container').addClass('hidden').html("");
-$('#remove-placement-message-container').html('<%= escape_javascript(@message) %>');
-$('#remove-placement-message-container').removeClass('hidden');
+$('#remove-placement-message-container')
+    .removeClass('hidden')
+    .html(markdown('<%= escape_javascript(@message.html_safe) %>'));
 $('#remove-name-placement-btn').addClass('hidden');
 $('#instance-class-tab-refresh-after-delete-btn').removeClass('hidden');
 $('#instance-classification-tab').click();

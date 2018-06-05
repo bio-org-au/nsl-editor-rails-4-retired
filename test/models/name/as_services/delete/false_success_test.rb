@@ -20,7 +20,7 @@ require "test_helper"
 # Single name model test.
 class NameAsServicesDeleteFalseSuccessTest < ActiveSupport::TestCase
   setup do
-    stub_request(:delete, /#{sub1}.*[0-9]{8,}#{sub2}.*/)
+    stub_request(:delete, /#{sub1}.*[0-9]{9,}#{sub2}.*/)
       .with(headers: { "Accept" => "application/json",
                        "Accept-Encoding" => "gzip, deflate",
                        "Host" => "localhost:9090",
@@ -39,7 +39,7 @@ class NameAsServicesDeleteFalseSuccessTest < ActiveSupport::TestCase
   end
 
   def sub1
-    "nsl.services.name.apni"
+    "nsl.services.rest.name.apni"
   end
 
   def sub2

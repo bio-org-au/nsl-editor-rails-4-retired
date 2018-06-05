@@ -1,30 +1,31 @@
-<tr id="search-result-<%= search_result.id %>" 
-  class="search-result instance-cited-by-relationship-instance-name-only <%= 'fresh' if search_result.fresh? %>"
-  data-get-url="<%= instance_path(search_result.id) %>"
-  data-edit-url="<%= instance_path(search_result.id) %>"
-  data-base-url="<%= instance_path(search_result.id) %>"
-  data-tab-url="<%= instance_tab_path(id:search_result.id,tab: 'active_tab_goes_here') %>"
-  data-record-id="<%= search_result.id %>"
-  data-record-type="instance"
-  data-instance-type="<%= search_result.type %>"
-  data-row-type="instance_cited_by_relationship_instance_name_only"
-  tabindex="<%= increment_tab_index(100) %>" 
-    >
+<tr id="search-result-<%= search_result.id %>"
+    class="search-result instance-cited-by-relationship-instance-name-only <%= 'fresh' if search_result.fresh? %>"
+    data-get-url="<%= instance_path(search_result.id) %>"
+    data-edit-url="<%= instance_path(search_result.id) %>"
+    data-base-url="<%= instance_path(search_result.id) %>"
+    data-tab-url="<%= instance_tab_path(id: search_result.id, tab: 'active_tab_goes_here') %>"
+    data-record-id="<%= search_result.id %>"
+    data-record-type="instance"
+    data-instance-type="<%= search_result.type %>"
+    data-row-type="instance_cited_by_relationship_instance_name_only"
+    tabindex="<%= increment_tab_index(100) %>"
+>
   <td class="nsl-tiny-icon-container width-1-percent"><%= record_icon('instance') %></td>
   <td colspan="1" class="text main-content takes-focus width-90-percent">
-    <a 
-      id="<%= %Q(#{search_result.class}-#{search_result.id}) %>"
-      class="show-details-link indent-level-2"
-      title="Instance record. Select to show details."
-      tabindex="<%= increment_tab_index %>" 
-      >
+    <a
+    id="<%= %Q(#{search_result.class}-#{search_result.id}) %>"
+    class="show-details-link indent-level-2 <%= "draft" if search_result.draft? %>"
+    title="Instance record. Select to show details."
+    tabindex="<%= increment_tab_index %>"
+    >
       <%= search_result.instance_type.of_label %>
       <span class="full-name-within-instance">
         <%= search_result.this_is_cited_by.name.try("full_name_html").try("html_safe") %><%= search_result.this_is_cited_by.name.try("name_status").try("name_and_comma_for_instance_display") %>
       </span>
-      <%= "[DRAFT]" if search_result.draft? %>
-    <%= render(partial: 'record_debug', locals: {search_result: search_result}) if @debug %>
- </a> </td>
+      <%= render(partial: 'record_debug', locals: {search_result: search_result}) if @debug %>
+      <%= render(partial: 'draft', locals: { search_result: search_result }) %>
+
+    </a></td>
   <td class="takes-focus width-10-percent filler">&nbsp;</td>
 </tr>
 

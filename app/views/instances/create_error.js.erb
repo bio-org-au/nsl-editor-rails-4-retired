@@ -2,7 +2,7 @@
 $('#search-result-details-error-message-container').html('<%= escape_javascript(@message) %>');
 $('#<%= focus_on_this_id %>').focus();
 <% if @allow_bypass %>
-  $('#bypass-warning-widget').removeClass('hidden');
+$('#concept-warning').removeClass('hidden');
 <% end %>
 <% if @multiple_primary_warning %>
   $('#extra-primary-warning').removeClass('hidden');

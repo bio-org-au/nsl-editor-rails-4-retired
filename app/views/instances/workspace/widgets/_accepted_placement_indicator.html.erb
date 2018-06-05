@@ -1,0 +1,13 @@
+<span class="apc-container no-decoration">
+    <% if tree_version_element.tree_element.excluded %>
+      <%= icon('ban', '', class: 'workspace icon excluded') %>
+    <% else %>
+      <%= icon('check', '', class: 'workspace icon accepted') %>
+    <% end %>
+  <span class='apc name accepted strong' title="in workspace">
+        <%= tree_version_element.tree_version.tree.name %>
+    <%= !tree_version_element.tree_version.published ?
+            tree_version_element.tree_version.draft_name : '' %>
+  </span>
+</span>
+

@@ -30,7 +30,7 @@ class InNestedSimpleInstanceOrderTest < ActiveSupport::TestCase
     @results = Instance.joins(:instance_type, :reference, :name)
                        .where.not(page: "exclude-from-ordering-test")
                        .in_nested_instance_type_order
-                       .order("reference.year,lower(name.full_name)")
+                   .order('reference.year,lower(name.full_name) collate "C"')
                        .order("instance_type.name") # make test order definitive
     @ndx = 0
   end

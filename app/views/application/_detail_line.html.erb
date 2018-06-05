@@ -18,7 +18,7 @@
   <% if info.blank? %>
     <span class="pull-left <%= info_width %> no-color">&nbsp;</span>
   <% else %>
-    <span class="pull-left <%= info_width %>"><%= info %></span>
+    <span class="pull-left <%= info_width %>"><%= info&.to_s&.html_safe %></span>
   <% end %>
   <span class="pull-right align-right <%= label_width %> field-label">
     <label class="align-right"><%= label %></label>

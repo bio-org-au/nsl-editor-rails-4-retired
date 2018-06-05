@@ -1,6 +1,6 @@
 
 <%= render partial: 'detail_line', 
-           locals: {info:  instance_note.value,
+           locals: {info:  instance_note.value.html_safe,
                     label: "#{instance_note.instance_note_key.name}"} 
 %>
 

@@ -1,2 +1,3 @@
-$('#remove-placement-error-message-container').html("<br/>Error removing name: <%= escape_javascript(@message) %>");
-$('#remove-placement-error-message-container').removeClass('hidden');
+$('#remove-placement-error-message-container')
+    .removeClass('hidden')
+    .html(markdown("Error removing name: <%= escape_javascript(@message.html_safe) %>"));

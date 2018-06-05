@@ -1,0 +1,7 @@
+$('#tree-reports-container').removeClass('hidden');
+<!--$('ul#search-results-tabset li').removeClass('active');-->
+if (!$('#tree-reports-container').hasClass('has-data')) {
+  $('#tree-reports-container').html("<%= j render(:partial => 'trees/tab_inners/reports_inner') %>")
+  $('#tree-reports-container').addClass('has-data');
+}
+loadReport($('#diff-content'), "<%= @diff_link.html_safe %>");

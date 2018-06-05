@@ -26,8 +26,8 @@ class NameNotInAPCTest < ActiveSupport::TestCase
     name.stubs(:get_apc_json).returns("inAPC" => false, "excluded" => false,
                                       "taxonId" => expected_instance_id,
                                       "type" => "ApcConcept")
-    assert_equal false, name.apc?, "Name should not be in APC"
-    assert_equal nil, name.apc_instance_id, "APC instance id should be set"
+    assert_equal false, name.accepted_concept?, "Name should not be in APC"
+    assert_equal nil, name.accepted_instance_id, "APC instance id should be set"
     assert_equal false, name.apc_declared_bt, "Name should not be a declared BT"
     assert_equal false, name.apc_instance_is_an_excluded_name,
                  "Should not be an excluded name"

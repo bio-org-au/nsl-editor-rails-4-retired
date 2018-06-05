@@ -1,0 +1,11 @@
+var showingDetails = $('.showing-details');
+if (showingDetails.length) {
+    $('.last-details').removeClass('last-details');
+    showingDetails.removeClass('showing-details').addClass('last-details');
+}
+$('#search-result-details').removeClass('hidden');
+$('#tree-form-cancel').on('click', function () {
+    debug('cancel creating a draft');
+    $('.last-details').find('a').click();
+});
+debug('cancel form rendered');

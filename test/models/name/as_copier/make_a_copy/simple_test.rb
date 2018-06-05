@@ -51,7 +51,7 @@ class NameAsCopierMakeACopySimpleTest < ActiveSupport::TestCase
   end
 
   def action
-    "http://localhost:9090/nsl/services/name/apni/"
+    "http://localhost:9090/nsl/services/rest/name/apni/"
   end
 
   def headers

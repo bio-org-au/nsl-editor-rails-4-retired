@@ -3,25 +3,6 @@
 # Names can be in a classification tree
 module NameTreeable
   extend ActiveSupport::Concern
-  included do
-    # TODO: Needs a test
-    has_one :apc_tree_path,
-            (lambda do
-               where "exists (select null from tree_arrangement ta where
-             tree_id = ta.id and ta.description = 'Australian Plant Census')"
-             end),
-            class_name: "NameTreePath"
-    # TODO: Needs a test
-    has_one :apni_tree_path,
-            (lambda do
-               where "exists (select null from tree_arrangement ta where
-               tree_id = ta.id and ta.description =
-               'APNI names classification')"
-             end),
-            class_name: "NameTreePath"
-    has_one :accepted_in_some_way, foreign_key: "id"
-    has_one :accepted_concept, foreign_key: "id"
-  end
 
   def apc_as_json
     Rails.cache.fetch("#{cache_key}/apc_info", expires_in: 2.minutes) do
@@ -32,31 +13,38 @@ module NameTreeable
     "[unknown - service error]"
   end
 
-  def accepted_in_some_way?
-    accepted_in_some_way.present?
+  def accepted_tree_version_element
+    Tree.accepted.first.current_tree_version.name_in_version(self)
   end
 
-  def apc?
-    accepted_in_some_way?
+  def default_draft_tree_version_element
+    Tree.accepted.first.default_draft_version.name_in_version(self)
   end
 
-  def apc_instance_id
-    return nil unless accepted_in_some_way?
-    accepted_in_some_way.instance_id
+  def draft_instance_id(draft_version)
+    return nil unless draft_version.present?
+    tree_version_element = draft_version.name_in_version(self)
+    return nil unless tree_version_element.present?
+    tree_version_element.tree_element.instance.id
   end
 
-  def apc_declared_bt?
-    return nil unless accepted_in_some_way?
-    accepted_in_some_way.declared_bt?
-  end
-
-  def apc_excluded?
-    return nil unless accepted_in_some_way?
-    accepted_in_some_way.excluded?
+  def draft_tree_version_element(draft_version)
+    TreeVersion.find(draft_version.id).name_in_version(self)
   end
 
   def accepted_concept?
-    accepted_concept.present?
+    tve = accepted_tree_version_element
+    tve.present? && !tve.tree_element.excluded
+  end
+
+  def accepted_instance_id
+    tve = accepted_tree_version_element
+    tve.present? && tve.tree_element.instance_id
+  end
+
+  def excluded_concept?
+    tve = accepted_tree_version_element
+    tve.present? && tve.tree_element.excluded
   end
 
   def sub_tree_size(level = 0)

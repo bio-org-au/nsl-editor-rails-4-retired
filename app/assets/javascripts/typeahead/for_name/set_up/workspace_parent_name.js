@@ -3,7 +3,9 @@ function setUpWorkspaceParentName() {
 
     $('#workspace_parent_name_typeahead').typeahead({highlight: true}, {
         name: 'workspace-parent-name-id',
-        displayKey: 'value',
+        displayKey: function(obj) {
+            return obj.value;
+        },
         source: workspaceParentNameSuggestions.ttAdapter()})
         .on('typeahead:opened', function($e,datum) {
             // Start afresh. Do not clear the hidden field on this event
@@ -11,6 +13,9 @@ function setUpWorkspaceParentName() {
         })
         .on('typeahead:selected', function($e,datum) {
             $('#workspace_parent_name_id').val(datum.id);
+            var input = $('#workspace_parent_name_typeahead');
+            var replaced = input.val().replace(/<.*>/g, '').trim();
+            input.val(replaced);
         })
         .on('typeahead:autocompleted', function($e,datum) {
             $('#workspace_name_parent_id').val(datum.id);

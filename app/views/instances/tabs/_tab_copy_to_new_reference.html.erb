@@ -55,7 +55,7 @@ The copied instance will remain attached to:
 
   <script> setUpInstanceReferenceExcludingCurrent(); </script>
   <%= f.hidden_field :reference_id, value: '' %>
-	<br>	
+  <br>
 	<%= radio_button_tag 'expected', 'page number',     true, id: 'page-number-rb',    tabindex: increment_tab_index %>
 	<%= label_tag "page-number-rb", 'page number'.humanize %>
 	<script>
@@ -87,6 +87,8 @@ The copied instance will remain attached to:
 	<br>
 	<span id="page-number-message">All the new instances will have this page number.</span>
 	<br>
+  <br>
+  <%= render partial: "instances/widgets/as_a_draft", locals: {f: f} %>
 	<br>
 <div class="width-100-percent"> 
 
@@ -115,7 +117,7 @@ The copied instance will remain attached to:
 			}
 		});
 	</script>
-		<div id="pre-submit-error-message" class="error-message red hidden">Please fill out all the fields</div>
+  <div id="pre-submit-error-message" class="error-message red hidden">Please fill out all the fields</div>
   <div id="confirm-or-cancel-copy-instance-link-container"
        class="confirm-or-cancel-container pull-right hidden">
 

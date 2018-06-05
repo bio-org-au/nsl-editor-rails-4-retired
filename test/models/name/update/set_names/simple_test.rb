@@ -41,7 +41,7 @@ class NameUpdateSetNamesSimpleTest < ActiveSupport::TestCase
   end
 
   def address
-    "http://localhost:9090/nsl/services/name/apni/"
+    "http://localhost:9090/nsl/services/rest/name/apni/"
   end
 
   test "name update set names simple" do

@@ -1,0 +1,4 @@
+$('#movement-error-message-container').removeClass('hidden');
+$('#movement-error-message').html(markdown("<%= escape_javascript(@message.html_safe) %>"));
+$('#update-name-placement-btn').find('i.fa').removeClass('fa-spin');
+linkNames('#movement-error-message');

@@ -22,6 +22,8 @@ class Instance::AsEdited < Instance
     if changed?
       logger.debug("Instance has changes to: #{changed}")
       self.updated_by = username
+      # We do this because the clean_all params below resets the attributes we've set
+      self.concept_warning_bypassed = params[:concept_warning_bypassed] == "1"
       self.extra_primary_override = params[:extra_primary_override] == "1"
       save!
       "Updated"

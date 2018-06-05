@@ -19,8 +19,8 @@
 class InstancesController < ApplicationController
   include ActionView::Helpers::TextHelper
   before_filter :find_instance, only: [:show, :tab, :destroy]
-  CONCEPT_WARNING = "Validation failed: This concept includes an accepted name \
-as a synonym"
+  # todo refactor validation error checks to not rely on a copied string comparison as this is very fragile
+  CONCEPT_WARNING = "Validation failed: You are trying to change an accepted concept's synonymy."
   EXTRA_PRIMARY_WARNING = "Validation failed: This would result in multiple primary instances"
 
   # GET /instances/1
@@ -33,12 +33,14 @@ as a synonym"
     @tab_index = (params[:tabIndex] || "1").to_i
     @tabs_to_offer = tabs_to_offer
     # Really only need to do this if the "class" tab is chosen.
-    # ToDo: do this only when needed.
-    unless @current_workspace.blank?
-      @name_node_tree_link = @current_workspace.find_name_node_link(@instance.name)
+    unless @working_draft.blank?
+      @tree_version_element = @working_draft.name_in_version(@instance.name)
+      @parent_tve = find_a_parent(@instance.name)
     end
+    @accepted_tve = @instance.name.accepted_tree_version_element
     render "show", layout: false
   end
+
 
   alias tab show
 
@@ -109,14 +111,14 @@ as a synonym"
   # PUT /instances/1.json
   def update
     @instance = Instance::AsEdited.find(params[:id])
-    @instance.extra_primary_override =
-      instance_params[:extra_primary_override] == "1"
+    # @instance.concept_warning_bypassed and @instance.extra_primary_override are set in AsEdited
     @message = @instance.update_if_changed(instance_params,
                                            current_user.username)
     render "update.js"
   rescue => e
     @multiple_primary_warning =
       e.to_s.match(/#{Instance::MULTIPLE_PRIMARY_WARNING}\z/)
+    @allow_bypass = e.to_s.match(/\A#{CONCEPT_WARNING}\z/)
     @message = e.to_s
     render "update_error.js", status: :unprocessable_entity
   end
@@ -227,8 +229,6 @@ as a synonym"
     if @instance.simple?
       offer << "tab_synonymy"
       offer << "tab_unpublished_citation"
-      # TODO: remove apc placement tab
-      offer << "tab_apc_placement"
       offer << "tab_classification"
     end
     offer << "tab_comments"
@@ -295,4 +295,14 @@ as a synonym"
     return unless instance_params[:name_id].blank?
     params[:instance][:name_id] = Name::AsResolvedTypeahead::ForUnpubCitationInstance.new(name_id, name_typeahead).value
   end
+
+  def find_a_parent(parent)
+    while parent
+      parent_tve = @working_draft.name_in_version(parent)
+      return parent_tve if parent_tve
+      parent = parent.parent
+    end
+    @working_draft.tree_version_elements.order(tree_element_id: 'asc').first
+  end
+
 end

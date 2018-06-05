@@ -29,7 +29,7 @@ class NamesDeleteConfirmForEditorSimpleTest < ActionController::TestCase
   end
 
   def a
-    "http://localhost:9090/nsl/services/name/apni/#{@name.id}/api/delete"
+    "http://localhost:9090/nsl/services/rest/name/apni/#{@name.id}/api/delete"
   end
 
   def b

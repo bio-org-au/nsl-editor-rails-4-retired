@@ -29,7 +29,7 @@ class NameAsServicesDeleteError500Test < ActiveSupport::TestCase
   end
 
   def s1
-    "http://localhost:9090/nsl/services/name/apni/540036697/"
+    "http://localhost:9090/nsl/services/rest/name/apni/540036697/"
   end
 
   def s2

@@ -1,0 +1,41 @@
+<%= text_area_tag("update_comment[comment]", @tree_version_element.comment, escaped: false, title: 'Edit comment', rows: 4, class: 'form-control', tabindex: increment_tab_index) %>
+
+<button type="submit"
+        id="update_comment_btn"
+        class="btn btn-primary left"
+        name="update_comment[update]"
+        tabindex="<%= increment_tab_index %>"
+        title="Update this comment"
+        onclick="$('#update_comment_btn').find('i.fa').addClass('fa-spin');"
+>Update comment <i class="fa fa-refresh"></i>
+</button>
+<button type="button"
+        id="delete_comment_btn"
+        class="btn btn-warning right"
+        name="delete_comment_btn"
+        tabindex="<%= increment_tab_index %>"
+        title="delete this comment"
+        onclick="$('#confirm_delete_comment').show();$('#update_comment_btn').hide();$('#delete_comment_btn').prop('disabled', true);$('#cancel_delete_comment_btn').focus();"
+>Delete comment
+</button>
+<div style="display: none" id="confirm_delete_comment">
+  <button type="submit"
+          id="confirm_delete_comment_btn"
+          class="btn btn-danger left"
+          name="update_comment[delete]"
+          tabindex="<%= tab_index(2) %>"
+          title="Update this comment"
+          onclick="$('#confirm_delete_comment_btn').find('i.fa').addClass('fa-spin');$('#update_comment_comment').val('')"
+  >Confirm delete <i class="fa fa-trash"></i>
+  </button>
+  <button type="button"
+          id="cancel_delete_comment_btn"
+          class="btn right"
+          name="update_comment[delete]"
+          tabindex="<%= increment_tab_index %>"
+          title="delete this comment"
+          onclick="$('#confirm_delete_comment').hide();$('#update_comment_btn').show();$('#delete_comment_btn').prop('disabled', false);$('#confirm_delete_comment_btn').find('i.fa').removeClass('fa-spin');"
+  >Cancel delete
+  </button>
+  <% increment_tab_index %>
+</div>

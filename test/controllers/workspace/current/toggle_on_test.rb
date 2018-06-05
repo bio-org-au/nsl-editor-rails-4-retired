@@ -21,7 +21,7 @@ require "test_helper"
 class WorkspaceCurrentToggleOnTest < ActionController::TestCase
   tests ::Trees::Workspaces::CurrentController
   setup do
-    @tree = tree_arrangements(:for_test)
+    @tree = tree_version(:draft_version)
   end
 
   test "toggle workspace on" do
@@ -32,9 +32,9 @@ class WorkspaceCurrentToggleOnTest < ActionController::TestCase
          user_full_name: "Fred Jones",
          groups: %w(edit treebuilder))
     assert_response :success
-    assert @request.session["workspace"].present?,
-           "Sesssion workspace expected"
-    assert @request.session["workspace"]["id"].to_i == @tree.id,
-           "Session workspace ID should match expected."
+    assert @request.session["draft"].present?,
+           "Session draft expected, but not there."
+    assert @request.session["draft"]["id"].to_i == @tree.id,
+           "Session draft ID should match expected."
   end
 end

@@ -58,7 +58,7 @@ class InstanceAsServicesTrueSuccess200Test < ActiveSupport::TestCase
   end
 
   def action
-    "http://localhost:9090/nsl/services/instance/apni/200/api/delete"
+    "http://localhost:9090/nsl/services/rest/instance/apni/200/api/delete"
   end
 
   test "instance delete service true success 200" do

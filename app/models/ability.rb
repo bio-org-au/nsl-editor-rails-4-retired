@@ -104,6 +104,7 @@ class Ability
     can "workspace_values",    :all
     can "trees/workspaces/current", "toggle"
     can "names/typeaheads/for_workspace_parent_name", :all
+    can "menu", "tree"
   end
 
   def admin_auth

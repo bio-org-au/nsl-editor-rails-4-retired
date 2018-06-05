@@ -1,0 +1,62 @@
+<% if !@instance.cited_by_id %>
+  <div>
+    <h1>Replace instance:
+      <%= render partial: "instances/workspace/widgets/placement_indicator", locals: {tree_version_element: @tree_version_element} %>
+    </h1>
+    <%= form_tag({controller: 'trees', action: 'replace_placement'}, {method: :patch, remote: true}) do %>
+      <%= hidden_field_tag("move_placement[element_link]", @tree_version_element.element_link) %>
+      <%= hidden_field_tag("move_placement[instance_id]", @instance.id) %>
+
+      <dl class="dl-horizontal">
+        <dt>Full Name</dt>
+        <dd><%= @instance.name.full_name_html.html_safe %></dd>
+        <dt>Reference</dt>
+        <dd><%= @instance.reference.citation %></dd>
+
+        <dt>Excluded</dt>
+        <dd>
+          <%= check_box_tag("move_placement[excluded]", true, @tree_version_element.tree_element.excluded, title: 'Exclude this') %>
+          <label for="move_placement_excluded" class="exclude-label">exclude</label>
+        </dd>
+        <dt><%= @tree_version_element.comment_key %></dt>
+        <dd>
+          <%= text_area_tag("move_placement[comment]", @tree_version_element.comment, escaped: false, title: 'Edit comment', rows: 4, class: 'form-control') %>
+          <button type="button"
+                  class="btn btn-warning clear-area"
+                  onclick="$('#move_placement_comment').val('');">Clear comment
+          </button>
+        </dd>
+        <dt><%= @tree_version_element.distribution_key %></dt>
+        <dd>
+          <%= text_area_tag("move_placement[distribution]", @tree_version_element.distribution, title: 'Edit distribution', rows: 2, class: 'form-control') %>
+          <button type="button"
+                  class="btn btn-warning clear-area"
+                  onclick="$('#move_placement_distribution').val('');">Clear distribution
+          </button>
+        </dd>
+      </dl>
+
+      <%= render partial: "instances/workspace/forms/name_typeahead" %>
+
+      <button type="submit"
+              id="update-name-placement-btn"
+              class="btn btn-primary"
+              name="move_placement[update]"
+              tabindex="<%= increment_tab_index %>"
+              title="Update the name on the tree."
+              onclick="$('#update-name-placement-btn').find('i.fa').addClass('fa-spin');"
+      >Use this instance <i class="fa fa-refresh"></i></button>
+
+      <div id="movement-message-container"
+           class="message-container hidden">
+
+      </div>
+      <div id="movement-error-message-container"
+           class="message-container error hidden">
+        <h4>Errors found.</h4>
+        <div id="movement-error-message"></div>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+

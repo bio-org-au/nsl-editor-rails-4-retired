@@ -1,0 +1,79 @@
+<div id="tree-reports-inner" class="width-95-percent reports-inner">
+  <ul class="nav nav-tabs" id="tree-report-tabs" role="tablist">
+    <li class="nav-item active">
+      <a class="nav-link"
+         id="diff-tab"
+         data-toggle="tab"
+         href="#treeDiff"
+         role="tab"
+         title="Diff"
+         aria-controls="diff"
+         aria-selected="true"
+         onclick="loadReport($('#diff-content'), '<%= @diff_link.html_safe %>');"
+      >Diff <span title="click to refresh" class="text-muted "><i class="fa fa-refresh"></i></span></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link"
+         id="alt-syn-tab"
+         data-toggle="tab"
+         href="#treeAltSyn"
+         role="tab"
+         title="Altered Synonymy"
+         aria-controls="Altered Synonymy"
+         aria-selected="false"
+         onclick="loadAleredSynonymyReport($('#synonymy-content'), '<%= @syn_link.html_safe %>');"
+      >Altered Synonymy <span title="click to refresh" class="text-muted "><i class="fa fa-refresh"></i></span></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link"
+         id="validation-tab"
+         data-toggle="tab"
+         href="#treeValidation"
+         role="tab"
+         title="Tree validation report"
+         aria-controls="Tree validation"
+         aria-selected="false"
+         onclick="loadReport($('#validation-content'), '<%= @val_link.html_safe %>');"
+      >Validation Report <span title="click to refresh" class="text-muted "><i class="fa fa-refresh"></i></span></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link"
+         id="val-syn-tab"
+         data-toggle="tab"
+         href="#treeValidateSyn"
+         role="tab"
+         title="Validate all  Synonymy"
+         aria-controls="Validate all Synonymy"
+         aria-selected="false"
+         onclick="loadReport($('#validate-synonymy-content'), '<%= @val_syn_link.html_safe %>');"
+      >Validate all Synonymy <span title="click to refresh" class="text-muted "><i class="fa fa-refresh"></i></span></a>
+    </li>
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade active in" id="treeDiff" role="tabpanel" aria-labelledby="diff-tab">
+      <div id="diff-content" class="tree-container">
+        Loading diff report...
+      </div>
+    </div>
+    <div class="tab-pane fade" id="treeAltSyn" role="tabpanel" aria-labelledby="alt-syn-tab">
+      <form action="<%= trees_update_synonymy_path %>" data-remote="true" method="post">
+        <div id="synonymy-content" class="tree-container">
+          Loading altered synonymy report...
+        </div>
+        <input type="submit" class="btn btn-primary hidden" name="update_selected_synonymy" id="update_selected_synonymy"
+               value="Update selected" title="Update selected"/>
+      </form>
+    </div>
+    <div class="tab-pane fade" id="treeValidation" role="tabpanel" aria-labelledby="validation-tab">
+      <div id="validation-content" class="tree-container">
+        Loading validation report...
+      </div>
+    </div>
+    <div class="tab-pane fade" id="treeValidateSyn" role="tabpanel" aria-labelledby="val-syn-tab">
+      <div id="validate-synonymy-content" class="tree-container">
+        Loading validate all synonymy report...
+      </div>
+    </div>
+  </div>
+
+</div>

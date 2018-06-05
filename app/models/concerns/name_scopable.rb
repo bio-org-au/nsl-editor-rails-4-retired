@@ -146,5 +146,10 @@ module NameScopable
              'Species') and sort_order <=(select sort_order from name_rank where
              name = 'Subforma') ) ")
            end)
+    scope :family_name,
+          (lambda do
+            joins(:name_rank)
+                .where("name_rank.name = 'Familia'")
+          end)
   end
 end

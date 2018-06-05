@@ -1,8 +1,7 @@
-<% if @name.apni_tree_path.present? %>
 <%= divider %>
-APNI Tree
+Name Parents
 <ul class="tree">
-<% @name.apni_tree_path.tree_ordered_names.each do |step| %>
+  <% @name.names_in_path.reverse.each do |step| %>
   <li>
   <%= link_to(%Q(#{step.full_name}<span class="pull-right">#{step.name_rank.name}</span>).html_safe,
                                         search_path(query_string: "id: #{step.id}",query_target: 'names'),
@@ -11,5 +10,4 @@ APNI Tree
                           class: '') %>
 <% end %>
 </ul>
-<% end %>
 

@@ -16,27 +16,31 @@
 #   limitations under the License.
 #
 class Tree::Workspace::Placement < ActiveType::Object
-  include WorkspaceParentNameResolvable
-  attribute :name_id, :integer
   attribute :instance_id, :integer
-  attribute :parent_name_id, :integer
-  attribute :parent_name_typeahead, :string
-  attribute :workspace_id, :integer
-  attribute :placement_type, :string
+  attribute :parent_element_link, :string
+  attribute :excluded, :boolean
   attribute :username, :string
-  attr_reader :resolved_parent_name_id, :integer
+  attribute :profile, :hash
+  attribute :version_id, :integer
 
-  validates :name_id, presence: true
   validates :instance_id, presence: true
-  validates :placement_type, presence: true
-  validates :workspace_id, presence: true
+  # validates :parent_element_link, presence: true
   validates :username, presence: true
+  validates :version_id, presence: true
 
-  def save
-    resolve_parent
-    build_url
+  def place
+
+    url = build_url
+    payload = {instanceUri: instance_url,
+               parentElementUri: parent_element_link,
+               excluded: excluded,
+               profile: profile,
+               versionId: version_id
+    }
+    logger.info "Calling #{url} with #{payload}"
     raise errors.full_messages.first unless valid?
-    RestClient.post(@url, accept: :json)
+    RestClient.put(url, payload.to_json,
+                   {content_type: :json, accept: :json})
   rescue RestClient::ExceptionWithResponse => e
     Rails.logger.error("Tree::Workspace::Placement error: #{e}")
     raise
@@ -45,19 +49,13 @@ class Tree::Workspace::Placement < ActiveType::Object
     raise
   end
 
+
   def build_url
-    @url = Tree::AsServices.placement_url(username: username,
-                                          tree_id: workspace_id,
-                                          name_id: name_id,
-                                          instance_id: instance_id,
-                                          parent_name: @resolved_parent_name_id,
-                                          placement_type: placement_type)
+    Tree::AsServices.placement_url(username, parent_element_link.blank?)
   end
 
-  def resolve_parent
-    @resolved_parent_name_id = resolve_parent_name(
-      parent_name_id: parent_name_id,
-      parent_name_typeahead: parent_name_typeahead
-    )
+  def instance_url
+    Tree::AsServices.instance_url(instance_id)
   end
+
 end

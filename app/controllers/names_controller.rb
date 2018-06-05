@@ -58,6 +58,11 @@ class NamesController < ApplicationController
     render json: typeahead.suggestions
   end
 
+  def name_family_suggestions
+    typeahead = Name::AsTypeahead::ForFamily.new(params)
+    render json: typeahead.suggestions
+  end
+
   # Columns such as parent and duplicate_of_id use a typeahead search.
   def cultivar_parent_suggestions
     render json: [] if params[:term].blank?
@@ -238,6 +243,8 @@ class NamesController < ApplicationController
                                  :base_author_typeahead,
                                  :ex_base_author_typeahead,
                                  :sanctioning_author_typeahead,
+                                 :family_id,
+                                 :family_typeahead,
                                  :parent_id,
                                  :second_parent_id,
                                  :parent_typeahead,

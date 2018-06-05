@@ -9,9 +9,9 @@ module NameParentResolvable
     ta_field = "#{field_name_stub}_typeahead"
     if params.key?(key_field)
       send("#{key_field}=", Name::AsResolvedTypeahead::ForParent.new(
-        params[key_field],
-        params[ta_field],
-        field_name_stub.capitalize
+          params[key_field],
+          params[ta_field],
+          field_name_stub.capitalize
       ).value)
     end
   end

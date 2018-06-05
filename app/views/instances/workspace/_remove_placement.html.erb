@@ -1,28 +1,26 @@
+<% if @working_draft.user_can_edit?(@current_user) %>
+    <% if @tree_version_element.present? %>
+        <%= form_tag({controller: 'trees', action: 'remove_name_placement'}, {method: :delete, remote: true}) do %>
+            <%= hidden_field_tag("remove_placement[taxon_uri]", @tree_version_element.element_link) %>
 
-<% if @current_workspace.user_can_edit?(@current_user) %>
-  <% if @name_node_tree_link.node.delete? %>
-    <%= form_tag({controller: 'trees', action: 'remove_name_placement'}, {method: :delete, remote: true}) do %>
-                <%= hidden_field_tag("remove_placement[name_id]", @instance.name.id) %>
-                <%= hidden_field_tag("remove_placement[instance_id]", @instance.id) %>
-                <h3>Remove <%= @instance.name.full_name_html.html_safe %> from
-                  <%= @current_workspace.title %></h3>
-                <div class="text-right">
-                <%= submit_tag "Remove",
-                             id: "remove_name_placement",
-                             class: "btn btn-primary width-6em pull-right",
-                             name: "remove_placement[delete]",
-                             tabindex: increment_tab_index,
-                             title: "Select to remove this name." %>
-                </div>
-                <br/>
+            <h3>Remove <%= @instance.name.full_name_html.html_safe %> from
+              <%= @working_draft.draft_name %></h3>
+            <div class="text-right">
 
-                           <div id="remove-placement-error-message-container"
-                             class="error-message-container red hidden"></div>
+              <button type="submit"
+                      id="remove_name_placement"
+                      class="btn btn-danger"
+                      name="remove_placement[delete]"
+                      tabindex="<%= increment_tab_index %>"
+                      title="Remove this name from the tree."
+                      onclick="$('#remove_name_placement').find('i.fa').addClass('fa-spin');"
+              >Remove <i class="fa fa-refresh"></i></button>
+            </div>
 
-     <% end %>
-   <% else %>
-     Has <%= pluralize(@name_node_tree_link.node.subnodes.size,'child') %>, cannot remove.
- <% end %>
-    <span id="remove-placement-message-container" class="message-container green hidden"></span>
-    <div id="remove-placement-error-message-container" class="error-message-container red hidden"></div>
+        <% end %>
+    <% else %>
+        <p>Um, shouldn't be here really, sorry.</p>
+    <% end %>
+    <div id="remove-placement-message-container" class="message-container hidden"></div>
+    <div id="remove-placement-error-message-container" class="message-container error hidden"></div>
 <% end %>

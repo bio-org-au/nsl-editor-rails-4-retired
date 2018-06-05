@@ -19,7 +19,7 @@
 class Names::Typeaheads::ForWorkspaceParentNameController < ApplicationController
   def index
     typeahead = Name::AsTypeahead::ForWorkspaceParentName
-                .new(params, @current_workspace)
+                .new(params, @working_draft)
     render json: typeahead.suggestions
   end
 

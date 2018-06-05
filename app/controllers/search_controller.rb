@@ -47,18 +47,6 @@ class SearchController < ApplicationController
     @search = Search::Error.new(params) unless @search.present?
   end
 
-  def tree
-    set_tree_defaults
-    @search = Search::Tree.new(params)
-    @ng_template_path = tree_ng_path("dummy").gsub(/dummy/, "")
-    logger.debug("@ng_template_path: #{@ng_template_path}")
-    render "trees/index"
-  rescue => e
-    logger.error("SearchController::tree exception: #{e}")
-    params[:error_message] = e.to_s
-    @search = Search::Error.new(params)
-  end
-
   def set_include_common_and_cultivar
     session[:include_common_and_cultivar] = \
       !session[:include_common_and_cultivar]
@@ -76,17 +64,6 @@ class SearchController < ApplicationController
 
   def trim_session_searches
     session[:searches].shift if session[:searches].size > 2
-  end
-
-  def tree_search
-    set_tree_defaults
-    @search = Search::Tree.new(params)
-    @ng_template_path = tree_ng_path("dummy").gsub(/dummy/, "")
-    render "trees/index"
-  rescue => e
-    logger.error("SearchController::tree exception: #{e}")
-    params[:error_message] = e.to_s
-    @search = Search::TreeError.new(params)
   end
 
   def handle_old

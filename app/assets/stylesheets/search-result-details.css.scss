@@ -1,10 +1,15 @@
 #search-result-details {
-  -webkit-box-shadow: 0 2px 3px black;
-  -moz-box-shadow: 0 2px 3px black;
-  box-shadow: 0 2px 3px black;
+  //-webkit-box-shadow: 0 2px 3px black;
+  //-moz-box-shadow: 0 2px 3px black;
+  box-shadow: 5px 5px 2px 1px rgba(0, 0, 0, .2);
   outline:none;
 	overflow: hidden;
 }
+
+div.focus-details h1 {
+  font-size: 18px;
+}
+
 #search-result-details h3 {
   font-size: 14px;
 }

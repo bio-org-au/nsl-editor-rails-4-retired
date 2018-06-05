@@ -28,7 +28,7 @@ class InstancesDeleteForEditorTest < ActionController::TestCase
   end
 
   def a
-    "http://localhost:9090/nsl/services/instance/apni/#{@instance.id}"
+    "http://localhost:9090/nsl/services/rest/instance/apni/#{@instance.id}"
   end
 
   def b

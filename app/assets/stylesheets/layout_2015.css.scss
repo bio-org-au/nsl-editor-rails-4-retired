@@ -73,10 +73,6 @@
         margin-bottom: 2em;
       }
 
-      div#example-search-container {
-        top: 150px;
-      }
-
       div#example-search-inner {
         width: 90%;
         position: fixed;
@@ -88,19 +84,13 @@
         margin-bottom: 1em;
       }
 
-      div#search-reports-inner,
-      div#search-help-inner,
-      div#search-history-inner,
-      div#search-examples-inner,
-      div#search-advanced-inner {
+      div.reports-inner {
         width: 98%;
-        position: fixed;
-        top: 160px;
+        position: relative;
+        top: 0px;
         left: 12px;
-        overflow: auto;
         min-height: 300px;
-        height: 80%;
-        margin-bottom: 1em;
+        //margin-bottom: 4em;
         margin-right: 1em;
       }
 
@@ -131,6 +121,9 @@ span#set-include-common-and-cultivar a:hover,
 span#set-include-common-and-cultivar a:focus,
 ul.navbar-nav a.dropdown-toggle:hover,
 ul.navbar-nav a.dropdown-toggle:focus,
+.search-btn {
+  background-color: white;
+}
 .search-btn:hover,
 .search-btn:focus {
   background: lightgray;

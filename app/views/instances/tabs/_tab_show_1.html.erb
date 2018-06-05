@@ -10,48 +10,54 @@
   <%= render 'instances/tabs/show_standalone' %>
 
 <% end %>
-
-
-<%= divider %>
-
-<%= render partial: 'detail_line', locals: {info: @instance.cites_id, label: 'cites_id'}  if @debug%>
-<%= render partial: 'detail_line', locals: {info: @instance.cited_by_id, label: 'cited_by_id'} if @debug %>
+<% if @instance.cites_id.present? || @instance.cited_by_id.present? %>
+  <dl class="dl-horizontal">
+    <dt>cites id</dt>
+    <dd><%= @instance.cites_id %></dd>
+    <dt>cited by id</dt>
+    <dd><%= @instance.cited_by_id %></dd>
+  </dl>
+<% else %>
+  <%= divider %>
+<% end %>
 
 <% if @instance.instance_notes.size > 0 %>
-    <div id="instance-note-fields" >
-    <h5>Notes</h5>
-    <% @instance.instance_notes.sort{|x,y| [x.instance_note_key.sort_order,x.value.downcase] <=> [y.instance_note_key.sort_order,y.value.downcase]}.each do |instance_note| %>
-        <div id="container-for-instance-note-<%= instance_note.id %>">
-            <%= render partial: 'instance_notes/show', locals: {instance_note: instance_note} %>
-        </div>
+  <h5>Notes</h5>
+  <dl class="dl-horizontal">
+    <% @instance.instance_notes.non_apc.sort {|x, y| [x.instance_note_key.sort_order, x.value.downcase] <=> [y.instance_note_key.sort_order, y.value.downcase]}.each do |instance_note| %>
+      <dt><%= instance_note.instance_note_key.name %></dt>
+      <dd><%= instance_note.value.html_safe %></dd>
     <% end %>
-    </div>
-    <br>
-    <%= divider %>
- <% end %>
+  </dl>
+<% end %>
 
-<% if @instance.comments.size > 0  %>
-  <h5><%= pluralize(@instance.comments.size,'Comment') %></h5>
-  <% @instance.comments.sort{|x,y| x.created_at <=> y.created_at}.each do |comment|  %>
+<% if @instance.comments.size > 0 %>
+  <h5><%= pluralize(@instance.comments.size, 'Comment') %></h5>
+  <% @instance.comments.sort {|x, y| x.created_at <=> y.created_at}.each do |comment| %>
     <%= render partial: 'comments/show', locals: {comment: comment} %>
     <%= divider %>
   <% end %>
 <% end %>
 
-<% if @name_node_tree_link.present? && @name_node_tree_link.placed_via_instance?(@instance) %>
-  <br/><%= @name_node_tree_link.placed_as.capitalize %> in <%= @current_workspace.name %>
-  <%= render partial: "instances/workspace/widgets/placement_indicator", locals: { name_node_tree_link: @name_node_tree_link, workspace: @current_workspace } %>
-  <% if @name_node_tree_link.distribution_value? %>
-    <br>
-    <%= @name_node_tree_link.distribution_value.field_name.capitalize %>:
-    <%= @name_node_tree_link.distribution_value.field_value %>
-    <br>
+<% if @instance.in_local_trees? %>
+  <div>
+    <dl class="dl-horizontal">
+      <dt>Local trees</dt>
+      <dd><%= @instance.in_local_tree_names %></dd>
+    </dl>
+  </div>
+<% end %>
+
+<% if @accepted_tve.present? && @accepted_tve.tree_element.instance.id == @instance.id %>
+
+  <%= render partial: "instances/tabs/tab_show_tree", locals: {tve: @accepted_tve} %>
+
+<% else
+     if @tree_version_element.present? && @tree_version_element.tree_element.instance.id == @instance.id %>
+
+    <%= render partial: "instances/tabs/tab_show_tree", locals: {tve: @tree_version_element} %>
+
   <% end %>
-  <% if @name_node_tree_link.comment_value? %>
-    <br><%= @name_node_tree_link.comment_value.field_name.capitalize %>:
-    <%= @name_node_tree_link.comment_value.field_value %>
-  <% end %>
-  <%= divider %>
 <% end %>
 
 <h5>Instance #<%= @instance.id %></h5>

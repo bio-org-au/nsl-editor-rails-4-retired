@@ -3,4 +3,6 @@ $('#form-update-error-message-container').html('<%= escape_javascript(@message) 
 <% if @multiple_primary_warning %>
   $('#extra-primary-warning').removeClass('hidden');
 <% end %>
-
+<% if @allow_bypass %>
+$('#concept-warning').removeClass('hidden');
+<% end %>

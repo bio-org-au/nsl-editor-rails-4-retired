@@ -27,7 +27,7 @@ class NameAsServicesDeleteSuccessTest < ActiveSupport::TestCase
   end
 
   def action
-    "http://localhost:9090/nsl/services/name/apni/540036697/api/delete"
+    "http://localhost:9090/nsl/services/rest/name/apni/540036697/api/delete"
   end
 
   def reason
