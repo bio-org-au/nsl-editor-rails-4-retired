@@ -10,11 +10,25 @@
   }
 
   .diffBefore {
-    background-color: rgba(235, 21, 31, 0.1);
+    border-left: 10px solid rgba(235, 21, 31, 0.1);
+    background-color: rgba(235, 21, 31, 0.02);
   }
 
   .diffAfter {
-    background-color: rgba(12, 235, 2, 0.1);
+    border-left: 10px solid rgba(12, 235, 2, 0.1);
+    background-color: rgba(12, 235, 2, 0.02);
+  }
+
+  .noTop > td {
+    border-top: none !important;
+  }
+
+  .noBottom > td {
+    border-bottom: none !important;
+  }
+
+  tr.sep {
+    border-top: 3px solid grey;
   }
 
   div.wrap {
@@ -298,6 +312,13 @@ tr.titleRow {
   font-weight: bold;
   background-color: RGBA(256, 256, 0, 0.30) !important;
   padding: 2px 10px 0 10px;
-  border-radius: 40px;
-  border: 3px solid red;
+  border-bottom: 1px solid red;
+
+}
+
+.targetHighlight {
+  display: inline-block;
+  font-weight: bold;
+  background-color: RGBA(256, 256, 0, 0.30) !important;
+  border-bottom: 1px solid red;
 }
