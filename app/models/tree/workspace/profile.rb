@@ -27,7 +27,7 @@ class Tree::Workspace::Profile < ActiveType::Object
     logger.info "Calling #{url} with #{payload}"
     raise errors.full_messages.first unless valid?
     RestClient.post(url, payload.to_json,
-                    {content_type: :json, accept: :json})
+                    {content_type: 'application/json; charset=utf-8', accept: 'application/json; charset=utf-8'})
   rescue RestClient::ExceptionWithResponse => e
     Rails.logger.error("Tree::Workspace::Profile error: #{e}")
     raise

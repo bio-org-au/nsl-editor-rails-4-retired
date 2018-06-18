@@ -246,19 +246,6 @@ class TreesController < ApplicationController
 
   private
 
-  # todo determine if this should be removed.
-  # def minor_update_profile(tve, key)
-  #   data = tve.tree_element.profile
-  #   current_key_data = data[key]
-  #   data[key] = { value: params[:value],
-  #                 updated_by: current_user.username,
-  #                 updated_at: Time.now.utc.iso8601,
-  #                 previous: current_key_data }
-  #   Tree::Workspace::Profile.new(username: current_user.username,
-  #                                element_link: tve.element_link,
-  #                                profile_data: data)
-  # end
-
   def json_error(err)
     logger.error(err)
     json = JSON.parse(err.http_body, object_class: OpenStruct)
