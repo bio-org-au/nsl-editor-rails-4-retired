@@ -65,7 +65,6 @@ class InstanceTabsNotesTest < ActionController::TestCase
       assert_select "option", /\AVernacular\z/i, "Needs Vernacular option."
       assert_select "input#instance-note-create-btn", 1, "Needs create button."
     end
-    assert_select "option", { text: /APC/i, count: 0 }, "No APC options."
   end
 
   def asserts3
