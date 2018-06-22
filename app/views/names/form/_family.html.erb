@@ -1,12 +1,11 @@
-<div class="form-group">
-  <label for="name-family-typeahead">Family</label>
+<% if @name.should_have_family? %>
+  <div class="form-group">
+    <label for="name-family-typeahead">Family*</label>
   <input id="name-family-typeahead"
          name="name[family_typeahead]"
          class="typeahead form-control requires-rank"
          data-name-id="<%= @name.id %>"
-         <% if @name.should_have_family? %>
          required
-         <% end %>
          type="text"
          tabindex="<%= increment_tab_index %>"
          title="Name family will be suggested as you type, so please select from the list. Duplicates and names without instances are excluded."
@@ -20,3 +19,4 @@
 <%= hidden_field(:name, :family_id, value: @name.family_id) %>
 
 <script>setUpNameFamilyTypeahead();</script>
+<% end %>

@@ -45,8 +45,5 @@ module NameRankable
         .order(:sort_order).reverse_order.first
   end
 
-  def should_have_family?
-    name_rank.below_family?
-  end
 
 end
