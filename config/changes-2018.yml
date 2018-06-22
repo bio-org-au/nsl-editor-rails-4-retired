@@ -25,3 +25,15 @@
   :jira_id: '2499'
   :description: |-
     Correct the ordering of instances by page.
+- :date: 13-Jun-2018
+  :jira_id: '2438'
+  :description: |-
+    New tree structure and editing.
+- :date: 22-Jun-2018
+  :jira_id: '2842'
+  :description: |-
+    Add a check if a name needs a Family. Alter the name edit form to leave out Family if not required.
+- :date: 22-Jun-2018
+  :jira_id: '2831'
+  :description: |-
+    Allow editing of existing APC comment and distribution notes. Note that notes that are on a tree should be removed from instance notes.
