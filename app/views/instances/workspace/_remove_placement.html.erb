@@ -1,26 +1,54 @@
 <% if @working_draft.user_can_edit?(@current_user) %>
-    <% if @tree_version_element.present? %>
-        <%= form_tag({controller: 'trees', action: 'remove_name_placement'}, {method: :delete, remote: true}) do %>
-            <%= hidden_field_tag("remove_placement[taxon_uri]", @tree_version_element.element_link) %>
+  <% if @tree_version_element.present? %>
 
-            <h3>Remove <%= @instance.name.full_name_html.html_safe %> from
-              <%= @working_draft.draft_name %></h3>
-            <div class="text-right">
+    <div>
+      <%= form_tag({controller: 'trees', action: 'remove_name_placement'}, {method: :delete, remote: true}) do %>
+        <%= hidden_field_tag("remove_placement[taxon_uri]", @tree_version_element.element_link) %>
 
-              <button type="submit"
-                      id="remove_name_placement"
-                      class="btn btn-danger"
-                      name="remove_placement[delete]"
-                      tabindex="<%= increment_tab_index %>"
-                      title="Remove this name from the tree."
-                      onclick="$('#remove_name_placement').find('i.fa').addClass('fa-spin');"
-              >Remove <i class="fa fa-refresh"></i></button>
-            </div>
+        <h3>Remove <%= @instance.name.full_name_html.html_safe %> from
+          <%= @working_draft.draft_name %></h3>
 
-        <% end %>
-    <% else %>
-        <p>Um, shouldn't be here really, sorry.</p>
-    <% end %>
-    <div id="remove-placement-message-container" class="message-container hidden"></div>
-    <div id="remove-placement-error-message-container" class="message-container error hidden"></div>
+        <div class="text-right">
+          <button type="button"
+                  id="remove_name_placement"
+                  name="remove_name_placement"
+                  class="btn btn-warning"
+                  tabindex="<%= increment_tab_index %>"
+                  title="Remove this name from the tree."
+                  onclick="$('#confirm_remove_placement').show();$('#remove_name_placement').prop('disabled', true);$('#cancel_remove_placement_btn').focus();"
+          >Remove
+          </button>
+        </div>
+        <div style="display: none" id="confirm_remove_placement">
+          <% if @tree_version_element.count_children > 0 %>
+            <p><strong><i class="fa fa-warning"></i> You are going to remove <%= @tree_version_element.count_children %>
+              Sub taxa</strong></p>
+          <% end %>
+          <button type="submit"
+                  id="confirm_remove_placement_btn"
+                  name="remove_placement[delete]"
+                  class="btn btn-danger"
+                  tabindex="<%= increment_tab_index %>"
+                  title="Really remove this name from the tree."
+                  onclick="$('#confirm_remove_placement_btn').find('i.fa').addClass('fa-spin');"
+          >Confirm Remove <i class="fa fa-trash"></i></button>
+
+          <button type="button"
+                  id="cancel_remove_placement_btn"
+                  name="cancel_remove_placement[delete]"
+                  class="btn right"
+                  tabindex="<%= increment_tab_index %>"
+                  title="cancel action"
+                  onclick="$('#confirm_remove_placement').hide();$('#remove_name_placement').prop('disabled', false);$('#confirm_remove_placement_btn').find('i.fa').removeClass('fa-spin');"
+          >Cancel remove
+          </button>
+        </div>
+      <% end %>
+    </div>
+
+  <% else %>
+    <p>Um, shouldn't be here really, sorry.</p>
+  <% end %>
+  <div id="remove-placement-message-container" class="message-container hidden"></div>
+  <div id="remove-placement-error-message-container" class="message-container error hidden"></div>
 <% end %>

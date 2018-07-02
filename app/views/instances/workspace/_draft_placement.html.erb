@@ -110,7 +110,8 @@
   </dl>
 </div>
 
-<%= "<strong>#{@tree_version_element.count_children} Sub taxa</strong>".html_safe %>
+<strong><%= @tree_version_element.count_children %> Sub taxa</strong>
+
 <script>
     function updateExcluded(input, taxonUri) {
         var data = {
