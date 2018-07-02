@@ -37,3 +37,7 @@
   :jira_id: '2831'
   :description: |-
     Allow editing of existing APC comment and distribution notes. Note that notes that are on a tree should be removed from instance notes.
+- :date: 2-Jul-2018
+  :jira_id: '2773'
+  :description: |-
+    Add confirm remove and warning of sub taxa removal when removing a taxon from the draft tree.
