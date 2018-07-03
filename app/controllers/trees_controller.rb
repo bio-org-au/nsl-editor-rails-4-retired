@@ -119,6 +119,17 @@ class TreesController < ApplicationController
     render "update_synonymy_error.js"
   end
 
+  def update_synonymy_by_instance
+    logger.info "Update synonymy by instance"
+    Tree::AsServices.update_synonymy_by_instance(request.raw_post, current_user.username)
+  rescue RestClient::Unauthorized, RestClient::Forbidden => e
+    @message = json_error(e)
+    render "update_synonymy_error.js"
+  rescue RestClient::Exception => e
+    @message = json_error(e)
+    render "update_synonymy_error.js"
+  end
+
   # Move an existing taxon (inc children) under a different parent
   def replace_placement
     logger.info("In replace placement!")

@@ -311,6 +311,11 @@ Rails.application.routes.draw do
         to: "trees#update_synonymy",
         via: :post
 
+  match "trees/update_synonymy_by_instance",
+        as: "trees_update_synonymy_by_instance",
+        to: "trees#update_synonymy_by_instance",
+        via: :post
+
   match "search/reports",
         as: "search_reports",
         to: "search#reports",

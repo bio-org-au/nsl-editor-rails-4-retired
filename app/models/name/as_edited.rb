@@ -24,17 +24,21 @@ class Name::AsEdited < Name::AsTypeahead
   def self.create(params, typeahead_params, username)
     name = Name::AsEdited.new(params)
     name.resolve_typeahead_params(typeahead_params)
-    if name.parent
-      name.name_path = name.parent.name_path + '/' + name.name_element
-    else
-      name.name_path = name.name_element
-    end
+    name.name_path = create_name_path(name)
     if name.save_with_username(username)
       name.set_names!
     else
       raise name.errors.full_messages.first.to_s
     end
     name
+  end
+
+  def self.create_name_path(name)
+    path = ""
+    path = name.parent.name_path if name.parent
+    path += "/" + name.name_element if name.name_element
+    # path += " x " + name.second_parent.name_element if name.second_parent TODO is this the right thing to do?
+    path
   end
 
   def update_if_changed(params, typeahead_params, username)

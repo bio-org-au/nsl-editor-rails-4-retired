@@ -45,8 +45,8 @@
          title="Validate all  Synonymy"
          aria-controls="Validate all Synonymy"
          aria-selected="false"
-         onclick="loadReport($('#validate-synonymy-content'), '<%= @val_syn_link.html_safe %>');"
-      >Validate all Synonymy <span title="click to refresh" class="text-muted "><i class="fa fa-refresh"></i></span></a>
+         onclick="loadCheckSynonymyReport($('#validate-synonymy-content'), '<%= @val_syn_link.html_safe %>');"
+      >Check all Synonymy <span title="click to refresh" class="text-muted "><i class="fa fa-refresh"></i></span></a>
     </li>
   </ul>
   <div class="tab-content" id="myTabContent">
@@ -70,9 +70,13 @@
       </div>
     </div>
     <div class="tab-pane fade" id="treeValidateSyn" role="tabpanel" aria-labelledby="val-syn-tab">
-      <div id="validate-synonymy-content" class="tree-container">
-        Loading validate all synonymy report...
-      </div>
+      <form action="<%= trees_update_synonymy_by_instance_path %>" data-remote="true" method="post">
+        <div id="validate-synonymy-content" class="tree-container">
+          Loading validate all synonymy report...
+        </div>
+        <input type="submit" class="btn btn-primary hidden" name="update_checked_synonymy" id="update_checked_synonymy"
+               value="Update selected" title="Update selected"/>
+      </form>
     </div>
   </div>
 

@@ -180,13 +180,14 @@ function loadReport(element, url) {
     $('.toggleNext').unbind('click').click(function () {
       toggleNext(this);
     });
-    debug('loaded report.')
+    debug('loaded report.');
     $(this).find('i').removeClass('fa-spin');
   });
 }
 
 function loadAleredSynonymyReport(element, url) {
   element.html('<h2>Loading <i class="fa fa-refresh fa-spin"</h2>');
+  $('#update_selected_synonymy').addClass('hidden');
   loadHtml(element, url, function (data) {
     element.html(data);
     if (element.find('input').length) {
@@ -198,9 +199,28 @@ function loadAleredSynonymyReport(element, url) {
       });
       $('#update_selected_synonymy').removeClass('hidden');
     }
-    debug('loaded synonymy report.')
+    debug('loaded synonymy report.');
   });
 }
+
+function loadCheckSynonymyReport(element, url) {
+  element.html('<h2>Loading <i class="fa fa-refresh fa-spin"</h2>');
+  $('#update_checked_synonymy').addClass('hidden');
+  loadHtml(element, url, function (data) {
+    element.html(data);
+    if (element.find('input').length) {
+      replaceDates();
+      linkNames(element);
+      linkSynonyms(element);
+      $('.toggleNext').unbind('click').click(function () {
+        toggleNext(this);
+      });
+      $('#update_checked_synonymy').removeClass('hidden');
+    }
+    debug('loaded synonymy report.');
+  });
+}
+
 
 var toggleNext = function (el) {
   $(el).find('i').toggle();

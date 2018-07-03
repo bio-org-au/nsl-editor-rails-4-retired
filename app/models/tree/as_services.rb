@@ -35,6 +35,7 @@ class Tree::AsServices
   SYN_LINK = "tree/eventReport"
   VAL_SYN_LINK = "tree/checkCurrentSynonymy"
   SYN_UPDATE_LINK = "tree-element/update-synonymy-by-event"
+  SYN_UPDATE_INST_LINK = "tree-element/update-synonymy-by-instance"
 
   API_KEY = "apiKey=#{Rails.configuration.api_key}"
   PREFERRED_LINK = "broker/preferredLink"
@@ -133,6 +134,16 @@ class Tree::AsServices
     url = syn_update_link(username)
     Rails.logger.info "calling #{url}"
     RestClient.post(url, events, {accept: :json})
+  end
+
+  def self.syn_update_inst_link(username)
+    "#{CLIENT_SIDE_SERVICES}#{SYN_UPDATE_INST_LINK}?#{API_KEY}&as=#{username}"
+  end
+
+  def self.update_synonymy_by_instance(instances, username)
+    url = syn_update_inst_link(username)
+    Rails.logger.info "calling #{url}"
+    RestClient.post(url, instances, {accept: :json})
   end
 
   def self.val_syn_link(tree)
