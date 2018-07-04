@@ -8,58 +8,62 @@
 -%>
 <% if @instance.allow_delete? %>
 
-<% confirm_delete_link = link_to("Confirm delete",
-                                 instance_path(@instance.id),
-                                 class: "btn btn-danger",
-                                 tabindex: increment_tab_index,
-                                 title: "Confirm the delete.",
-                                 remote: true,
-                                 method: :delete)
--%>
+  <% if @instance.this_is_cited_by.accepted_concept? %>
+    <div class="text-danger">Warning: you are changing the synononymy of an accepted concept.</div>
+  <% end %>
 
-<% cancel_delete_link = link_to("Cancel delete",
-                                '#',
-                                id: "cancel-delete-link",
-                                class: "btn btn-default cancel-link",
-                                title: "Cancel the delete.",
-                                tabindex: increment_tab_index,
-                                data: {enable_this_id: 'instance-delete-link',
-                                       hide_this_id: 'confirm-or-cancel-link-container'})
--%>
+  <% confirm_delete_link = link_to("Confirm delete",
+                                   instance_path(@instance.id),
+                                   class: "btn btn-danger",
+                                   tabindex: increment_tab_index,
+                                   title: "Confirm the delete.",
+                                   remote: true,
+                                   method: :delete)
+  -%>
 
-<% confirm_or_cancel_element = %Q(<div id="confirm-or-cancel-link-container"
+  <% cancel_delete_link = link_to("Cancel delete",
+                                  '#',
+                                  id: "cancel-delete-link",
+                                  class: "btn btn-default cancel-link",
+                                  title: "Cancel the delete.",
+                                  tabindex: increment_tab_index,
+                                  data: {enable_this_id: 'instance-delete-link',
+                                         hide_this_id: 'confirm-or-cancel-link-container'})
+  -%>
+
+  <% confirm_or_cancel_element = %Q(<div id="confirm-or-cancel-link-container"
                                   class="instance-note confirm-or-cancel-delete-link pull-right hidden">
                                   #{confirm_delete_link}
-#{cancel_delete_link}</div>)
--%>
-<div class="actions"> <%= delete_link.html_safe %> </div>
-<div class="width-100-percent"> <%= confirm_or_cancel_element.html_safe %> </div>
+  #{cancel_delete_link}</div>)
+  -%>
+  <div class="actions"> <%= delete_link.html_safe %> </div>
+  <div class="width-100-percent"> <%= confirm_or_cancel_element.html_safe %> </div>
 <% else %>
   You cannot delete this instance.
-    <br>
+  <br>
   <% if @instance.in_apc? %>
     Instance is in APC.
     <br>
   <% end %>
   <% if @instance.instance_notes.size > 0 %>
-    <span title="See the Notes tab." ><%= "Instance notes: #{@instance.instance_notes.size} (see the 'Notes' tab)" %></span>
+    <span title="See the Notes tab."><%= "Instance notes: #{@instance.instance_notes.size} (see the 'Notes' tab)" %></span>
     <br>
   <% end %>
   <% if @instance.reverse_of_this_cites.size > 0 %>
     <%= link_to("Instance is cited: #{@instance.reverse_of_this_cites.size} &nbsp; #{gray_search_icon}".html_safe,
-                 search_path(query_string: @instance.id.to_s,
-                                 query_target: 'instance is cited'), 
-               title: "Query the instances") %>
+                search_path(query_string: @instance.id.to_s,
+                            query_target: 'instance is cited'),
+                title: "Query the instances") %>
     <br>
   <% end %>
   <% if @instance.reverse_of_this_is_cited_by.size > 0 %>
     <%= link_to("Instance cited by #{citation_summary(@instance)} &nbsp; #{gray_search_icon}".html_safe,
-                 search_path(query_string: @instance.id.to_s, query_target: 'instance is cited by'),
-                 title: "Query the instances this is cited by.") %>
+                search_path(query_string: @instance.id.to_s, query_target: 'instance is cited by'),
+                title: "Query the instances this is cited by.") %>
     <br>
   <% end %>
   <% if @instance.comments.size > 0 %>
-    <span title="See the Adnot tab." ><%= "Instance Adnot: #{@instance.comments.size} (see the 'Adnot' tab)" %></span>
+    <span title="See the Adnot tab."><%= "Instance Adnot: #{@instance.comments.size} (see the 'Adnot' tab)" %></span>
     <br>
   <% end %>
   <br>
