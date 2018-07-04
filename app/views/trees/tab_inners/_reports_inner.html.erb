@@ -60,8 +60,13 @@
         <div id="synonymy-content" class="tree-container">
           Loading altered synonymy report...
         </div>
-        <input type="submit" class="btn btn-primary hidden" name="update_selected_synonymy" id="update_selected_synonymy"
-               value="Update selected" title="Update selected"/>
+        <button type="submit"
+                id="update_selected_synonymy"
+                name="update_selected_synonymy"
+                class="btn btn-primary hidden"
+                title="Update selected"
+                onclick="$(this).find('i.fa').addClass('fa-spin')">Update selected <i class="fa fa-refresh"></i>
+        </button>
       </form>
     </div>
     <div class="tab-pane fade" id="treeValidation" role="tabpanel" aria-labelledby="validation-tab">
@@ -74,8 +79,13 @@
         <div id="validate-synonymy-content" class="tree-container">
           Loading validate all synonymy report...
         </div>
-        <input type="submit" class="btn btn-primary hidden" name="update_checked_synonymy" id="update_checked_synonymy"
-               value="Update selected" title="Update selected"/>
+        <button type="submit"
+                id="update_checked_synonymy"
+                name="update_checked_synonymy"
+                class="btn btn-primary hidden"
+                title="Update selected"
+                onclick="$(this).find('i.fa').addClass('fa-spin')">Update selected <i class="fa fa-refresh"></i>
+        </button>
       </form>
     </div>
   </div>
