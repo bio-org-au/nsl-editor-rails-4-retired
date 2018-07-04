@@ -41,3 +41,12 @@
   :jira_id: '2773'
   :description: |-
     Add confirm remove and warning of sub taxa removal when removing a taxon from the draft tree.
+- :date: 4-Jul-2018
+  :jira_id: '2883'
+  :description: |-
+    Fix error when creating hybrid names.
+- :date: 4-Jul-2018
+  :jira_id: '2857'
+  :description: |-
+    Warn when editing or deleting the synonymy of an accepted instance.
+
