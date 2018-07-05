@@ -1,4 +1,8 @@
-
+<% if @instance.this_is_cited_by&.accepted_concept? %>
+  <div class="alert alert-warning">Note: if you edit this instance you are changing the synononymy of an
+    accepted concept.
+  </div>
+<% end %>
 <%= form_for(@instance, remote: true) do |f| %>
     <% if @instance.errors.any? %>
         <div id="error_explanation">

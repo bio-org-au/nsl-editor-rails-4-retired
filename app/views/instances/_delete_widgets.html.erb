@@ -8,8 +8,10 @@
 -%>
 <% if @instance.allow_delete? %>
 
-  <% if @instance.this_is_cited_by.accepted_concept? %>
-    <div class="text-danger">Warning: you are changing the synononymy of an accepted concept.</div>
+  <% if @instance.this_is_cited_by&.accepted_concept? %>
+    <div class="text-warning">Note: if you delete this instance you are changing the synononymy of an accepted
+      concept.
+    </div>
   <% end %>
 
   <% confirm_delete_link = link_to("Confirm delete",

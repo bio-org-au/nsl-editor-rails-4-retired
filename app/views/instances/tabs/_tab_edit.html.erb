@@ -6,9 +6,6 @@
   <%= render 'update_reference_id_widgets' if can?('instances','update_reference_id_widgets') && !@instance.update_reference_allowed? %>
 
 <% elsif @instance.synonymy? %>
-  <% if @instance.this_is_cited_by.accepted_concept? %>
-    <div class="alert alert-danger text-danger">Warning: you are changing the synononymy of an accepted concept.</div>
-  <% end %>
 
   <%= render 'form_update_synonymy' %>
 
