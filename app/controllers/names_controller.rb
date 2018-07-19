@@ -102,7 +102,7 @@ class NamesController < ApplicationController
     @category = params[:type].tr("-", " ")
     logger.debug("@category: #{@category}")
     respond_to do |format|
-      format.html { redirect_to new_search_path }
+      format.html {redirect_to new_search_path}
       format.js {}
     end
   end
@@ -205,14 +205,22 @@ class NamesController < ApplicationController
 
   def new_name_for_category
     case params[:category]
-    when "scientific"      then Name::AsNew.scientific
-    when "phrase"          then Name::AsNew.phrase
-    when "hybrid formula"  then Name::AsNew.scientific_hybrid
+    when "scientific" then
+      Name::AsNew.scientific
+    when "scientific_family" then
+      Name::AsNew.scientific_family
+    when "phrase" then
+      Name::AsNew.phrase
+    when "hybrid formula" then
+      Name::AsNew.scientific_hybrid
     when "hybrid formula unknown 2nd parent"
       Name::AsNew.scientific_hybrid_unknown_2nd_parent
-    when "cultivar hybrid" then Name::AsNew.cultivar_hybrid
-    when "cultivar"        then Name::AsNew.cultivar
-    else                        Name::AsNew.other
+    when "cultivar hybrid" then
+      Name::AsNew.cultivar_hybrid
+    when "cultivar" then
+      Name::AsNew.cultivar
+    else
+      Name::AsNew.other
     end
   end
 

@@ -16,6 +16,14 @@
       </li>
 
       <li role="presentation">
+        <%= link_to "Scientific name above family",
+                    name_new_row_path('scientific_family'),
+                    title: 'Add a new scientific name above family',
+                    remote: true,
+                    tabindex: '-1' %>
+      </li>
+
+      <li role="presentation">
         <%= link_to "Phrase name",
                     name_new_row_path('phrase'),
                     title: 'Add a new phrase name',

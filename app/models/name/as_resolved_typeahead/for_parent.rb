@@ -31,7 +31,7 @@ class Name::AsResolvedTypeahead::ForParent
   def run
     case resolve(@id_string, @text)
     when NO_ID_OR_TEXT, ID_ONLY # assume delete
-      raise "please choose parent from suggestions"
+      @value = ""
     when TEXT_ONLY
       text_only
     when ID_AND_TEXT
