@@ -19,6 +19,18 @@
     background-color: rgba(12, 235, 2, 0.02);
   }
 
+  .missing {
+    display: inline;
+    background-color: RGBA(256, 256, 0, 0.30) !important;
+    border-bottom: 2px solid red;
+  }
+
+  .added {
+    display: inline;
+    background-color: RGBA(256, 256, 0, 0.30) !important;
+    border-bottom: 2px solid #0cff2e;
+  }
+
   .noTop > td {
     border-top: none !important;
   }
