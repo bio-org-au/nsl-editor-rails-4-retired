@@ -101,14 +101,18 @@ class NameRank < ActiveRecord::Base
     NameRank.where(abbrev: "sp.").push(NameRank.first).first
   end
 
-  def self.options_for_category(name_category = :unknown)
+  def self.options_for_category(name_category = :unknown, rank)
     case name_category
     when Name::CULTIVAR_HYBRID_CATEGORY
       cultivar_hybrid_options
     when Name::CULTIVAR_CATEGORY
       cultivar_options
     else
-      options
+      if rank.below_family?
+        below_family_options
+      else
+        above_family_options
+      end
     end
   end
 
@@ -152,6 +156,20 @@ class NameRank < ActiveRecord::Base
     = 'species')")
       .order(:sort_order)
       .collect { |n| [n.name, n.id] }
+  end
+
+  def self.below_family_options
+    where("deprecated is false")
+        .where(" sort_order > (select sort_order from name_rank where lower(name) = 'familia')")
+        .order(:sort_order)
+        .collect {|n| [n.name, n.id]}
+  end
+
+  def self.above_family_options
+    where("deprecated is false")
+        .where(" sort_order <= (select sort_order from name_rank where lower(name) = 'familia')")
+        .order(:sort_order)
+        .collect {|n| [n.name, n.id]}
   end
 
   def self.id_is_unranked?(id)

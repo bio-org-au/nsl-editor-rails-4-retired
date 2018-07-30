@@ -19,43 +19,45 @@ require "test_helper"
 
 # Nam rank options test.
 class RankOptionTest < ActiveSupport::TestCase
-  test "scientific ranks" do
-    options = NameRank.options_for_category(Name::SCIENTIFIC_CATEGORY)
+  test "scientific ranks below family" do
+    options = NameRank.options_for_category(Name::SCIENTIFIC_CATEGORY, NameRank.species)
     assert options.class == Array
     ranks = options.collect(&:first)
-    a(ranks)
-    b(ranks)
-    c(ranks)
-    d(ranks)
-    e(ranks)
-    f(ranks)
+    subfamily_to_genus(ranks)
+    genus_to_species(ranks)
+    species_to_var(ranks)
+    below_var(ranks)
     the_rest(ranks)
   end
 
-  def a(ranks)
+  test "scientific ranks above family" do
+    options = NameRank.options_for_category(Name::SCIENTIFIC_CATEGORY, NameRank.family)
+    assert options.class == Array
+    ranks = options.collect(&:first)
+    family_and_above(ranks)
+  end
+
+  def family_and_above(ranks)
     assert ranks.include?("Regnum"), "Ranks should include 'Regnum'"
     assert ranks.include?("Division"), "Ranks should include 'Division'"
     assert ranks.include?("Classis"), "Ranks should include 'Classis'"
     assert ranks.include?("Subclassis"), "Ranks should include 'Subclassis'"
     assert ranks.include?("Superordo"), "Ranks should include 'Superordo'"
-  end
-
-  def b(ranks)
     assert ranks.include?("Ordo"), "Ranks should include 'Ordo'"
     assert ranks.include?("Subordo"), "Ranks should include 'Subordo'"
     assert ranks.include?("Familia"), "Ranks should include 'Familia'"
-    assert ranks.include?("Subfamilia"), "Ranks should include 'Subfamilia'"
-    assert ranks.include?("Tribus"), "Ranks should include 'Tribus'"
   end
 
-  def c(ranks)
+  def subfamily_to_genus(ranks)
+    assert ranks.include?("Subfamilia"), "Ranks should include 'Subfamilia'"
+    assert ranks.include?("Tribus"), "Ranks should include 'Tribus'"
     assert ranks.include?("Subtribus"), "Ranks should include 'Subtribus'"
+  end
+
+  def genus_to_species(ranks)
     assert ranks.include?("Genus"), "Ranks should include 'Genus'"
     assert ranks.include?("Subgenus"), "Ranks should include 'Subgenus'"
     assert ranks.include?("Sectio"), "Ranks should include 'Sectio'"
-  end
-
-  def d(ranks)
     assert ranks.include?("Subsectio"), "Ranks should include 'Subsectio'"
     assert ranks.include?("Series"), "Ranks should include 'Series'"
     assert ranks.include?("Subseries"), "Ranks should include 'Subseries'"
@@ -63,22 +65,22 @@ class RankOptionTest < ActiveSupport::TestCase
            "Ranks should include 'Superspecies'"
   end
 
-  def e(ranks)
+  def species_to_var(ranks)
     assert ranks.include?("Species"), "Ranks should include 'Species'"
     assert ranks.include?("Subspecies"), "Ranks should include 'Subspecies'"
     assert ranks.include?("Nothovarietas"),
            "Ranks should include 'Nothovarietas'"
   end
 
-  def f(ranks)
+  def below_var(ranks)
     assert ranks.include?("Varietas"), "Ranks should include 'Varietas'"
     assert ranks.include?("Subvarietas"), "Ranks should include 'Subvarietas'"
     assert ranks.include?("Forma"), "Ranks should include 'Forma'"
     assert ranks.include?("Subforma"), "Ranks should include 'Subforma'"
-    assert ranks.include?("[unranked]"), "Ranks should include '[unranked]'"
   end
 
   def the_rest(ranks)
+    assert ranks.include?("[unranked]"), "Ranks should include '[unranked]'"
     assert ranks.include?("[infrafamily]"),
            "Ranks should include '[infrafamily]'"
     assert ranks.include?("[infragenus]"), "Ranks should include '[infragenus]'"

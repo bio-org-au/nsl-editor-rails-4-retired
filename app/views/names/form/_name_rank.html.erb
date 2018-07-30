@@ -2,7 +2,7 @@
 
   <div class="form-group">
     <label for="name_rank_id">Rank*</label>
-    <%= select('name', 'name_rank_id', NameRank.options_for_category(@name.category),
+    <%= select('name', 'name_rank_id', NameRank.options_for_category(@name.category, @name.name_rank),
                { include_blank: false }, autocomplete: "off", title: 'Select rank',
                tabindex: increment_tab_index, class: "form-control", disabled: false, required: true) %>
   </div>

@@ -20,8 +20,8 @@ require "test_helper"
 # Single name model test.
 class NameAsResolvedTypeahead4ParentIdWithNoString < ActiveSupport::TestCase
   test "id with no string" do
-    assert_raise(RuntimeError, "Should raise a RuntimeError for no parent") do
-      Name::AsResolvedTypeahead::ForParent.new("1", "", "parent")
-    end
+    result = Name::AsResolvedTypeahead::ForParent.new("1", "", "parent")
+    assert_equal("", result.value, "value should be blank when id and no string")
+
   end
 end
