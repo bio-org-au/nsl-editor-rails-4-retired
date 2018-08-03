@@ -47,12 +47,14 @@
 <h5 class="">Note queries</h5>
 <table class="example-searches table table-striped">
   <% [
-    {search_target: 'Instances', search_string: "note-key:apc dist.", explanation: %Q(instances with note key 'apc dist.'.)},
-    {search_target: 'Instances', search_string: "note:*intermediate*", explanation: %Q(instances where 'intermediate' is noted.)},
-    {search_target: 'Instances', search_string: "notes: *autonym* note-key: comment notes: *valid*",explanation: %Q(Find instances with note comments and two specific words in any order.)},
-    {search_target: 'Instances', search_string: "note-key-type-note: craven",explanation: %Q(Find instances with Type notes containing the word "craven".)},
-    {search_target: 'Instances', search_string: "apc-dist-matches: NSw",explanation: %Q(Find instances with APC Dist. notes matching regular expression "NSw".)},
-    {search_target: 'Instances', search_string: "apc-dist-matches: [^C]hI",explanation: %Q(Find instances with APC Dist. notes matching "hI" not preceded by "C".)},
+         {search_target: 'Instances', search_string: "note-key:apc dist.", explanation: %Q(instances with note key 'apc dist.'.)},
+         {search_target: 'Instances', search_string: "note:*intermediate*", explanation: %Q(instances where 'intermediate' is noted.)},
+         {search_target: 'Instances', search_string: "notes: *autonym* note-key: comment notes: *valid*",explanation: %Q(Find instances with note comments and two specific words in any order.)},
+         {search_target: 'Instances', search_string: "note-key-type-note: craven",explanation: %Q(Find instances with Type notes containing the word "craven".)},
+         {search_target: 'Instances', search_string: "apc-dist-note-matches: NSw", explanation: %Q(Find instances with APC Dist. notes matching regular expression "NSw".)},
+         {search_target: 'Instances', search_string: "apc-dist-note-matches: [^C]hI", explanation: %Q(Find instances with APC Dist. notes matching "hI" not preceded by "C".)},
+         {search_target: 'Instances', search_string: "tree-dist-matches: \\?", explanation: %Q(Find instances with profile distribution containing "?".)},
+         {search_target: 'Instances', search_string: "tree-dist-matches: [^C]hI", explanation: %Q(Find instances with profile distribution matching "hI" not preceded by "C".)},
       ].each do |val| %>
   <tr>
     <td class="width-30-percent">

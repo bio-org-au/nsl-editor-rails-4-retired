@@ -1,4 +1,32 @@
 ---
+- :date: 3-Aug-2018
+  :jira_id: '2875'
+  :description: |-
+    Added "tree-dist-matches:" search option to instance search and changed "apc-dist-match" to "apc-dist-note-match"
+- :date: 4-Jul-2018
+  :jira_id: '2883'
+  :description: |-
+    Fix error when creating hybrid names.
+- :date: 4-Jul-2018
+  :jira_id: '2857'
+  :description: |-
+    Warn when editing or deleting the synonymy of an accepted instance.
+- :date: 2-Jul-2018
+  :jira_id: '2773'
+  :description: |-
+    Add confirm remove and warning of sub taxa removal when removing a taxon from the draft tree.
+- :date: 22-Jun-2018
+  :jira_id: '2842'
+  :description: |-
+    Add a check if a name needs a Family. Alter the name edit form to leave out Family if not required.
+- :date: 22-Jun-2018
+  :jira_id: '2831'
+  :description: |-
+    Allow editing of existing APC comment and distribution notes. Note that notes that are on a tree should be removed from instance notes.
+- :date: 13-Jun-2018
+  :jira_id: '2438'
+  :description: |-
+    New tree structure and editing.
 - :date: 29-Mar-2018
   :jira_id: 
   :description: |-
@@ -25,28 +53,4 @@
   :jira_id: '2499'
   :description: |-
     Correct the ordering of instances by page.
-- :date: 13-Jun-2018
-  :jira_id: '2438'
-  :description: |-
-    New tree structure and editing.
-- :date: 22-Jun-2018
-  :jira_id: '2842'
-  :description: |-
-    Add a check if a name needs a Family. Alter the name edit form to leave out Family if not required.
-- :date: 22-Jun-2018
-  :jira_id: '2831'
-  :description: |-
-    Allow editing of existing APC comment and distribution notes. Note that notes that are on a tree should be removed from instance notes.
-- :date: 2-Jul-2018
-  :jira_id: '2773'
-  :description: |-
-    Add confirm remove and warning of sub taxa removal when removing a taxon from the draft tree.
-- :date: 4-Jul-2018
-  :jira_id: '2883'
-  :description: |-
-    Fix error when creating hybrid names.
-- :date: 4-Jul-2018
-  :jira_id: '2857'
-  :description: |-
-    Warn when editing or deleting the synonymy of an accepted instance.
 

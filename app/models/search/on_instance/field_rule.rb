@@ -17,26 +17,26 @@
 #
 class Search::OnInstance::FieldRule
   RULES = {
-    "id:"                   => { multiple_values: true,
+      "id:"                   => { multiple_values: true,
                                  where_clause: " id = ? ",
                                  multiple_values_where_clause: " id in (?)" },
-    "ids:"                  => { multiple_values: true,
+      "ids:"                  => { multiple_values: true,
                                  where_clause: " id = ? ",
                                  multiple_values_where_clause: " id in (?)" },
-    "year:"                 => { where_clause: " exists (select null from
+      "year:"                 => { where_clause: " exists (select null from
                                  reference ref where instance.reference_id =
                                  ref.id and ref.year = ?)" },
-    "name:"                 => { where_clause: "exists (select null
+      "name:"                 => { where_clause: "exists (select null
                                  from name n
                                  where instance.name_id = n.id
                                  and lower(n.full_name) like lower(?) )",
                                  leading_wildcard: true,
                                  trailing_wildcard: true },
-    "name-exact:"           => { where_clause: "exists (select null
+      "name-exact:"           => { where_clause: "exists (select null
                                  from name n
                                  where instance.name_id = n.id
                                  and lower(n.full_name) like lower(?) )" },
-    "comments:"             => { trailing_wildcard: true,
+      "comments:"             => { trailing_wildcard: true,
                                  leading_wildcard: true,
                                  not_exists_clause: " not exists (select null
 from comment where comment.instance_id = instance.id)",
@@ -44,17 +44,17 @@ from comment where comment.instance_id = instance.id)",
                                  comment
                                  where comment.instance_id = instance.id
                                  and lower(comment.text) like ?) " },
-    "comments-by:"          => { where_clause: " exists (select null
+      "comments-by:"          => { where_clause: " exists (select null
                                  from comment
                                  where comment.instance_id = instance.id
                                  and comment.created_by like ?) " },
-    "comments-exact:"       => { where_clause: " exists (select null from comment where comment.instance_id = instance.id and lower(comment.text) like ?) " },
-    "bhl:"                  => { where_clause: " lower(bhl_url) like lower(?)" },
-    "page:"                 => { where_clause: " lower(page) like lower(?)" },
-    "page-qualifier:"       => { where_clause:
+      "comments-exact:"       => { where_clause: " exists (select null from comment where comment.instance_id = instance.id and lower(comment.text) like ?) " },
+      "bhl:"                  => { where_clause: " lower(bhl_url) like lower(?)" },
+      "page:"                 => { where_clause: " lower(page) like lower(?)" },
+      "page-qualifier:"       => { where_clause:
                                  " lower(page_qualifier) like lower(?)" },
 
-    "note-key:"             => { where_clause: " exists (select null
+      "note-key:"             => { where_clause: " exists (select null
                                  from instance_note
                                  where instance_id = instance.id
                                  and exists (select null
@@ -64,13 +64,13 @@ from comment where comment.instance_id = instance.id)",
                                  and lower(instance_note_key.name)
                                  like lower(?) )) " },
 
-    "notes-exact:"          => { where_clause: " exists (select null
+      "notes-exact:"          => { where_clause: " exists (select null
                                  from instance_note
                                  where instance_id = instance.id
                                  and lower(instance_note.value)
                                  like lower(?)) " },
 
-    "notes:"                => { where_clause: " exists (select null
+      "notes:"                => { where_clause: " exists (select null
                                  from instance_note
                                  where instance_id = instance.id
                                  and lower(instance_note.value)
@@ -78,7 +78,7 @@ from comment where comment.instance_id = instance.id)",
                                  leading_wildcard: true,
                                  trailing_wildcard: true },
 
-    "note-key-type-note:"   => { where_clause: " exists (select null
+      "note-key-type-note:"   => { where_clause: " exists (select null
                                  from instance_note
                                  where instance_id = instance.id
                                  and lower(instance_note.value) like lower(?)
@@ -89,7 +89,7 @@ from comment where comment.instance_id = instance.id)",
                                  and lower(instance_note_key.name) = 'type')) ",
                                  leading_wildcard: true,
                                  trailing_wildcard: true },
-    "apc-dist-matches:"     => { where_clause: " exists (select null
+      "apc-dist-note-matches:" => {where_clause: " exists (select null
                                  from instance_note
                                  where instance_id = instance.id
                                  and instance_note.value ~ ?
@@ -98,7 +98,13 @@ from comment where comment.instance_id = instance.id)",
                                  where instance_note_key_id =
                                  instance_note_key.id
                                  and instance_note_key.name = 'APC Dist.')) " },
-    "type:"                 => { where_clause: " exists (select null
+      "tree-dist-matches:" => {where_clause: " exists (select null
+                                     from tree t join tree_version_element tve on tve.tree_version_id = t.current_tree_version_id
+                                                 join tree_element te on tve.tree_element_id = te.id
+                                     where t.accepted_tree
+                                       and te.instance_id = instance.id
+                                       and (te.profile -> (t.config ->> 'distribution_key') ->> 'value') ~ ?)"},
+      "type:"                 => { where_clause: " exists (select null
                                  from instance_type
                                  where instance_type_id = instance_type.id
                                  and instance_type.name like ?) ",
@@ -111,7 +117,7 @@ from comment where comment.instance_id = instance.id)",
                                  order: "name.full_name",
                                  join: :name },
 
-    "ref-type:"             => { where_clause: " exists (select null
+      "ref-type:"             => { where_clause: " exists (select null
                                  from reference ref
                                  where ref.id = instance.reference_id
                                  and exists (select null
@@ -125,32 +131,32 @@ from comment where comment.instance_id = instance.id)",
                                  and exists (select null from ref_type
                                  where ref_type.id = ref.ref_type_id
                                  and lower(ref_type.name) in (?)))" },
-    "cites-an-instance:"    => { where_clause: " cites_id is not null" },
+      "cites-an-instance:"    => { where_clause: " cites_id is not null" },
 
-    "is-cited-by-an-instance:" => { where_clause: " cited_by_id is not null" },
-    "does-not-cite-an-instance:" => { where_clause: " cites_id is null" },
-    "is-not-cited-by-an-instance:" => { where_clause: " cited_by_id is null" },
-    "verbatim-name-exact:"  => { where_clause:
+      "is-cited-by-an-instance:" => { where_clause: " cited_by_id is not null" },
+      "does-not-cite-an-instance:" => { where_clause: " cites_id is null" },
+      "is-not-cited-by-an-instance:" => { where_clause: " cited_by_id is null" },
+      "verbatim-name-exact:"  => { where_clause:
                                  "lower(verbatim_name_string) like lower(?) " },
-    "verbatim-name:"        => { where_clause:
+      "verbatim-name:"        => { where_clause:
                                  "lower(verbatim_name_string) like lower(?)",
                                  leading_wildcard: true,
                                  trailing_wildcard: true },
-    "verbatim-name-matches-full-name:" => { where_clause:
+      "verbatim-name-matches-full-name:" => { where_clause:
                                              " lower(verbatim_name_string) =
                                              (select lower(full_name)
                                              from name
                                              where name.id =
                                              instance.name_id) " },
 
-    "verbatim-name-does-not-match-full-name:" =>
+      "verbatim-name-does-not-match-full-name:" =>
     { where_clause: " lower(verbatim_name_string) != (select lower(full_name)
     from name where name.id = instance.name_id) " },
-    "is-novelty:" => { where_clause: " exists (select null
+      "is-novelty:" => { where_clause: " exists (select null
                        from instance_type
                        where instance_type_id = instance_type.id
                        and instance_type.primary_instance) " },
-    "is-tax-nov-for-orth-var-name:" => { where_clause: " exists (select null
+      "is-tax-nov-for-orth-var-name:" => { where_clause: " exists (select null
                                  from instance_type
                                  where instance_type_id = instance_type.id
                                  and instance_type.name = 'tax. nov.') and
@@ -162,7 +168,7 @@ from comment where comment.instance_id = instance.id)",
                                                         name.name_status_id
                                                           and name_status.name =
                                                              'orth. var.'))" },
-    "species-or-below-syn-with-genus-or-above:" =>
+      "species-or-below-syn-with-genus-or-above:" =>
     { where_clause:
       " instance.id in
       (
@@ -186,13 +192,13 @@ where rb.sort_order >= (select sort_order from name_rank where name = 'Species')
       ",
       order: "name.full_name",
       join: :name },
-    "rank:" => { where_clause: " exists (select null from
+      "rank:" => { where_clause: " exists (select null from
                   name n inner join name_rank nr
                   on n.name_rank_id = nr.id where instance.name_id =
                   n.id and lower(nr.name) like lower(?))",
                  order: "name.full_name" },
 
-    "bad-relationships-974:" => { where_clause: " instance.id in (select syn.id
+      "bad-relationships-974:" => { where_clause: " instance.id in (select syn.id
   from instance syn
  inner join instance standalone
     on syn.cited_by_id = standalone.id
@@ -209,17 +215,17 @@ where rb.sort_order >= (select sort_order from name_rank where name = 'Species')
      )
        )
 )", order: "instance.id" },
-    "ref-exact:"           => { where_clause: "exists (select null
+      "ref-exact:"           => { where_clause: "exists (select null
                                  from reference ref
                                  where instance.reference_id = ref.id
                                  and lower(ref.citation) like lower(?) )" },
-    "parent-ref-exact:"    => { where_clause: "exists (select null
+      "parent-ref-exact:"    => { where_clause: "exists (select null
                                  from reference ref
                                  where instance.reference_id = ref.id
                                    and exists (select null from reference parent
                                                 where ref.parent_id = parent.id
                                                   and lower(parent.citation) like lower(?) ))" },
-    "draft:" => { where_clause: " draft " },
-    "not-draft:" => { where_clause: " draft = false " },
+      "draft:" => { where_clause: " draft " },
+      "not-draft:" => { where_clause: " draft = false " },
   }.freeze
 end
