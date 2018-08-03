@@ -2,7 +2,7 @@
 - :date: 3-Aug-2018
   :jira_id: '2875'
   :description: |-
-    Added "tree-dist-matches:" search option to instance search and changed "apc-dist-match" to "apc-dist-note-match"
+    Added "tree-dist-matches:" and "tree-comment-matches:" search option to instance search and changed "apc-dist-match" to "apc-dist-note-match"
 - :date: 4-Jul-2018
   :jira_id: '2883'
   :description: |-

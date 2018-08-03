@@ -104,6 +104,12 @@ from comment where comment.instance_id = instance.id)",
                                      where t.accepted_tree
                                        and te.instance_id = instance.id
                                        and (te.profile -> (t.config ->> 'distribution_key') ->> 'value') ~ ?)"},
+      "tree-comment-matches:" => {where_clause: " exists (select null
+                                     from tree t join tree_version_element tve on tve.tree_version_id = t.current_tree_version_id
+                                                 join tree_element te on tve.tree_element_id = te.id
+                                     where t.accepted_tree
+                                       and te.instance_id = instance.id
+                                       and (te.profile -> (t.config ->> 'comment_key') ->> 'value') ~ ?)"},
       "type:"                 => { where_clause: " exists (select null
                                  from instance_type
                                  where instance_type_id = instance_type.id
