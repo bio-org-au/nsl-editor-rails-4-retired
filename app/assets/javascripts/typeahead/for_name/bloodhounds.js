@@ -87,6 +87,9 @@ nameParentSuggestionsForCultivar = new Bloodhound({
     limit: 100
 });
 
+// kicks off the loading/processing of `local` and `prefetch`
+nameParentSuggestionsForCultivar.initialize();
+
 //---------------------------------------------------------------------------------------------------------------//
 
 // Provides a way to inject the current name id into the URL.
@@ -111,7 +114,5 @@ nameFamilySuggestions.initialize();
 
 //---------------------------------------------------------------------------------------------------------------//
 
-// kicks off the loading/processing of `local` and `prefetch`
-nameParentSuggestionsForCultivar.initialize();
 
 

@@ -36,7 +36,7 @@ class Name::AsTypeahead::ForParent
               :params
   SEARCH_LIMIT = 50
   GROUP_BY = "name.id,name.full_name,name_rank.name,name_status.name,"\
-             "name_rank.sort_order"
+             "name_rank.sort_order, family_full_name"
 
   def initialize(params)
     @params = params
@@ -53,11 +53,12 @@ class Name::AsTypeahead::ForParent
 
   def core_query
     Name.not_a_duplicate
-        .full_name_like(prepared_search_term)
+        .lower_full_name_like_for_parent_typeahead(prepared_search_term)
         .avoids_id(@params[:avoid_id].try("to_i") || -1)
+        .joins(:family)
         .joins(:name_status)
         .joins("left outer join instance on instance.name_id = name.id")
-        .order_by_rank_and_full_name
+        .order_by_rank_and_full_name_for_parent_typeahead
         .limit(SEARCH_LIMIT)
   end
 
@@ -127,10 +128,12 @@ class Name::AsTypeahead::ForParent
     @qry = @qry.select_fields_for_parent_typeahead
                .group(GROUP_BY)
                .collect do |n|
-      { value: "#{n.full_name} | #{n.name_rank_name} | "\
+      {value: "#{n.full_name} | #{n.name_rank_name} | "\
                "#{n.name_status_name} | "\
                "#{instance_phrase(n.instance_count)} ",
-        id: n.id }
+       id: n.id,
+       family_id: n.family_id,
+       family_value: "#{n.family_full_name}"}
     end
   end
 end

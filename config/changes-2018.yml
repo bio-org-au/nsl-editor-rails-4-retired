@@ -1,4 +1,8 @@
 ---
+- :date: 6-Aug-2018
+  :jira_id: '2757'
+  :description: |-
+    Changed the name of the new scientific name family and above. Changed the order of parent and Family and automatically set family from the parent.
 - :date: 3-Aug-2018
   :jira_id: '2875'
   :description: |-

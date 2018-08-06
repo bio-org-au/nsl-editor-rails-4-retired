@@ -73,7 +73,7 @@ class Name::AsTypeahead::ForFamily
   def query
     @qry = core_query
     @qry = rank_query
-    @qry = @qry.select_fields_for_parent_typeahead
+    @qry = @qry.select_fields_for_family_typeahead
                .group(GROUP_BY)
                .collect do |n|
       { value: "#{n.full_name} | #{n.name_rank_name} | "\

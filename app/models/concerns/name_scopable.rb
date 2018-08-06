@@ -39,12 +39,31 @@ module NameScopable
              select(" name.id, name.full_name, name_rank.name name_rank_name,
                     name_status.name name_status_name")
            end)
+    # sorry this repeated code forced on me by needing to set the name of name.full_name
+    scope :order_by_rank_and_full_name_for_parent_typeahead,
+          -> {order("name_rank.sort_order, lower(name.full_name)")}
+    # sorry this repeated code forced on me by needing to set the name of name.full_name
+    scope :lower_full_name_like_for_parent_typeahead,
+          (lambda do |string|
+            where("lower(f_unaccent(name.full_name)) like lower(f_unaccent(?)) ",
+                  string.tr("*", "%") + "%")
+          end)
     scope :select_fields_for_parent_typeahead,
           (lambda do
-             select(" name.id, name.full_name, name_rank.name name_rank_name,
+            select(" name.id, name.full_name, name.family_id,
+                    families_name.full_name family_full_name,
+                    name_rank.name name_rank_name,
                     name_status.name name_status_name, count(instance.id)
                     instance_count")
            end)
+    scope :select_fields_for_family_typeahead,
+          (lambda do
+            select(" name.id, name.full_name,
+                    name_rank.name name_rank_name,
+                    name_status.name name_status_name, count(instance.id)
+                    instance_count")
+          end)
+
     scope :from_a_higher_rank,
           (lambda do |rank_id|
              joins(:name_rank).where("not name_rank.deprecated and
