@@ -55,7 +55,7 @@ class Name::AsTypeahead::ForParent
     Name.not_a_duplicate
         .lower_full_name_like_for_parent_typeahead(prepared_search_term)
         .avoids_id(@params[:avoid_id].try("to_i") || -1)
-        .joins(:family)
+        .joins("left outer join name families_name on name.family_id = families_name.id")
         .joins(:name_status)
         .joins("left outer join instance on instance.name_id = name.id")
         .order_by_rank_and_full_name_for_parent_typeahead
