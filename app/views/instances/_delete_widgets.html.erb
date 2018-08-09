@@ -9,7 +9,7 @@
 <% if @instance.allow_delete? %>
 
   <% if @instance.this_is_cited_by&.accepted_concept? %>
-    <div class="text-warning">Note: if you delete this instance you are changing the synononymy of an accepted
+    <div class="text-warning">Note: if you delete this instance you are changing the synonymy of an accepted
       concept.
     </div>
   <% end %>
