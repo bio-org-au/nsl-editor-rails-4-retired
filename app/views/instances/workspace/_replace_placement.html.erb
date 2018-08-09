@@ -1,4 +1,11 @@
 <% if !@instance.cited_by_id %>
+  <div class="toggleNext">
+    <i style="font-style: normal; font-weight: bold">
+      This instance is not on <%= @tree_version_element.tree_version.draft_name %>
+      <br>
+      <a href="#" title="Show the form."> Replace current instance with this one?</a>
+    </i>
+  </div>
   <div>
     <h1>Replace instance:
       <%= render partial: "instances/workspace/widgets/placement_indicator", locals: {tree_version_element: @tree_version_element} %>
@@ -58,5 +65,8 @@
       </div>
     <% end %>
   </div>
+  <script>$('.toggleNext').unbind('click').click(function () {
+    toggleNext(this);
+  }).next('div').hide();</script>
 <% end %>
 
