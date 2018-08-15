@@ -98,6 +98,15 @@ from comment where comment.instance_id = instance.id)",
                                  where instance_note_key_id =
                                  instance_note_key.id
                                  and instance_note_key.name = 'APC Dist.')) " },
+      "apc-comment-note-matches:" => {where_clause: " exists (select null
+                                 from instance_note
+                                 where instance_id = instance.id
+                                 and instance_note.value ~ ?
+                                 and exists (select null
+                                 from instance_note_key
+                                 where instance_note_key_id =
+                                 instance_note_key.id
+                                 and instance_note_key.name = 'APC Comment')) "},
       "tree-dist-matches:" => {where_clause: " exists(select null
                                  from tree t, tree_element te
                                  where t.accepted_tree
