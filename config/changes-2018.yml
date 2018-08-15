@@ -1,4 +1,6 @@
 ---
+- :date: 16-Aug-2018
+  :release: true
 - :date: 6-Aug-2018
   :jira_id: '2757'
   :description: |-
@@ -31,6 +33,8 @@
   :jira_id: '2438'
   :description: |-
     New tree structure and editing.
+- :date: 13-Jun-2018
+  :release: true
 - :date: 29-Mar-2018
   :jira_id: 
   :description: |-
