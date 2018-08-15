@@ -25,7 +25,6 @@ class TreePlacementCreateTest < ActionController::TestCase
     @name = names(:to_be_placed)
     @parent = names(:angophora_costata)
     @workspace = tree_version(:draft_version)
-    puts "\nworkspace_id: #{@workspace.id}"
     stub_it
     stub_mapper
   end
@@ -50,7 +49,9 @@ class TreePlacementCreateTest < ActionController::TestCase
         .with(:headers => {"Accept" => "application/json",
                            "Accept-Encoding" => "gzip, deflate",
                            "Content-Type" => "application/json",
-                           "Host" => "localhost:7070",
+                           "Host" => Rails.configuration.nsl_linker
+                                          .sub(%r{^http://},'')
+                                          .split(%r{/})[0],
                            "User-Agent" => /ruby/})
         .to_return(:status => 200, :body => '{"link":"#{Rails.configuration.nsl_linker}instance/apni/481811"}', :headers => {})
   end
