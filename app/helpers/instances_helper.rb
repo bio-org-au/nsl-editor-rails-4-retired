@@ -57,6 +57,15 @@ module InstancesHelper
         tab == "tab_edit_notes" ||
         tab == "tab_comments"
       tab
+    elsif row_type == "instance_record"
+      if tab == "tab_synonymy" ||
+          tab == "tab_unpublished_citation" ||
+          tab == "tab_classification" ||
+          tab == "tab_copy_to_new_reference"
+        tab
+      else
+        "tab_empty"
+      end
     elsif row_type == "instance_as_part_of_concept_record"
       if tab == "tab_synonymy" ||
           tab == "tab_unpublished_citation" ||
