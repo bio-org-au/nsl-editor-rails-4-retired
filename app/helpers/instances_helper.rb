@@ -54,8 +54,8 @@ module InstancesHelper
   def tab_for_instance_type(tab, row_type)
     if tab == "tab_show_1" ||
         tab == "tab_edit" ||
-        tab == "tab_edit_notes" || tab == "tab_comments" ||
-        tab == "tab_classification"
+        tab == "tab_edit_notes" ||
+        tab == "tab_comments"
       tab
     elsif row_type == "instance_as_part_of_concept_record"
       if tab == "tab_synonymy" ||
@@ -68,8 +68,7 @@ module InstancesHelper
       end
     elsif row_type == "citing_instance_within_name_search"
       if tab == "tab_synonymy" ||
-          tab == "tab_create_unpublished_citation" ||
-          tab == "tab_classification"
+          tab == "tab_create_unpublished_citation"
         tab
       elsif tab == "tab_copy_to_new_reference"
         "tab_copy_to_new_reference_na"
