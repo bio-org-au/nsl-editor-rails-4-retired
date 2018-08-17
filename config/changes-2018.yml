@@ -1,5 +1,9 @@
 ---
 - :date: 16-Aug-2018
+  :jira_id: '2928'
+  :description: |-
+    The Name &gt; Copy tab has a link that appears after a copy is completed.  That link was broken and it is now fixed.
+- :date: 16-Aug-2018
   :release: true
 - :date: 6-Aug-2018
   :jira_id: '2757'

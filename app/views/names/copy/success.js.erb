@@ -1,5 +1,8 @@
-$('#copy-name-info-message-container').html('<%= link_to("1 Name copied #{icon('search')}".html_safe, query: "name: id:#{@name.id}") %>');
+$('#copy-name-info-message-container')
+  .html('<%= link_to("1 Name copied #{icon('search')}".html_safe,
+                     search_url(query_target: 'Names',
+                                query_string: "id:#{@name.id}"),
+                                title: "Query the newly copied name") %>');
 $('#copy-name-info-message-container').removeClass('hidden');
 $('#confirm-or-cancel-copy-name-link-container').addClass('hidden');
 $('#copy-name-link').removeClass('disabled');
-
