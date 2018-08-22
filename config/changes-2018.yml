@@ -1,4 +1,8 @@
 ---
+- :date: 22-Aug-2018
+  :jira_id: '2955'
+  :description: |-
+    Add link to show name in new search.
 - :date: 16-Aug-2018
   :jira_id: '2928'
   :description: |-
