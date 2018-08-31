@@ -1,0 +1,6 @@
+
+Do this:
+
+pg_dump -s -x -O -f /home/pmcneil/devel/anbg/nsl/nsl-editor/db/structure.sql nsl
+
+Then remove the parameters to the nsl_global_seq so it starts from 1.

@@ -54,7 +54,7 @@ class NameRank < ActiveRecord::Base
   INFRAGENUS = "[infragenus]"
   INFRASPECIES = "[infraspecies]"
 
-  scope :not_deprecated, -> { where(deprecated: false) }
+  scope :not_deprecated, -> {where(deprecated: false)}
 
   scope :infraspecific,
         (lambda do
@@ -118,43 +118,43 @@ class NameRank < ActiveRecord::Base
 
   def self.options
     where("deprecated is false")
-      .order(:sort_order)
+        .order(:sort_order)
         .collect {|rank| [rank.display_name, rank.id]}
   end
 
   def self.query_form_options
     where("deprecated is false")
-      .order(:sort_order)
-      .collect { |n| [n.name, "rank: #{n.name.downcase}"] }
+        .order(:sort_order)
+        .collect {|n| [n.name, "rank: #{n.name.downcase}"]}
   end
 
   def self.query_form_ranked_below_options
     where("deprecated is false")
-      .order(:sort_order)
-      .collect { |n| [n.name, "below-rank: #{n.name.downcase}"] }
+        .order(:sort_order)
+        .collect {|n| [n.name, "below-rank: #{n.name.downcase}"]}
   end
 
   def self.xquery_form_ranked_above_options
     where("deprecated is false")
-      .order(:sort_order)
-      .collect { |n| [n.name, "above-rank: #{n.name.downcase}"] }
+        .order(:sort_order)
+        .collect {|n| [n.name, "above-rank: #{n.name.downcase}"]}
   end
 
   def self.cultivar_hybrid_options
     where("deprecated is false")
-      .where("(name not like '%[%' or name = '[unranked]') ")
-      .where(" sort_order >= (select sort_order from name_rank where lower(name)
+        .where("(name not like '%[%' or name = '[unranked]') ")
+        .where(" sort_order >= (select sort_order from name_rank where lower(name)
     = 'species')")
-      .order(:sort_order)
+        .order(:sort_order)
         .collect {|rank| [rank.display_name, rank.id]}
   end
 
   def self.cultivar_options
     where("deprecated is false")
-      .where("name not like '%[%' or name = '[unranked]' ")
-      .where(" sort_order >= (select sort_order from name_rank where lower(name)
+        .where("name not like '%[%' or name = '[unranked]' ")
+        .where(" sort_order >= (select sort_order from name_rank where lower(name)
     = 'species')")
-      .order(:sort_order)
+        .order(:sort_order)
         .collect {|rank| [rank.display_name, rank.id]}
   end
 
