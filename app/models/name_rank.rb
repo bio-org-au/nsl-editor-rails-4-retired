@@ -54,7 +54,7 @@ class NameRank < ActiveRecord::Base
   INFRAGENUS = "[infragenus]"
   INFRASPECIES = "[infraspecies]"
 
-  scope :not_deprecated, -> { where(deprecated: false) }
+  scope :not_deprecated, -> {where(deprecated: false)}
 
   scope :infraspecific,
         (lambda do
@@ -98,7 +98,7 @@ class NameRank < ActiveRecord::Base
         end)
 
   def self.default
-    NameRank.where(abbrev: "sp.").push(NameRank.first).first
+    NameRank.where(name: "Species").push(NameRank.first).first
   end
 
   def self.options_for_category(name_category = :unknown, rank)
@@ -118,58 +118,58 @@ class NameRank < ActiveRecord::Base
 
   def self.options
     where("deprecated is false")
-      .order(:sort_order)
-      .collect { |n| [n.name, n.id] }
+        .order(:sort_order)
+        .collect {|rank| [rank.display_name, rank.id]}
   end
 
   def self.query_form_options
     where("deprecated is false")
-      .order(:sort_order)
-      .collect { |n| [n.name, "rank: #{n.name.downcase}"] }
+        .order(:sort_order)
+        .collect {|n| [n.name, "rank: #{n.name.downcase}"]}
   end
 
   def self.query_form_ranked_below_options
     where("deprecated is false")
-      .order(:sort_order)
-      .collect { |n| [n.name, "below-rank: #{n.name.downcase}"] }
+        .order(:sort_order)
+        .collect {|n| [n.name, "below-rank: #{n.name.downcase}"]}
   end
 
   def self.xquery_form_ranked_above_options
     where("deprecated is false")
-      .order(:sort_order)
-      .collect { |n| [n.name, "above-rank: #{n.name.downcase}"] }
+        .order(:sort_order)
+        .collect {|n| [n.name, "above-rank: #{n.name.downcase}"]}
   end
 
   def self.cultivar_hybrid_options
     where("deprecated is false")
-      .where("(name not like '%[%' or name = '[unranked]') ")
-      .where(" sort_order >= (select sort_order from name_rank where lower(name)
+        .where("(name not like '%[%' or name = '[unranked]') ")
+        .where(" sort_order >= (select sort_order from name_rank where lower(name)
     = 'species')")
-      .order(:sort_order)
-      .collect { |n| [n.name, n.id] }
+        .order(:sort_order)
+        .collect {|rank| [rank.display_name, rank.id]}
   end
 
   def self.cultivar_options
     where("deprecated is false")
-      .where("name not like '%[%' or name = '[unranked]' ")
-      .where(" sort_order >= (select sort_order from name_rank where lower(name)
+        .where("name not like '%[%' or name = '[unranked]' ")
+        .where(" sort_order >= (select sort_order from name_rank where lower(name)
     = 'species')")
-      .order(:sort_order)
-      .collect { |n| [n.name, n.id] }
+        .order(:sort_order)
+        .collect {|rank| [rank.display_name, rank.id]}
   end
 
   def self.below_family_options
     where("deprecated is false")
         .where(" sort_order > (select sort_order from name_rank where lower(name) = 'familia')")
         .order(:sort_order)
-        .collect {|n| [n.name, n.id]}
+        .collect {|rank| [rank.display_name, rank.id]}
   end
 
   def self.above_family_options
     where("deprecated is false")
         .where(" sort_order <= (select sort_order from name_rank where lower(name) = 'familia')")
         .order(:sort_order)
-        .collect {|n| [n.name, n.id]}
+        .collect {|rank| [rank.display_name, rank.id]}
   end
 
   def self.id_is_unranked?(id)

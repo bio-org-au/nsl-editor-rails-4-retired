@@ -1,4 +1,25 @@
 ---
+- :date: 19-Sep-2018
+  :jira_id: '2990'
+  :description: |-
+    Change the instance details tab by adding a link to show the current name in
+    new search.
+- :date: 7-Sep-2018
+  :release: true
+- :date: 22-Aug-2018
+  :jira_id: '2955'
+  :description: |-
+    Change the name details tab by adding a link to show the current name in
+    new search.
+- :date: 20-Aug-2018
+  :jira_id: ''
+  :description: |-
+    Remove menu options that were 'Editor' toggle switches for new search.
+- :date: 16-Aug-2018
+  :jira_id: '2928'
+  :description: |-
+    The Name &gt; Copy tab has a link that appears after a copy is completed.
+    That link was broken and it is now fixed.
 - :date: 16-Aug-2018
   :release: true
 - :date: 6-Aug-2018

@@ -4,6 +4,7 @@ regnum:
   italicize: false
   major: true
   name: Regnum
+  display_name: Regnum
   name_group: botanical
   sort_order: 10
   visible_in_name: false
@@ -14,6 +15,7 @@ division:
   italicize: false
   major: true
   name: Division
+  display_name: Division
   name_group: botanical
   sort_order: 20
   visible_in_name: false
@@ -24,6 +26,7 @@ classis:
   italicize: false
   major: true
   name: Classis
+  display_name: Classis
   name_group: botanical
   sort_order: 30
   visible_in_name: false
@@ -34,6 +37,7 @@ subclassis:
   italicize: false
   major: false
   name: Subclassis
+  display_name: Subclassis
   name_group: botanical
   sort_order: 40
   visible_in_name: false
@@ -44,6 +48,7 @@ superordo:
   italicize: false
   major: false
   name: Superordo
+  display_name: Superordo
   name_group: botanical
   sort_order: 50
   visible_in_name: false
@@ -54,6 +59,7 @@ ordo:
   italicize: false
   major: true
   name: Ordo
+  display_name: Ordo
   name_group: botanical
   sort_order: 60
   visible_in_name: false
@@ -64,6 +70,7 @@ subordo:
   italicize: false
   major: false
   name: Subordo
+  display_name: Subordo
   name_group: botanical
   sort_order: 70
   visible_in_name: false
@@ -74,6 +81,7 @@ familia:
   italicize: false
   major: true
   name: Familia
+  display_name: Familia
   name_group: botanical
   sort_order: 80
   visible_in_name: false
@@ -84,6 +92,7 @@ subfamilia:
   italicize: false
   major: false
   name: Subfamilia
+  display_name: Subfamilia
   name_group: botanical
   sort_order: 90
   visible_in_name: true
@@ -94,6 +103,7 @@ tribus:
   italicize: false
   major: true
   name: Tribus
+  display_name: Tribus
   name_group: botanical
   sort_order: 100
   visible_in_name: true
@@ -104,6 +114,7 @@ subtribus:
   italicize: false
   major: false
   name: Subtribus
+  display_name: Subtribus
   name_group: botanical
   sort_order: 110
   visible_in_name: true
@@ -114,6 +125,7 @@ genus:
   italicize: false
   major: true
   name: Genus
+  display_name: Genus
   name_group: botanical
   sort_order: 120
   visible_in_name: false
@@ -124,6 +136,7 @@ subgenus:
   italicize: false
   major: false
   name: Subgenus
+  display_name: Subgenus
   name_group: botanical
   sort_order: 130
   visible_in_name: true
@@ -134,6 +147,7 @@ sectio:
   italicize: false
   major: false
   name: Sectio
+  display_name: Sectio
   name_group: botanical
   sort_order: 140
   visible_in_name: true
@@ -144,6 +158,7 @@ subsectio:
   italicize: false
   major: false
   name: Subsectio
+  display_name: Subsectio
   name_group: botanical
   sort_order: 150
   visible_in_name: true
@@ -154,6 +169,7 @@ series:
   italicize: false
   major: false
   name: Series
+  display_name: Series
   name_group: botanical
   sort_order: 160
   visible_in_name: true
@@ -164,6 +180,7 @@ subseries:
   italicize: false
   major: false
   name: Subseries
+  display_name: Subseries
   name_group: botanical
   sort_order: 170
   visible_in_name: true
@@ -174,6 +191,7 @@ superspecies:
   italicize: false
   major: false
   name: Superspecies
+  display_name: Superspecies
   name_group: botanical
   sort_order: 180
   visible_in_name: true
@@ -184,6 +202,7 @@ species:
   italicize: false
   major: true
   name: Species
+  display_name: Species
   name_group: botanical
   sort_order: 190
   visible_in_name: false
@@ -194,6 +213,7 @@ subspecies:
   italicize: false
   major: false
   name: Subspecies
+  display_name: Subspecies
   name_group: botanical
   sort_order: 200
   visible_in_name: true
@@ -204,6 +224,7 @@ nothovarietas:
   italicize: false
   major: false
   name: Nothovarietas
+  display_name: Nothovarietas
   name_group: botanical
   sort_order: 210
   visible_in_name: true
@@ -214,6 +235,7 @@ varietas:
   italicize: false
   major: false
   name: Varietas
+  display_name: Varietas
   name_group: botanical
   sort_order: 210
   visible_in_name: true
@@ -224,6 +246,7 @@ subvarietas:
   italicize: false
   major: false
   name: Subvarietas
+  display_name: Subvarietas
   name_group: botanical
   sort_order: 220
   visible_in_name: true
@@ -234,6 +257,7 @@ forma:
   italicize: false
   major: false
   name: Forma
+  display_name: Forma
   name_group: botanical
   sort_order: 230
   visible_in_name: true
@@ -244,6 +268,7 @@ subforma:
   italicize: false
   major: false
   name: Subforma
+  display_name: Subforma
   name_group: botanical
   sort_order: 240
   visible_in_name: true
@@ -254,6 +279,7 @@ form_taxon:
   italicize: false
   major: false
   name: form taxon
+  display_name: form taxon
   name_group: botanical
   sort_order: 250
   visible_in_name: false
@@ -264,6 +290,7 @@ morphological_var:
   italicize: false
   major: false
   name: morphological var.
+  display_name: morphological var.
   name_group: botanical
   sort_order: 260
   visible_in_name: false
@@ -274,6 +301,7 @@ nothomorph:
   italicize: false
   major: false
   name: nothomorph.
+  display_name: nothomorph.
   name_group: botanical
   sort_order: 270
   visible_in_name: false
@@ -284,6 +312,7 @@ unranked:
   italicize: false
   major: false
   name: '[unranked]'
+  display_name: '[unranked]'
   name_group: botanical
   sort_order: 500
   visible_in_name: true
@@ -294,6 +323,7 @@ na:
   italicize: false
   major: false
   name: '[n/a]'
+  display_name: '[n/a]'
   name_group: botanical
   sort_order: 500
   visible_in_name: false
@@ -304,6 +334,7 @@ infragenus:
   italicize: false
   major: false
   name: '[infragenus]'
+  display_name: '[infragenus]'
   name_group: botanical
   sort_order: 500
   visible_in_name: false
@@ -314,6 +345,7 @@ unknown:
   italicize: false
   major: false
   name: '[unknown]'
+  display_name: '[unknown]'
   name_group: botanical
   sort_order: 500
   visible_in_name: false
@@ -324,6 +356,7 @@ infrafamily:
   italicize: false
   major: false
   name: '[infrafamily]'
+  display_name: '[infrafamily]'
   name_group: botanical
   sort_order: 500
   visible_in_name: false
@@ -334,6 +367,7 @@ infraspecies:
   italicize: false
   major: false
   name: '[infraspecies]'
+  display_name: '[infraspecies]'
   name_group: botanical
   sort_order: 500
   visible_in_name: false
