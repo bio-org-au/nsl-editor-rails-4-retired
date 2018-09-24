@@ -36,6 +36,6 @@ class ActiveSupport::Logger::SimpleFormatter
     color = SEVERITY_TO_COLOR_MAP[severity]
 
     "\033[0;37m#{formatted_time}\033[0m [\033[#{color}m#{formatted_severity}\
-\033[0m] #{msg.strip} (pid:#{$PROCESS_ID})\n"
+\033[0m] editor #{msg.strip} (pid:#{$PROCESS_ID})\n"
   end
 end
