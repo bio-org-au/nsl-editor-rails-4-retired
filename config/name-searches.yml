@@ -583,3 +583,14 @@ from comment where comment.name_id = name.id)"
                                                   where t.name = 'basionym')
                                                   group by instance.name_id
                                                   having count(*) > 1))"
+'has-no-primary-instance:':
+  :where_clause: "id in (
+    select id
+      from name n4pi
+     where exists(select null
+                    from instance i
+                   where i.name_id = n4pi.id)
+     and not exists(select null
+                 from instance i
+                 join instance_type it ON it.id = i.instance_type_id
+                 where it.primary_instance and i.name_id = n4pi.id))"

@@ -1,4 +1,8 @@
 ---
+- :date: 24-Sep-2018
+  :jira_id: '1221'
+  :description: |-
+    Add a name search assertion "has-no-primary-instance:".
 - :date: 21-Sep-2018
   :release: true
 - :date: 19-Sep-2018
