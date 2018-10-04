@@ -1,4 +1,8 @@
 ---
+- :date: 4-Oct-2018
+  :jira_id: '3033'
+  :description: |-
+    Add instance search "non-tree-drafst:".
 - :date: 28-Sep-2018
   :release: true
 - :date: 24-Sep-2018
