@@ -8,6 +8,7 @@ platform :jruby do
   # warbler for rake tasks to generate a WAR file and use jruby 9.1.5.0
   gem "jruby-jars", "9.1.5.0"
   gem "warbler"
+  gem 'json', '~> 1.8', '>= 1.8.6'
 end
 
 platform :ruby do
@@ -61,7 +62,6 @@ platform :ruby do
     gem "minitest"
     gem "minitest-rails"
     gem "minitest-reporters"
-    gem "autoprefixer-rails"
     gem "launchy"
     gem "mocha", "~> 1.1.0"
   end
