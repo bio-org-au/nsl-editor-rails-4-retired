@@ -1,5 +1,9 @@
 ---
 - :date: 12-Oct-2018
+  :jira_id: '3034'
+  :description: |-
+    New instance queries for synonyms with note or adnote: syn-with-note:, syn-with-adnote:
+- :date: 12-Oct-2018
   :release: true
 - :date: 8-Oct-2018
   :jira_id: '3030'

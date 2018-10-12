@@ -57,7 +57,9 @@
     <tr><td class="width-40-percent min-width-10em">Rails.env</td><td> <%= Rails.env %> </td></tr>
 
     <tr><td>Ruby platform</td><td> <%= RUBY_PLATFORM %> </td></tr>
+    <% if RUBY_PLATFORM =~ /jruby/i %>
     <tr><td>JRuby version</td><td> <%= JRUBY_VERSION %> </td></tr>
+    <% end %>
     <tr><td>Ruby version</td><td> <%= RUBY_VERSION %> </td></tr>
 
     <tr><td>Rails</td><td> <%= Rails::VERSION::STRING %> </td></tr>

@@ -23,3 +23,9 @@ reference_comment:
   reference: handbook_of_the_vascular_plants_of_sydney
   created_by: greg
   updated_by: greg
+
+synonym_comment:
+  text: synonym comment
+  instance: xyz_costata_is_synonym_of_angophora_costata
+  created_by: greg
+  updated_by: greg
