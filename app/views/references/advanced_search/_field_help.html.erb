@@ -76,7 +76,7 @@
   <% [
       {field_name: 'author:', description: "author name(s), leading and trailing wildcards added automatically"},
       {field_name: 'author-exact:', description: "author name(s)"},
-      {field_name: 'author_role:', description: "author role",partial: "ref_author_roles/list_for_search_help"}
+      {field_name: 'author-role:', description: "author role",partial: "ref_author_roles/list_for_search_help"}
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">
@@ -99,10 +99,10 @@
     {field_name: 'edition:', description: "edition"},
     {field_name: 'isbn:', description: "ISBN"},
     {field_name: 'issn:', description: "ISSN"},
-    {field_name: 'publication_date:', description: "publication date"},
+    {field_name: 'publication-date:', description: "publication date"},
     {field_name: 'is-published:', description: "published (also listed as an assertion)"},
     {field_name: 'is-not-published:', description: "not published (also listed as an assertion)"},
-    {field_name: 'published_location:', description: "published location"},
+    {field_name: 'published-location:', description: "published location"},
     {field_name: 'publisher:', description: "publisher"},
     {field_name: 'volume:', description: "volume"},
     {field_name: 'year:', description: "year - 4 digit integer field, do not use wildcards"},
@@ -196,8 +196,8 @@
 <h5>Related record IDs</h5>
 <table class="table table-striped">
   <% [
-      {field_name: 'duplicate_of_id:', description: "ID of the master record if marked as a duplicate"},
-      {field_name: 'parent_id:', description: "ID of the 'parent' reference, if it is identified, e.g. book for chapter, journal for paper"},
+      {field_name: 'duplicate-of-id:', description: "ID of the master record if marked as a duplicate"},
+      {field_name: 'parent-id:', description: "ID of the 'parent' reference, if it is identified, e.g. book for chapter, journal for paper"},
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">

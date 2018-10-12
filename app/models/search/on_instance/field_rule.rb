@@ -117,6 +117,9 @@ from comment where comment.instance_id = instance.id)",
                                  where t.accepted_tree
                                    and instance_id = instance.id
                                    and (te.profile -> (t.config ->> 'comment_key') ->> 'value') ~ ?)"},
+      "non-tree-drafts:" => {where_clause: " draft and not exists(select null
+                                 from tree_element te
+                                 where te.instance_id = instance.id)"},
       "type:"                 => { where_clause: " exists (select null
                                  from instance_type
                                  where instance_type_id = instance_type.id

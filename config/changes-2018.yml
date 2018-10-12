@@ -1,4 +1,14 @@
 ---
+- :date: 8-Oct-2018
+  :jira_id: '3030'
+  :description: |-
+    Fix typos in reference help.
+- :date: 4-Oct-2018
+  :jira_id: '3033'
+  :description: |-
+    Add instance search "non-tree-drafts:".
+- :date: 28-Sep-2018
+  :release: true
 - :date: 24-Sep-2018
   :jira_id: '1221'
   :description: |-
