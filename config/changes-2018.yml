@@ -1,4 +1,8 @@
 ---
+- :date: 15-Oct-2018
+  :jira_id: '2947'
+  :description: |-
+    Pressing Enter in the Copy Name tab triggers the confirmation dialog.
 - :date: 12-Oct-2018
   :jira_id: '3034'
   :description: |-
