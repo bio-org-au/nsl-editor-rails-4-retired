@@ -1,4 +1,8 @@
 ---
+- :date: 17-Oct-2018
+  :jira_id: '3059'
+  :description: |-
+    Added name query has-multiple-primary-instances.
 - :date: 15-Oct-2018
   :jira_id: '2947'
   :description: |-
