@@ -251,13 +251,13 @@ where rb.sort_order >= (select sort_order from name_rank where name = 'Species')
                                                                  where n.instance_id = i.id)
                                                  )",
                            order: "instance.id" },
- "syn-with-adnote:"    => { where_clause: " id in (select id
-                                                   from instance i
-                                                  where cited_by_id is not null
-                                                    and exists (select null
-                                                                  from comment c
-                                                                 where c.instance_id = i.id)
-                                                 )",
+ "syn-with-adnot:"    => { where_clause: " id in (select id
+                                                  from instance i
+                                                 where cited_by_id is not null
+                                                   and exists (select null
+                                                                 from comment c
+                                                                where c.instance_id = i.id)
+                                                )",
                            order: "instance.id" }
   }.freeze
 end

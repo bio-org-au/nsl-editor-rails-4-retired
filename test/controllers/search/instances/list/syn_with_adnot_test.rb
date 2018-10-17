@@ -18,13 +18,13 @@
 require "test_helper"
 
 # Single search controller test.
-class SearchInstListSynWithAdnoteTest < ActionController::TestCase
+class SearchInstListSynWithAdnotTest < ActionController::TestCase
   tests SearchController
 
-  test "search for instances that are synonyms with an adnote" do
+  test "search for instances that are synonyms with an adnot" do
     get(:search,
         { query_target: "instance",
-          query_string: "syn-with-adnote:" },
+          query_string: "syn-with-adnot:" },
         username: "fred",
         user_full_name: "Fred Jones",
         groups: [])

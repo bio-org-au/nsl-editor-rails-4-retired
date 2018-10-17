@@ -1,5 +1,9 @@
 ---
 - :date: 17-Oct-2018
+  :jira_id: '3034'
+  :description: |-
+    Spell "adnote" correctly as "adnot" in syn-with-adnot search. 
+- :date: 17-Oct-2018
   :jira_id: '3059'
   :description: |-
     Added name query has-multiple-primary-instances.
