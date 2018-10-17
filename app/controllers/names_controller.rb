@@ -156,6 +156,7 @@ class NamesController < ApplicationController
     render "names/copy/success.js"
   rescue => e
     @message = e.to_s
+    logger.error("Error in Name#copy: #{@message}")
     render "names/copy/error.js"
   end
 
