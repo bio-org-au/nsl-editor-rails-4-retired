@@ -24,6 +24,7 @@ module NameCategorable
     "named hybrid autonym" => NameCategories::SCIENTIFIC_CATEGORY,
     "sanctioned" => NameCategories::SCIENTIFIC_CATEGORY,
     "scientific" => NameCategories::SCIENTIFIC_CATEGORY,
+    "candidatus" => NameCategories::SCIENTIFIC_CATEGORY,
     "phrase name" => NameCategories::PHRASE,
     "cultivar hybrid formula" =>
     NameCategories::SCIENTIFIC_HYBRID_FORMULA_CATEGORY,
