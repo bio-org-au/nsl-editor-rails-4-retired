@@ -594,3 +594,12 @@ from comment where comment.name_id = name.id)"
                  from instance i
                  join instance_type it ON it.id = i.instance_type_id
                  where it.primary_instance and i.name_id = n4pi.id))"
+'has-multiple-primary-instances:':
+  :where_clause: "id in (
+    select name_id
+      from instance i
+           join instance_type it ON it.id = i.instance_type_id
+     where it.primary_instance
+     group by name_id
+     having count(*) > 1)"
+  :order: name.sort_name

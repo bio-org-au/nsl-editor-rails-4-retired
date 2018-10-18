@@ -1,4 +1,22 @@
 ---
+- :date: 17-Oct-2018
+  :jira_id: '3034'
+  :description: |-
+    Spell "adnote" correctly as "adnot" in syn-with-adnot search. 
+- :date: 17-Oct-2018
+  :jira_id: '3059'
+  :description: |-
+    Added name query has-multiple-primary-instances.
+- :date: 15-Oct-2018
+  :jira_id: '2947'
+  :description: |-
+    Pressing Enter in the Copy Name tab triggers the confirmation dialog.
+- :date: 12-Oct-2018
+  :jira_id: '3034'
+  :description: |-
+    New instance queries for synonyms with note or adnote: syn-with-note:, syn-with-adnote:
+- :date: 12-Oct-2018
+  :release: true
 - :date: 8-Oct-2018
   :jira_id: '3030'
   :description: |-

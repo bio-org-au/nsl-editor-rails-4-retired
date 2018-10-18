@@ -243,5 +243,21 @@ where rb.sort_order >= (select sort_order from name_rank where name = 'Species')
                                                   and lower(parent.citation) like lower(?) ))" },
       "draft:" => { where_clause: " draft " },
       "not-draft:" => { where_clause: " draft = false " },
+ "syn-with-note:"    => { where_clause: " id in (select id
+                                                   from instance i
+                                                  where cited_by_id is not null
+                                                    and exists (select null
+                                                                  from instance_note n
+                                                                 where n.instance_id = i.id)
+                                                 )",
+                           order: "instance.id" },
+ "syn-with-adnot:"    => { where_clause: " id in (select id
+                                                  from instance i
+                                                 where cited_by_id is not null
+                                                   and exists (select null
+                                                                 from comment c
+                                                                where c.instance_id = i.id)
+                                                )",
+                           order: "instance.id" }
   }.freeze
 end

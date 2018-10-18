@@ -55,6 +55,8 @@ jQuery ->
   $('body').on('click','.tree-row div.head', (event) ->                    treeRowClicked(event,$(this)))
   $('body').on('click','#confirm-delete-name-button', (event) ->           confirmDeleteNameButtonClick(event,$(this)))
   $('body').on('click','#confirm-name-refresh-children-button', (event) -> confirmNameRefreshChildrenButtonClick(event,$(this)))
+  $('body').on('keydown','#copy-name-form', (event) ->                     copyNameFormEnter(event,$(this)))
+  $('body').on('click','#create-copy-of-name', (event) ->                  createCopyOfNameClick(event,$(this)))
   debug("on load - search-target-button-text: " + $('#search-target-button-text').text().trim())
 
   # When tabbing to search-result record, need to click to trigger retrieval of details.
@@ -92,6 +94,28 @@ confirmNameRefreshChildrenButtonClick = (event,$the_button) ->
   $('#name-refresh-tab').attr('disabled','true')
   $('#search-result-details-error-message-container').html('')
   $('#refresh-children-spinner').removeClass('hidden')
+
+copyNameFormEnter = (event,$the_button) ->
+  key = event.which
+  enter_key_code = 13
+  if (key == enter_key_code)
+    if ($('#confirm-or-cancel-copy-name-link-container').hasClass('hidden'))
+      # Show the confirm/cancel buttons
+      $('#confirm-or-cancel-copy-name-link-container').removeClass('hidden')
+      return false
+    else
+      $('#create-copy-of-name').click()
+      return false
+  else
+    return true
+
+createCopyOfNameClick = (event,$the_element) ->
+  debug('createCopyOfNameClick')
+  $('#copy-name-error-message-container').html('')
+  $('#copy-name-error-message-container').addClass('hidden');
+  $('#copy-name-info-message-container').html('')
+  $('#copy-name-info-message-container').addClass('hidden');
+  return true
 
 confirmDeleteNameButtonClick = (event,$element) ->
   $element.attr('disabled','true')

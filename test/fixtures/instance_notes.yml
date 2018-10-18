@@ -32,6 +32,14 @@ apc_dist_2:
   updated_by: greg
   created_by: greg
 
+syn_note:
+  instance: metrosideros_costata_is_basionym_of_angophora_costata
+  instance_note_key: text
+  value: a note
+  namespace: apni
+  updated_by: x
+  created_by: x
+
 type_note:
   instance: triodia_in_brassard
   instance_note_key: type
