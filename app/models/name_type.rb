@@ -47,11 +47,6 @@ class NameType < ActiveRecord::Base
     end
   end
 
-  def self.default
-    NameType.where(name: "scientific")
-            .push(NameType.order("name").limit(1).first).first
-  end
-
   def self.query_form_options
     not_deprecated.sort_by(&:name)
                   .collect { |n| [n.capitalised_name, n.name.to_s, class: ""] }
