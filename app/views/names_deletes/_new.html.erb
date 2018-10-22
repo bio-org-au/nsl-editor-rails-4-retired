@@ -9,7 +9,12 @@
 -%>
 
     <% names_delete = NamesDelete.new(name_id: @name.id) %>
-    <%= form_for(names_delete, as: 'names_delete', role: 'form', method: :delete, remote: true) do |f| %>
+    <%= form_for(names_delete,
+                 html: {id: 'name-delete-form',
+                        as: 'names_delete',
+                        role: 'form',
+                        method: :delete,
+                        remote: true}) do |f| %>
     <br>
     <%= f.hidden_field :name_id %>
     <%= f.submit "Confirm delete", 
@@ -41,7 +46,7 @@
     <br>
     <br>
     <br>
-    <p id="name-delete-possible-delay-message" class="hidden">
+    <p id="name-delete-spinner" class="hidden">
     Deleting...    <i class="fa fa-spinner fa-spin"></i>
     </p>
     <% end %>

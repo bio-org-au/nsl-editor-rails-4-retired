@@ -1,4 +1,8 @@
 ---
+- :date: 22-Oct-2018
+  :jira_id: '3072'
+  :description: |-
+    Name delete changed to also work in Chrome browser.
 - :date: 18-Oct-2018
   :release: true
 - :date: 17-Oct-2018

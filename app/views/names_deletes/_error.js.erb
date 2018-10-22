@@ -1,6 +1,6 @@
 $('.message-container').html('');
 $('#search-result-details-error-message-container').html("<%= escape_javascript(@message) %> ");
-$('#name-delete-possible-delay-message').addClass('hidden');
+$('#name-delete-spinner').addClass('hidden');
 $('#confirm-delete-name-button').removeAttr('disabled');
 $('#cancel-delete-link').removeAttr('disabled');
 $('#name-delete-tab').removeAttr('disabled').removeClass('disabled');

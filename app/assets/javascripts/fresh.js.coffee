@@ -53,7 +53,7 @@ jQuery ->
   $('body').on('click','.cancel-new-record-link', (event) ->               cancelNewRecord(event,$(this)))
   $('body').on('click','#instance-reference-typeahead', (event) ->         $(this).select())
   $('body').on('click','.tree-row div.head', (event) ->                    treeRowClicked(event,$(this)))
-  $('body').on('click','#confirm-delete-name-button', (event) ->           confirmDeleteNameButtonClick(event,$(this)))
+  $('body').on('submit','#name-delete-form', (event) ->                    nameDeleteFormSubmit(event,$(this)))
   $('body').on('click','#confirm-name-refresh-children-button', (event) -> confirmNameRefreshChildrenButtonClick(event,$(this)))
   $('body').on('keydown','#copy-name-form', (event) ->                     copyNameFormEnter(event,$(this)))
   $('body').on('click','#create-copy-of-name', (event) ->                  createCopyOfNameClick(event,$(this)))
@@ -117,15 +117,13 @@ createCopyOfNameClick = (event,$the_element) ->
   $('#copy-name-info-message-container').addClass('hidden');
   return true
 
-confirmDeleteNameButtonClick = (event,$element) ->
-  $element.attr('disabled','true')
+nameDeleteFormSubmit = (event,$element) ->
+  $('#confirm-delete-name-button').attr('disabled','true')
   $('#cancel-delete-link').attr('disabled','true')
   $('#name-delete-tab').attr('disabled','true').addClass('disabled')
   $('#search-result-details-error-message-container').html('')
-  setTimeout (->
-    $('#name-delete-possible-delay-message').removeClass('hidden') if $('#search-result-details-error-message-container').is(':empty') && $('#search-result-details-info-message-container').is(':empty')
-    return
-  ), 2000
+  $('#name-delete-spinner').removeClass('hidden')
+  return true
 
 refreshPageLinkClick = (event,$element) ->
   location.reload()

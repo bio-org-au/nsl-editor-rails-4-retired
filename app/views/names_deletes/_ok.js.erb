@@ -3,4 +3,4 @@ $('#search-result-details-info-message-container').html('Record deleted.  <br><b
 $('#confirm-or-cancel-link-container a.btn-danger').addClass('disabled');
 $('#cancel-delete-link').addClass('disabled');
 setTimeout(function(){window.showRecordWasDeleted('<%= @names_delete.name_id %>', 'name')},2000);
-$('#name-delete-possible-delay-message').addClass('hidden');
+$('#name-delete-spinner').addClass('hidden');
