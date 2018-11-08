@@ -103,9 +103,9 @@ class NameRank < ActiveRecord::Base
 
   def self.options_for_category(name_category = :unknown, rank)
     case name_category
-    when Name::CULTIVAR_HYBRID_CATEGORY
+    when NameCategory::CULTIVAR_HYBRID_CATEGORY
       cultivar_hybrid_options
-    when Name::CULTIVAR_CATEGORY
+    when NameCategory::CULTIVAR_CATEGORY
       cultivar_options
     else
       if rank.below_family?

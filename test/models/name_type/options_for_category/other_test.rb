@@ -21,7 +21,7 @@ require "test_helper"
 # Name type options for category test.
 class OtherTest < ActiveSupport::TestCase
   test "other name type options" do
-    current_category = Name::OTHER_CATEGORY
+    current_category = name_categories(:other)
     assert_equal 5,
                  NameType.options_for_category(current_category).size,
                  "Should be just 5 #{current_category} name types."

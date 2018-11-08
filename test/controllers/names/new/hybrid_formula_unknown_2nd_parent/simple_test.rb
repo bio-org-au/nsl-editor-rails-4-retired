@@ -27,7 +27,7 @@ class NamesNewScientHybridFormulaUnk2ParSimpleTest < ActionController::TestCase
     @request.session["user_full_name"] = "Fred Jones"
     @request.session["groups"] = ["edit"]
     xhr(:get, :new,
-        { category: "hybrid formula unknown 2nd parent",
+        { category: 'hybrid formula unknown 2nd parent',
           random_id: "123445",
           tabIndex: "107" },
         {},

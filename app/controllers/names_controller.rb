@@ -34,8 +34,8 @@ class NamesController < ApplicationController
   def show
     pick_a_tab("tab_details")
     pick_a_tab_index
-    if params[:change_category_to].present?
-      @name.change_category_to = "scientific"
+    if params[:change_category_name_to].present?
+      @name.change_category_name_to = "scientific"
     end
     if params[:tab] =~ /\Atab_instances\z/
       @instance = Instance.new if params[:tab] =~ /\Atab_instances\z/
@@ -87,11 +87,12 @@ class NamesController < ApplicationController
   end
 
   def edit_as_category
-    logger.debug("edit_as_category")
     @tab = "tab_edit"
     @tab_index = 1
     if params[:new_category].present?
-      @name.change_category_to = params[:new_category]
+      @name.change_category_name_to = params[:new_category]
+    else
+      throw 'No new category param'
     end
     render "show", layout: false
   end
@@ -109,7 +110,7 @@ class NamesController < ApplicationController
 
   # GET /names/new
   def new
-    logger.debug("new")
+    logger.debug("new name")
     @tab_index = (params[:tabIndex] || "40").to_i
     @name = new_name_for_category
     @no_search_result_details = true

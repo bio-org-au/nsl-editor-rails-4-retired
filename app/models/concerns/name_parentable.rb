@@ -3,7 +3,6 @@
 # Name scopes
 module NameParentable
   extend ActiveSupport::Concern
-  include NameCategories
   included do
     belongs_to :parent, class_name: "Name", foreign_key: "parent_id"
     has_many :children,
@@ -23,7 +22,7 @@ module NameParentable
   end
 
   def requires_parent?
-    category != NameCategories::OTHER_CATEGORY &&
+    name_category.min_parents_required > 0 &&
       name_rank.present? &&
         name_rank.below_family?
   end
@@ -33,57 +32,31 @@ module NameParentable
   end
 
   def takes_parent_1?
-    category == NameCategories::SCIENTIFIC_CATEGORY ||
-      category == NameCategories::PHRASE ||
-      category == NameCategories::SCIENTIFIC_HYBRID_FORMULA_CATEGORY ||
-      category == NameCategories::CULTIVAR_CATEGORY ||
-      category == NameCategories::CULTIVAR_HYBRID_CATEGORY ||
-      category ==
-        NameCategories::SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY
+    name_category.max_parents_allowed > 0
   end
 
   def takes_parent_2?
-    category == NameCategories::SCIENTIFIC_HYBRID_FORMULA_CATEGORY ||
-      category == NameCategories::CULTIVAR_HYBRID_CATEGORY
+    name_category.max_parents_allowed > 1
   end
 
   def requires_parent_2?
-    category == NameCategories::SCIENTIFIC_HYBRID_FORMULA_CATEGORY ||
-      category == NameCategories::CULTIVAR_HYBRID_CATEGORY
+    name_category.requires_parent_2?
   end
 
   def takes_hybrid_scoped_parent?
-    category == NameCategories::SCIENTIFIC_HYBRID_FORMULA_CATEGORY ||
-      category ==
-        NameCategories::SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY
+    name_category.takes_hybrid_scoped_parent?
   end
 
   def takes_cultivar_scoped_parent?
-    category == NameCategories::CULTIVAR_CATEGORY ||
-      category == NameCategories::CULTIVAR_HYBRID_CATEGORY
+    name_category.takes_cultivar_scoped_parent?
   end
 
   def parent_rule
-    case category
-    when NameCategories::SCIENTIFIC_HYBRID_FORMULA_CATEGORY,
-         NameCategories::SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY
-      then "hybrid - species and below or unranked if unranked"
-    when NameCategories::CULTIVAR_HYBRID_CATEGORY,
-         NameCategories::CULTIVAR_CATEGORY
-      then "cultivar - genus and below, or unranked if unranked"
-    else
-      "ordinary - restricted by rank, or unranked if unranked"
-    end
+    name_category.parent_1_help_text
   end
 
   def second_parent_rule
-    case category
-    when NameCategories::SCIENTIFIC_HYBRID_FORMULA_CATEGORY
-      then "hybrid - species and below or unranked if unranked"
-    when NameCategories::CULTIVAR_HYBRID_CATEGORY
-      then "cultivar - genus and below, or unranked if unranked"
-    else ""
-    end
+    name_category.parent_2_help_text
   end
 
   def has_parent?

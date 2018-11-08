@@ -1,19 +1,132 @@
-scientific: 
-  name: Scientific
-  sort_order: 0
+phrase:
+  name: phrase name
+  sort_order: 20
+  description_html: names entered and edited as scientific phrase names
+  rdf_id:
+  min_parents_required: 1
+  max_parents_allowed: 1
+  parent_1_help_text: ordinary - restricted by rank, or unranked if unranked
+  takes_hybrid_scoped_parent: f
+  requires_family: t
+  takes_name_element: t
+  takes_authors: f
+  takes_author_only: t
+  requires_name_element: f
+  requires_higher_ranked_parent: f
+  parent_2_help_text:
+  takes_cultivar_scoped_parent: f
+  takes_verbatim_rank: f
 
-informal: 
-  name: Informal
-  sort_order: 2
+scientific_hybrid_formula_unknown_2nd_parent:
+  name: scientific hybrid formula unknown 2nd parent
+  sort_order: 40
+  description_html: names entered and edited as scientific hybrid formulae with unknown 2nd parent
+  rdf_id:
+  min_parents_required: 1
+  max_parents_allowed: 1
+  parent_1_help_text: hybrid - species and below or unranked if unranked
+  takes_hybrid_scoped_parent: t
+  requires_family: t
+  takes_name_element: f
+  takes_authors: f
+  takes_author_only: f
+  requires_name_element: f
+  requires_higher_ranked_parent: f
+  parent_2_help_text:
+  takes_cultivar_scoped_parent: f
+  takes_verbatim_rank: t
 
-cultivar: 
-  name: Cultivar
-  sort_order: 1
+other:
+  name: other
+  sort_order: 70
+  description_html: names entered and edited as other names
+  rdf_id:
+  min_parents_required: 0
+  max_parents_allowed: 0
+  parent_1_help_text: ordinary - restricted by rank, or unranked if unranked
+  takes_hybrid_scoped_parent: f
+  requires_family: f
+  takes_name_element: t
+  takes_authors: f
+  takes_author_only: f
+  requires_name_element: t
+  requires_higher_ranked_parent: f
+  parent_2_help_text:
+  takes_cultivar_scoped_parent: f
+  takes_verbatim_rank: t
 
-common: 
-  name: Common
-  sort_order: 3
+scientific:
+  name: scientific
+  sort_order: 10
+  description_html: (description of <b>scientific</b>)
+  rdf_id: scientific
+  min_parents_required: 1
+  max_parents_allowed: 1
+  parent_1_help_text: ordinary - restricted by rank, or unranked if unranked
+  takes_hybrid_scoped_parent: f
+  requires_family: t
+  takes_name_element: t
+  takes_authors: t
+  takes_author_only: f
+  requires_name_element: t
+  requires_higher_ranked_parent: t
+  parent_2_help_text:
+  takes_cultivar_scoped_parent: f
+  takes_verbatim_rank: t
 
-na: 
-  name: "n/a"
-  sort_order: 99
+scientific_hybrid_formula:
+  name: scientific hybrid formula
+  sort_order: 30
+  description_html: names entered and edited as scientific hybrid formulae
+  rdf_id:
+  min_parents_required: 2
+  max_parents_allowed: 2
+  parent_1_help_text: hybrid - species and below or unranked if unranked
+  takes_hybrid_scoped_parent: t
+  requires_family: t
+  takes_name_element: f
+  takes_authors: f
+  takes_author_only: f
+  requires_name_element: f
+  requires_higher_ranked_parent: f
+  parent_2_help_text: hybrid - species and below or unranked if unranked
+  takes_cultivar_scoped_parent: f
+  takes_verbatim_rank: t
+
+cultivar:
+  name: cultivar
+  sort_order: 50
+  description_html: (description of <b>cultivar</b>)
+  rdf_id: cultivar
+  min_parents_required: 1
+  max_parents_allowed: 1
+  parent_1_help_text: cultivar - genus and below, or unranked if unranked
+  takes_hybrid_scoped_parent: f
+  requires_family: t
+  takes_name_element: t
+  takes_authors: f
+  takes_author_only: f
+  requires_name_element: t
+  requires_higher_ranked_parent: f
+  parent_2_help_text:
+  takes_cultivar_scoped_parent: t
+  takes_verbatim_rank: t
+
+cultivar_hybrid:
+  name: cultivar hybrid
+  sort_order: 60
+  description_html: names entered and edited as cultivar  hybrid names
+  rdf_id:
+  min_parents_required: 2
+  max_parents_allowed: 2
+  parent_1_help_text: cultivar - genus and below, or unranked if unranked
+  takes_hybrid_scoped_parent: f
+  requires_family: t
+  takes_name_element: t
+  takes_authors: f
+  takes_author_only: f
+  requires_name_element: t
+  requires_higher_ranked_parent: f
+  parent_2_help_text: cultivar - genus and below, or unranked if unranked
+  takes_cultivar_scoped_parent: t
+  takes_verbatim_rank: t

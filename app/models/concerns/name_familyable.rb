@@ -4,8 +4,8 @@
 module NameFamilyable
   extend ActiveSupport::Concern
 
-  def should_have_family?
-    name_rank.below_family? && category != NameCategories::OTHER_CATEGORY
+  def requires_family?
+    name_rank.below_family? && name_category.requires_family
   end
 
 end

@@ -14,13 +14,120 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#
+
+# Rails class for the Name Category table.
 class NameCategory < ActiveRecord::Base
   self.table_name = "name_category"
   self.primary_key = "id"
   self.sequence_name = "nsl_global_seq"
+  SCIENTIFIC_CATEGORY = 'scientific'
+  SCIENTIFIC_HYBRID_FORMULA_CATEGORY = 'scientific hybrid formula'
+  SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY =
+    'scientific hybrid formula unknown 2nd parent'
+  PHRASE_NAME = 'phrase name'
+  CULTIVAR_CATEGORY = 'cultivar'
+  CULTIVAR_HYBRID_CATEGORY = 'cultivar hybrid'
+  OTHER_CATEGORY = 'other'
 
-  # attr_accessible :name
 
   has_many :name_types
+  def self.phrase_name
+    self.where("name = 'phrase name'").first
+  end
+
+  def needs_top_buttons?
+    scientific?
+  end
+
+  def scientific?
+    name == SCIENTIFIC_CATEGORY
+  end
+
+  def scientific_hybrid_formula?
+    name == SCIENTIFIC_HYBRID_FORMULA_CATEGORY
+  end
+
+  def scientific_hybrid_formula_unknown_2nd_parent?
+    name == SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY
+  end
+
+  def cultivar?
+    name == CULTIVAR_CATEGORY
+  end
+
+  def cultivar_hybrid?
+    name == CULTIVAR_HYBRID_CATEGORY
+  end
+
+  def phrase_name?
+    name == PHRASE_NAME
+  end
+
+  def other?
+    name == OTHER_CATEGORY
+  end
+
+  # count the types?
+  def only_one_type?
+    cultivar? ||
+      cultivar_hybrid? ||
+      scientific_hybrid_formula_unknown_2nd_parent? ||
+      phrase_name?
+  end
+
+  def takes_rank?
+    scientific? ||
+      scientific_hybrid_formula? ||
+      cultivar? ||
+      cultivar_hybrid? ||
+      phrase_name?
+  end
+
+  def takes_authors?
+    takes_authors
+  end
+
+  def takes_author_only?
+    takes_author_only
+  end
+
+  def takes_name_element?
+    takes_name_element
+  end
+
+  def requires_parent_1?
+    min_parents_required > 0
+  end
+
+  def requires_parent_2?
+    min_parents_required > 1
+  end
+
+  def requires_name_element?
+    requires_name_element
+  end
+
+  def requires_higher_ranked_parent?
+    requires_higher_ranked_parent
+  end
+
+  def takes_cultivar_scoped_parent?
+    takes_cultivar_scoped_parent
+  end
+
+  def takes_hybrid_scoped_parent?
+    takes_hybrid_scoped_parent
+  end
+
+  def takes_verbatim_rank?
+    takes_verbatim_rank
+  end
+
+  def takes_parent_1?
+    max_parents_allowed > 0
+  end
+
+  def takes_parent_2?
+    max_parents_allowed > 1
+  end
 end

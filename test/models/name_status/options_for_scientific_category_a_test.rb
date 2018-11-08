@@ -21,7 +21,7 @@ require "test_helper"
 class OptionsForScientificCategoryATest < ActiveSupport::TestCase
   test "should include default" do
     assert NameStatus
-      .options_for_category(Name::SCIENTIFIC_CATEGORY)
+      .options_for_category(name_categories(:scientific))
       .collect(&:first)
       .include?("[default]"),
            'Scientific name status options should include "default"'
@@ -29,7 +29,7 @@ class OptionsForScientificCategoryATest < ActiveSupport::TestCase
 
   test "should include  [deleted]" do
     assert NameStatus
-      .options_for_category(Name::SCIENTIFIC_CATEGORY)
+      .options_for_category(name_categories(:scientific))
       .collect(&:first)
       .include?("[deleted]"),
            'Scientific name status options should include "[deleted]"'
@@ -37,7 +37,7 @@ class OptionsForScientificCategoryATest < ActiveSupport::TestCase
 
   test "should include  [n/a]" do
     assert NameStatus
-      .options_for_category(Name::SCIENTIFIC_CATEGORY)
+      .options_for_category(name_categories(:scientific))
       .collect(&:first)
       .include?("[n/a]"),
            'Scientific name status options should include "[n/a]"'
@@ -45,7 +45,7 @@ class OptionsForScientificCategoryATest < ActiveSupport::TestCase
 
   test "should include  [unknown]" do
     assert NameStatus
-      .options_for_category(Name::SCIENTIFIC_CATEGORY)
+      .options_for_category(name_categories(:scientific))
       .collect(&:first)
       .include?("[unknown]"),
            'Scientific name status options should include "[unknown]"'
@@ -53,7 +53,7 @@ class OptionsForScientificCategoryATest < ActiveSupport::TestCase
 
   test "should include  isonym" do
     assert NameStatus
-      .options_for_category(Name::SCIENTIFIC_CATEGORY)
+      .options_for_category(name_categories(:scientific))
       .collect(&:first)
       .include?("isonym"),
            'Scientific name status options should include "isonym"'
@@ -61,7 +61,7 @@ class OptionsForScientificCategoryATest < ActiveSupport::TestCase
 
   test "should include  legitimate" do
     assert NameStatus
-      .options_for_category(Name::SCIENTIFIC_CATEGORY)
+      .options_for_category(name_categories(:scientific))
       .collect(&:first)
       .include?("legitimate"),
            'Scientific name status options should include "legitimate"'
@@ -69,7 +69,7 @@ class OptionsForScientificCategoryATest < ActiveSupport::TestCase
 
   test "should include  manuscript" do
     assert NameStatus
-      .options_for_category(Name::SCIENTIFIC_CATEGORY)
+      .options_for_category(name_categories(:scientific))
       .collect(&:first)
       .include?("manuscript"),
            'Scientific name status options should include "manuscript"'
@@ -77,7 +77,7 @@ class OptionsForScientificCategoryATest < ActiveSupport::TestCase
 
   test "should include  nom. alt." do
     assert NameStatus
-      .options_for_category(Name::SCIENTIFIC_CATEGORY)
+      .options_for_category(name_categories(:scientific))
       .collect(&:first)
       .include?("nom. alt."),
            'Scientific name status options should include "nom. alt."'
@@ -85,7 +85,7 @@ class OptionsForScientificCategoryATest < ActiveSupport::TestCase
 
   test "should include  nom. cons." do
     assert NameStatus
-      .options_for_category(Name::SCIENTIFIC_CATEGORY)
+      .options_for_category(name_categories(:scientific))
       .collect(&:first)
       .include?("nom. cons."),
            'Scientific name status options should include "nom. cons."'
@@ -93,7 +93,7 @@ class OptionsForScientificCategoryATest < ActiveSupport::TestCase
 
   test "should include  nom. cons., nom. alt." do
     assert NameStatus
-      .options_for_category(Name::SCIENTIFIC_CATEGORY)
+      .options_for_category(name_categories(:scientific))
       .collect(&:first)
       .include?("nom. cons., nom. alt."),
            'Scientific name status options need "nom. cons., nom. alt."'
@@ -101,7 +101,7 @@ class OptionsForScientificCategoryATest < ActiveSupport::TestCase
 
   test "should include  nom. cons., orth. cons." do
     assert NameStatus
-      .options_for_category(Name::SCIENTIFIC_CATEGORY)
+      .options_for_category(name_categories(:scientific))
       .collect(&:first)
       .include?("nom. cons., orth. cons."),
            'Scientific name status should include "nom. cons., orth. cons."'
@@ -109,7 +109,7 @@ class OptionsForScientificCategoryATest < ActiveSupport::TestCase
 
   test "should not include  nom. cult." do
     assert_not NameStatus
-      .options_for_category(Name::SCIENTIFIC_CATEGORY)
+      .options_for_category(name_categories(:scientific))
       .collect(&:first)
       .include?("nom. cult."),
                'Scientific name status options should not include "nom. cult."'

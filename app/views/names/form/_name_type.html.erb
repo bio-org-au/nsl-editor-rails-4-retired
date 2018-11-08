@@ -2,7 +2,7 @@
     <label for="name_type_id">Type*</label>
     <% if @name.only_one_type? %>
       <%= f.select('name_type_id',
-                   NameType.options_for_category(@name.category),
+                   NameType.options_for_category(@name.category_for_edit),
                    {prompt: 'Choose one'},
                    title: 'Select type',
                    tabindex: increment_tab_index,
@@ -11,7 +11,7 @@
                    required: true) %>
     <% else %>
       <%= f.select('name_type_id',
-                   NameType.options_for_category(@name.category),
+                   NameType.options_for_category(@name.category_for_edit),
                    {},
                    title: 'Select type',
                    tabindex: increment_tab_index,

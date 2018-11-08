@@ -1,7 +1,7 @@
 
 default: 
   name: "[default]"
-  name_category: na
+  name_category: other
   name_group: botanical
   scientific: false
   autonym: false
@@ -11,7 +11,7 @@ default:
 
 unknown: 
   name: "[unknown]"
-  name_category: na
+  name_category: other
   name_group: botanical
   scientific: false
   autonym: false
@@ -21,7 +21,7 @@ unknown:
 
 na: 
   name: "[n/a]"
-  name_category: na
+  name_category: other
   name_group: botanical
   scientific: false
   autonym: false
@@ -51,7 +51,7 @@ sanctioned:
 
 phrase_name: 
   name: phrase name
-  name_category: scientific
+  name_category: phrase
   name_group: botanical
   scientific: true
   autonym: false
@@ -61,7 +61,7 @@ phrase_name:
 
 hybrid_formula_parents_known:
   name: hybrid formula parents known
-  name_category: scientific
+  name_category: scientific_hybrid_formula
   name_group: botanical
   scientific: true
   autonym: false
@@ -71,7 +71,7 @@ hybrid_formula_parents_known:
 
 hybrid_formula_unknown_2nd_parent: 
   name: hybrid formula unknown 2nd parent
-  name_category: scientific
+  name_category: scientific_hybrid_formula_unknown_2nd_parent
   name_group: botanical
   scientific: true
   autonym: false
@@ -101,7 +101,7 @@ named_hybrid_autonym:
 
 hybrid_autonym: 
   name: hybrid autonym
-  name_category: scientific
+  name_category: scientific_hybrid_formula
   name_group: botanical
   scientific: true
   autonym: true
@@ -111,7 +111,7 @@ hybrid_autonym:
 
 intergrade: 
   name: intergrade
-  name_category: scientific
+  name_category: scientific_hybrid_formula
   name_group: botanical
   scientific: true
   autonym: false
@@ -131,7 +131,7 @@ autonym:
 
 common: 
   name: common
-  name_category: common
+  name_category: other
   name_group: botanical
   scientific: false
   autonym: false
@@ -152,7 +152,7 @@ cultivar:
 
 cultivar_hybrid: 
   name: cultivar hybrid
-  name_category: cultivar
+  name_category: cultivar_hybrid
   name_group: botanical
   scientific: false
   autonym: false
@@ -163,7 +163,7 @@ cultivar_hybrid:
 
 cultivar_hybrid_formula: 
   name: cultivar hybrid formula
-  name_category: cultivar
+  name_category: scientific_hybrid_formula
   name_group: botanical
   scientific: false
   autonym: false
@@ -185,7 +185,7 @@ acra:
 
 acra_hybrid: 
   name: acra hybrid
-  name_category: cultivar
+  name_category: cultivar_hybrid
   name_group: botanical
   scientific: false
   autonym: false
@@ -207,7 +207,7 @@ pbr:
 
 pbr_hybrid: 
   name: pbr hybrid
-  name_category: cultivar
+  name_category: cultivar_hybrid
   name_group: botanical
   scientific: false
   autonym: false
@@ -229,7 +229,7 @@ trade:
 
 trade_hybrid: 
   name: trade hybrid
-  name_category: cultivar
+  name_category: cultivar_hybrid
   name_group: botanical
   scientific: false
   autonym: false
@@ -240,7 +240,7 @@ trade_hybrid:
 
 graft_chimera: 
   name: graft/chimera
-  name_category: cultivar
+  name_category: scientific_hybrid_formula
   name_group: botanical
   scientific: false
   autonym: false
@@ -251,7 +251,7 @@ graft_chimera:
 
 informal: 
   name: informal
-  name_category: informal
+  name_category: other
   name_group: botanical
   scientific: false
   autonym: false

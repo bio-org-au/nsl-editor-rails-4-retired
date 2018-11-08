@@ -21,8 +21,6 @@
 class Name < ActiveRecord::Base
   include NameScopable
   include AuditScopable
-  include NameCategories
-  include NameCategorable
   include NameValidatable
   include NameParentable
   include NameFamilyable
@@ -43,9 +41,10 @@ class Name < ActiveRecord::Base
                 :give_me_focus,
                 :apc_instance_is_an_excluded_name,
                 :apc_declared_bt,
-                :change_category_to
+                :change_category_name_to
 
   belongs_to :name_type
+  has_one :name_category, through: :name_type
   belongs_to :name_status
   belongs_to :namespace, class_name: "Namespace", foreign_key: "namespace_id"
 
@@ -101,10 +100,7 @@ class Name < ActiveRecord::Base
   end
 
   def only_one_type?
-    category == CULTIVAR_CATEGORY ||
-        category == CULTIVAR_HYBRID_CATEGORY ||
-        category == SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY ||
-        category == PHRASE
+    name_category.only_one_type?
   end
 
   def full_name_or_default
@@ -140,7 +136,7 @@ class Name < ActiveRecord::Base
   end
 
   def cultivar_hybrid?
-    category == CULTIVAR_HYBRID_CATEGORY
+    name_category.cultivar_hybrid?
   end
 
   def names_in_path

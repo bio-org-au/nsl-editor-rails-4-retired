@@ -59,28 +59,51 @@ class NameType < ActiveRecord::Base
        .collect { |n| [n.capitalised_name, n.id, class: ""] }
   end
 
-  def self.option_ids_for_category(name_category_string)
-    NameType.options_for_category(name_category_string).collect(&:second)
+  def self.option_ids_for_category(name_category)
+    NameType.options_for_category(name_category).collect(&:second)
   end
 
-  def self.options_for_category(for_category)
+  def self.xoptions_for_category(for_category)
     case for_category
-    when Name::SCIENTIFIC_CATEGORY
+    when Name.name_category.scientific?
       scientific_1_parent_options
-    when Name::SCIENTIFIC_HYBRID_FORMULA_CATEGORY
+    when Name.name_category.scientific_hybrid_formula?
       scientific_2_parent_options
-    when Name::SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY
+    when Name.name_category.scientific_hybrid_formula_unknown_2nd_parent?
       scientific_hybrid_formula_unknown_2nd_parent_options
-    when Name::CULTIVAR_HYBRID_CATEGORY
+    when Name.name_category.cultivar_hybrid?
       cultivar_hybrid_options
-    when Name::CULTIVAR_CATEGORY
+    when Name.name_category.cultivar?
       cultivar_options
-    when Name::PHRASE
+    when Name.name_category.phrase_name?
       phrase_options
-    when Name::OTHER_CATEGORY
+    when Name.name_category.other?
       other_options
     when "all"
       options
+    else
+      []
+    end
+  end
+
+  def self.options_for_category(for_category)
+    case 
+    when for_category.scientific?
+      scientific_1_parent_options
+    when for_category.scientific_hybrid_formula?
+      scientific_2_parent_options
+    when for_category.scientific_hybrid_formula_unknown_2nd_parent?
+      scientific_hybrid_formula_unknown_2nd_parent_options
+    when for_category.cultivar_hybrid?
+      cultivar_hybrid_options
+    when for_category.cultivar?
+      cultivar_options
+    when for_category.phrase_name?
+      phrase_options
+    when for_category.other?
+      other_options
+    # when "all"
+    #   options
     else
       []
     end
@@ -159,7 +182,7 @@ class NameType < ActiveRecord::Base
     name == "phrase name"
   end
 
-  def category
+  def xcategory
     case name
     when "[default]"                         then "other"
     when "[unknown]"                         then "other"

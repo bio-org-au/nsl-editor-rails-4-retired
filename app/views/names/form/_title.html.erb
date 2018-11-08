@@ -1,11 +1,7 @@
-  <% if @name.id.present? -%>
     <% edit_title = "<strong class='pull-left'>" -%>
-    <% unless @name.category == @name.raw_category -%>
+    <% unless @name.category_for_edit.name == @name.name_category.name -%>
       <% edit_title += 'Edit as ' -%>
     <% end -%>
-    <% edit_title += "#{@name.category.capitalize} name" -%>
+    <% edit_title += "#{@name.category_for_edit.name.capitalize} name" -%>
     <% edit_title += "</strong>" -%>
-  <% else -%>
-    <% edit_title = "" -%>
-  <% end -%>
-  <%= edit_title.html_safe %>&nbsp;
+  <%= edit_title.sub(/ name name/,' name').html_safe -%>&nbsp;
