@@ -146,8 +146,8 @@ class Tree::AsServices
     RestClient.post(url, instances, {accept: :json})
   end
 
-  def self.val_syn_link(tree)
-    "#{CLIENT_SIDE_SERVICES}#{VAL_SYN_LINK}?treeId=#{tree}&embed=true"
+  def self.val_syn_link(tree_version_id)
+    "#{CLIENT_SIDE_SERVICES}#{VAL_SYN_LINK}?treeVersionId=#{tree_version_id}&embed=true"
   end
 
   def self.val_link(version)

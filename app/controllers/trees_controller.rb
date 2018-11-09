@@ -105,7 +105,7 @@ class TreesController < ApplicationController
     @diff_link = Tree::AsServices.diff_link(@working_draft.tree.current_tree_version_id, @working_draft.id)
     @syn_link = Tree::AsServices.syn_link(@working_draft.tree.id)
     @val_link = Tree::AsServices.val_link(@working_draft.id)
-    @val_syn_link = Tree::AsServices.val_syn_link(@working_draft.tree.id)
+    @val_syn_link = Tree::AsServices.val_syn_link(@working_draft.id)
   end
 
   def update_synonymy

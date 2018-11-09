@@ -334,3 +334,18 @@ tr.titleRow {
   background-color: RGBA(256, 256, 0, 0.30) !important;
   border-bottom: 1px solid red;
 }
+
+.targetMoved {
+  display: block;
+  margin-left: -1em;
+}
+
+.targetMoved tax,
+.targetMoved nom,
+.targetMoved mis,
+.targetMoved syn {
+  display: inline-block !important;
+  font-weight: bold;
+  background-color: RGBA(256, 256, 0, 0.30) !important;
+  border-bottom: 1px solid green;
+}
