@@ -1517,7 +1517,22 @@ CREATE TABLE public.name_category (
     name character varying(50) NOT NULL,
     sort_order integer DEFAULT 0 NOT NULL,
     description_html text,
-    rdf_id character varying(50)
+    rdf_id character varying(50),
+    min_parents_required integer DEFAULT 0 NOT NULL,
+    max_parents_allowed integer DEFAULT 0 NOT NULL,
+    parent_1_help_text character varying(80),
+    takes_hybrid_scoped_parent boolean DEFAULT false NOT NULL,
+    requires_family boolean DEFAULT false NOT NULL,
+    takes_name_element boolean DEFAULT false NOT NULL,
+    takes_authors boolean DEFAULT false NOT NULL,
+    takes_author_only boolean DEFAULT false NOT NULL,
+    requires_name_element boolean DEFAULT false NOT NULL,
+    requires_higher_ranked_parent boolean DEFAULT false NOT NULL,
+    parent_2_help_text character varying(80),
+    takes_cultivar_scoped_parent boolean DEFAULT false NOT NULL,
+    takes_verbatim_rank boolean DEFAULT false NOT NULL,
+    CONSTRAINT name_category_max_parents_allowed_check CHECK (((max_parents_allowed >= 0) AND (max_parents_allowed <= 2))),
+    CONSTRAINT name_category_min_parents_required_check CHECK (((min_parents_required >= 0) AND (min_parents_required <= 2)))
 );
 
 

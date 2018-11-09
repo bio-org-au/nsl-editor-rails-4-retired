@@ -20,7 +20,7 @@ require "test_helper"
 # Name status options tests.
 class OptionsForSciHybFormUnk2ndParCatTest < ActiveSupport::TestCase
   test "should include  [n/a]" do
-    cat = Name::SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY
+    cat = name_categories(:scientific_hybrid_formula_unknown_2nd_parent)
     assert NameStatus.options_for_category(cat)
       .collect(&:first)
       .include?("[n/a]"),
@@ -29,7 +29,7 @@ class OptionsForSciHybFormUnk2ndParCatTest < ActiveSupport::TestCase
   end
 
   test "should have only one entry" do
-    cat = Name::SCIENTIFIC_HYBRID_FORMULA_UNKNOWN_2ND_PARENT_CATEGORY
+    cat = name_categories(:scientific_hybrid_formula_unknown_2nd_parent)
     assert_equal(NameStatus.options_for_category(cat).size, 1,
                  "Wrong number of name status options for scientific
                  hybrid formula unknown 2nd parent  category")

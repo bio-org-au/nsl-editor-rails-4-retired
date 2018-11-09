@@ -1,5 +1,5 @@
 <%= form_for(@name, as: 'name', role: 'form', remote: true) do |f| %>
-  <%= render partial: "names/form/title" %>
+  <%= render partial: "names/form/title" if @name.id.present? -%>
   <input type="hidden" name="random_id" value="<%= params[:random_id] %>"/>
   <input type="hidden" name="category" value="<%= params[:category] %>"/>
   <%= render partial: "names/form/top_buttons", locals: {f: f} %>

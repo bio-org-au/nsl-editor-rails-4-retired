@@ -6,8 +6,8 @@ gem "rails", "~> 4.2"
 platform :jruby do
   gem "activerecord-jdbcpostgresql-adapter"
   # warbler for rake tasks to generate a WAR file and use jruby 9.1.5.0
-  gem "jruby-jars", "9.1.5.0"
-  gem "warbler"
+  gem "jruby-jars", "9.1.17.0"
+  gem "warbler", '~> 2.0.5'
   gem 'json', '~> 1.8', '>= 1.8.6'
 end
 

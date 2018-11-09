@@ -1,11 +1,11 @@
-  <% if @name.takes_parent_2? %>
+  <% if @name.category_for_edit.takes_parent_2? %>
 
     <div class="form-group">
-      <label for="name-second-parent-typeahead">Second parent<%= "*" if @name.requires_parent_2? %></label><%= " [#{@name.second_parent_rule}]" %><br>
+      <label for="name-second-parent-typeahead">Second parent<%= "*" if @name.category_for_edit.requires_parent_2? %></label><%= " [#{@name.category_for_edit.parent_2_help_text}]" %><br>
       <input id="name-second-parent-typeahead"
              name="name[second_parent_typeahead]"
              class="typeahead form-control requires-rank"
-             <% if @name.requires_parent_2? %>
+             <% if @name.category_for_edit.requires_parent_2? %>
                required
              <% end %>
              type="text" 
@@ -20,7 +20,7 @@
     </div>
     <%= hidden_field(:name,:second_parent_id, value: @name.second_parent_id) %>
 
-    <% if @name.takes_cultivar_scoped_parent? %>   
+    <% if @name.category_for_edit.takes_cultivar_scoped_parent? %>   
       <script>setUpNameCultivarSecondParentTypeahead();</script>
     <% else %>
       <script>setUpNameSecondParentTypeahead();</script>

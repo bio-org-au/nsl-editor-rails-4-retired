@@ -75,13 +75,14 @@ class NameStatus < ActiveRecord::Base
     find_by(name: NA)
   end
 
-  def self.options_for_category(name_category = :unknown, allow_delete = false)
-    case name_category
-    when Name::SCIENTIFIC_CATEGORY
-      scientific_options(allow_delete)
-    when Name::CULTIVAR_HYBRID_CATEGORY,
-         Name::CULTIVAR_CATEGORY
-      na_default_and_deleted_options(allow_delete)
+  def self.options_for_category(name_category)
+    case 
+    when name_category.scientific?
+      scientific_options
+    when name_category.cultivar_hybrid?
+      na_default_and_deleted_options
+    when name_category.cultivar?
+      na_default_and_deleted_options
     else
       na_option
     end
@@ -93,11 +94,11 @@ class NameStatus < ActiveRecord::Base
     end.unshift(["any status", ""])
   end
 
-  def self.scientific_options(allow_delete = false)
+  def self.scientific_options
     where(" name not in ('nom. cult.', 'nom. cult., nom. alt.') ")
       .not_deprecated
       .ordered_by_name.collect do |n|
-        [n.name, n.id, disabled: (n.name == "[deleted]" && !allow_delete)]
+        [n.name, n.id]
       end
   end
 
@@ -107,10 +108,10 @@ class NameStatus < ActiveRecord::Base
     end
   end
 
-  def self.na_default_and_deleted_options(allow_delete)
+  def self.na_default_and_deleted_options
     where(" name = '[n/a]' or name = '[default]' or name = '[deleted]' ")
       .order("name").collect do |n|
-        [n.name, n.id, disabled: n.name == "[deleted]" && !allow_delete]
+        [n.name, n.id]
       end
   end
 end

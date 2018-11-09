@@ -20,7 +20,7 @@ require "test_helper"
 # Name type options for category test.
 class ScientificHybridFormulaTest < ActiveSupport::TestCase
   setup do
-    @current_category = Name::SCIENTIFIC_HYBRID_FORMULA_CATEGORY
+    @current_category = name_categories(:scientific_hybrid_formula)
   end
   test "scientific hybrid formula name type options" do
     part1

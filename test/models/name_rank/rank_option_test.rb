@@ -20,7 +20,9 @@ require "test_helper"
 # Nam rank options test.
 class RankOptionTest < ActiveSupport::TestCase
   test "scientific ranks below family" do
-    options = NameRank.options_for_category(Name::SCIENTIFIC_CATEGORY, NameRank.species)
+    options = NameRank.options_for_category(
+      name_categories(:scientific),
+      NameRank.species)
     assert options.class == Array
     ranks = options.collect(&:first)
     subfamily_to_genus(ranks)
@@ -31,7 +33,9 @@ class RankOptionTest < ActiveSupport::TestCase
   end
 
   test "scientific ranks above family" do
-    options = NameRank.options_for_category(Name::SCIENTIFIC_CATEGORY, NameRank.family)
+    options = NameRank.options_for_category(
+      name_categories(:scientific),
+      NameRank.family)
     assert options.class == Array
     ranks = options.collect(&:first)
     family_and_above(ranks)

@@ -21,7 +21,7 @@ require "test_helper"
 # Name type options for category test.
 class ScientificTest < ActiveSupport::TestCase
   setup do
-    @current_category = Name::SCIENTIFIC_CATEGORY
+    @current_category = name_categories(:scientific)
   end
 
   test "scientific name type options" do
