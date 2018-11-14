@@ -1,6 +1,6 @@
   <div class="form-group margin-top-1em">
     <label for="name_type_id">Type*</label>
-    <% if @name.only_one_type? %>
+    <% if @name.category_for_edit.only_one_type? %>
       <%= f.select('name_type_id',
                    NameType.options_for_category(@name.category_for_edit),
                    {prompt: 'Choose one'},

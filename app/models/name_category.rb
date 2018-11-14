@@ -69,10 +69,7 @@ class NameCategory < ActiveRecord::Base
 
   # count the types?
   def only_one_type?
-    cultivar? ||
-      cultivar_hybrid? ||
-      scientific_hybrid_formula_unknown_2nd_parent? ||
-      phrase_name?
+    name_types.size == 1
   end
 
   def takes_rank?
