@@ -70,6 +70,8 @@ class NameCreateScientificHybridFormulaTest < ActiveSupport::TestCase
         "second_parent_id" => @second_parent.id.to_s,
         "verbatim_rank" => "sdfdf" }
     name = Name::AsEdited.create(@name_params, typeahead_params, "fred")
+    assert name.name_element == "a_species x another-species"
+    assert name.name_path == "Plantae/Magnoliophyta/a_family/a_genus/a_species/a_species x another-species"
     assert name.valid?,
            "Name should be valid. Errs: #{name.errors.full_messages.join('; ')}"
   end

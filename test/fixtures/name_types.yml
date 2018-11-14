@@ -67,6 +67,7 @@ hybrid_formula_parents_known:
   autonym: false
   hybrid: true
   sort_order: 7
+  connector: 'x'
   deprecated: false
 
 hybrid_formula_unknown_2nd_parent: 
@@ -77,6 +78,7 @@ hybrid_formula_unknown_2nd_parent:
   autonym: false
   hybrid: true
   sort_order: 8
+  connector: 'x'
   deprecated: false
 
 named_hybrid: 
@@ -87,6 +89,7 @@ named_hybrid:
   autonym: false
   hybrid: true
   sort_order: 9
+  connector: 'x'
   deprecated: false
 
 named_hybrid_autonym: 
@@ -97,6 +100,7 @@ named_hybrid_autonym:
   autonym: true
   hybrid: true
   sort_order: 10
+  connector: 'x'
   deprecated: false
 
 hybrid_autonym: 
@@ -107,6 +111,7 @@ hybrid_autonym:
   autonym: true
   hybrid: true
   sort_order: 11
+  connector: 'x'
   deprecated: false
 
 intergrade: 
@@ -117,6 +122,7 @@ intergrade:
   autonym: false
   hybrid: true
   sort_order: 12
+  connector: '-'
   deprecated: false
 
 autonym: 
@@ -170,6 +176,7 @@ cultivar_hybrid_formula:
   hybrid: true
   cultivar: true
   sort_order: 18
+  connector: 'x'
   deprecated: false
 
 acra: 
@@ -247,6 +254,7 @@ graft_chimera:
   hybrid: false
   cultivar: true
   sort_order: 25
+  connector: '+'
   deprecated: false
 
 informal: 
