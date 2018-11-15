@@ -119,7 +119,8 @@
             taxonUri: taxonUri
         };
         $(input).replaceWith("<i class='fa fa-refresh fa-spin'></i>");
-        send(data, "POST", window.relative_url_root + "/trees/update_excluded");
+      send(data, "POST", window.relative_url_root + "/trees/update_excluded", function () {
         $('#instance-classification-tab').click();
+      });
     }
 </script>
