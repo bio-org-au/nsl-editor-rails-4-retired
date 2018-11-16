@@ -82,4 +82,8 @@ class TreeVersion < ActiveRecord::Base
     tree.host_name
   end
 
+  def draft_instance_default?
+    self != tree.default_draft_version
+  end
+
 end

@@ -72,7 +72,7 @@ var showTabIndexes = function showTabIndexes() {
   })
 };
 
-function send(data, method, url) {
+function send(data, method, url, onDone) {
   $.ajax({
     method: method,
     url: url,
@@ -81,6 +81,7 @@ function send(data, method, url) {
     dataType: "json"
   }).done(function (respData) {
     debug(respData);
+    onDone();
   }).fail(function (jqxhr, statusText) {
     if (jqxhr.status === 403) {
       debug("status 403 forbidden");

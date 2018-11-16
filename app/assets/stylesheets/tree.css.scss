@@ -94,7 +94,15 @@
   div.tr synonyms {
     display: block;
     margin-left: 2em;
-    color: slategrey;
+    color: black;
+  }
+
+  div.tr synonyms name-status {
+    font-style: italic;
+  }
+
+  div.tr synonyms type {
+    color: darkslategrey;
   }
 
   div.tr synonyms scientific,
@@ -296,6 +304,13 @@
     padding-top: 0.7em;
   }
 
+  name-status.manuscript,
+  name-status.legitimate,
+  name-status.\[default\],
+  name-status.\[unknown\],
+  name-status.\[n\/a\] {
+    display: none;
+  }
 }
 
 .dl-horizontal dd form {
@@ -345,7 +360,4 @@ tr.titleRow {
 .targetMoved mis,
 .targetMoved syn {
   display: inline-block !important;
-  font-weight: bold;
-  background-color: RGBA(256, 256, 0, 0.30) !important;
-  border-bottom: 1px solid green;
 }
