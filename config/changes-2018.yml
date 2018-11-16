@@ -2,6 +2,10 @@
 - :date: 14-Nov-2018
   :jira_id: '3065'
   :description: |-
+    Use name_category.takes_rank if it is available.
+- :date: 14-Nov-2018
+  :jira_id: '3065'
+  :description: |-
     Set name type to phrase name in edit tab when converting scientific name to phrase name
 - :date: 07-Nov-2018
   :jira_id: '3065'

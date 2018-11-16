@@ -73,6 +73,10 @@ class NameCategory < ActiveRecord::Base
   end
 
   def takes_rank?
+    takes_rank
+  rescue => e
+    # transitional code
+    Rails.logger.error('Falling back to static takes_rank criteria because name_category.takes_rank was not found')
     scientific? ||
       scientific_hybrid_formula? ||
       cultivar? ||
