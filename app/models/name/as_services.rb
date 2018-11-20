@@ -17,27 +17,28 @@
 
 #  Name services
 class Name::AsServices < Name
+  NAME_SERVICES = Rails.configuration.try('name_services')
   def self.name_strings_url(id)
-    "#{Rails.configuration.name_services}#{id}/api/name-strings"
+    "#{NAME_SERVICES}#{id}/api/name-strings"
   end
 
   def self.in_apc_url(id)
-    "#{Rails.configuration.name_services}#{id}/api/apc"
+    "#{NAME_SERVICES}#{id}/api/apc"
   end
 
   def self.in_apni_url(id)
-    "#{Rails.configuration.name_services}#{id}/api/apni"
+    "#{NAME_SERVICES}#{id}/api/apni"
   end
 
   def self.apni_family_url(id)
-    "#{Rails.configuration.name_services}#{id}/api/family"
+    "#{NAME_SERVICES}#{id}/api/family"
   end
 
   def self.delete_url(id, reason = "No longer required.")
     api_key = Rails.configuration.api_key
-    address = Rails.configuration.name_services
     path = "#{id}/api/delete"
-    "#{address}#{path}?apiKey=#{api_key}&reason=#{ERB::Util.url_encode(reason)}"
+    encoded_reason= "#{ERB::Util.url_encode(reason)}"
+    "#{NAME_SERVICES}#{path}?apiKey=#{api_key}&reason=#{encoded_reason}"
   end
 
   # Service will send back 200 even if delete fails, but will also sometimes

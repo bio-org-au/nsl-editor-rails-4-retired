@@ -1,4 +1,8 @@
 ---
+- :date: 21-Nov-2018
+  :jira_id: '3099'
+  :description: |-
+    Configure the use of name authors and changed combination to allow for ICZN.
 - :date: 14-Nov-2018
   :jira_id: '3065'
   :description: |-

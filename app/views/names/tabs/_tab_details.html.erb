@@ -51,6 +51,11 @@
 
 <%= render partial: "names/widgets/duplicates" %>
 
+
+<% if @name.changed_combination %>
+  <br>Changed combination
+<% end %>
+
 <% unless @name.ex_base_author.blank? %>
     <br>
     <% auth_link = link_to(@name.ex_base_author.abbrev_if_possible, search_path(query_target: 'author',

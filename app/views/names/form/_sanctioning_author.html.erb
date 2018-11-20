@@ -1,0 +1,13 @@
+
+  <div class="form-group">
+    <label for="sanctioning-author-by-abbrev">Sanctioning Author</label><br>
+    <input id="sanctioning-author-by-abbrev"
+           name="name[sanctioning_author_typeahead]"   
+           class="typeahead form-control" 
+           type="text" 
+           title="Authors will be suggested as you type, so please select from the list or type enough to identify a single author by abbreviation."
+           tabindex="<%= increment_tab_index %>"
+           value="<%= @name.sanctioning_author.try('abbrev_if_possible') %>"/>
+  </div>
+  <%= f.hidden_field(:sanctioning_author_id) %>
+

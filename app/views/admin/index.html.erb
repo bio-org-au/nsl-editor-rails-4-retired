@@ -93,8 +93,8 @@
 
     <tr><td>Rails.configuration.action_controller.perform_caching</td><td> <%= Rails.configuration.action_controller.try(:perform_caching) %> </td></tr>
 
-    <tr><td></td><td> <%= Rails.application.secrets[:secret_key_base][3..6] %> </td></tr>
-
+    <tr><td>Key base stats</td><td> <%= Rails.application.secrets[:secret_key_base][3..6] %>; <%= Rails.application.secrets[:secret_key_base].length %> </td></tr>
+    <tr><td colspan="2">&nbsp;</td></tr>
     </table>
 
     <h4>Editor Services</h4>
@@ -134,11 +134,18 @@
 
     <h4>Editor Behaviour</h4>
     <table class="table table-condensed search-results width-100-percent">
-
     <tr><td class="width-40-percent min-width-10em">Rails.configuration.show_new_search_link </td><td> <%= Rails.configuration.try(:show_new_search_link) %> </td></tr>
+    <tr><td class="width-5-percent">&nbsp;</td></tr>
+    </table>
 
-
-
+    <h5>ICN/ICZN Switches</h4>
+    <table class="table table-condensed search-results width-100-percent">
+    <tr><td class="width-40-percent min-width-10em">Rails.configuration.allow_name_changed_combination </td><td> <%= Rails.configuration.try(:allow_name_changed_combination) %> </td></tr>
+    <tr><td class="width-40-percent min-width-10em">Rails.configuration.allow_name_ex_author </td><td> <%= Rails.configuration.try(:allow_name_ex_author) %> </td></tr>
+    <tr><td class="width-40-percent min-width-10em">Rails.configuration.allow_name_base_author </td><td> <%= Rails.configuration.try(:allow_name_base_author) %> </td></tr>
+    <tr><td class="width-40-percent min-width-10em">Rails.configuration.allow_name_ex_base_author </td><td> <%= Rails.configuration.try(:allow_name_ex_base_author) %> </td></tr>
+    <tr><td class="width-40-percent min-width-10em">Rails.configuration.allow_name_sanctioning_author </td><td> <%= Rails.configuration.try(:allow_name_sanctioning_author) %> </td></tr>
+    <tr><td class="width-5-percent">&nbsp;</td></tr>
     </table>
 
   </div>

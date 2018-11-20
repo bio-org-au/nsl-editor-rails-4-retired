@@ -1,0 +1,8 @@
+  <% if @name.takes_changed_combination? %>
+  <div class="form-group changed-combination">
+    <label for="name_changed_combination">
+      <%= f.check_box(:changed_combination, {class:'checkbox-inline width-1em', title: "Check the box if this is a changed combination", tabindex: increment_tab_index}) %>
+      Changed Combination
+    </label>
+  </div>
+  <% end %>

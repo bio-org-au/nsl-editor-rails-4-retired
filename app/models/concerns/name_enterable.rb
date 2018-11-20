@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Name scopes
+# Name fields that are offered for the various types and categories of names.
 module NameEnterable
   extend ActiveSupport::Concern
   included do
@@ -18,13 +18,6 @@ module NameEnterable
     category_for_edit.takes_rank?
   end
 
-  def takes_authors?
-    category_for_edit.takes_authors?
-  end
-
-  def takes_author_only?
-    category_for_edit.takes_author_only?
-  end
 
   def takes_verbatim_rank?
     category_for_edit.takes_verbatim_rank?
@@ -55,5 +48,14 @@ module NameEnterable
 
   def category_for_edit
     NameCategory.find_by_name(category_name_for_edit)
+  end
+
+  # Default to false, so that this field
+  # will not appear in shards with no config item
+  def takes_changed_combination?
+    config_name = "allow_name_changed_combination"
+    allow = Rails.configuration.try(config_name)
+    allow = false if allow.nil?
+    allow && category_for_edit.takes_authors?
   end
 end

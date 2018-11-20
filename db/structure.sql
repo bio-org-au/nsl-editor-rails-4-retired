@@ -1503,7 +1503,8 @@ CREATE TABLE public.name (
     verbatim_rank character varying(50),
     sort_name character varying(250),
     family_id bigint,
-    name_path text DEFAULT ''::text NOT NULL
+    name_path text DEFAULT ''::text NOT NULL,
+    changed_combination boolean DEFAULT false NOT NULL
 );
 
 

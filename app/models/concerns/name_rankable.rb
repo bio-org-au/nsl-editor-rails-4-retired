@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Name scopes
+# Name rank rules
 module NameRankable
   extend ActiveSupport::Concern
   included do
@@ -40,10 +40,9 @@ module NameRankable
     next_major = next_major_rank
     NameRank.where(["sort_order < :this_rank and sort_order >= :major_rank", this_rank: self.name_rank.sort_order, major_rank: next_major.sort_order])
   end
+
   def next_major_rank
     NameRank.where(["sort_order < :this_rank and major", this_rank: self.name_rank.sort_order])
         .order(:sort_order).reverse_order.first
   end
-
-
 end

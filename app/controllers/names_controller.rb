@@ -239,7 +239,8 @@ class NamesController < ApplicationController
                                  :name_rank_id,
                                  :name_type_id,
                                  :name_element,
-                                 :verbatim_rank)
+                                 :verbatim_rank,
+                                 :changed_combination)
   end
 
   def typeahead_params

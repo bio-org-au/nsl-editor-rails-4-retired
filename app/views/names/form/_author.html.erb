@@ -1,0 +1,16 @@
+
+
+  <div class="form-group author">
+    <label for="author-by-abbrev"><%= "Original " if @name.changed_combination %>Author</label><br>
+    <input id="author-by-abbrev"
+           name="name[author_typeahead]"   
+           class="typeahead form-control" 
+           type="text" 
+           title="Authors will be suggested as you type, so please select from the list or type enough to identify a single author by abbreviation."
+           tabindex="<%= increment_tab_index %>"
+           value="<%= @name.author.try('abbrev_if_possible') %>"/>
+  </div>
+  <%= f.hidden_field(:author_id) %>
+  <script>setUpAuthorByAbbrev(); </script>
+
+
