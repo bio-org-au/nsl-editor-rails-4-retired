@@ -2,7 +2,9 @@ AllCops:
   Exclude:
     - 'db/**/*'
   TargetRubyVersion: 2.3
-Style/TrailingCommaInLiteral:
+Style/TrailingCommaInArrayLiteral:
+  Enabled: false
+Style/TrailingCommaInHashLiteral:
   Enabled: false
 Naming/VariableNumber:
   Enabled: false
@@ -15,3 +17,4 @@ Style/ClassAndModuleChildren:
 # Gives warning: || Warning: unrecognized cop Rails found in /Users/gregc/Dropbox/anbg/rails/ned/.rubocop.yml
 # Rails:
 #   Enabled: true
+

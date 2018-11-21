@@ -1,5 +1,9 @@
 ---
 - :date: 21-Nov-2018
+  :jira_id: '3116'
+  :description: |-
+    Restore the ability of names above family to omit a parent.
+- :date: 21-Nov-2018
   :jira_id: '3099'
   :description: |-
     Configure the use of name authors and changed combination to allow for ICZN.

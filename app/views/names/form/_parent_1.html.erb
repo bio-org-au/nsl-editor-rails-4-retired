@@ -1,11 +1,11 @@
   <% if @name.category_for_edit.takes_parent_1? %>
     <div class="form-group">
-      <label for="name-parent-typeahead"><%= 'First ' if @name.hybrid? %>Parent<%= "*" if @name.category_for_edit.requires_parent_1? %></label> <%= " [#{@name.category_for_edit.parent_1_help_text}]" %><br>
+      <label for="name-parent-typeahead"><%= 'First ' if @name.hybrid? %>Parent<%= "*" if @name.requires_parent_1? %></label> <%= " [#{@name.category_for_edit.parent_1_help_text}]" %><br>
       <input id="name-parent-typeahead"
              name="name[parent_typeahead]"
              class="typeahead form-control requires-rank"
              data-name-id="<%= @name.id %>"
-             <% if @name.category_for_edit.requires_parent_1? %>
+             <% if @name.requires_parent_1? %>
                required 
              <% end %>
              type="text" 

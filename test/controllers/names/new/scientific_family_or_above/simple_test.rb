@@ -18,28 +18,29 @@
 require "test_helper"
 
 # Single controller test.
-class NamesNewScientificSimpleTest < ActionController::TestCase
+class NamesNewScientificFamilyOrAboveSimpleTest < ActionController::TestCase
   tests NamesController
 
-  test "editor should be able to start a new scientific" do
+  test "editor should be able to start a new scientific name family or above" do
     @request.headers["Accept"] = "application/javascript"
     @request.session["username"] = "fred"
     @request.session["user_full_name"] = "Fred Jones"
     @request.session["groups"] = ["edit"]
     xhr(:get, :new,
-        { category: "scientific",
+        { category: "scientific_family",
           random_id: "123445",
           tabIndex: "107" },
         {},
         xhr: true)
-    assert_response :success, "Cannot start enter new scientific name"
+    assert_response :success, "Cannot enter new scientific name family or above"
     assert_select("h4", /New Scientific Name/)
     assert_select "input" do |inputs|
       inputs.each do |input|
         if input.to_s.match(/name-parent-typeahead/)
-          assert_match 'required', input.to_s, 'name-parent-typeahead should be required'
+          assert_no_match 'required', input.to_s, 'name-parent-typeahead should not be required'
         end
       end
     end
-  end
+ end
 end
+

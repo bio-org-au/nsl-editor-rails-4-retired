@@ -22,9 +22,9 @@ module NameParentable
   end
 
   def requires_parent?
-    name_category.min_parents_required > 0 &&
+    name_category.requires_parent_1? &&
       name_rank.present? &&
-        name_rank.below_family?
+      name_rank.below_family?
   end
 
   def requires_parent_1?
