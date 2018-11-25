@@ -43,6 +43,7 @@ class Instance::AsCopier < Instance
       new.page = new_page
       new.draft = new_is_draft
       new.created_by = new.updated_by = as_username
+      new.uri = nil
       new.save!
       reverse_of_this_is_cited_by.each do |citer|
         new_citer = Instance.new
