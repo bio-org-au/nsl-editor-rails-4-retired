@@ -1301,6 +1301,7 @@ CREATE TABLE public.instance (
     updated_by character varying(1000) NOT NULL,
     valid_record boolean DEFAULT false NOT NULL,
     verbatim_name_string character varying(255),
+    uri text,
     CONSTRAINT citescheck CHECK (((cites_id IS NULL) OR (cited_by_id IS NOT NULL)))
 );
 
