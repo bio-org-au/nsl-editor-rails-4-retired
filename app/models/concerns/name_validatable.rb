@@ -46,6 +46,10 @@ module NameValidatable
                            unless: "cultivar_hybrid?"
     validates :second_parent_id, absence: true, unless: :requires_parent_2?
     validates :verbatim_rank, length: { maximum: 50 }
+    validates :published_year,
+              numericality: { greater_than_or_equal_to: 1700,
+                              less_than_or_equal_to: Date.current.year,
+                              only_integer: true }
   end
 
   def name_element_is_stripped
