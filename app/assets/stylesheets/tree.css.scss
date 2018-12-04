@@ -257,6 +257,18 @@
     padding-left: 11em;
   }
 
+  div.indented div.tr.level12 {
+    padding-left: 12em;
+  }
+
+  div.indented div.tr.level13 {
+    padding-left: 13em;
+  }
+
+  div.indented div.tr.level14 {
+    padding-left: 14em;
+  }
+
   /* add links to div.tr line by wrapping it with another div */
   div.wrap div.tr {
     width: auto;
