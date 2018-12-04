@@ -49,7 +49,8 @@ module NameValidatable
     validates :published_year,
               numericality: { greater_than_or_equal_to: 1700,
                               less_than_or_equal_to: Date.current.year,
-                              only_integer: true }
+                              only_integer: true },
+              allow_blank: true
   end
 
   def name_element_is_stripped
