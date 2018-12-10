@@ -240,6 +240,7 @@ class NamesController < ApplicationController
                                  :name_type_id,
                                  :name_element,
                                  :verbatim_rank,
+                                 :published_year,
                                  :changed_combination)
   end
 

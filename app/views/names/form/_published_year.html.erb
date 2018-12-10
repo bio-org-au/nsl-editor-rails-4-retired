@@ -1,0 +1,18 @@
+
+<% if @name.takes_published_year? %>
+  <div class="form-group">
+    <label for="">Year Published</label><br>
+    <input id="published_year"
+           name="name[published_year]"   
+           class="typeahead form-control" 
+           type="number"
+           name="quantity"
+           min="1700"
+           max="<%= Date.current.year %>"
+           title="Year in which this name was published.  4-digit years are acceptable.  The year published may appear as part of the constructed full name."
+           tabindex="<%= increment_tab_index %>"
+           data-name-id="<%= @name.id %>"
+           value="<%= @name.published_year %>"/>
+  </div>
+<% end %>
+

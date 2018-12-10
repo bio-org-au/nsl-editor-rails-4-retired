@@ -29,7 +29,7 @@
 
     <dt>Under</dt>
     <dd>
-      <% if tve.parent.tree_element %>
+      <% if tve.parent.present? && tve.parent.tree_element %>
         <%= link_to("<i class=\"fa fa-sitemap\"></i> #{search_icon_on_tab}
                     #{tve.parent.tree_element.instance.name.try('full_name')}"
                         .html_safe,

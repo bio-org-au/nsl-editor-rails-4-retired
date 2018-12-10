@@ -82,7 +82,9 @@ We run the app under JRuby because Tomcat.
       Rails.configuration.allow_name_ex_base_author = true
       Rails.configuration.allow_name_base_author = true
       Rails.configuration.allow_name_ex_author = true
-      Rails.configuration.allow_sanctioning_author = true
+      Rails.configuration.allow_name_sanctioning_author = true
+      # ICZN uses name.published year, irrelevant to ICN
+      Rails.configuration.allow_name_published_year = false
 
       Rails.configuration.offer_feedback_link = false
       Rails.configuration.feedback_script = 'not the real script'
