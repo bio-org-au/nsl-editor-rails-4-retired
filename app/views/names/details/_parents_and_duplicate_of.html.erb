@@ -1,0 +1,30 @@
+<% if @name.has_parent? %>
+    <% if @name.has_second_parent? %>
+        between
+    <% else %>
+        within
+    <% end %>
+    <%= link_to(@name.parent.try('full_name_html').try('html_safe'),
+                search_path(query_target: 'names', query_string: "id: #{@name.parent_id}"),
+                class: 'name',
+                tabindex: increment_tab_index,
+                title: "Query the parent") %>
+<% end %>
+
+<% if @name.has_second_parent? %>
+    and
+    <%= link_to(@name.second_parent.try('full_name_html').try('html_safe'),
+                search_path(query_target: "names", query_string: "id:#{@name.second_parent_id}"),
+                class: 'rebeccapurple',
+                tabindex: increment_tab_index,
+                title: 'second parent') %>
+<% end %>
+
+<% if @name.duplicate_of_id.present? %>
+    <br>
+    <% link = link_to(@name.duplicate_of.full_name, search_path(query_target: 'name',
+                                                                query_string: "id: #{@name.duplicate_of_id}"),
+                      title: 'Retrieve duplicate of', tabindex: increment_tab_index) %>
+    <%= "Duplicate of #{link}".html_safe %>
+<% end %>
+

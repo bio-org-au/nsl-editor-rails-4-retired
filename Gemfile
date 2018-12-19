@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 source "https://rubygems.org"
 
-gem "rails", "~> 4.2"
+gem "rails", "4.2.7.1"
 
 platform :jruby do
-  gem "activerecord-jdbcpostgresql-adapter"
+  gem "activerecord-jdbcpostgresql-adapter", "1.3.24", :platform => :jruby
   # warbler for rake tasks to generate a WAR file and use jruby 9.1.5.0
   gem "jruby-jars", "9.1.5.0"
   gem "warbler"
@@ -12,7 +12,7 @@ platform :jruby do
 end
 
 platform :ruby do
-  gem "pg"
+  gem 'pg', '~> 0.21'
 end
 
 gem "sass-rails", "~> 4.0.3"
@@ -20,7 +20,6 @@ gem "autoprefixer-rails"
 gem "bootstrap-sass"
 gem "uglifier", ">= 1.3.0"
 gem "coffee-rails", "~> 4.0.0"
-gem "therubyrhino"
 gem "jquery-rails"
 gem "jquery-ui-rails"
 gem "turbolinks"
@@ -39,15 +38,8 @@ group :development do
   gem "better_errors", "~>1.0"
   gem "spring"
   gem "binding_of_caller", platforms: [:mri_19, :mri_20, :mri_21, :rbx]
-  gem "guard-bundler"
-  gem "guard-rails"
-  gem "guard-test"
   gem "quiet_assets"
   gem "rails_layout"
-  gem "rb-fchange", require: false
-  gem "rb-fsevent", require: false
-  gem "rb-inotify", require: false
-  # gem "rails-erd"
 end
 
 group :development, :test do
@@ -57,14 +49,12 @@ group :development, :test do
   # gem "schema_plus"
 end
 
-platform :ruby do
-  group :test do
+group :test do
     gem "minitest"
     gem "minitest-rails"
     gem "minitest-reporters"
     gem "launchy"
     gem "mocha", "~> 1.1.0"
-  end
 end
 
 gem "kramdown"

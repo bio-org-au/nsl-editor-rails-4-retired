@@ -1,0 +1,39 @@
+<% unless @name.ex_base_author.blank? %>
+    <br>
+    <% auth_link = link_to(@name.ex_base_author.abbrev_if_possible, search_path(query_target: 'author',
+                                                                                query_string: "id: #{@name.ex_base_author_id}"),
+                           title: "Retrieve ex base author", tabindex: increment_tab_index, class: 'author') %>
+    <%= "Ex Base Name Authored by #{auth_link}".html_safe %>
+<% end %>
+
+<% unless @name.base_author.blank? %>
+    <br>
+    <% auth_link = link_to(@name.base_author.abbrev_if_possible, search_path(query_target: 'author',
+                                                                             query_string: "id: #{@name.base_author_id}"),
+                           title: "Retrieve ex base author", tabindex: increment_tab_index, class: 'author') %>
+    <%= "Base Name Authored by #{auth_link}".html_safe %>
+<% end %>
+
+<% unless @name.ex_author.blank? %>
+    <br>
+    <% auth_link = link_to(@name.ex_author.abbrev_if_possible, search_path(query_target: 'author',
+                                                                           query_string: "id: #{@name.ex_author_id}"),
+                           title: "Retrieve ex base author", tabindex: increment_tab_index, class: 'author') %>
+    <%= "Ex Authored by #{auth_link}".html_safe %>
+<% end %>
+
+<% unless @name.author.blank? %>
+    <br>
+    <% auth_link = link_to(@name.author.abbrev_if_possible, search_path(query_target: 'author',
+                                                                        query_string: "id: #{@name.author_id}"),
+                           title: "Retrieve ex base author", tabindex: increment_tab_index, class: 'author') %>
+    <%= "Authored by #{auth_link}".html_safe %>
+<% end %>
+<% unless @name.sanctioning_author.blank? %>
+    <br>
+    <% auth_link = link_to(@name.sanctioning_author.abbrev_if_possible, search_path(query_target: 'author',
+                                                                                    query_string: "author id: #{@name.sanctioning_author_id}"),
+                           title: "Retrieve ex base author", tabindex: increment_tab_index, class: 'author') %>
+    <%= "Sanctioned by #{auth_link}".html_safe %>
+<% end %>
+

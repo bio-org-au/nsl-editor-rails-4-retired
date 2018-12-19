@@ -75,6 +75,11 @@ class Ldap < ActiveType::Object
   def admin_connection
     Rails.logger.info("Connecting to LDAP")
     ldap = Net::LDAP.new
+    Rails.logger.info("Rails.configuration.ldap_host: #{Rails.configuration.ldap_host}")
+    Rails.logger.info("Rails.configuration.ldap_port: #{Rails.configuration.ldap_port}")
+    Rails.logger.info("Rails.configuration.ldap_admin_username: #{Rails.configuration.ldap_admin_username}")
+    Rails.logger.info("Rails.configuration.ldap_admin_password: #{Rails.configuration.ldap_admin_password}")
+    ldap.port = Rails.configuration.ldap_port
     ldap.host = Rails.configuration.ldap_host
     ldap.port = Rails.configuration.ldap_port
     ldap.auth Rails.configuration.ldap_admin_username,
@@ -83,11 +88,17 @@ class Ldap < ActiveType::Object
       Rails.logger.error("LDAP error: #{ldap.get_operation_result.error_message}")
       raise "Failed admin connection!"
     end
+    Rails.logger.info("Admin connection to LDAP succeeded")
     ldap
   end
 
   def validate_user_credentials
-    Rails.logger.info("Validate user credentials")
+    Rails.logger.info("Validate user credentials ----------------------")
+    Rails.logger.info("Rails.configuration.ldap_users: #{Rails.configuration.ldap_users}")
+    Rails.logger.info(%Q(Net::LDAP::Filter.eq("uid", username): #{Rails.configuration.ldap_users}))
+    Rails.logger.info("username: #{username}")
+    Rails.logger.info("password: #{password}")
+    Rails.logger.info("=============================")
     result = admin_connection.bind_as(
       base: Rails.configuration.ldap_users,
       filter: Net::LDAP::Filter.eq("uid", username),

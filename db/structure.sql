@@ -2,12 +2,11 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.6.10
--- Dumped by pg_dump version 9.6.10
+-- Dumped from database version 9.5.14
+-- Dumped by pg_dump version 9.5.14
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
@@ -34,6 +33,20 @@ COMMENT ON SCHEMA audit IS 'Out-of-table audit/history logging tables and trigge
 --
 
 CREATE SCHEMA mapper;
+
+
+--
+-- Name: uncited; Type: SCHEMA; Schema: -; Owner: -
+--
+
+CREATE SCHEMA uncited;
+
+
+--
+-- Name: SCHEMA uncited; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON SCHEMA uncited IS 'Archive of name records "uncited" by instance; along with name_tags and comments';
 
 
 --
@@ -285,6 +298,322 @@ of the audit trigger its self.
 
 
 --
+-- Name: apni_detail_jsonb(bigint); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.apni_detail_jsonb(nameid bigint) RETURNS jsonb
+    LANGUAGE sql
+    AS $$
+select jsonb_agg(
+         jsonb_build_object(
+           'ref_citation_html', refs.citation_html,
+           'ref_citation', refs.citation,
+           'instance_id', refs.instance_id,
+           'instance_uri', refs.instance_uri,
+           'instance_type', refs.instance_type,
+           'page', refs.page,
+           'type_notes', coalesce(type_notes_jsonb(refs.instance_id), '{}' :: jsonb),
+           'synonyms', coalesce(apni_ordered_synonymy_jsonb(refs.instance_id), apni_synonym_jsonb(refs.instance_id), '[]' :: jsonb),
+           'non_type_notes', coalesce(non_type_notes_jsonb(refs.instance_id), '{}' :: jsonb),
+           'profile', coalesce(latest_accepted_profile_jsonb(refs.instance_id), '{}' :: jsonb),
+           'resources', coalesce(instance_resources_jsonb(refs.instance_id), '{}' :: jsonb),
+           'tree', coalesce(instance_on_accepted_tree_jsonb(refs.instance_id), '{}' :: jsonb)
+         )
+       )
+from apni_ordered_references(nameid) refs
+$$;
+
+
+--
+-- Name: apni_detail_text(bigint); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.apni_detail_text(nameid bigint) RETURNS text
+    LANGUAGE sql
+    AS $$
+select string_agg(' ' ||
+                  refs.citation ||
+                  ': ' ||
+                  refs.page || E'
+' ||
+                  coalesce(type_notes_text(refs.instance_id), '') ||
+                  coalesce(apni_ordered_synonymy_text(refs.instance_id), apni_synonym_text(refs.instance_id), '') ||
+                  coalesce(non_type_notes_text(refs.instance_id), '') ||
+                  coalesce(latest_accepted_profile_text(refs.instance_id), ''),
+                  E'
+')
+from apni_ordered_references(nameid) refs
+$$;
+
+
+--
+-- Name: apni_ordered_nom_synonymy(bigint); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.apni_ordered_nom_synonymy(instanceid bigint) RETURNS TABLE(instance_id bigint, instance_uri text, instance_type text, instance_type_id bigint, name_id bigint, name_uri text, full_name text, full_name_html text, name_status text, citation text, citation_html text, year integer, page text, sort_name text, misapplied boolean, ref_id bigint)
+    LANGUAGE sql
+    AS $$
+select i.id,
+       i.uri,
+       it.has_label as instance_type,
+       it.id        as instance_type_id,
+       n.id         as name_id,
+       n.uri,
+       n.full_name,
+       n.full_name_html,
+       ns.name      as name_status,
+       r.citation,
+       r.citation_html,
+       r.year,
+       cites.page,
+       n.sort_name,
+       false,
+       r.id
+from instance i
+       join instance_type it on i.instance_type_id = it.id and it.nomenclatural
+       join name n on i.name_id = n.id
+       join name_status ns on n.name_status_id = ns.id
+       left outer join instance cites on i.cites_id = cites.id
+       left outer join reference r on cites.reference_id = r.id
+where i.cited_by_id = instanceid
+order by (it.sort_order < 20) desc,
+         it.nomenclatural desc,
+         r.year,
+         n.sort_name,
+         it.pro_parte,
+         it.doubtful,
+         cites.page,
+         cites.id;
+$$;
+
+
+--
+-- Name: apni_ordered_other_synonymy(bigint); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.apni_ordered_other_synonymy(instanceid bigint) RETURNS TABLE(instance_id bigint, instance_uri text, instance_type text, instance_type_id bigint, name_id bigint, name_uri text, full_name text, full_name_html text, name_status text, citation text, citation_html text, year integer, page text, sort_name text, group_name text, group_head boolean, group_year integer, misapplied boolean, ref_id bigint, og_id bigint, og_head boolean, og_name text, og_year integer)
+    LANGUAGE sql
+    AS $$
+select i.id                            as instance_id,
+       i.uri                           as instance_uri,
+       it.has_label                    as instance_type,
+       it.id                           as instance_type_id,
+       n.id                            as name_id,
+       n.uri                           as name_uri,
+       n.full_name,
+       n.full_name_html,
+       ns.name                         as name_status,
+       r.citation,
+       r.citation_html,
+       r.year,
+       cites.page,
+       n.sort_name,
+       ng.group_name                   as group_name,
+       ng.group_id = n.id              as group_head,
+       coalesce(ng.group_year, r.year) as group_year,
+       it.misapplied,
+       r.id                            as ref_id,
+       og_id                           as og_id,
+       og_id = n.id                    as og_head,
+       coalesce(ogn.sort_name, n.sort_name) as og_name,
+       coalesce(ogr.year,r.year)       as og_year
+from instance i
+       join instance_type it on i.instance_type_id = it.id and not it.nomenclatural and it.relationship
+       join name n on i.name_id = n.id
+       join name_type nt on n.name_type_id = nt.id
+       join orth_or_alt_of(case when nt.autonym then n.parent_id else n.id end) og_id on true
+       left outer join name ogn on ogn.id = og_id and not og_id = n.id
+       left outer join instance ogi
+       join reference ogr on ogr.id = ogi.reference_id
+         on ogi.name_id = og_id and ogi.id = i.cited_by_id and not og_id = n.id
+       left outer join first_ref(basionym(og_id)) ng on true
+       join name_status ns on n.name_status_id = ns.id
+       left outer join instance cites on i.cites_id = cites.id
+       left outer join reference r on cites.reference_id = r.id
+where i.cited_by_id = instanceid
+order by (it.sort_order < 20) desc,
+         it.taxonomic desc,
+         group_year,
+         group_name,
+         group_head desc,
+         og_year,
+         og_name,
+         og_head desc,
+         r.year,
+         n.sort_name,
+         it.pro_parte,
+         it.misapplied desc,
+         it.doubtful,
+         cites.page,
+         cites.id;
+$$;
+
+
+--
+-- Name: apni_ordered_references(bigint); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.apni_ordered_references(nameid bigint) RETURNS TABLE(instance_id bigint, instance_uri text, instance_type text, citation text, citation_html text, year integer, pages text, page text)
+    LANGUAGE sql
+    AS $$
+select i.id, i.uri, it.name, r.citation, r.citation_html, r.year, r.pages, coalesce(i.page, citedby.page, '-')
+from instance i
+       join reference r on i.reference_id = r.id
+       join instance_type it on i.instance_type_id = it.id
+       left outer join instance citedby on i.cited_by_id = citedby.id
+where i.name_id = nameid
+group by r.id, i.id, it.id, citedby.id
+order by r.year, it.protologue, it.primary_instance, r.citation, r.pages, i.page, r.id;
+$$;
+
+
+--
+-- Name: apni_ordered_synonymy(bigint); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.apni_ordered_synonymy(instanceid bigint) RETURNS TABLE(instance_id bigint, instance_uri text, instance_type text, instance_type_id bigint, name_id bigint, name_uri text, full_name text, full_name_html text, name_status text, citation text, citation_html text, year integer, page text, sort_name text, misapplied boolean, ref_id bigint)
+    LANGUAGE sql
+    AS $$
+
+select instance_id, instance_uri, instance_type, instance_type_id, name_id, name_uri, full_name, full_name_html,
+       name_status, citation, citation_html, year, page, sort_name, misapplied, ref_id
+from apni_ordered_nom_synonymy(instanceid)
+union all
+select instance_id, instance_uri, instance_type, instance_type_id, name_id, name_uri, full_name, full_name_html,
+       name_status, citation, citation_html, year, page, sort_name, misapplied, ref_id
+from apni_ordered_other_synonymy(instanceid)
+$$;
+
+
+--
+-- Name: apni_ordered_synonymy_jsonb(bigint); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.apni_ordered_synonymy_jsonb(instanceid bigint) RETURNS jsonb
+    LANGUAGE sql
+    AS $$
+select jsonb_agg(
+         jsonb_build_object(
+           'instance_id', syn.instance_id,
+           'instance_uri', syn.instance_uri,
+           'instance_type', syn.instance_type,
+           'name_uri', syn.name_uri,
+           'full_name_html', syn.full_name_html,
+           'name_status', syn.name_status,
+           'misapplied', syn.misapplied,
+           'citation_html', syn.citation_html
+             )
+           )
+from apni_ordered_synonymy(instanceid) syn;
+$$;
+
+
+--
+-- Name: apni_ordered_synonymy_text(bigint); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.apni_ordered_synonymy_text(instanceid bigint) RETURNS text
+    LANGUAGE sql
+    AS $$
+select string_agg('  ' ||
+                  syn.instance_type ||
+                  ': ' ||
+                  syn.full_name ||
+                  (case
+                     when syn.name_status = 'legitimate' then ''
+                     when syn.name_status = '[n/a]' then ''
+                     else ' ' || syn.name_status end) ||
+                  (case
+                     when syn.misapplied then syn.citation
+                     else '' end), E'
+') || E'
+'
+from apni_ordered_synonymy(instanceid) syn;
+$$;
+
+
+--
+-- Name: apni_synonym(bigint); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.apni_synonym(instanceid bigint) RETURNS TABLE(instance_id bigint, instance_uri text, instance_type text, instance_type_id bigint, name_id bigint, name_uri text, full_name text, full_name_html text, name_status text, citation text, citation_html text, year integer, page text, misapplied boolean, sort_name text)
+    LANGUAGE sql
+    AS $$
+select i.id,
+       i.uri,
+       it.of_label as instance_type,
+       it.id       as instance_type_id,
+       n.id        as name_id,
+       n.uri,
+       n.full_name,
+       n.full_name_html,
+       ns.name,
+       r.citation,
+       r.citation_html,
+       r.year,
+       i.page,
+       it.misapplied,
+       n.sort_name
+from instance i
+       join instance_type it on i.instance_type_id = it.id
+       join instance cites on i.cited_by_id = cites.id
+       join name n on cites.name_id = n.id
+       join name_status ns on n.name_status_id = ns.id
+       join reference r on i.reference_id = r.id
+where i.id = instanceid
+  and it.relationship;
+$$;
+
+
+--
+-- Name: apni_synonym_jsonb(bigint); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.apni_synonym_jsonb(instanceid bigint) RETURNS jsonb
+    LANGUAGE sql
+    AS $$
+select jsonb_agg(
+         jsonb_build_object(
+           'instance_id', syn.instance_id,
+           'instance_uri', syn.instance_uri,
+           'instance_type', syn.instance_type,
+           'name_uri', syn.name_uri,
+           'full_name_html', syn.full_name_html,
+           'name_status', syn.name_status,
+           'misapplied', syn.misapplied,
+           'citation_html', syn.citation_html
+             )
+           )
+from apni_synonym(instanceid) syn;
+$$;
+
+
+--
+-- Name: apni_synonym_text(bigint); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.apni_synonym_text(instanceid bigint) RETURNS text
+    LANGUAGE sql
+    AS $$
+select string_agg('  ' ||
+                  syn.instance_type ||
+                  ': ' ||
+                  syn.full_name ||
+                  (case
+                     when syn.name_status = 'legitimate' then ''
+                     when syn.name_status = '[n/a]' then ''
+                     else ' ' || syn.name_status end) ||
+                  (case
+                     when syn.misapplied
+                             then 'by ' || syn.citation
+                     else '' end), E'
+') || E'
+'
+from apni_synonym(instanceid) syn;
+$$;
+
+
+--
 -- Name: author_notification(); Type: FUNCTION; Schema: public; Owner: -
 --
 
@@ -322,6 +651,26 @@ BEGIN
   END IF;
   RETURN NULL;
 END;
+$$;
+
+
+--
+-- Name: basionym(bigint); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.basionym(nameid bigint) RETURNS bigint
+    LANGUAGE sql
+    AS $$
+select coalesce(
+         (select coalesce(bas_name.id, primary_inst.name_id)
+          from instance primary_inst
+                 left join instance bas_inst
+                 join name bas_name on bas_inst.name_id = bas_name.id
+                 join instance_type bas_it on bas_inst.instance_type_id = bas_it.id and bas_it.name in ('basionym','replaced synonym')
+                 join instance cit_inst on bas_inst.cites_id = cit_inst.id on bas_inst.cited_by_id = primary_inst.id
+                 join instance_type primary_it on primary_inst.instance_type_id = primary_it.id and primary_it.primary_instance
+          where primary_inst.name_id = nameid
+          limit 1), nameid);
 $$;
 
 
@@ -479,6 +828,23 @@ $$;
 
 
 --
+-- Name: first_ref(bigint); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.first_ref(nameid bigint) RETURNS TABLE(group_id bigint, group_name text, group_year integer)
+    LANGUAGE sql
+    AS $$
+select n.id group_id, n.sort_name group_name, min(r.year)
+from name n
+       join instance i
+       join reference r on i.reference_id = r.id
+         on n.id  = i.name_id
+where n.id = nameid
+group by n.id, sort_name
+$$;
+
+
+--
 -- Name: instance_notification(); Type: FUNCTION; Schema: public; Owner: -
 --
 
@@ -516,6 +882,143 @@ BEGIN
   END IF;
   RETURN NULL;
 END;
+$$;
+
+
+--
+-- Name: instance_on_accepted_tree(bigint); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.instance_on_accepted_tree(instanceid bigint) RETURNS TABLE(current boolean, excluded boolean, element_link text, tree_name text)
+    LANGUAGE sql
+    AS $$
+select t.current_tree_version_id = tv.id, te.excluded, tve.element_link, t.name
+from tree_element te
+       join tree_version_element tve on te.id = tve.tree_element_id
+       join tree_version tv on tve.tree_version_id = tv.id
+       join tree t on tv.tree_id = t.id and t.accepted_tree
+where te.instance_id = instanceId
+  and tv.published
+order by tve.tree_version_id desc
+limit 1;
+$$;
+
+
+--
+-- Name: instance_on_accepted_tree_jsonb(bigint); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.instance_on_accepted_tree_jsonb(instanceid bigint) RETURNS jsonb
+    LANGUAGE sql
+    AS $$
+select jsonb_agg(
+         jsonb_build_object(
+             'current', tve.current,
+             'excluded', tve.excluded,
+             'element_link', tve.element_link,
+             'tree_name', tve.tree_name
+             )
+           )
+from instance_on_accepted_tree(instanceid) tve
+$$;
+
+
+--
+-- Name: instance_resources(bigint); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.instance_resources(instanceid bigint) RETURNS TABLE(name text, description text, url text, css_icon text, media_icon text)
+    LANGUAGE sql
+    AS $$
+select rd.name, rd.description, s.url || '/' || r.path, rd.css_icon, 'media/' || m.id
+from instance_resources ir
+       join resource r on ir.resource_id = r.id
+       join site s on r.site_id = s.id
+       join resource_type rd on r.resource_type_id = rd.id
+      left outer join media m on m.id = rd.media_icon_id
+    where ir.instance_id = instanceid
+$$;
+
+
+--
+-- Name: instance_resources_jsonb(bigint); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.instance_resources_jsonb(instanceid bigint) RETURNS jsonb
+    LANGUAGE sql
+    AS $$
+select jsonb_agg(
+         jsonb_build_object(
+           'type', ir.name,
+           'description', ir.description,
+           'url', ir.url,
+           'css_icon', ir.css_icon,
+           'media_icon', ir.media_icon
+         )
+       )
+from instance_resources(instanceid) ir
+$$;
+
+
+--
+-- Name: latest_accepted_profile(bigint); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.latest_accepted_profile(instanceid bigint) RETURNS TABLE(comment_key text, comment_value text, dist_key text, dist_value text)
+    LANGUAGE sql
+    AS $$
+select config ->> 'comment_key'                                 as comment_key,
+       (profile -> (config ->> 'comment_key')) ->> 'value'      as comment_value,
+       config ->> 'distribution_key'                            as dist_key,
+       (profile -> (config ->> 'distribution_key')) ->> 'value' as dist_value
+from tree_version_element tve
+       join tree_element te on tve.tree_element_id = te.id
+       join tree_version tv on tve.tree_version_id = tv.id and tv.published
+       join tree t on tv.tree_id = t.id and t.accepted_tree
+where te.instance_id = instanceid
+order by tv.id desc
+limit 1
+$$;
+
+
+--
+-- Name: latest_accepted_profile_jsonb(bigint); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.latest_accepted_profile_jsonb(instanceid bigint) RETURNS jsonb
+    LANGUAGE sql
+    AS $$
+select jsonb_build_object(
+         'comment_key', comment_key,
+         'comment_value', comment_value,
+         'dist_key', dist_key,
+         'dist_value', dist_value
+           )
+from latest_accepted_profile(instanceid)
+$$;
+
+
+--
+-- Name: latest_accepted_profile_text(bigint); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.latest_accepted_profile_text(instanceid bigint) RETURNS text
+    LANGUAGE sql
+    AS $$
+select '  ' ||
+       case
+         when comment_value is not null
+                 then comment_key || ': ' || comment_value
+         else ''
+           end ||
+       case
+         when dist_value is not null
+                 then dist_key || ': ' || dist_value
+         else ''
+           end ||
+       E'
+'
+from latest_accepted_profile(instanceid)
 $$;
 
 
@@ -602,6 +1105,71 @@ BEGIN
   END IF;
   RETURN NULL;
 END;
+$$;
+
+
+--
+-- Name: non_type_notes(bigint); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.non_type_notes(instanceid bigint) RETURNS TABLE(note_key text, note text)
+    LANGUAGE sql
+    AS $$
+select k.name, nt.value
+from instance_note nt
+       join instance_note_key k on nt.instance_note_key_id = k.id
+where nt.instance_id = instanceid
+  and k.name not ilike '%type'
+$$;
+
+
+--
+-- Name: non_type_notes_jsonb(bigint); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.non_type_notes_jsonb(instanceid bigint) RETURNS jsonb
+    LANGUAGE sql
+    AS $$
+select jsonb_agg(
+         jsonb_build_object(
+           'note_key', nt.note_key,
+           'note_value', nt.note
+             )
+           )
+from non_type_notes(instanceid) as nt
+$$;
+
+
+--
+-- Name: non_type_notes_text(bigint); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.non_type_notes_text(instanceid bigint) RETURNS text
+    LANGUAGE sql
+    AS $$
+select string_agg('  ' || nt.note_key || ': ' || nt.note || E'
+', E'
+')
+from non_type_notes(instanceid) as nt
+$$;
+
+
+--
+-- Name: orth_or_alt_of(bigint); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.orth_or_alt_of(nameid bigint) RETURNS bigint
+    LANGUAGE sql
+    AS $$
+select coalesce((select alt_of_inst.name_id
+                 from name n
+                        join name_status ns on n.name_status_id = ns.id
+                        join instance alt_inst on n.id = alt_inst.name_id
+                        join instance_type alt_it on alt_inst.instance_type_id = alt_it.id and
+                                                     alt_it.name in ('orthographic variant', 'alternative name')
+                        join instance alt_of_inst on alt_of_inst.id = alt_inst.cited_by_id
+                 where n.id = nameid
+                   and ns.name ~ '(orth. var.|nom. alt.)' limit 1), nameid) id
 $$;
 
 
@@ -693,31 +1261,23 @@ CREATE FUNCTION public.synonym_as_html(instanceid bigint) RETURNS TABLE(html tex
     LANGUAGE sql
     AS $$
 SELECT CASE
-       WHEN it.nomenclatural
-         THEN '<nom>' || synonym.full_name_html || ' <type>' || it.name || '</type></nom>'
-       WHEN it.taxonomic
-         THEN '<tax>' || synonym.full_name_html || ' <type>' || it.name || '</type></tax>'
-       WHEN it.misapplied
-         THEN '<mis>' || synonym.full_name_html || ' <type>' || it.name || '</type> by <citation>' ||
-              cites_ref.citation_html
-              ||
-              '</citation></mis>'
-       WHEN it.synonym
-         THEN '<syn>' || synonym.full_name_html || ' <type>' || it.name || '</type></syn>'
-       ELSE ''
-       END
-FROM Instance i,
-  Instance syn_inst
-  JOIN instance_type it ON syn_inst.instance_type_id = it.id
-  JOIN instance cites_inst ON syn_inst.cites_id = cites_inst.id
-  JOIN reference cites_ref ON cites_inst.reference_id = cites_ref.id
-  ,
-  NAME synonym
-WHERE syn_inst.cited_by_id = i.id
-      AND i.id = instanceid
-      AND synonym.id = syn_inst.name_id
-ORDER BY it.nomenclatural DESC, it.taxonomic DESC, it.misapplied DESC, synonym.simple_name, cites_ref.year ASC,
-  cites_inst.id ASC, synonym.id ASC;
+         WHEN it.nomenclatural
+                 THEN '<nom>' || full_name_html || '<name-status class="' || name_status|| '">, ' || name_status ||
+                      '</name-status> <year>('|| year || ')<year> <type>' || instance_type || '</type></nom>'
+         WHEN it.taxonomic
+                 THEN '<tax>' || full_name_html || '<name-status class="' || name_status|| '">, ' || name_status ||
+                      '</name-status> <year>('|| year || ')<year> <type>' || instance_type || '</type></tax>'
+         WHEN it.misapplied
+                 THEN '<mis>' || full_name_html || '<name-status class="' || name_status|| '">, ' || name_status ||
+                      '</name-status><type>' || instance_type || '</type> by <citation>' ||
+                      citation_html || '</citation></mis>'
+         WHEN it.synonym
+                 THEN '<syn>' || full_name_html || '<name-status class="' || name_status|| '">, ' || name_status ||
+                      '</name-status> <year>('|| year || ')<year> <type>' || it.name || '</type></syn>'
+         ELSE ''
+           END
+FROM apni_ordered_synonymy(instanceid)
+       join instance_type it on instance_type_id = it.id
 $$;
 
 
@@ -742,38 +1302,38 @@ CREATE FUNCTION public.synonyms_as_jsonb(instance_id bigint, host text) RETURNS 
     AS $$
 SELECT jsonb_build_object('list',
                           coalesce(
-                              jsonb_agg(jsonb_build_object(
-                                            'host', host,
-                                            'instance_id', syn_inst.id,
-                                            'instance_link',
-                                            '/instance/apni/' || syn_inst.id,
-                                            'concept_link',
-                                            '/instance/apni/' || cites_inst.id,
-                                            'simple_name', synonym.simple_name,
-                                            'type', it.name,
-                                            'name_id', synonym.id :: BIGINT,
-                                            'name_link',
-                                            '/name/apni/' || synonym.id,
-                                            'full_name_html', synonym.full_name_html,
-                                            'nom', it.nomenclatural,
-                                            'tax', it.taxonomic,
-                                            'mis', it.misapplied,
-                                            'cites', cites_ref.citation_html,
-                                            'cites_link',
-                                            '/reference/apni/' || cites_ref.id,
-                                            'year', cites_ref.year
-                                        )), '[]' :: JSONB)
-)
+                            jsonb_agg(jsonb_build_object(
+                                        'host', host,
+                                        'instance_id', syn_inst.id,
+                                        'instance_link',
+                                        '/instance/apni/' || syn_inst.id,
+                                        'concept_link',
+                                        '/instance/apni/' || cites_inst.id,
+                                        'simple_name', synonym.simple_name,
+                                        'type', it.name,
+                                        'name_id', synonym.id :: BIGINT,
+                                        'name_link',
+                                        '/name/apni/' || synonym.id,
+                                        'full_name_html', synonym.full_name_html,
+                                        'nom', it.nomenclatural,
+                                        'tax', it.taxonomic,
+                                        'mis', it.misapplied,
+                                        'cites', cites_ref.citation_html,
+                                        'cites_link',
+                                        '/reference/apni/' || cites_ref.id,
+                                        'year', cites_ref.year
+                                          )), '[]' :: JSONB)
+           )
 FROM Instance i,
-  Instance syn_inst
-  JOIN instance_type it ON syn_inst.instance_type_id = it.id
-  JOIN instance cites_inst ON syn_inst.cites_id = cites_inst.id
-  JOIN reference cites_ref ON cites_inst.reference_id = cites_ref.id
-  ,
-  name synonym
+     Instance syn_inst
+       JOIN instance_type it ON syn_inst.instance_type_id = it.id
+       JOIN instance cites_inst ON syn_inst.cites_id = cites_inst.id
+       JOIN reference cites_ref ON cites_inst.reference_id = cites_ref.id
+    ,
+     name synonym
 WHERE i.id = instance_id
-      AND syn_inst.cited_by_id = i.id
-      AND synonym.id = syn_inst.name_id;
+  AND syn_inst.cited_by_id = i.id
+  AND synonym.id = syn_inst.name_id;
 $$;
 
 
@@ -870,6 +1430,52 @@ SELECT
   parent_excluded,
   depth
 FROM treewalk
+$$;
+
+
+--
+-- Name: type_notes(bigint); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.type_notes(instanceid bigint) RETURNS TABLE(note_key text, note text)
+    LANGUAGE sql
+    AS $$
+select k.name, nt.value
+from instance_note nt
+       join instance_note_key k on nt.instance_note_key_id = k.id
+where nt.instance_id = instanceid
+  and k.name ilike '%type'
+$$;
+
+
+--
+-- Name: type_notes_jsonb(bigint); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.type_notes_jsonb(instanceid bigint) RETURNS jsonb
+    LANGUAGE sql
+    AS $$
+select jsonb_agg(
+         jsonb_build_object(
+           'note_key', nt.note_key,
+           'note_value', nt.note
+             )
+           )
+from type_notes(instanceid) as nt
+$$;
+
+
+--
+-- Name: type_notes_text(bigint); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.type_notes_text(instanceid bigint) RETURNS text
+    LANGUAGE sql
+    AS $$
+select string_agg('  ' || nt.note_key || ': ' || nt.note || E'
+', E'
+')
+from type_notes(instanceid) as nt
 $$;
 
 
@@ -1137,6 +1743,12 @@ CREATE TABLE mapper.match_host (
 --
 
 CREATE SEQUENCE public.nsl_global_seq;
+-- Comment this out for testing to work.
+--    START WITH 50000001
+--    INCREMENT BY 1
+--    MINVALUE 50000001
+--    MAXVALUE 60000000
+--    CACHE 1;
 
 
 --
@@ -1161,7 +1773,8 @@ CREATE TABLE public.author (
     source_system character varying(50),
     updated_at timestamp with time zone NOT NULL,
     updated_by character varying(255) NOT NULL,
-    valid_record boolean DEFAULT false NOT NULL
+    valid_record boolean DEFAULT false NOT NULL,
+    uri text
 );
 
 
@@ -1302,6 +1915,7 @@ CREATE TABLE public.instance (
     valid_record boolean DEFAULT false NOT NULL,
     verbatim_name_string character varying(255),
     uri text,
+    cached_synonymy_html text,
     CONSTRAINT citescheck CHECK (((cites_id IS NULL) OR (cited_by_id IS NOT NULL)))
 );
 
@@ -1384,7 +1998,8 @@ CREATE TABLE public.resource (
     path character varying(2400) NOT NULL,
     site_id bigint NOT NULL,
     updated_at timestamp with time zone NOT NULL,
-    updated_by character varying(50) NOT NULL
+    updated_by character varying(50) NOT NULL,
+    resource_type_id bigint NOT NULL
 );
 
 
@@ -1467,6 +2082,20 @@ CREATE TABLE public.language (
 
 
 --
+-- Name: media; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.media (
+    id bigint DEFAULT nextval('public.hibernate_sequence'::regclass) NOT NULL,
+    version bigint NOT NULL,
+    data bytea NOT NULL,
+    description text NOT NULL,
+    file_name text NOT NULL,
+    mime_type text NOT NULL
+);
+
+
+--
 -- Name: name; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1505,7 +2134,11 @@ CREATE TABLE public.name (
     sort_name character varying(250),
     family_id bigint,
     name_path text DEFAULT ''::text NOT NULL,
-    changed_combination boolean DEFAULT false NOT NULL
+    uri text,
+    changed_combination boolean DEFAULT false NOT NULL,
+    published_year integer,
+    apni_json jsonb,
+    CONSTRAINT published_year_limits CHECK (((published_year > 0) AND (published_year < 2500)))
 );
 
 
@@ -1520,21 +2153,20 @@ CREATE TABLE public.name_category (
     sort_order integer DEFAULT 0 NOT NULL,
     description_html text,
     rdf_id character varying(50),
-    min_parents_required integer DEFAULT 0 NOT NULL,
     max_parents_allowed integer DEFAULT 0 NOT NULL,
-    parent_1_help_text character varying(80),
-    takes_hybrid_scoped_parent boolean DEFAULT false NOT NULL,
+    min_parents_required integer DEFAULT 0 NOT NULL,
+    parent_1_help_text text,
+    parent_2_help_text text,
     requires_family boolean DEFAULT false NOT NULL,
-    takes_name_element boolean DEFAULT false NOT NULL,
-    takes_authors boolean DEFAULT false NOT NULL,
-    takes_author_only boolean DEFAULT false NOT NULL,
-    requires_name_element boolean DEFAULT false NOT NULL,
     requires_higher_ranked_parent boolean DEFAULT false NOT NULL,
-    parent_2_help_text character varying(80),
+    requires_name_element boolean DEFAULT false NOT NULL,
+    takes_author_only boolean DEFAULT false NOT NULL,
+    takes_authors boolean DEFAULT false NOT NULL,
     takes_cultivar_scoped_parent boolean DEFAULT false NOT NULL,
+    takes_hybrid_scoped_parent boolean DEFAULT false NOT NULL,
+    takes_name_element boolean DEFAULT false NOT NULL,
     takes_verbatim_rank boolean DEFAULT false NOT NULL,
-    CONSTRAINT name_category_max_parents_allowed_check CHECK (((max_parents_allowed >= 0) AND (max_parents_allowed <= 2))),
-    CONSTRAINT name_category_min_parents_required_check CHECK (((min_parents_required >= 0) AND (min_parents_required <= 2)))
+    takes_rank boolean DEFAULT false NOT NULL
 );
 
 
@@ -1704,7 +2336,8 @@ CREATE TABLE public.reference (
     verbatim_citation character varying(2000),
     verbatim_reference character varying(1000),
     volume character varying(100),
-    year integer
+    year integer,
+    uri text
 );
 
 
@@ -1866,7 +2499,8 @@ CREATE TABLE public.tree_version_element (
     tree_path text NOT NULL,
     tree_version_id bigint NOT NULL,
     updated_at timestamp with time zone NOT NULL,
-    updated_by character varying(255) NOT NULL
+    updated_by character varying(255) NOT NULL,
+    merge_conflict boolean DEFAULT false NOT NULL
 );
 
 
@@ -1938,8 +2572,7 @@ CREATE MATERIALIZED VIEW public.name_view AS
         CASE
             WHEN (nt.autonym = true) THEN (parent_name.full_name)::text
             ELSE ( SELECT string_agg(regexp_replace((note.value)::text, '[
-
- ]+'::text, ' '::text, 'g'::text), ' '::text) AS string_agg
+ ]+'::text, ' '::text, 'g'::text), ' '::text) AS string_agg
                FROM (public.instance_note note
                  JOIN public.instance_note_key key1 ON (((key1.id = note.instance_note_key_id) AND ((key1.name)::text = 'Type'::text))))
               WHERE (note.instance_id = COALESCE(basionym_inst.cites_id, primary_inst.id)))
@@ -2086,6 +2719,46 @@ CREATE TABLE public.nsl_simple_name_export (
 
 
 --
+-- Name: orchidaceae; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.orchidaceae (
+    id integer,
+    record_type text,
+    parent_id integer,
+    hybrid_id text,
+    family text,
+    hr_comment text,
+    subfamily text,
+    tribe text,
+    subtribe text,
+    rank text,
+    nsl_rank text,
+    taxon text,
+    base_author text,
+    ex_base_author text,
+    comb_author text,
+    ex_comb_author text,
+    author_rank text,
+    name_status text,
+    name_comment text,
+    partly text,
+    auct_non text,
+    synonym_type text,
+    doubtful text,
+    questionable text,
+    hybrid_level text,
+    publication text,
+    note_and_publication text,
+    warning text,
+    footnote text,
+    distribution text,
+    comment text,
+    original_text text
+);
+
+
+--
 -- Name: ref_author_role; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -2115,6 +2788,23 @@ CREATE TABLE public.ref_type (
 
 
 --
+-- Name: resource_type; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.resource_type (
+    id bigint DEFAULT nextval('public.nsl_global_seq'::regclass) NOT NULL,
+    lock_version bigint DEFAULT 0 NOT NULL,
+    css_icon text,
+    deprecated boolean DEFAULT false NOT NULL,
+    description text NOT NULL,
+    display boolean DEFAULT true NOT NULL,
+    media_icon_id bigint,
+    name text NOT NULL,
+    rdf_id character varying(50)
+);
+
+
+--
 -- Name: shard_config; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -2132,9 +2822,9 @@ CREATE TABLE public.shard_config (
 --
 
 CREATE MATERIALIZED VIEW public.taxon_view AS
- SELECT (syn.value ->> 'concept_link'::text) AS "taxonID",
+ SELECT (tree.host_name || regexp_replace((syn.value ->> 'concept_link'::text), '^https://[^/]*'::text, ''::text)) AS "taxonID",
     acc_nt.name AS "nameType",
-    tve.element_link AS "acceptedNameUsageID",
+    (tree.host_name || tve.element_link) AS "acceptedNameUsageID",
     acc_name.full_name AS "acceptedNameUsage",
         CASE
             WHEN ((acc_ns.name)::text <> ALL (ARRAY[('legitimate'::character varying)::text, ('[default]'::character varying)::text])) THEN acc_ns.name
@@ -2143,7 +2833,7 @@ CREATE MATERIALIZED VIEW public.taxon_view AS
     (syn.value ->> 'type'::text) AS "taxonomicStatus",
     ((syn.value ->> 'type'::text) ~ 'parte'::text) AS "proParte",
     syn_name.full_name AS "scientificName",
-    (syn.value ->> 'name_link'::text) AS "scientificNameID",
+    (tree.host_name || regexp_replace((syn.value ->> 'name_link'::text), '^https://[^/]*'::text, ''::text)) AS "scientificNameID",
     syn_name.simple_name AS "canonicalName",
         CASE
             WHEN syn_nt.autonym THEN NULL::text
@@ -2168,9 +2858,9 @@ CREATE MATERIALIZED VIEW public.taxon_view AS
     syn_name.created_at AS created,
     syn_name.updated_at AS modified,
     tree.name AS "datasetName",
-    (syn.value ->> 'concept_link'::text) AS "taxonConceptID",
+    (tree.host_name || regexp_replace((syn.value ->> 'concept_link'::text), '^https://[^/]*'::text, ''::text)) AS "taxonConceptID",
     (syn.value ->> 'cites'::text) AS "nameAccordingTo",
-    (syn.value ->> 'cites_link'::text) AS "nameAccordingToID",
+    (tree.host_name || regexp_replace((syn.value ->> 'cites_link'::text), '^https://[^/]*'::text, ''::text)) AS "nameAccordingToID",
     ((te.profile -> 'APC Comment'::text) ->> 'value'::text) AS "taxonRemarks",
     ((te.profile -> 'APC Dist.'::text) ->> 'value'::text) AS "taxonDistribution",
     regexp_replace(tve.name_path, '/'::text, '|'::text, 'g'::text) AS "higherClassification",
@@ -2179,7 +2869,7 @@ CREATE MATERIALIZED VIEW public.taxon_view AS
             ELSE NULL::character varying
         END AS "firstHybridParentName",
         CASE
-            WHEN (firsthybridparent.id IS NOT NULL) THEN ('http://id.biodiversity.org.au/name/apni/'::text || firsthybridparent.id)
+            WHEN (firsthybridparent.id IS NOT NULL) THEN ((tree.host_name || '/name/apni/'::text) || firsthybridparent.id)
             ELSE NULL::text
         END AS "firstHybridParentNameID",
         CASE
@@ -2187,12 +2877,12 @@ CREATE MATERIALIZED VIEW public.taxon_view AS
             ELSE NULL::character varying
         END AS "secondHybridParentName",
         CASE
-            WHEN (secondhybridparent.id IS NOT NULL) THEN ('http://id.biodiversity.org.au/name/apni/'::text || secondhybridparent.id)
+            WHEN (secondhybridparent.id IS NOT NULL) THEN ((tree.host_name || '/name/apni/'::text) || secondhybridparent.id)
             ELSE NULL::text
         END AS "secondHybridParentNameID",
     'ICN'::text AS "nomenclaturalCode",
     'http://creativecommons.org/licenses/by/3.0/'::text AS license,
-    (syn.value ->> 'instance_link'::text) AS "ccAttributionIRI "
+    (tree.host_name || regexp_replace((syn.value ->> 'instance_link'::text), '^https://[^/]*'::text, ''::text)) AS "ccAttributionIRI "
    FROM ((((((((public.tree_version_element tve
      JOIN public.tree ON (((tve.tree_version_id = tree.current_tree_version_id) AND (tree.accepted_tree = true))))
      JOIN public.tree_element te ON ((tve.tree_element_id = te.id)))
@@ -2213,9 +2903,9 @@ CREATE MATERIALIZED VIEW public.taxon_view AS
              JOIN public.tree_element te_1 ON ((tve_1.tree_element_id = te_1.id)))
           WHERE ((te_1.rank)::text = 'Regnum'::text)) regnum
 UNION
- SELECT tve.element_link AS "taxonID",
+ SELECT (tree.host_name || tve.element_link) AS "taxonID",
     acc_nt.name AS "nameType",
-    tve.element_link AS "acceptedNameUsageID",
+    (tree.host_name || tve.element_link) AS "acceptedNameUsageID",
     acc_name.full_name AS "acceptedNameUsage",
         CASE
             WHEN ((acc_ns.name)::text <> ALL (ARRAY[('legitimate'::character varying)::text, ('[default]'::character varying)::text])) THEN acc_ns.name
@@ -2233,7 +2923,7 @@ UNION
             WHEN acc_nt.autonym THEN NULL::text
             ELSE regexp_replace("substring"((acc_name.full_name_html)::text, '<authors>(.*)</authors>'::text), '<[^>]*>'::text, ''::text, 'g'::text)
         END AS "scientificNameAuthorship",
-    tve.parent_id AS "parentNameUsageID",
+    (tree.host_name || tve.parent_id) AS "parentNameUsageID",
     te.rank AS "taxonRank",
     acc_rank.sort_order AS "taxonRankSortOrder",
     regnum.name_path AS kindom,
@@ -2254,7 +2944,7 @@ UNION
     tree.name AS "datasetName",
     te.instance_link AS "taxonConceptID",
     acc_ref.citation AS "nameAccordingTo",
-    ('http://id.biodiversity.org.au/reference/apni/'::text || acc_ref.id) AS "nameAccordingToID",
+    ((tree.host_name || '/reference/apni/'::text) || acc_ref.id) AS "nameAccordingToID",
     ((te.profile -> 'APC Comment'::text) ->> 'value'::text) AS "taxonRemarks",
     ((te.profile -> 'APC Dist.'::text) ->> 'value'::text) AS "taxonDistribution",
     regexp_replace(tve.name_path, '/'::text, '|'::text, 'g'::text) AS "higherClassification",
@@ -2263,7 +2953,7 @@ UNION
             ELSE NULL::character varying
         END AS "firstHybridParentName",
         CASE
-            WHEN (firsthybridparent.id IS NOT NULL) THEN ('http://id.biodiversity.org.au/name/apni/'::text || firsthybridparent.id)
+            WHEN (firsthybridparent.id IS NOT NULL) THEN ((tree.host_name || '/name/apni/'::text) || firsthybridparent.id)
             ELSE NULL::text
         END AS "firstHybridParentNameID",
         CASE
@@ -2271,12 +2961,12 @@ UNION
             ELSE NULL::character varying
         END AS "secondHybridParentName",
         CASE
-            WHEN (secondhybridparent.id IS NOT NULL) THEN ('http://id.biodiversity.org.au/name/apni/'::text || secondhybridparent.id)
+            WHEN (secondhybridparent.id IS NOT NULL) THEN ((tree.host_name || '/name/apni/'::text) || secondhybridparent.id)
             ELSE NULL::text
         END AS "secondHybridParentNameID",
     'ICN'::text AS "nomenclaturalCode",
     'http://creativecommons.org/licenses/by/3.0/'::text AS license,
-    tve.element_link AS "ccAttributionIRI "
+    (tree.host_name || tve.element_link) AS "ccAttributionIRI "
    FROM (((((((((((public.tree_version_element tve
      JOIN public.tree ON (((tve.tree_version_id = tree.current_tree_version_id) AND (tree.accepted_tree = true))))
      JOIN public.tree_element te ON ((tve.tree_element_id = te.id)))
@@ -2317,14 +3007,311 @@ CREATE TABLE public.tree_version (
 
 
 --
--- Name: logged_actions event_id; Type: DEFAULT; Schema: audit; Owner: -
+-- Name: all_links; Type: TABLE; Schema: uncited; Owner: -
+--
+
+CREATE TABLE uncited.all_links (
+    id bigint,
+    link bigint,
+    sp text,
+    rm boolean
+);
+
+
+--
+-- Name: TABLE all_links; Type: COMMENT; Schema: uncited; Owner: -
+--
+
+COMMENT ON TABLE uncited.all_links IS 'All of the internal name references: parent, second_parent, family, duplicate';
+
+
+--
+-- Name: apni; Type: TABLE; Schema: uncited; Owner: -
+--
+
+CREATE TABLE uncited.apni (
+    id bigint,
+    family_id bigint,
+    parent_id bigint,
+    second_parent_id bigint,
+    duplicate_of_id bigint
+);
+
+
+--
+-- Name: TABLE apni; Type: COMMENT; Schema: uncited; Owner: -
+--
+
+COMMENT ON TABLE uncited.apni IS 'the names to remain';
+
+
+--
+-- Name: candidate; Type: TABLE; Schema: uncited; Owner: -
+--
+
+CREATE TABLE uncited.candidate (
+    id bigint,
+    link bigint,
+    name character varying(512),
+    depth integer,
+    n_path text,
+    id_path bigint[],
+    cited boolean[]
+);
+
+
+--
+-- Name: comment; Type: TABLE; Schema: uncited; Owner: -
+--
+
+CREATE TABLE uncited.comment (
+    id bigint,
+    lock_version bigint,
+    author_id bigint,
+    created_at timestamp with time zone,
+    created_by character varying(50),
+    instance_id bigint,
+    name_id bigint,
+    reference_id bigint,
+    text text,
+    updated_at timestamp with time zone,
+    updated_by character varying(50)
+);
+
+
+--
+-- Name: TABLE comment; Type: COMMENT; Schema: uncited; Owner: -
+--
+
+COMMENT ON TABLE uncited.comment IS 'The comments referencing uncited names';
+
+
+--
+-- Name: linked_name; Type: TABLE; Schema: uncited; Owner: -
+--
+
+CREATE TABLE uncited.linked_name (
+    id bigint,
+    lock_version bigint,
+    author_id bigint,
+    base_author_id bigint,
+    created_at timestamp with time zone,
+    created_by character varying(50),
+    duplicate_of_id bigint,
+    ex_author_id bigint,
+    ex_base_author_id bigint,
+    full_name character varying(512),
+    full_name_html character varying(2048),
+    name_element character varying(255),
+    name_rank_id bigint,
+    name_status_id bigint,
+    name_type_id bigint,
+    namespace_id bigint,
+    orth_var boolean,
+    parent_id bigint,
+    sanctioning_author_id bigint,
+    second_parent_id bigint,
+    simple_name character varying(250),
+    simple_name_html character varying(2048),
+    source_dup_of_id bigint,
+    source_id bigint,
+    source_id_string character varying(100),
+    source_system character varying(50),
+    status_summary character varying(50),
+    updated_at timestamp with time zone,
+    updated_by character varying(50),
+    valid_record boolean,
+    verbatim_rank character varying(50),
+    sort_name character varying(250),
+    family_id bigint,
+    name_path text
+);
+
+
+--
+-- Name: TABLE linked_name; Type: COMMENT; Schema: uncited; Owner: -
+--
+
+COMMENT ON TABLE uncited.linked_name IS 'uncited names with dependants';
+
+
+--
+-- Name: name; Type: TABLE; Schema: uncited; Owner: -
+--
+
+CREATE TABLE uncited.name (
+    id bigint,
+    lock_version bigint,
+    author_id bigint,
+    base_author_id bigint,
+    created_at timestamp with time zone,
+    created_by character varying(50),
+    duplicate_of_id bigint,
+    ex_author_id bigint,
+    ex_base_author_id bigint,
+    full_name character varying(512),
+    full_name_html character varying(2048),
+    name_element character varying(255),
+    name_rank_id bigint,
+    name_status_id bigint,
+    name_type_id bigint,
+    namespace_id bigint,
+    orth_var boolean,
+    parent_id bigint,
+    sanctioning_author_id bigint,
+    second_parent_id bigint,
+    simple_name character varying(250),
+    simple_name_html character varying(2048),
+    source_dup_of_id bigint,
+    source_id bigint,
+    source_id_string character varying(100),
+    source_system character varying(50),
+    status_summary character varying(50),
+    updated_at timestamp with time zone,
+    updated_by character varying(50),
+    valid_record boolean,
+    verbatim_rank character varying(50),
+    sort_name character varying(250),
+    family_id bigint,
+    name_path text
+);
+
+
+--
+-- Name: TABLE name; Type: COMMENT; Schema: uncited; Owner: -
+--
+
+COMMENT ON TABLE uncited.name IS 'All uncited names';
+
+
+--
+-- Name: name_bkp; Type: TABLE; Schema: uncited; Owner: -
+--
+
+CREATE TABLE uncited.name_bkp (
+    id bigint,
+    lock_version bigint,
+    author_id bigint,
+    base_author_id bigint,
+    created_at timestamp with time zone,
+    created_by character varying(50),
+    duplicate_of_id bigint,
+    ex_author_id bigint,
+    ex_base_author_id bigint,
+    full_name character varying(512),
+    full_name_html character varying(2048),
+    name_element character varying(255),
+    name_rank_id bigint,
+    name_status_id bigint,
+    name_type_id bigint,
+    namespace_id bigint,
+    orth_var boolean,
+    parent_id bigint,
+    sanctioning_author_id bigint,
+    second_parent_id bigint,
+    simple_name character varying(250),
+    simple_name_html character varying(2048),
+    source_dup_of_id bigint,
+    source_id bigint,
+    source_id_string character varying(100),
+    source_system character varying(50),
+    status_summary character varying(50),
+    updated_at timestamp with time zone,
+    updated_by character varying(50),
+    valid_record boolean,
+    verbatim_rank character varying(50),
+    sort_name character varying(250),
+    family_id bigint,
+    name_path text
+);
+
+
+--
+-- Name: TABLE name_bkp; Type: COMMENT; Schema: uncited; Owner: -
+--
+
+COMMENT ON TABLE uncited.name_bkp IS 'All names prior to uncited cull';
+
+
+--
+-- Name: name_tag_name; Type: TABLE; Schema: uncited; Owner: -
+--
+
+CREATE TABLE uncited.name_tag_name (
+    name_id bigint,
+    tag_id bigint,
+    created_at timestamp with time zone,
+    created_by character varying(255),
+    updated_at timestamp with time zone,
+    updated_by character varying(255)
+);
+
+
+--
+-- Name: TABLE name_tag_name; Type: COMMENT; Schema: uncited; Owner: -
+--
+
+COMMENT ON TABLE uncited.name_tag_name IS 'The name_tag_names referencing uncited names';
+
+
+--
+-- Name: unlinked_name; Type: TABLE; Schema: uncited; Owner: -
+--
+
+CREATE TABLE uncited.unlinked_name (
+    id bigint,
+    lock_version bigint,
+    author_id bigint,
+    base_author_id bigint,
+    created_at timestamp with time zone,
+    created_by character varying(50),
+    duplicate_of_id bigint,
+    ex_author_id bigint,
+    ex_base_author_id bigint,
+    full_name character varying(512),
+    full_name_html character varying(2048),
+    name_element character varying(255),
+    name_rank_id bigint,
+    name_status_id bigint,
+    name_type_id bigint,
+    namespace_id bigint,
+    orth_var boolean,
+    parent_id bigint,
+    sanctioning_author_id bigint,
+    second_parent_id bigint,
+    simple_name character varying(250),
+    simple_name_html character varying(2048),
+    source_dup_of_id bigint,
+    source_id bigint,
+    source_id_string character varying(100),
+    source_system character varying(50),
+    status_summary character varying(50),
+    updated_at timestamp with time zone,
+    updated_by character varying(50),
+    valid_record boolean,
+    verbatim_rank character varying(50),
+    sort_name character varying(250),
+    family_id bigint,
+    name_path text
+);
+
+
+--
+-- Name: TABLE unlinked_name; Type: COMMENT; Schema: uncited; Owner: -
+--
+
+COMMENT ON TABLE uncited.unlinked_name IS 'No dependent links to clean up before deletion';
+
+
+--
+-- Name: event_id; Type: DEFAULT; Schema: audit; Owner: -
 --
 
 ALTER TABLE ONLY audit.logged_actions ALTER COLUMN event_id SET DEFAULT nextval('audit.logged_actions_event_id_seq'::regclass);
 
 
 --
--- Name: logged_actions logged_actions_pkey; Type: CONSTRAINT; Schema: audit; Owner: -
+-- Name: logged_actions_pkey; Type: CONSTRAINT; Schema: audit; Owner: -
 --
 
 ALTER TABLE ONLY audit.logged_actions
@@ -2332,7 +3319,7 @@ ALTER TABLE ONLY audit.logged_actions
 
 
 --
--- Name: db_version db_version_pkey; Type: CONSTRAINT; Schema: mapper; Owner: -
+-- Name: db_version_pkey; Type: CONSTRAINT; Schema: mapper; Owner: -
 --
 
 ALTER TABLE ONLY mapper.db_version
@@ -2340,7 +3327,7 @@ ALTER TABLE ONLY mapper.db_version
 
 
 --
--- Name: host host_pkey; Type: CONSTRAINT; Schema: mapper; Owner: -
+-- Name: host_pkey; Type: CONSTRAINT; Schema: mapper; Owner: -
 --
 
 ALTER TABLE ONLY mapper.host
@@ -2348,7 +3335,7 @@ ALTER TABLE ONLY mapper.host
 
 
 --
--- Name: identifier_identities identifier_identities_pkey; Type: CONSTRAINT; Schema: mapper; Owner: -
+-- Name: identifier_identities_pkey; Type: CONSTRAINT; Schema: mapper; Owner: -
 --
 
 ALTER TABLE ONLY mapper.identifier_identities
@@ -2356,7 +3343,7 @@ ALTER TABLE ONLY mapper.identifier_identities
 
 
 --
--- Name: identifier identifier_pkey; Type: CONSTRAINT; Schema: mapper; Owner: -
+-- Name: identifier_pkey; Type: CONSTRAINT; Schema: mapper; Owner: -
 --
 
 ALTER TABLE ONLY mapper.identifier
@@ -2364,7 +3351,7 @@ ALTER TABLE ONLY mapper.identifier
 
 
 --
--- Name: match match_pkey; Type: CONSTRAINT; Schema: mapper; Owner: -
+-- Name: match_pkey; Type: CONSTRAINT; Schema: mapper; Owner: -
 --
 
 ALTER TABLE ONLY mapper.match
@@ -2372,7 +3359,7 @@ ALTER TABLE ONLY mapper.match
 
 
 --
--- Name: match uk_2u4bey0rox6ubtvqevg3wasp9; Type: CONSTRAINT; Schema: mapper; Owner: -
+-- Name: uk_2u4bey0rox6ubtvqevg3wasp9; Type: CONSTRAINT; Schema: mapper; Owner: -
 --
 
 ALTER TABLE ONLY mapper.match
@@ -2380,7 +3367,7 @@ ALTER TABLE ONLY mapper.match
 
 
 --
--- Name: identifier unique_name_space; Type: CONSTRAINT; Schema: mapper; Owner: -
+-- Name: unique_name_space; Type: CONSTRAINT; Schema: mapper; Owner: -
 --
 
 ALTER TABLE ONLY mapper.identifier
@@ -2388,7 +3375,7 @@ ALTER TABLE ONLY mapper.identifier
 
 
 --
--- Name: author author_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: author_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.author
@@ -2396,7 +3383,7 @@ ALTER TABLE ONLY public.author
 
 
 --
--- Name: comment comment_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: comment_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.comment
@@ -2404,7 +3391,7 @@ ALTER TABLE ONLY public.comment
 
 
 --
--- Name: db_version db_version_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: db_version_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.db_version
@@ -2412,7 +3399,7 @@ ALTER TABLE ONLY public.db_version
 
 
 --
--- Name: delayed_jobs delayed_jobs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: delayed_jobs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.delayed_jobs
@@ -2420,7 +3407,7 @@ ALTER TABLE ONLY public.delayed_jobs
 
 
 --
--- Name: distribution distribution_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: distribution_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.distribution
@@ -2428,7 +3415,7 @@ ALTER TABLE ONLY public.distribution
 
 
 --
--- Name: event_record event_record_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: event_record_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.event_record
@@ -2436,7 +3423,7 @@ ALTER TABLE ONLY public.event_record
 
 
 --
--- Name: id_mapper id_mapper_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: id_mapper_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.id_mapper
@@ -2444,7 +3431,7 @@ ALTER TABLE ONLY public.id_mapper
 
 
 --
--- Name: instance_note_key instance_note_key_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: instance_note_key_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.instance_note_key
@@ -2452,7 +3439,7 @@ ALTER TABLE ONLY public.instance_note_key
 
 
 --
--- Name: instance_note instance_note_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: instance_note_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.instance_note
@@ -2460,7 +3447,7 @@ ALTER TABLE ONLY public.instance_note
 
 
 --
--- Name: instance instance_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: instance_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.instance
@@ -2468,7 +3455,7 @@ ALTER TABLE ONLY public.instance
 
 
 --
--- Name: instance_resources instance_resources_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: instance_resources_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.instance_resources
@@ -2476,7 +3463,7 @@ ALTER TABLE ONLY public.instance_resources
 
 
 --
--- Name: instance_type instance_type_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: instance_type_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.instance_type
@@ -2484,7 +3471,7 @@ ALTER TABLE ONLY public.instance_type
 
 
 --
--- Name: language language_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: language_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.language
@@ -2492,7 +3479,15 @@ ALTER TABLE ONLY public.language
 
 
 --
--- Name: name_category name_category_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: media_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.media
+    ADD CONSTRAINT media_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: name_category_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.name_category
@@ -2500,7 +3495,7 @@ ALTER TABLE ONLY public.name_category
 
 
 --
--- Name: name_group name_group_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: name_group_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.name_group
@@ -2508,7 +3503,7 @@ ALTER TABLE ONLY public.name_group
 
 
 --
--- Name: name name_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: name_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.name
@@ -2516,7 +3511,7 @@ ALTER TABLE ONLY public.name
 
 
 --
--- Name: name_rank name_rank_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: name_rank_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.name_rank
@@ -2524,7 +3519,7 @@ ALTER TABLE ONLY public.name_rank
 
 
 --
--- Name: name_status name_status_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: name_status_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.name_status
@@ -2532,7 +3527,7 @@ ALTER TABLE ONLY public.name_status
 
 
 --
--- Name: name_tag_name name_tag_name_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: name_tag_name_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.name_tag_name
@@ -2540,7 +3535,7 @@ ALTER TABLE ONLY public.name_tag_name
 
 
 --
--- Name: name_tag name_tag_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: name_tag_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.name_tag
@@ -2548,7 +3543,7 @@ ALTER TABLE ONLY public.name_tag
 
 
 --
--- Name: name_type name_type_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: name_type_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.name_type
@@ -2556,7 +3551,7 @@ ALTER TABLE ONLY public.name_type
 
 
 --
--- Name: namespace namespace_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: namespace_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.namespace
@@ -2564,7 +3559,7 @@ ALTER TABLE ONLY public.namespace
 
 
 --
--- Name: instance no_duplicate_synonyms; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: no_duplicate_synonyms; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.instance
@@ -2572,7 +3567,7 @@ ALTER TABLE ONLY public.instance
 
 
 --
--- Name: notification notification_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: notification_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.notification
@@ -2580,7 +3575,7 @@ ALTER TABLE ONLY public.notification
 
 
 --
--- Name: name_rank nr_unique_name; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: nr_unique_name; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.name_rank
@@ -2588,7 +3583,7 @@ ALTER TABLE ONLY public.name_rank
 
 
 --
--- Name: name_status ns_unique_name; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: ns_unique_name; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.name_status
@@ -2596,7 +3591,7 @@ ALTER TABLE ONLY public.name_status
 
 
 --
--- Name: name_type nt_unique_name; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: nt_unique_name; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.name_type
@@ -2604,7 +3599,7 @@ ALTER TABLE ONLY public.name_type
 
 
 --
--- Name: ref_author_role ref_author_role_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: ref_author_role_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.ref_author_role
@@ -2612,7 +3607,7 @@ ALTER TABLE ONLY public.ref_author_role
 
 
 --
--- Name: ref_type ref_type_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: ref_type_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.ref_type
@@ -2620,7 +3615,7 @@ ALTER TABLE ONLY public.ref_type
 
 
 --
--- Name: reference reference_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: reference_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.reference
@@ -2628,7 +3623,7 @@ ALTER TABLE ONLY public.reference
 
 
 --
--- Name: resource resource_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: resource_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.resource
@@ -2636,7 +3631,15 @@ ALTER TABLE ONLY public.resource
 
 
 --
--- Name: shard_config shard_config_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: resource_type_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_type
+    ADD CONSTRAINT resource_type_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: shard_config_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.shard_config
@@ -2644,7 +3647,7 @@ ALTER TABLE ONLY public.shard_config
 
 
 --
--- Name: site site_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: site_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.site
@@ -2652,7 +3655,7 @@ ALTER TABLE ONLY public.site
 
 
 --
--- Name: tree_element tree_element_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: tree_element_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.tree_element
@@ -2660,7 +3663,7 @@ ALTER TABLE ONLY public.tree_element
 
 
 --
--- Name: tree tree_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: tree_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.tree
@@ -2668,7 +3671,7 @@ ALTER TABLE ONLY public.tree
 
 
 --
--- Name: tree_version_element tree_version_element_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: tree_version_element_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.tree_version_element
@@ -2676,7 +3679,7 @@ ALTER TABLE ONLY public.tree_version_element
 
 
 --
--- Name: tree_version tree_version_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: tree_version_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.tree_version
@@ -2684,7 +3687,7 @@ ALTER TABLE ONLY public.tree_version
 
 
 --
--- Name: ref_type uk_4fp66uflo7rgx59167ajs0ujv; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: uk_4fp66uflo7rgx59167ajs0ujv; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.ref_type
@@ -2692,7 +3695,7 @@ ALTER TABLE ONLY public.ref_type
 
 
 --
--- Name: name_group uk_5185nbyw5hkxqyyqgylfn2o6d; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: uk_5185nbyw5hkxqyyqgylfn2o6d; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.name_group
@@ -2700,7 +3703,15 @@ ALTER TABLE ONLY public.name_group
 
 
 --
--- Name: author uk_9kovg6nyb11658j2tv2yv4bsi; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: uk_66rbixlxv32riosi9ob62m8h5; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.name
+    ADD CONSTRAINT uk_66rbixlxv32riosi9ob62m8h5 UNIQUE (uri);
+
+
+--
+-- Name: uk_9kovg6nyb11658j2tv2yv4bsi; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.author
@@ -2708,7 +3719,7 @@ ALTER TABLE ONLY public.author
 
 
 --
--- Name: instance_note_key uk_a0justk7c77bb64o6u1riyrlh; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: uk_a0justk7c77bb64o6u1riyrlh; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.instance_note_key
@@ -2716,7 +3727,15 @@ ALTER TABLE ONLY public.instance_note_key
 
 
 --
--- Name: namespace uk_eq2y9mghytirkcofquanv5frf; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: uk_bl9pesvdo9b3mp2qdna1koqc7; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.instance
+    ADD CONSTRAINT uk_bl9pesvdo9b3mp2qdna1koqc7 UNIQUE (uri);
+
+
+--
+-- Name: uk_eq2y9mghytirkcofquanv5frf; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.namespace
@@ -2724,7 +3743,7 @@ ALTER TABLE ONLY public.namespace
 
 
 --
--- Name: language uk_g8hr207ijpxlwu10pewyo65gv; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: uk_g8hr207ijpxlwu10pewyo65gv; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.language
@@ -2732,7 +3751,7 @@ ALTER TABLE ONLY public.language
 
 
 --
--- Name: language uk_hghw87nl0ho38f166atlpw2hy; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: uk_hghw87nl0ho38f166atlpw2hy; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.language
@@ -2740,7 +3759,7 @@ ALTER TABLE ONLY public.language
 
 
 --
--- Name: instance_type uk_j5337m9qdlirvd49v4h11t1lk; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: uk_j5337m9qdlirvd49v4h11t1lk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.instance_type
@@ -2748,7 +3767,7 @@ ALTER TABLE ONLY public.instance_type
 
 
 --
--- Name: reference uk_kqwpm0crhcq4n9t9uiyfxo2df; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: uk_kqwpm0crhcq4n9t9uiyfxo2df; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.reference
@@ -2756,7 +3775,7 @@ ALTER TABLE ONLY public.reference
 
 
 --
--- Name: ref_author_role uk_l95kedbafybjpp3h53x8o9fke; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: uk_l95kedbafybjpp3h53x8o9fke; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.ref_author_role
@@ -2764,7 +3783,15 @@ ALTER TABLE ONLY public.ref_author_role
 
 
 --
--- Name: name_tag uk_o4su6hi7vh0yqs4c1dw0fsf1e; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: uk_nivlrafbqdoj0yie46ixithd3; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.reference
+    ADD CONSTRAINT uk_nivlrafbqdoj0yie46ixithd3 UNIQUE (uri);
+
+
+--
+-- Name: uk_o4su6hi7vh0yqs4c1dw0fsf1e; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.name_tag
@@ -2772,7 +3799,15 @@ ALTER TABLE ONLY public.name_tag
 
 
 --
--- Name: language uk_rpsahneqboogcki6p1bpygsua; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: uk_rd7q78koyhufe1edfb2rgfrum; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.author
+    ADD CONSTRAINT uk_rd7q78koyhufe1edfb2rgfrum UNIQUE (uri);
+
+
+--
+-- Name: uk_rpsahneqboogcki6p1bpygsua; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.language
@@ -2780,7 +3815,7 @@ ALTER TABLE ONLY public.language
 
 
 --
--- Name: name_category uk_rxqxoenedjdjyd4x7c98s59io; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: uk_rxqxoenedjdjyd4x7c98s59io; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.name_category
@@ -2788,7 +3823,7 @@ ALTER TABLE ONLY public.name_category
 
 
 --
--- Name: id_mapper unique_from_id; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: unique_from_id; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.id_mapper
@@ -3482,119 +4517,168 @@ CREATE UNIQUE INDEX unique_instance_path_index ON public.instance_paths USING bt
 
 
 --
--- Name: author audit_trigger_row; Type: TRIGGER; Schema: public; Owner: -
+-- Name: all_links_idx; Type: INDEX; Schema: uncited; Owner: -
+--
+
+CREATE INDEX all_links_idx ON uncited.all_links USING btree (id);
+
+
+--
+-- Name: all_links_link_idx; Type: INDEX; Schema: uncited; Owner: -
+--
+
+CREATE INDEX all_links_link_idx ON uncited.all_links USING btree (link);
+
+
+--
+-- Name: apni_ndx; Type: INDEX; Schema: uncited; Owner: -
+--
+
+CREATE INDEX apni_ndx ON uncited.apni USING btree (id);
+
+
+--
+-- Name: candidate_idx; Type: INDEX; Schema: uncited; Owner: -
+--
+
+CREATE INDEX candidate_idx ON uncited.candidate USING btree (id);
+
+
+--
+-- Name: linked_name_idx; Type: INDEX; Schema: uncited; Owner: -
+--
+
+CREATE INDEX linked_name_idx ON uncited.linked_name USING btree (id);
+
+
+--
+-- Name: name_idx; Type: INDEX; Schema: uncited; Owner: -
+--
+
+CREATE INDEX name_idx ON uncited.name USING btree (id);
+
+
+--
+-- Name: unlinked_idx; Type: INDEX; Schema: uncited; Owner: -
+--
+
+CREATE INDEX unlinked_idx ON uncited.unlinked_name USING btree (id);
+
+
+--
+-- Name: audit_trigger_row; Type: TRIGGER; Schema: public; Owner: -
 --
 
 CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON public.author FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
 --
--- Name: instance audit_trigger_row; Type: TRIGGER; Schema: public; Owner: -
---
-
-CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON public.instance FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
-
-
---
--- Name: name audit_trigger_row; Type: TRIGGER; Schema: public; Owner: -
---
-
-CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON public.name FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
-
-
---
--- Name: reference audit_trigger_row; Type: TRIGGER; Schema: public; Owner: -
---
-
-CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON public.reference FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
-
-
---
--- Name: instance_note audit_trigger_row; Type: TRIGGER; Schema: public; Owner: -
---
-
-CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON public.instance_note FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
-
-
---
--- Name: comment audit_trigger_row; Type: TRIGGER; Schema: public; Owner: -
+-- Name: audit_trigger_row; Type: TRIGGER; Schema: public; Owner: -
 --
 
 CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON public.comment FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
 --
--- Name: author audit_trigger_stm; Type: TRIGGER; Schema: public; Owner: -
+-- Name: audit_trigger_row; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON public.instance FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+--
+-- Name: audit_trigger_row; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON public.instance_note FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+--
+-- Name: audit_trigger_row; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON public.name FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+--
+-- Name: audit_trigger_row; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON public.reference FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+--
+-- Name: audit_trigger_stm; Type: TRIGGER; Schema: public; Owner: -
 --
 
 CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON public.author FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
 --
--- Name: instance audit_trigger_stm; Type: TRIGGER; Schema: public; Owner: -
---
-
-CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON public.instance FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
-
-
---
--- Name: name audit_trigger_stm; Type: TRIGGER; Schema: public; Owner: -
---
-
-CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON public.name FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
-
-
---
--- Name: reference audit_trigger_stm; Type: TRIGGER; Schema: public; Owner: -
---
-
-CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON public.reference FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
-
-
---
--- Name: instance_note audit_trigger_stm; Type: TRIGGER; Schema: public; Owner: -
---
-
-CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON public.instance_note FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
-
-
---
--- Name: comment audit_trigger_stm; Type: TRIGGER; Schema: public; Owner: -
+-- Name: audit_trigger_stm; Type: TRIGGER; Schema: public; Owner: -
 --
 
 CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON public.comment FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
 --
--- Name: author author_update; Type: TRIGGER; Schema: public; Owner: -
+-- Name: audit_trigger_stm; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON public.instance FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+--
+-- Name: audit_trigger_stm; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON public.instance_note FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+--
+-- Name: audit_trigger_stm; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON public.name FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+--
+-- Name: audit_trigger_stm; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON public.reference FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+--
+-- Name: author_update; Type: TRIGGER; Schema: public; Owner: -
 --
 
 CREATE TRIGGER author_update AFTER INSERT OR DELETE OR UPDATE ON public.author FOR EACH ROW EXECUTE PROCEDURE public.author_notification();
 
 
 --
--- Name: instance instance_update; Type: TRIGGER; Schema: public; Owner: -
+-- Name: instance_update; Type: TRIGGER; Schema: public; Owner: -
 --
 
 CREATE TRIGGER instance_update AFTER INSERT OR DELETE OR UPDATE ON public.instance FOR EACH ROW EXECUTE PROCEDURE public.instance_notification();
 
 
 --
--- Name: name name_update; Type: TRIGGER; Schema: public; Owner: -
+-- Name: name_update; Type: TRIGGER; Schema: public; Owner: -
 --
 
 CREATE TRIGGER name_update AFTER INSERT OR DELETE OR UPDATE ON public.name FOR EACH ROW EXECUTE PROCEDURE public.name_notification();
 
 
 --
--- Name: reference reference_update; Type: TRIGGER; Schema: public; Owner: -
+-- Name: reference_update; Type: TRIGGER; Schema: public; Owner: -
 --
 
 CREATE TRIGGER reference_update AFTER INSERT OR DELETE OR UPDATE ON public.reference FOR EACH ROW EXECUTE PROCEDURE public.reference_notification();
 
 
 --
--- Name: match_host fk_3unhnjvw9xhs9l3ney6tvnioq; Type: FK CONSTRAINT; Schema: mapper; Owner: -
+-- Name: fk_3unhnjvw9xhs9l3ney6tvnioq; Type: FK CONSTRAINT; Schema: mapper; Owner: -
 --
 
 ALTER TABLE ONLY mapper.match_host
@@ -3602,7 +4686,7 @@ ALTER TABLE ONLY mapper.match_host
 
 
 --
--- Name: match_host fk_iw1fva74t5r4ehvmoy87n37yr; Type: FK CONSTRAINT; Schema: mapper; Owner: -
+-- Name: fk_iw1fva74t5r4ehvmoy87n37yr; Type: FK CONSTRAINT; Schema: mapper; Owner: -
 --
 
 ALTER TABLE ONLY mapper.match_host
@@ -3610,7 +4694,7 @@ ALTER TABLE ONLY mapper.match_host
 
 
 --
--- Name: identifier fk_k2o53uoslf9gwqrd80cu2al4s; Type: FK CONSTRAINT; Schema: mapper; Owner: -
+-- Name: fk_k2o53uoslf9gwqrd80cu2al4s; Type: FK CONSTRAINT; Schema: mapper; Owner: -
 --
 
 ALTER TABLE ONLY mapper.identifier
@@ -3618,7 +4702,7 @@ ALTER TABLE ONLY mapper.identifier
 
 
 --
--- Name: identifier_identities fk_mf2dsc2dxvsa9mlximsct7uau; Type: FK CONSTRAINT; Schema: mapper; Owner: -
+-- Name: fk_mf2dsc2dxvsa9mlximsct7uau; Type: FK CONSTRAINT; Schema: mapper; Owner: -
 --
 
 ALTER TABLE ONLY mapper.identifier_identities
@@ -3626,7 +4710,7 @@ ALTER TABLE ONLY mapper.identifier_identities
 
 
 --
--- Name: identifier_identities fk_ojfilkcwskdvvbggwsnachry2; Type: FK CONSTRAINT; Schema: mapper; Owner: -
+-- Name: fk_ojfilkcwskdvvbggwsnachry2; Type: FK CONSTRAINT; Schema: mapper; Owner: -
 --
 
 ALTER TABLE ONLY mapper.identifier_identities
@@ -3634,7 +4718,7 @@ ALTER TABLE ONLY mapper.identifier_identities
 
 
 --
--- Name: name_type fk_10d0jlulq2woht49j5ccpeehu; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_10d0jlulq2woht49j5ccpeehu; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.name_type
@@ -3642,7 +4726,7 @@ ALTER TABLE ONLY public.name_type
 
 
 --
--- Name: name fk_156ncmx4599jcsmhh5k267cjv; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_156ncmx4599jcsmhh5k267cjv; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.name
@@ -3650,7 +4734,7 @@ ALTER TABLE ONLY public.name
 
 
 --
--- Name: reference fk_1qx84m8tuk7vw2diyxfbj5r2n; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_1qx84m8tuk7vw2diyxfbj5r2n; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.reference
@@ -3658,7 +4742,7 @@ ALTER TABLE ONLY public.reference
 
 
 --
--- Name: name_tag_name fk_22wdc2pxaskytkgpdgpyok07n; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_22wdc2pxaskytkgpdgpyok07n; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.name_tag_name
@@ -3666,7 +4750,7 @@ ALTER TABLE ONLY public.name_tag_name
 
 
 --
--- Name: name_tag_name fk_2uiijd73snf6lh5s6a82yjfin; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_2uiijd73snf6lh5s6a82yjfin; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.name_tag_name
@@ -3674,7 +4758,7 @@ ALTER TABLE ONLY public.name_tag_name
 
 
 --
--- Name: instance fk_30enb6qoexhuk479t75apeuu5; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_30enb6qoexhuk479t75apeuu5; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.instance
@@ -3682,7 +4766,7 @@ ALTER TABLE ONLY public.instance
 
 
 --
--- Name: reference fk_3min66ljijxavb0fjergx5dpm; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_3min66ljijxavb0fjergx5dpm; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.reference
@@ -3690,7 +4774,7 @@ ALTER TABLE ONLY public.reference
 
 
 --
--- Name: name fk_3pqdqa03w5c6h4yyrrvfuagos; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_3pqdqa03w5c6h4yyrrvfuagos; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.name
@@ -3698,7 +4782,7 @@ ALTER TABLE ONLY public.name
 
 
 --
--- Name: comment fk_3tfkdcmf6rg6hcyiu8t05er7x; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_3tfkdcmf6rg6hcyiu8t05er7x; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.comment
@@ -3706,7 +4790,7 @@ ALTER TABLE ONLY public.comment
 
 
 --
--- Name: tree fk_48skgw51tamg6ud4qa8oh0ycm; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_48skgw51tamg6ud4qa8oh0ycm; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.tree
@@ -3714,7 +4798,7 @@ ALTER TABLE ONLY public.tree
 
 
 --
--- Name: instance_resources fk_49ic33s4xgbdoa4p5j107rtpf; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_49ic33s4xgbdoa4p5j107rtpf; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.instance_resources
@@ -3722,7 +4806,7 @@ ALTER TABLE ONLY public.instance_resources
 
 
 --
--- Name: tree_version fk_4q3huja5dv8t9xyvt5rg83a35; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_4q3huja5dv8t9xyvt5rg83a35; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.tree_version
@@ -3730,7 +4814,7 @@ ALTER TABLE ONLY public.tree_version
 
 
 --
--- Name: ref_type fk_51alfoe7eobwh60yfx45y22ay; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_51alfoe7eobwh60yfx45y22ay; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.ref_type
@@ -3738,7 +4822,7 @@ ALTER TABLE ONLY public.ref_type
 
 
 --
--- Name: name fk_5fpm5u0ukiml9nvmq14bd7u51; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_5fpm5u0ukiml9nvmq14bd7u51; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.name
@@ -3746,7 +4830,7 @@ ALTER TABLE ONLY public.name
 
 
 --
--- Name: name fk_5gp2lfblqq94c4ud3340iml0l; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_5gp2lfblqq94c4ud3340iml0l; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.name
@@ -3754,7 +4838,7 @@ ALTER TABLE ONLY public.name
 
 
 --
--- Name: name_type fk_5r3o78sgdbxsf525hmm3t44gv; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_5r3o78sgdbxsf525hmm3t44gv; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.name_type
@@ -3762,7 +4846,7 @@ ALTER TABLE ONLY public.name_type
 
 
 --
--- Name: tree_element fk_5sv181ivf7oybb6hud16ptmo5; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_5sv181ivf7oybb6hud16ptmo5; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.tree_element
@@ -3770,7 +4854,7 @@ ALTER TABLE ONLY public.tree_element
 
 
 --
--- Name: author fk_6a4p11f1bt171w09oo06m0wag; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_6a4p11f1bt171w09oo06m0wag; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.author
@@ -3778,7 +4862,15 @@ ALTER TABLE ONLY public.author
 
 
 --
--- Name: comment fk_6oqj6vquqc33cyawn853hfu5g; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_6nxjoae1hvplngbvpo0k57jjt; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_type
+    ADD CONSTRAINT fk_6nxjoae1hvplngbvpo0k57jjt FOREIGN KEY (media_icon_id) REFERENCES public.media(id);
+
+
+--
+-- Name: fk_6oqj6vquqc33cyawn853hfu5g; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.comment
@@ -3786,7 +4878,7 @@ ALTER TABLE ONLY public.comment
 
 
 --
--- Name: tree_version_element fk_80khvm60q13xwqgpy43twlnoe; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_80khvm60q13xwqgpy43twlnoe; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.tree_version_element
@@ -3794,7 +4886,7 @@ ALTER TABLE ONLY public.tree_version_element
 
 
 --
--- Name: instance_resources fk_8mal9hru5u3ypaosfoju8ulpd; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_8mal9hru5u3ypaosfoju8ulpd; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.instance_resources
@@ -3802,7 +4894,7 @@ ALTER TABLE ONLY public.instance_resources
 
 
 --
--- Name: tree_version_element fk_8nnhwv8ldi9ppol6tg4uwn4qv; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_8nnhwv8ldi9ppol6tg4uwn4qv; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.tree_version_element
@@ -3810,7 +4902,7 @@ ALTER TABLE ONLY public.tree_version_element
 
 
 --
--- Name: comment fk_9aq5p2jgf17y6b38x5ayd90oc; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_9aq5p2jgf17y6b38x5ayd90oc; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.comment
@@ -3818,7 +4910,7 @@ ALTER TABLE ONLY public.comment
 
 
 --
--- Name: reference fk_a98ei1lxn89madjihel3cvi90; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_a98ei1lxn89madjihel3cvi90; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.reference
@@ -3826,7 +4918,7 @@ ALTER TABLE ONLY public.reference
 
 
 --
--- Name: name fk_ai81l07vh2yhmthr3582igo47; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_ai81l07vh2yhmthr3582igo47; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.name
@@ -3834,7 +4926,7 @@ ALTER TABLE ONLY public.name
 
 
 --
--- Name: name fk_airfjupm6ohehj1lj82yqkwdx; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_airfjupm6ohehj1lj82yqkwdx; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.name
@@ -3842,7 +4934,7 @@ ALTER TABLE ONLY public.name
 
 
 --
--- Name: reference fk_am2j11kvuwl19gqewuu18gjjm; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_am2j11kvuwl19gqewuu18gjjm; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.reference
@@ -3850,7 +4942,7 @@ ALTER TABLE ONLY public.reference
 
 
 --
--- Name: name fk_bcef76k0ijrcquyoc0yxehxfp; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_bcef76k0ijrcquyoc0yxehxfp; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.name
@@ -3858,7 +4950,7 @@ ALTER TABLE ONLY public.name
 
 
 --
--- Name: instance_note fk_bw41122jb5rcu8wfnog812s97; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_bw41122jb5rcu8wfnog812s97; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.instance_note
@@ -3866,7 +4958,7 @@ ALTER TABLE ONLY public.instance_note
 
 
 --
--- Name: name fk_coqxx3ewgiecsh3t78yc70b35; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_coqxx3ewgiecsh3t78yc70b35; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.name
@@ -3874,7 +4966,7 @@ ALTER TABLE ONLY public.name
 
 
 --
--- Name: reference fk_cr9avt4miqikx4kk53aflnnkd; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_cr9avt4miqikx4kk53aflnnkd; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.reference
@@ -3882,7 +4974,7 @@ ALTER TABLE ONLY public.reference
 
 
 --
--- Name: name fk_dd33etb69v5w5iah1eeisy7yt; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_dd33etb69v5w5iah1eeisy7yt; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.name
@@ -3890,7 +4982,7 @@ ALTER TABLE ONLY public.name
 
 
 --
--- Name: reference fk_dm9y4p9xpsc8m7vljbohubl7x; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_dm9y4p9xpsc8m7vljbohubl7x; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.reference
@@ -3898,7 +4990,7 @@ ALTER TABLE ONLY public.reference
 
 
 --
--- Name: instance_note fk_f6s94njexmutjxjv8t5dy1ugt; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_f6s94njexmutjxjv8t5dy1ugt; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.instance_note
@@ -3906,7 +4998,7 @@ ALTER TABLE ONLY public.instance_note
 
 
 --
--- Name: name_status fk_g4o6xditli5a0xrm6eqc6h9gw; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_g4o6xditli5a0xrm6eqc6h9gw; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.name_status
@@ -3914,7 +5006,7 @@ ALTER TABLE ONLY public.name_status
 
 
 --
--- Name: instance fk_gdunt8xo68ct1vfec9c6x5889; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_gdunt8xo68ct1vfec9c6x5889; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.instance
@@ -3922,7 +5014,7 @@ ALTER TABLE ONLY public.instance
 
 
 --
--- Name: instance fk_gtkjmbvk6uk34fbfpy910e7t6; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_gtkjmbvk6uk34fbfpy910e7t6; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.instance
@@ -3930,7 +5022,7 @@ ALTER TABLE ONLY public.instance
 
 
 --
--- Name: comment fk_h9t5eaaqhnqwrc92rhryyvdcf; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_h9t5eaaqhnqwrc92rhryyvdcf; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.comment
@@ -3938,7 +5030,7 @@ ALTER TABLE ONLY public.comment
 
 
 --
--- Name: instance fk_hb0xb97midopfgrm2k5fpe3p1; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_hb0xb97midopfgrm2k5fpe3p1; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.instance
@@ -3946,7 +5038,7 @@ ALTER TABLE ONLY public.instance
 
 
 --
--- Name: instance_note fk_he1t3ug0o7ollnk2jbqaouooa; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_he1t3ug0o7ollnk2jbqaouooa; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.instance_note
@@ -3954,7 +5046,15 @@ ALTER TABLE ONLY public.instance_note
 
 
 --
--- Name: resource fk_l76e0lo0edcngyyqwkmkgywj9; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_i2tgkebwedao7dlbjcrnvvtrv; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource
+    ADD CONSTRAINT fk_i2tgkebwedao7dlbjcrnvvtrv FOREIGN KEY (resource_type_id) REFERENCES public.resource_type(id);
+
+
+--
+-- Name: fk_l76e0lo0edcngyyqwkmkgywj9; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.resource
@@ -3962,7 +5062,7 @@ ALTER TABLE ONLY public.resource
 
 
 --
--- Name: instance fk_lumlr5avj305pmc4hkjwaqk45; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_lumlr5avj305pmc4hkjwaqk45; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.instance
@@ -3970,7 +5070,7 @@ ALTER TABLE ONLY public.instance
 
 
 --
--- Name: instance fk_o80rrtl8xwy4l3kqrt9qv0mnt; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_o80rrtl8xwy4l3kqrt9qv0mnt; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.instance
@@ -3978,7 +5078,7 @@ ALTER TABLE ONLY public.instance
 
 
 --
--- Name: author fk_p0ysrub11cm08xnhrbrfrvudh; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_p0ysrub11cm08xnhrbrfrvudh; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.author
@@ -3986,7 +5086,7 @@ ALTER TABLE ONLY public.author
 
 
 --
--- Name: name_rank fk_p3lpayfbl9s3hshhoycfj82b9; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_p3lpayfbl9s3hshhoycfj82b9; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.name_rank
@@ -3994,7 +5094,7 @@ ALTER TABLE ONLY public.name_rank
 
 
 --
--- Name: reference fk_p8lhsoo01164dsvvwxob0w3sp; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_p8lhsoo01164dsvvwxob0w3sp; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.reference
@@ -4002,7 +5102,7 @@ ALTER TABLE ONLY public.reference
 
 
 --
--- Name: instance fk_pr2f6peqhnx9rjiwkr5jgc5be; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_pr2f6peqhnx9rjiwkr5jgc5be; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.instance
@@ -4010,7 +5110,7 @@ ALTER TABLE ONLY public.instance
 
 
 --
--- Name: id_mapper fk_qiy281xsleyhjgr0eu1sboagm; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_qiy281xsleyhjgr0eu1sboagm; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.id_mapper
@@ -4018,7 +5118,7 @@ ALTER TABLE ONLY public.id_mapper
 
 
 --
--- Name: name_rank fk_r67um91pujyfrx7h1cifs3cmb; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_r67um91pujyfrx7h1cifs3cmb; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.name_rank
@@ -4026,7 +5126,7 @@ ALTER TABLE ONLY public.name_rank
 
 
 --
--- Name: name fk_rp659tjcxokf26j8551k6an2y; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_rp659tjcxokf26j8551k6an2y; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.name
@@ -4034,7 +5134,7 @@ ALTER TABLE ONLY public.name
 
 
 --
--- Name: name fk_sgvxmyj7r9g4wy9c4hd1yn4nu; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_sgvxmyj7r9g4wy9c4hd1yn4nu; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.name
@@ -4042,7 +5142,7 @@ ALTER TABLE ONLY public.name
 
 
 --
--- Name: name fk_sk2iikq8wla58jeypkw6h74hc; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_sk2iikq8wla58jeypkw6h74hc; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.name
@@ -4050,7 +5150,7 @@ ALTER TABLE ONLY public.name
 
 
 --
--- Name: tree fk_svg2ee45qvpomoer2otdc5oyc; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_svg2ee45qvpomoer2otdc5oyc; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.tree
@@ -4058,7 +5158,7 @@ ALTER TABLE ONLY public.tree
 
 
 --
--- Name: name_status fk_swotu3c2gy1hp8f6ekvuo7s26; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_swotu3c2gy1hp8f6ekvuo7s26; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.name_status
@@ -4066,7 +5166,7 @@ ALTER TABLE ONLY public.name_status
 
 
 --
--- Name: tree_version fk_tiniptsqbb5fgygt1idm1isfy; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_tiniptsqbb5fgygt1idm1isfy; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.tree_version
@@ -4074,7 +5174,7 @@ ALTER TABLE ONLY public.tree_version
 
 
 --
--- Name: tree_version_element fk_ufme7yt6bqyf3uxvuvouowhh; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_ufme7yt6bqyf3uxvuvouowhh; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.tree_version_element
@@ -4082,7 +5182,7 @@ ALTER TABLE ONLY public.tree_version_element
 
 
 --
--- Name: name fk_whce6pgnqjtxgt67xy2lfo34; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_whce6pgnqjtxgt67xy2lfo34; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.name
@@ -4092,4 +5192,6 @@ ALTER TABLE ONLY public.name
 --
 -- PostgreSQL database dump complete
 --
+
+SET search_path TO "$user", public;
 
