@@ -9,4 +9,9 @@ before_script:
   - psql -c "create database editor_test_db with encoding = 'unicode' owner = 'editor_user';" -U postgres
 script:
   - RAILS_ENV=test bundle exec rake test:controllers
+  - RAILS_ENV=test bundle exec rake test:models
+  - bundle exec rake assets:clobber
+  - export PRECOMPILING_FOR_PRODUCTION='false' 
+  - bundle exec rake assets:precompile  RAILS_ENV=production RAILS_GROUPS=assets
+  - bundle exec warble
 
