@@ -1,6 +1,8 @@
 addons:
   postgresql: 9.6
 language: ruby
+env:
+  - TRAVIS_BUILD='true'
 rvm: 
   - "jruby-9.1.9.0"
 before_script:

@@ -85,4 +85,4 @@ Rails.application.configure do
   config.action_controller.relative_url_root = "/nsl/editor"
 end
 
-load "#{ENV['HOME']}/.nsl/editor-config.rb"
+load "#{ENV['HOME']}/.nsl/editor-config.rb" unless ENV['TRAVIS_BUILD'] == 'true'
