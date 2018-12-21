@@ -12,9 +12,11 @@ test:
   username: editor_user
   password: editor_pwd
 <% else %>
+<% unless ENV['TRAVIS_BUILD'] == 'true' %>
 <% File.open("#{ENV['HOME']}/.nsl/editor-database.yml", 'r') do |file| %>
 <% while line = file.gets %>
 <%= line %>
+<% end %>
 <% end %>
 <% end %>
 <% end %>
