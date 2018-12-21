@@ -12,7 +12,15 @@ test:
   username: editor_user
   password: editor_pwd
 <% else %>
-<% unless ENV['TRAVIS_BUILD'] == 'true' %>
+<% if ENV['TRAVIS_BUILD'] == 'true' %>
+production:
+  adapter: postgresql
+  encoding: unicode
+  host: localhost
+  database: editor_test_db
+  username: editor_user
+  password: editor_pwd
+<% else %>
 <% File.open("#{ENV['HOME']}/.nsl/editor-database.yml", 'r') do |file| %>
 <% while line = file.gets %>
 <%= line %>
