@@ -6,8 +6,8 @@ triodia_in_brassard:
   namespace: apni
   created_by: tester
   updated_by: tester
-  created_at: <%= Time.now + (24*60*60) %>
-  updated_at: <%= Time.now + (24*60*60) %>
+  created_at: <%= Time.now - (24*60*60) %>
+  updated_at: <%= Time.now - (24*60*60) %>
   page: "xx 200,300"
   page_qualifier: qualified
  
@@ -688,8 +688,8 @@ doubtful_taxonomic_synonym_instance:
   namespace: apni
   created_by: tester
   updated_by: tester
-  created_at: <%= Time.now + (24*60*60) %>
-  updated_at: <%= Time.now + (24*60*60) %>
+  created_at: <%= Time.now - (24*60*60) %>
+  updated_at: <%= Time.now - (24*60*60) %>
 
 doubtful_nomenclatural_synonym_instance:
   reference: dummy_reference_for_eflora_service
@@ -699,8 +699,8 @@ doubtful_nomenclatural_synonym_instance:
   namespace: apni
   created_by: tester
   updated_by: tester
-  created_at: <%= Time.now + (24*60*60) %>
-  updated_at: <%= Time.now + (24*60*60) %>
+  created_at: <%= Time.now - (24*60*60) %>
+  updated_at: <%= Time.now - (24*60*60) %>
 
 doubtful_pro_parte_nomenclatural_synonym_instance:
   reference: dummy_reference_for_eflora_service
@@ -710,8 +710,8 @@ doubtful_pro_parte_nomenclatural_synonym_instance:
   namespace: apni
   created_by: tester
   updated_by: tester
-  created_at: <%= Time.now + (24*60*60) %>
-  updated_at: <%= Time.now + (24*60*60) %>
+  created_at: <%= Time.now - (24*60*60) %>
+  updated_at: <%= Time.now - (24*60*60) %>
 
 doubtful_pro_parte_taxonomic_synonym_instance:
   reference: dummy_reference_for_eflora_service
@@ -721,8 +721,8 @@ doubtful_pro_parte_taxonomic_synonym_instance:
   namespace: apni
   created_by: tester
   updated_by: tester
-  created_at: <%= Time.now + (24*60*60) %>
-  updated_at: <%= Time.now + (24*60*60) %>
+  created_at: <%= Time.now - (24*60*60) %>
+  updated_at: <%= Time.now - (24*60*60) %>
 
 pro_parte_nomenclatural_synonym_instance:
   reference: dummy_reference_for_eflora_service
@@ -732,8 +732,8 @@ pro_parte_nomenclatural_synonym_instance:
   namespace: apni
   created_by: tester
   updated_by: tester
-  created_at: <%= Time.now + (24*60*60) %>
-  updated_at: <%= Time.now + (24*60*60) %>
+  created_at: <%= Time.now - (24*60*60) %>
+  updated_at: <%= Time.now - (24*60*60) %>
  
 # Standalone instance
 has_no_page_bhl_url_verbatim_name_string:
@@ -743,6 +743,8 @@ has_no_page_bhl_url_verbatim_name_string:
   namespace: apni
   created_by: tester
   updated_by: tester
+  created_at: <%= Time.now - (24*60*60) %>
+  updated_at: <%= Time.now - (24*60*60) %>
 
 page_57_hyphen_58:
   reference: reference_1_for_instance_ordering_by_page
