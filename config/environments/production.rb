@@ -84,5 +84,8 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
   config.action_controller.relative_url_root = "/nsl/editor"
 end
-
-load "#{ENV['HOME']}/.nsl/editor-config.rb" unless ENV['TRAVIS_BUILD'] == 'true'
+if ENV['TRAVIS_BUILD'] == 'true'
+  load "config/test-config.rb"
+else
+  load "#{ENV['HOME']}/.nsl/editor-config.rb" 
+end
