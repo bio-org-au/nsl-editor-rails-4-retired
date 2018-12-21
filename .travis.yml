@@ -3,3 +3,7 @@ addons:
 language: ruby
 rvm: 
   - "jruby-9.1.9.0"
+before_script:
+  - psql -c 'create database ned_test;' -U postgres
+script:
+  - RAILS_ENV=test bundle exec rake test:controllers
