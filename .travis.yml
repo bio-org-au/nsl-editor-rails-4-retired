@@ -4,6 +4,10 @@ language: ruby
 rvm: 
   - "jruby-9.1.9.0"
 before_script:
-  - psql -c 'create database ned_test;' -U postgres
+  alter user travis createdb;
+  - psql -c "create user travis with password 'travis';"
+  - psql -c "alter user travis superuser;"
+  - psql -c "create database travis_test with encoding = 'unicode' owner = 'travis';" -U postgres
 script:
   - RAILS_ENV=test bundle exec rake test:controllers
+

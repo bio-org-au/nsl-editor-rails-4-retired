@@ -1,10 +1,21 @@
 
 
 # Get database config and credentials.
+# Don't indent code - it's yaml
 
+<% if ENV['RAILS_ENV'] == 'test' %>
+test:
+  adapter: postgresql
+  encoding: unicode
+  host: localhost
+  database: travis_test
+  username: travis
+  password: travis
+<% else %>
 <% File.open("#{ENV['HOME']}/.nsl/editor-database.yml", 'r') do |file| %>
 <% while line = file.gets %>
 <%= line %>
+<% end %>
 <% end %>
 <% end %>
 
