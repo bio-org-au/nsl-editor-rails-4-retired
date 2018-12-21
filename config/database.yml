@@ -8,9 +8,9 @@ test:
   adapter: postgresql
   encoding: unicode
   host: localhost
-  database: travis_test
-  username: travis
-  password: travis
+  database: editor_test_db
+  username: editor_user
+  password: editor_pwd
 <% else %>
 <% File.open("#{ENV['HOME']}/.nsl/editor-database.yml", 'r') do |file| %>
 <% while line = file.gets %>

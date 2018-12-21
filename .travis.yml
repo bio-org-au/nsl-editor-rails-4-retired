@@ -4,9 +4,9 @@ language: ruby
 rvm: 
   - "jruby-9.1.9.0"
 before_script:
-  - psql -c "create user travis with password 'travis';" -U postgres
-  - psql -c "alter user travis superuser;" -U postgres
-  - psql -c "create database travis_test with encoding = 'unicode' owner = 'travis';" -U postgres
+  - psql -c "create user editor_user with password 'editor_pwd';" -U postgres
+  - psql -c "alter user editor_user superuser;" -U postgres
+  - psql -c "create database editor_test_db with encoding = 'unicode' owner = 'editor_user';" -U postgres
 script:
   - RAILS_ENV=test bundle exec rake test:controllers
 
