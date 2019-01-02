@@ -1,5 +1,0 @@
-addons:
-  postgresql: 9.6
-language: ruby
-rvm: 
-  - "jruby-9.1.9.0"
