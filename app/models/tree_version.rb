@@ -44,6 +44,7 @@ class TreeVersion < ActiveRecord::Base
     tree_version_elements
         .joins(:tree_element)
         .where(["lower(tree_element.simple_name) like lower(?)", term])
+        .order(:name_path)
         .limit(50)
   end
 

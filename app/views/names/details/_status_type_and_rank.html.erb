@@ -1,0 +1,10 @@
+<span class='name-status' title='status'>
+  <%= @name.name_status.try('name').try('capitalize') %>
+</span>
+<span class='name-type' title='type'>
+  <%= @name.name_type.try('name') %>
+</span>
+<span class='name-rank' title='rank'>
+  <%= @name.name_rank.try('name').try('downcase') %>
+</span>
+

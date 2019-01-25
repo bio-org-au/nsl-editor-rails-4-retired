@@ -1,139 +1,18 @@
 <% increment_tab_index(0) %>
 
-<span class="full-name" title="Full name"><%= "#{@name.full_name}" %></span>&nbsp;
-<%= link_to("#{ShardConfig.name_space} #{icon('external-link-square')}".html_safe,
-            "#{Rails.configuration.nsl_links}apniFormat/display/#{@name.id}",
-            title: "#{ShardConfig.name_space} search. Opens in another tab or window.",
-            class: "rebeccapurple",
-            target: "_editor_to_apni",
-            tabindex: increment_tab_index) if @name.instances.size > 0 %>
-<% if Rails.configuration.try(:show_new_search_link) %>
-  <%= link_to("New #{ShardConfig.name_space} #{icon('external-link-square')}".html_safe,
-              "#{Rails.configuration.try('search_address')}/name/#{@name.id}?search_form=names#name-#{@name.id}",
-              title: "New #{ShardConfig.name_space} search. Opens in another tab or window.",
-              class: "rebeccapurple",
-              target: "_editor_to_apni",
-              tabindex: increment_tab_index) if @name.instances.size > 0 %>
-<% end %>
-<br>
-<%= "<span class='name-status' title='status'>#{@name.name_status.try('name').try('capitalize')}</span>".html_safe %>
-<%= "<span class='name-type' title='type'> #{@name.name_type.try('name')}</span>".html_safe %>
-<%= "<span class='name-rank' title='rank'>#{@name.name_rank.try('name').try('downcase')}</span> name ".html_safe %>
-<% if @name.has_parent? %>
-    <% if @name.has_second_parent? %>
-        between
-    <% else %>
-        within
-    <% end %>
-    <%= link_to(@name.parent.try('full_name_html').try('html_safe'),
-                search_path(query_target: 'names', query_string: "id: #{@name.parent_id}"),
-                class: 'name',
-                tabindex: increment_tab_index,
-                title: "Query the parent") %>
-<% end %>
-
-<% if @name.has_second_parent? %>
-    and
-    <%= link_to(@name.second_parent.try('full_name_html').try('html_safe'),
-                search_path(query_target: "names", query_string: "id:#{@name.second_parent_id}"),
-                class: 'rebeccapurple',
-                tabindex: increment_tab_index,
-                title: 'second parent') %>
-<% end %>
-
-<% if @name.duplicate_of_id.present? %>
-    <br>
-    <% link = link_to(@name.duplicate_of.full_name, search_path(query_target: 'name',
-                                                                query_string: "id: #{@name.duplicate_of_id}"),
-                      title: 'Retrieve duplicate of', tabindex: increment_tab_index) %>
-    <%= "Duplicate of #{link}".html_safe %>
-<% end %>
-
+<%= render partial: "names/details/full_name_and_link_to_search" %>
+<%= render partial: "names/details/status_type_and_rank" %>
+<%= render partial: "names/details/parents_and_duplicate_of" %>
 <%= render partial: "names/widgets/duplicates" %>
-
-
-<% if @name.changed_combination %>
-  <br>Changed combination
-<% end %>
-
-<% unless @name.ex_base_author.blank? %>
-    <br>
-    <% auth_link = link_to(@name.ex_base_author.abbrev_if_possible, search_path(query_target: 'author',
-                                                                                query_string: "id: #{@name.ex_base_author_id}"),
-                           title: "Retrieve ex base author", tabindex: increment_tab_index, class: 'author') %>
-    <%= "Ex Base Name Authored by #{auth_link}".html_safe %>
-<% end %>
-
-<% unless @name.base_author.blank? %>
-    <br>
-    <% auth_link = link_to(@name.base_author.abbrev_if_possible, search_path(query_target: 'author',
-                                                                             query_string: "id: #{@name.base_author_id}"),
-                           title: "Retrieve ex base author", tabindex: increment_tab_index, class: 'author') %>
-    <%= "Base Name Authored by #{auth_link}".html_safe %>
-<% end %>
-
-<% unless @name.ex_author.blank? %>
-    <br>
-    <% auth_link = link_to(@name.ex_author.abbrev_if_possible, search_path(query_target: 'author',
-                                                                           query_string: "id: #{@name.ex_author_id}"),
-                           title: "Retrieve ex base author", tabindex: increment_tab_index, class: 'author') %>
-    <%= "Ex Authored by #{auth_link}".html_safe %>
-<% end %>
-
-<% unless @name.author.blank? %>
-    <br>
-    <% auth_link = link_to(@name.author.abbrev_if_possible, search_path(query_target: 'author',
-                                                                        query_string: "id: #{@name.author_id}"),
-                           title: "Retrieve ex base author", tabindex: increment_tab_index, class: 'author') %>
-    <%= "Authored by #{auth_link}".html_safe %>
-<% end %>
-<% unless @name.sanctioning_author.blank? %>
-    <br>
-    <% auth_link = link_to(@name.sanctioning_author.abbrev_if_possible, search_path(query_target: 'author',
-                                                                                    query_string: "author id: #{@name.sanctioning_author_id}"),
-                           title: "Retrieve ex base author", tabindex: increment_tab_index, class: 'author') %>
-    <%= "Sanctioned by #{auth_link}".html_safe %>
-<% end %>
-
-<% if @name.name_tags.present? %>
-    <br>
-    <span title='Name tags'>
-<%= icon('tags') %> <%= "<span class='name-tag' title='Name tag'>#{@name.name_tags.collect { |name_tag| name_tag.name }.join(',')}</span>".html_safe %>
-</span>
-<% end %>
+<% if @name.changed_combination %> <br>Changed combination <% end %>
+<%= render partial: "names/details/authors" %>
+<%= render partial: "names/details/tags" %>
 <%= "Verbatim rank  #{@name.verbatim_rank}" unless @name.verbatim_rank.blank? %>
 <br>
-<% if @name.instances.size > 0 %>
-    <%= link_to("#{pluralize(@name.instances.size, 'instance')} #{icon('search')}".html_safe,
-                search_path(query_target: "Name", query_string: "id: #{@name.id} show-instances:"),
-                tabindex: increment_tab_index,
-                title: "Search for the #{pluralize(@name.instances.size, 'instance')}",
-                class: 'give-me-focus') %>
-<% else %>
-    No instances.
-<% end %>
+<%= render partial: "names/details/instances" %>
 <%= render 'names/details/children' %>
 <%= render partial: 'names/details/apni_tree' %>
 <%= render partial: 'names/details/apc_tree' %>
-
-<% if @name.comments.size > 0 %>
-    <%= divider %>
-    <h5><%= pluralize(@name.comments.size, 'Comment') %></h5>
-    <% @name.comments.sort { |x, y| x.created_at <=> y.created_at }.each do |comment| %>
-        <%= render partial: 'comments/show', locals: { comment: comment } %>
-    <% end %>
-<% end %>
-
+<%= render partial: "names/details/comments" %>
 <%= divider %>
-<h5>Name #<%= @name.id %></h5>
-
-simple name: <%= @name.simple_name %>
-<br>
-<br>
-<%= created_by_whom_and_when(@name).html_safe %>
-<br>
-<%= updated_by_whom_and_when(@name).html_safe %>
-<%= render partial: 'detail_line',
-           locals: { label: 'System',
-                     info: "#{@name.namespace.name}#{%Q(.#{@name.source_system.downcase}.#{@name.source_id}) if @name.source_system}" } %>
-
+<%= render partial: "names/details/meta" %>

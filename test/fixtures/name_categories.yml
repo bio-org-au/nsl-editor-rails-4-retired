@@ -15,6 +15,7 @@ phrase:
   requires_higher_ranked_parent: f
   parent_2_help_text:
   takes_cultivar_scoped_parent: f
+  takes_rank: t
   takes_verbatim_rank: f
 
 scientific_hybrid_formula_unknown_2nd_parent:
@@ -34,6 +35,7 @@ scientific_hybrid_formula_unknown_2nd_parent:
   requires_higher_ranked_parent: f
   parent_2_help_text:
   takes_cultivar_scoped_parent: f
+  takes_rank: t
   takes_verbatim_rank: t
 
 other:
@@ -53,6 +55,7 @@ other:
   requires_higher_ranked_parent: f
   parent_2_help_text:
   takes_cultivar_scoped_parent: f
+  takes_rank: f
   takes_verbatim_rank: t
 
 scientific:
@@ -72,6 +75,7 @@ scientific:
   requires_higher_ranked_parent: t
   parent_2_help_text:
   takes_cultivar_scoped_parent: f
+  takes_rank: t
   takes_verbatim_rank: t
 
 scientific_hybrid_formula:
@@ -91,6 +95,7 @@ scientific_hybrid_formula:
   requires_higher_ranked_parent: f
   parent_2_help_text: hybrid - species and below or unranked if unranked
   takes_cultivar_scoped_parent: f
+  takes_rank: t
   takes_verbatim_rank: t
 
 cultivar:
@@ -110,6 +115,7 @@ cultivar:
   requires_higher_ranked_parent: f
   parent_2_help_text:
   takes_cultivar_scoped_parent: t
+  takes_rank: t
   takes_verbatim_rank: t
 
 cultivar_hybrid:
@@ -129,4 +135,5 @@ cultivar_hybrid:
   requires_higher_ranked_parent: f
   parent_2_help_text: cultivar - genus and below, or unranked if unranked
   takes_cultivar_scoped_parent: t
+  takes_rank: t
   takes_verbatim_rank: t

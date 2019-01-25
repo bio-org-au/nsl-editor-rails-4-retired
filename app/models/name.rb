@@ -54,7 +54,7 @@ class Name < ActiveRecord::Base
   has_many :duplicates,
            class_name: "Name",
            foreign_key: "duplicate_of_id",
-           dependent: :restrict_with_exception # , order: 'name_element'
+           dependent: :restrict_with_exception
 
   has_many :instances,
            foreign_key: "name_id",

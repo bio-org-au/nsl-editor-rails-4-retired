@@ -29,15 +29,3 @@
                 class: '') %>
   <br>
 <% end %>
-<%# if @name.sub_tree_size > 0 %>
-  <%#= "#{pluralize(@name.sub_tree_size,'descendant')}" %>
-  <%#= link_to("#{pluralize(@name.sub_tree_size,'descendant')} #{icon('search')}".html_safe,
-    search_path(query_string: "parent-id: #{@name.id}",
-                query_common_and_cultivar: "t",
-                query_target: 'name'),
-                tabindex: increment_tab_index,
-                title: "Retrieve #{pluralize(@name.children.size,'child')}.",
-                class: '') %>
-  <br>
-<%# end %>
-
