@@ -291,6 +291,7 @@ GEM
 PLATFORMS
   java
   ruby
+  universal-java-1.8
   x86_64-darwin-18
 
 DEPENDENCIES
@@ -345,4 +346,4 @@ DEPENDENCIES
   webmock
 
 BUNDLED WITH
-   1.17.2
+   2.0.0
