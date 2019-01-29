@@ -26,6 +26,6 @@ class DbVersion < ActiveRecord::Base
   rescue => e
     Rails.logger.error("Problem detecting current schema version.")
     Rails.logger.error("Exception: #{e}")
-    "[Problem finding version]"
+    "[Problem finding version: #{e}]"
   end
 end
