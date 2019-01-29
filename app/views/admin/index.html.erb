@@ -51,7 +51,7 @@
     <tr><td colspan="2">&nbsp;</td></tr>
     </table>
 
-    <h4>Rails environment</h4>
+    <h4>Application environment</h4>
     <table class="table table-condensed search-results width-100-percent">
 
     <tr><td class="width-40-percent min-width-10em">Rails.env</td><td> <%= Rails.env %> </td></tr>
@@ -67,6 +67,7 @@
     <tr><td>Database</td><td> <%= Rails.configuration.database_configuration[Rails.env]["database"] %> </td></tr>
 
     <tr><td>Schema version</td><td> <%= DbVersion.current %> </td></tr>
+    <tr><td>Application version</td><td> <%= Rails.configuration.try('version') %> </td></tr>
     <tr><td>Path to broadcast file</td><td> <%= Rails.configuration.try(:path_to_broadcast_file) %> </td></tr>
     <tr><td>Namespace</td><td> <%= Namespace.try(:default).try(:name) %> </td></tr>
     <tr><td colspan="2">&nbsp;</td></tr>
