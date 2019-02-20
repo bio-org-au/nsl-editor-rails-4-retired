@@ -1,3 +1,7 @@
 ---
+- :date: 20-02-2019
+  :jira_id: '3217'
+  :description: |-
+    Extract and display the error message from the name delete service when it fails.
 - :date: 04-Feb-2019
   :release: true
