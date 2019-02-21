@@ -31,4 +31,6 @@ en:
   activerecord:
     attributes:
       reference:
-       parent_id: "Parent reference"
+        parent_id: "Parent reference"
+      names_delete:
+        extra_info: "Extra information"

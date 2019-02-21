@@ -17,16 +17,4 @@
 #
 class HistoryController < ApplicationController
   before_filter :hide_details, :empty_search
-
-  def y2015
-  end
-
-  def y2016
-  end
-
-  def y2017
-  end
-
-  def y2018
-  end
 end

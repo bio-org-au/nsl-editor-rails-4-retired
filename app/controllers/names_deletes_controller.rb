@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -17,31 +18,42 @@
 #
 class NamesDeletesController < ApplicationController
   # Confirm user wants to delete the name
+  # Then delete it via a service call
   def confirm
     @names_delete = NamesDelete.new(names_delete_params)
-    if @names_delete.save # i.e. successfully confirm
-      logger.debug("NamesDeletes confirmed!")
-      @name = Name::AsServices.find(names_delete_params[:name_id])
-      logger.debug("NamesDeletes is for name: #{@name.id}")
-      @name.update_attribute(:updated_by, current_user.username)
-      if @name.delete_with_reason(@names_delete.assembled_reason)
-        render partial: "ok.js"
-      else
-        @message = @name.errors.full_messages.first
-        render partial: "error.js"
-      end
-    else
-      logger.debug("NamesDeletes not saved!")
-      @message = @names_delete.errors.full_messages.first
-      render partial: "error.js"
-    end
-  rescue => e
+    raise "Not confirmed" unless @names_delete.save! # i.e. confirmed
+
+    delete_via_service(names_delete_params)
+    render partial: "ok.js"
+  rescue StandardError => e
     logger.error("Exception deleting name: #{e}")
-    @message = e.to_s
+    assemble_error_message(e)
     render partial: "error.js"
   end
 
   private
+
+  def delete_via_service(names_delete_params)
+    @name = Name::AsServices.find(names_delete_params[:name_id])
+    @name.update_attribute(:updated_by, current_user.username)
+    raise "Not saved" unless @name.delete_with_reason(
+      @names_delete.assembled_reason
+    )
+  end
+
+  def assemble_error_message(err)
+    @message = err.to_s
+    return if err.try("http_body").nil?
+
+    json = JSON.parse err.http_body
+    return if json["errors"].blank?
+
+    @message += ": "
+    @message += json["errors"].join(";")
+  rescue StandardError => e
+    logger.error("Exception assembling the error message: #{e}")
+    @message += " (Problem assembling the error message: #{e})"
+  end
 
   def build_form
     @name_delete = NameDelete.new
