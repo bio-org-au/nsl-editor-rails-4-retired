@@ -19,6 +19,7 @@ class InstanceNoteKey < ActiveRecord::Base
   self.table_name = "instance_note_key"
   self.primary_key = "id"
   APC_DIST = "APC Dist."
+  NOTE_MATCHES = '-note-matches:'
   has_many :instance_notes
   scope :apc, -> { where(name: ["APC Comment", "APC Dist."]) }
   scope :apc_comment, -> { where(name: ["APC Comment"]) }
@@ -63,5 +64,14 @@ class InstanceNoteKey < ActiveRecord::Base
 
   def apc_dist?
     name == APC_DIST
+  end
+
+  def self.string_has_embedded_note_key?(str)
+    if str.match(/#{NOTE_MATCHES}\z/i)
+      possible_key = str.sub(/#{NOTE_MATCHES}\z/i,'').gsub(/-/,' ')
+      self.where(['lower(name) = lower(?)', possible_key]).size == 1
+    else
+      false
+    end
   end
 end

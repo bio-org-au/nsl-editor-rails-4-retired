@@ -97,7 +97,8 @@ from comment where comment.instance_id = instance.id)",
                                  from instance_note_key
                                  where instance_note_key_id =
                                  instance_note_key.id
-                                 and instance_note_key.name = 'APC Dist.')) " },
+                                 and instance_note_key.name = 'APC Dist.')) ",
+                                 convert_asterisk_to_percent: false},
       "apc-comment-note-matches:" => {where_clause: " exists (select null
                                  from instance_note
                                  where instance_id = instance.id
@@ -106,7 +107,8 @@ from comment where comment.instance_id = instance.id)",
                                  from instance_note_key
                                  where instance_note_key_id =
                                  instance_note_key.id
-                                 and instance_note_key.name = 'APC Comment')) "},
+                                 and instance_note_key.name = 'APC Comment')) ",
+                                 convert_asterisk_to_percent: false},
       "tree-dist-matches:" => {where_clause: " exists(select null
                                  from tree t, tree_element te
                                  where t.accepted_tree
@@ -260,4 +262,25 @@ where rb.sort_order >= (select sort_order from name_rank where name = 'Species')
                                                 )",
                            order: "instance.id" }
   }.freeze
+
+  def self.resolve(field)
+    if InstanceNoteKey.string_has_embedded_note_key?(field)
+      hash = Hash.new 
+      key = field.sub(/#{InstanceNoteKey::NOTE_MATCHES}/i,%q[]).gsub(/-/,%( ))
+      hash[field] = {where_clause: %Q( exists (select null
+                                 from instance_note
+                                 where instance_id = instance.id
+                                 and instance_note.value ~* ?
+                                 and exists (select null
+                                 from instance_note_key
+                                 where instance_note_key_id =
+                                 instance_note_key.id
+                                 and lower(instance_note_key.name) = lower('#{key}')))),
+                                 convert_asterisk_to_percent: false}
+
+      return hash[field]
+    else
+      RULES[field]
+    end
+  end
 end

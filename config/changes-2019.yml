@@ -1,4 +1,10 @@
 ---
+- :date: 26-02-2019
+  :jira_id: '2426'
+  :description: |-
+    Search for text in a particular type of instance note.
+- :date: 22-Feb-2019
+  :release: true
 - :date: 20-02-2019
   :jira_id: '3217'
   :description: |-

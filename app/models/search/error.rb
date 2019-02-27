@@ -26,7 +26,7 @@ class Search::Error
               :parsed_request
 
   def initialize(params)
-    debug("start with query string: #{params[:query_string]}")
+    print_error("start with query string: #{params[:query_string]}")
     @parsed_request = Search::ParsedRequest.new(params)
     @common_and_cultivar_included = true
     @error = true
@@ -46,7 +46,7 @@ class Search::Error
       "error_message" => @error_message }
   end
 
-  def debug(s)
-    Rails.logger.debug("Search::Error #{s}")
+  def print_error(s)
+    Rails.logger.error("Search::Error #{s}")
   end
 end
