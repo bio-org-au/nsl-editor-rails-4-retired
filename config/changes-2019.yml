@@ -1,4 +1,8 @@
 ---
+- :date: 06-03-2019
+  :jira_id: '3173'
+  :description: |-
+    Change placement of edition on reference details tab.
 - :date: 26-02-2019
   :jira_id: '2426'
   :description: |-
