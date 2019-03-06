@@ -65,7 +65,8 @@ class Search::OnInstance::Predicate
     @multiple_values = @rule[:multiple_values] || false
     @predicate = build_predicate
     # TODO: build this into the @rule
-    @value = @value.downcase unless @canon_field =~ /-match/
+    # @value = @value.downcase unless @canon_field =~ /-match/i
+    @value = @value.downcase unless @rule[:case_sensitive]
     @tokenize = @rule[:tokenize] || false
     @join_name = @rule[:join] == :name
   end

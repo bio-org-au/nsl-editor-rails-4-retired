@@ -98,7 +98,8 @@ from comment where comment.instance_id = instance.id)",
                                  where instance_note_key_id =
                                  instance_note_key.id
                                  and instance_note_key.name = 'APC Dist.')) ",
-                                 convert_asterisk_to_percent: false},
+                                 convert_asterisk_to_percent: false,
+                                 case_sensitive: true},
       "apc-comment-note-matches:" => {where_clause: " exists (select null
                                  from instance_note
                                  where instance_id = instance.id
@@ -108,17 +109,20 @@ from comment where comment.instance_id = instance.id)",
                                  where instance_note_key_id =
                                  instance_note_key.id
                                  and instance_note_key.name = 'APC Comment')) ",
-                                 convert_asterisk_to_percent: false},
+                                 convert_asterisk_to_percent: false,
+                                 case_sensitive: true},
       "tree-dist-matches:" => {where_clause: " exists(select null
                                  from tree t, tree_element te
                                  where t.accepted_tree
                                    and instance_id = instance.id
-                                   and (te.profile -> (t.config ->> 'distribution_key') ->> 'value') ~ ?)"},
+                                   and (te.profile -> (t.config ->> 'distribution_key') ->> 'value') ~ ?)",
+                                 case_sensitive: true},
       "tree-comment-matches:" => {where_clause: " exists(select null
                                  from tree t, tree_element te
                                  where t.accepted_tree
                                    and instance_id = instance.id
-                                   and (te.profile -> (t.config ->> 'comment_key') ->> 'value') ~ ?)"},
+                                   and (te.profile -> (t.config ->> 'comment_key') ->> 'value') ~ ?)",
+                                 case_sensitive: true},
       "non-tree-drafts:" => {where_clause: " draft and not exists(select null
                                  from tree_element te
                                  where te.instance_id = instance.id)"},
@@ -165,11 +169,13 @@ from comment where comment.instance_id = instance.id)",
                                              (select lower(full_name)
                                              from name
                                              where name.id =
-                                             instance.name_id) " },
+                                             instance.name_id) ",
+                                 case_sensitive: true},
 
       "verbatim-name-does-not-match-full-name:" =>
     { where_clause: " lower(verbatim_name_string) != (select lower(full_name)
-    from name where name.id = instance.name_id) " },
+    from name where name.id = instance.name_id) ",
+                                 case_sensitive: true},
       "is-novelty:" => { where_clause: " exists (select null
                        from instance_type
                        where instance_type_id = instance_type.id
@@ -270,14 +276,14 @@ where rb.sort_order >= (select sort_order from name_rank where name = 'Species')
       hash[field] = {where_clause: %Q( exists (select null
                                  from instance_note
                                  where instance_id = instance.id
-                                 and instance_note.value ~* ?
+                                 and instance_note.value ~ ?
                                  and exists (select null
                                  from instance_note_key
                                  where instance_note_key_id =
                                  instance_note_key.id
                                  and lower(instance_note_key.name) = lower('#{key}')))),
-                                 convert_asterisk_to_percent: false}
-
+                                 convert_asterisk_to_percent: false,
+                                 case_sensitive: true}
       return hash[field]
     else
       RULES[field]

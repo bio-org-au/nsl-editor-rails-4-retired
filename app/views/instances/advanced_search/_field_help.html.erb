@@ -37,34 +37,35 @@
 <br/>
 <br/>
 
-<h4>Note Searches (New February 2019)</h4>
+<h4>Note Searches (New March 2019)</h4>
 <p>There is now a way to search for text in specific kinds of instance notes.</p>
 <p>e.g. 
-    <pre>etymology-note-matches: darwin</pre>
+    <pre>etymology-note-matches: Darwin</pre>
 <p>In this example "etymology" is a type of instance note for the data set.</p>
 
 <p>Check your available note types on the Note tab for any Instance record.</p>
 
 <p>Take any note type you're interested in and replace 'etymology' with it in the example above.</p>
 
-<p>Likewise, put the text you're interested in the place of 'darwin'.</p>
+<p>Likewise, put the text you're interested in the place of 'Darwin'.</p>
 
 <p>Another example, this time showing how to use multiple words and punctuation:</p>
 
-<pre>apc-dist.-note-matches: darwin .*bark</pre>
+<pre>apc-dist.-note-matches: Darwin .*bark</pre>
 
 <p>This would retrieve instances with an APC Dist. note that contains the 
 word "darwin" followed by a space, one or more other characters followed by "bark".</p>
 
 <p>These searches use regular expressions, so use ".*" instead of '%'.</p>
 
-<p>They are <b>not</b> case-sensitive.</p>
+<p>They are <b>case-sensitive</b>.</p>
 
 <p>You can combine these search directives and they will be ANDED. For example:</p>
 
-    <pre>etymology-note-matches: darwin apc-dist.-note-matches: darwin .*bark</pre>
+    <pre>etymology-note-matches: Darwin apc-dist.-note-matches: Darwin .*bark</pre>
+    <pre>type-note-matches: San Francisco comment-note-matches: H.M.Hall</pre>
 
-<p>finds records that match both tests.</p>
+<p>find records that match both tests.</p>
 
 <br>
 

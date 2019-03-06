@@ -23,7 +23,7 @@ class SearchOnInstNoteKeyAndNoteCaseSensitiveValueTest < ActiveSupport::TestCase
   test "search on instance notes within a specified key case sensitive value" do
     params = ActiveSupport::HashWithIndifferentAccess.new(
       query_target: "instance",
-      query_string: "nEotyPe-NoTe-mAtches: mYstRIng",
+      query_string: "nEotyPe-NoTe-mAtches: MyString",
       include_common_and_cultivar_session: true,
       current_user: build_edit_user
     )
