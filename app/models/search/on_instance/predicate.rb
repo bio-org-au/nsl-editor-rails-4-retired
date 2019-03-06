@@ -33,15 +33,16 @@ class Search::OnInstance::Predicate
               :join_name
 
   def initialize(field, value)
+    debug('Start')
     @field = field
     @value = value
     @canon_field = build_canon_field(field)
-    rule = Search::OnInstance::FieldRule::RULES[@canon_field] || EMPTY_RULE
+    @rule = Search::OnInstance::FieldRule.resolve(@canon_field)
     @is_null = value.blank?
-    apply_rule(rule)
+    apply_rule
     @canon_value = build_canon_value
     apply_scope
-    @order = rule[:order] || nil
+    @order = @rule[:order] || nil
     process_value
   end
 
@@ -53,20 +54,21 @@ class Search::OnInstance::Predicate
     "Search::OnInstance::Predicate: canon_field: #{@canon_field}"
   end
 
-  def apply_rule(rule)
-    @scope_ = rule[:scope_] || ""
-    @trailing_wildcard = rule[:trailing_wildcard] || false
-    @leading_wildcard = rule[:leading_wildcard] || false
-    apply_rule_overflow(rule)
+  def apply_rule
+    @scope_ = @rule[:scope_] || ""
+    @trailing_wildcard = @rule[:trailing_wildcard] || false
+    @leading_wildcard = @rule[:leading_wildcard] || false
+    apply_rule_overflow
   end
 
-  def apply_rule_overflow(rule)
-    @multiple_values = rule[:multiple_values] || false
-    @predicate = build_predicate(rule)
-    # TODO: build this into the rule
-    @value = @value.downcase unless @canon_field =~ /-match/
-    @tokenize = rule[:tokenize] || false
-    @join_name = rule[:join] == :name
+  def apply_rule_overflow
+    @multiple_values = @rule[:multiple_values] || false
+    @predicate = build_predicate
+    # TODO: build this into the @rule
+    # @value = @value.downcase unless @canon_field =~ /-match/i
+    @value = @value.downcase unless @rule[:case_sensitive]
+    @tokenize = @rule[:tokenize] || false
+    @join_name = @rule[:join] == :name
   end
 
   def apply_scope
@@ -84,27 +86,27 @@ class Search::OnInstance::Predicate
     @processed_value = "#{@processed_value}%" if @trailing_wildcard
   end
 
-  def build_predicate(rule)
+  def build_predicate
     if @multiple_values && @value.split(/,/).size > 1
-      rule[:multiple_values_where_clause]
+      @rule[:multiple_values_where_clause]
     else
-      build_scalar_predicate(rule)
+      build_scalar_predicate
     end
   end
 
-  def build_scalar_predicate(rule)
+  def build_scalar_predicate
     if @is_null
-      build_is_null_predicate(rule)
+      build_is_null_predicate
     else
-      rule[:where_clause]
+      @rule[:where_clause]
     end
   end
 
-  def build_is_null_predicate(rule)
-    if rule[:not_exists_clause].present?
-      rule[:not_exists_clause]
+  def build_is_null_predicate
+    if @rule[:not_exists_clause].present?
+      @rule[:not_exists_clause]
     else
-      rule[:where_clause].gsub(/= \?/, "is null")
+      @rule[:where_clause].gsub(/= \?/, "is null")
                          .gsub(/like lower\(\?\)/, "is null")
                          .gsub(/like lower\(f_unaccent\(\?\)\)/, "is null")
     end
@@ -114,20 +116,38 @@ class Search::OnInstance::Predicate
     if @multiple_values && @value.split(/,/).size > 1
       @value.split(",").collect(&:strip)
     else
-      @value.tr("*", "%")
+      convert_asterisk_to_percent
     end
+  end
+
+  def convert_asterisk_to_percent
+    case @rule[:convert_asterisk_to_percent]
+      when nil then
+        @value.tr("*", "%")
+      when true then
+        @value.tr("*", "%")
+      else
+        @value
+      end
   end
 
   def build_canon_field(field)
     if Search::OnInstance::FieldRule::RULES.key?(field)
       field
     elsif Search::OnInstance::FieldRule::RULES.key?(
+      # redundant?
       Search::OnInstance::FieldAbbrev::ABBREVS[field]
     )
       Search::OnInstance::FieldAbbrev::ABBREVS[field]
+    elsif field_matches_a_note_key?(field)
+      field      
     else
       raise "Cannot search instances for: #{field}. You may need to try another
       search term or target."
     end
+  end
+
+  def field_matches_a_note_key?(field)
+    InstanceNoteKey.string_has_embedded_note_key?(field)
   end
 end

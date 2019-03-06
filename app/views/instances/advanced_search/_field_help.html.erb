@@ -37,6 +37,52 @@
 <br/>
 <br/>
 
+<h4>Note Searches (New March 2019)</h4>
+<p>It is now possible to search for matching text in any
+of the instance notes that exist in a given database.
+<p>Each search directive can only search one note of a given kind ("note-key")
+but multiple directives can be included in a search, where they will be ANDed.</p>
+
+<p>e.g. 
+    <pre>etymology-note-matches: Darwin</pre>
+<p>In this example "etymology" is a type of instance note for the database.</p>
+
+<p>(You can find a list of the available note types on the Note tab for any Instance record.)</p>
+
+<p>Take any note type you're interested in and replace 'etymology' with it in the example above.</p>
+
+<p>Likewise, put the text you're interested in the place of 'Darwin'.</p>
+
+<p>Another example, this time showing how to use multiple words or part words with a space and other characters between:</p>
+
+<pre>apc-dist.-note-matches: Darwin .*bark</pre>
+
+<p>This would retrieve instances with an APC Dist. note that contains the 
+word "darwin" followed by a space, one or more other characters followed by "bark".</p>
+
+<p>These searches use regular expressions, so use ".*" instead of '%'.</p>
+
+<p>These searches are <b>case-sensitive</b>.</p>
+<br>
+<h5>Examples:</h5>
+<p>An instance with "San Francisco" in a type note and "H.M.Hall" in a comment note.</p>
+    <pre>type-note-matches: San Francisco comment-note-matches: H.M.Hall</pre>
+<p>An instance with a lectotype note (the not-null query for regular expressions):</p>
+    <pre>lectotype-note-matches: .</pre>
+<br>
+<h5>Advanced Regular Expression Examples:</h5>
+<p>An instance with a type note that <b>includes</b> "PERTH" followed by a full-stop then a double-quote:</p>
+    <pre>type-note-matches: PERTH\."</pre>
+    <p>An instance with a type note that <b>ends</b> with "PERTH" followed by exactly 2 characters then a double-quote:</p>
+    <pre>type-note-matches: PERTH.."\Z</pre>
+<p>An instance with a type note that ends with "PERTH" followed by at least 2 characters then a double-quote:</p>
+    <pre>type-note-matches: PERTH..+"\Z</pre>
+<p>An instance with a type note that ends with "PERTH" followed by a full-stop followed by a double-quote:</p>
+    <pre>type-note-matches: PERTH\."\Z</pre>
+
+
+<br>
+
 <h4>Special Note Searches</h4>
 <table class="table table-striped">
   <tr>
