@@ -1,1 +1,1 @@
-Rails.configuration.version = '1.79'
+Rails.configuration.version = '1.80'
