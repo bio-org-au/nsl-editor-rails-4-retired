@@ -69,7 +69,6 @@ class SearchController < ApplicationController
   def handle_old
     handle_old_style_params
     handle_old_targets
-    handle_old_ffox
   end
 
   # translate services/search/link
@@ -88,11 +87,6 @@ class SearchController < ApplicationController
     params[:query_target] = "name"
     return if params[:query_string] =~ /show-instances:/
     params[:query_string] = params[:query_string].sub(/\z/, " show-instances:")
-  end
-
-  def handle_old_ffox
-    session[:old_ffox] = params[:old_ffox].present? &&
-                         params[:old_ffox].match(/true/i)
   end
 
   def run_tree_search
