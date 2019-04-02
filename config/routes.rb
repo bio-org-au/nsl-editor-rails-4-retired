@@ -322,6 +322,16 @@ Rails.application.routes.draw do
         to: "search#reports",
         via: :get
 
+  match "password",
+        as: "new_password",
+        to: "users#new_password",
+        via: :get
+
+  match "password",
+        as: "change_password",
+        to: "users#change_password",
+        via: :post
+
   root to: "search#search"
   match "/*random", to: "search#search", via: [:get, :post, :delete, :patch]
 end

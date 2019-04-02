@@ -70,7 +70,18 @@ class Ldap < ActiveType::Object
     result
   end
 
-  private
+  # See https://github.com/ruby-ldap/ruby-net-ldap/issues/290
+  def change_password(uid,new_password,salt)
+    conn = admin_connection
+    digest = Digest::SHA1.digest("#{new_password}#{salt}")
+    person = conn.search(base: Rails.configuration.ldap_users, filter: Net::LDAP::Filter.eq("uid",uid))
+    new_hashed_password = "{SSHA}"+Base64.encode64(digest+salt).chomp!
+    conn.replace_attribute(person.first.dn, 'userPassword', new_hashed_password)
+  end
+
+  def verify_current_password
+    validate_user_credentials
+  end
 
   def admin_connection
     Rails.logger.info("Connecting to LDAP")
@@ -78,10 +89,8 @@ class Ldap < ActiveType::Object
     Rails.logger.info("Rails.configuration.ldap_host: #{Rails.configuration.ldap_host}")
     Rails.logger.info("Rails.configuration.ldap_port: #{Rails.configuration.ldap_port}")
     Rails.logger.info("Rails.configuration.ldap_admin_username: #{Rails.configuration.ldap_admin_username}")
-    Rails.logger.info("Rails.configuration.ldap_admin_password: #{Rails.configuration.ldap_admin_password}")
     ldap.port = Rails.configuration.ldap_port
     ldap.host = Rails.configuration.ldap_host
-    ldap.port = Rails.configuration.ldap_port
     ldap.auth Rails.configuration.ldap_admin_username,
               Rails.configuration.ldap_admin_password
     unless ldap.bind
@@ -92,13 +101,9 @@ class Ldap < ActiveType::Object
     ldap
   end
 
+  private
+
   def validate_user_credentials
-    Rails.logger.info("Validate user credentials ----------------------")
-    Rails.logger.info("Rails.configuration.ldap_users: #{Rails.configuration.ldap_users}")
-    Rails.logger.info(%Q(Net::LDAP::Filter.eq("uid", username): #{Rails.configuration.ldap_users}))
-    Rails.logger.info("username: #{username}")
-    Rails.logger.info("password: #{password}")
-    Rails.logger.info("=============================")
     result = admin_connection.bind_as(
       base: Rails.configuration.ldap_users,
       filter: Net::LDAP::Filter.eq("uid", username),
@@ -107,7 +112,9 @@ class Ldap < ActiveType::Object
     unless result
       errors.add(:connection, "failed")
       Rails.logger.error("Validating user credentials failed.")
+      return false
     end
+    return true
   rescue => e
     Rails.logger.error("Exception in validate_user_credentials")
     Rails.logger.error(e.to_s)

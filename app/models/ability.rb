@@ -74,6 +74,8 @@ class Ability
     can "services",           :all
     can "sessions",           :all
     can "trees",              "ng"
+    can "users",              "new_password"
+    can "users",              "change_password"
   end
 
   def edit_auth

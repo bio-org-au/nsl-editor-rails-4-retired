@@ -1,4 +1,8 @@
 ---
+- :date: 02-04-2019
+  :jira_id: '614'
+  :description: |-
+    Add ability to change password.
 - :date: 27-03-2019
   :jira_id: '3235'
   :description: |-

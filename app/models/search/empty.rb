@@ -24,7 +24,7 @@ class Search::Empty
               :parsed_request
 
   def initialize(params)
-    Rails.logger.debug("Search::Empty start")
+    Rails.logger.debug("Search::Empty start (setting up an empty search)")
     Rails.logger.debug(("=" * 40).to_s)
     @parsed_request = Search::EmptyParsedRequest.new(params)
     @common_and_cultivar_included = true
