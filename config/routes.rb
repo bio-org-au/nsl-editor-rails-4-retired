@@ -323,13 +323,13 @@ Rails.application.routes.draw do
         via: :get
 
   match "password",
-        as: "new_password",
-        to: "users#new_password",
+        as: "edit_password",
+        to: "passwords#edit",
         via: :get
 
   match "password",
-        as: "change_password",
-        to: "users#change_password",
+        as: "update_password",
+        to: "passwords#update",
         via: :post
 
   root to: "search#search"

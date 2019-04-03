@@ -16,14 +16,14 @@
 #   limitations under the License.
 #
 # Administrator Actions
-class UsersController < ApplicationController
+class PasswordsController < ApplicationController
   before_filter :hide_details, :empty_search
 
-  def new_password
+  def edit
     @password = Password.new
   end
 
-  def change_password
+  def update
     Rails.logger.debug("Now in change_password")
     @password = Password.new
     @password.current_password = params[:password]["current_password"]
@@ -31,9 +31,9 @@ class UsersController < ApplicationController
     @password.new_password_confirmation = params[:password]["new_password_confirmation"]
     @password.username = @current_user.username
     if @password.save!
-      render :change_password
+      render :updated
     else
-      render :new_password
+      render :edit
     end
   end
 end

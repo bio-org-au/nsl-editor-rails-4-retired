@@ -4,7 +4,7 @@
 
   <div id="change-password-form">
 
-    <%= form_for(@password, url: change_password_path, role: 'form') do | form | %>
+    <%= form_for(@password, url: edit_password_path, role: 'form') do | form | %>
 
       <% unless @password.error.blank? %>
         <h3>We had a problem doing that.</h3>
