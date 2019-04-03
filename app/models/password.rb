@@ -50,7 +50,7 @@ class Password < ActiveType::Object
     unless new_password == new_password_confirmation
       raise "new password was not confirmed correctly"
     end
-    raise "new password not long enough" if new_password.size < 4
+    raise "new password not long enough" if new_password.size < 8
     raise "new password too long" if new_password.size > 25
   end
 

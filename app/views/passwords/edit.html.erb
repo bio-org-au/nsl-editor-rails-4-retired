@@ -3,9 +3,7 @@
   <h2>Change Password</h2>
 
   <div id="change-password-form">
-
     <%= form_for(@password, url: edit_password_path, role: 'form') do | form | %>
-
       <% unless @password.error.blank? %>
         <h3>We had a problem doing that.</h3>
         <div id="error_explanation">
@@ -13,10 +11,8 @@
         <br>
         </div>
       <% end %>
-
-
-  User: <%= @current_user.full_name %>
-<br>
+      <h4><%= @current_user.full_name %></h4>
+      <br>
       <div class="form-group">
         <%= form.label :current_password, 'Current Password*' %>
         <%= form.password_field :current_password, required: true, title: "Enter your current password", class: 'form-control', autofocus: true %>
