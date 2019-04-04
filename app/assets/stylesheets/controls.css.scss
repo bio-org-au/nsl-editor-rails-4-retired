@@ -274,3 +274,8 @@ button.clear-area {
   display: inline-block;
   float: right;
 }
+
+a.no-highlight button:focus {
+  text-decoration:underline;
+  outline: 5px;
+}
