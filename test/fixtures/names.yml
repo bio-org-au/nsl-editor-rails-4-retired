@@ -17,9 +17,10 @@ the_regnum:
   namespace: apni
   parent_id: nil
   family: a_family
-  name_path: 'Plantae'
   simple_name: "Plantae"
   simple_name_html: "<scientific><name id='54717'><element>Plantae</element></name></scientific>"
+  name_path: 'Plantae'
+  uri: aa
   source_system: "PLANT_NAME"
   created_by: "MCOSGROV"
   updated_by: "MCOSGROV"
@@ -36,9 +37,10 @@ a_division:
   namespace: apni
   parent: the_regnum
   family_id: nil
-  name_path: 'Plantae/Magnoliophyta'
   simple_name: "Magnoliophyta"
   simple_name_html: "<scientific><name id='217746'><element>Magnoliophyta</element></name></scientific>"
+  name_path: 'Plantae/Magnoliophyta'
+  uri: ab
   source_system: "PLANT_NAME"
   created_by: "TWEESE"
   updated_by: "TWEESE"
@@ -54,9 +56,10 @@ a_classis:
   namespace: apni
   parent: a_division
   family_id: nil
-  name_path: 'Plantae/Magnoliophyta/Magnoliopsida'
   simple_name: "Magnoliopsida"
   simple_name_html: "<scientific><name id='214952'><element>Magnoliopsida</element></name></scientific>"
+  name_path: 'Plantae/Magnoliophyta/Magnoliopsida'
+  uri: ac
   source_system: "PLANT_NAME"
   created_by: "TWEESE"
   updated_by: "TWEESE"
@@ -72,6 +75,7 @@ a_subclassis:
   parent: a_classis
   family_id: nil
   name_path: 'Plantae/Magnoliophyta/Magnoliopsida/a_subclassis'
+  uri: ad
   updated_by: greg
   created_by: greg
 
@@ -86,6 +90,7 @@ a_superordo:
   parent: a_subclassis
   family_id: nil
   name_path: 'Plantae/Magnoliophyta/Magnoliopsida/a_subclassis/a_superordo'
+  uri: ae
   updated_by: greg
   created_by: greg
 
@@ -100,6 +105,7 @@ an_ordo:
   parent: a_super_ordo
   family_id: nil
   name_path: 'Plantae/Magnoliophyta/Magnoliopsida/a_subclassis/a_superordo/an_ordo'
+  uri: af
   updated_by: greg
   created_by: greg
 
@@ -114,6 +120,7 @@ a_subordo:
   parent: an_ordo
   family_id: nil
   name_path: 'Plantae/Magnoliophyta/Magnoliopsida/a_subclassis/a_superordo/an_ordo/a_subordo'
+  uri: ag
   updated_by: greg
   created_by: greg
 
@@ -129,6 +136,7 @@ a_family:
   parent: a_super_ordo
   family: a_family
   name_path: 'Plantae/Magnoliophyta/Magnoliopsida/a_subclassis/a_superordo/an_ordo/a_subordo/a_family'
+  uri: ah
   updated_by: greg
   created_by: greg
 
@@ -143,6 +151,7 @@ a_subfamilia:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/Magnoliopsida/a_subclassis/a_superordo/an_ordo/a_subordo/a_family/a_subfamilia'
+  uri: ai
   updated_by: greg
   created_by: greg
 
@@ -157,6 +166,7 @@ a_tribus:
   parent: a_subfamily
   family: a_family
   name_path: 'Plantae/Magnoliophyta/Magnoliopsida/a_subclassis/a_superordo/an_ordo/a_subordo/a_family/a_subfamilia/a_tribus'
+  uri: aj
   updated_by: greg
   created_by: greg
 
@@ -171,6 +181,7 @@ a_subtribus:
   parent: a_tribus
   family: a_family
   name_path: 'Plantae/Magnoliophyta/Magnoliopsida/a_subclassis/a_superordo/an_ordo/a_subordo/a_family/a_subfamilia/a_tribus/a_subtribus'
+  uri: ak
   updated_by: greg
   created_by: greg
 
@@ -185,6 +196,7 @@ unknown_species:
   parent: acacia
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: al
   updated_by: greg
   created_by: greg
 
@@ -199,6 +211,7 @@ another_species:
   parent: acacia
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: am
   updated_by: greg
   created_by: greg
 
@@ -213,6 +226,7 @@ a_genus:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: an
   updated_by: greg
   created_by: greg
 
@@ -227,6 +241,7 @@ a_subgenus:
   parent: a_genus
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: ao
   updated_by: greg
   created_by: greg
 
@@ -241,6 +256,7 @@ a_sectio:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: ap
   updated_by: greg
   created_by: greg
 
@@ -255,6 +271,7 @@ a_subsectio:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: aq
   updated_by: greg
   created_by: greg
 
@@ -269,6 +286,7 @@ a_series:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: ar
   updated_by: greg
   created_by: greg
 
@@ -283,6 +301,7 @@ a_subseries:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: as
   updated_by: greg
   created_by: greg
 
@@ -297,6 +316,7 @@ a_superspecies:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: at
   updated_by: greg
   created_by: greg
 
@@ -311,6 +331,7 @@ a_species:
   parent: a_genus
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/a_species'
+  uri: au
   updated_by: greg
   created_by: greg
 
@@ -325,6 +346,7 @@ a_duplicate_species:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/a duplicate species'
+  uri: av
   duplicate_of: a_species
   updated_by: greg
   created_by: greg
@@ -340,6 +362,7 @@ a_subspecies:
   parent: a_species
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: aw
   updated_by: greg
   created_by: greg
 
@@ -354,6 +377,7 @@ a_nothovarietas:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: ax
   updated_by: greg
   created_by: greg
 
@@ -368,6 +392,7 @@ a_varietas:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: ay
   updated_by: greg
   created_by: greg
 
@@ -382,6 +407,7 @@ a_subvarietas:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: az
   updated_by: greg
   created_by: greg
 
@@ -396,6 +422,7 @@ a_forma:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: aba
   updated_by: greg
   created_by: greg
 
@@ -410,6 +437,7 @@ a_subforma:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: abc
   updated_by: greg
   created_by: greg
 
@@ -424,6 +452,7 @@ triodia_basedowii:
   parent: acacia
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: abd
   author: bentham
   updated_by: greg
   created_by: greg
@@ -439,6 +468,7 @@ crotalaria_distans:
   parent: acacia
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: abe
   author: bentham
   updated_by: greg
   created_by: greg
@@ -454,6 +484,7 @@ acacia:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: abf
   author: bentham
   updated_by: greg
   created_by: greg
@@ -469,6 +500,7 @@ angophora:
   parent: 
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: abg
   author: bentham
   updated_by: greg
   created_by: greg
@@ -484,6 +516,7 @@ metrosideros:
   parent: 
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: abh
   author: bentham
   updated_by: greg
   created_by: greg
@@ -499,6 +532,7 @@ argyle_apple:
   parent: a_genus
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: abi
   author: bentham
   updated_by: greg
   created_by: greg
@@ -514,6 +548,7 @@ scientific_name:
   parent: acacia
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: abj
   author: bentham
   updated_by: greg
   created_by: greg
@@ -529,6 +564,7 @@ scientific_name_without_author:
   parent: acacia
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: abk
   updated_by: greg
   created_by: greg
 
@@ -544,6 +580,7 @@ var_tuberosus:
   parent: acacia
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: abl
   author: 
   updated_by: greg
   created_by: greg
@@ -560,6 +597,7 @@ nom_inval_prainiana:
   parent: acacia
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: abm
   author: 
   updated_by: greg
   created_by: greg
@@ -575,6 +613,7 @@ nom_inval_andrewsianum:
   parent: acacia
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: abn
   author: 
   updated_by: greg
   created_by: greg
@@ -587,6 +626,7 @@ rusty_gum:
   name_status: na
   name_type: common
   namespace: apni
+  uri: abo
   updated_by: tester
   created_by: tester
 
@@ -601,6 +641,7 @@ metrosideros_costata:
   parent: metrosideros
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: abp
   updated_by: greg
   created_by: greg
 
@@ -615,6 +656,7 @@ angophora_costata:
   parent: angophora
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: abq
   updated_by: greg
   created_by: greg
 
@@ -630,6 +672,7 @@ by_authority_with_just_one_name:
   parent: angophora
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: abr
   updated_by: greg
   created_by: greg
     
@@ -645,6 +688,7 @@ is_authored_by_the_name_authority_of_every_type:
   parent: angophora
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: abs
   updated_by: greg
   created_by: greg
     
@@ -661,6 +705,7 @@ is_base_authored_by_the_name_authority_of_every_type:
   parent: angophora
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: abt
   updated_by: greg
   created_by: greg
     
@@ -678,6 +723,7 @@ is_ex_base_authored_by_the_name_authority_of_every_type:
   parent: angophora
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: abu
   updated_by: greg
   created_by: greg
     
@@ -694,6 +740,7 @@ is_ex_authored_by_the_name_authority_of_every_type:
   parent: angophora
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: abv
   updated_by: greg
   created_by: greg
     
@@ -710,6 +757,7 @@ is_sanction_authored_by_the_name_authority_of_every_type:
   parent: angophora
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: abw
   updated_by: greg
   created_by: greg
 
@@ -725,6 +773,7 @@ has_an_author_that_is_all:
   parent: angophora
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: abx
   updated_by: greg
   created_by: greg
 
@@ -741,6 +790,7 @@ has_a_base_author_that_is_all:
   parent: angophora
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: aby
   created_by: greg
   updated_by: greg
 
@@ -758,6 +808,7 @@ has_an_ex_base_author_that_is_all:
   parent: angophora
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: abz
   created_by: greg
   updated_by: greg
 
@@ -774,6 +825,7 @@ has_an_ex_author_that_is_all:
   parent: angophora
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: aca
   created_by: greg
   updated_by: greg
 
@@ -789,26 +841,20 @@ has_a_sanctioning_author_that_is_all:
   parent: angophora
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: acc
   created_by: greg
   updated_by: greg
 
 hybrid_name_with_unknown_2nd_parent:
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
   simple_name: Hybrid formula with unknown 2nd parent
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
   full_name: Hybrid formula with unknown 2nd parent
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
   name_rank: na
   name_status: na
   name_type: hybrid_formula_unknown_2nd_parent 
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
   parent: a_species
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: acd
   namespace: apni
   created_by: greg
   updated_by: greg
@@ -817,16 +863,13 @@ hybrid_formula:
   simple_name: Hybrid formula
   full_name: Hybrid formula
   name_type: hybrid_formula_parents_known
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
   name_rank: species
   name_status: na
   parent: a_species
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
   second_parent: another_species
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: ace
   namespace: apni
   created_by: greg
   updated_by: greg
@@ -839,6 +882,7 @@ other_informal:
   name_rank: na
   name_status: na
   namespace: apni
+  uri: acf
   created_by: greg
   updated_by: greg
 
@@ -851,12 +895,12 @@ without_names_from_service:
   parent: acacia
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: acg
   created_by: greg
   updated_by: greg
     
 cultivar_hybrid_with_one_parent: 
   family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
   name_element: Rambocano
   name_rank: species
   name_status: na
@@ -865,6 +909,7 @@ cultivar_hybrid_with_one_parent:
   parent: angophora
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: ach
   updated_by: greg
   created_by: greg
 
@@ -883,6 +928,7 @@ has_no_instances:
   parent: angophora
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: aci
   created_by: greg
   updated_by: greg
 
@@ -897,34 +943,23 @@ unranked_name_1:
   name_status: unknown
   name_type: scientific
   namespace: apni
+  uri: acj
   created_by: greg
   updated_by: greg
 
 unranked_scientific_name_with_unranked_parent:
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
   author: bentham
-  simple_name: unranked scientific name with unranked parent
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
-  simple_name_html: unranked scientific name with unranked parent
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
-  full_name: unranked scientific name with unranked parent
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
-  full_name_html: unranked scientific name with unranked parent
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
   name_element: unranked scientific name with unranked parent
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  simple_name: unranked scientific name with unranked parent
+  simple_name_html: unranked scientific name with unranked parent
+  full_name_html: unranked scientific name with unranked parent
   name_rank: unranked
   name_status: unknown
   name_type: scientific
   parent: unranked_name_1
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: ack
   namespace: apni
   created_by: greg
   updated_by: greg
@@ -943,6 +978,7 @@ a_duplicate_genus:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: acl
   updated_by: greg
   created_by: greg
 
@@ -959,6 +995,7 @@ not_a_duplicate_genus:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: acm
   updated_by: greg
   created_by: greg
 
@@ -975,6 +1012,7 @@ a_genus_without_an_instance:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: acn
   updated_by: greg
   created_by: greg
 
@@ -991,6 +1029,7 @@ a_species_without_an_instance:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: aco
   updated_by: greg
   created_by: greg
 
@@ -1007,6 +1046,7 @@ a_morphological_var_with_an_instance:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: acp
   updated_by: greg
   created_by: greg
 
@@ -1023,6 +1063,7 @@ a_nothomorph_with_an_instance:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: acq
   updated_by: greg
   created_by: greg
 
@@ -1039,6 +1080,7 @@ an_unranked_with_an_instance:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: acr
   updated_by: greg
   created_by: greg
 
@@ -1055,6 +1097,7 @@ an_na_with_an_instance:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: acs
   updated_by: greg
   created_by: greg
 
@@ -1071,6 +1114,7 @@ an_unknown_with_an_instance:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: act
   updated_by: greg
   created_by: greg
 
@@ -1087,6 +1131,7 @@ an_infraspecies_with_an_instance:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: acu
   updated_by: greg
   created_by: greg
 
@@ -1103,6 +1148,7 @@ an_infragenus_with_an_instance:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: acv
   updated_by: greg
   created_by: greg
 
@@ -1119,6 +1165,7 @@ an_infrafamily_with_an_instance:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: acw
   updated_by: greg
   created_by: greg
 
@@ -1135,6 +1182,7 @@ belonia_korb_with_diacrit:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: afz
   updated_by: greg
   created_by: greg
 
@@ -1148,6 +1196,7 @@ casuarina_inophloia:
   name_status: legitimate
   name_type: scientific
   namespace: apni
+  uri: aga
   updated_by: greg
   created_by: greg
 
@@ -1164,6 +1213,7 @@ a_genus_with_one_instance:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: agb
   updated_by: greg
   created_by: greg
 
@@ -1180,6 +1230,7 @@ a_genus_with_two_instances:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: acy
   updated_by: greg
   created_by: greg
 
@@ -1196,6 +1247,7 @@ has_two_instances_the_same:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: acz
   updated_by: greg
   created_by: greg
 
@@ -1214,7 +1266,6 @@ metrosideros_costata_gaertn:
   orth_var: false
   parent: a_genus
   family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
   sanctioning_author_id: 
   simple_name: Metrosideros costata
   simple_name_html: "<scientific><name id='110181'><scientific><name id='109596'><element><i>Metrosideros</i></element></name></scientific> <element><i>costata</i></element></name></scientific>"
@@ -1223,6 +1274,8 @@ metrosideros_costata_gaertn:
   source_id_string: '56558'
   source_system: PLANT_NAME
   status_summary: 
+  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: ada
   updated_at: 2006-11-16 23:05:07.000000000 Z
   updated_by: KIRSTENC
   valid_record: false
@@ -1244,6 +1297,7 @@ angophora_lanceolata_cav:
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
   simple_name: Angophora lanceolata
   simple_name_html: <scientific><name id='91851'><scientific><name id='91714'><element><i>Angophora</i></element></name></scientific> <element><i>lanceolata</i></element></name></scientific>
+  uri: adb
   source_id: 37859
   source_id_string: '37859'
   source_system: PLANT_NAME
@@ -1264,6 +1318,7 @@ nothing_name_for_invalid_instance:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: adc
   updated_by: greg
   created_by: greg
 
@@ -1280,6 +1335,7 @@ legitimate_name_one_for_eflora:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: add
   updated_by: greg
   created_by: greg
 
@@ -1296,6 +1352,7 @@ default_name_one_for_eflora:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: ade
   updated_by: greg
   created_by: greg
 
@@ -1312,6 +1369,7 @@ deleted_name_one_for_eflora:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: adf
   updated_by: greg
   created_by: greg
 
@@ -1328,6 +1386,7 @@ na_name_one_for_eflora:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: adg
   updated_by: greg
   created_by: greg
 
@@ -1344,6 +1403,7 @@ unknown_name_one_for_eflora:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: adh
   updated_by: greg
   created_by: greg
 
@@ -1360,6 +1420,7 @@ isonym_name_one_for_eflora:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: adi
   updated_by: greg
   created_by: greg
 
@@ -1376,6 +1437,7 @@ nom_cult_name_one_for_eflora:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: adj
   updated_by: greg
   created_by: greg
 
@@ -1392,6 +1454,7 @@ nom_cult_nom_alt_name_one_for_eflora:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: adk
   updated_by: greg
   created_by: greg
 
@@ -1408,6 +1471,7 @@ nom_et_orth_cons_name_one_for_eflora:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: adl
   updated_by: greg
   created_by: greg
 
@@ -1424,6 +1488,7 @@ nom_illeg_name_one_for_eflora:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: adm
   updated_by: greg
   created_by: greg
 
@@ -1440,6 +1505,7 @@ nom_illeg_nom_rej_name_one_for_eflora:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: adn
   updated_by: greg
   created_by: greg
 
@@ -1456,6 +1522,7 @@ nom_illeg_nom_superfl_name_one_for_eflora:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: ado
   updated_by: greg
   created_by: greg
 
@@ -1472,6 +1539,7 @@ nom_inval_name_one_for_eflora:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: adp
   updated_by: greg
   created_by: greg
 
@@ -1488,6 +1556,7 @@ nom_inval_nom_alt_name_one_for_eflora:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: adq
   updated_by: greg
   created_by: greg
 
@@ -1504,6 +1573,7 @@ nom_inval_nom_ambig_name_one_for_eflora:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: adr
   updated_by: greg
   created_by: greg
 
@@ -1520,6 +1590,7 @@ nom_inval_nom_confus_name_one_for_eflora:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: ads
   updated_by: greg
   created_by: greg
 
@@ -1536,6 +1607,7 @@ nom_inval_nom_dub_name_one_for_eflora:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: adt
   updated_by: greg
   created_by: greg
 
@@ -1552,6 +1624,7 @@ nom_inval_nom_nud_name_one_for_eflora:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: adu
   updated_by: greg
   created_by: greg
 
@@ -1568,6 +1641,7 @@ nom_inval_nom_prov_name_one_for_eflora:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: adv
   updated_by: greg
   created_by: greg
 
@@ -1584,6 +1658,7 @@ nom_inval_nom_subnud_name_one_for_eflora:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: adw
   updated_by: greg
   created_by: greg
 
@@ -1600,6 +1675,7 @@ nom_inval_opera_name_one_for_eflora:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: adx
   updated_by: greg
   created_by: greg
 
@@ -1616,6 +1692,7 @@ nom_inval_pro_syn_name_one_for_eflora:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: ady
   updated_by: greg
   created_by: greg
 
@@ -1632,6 +1709,7 @@ nom_inval_tautonym_name_one_for_eflora:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: adz
   updated_by: greg
   created_by: greg
 
@@ -1648,6 +1726,7 @@ nom_rej_name_one_for_eflora:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: aea
   updated_by: greg
   created_by: greg
 
@@ -1664,6 +1743,7 @@ nom_superfl_name_one_for_eflora:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: aeb
   updated_by: greg
   created_by: greg
 
@@ -1680,6 +1760,7 @@ nomino_utique_rejicienda_name_one_for_eflora:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: aec
   updated_by: greg
   created_by: greg
 
@@ -1696,6 +1777,7 @@ orth_var_name_one_for_eflora:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: aed
   updated_by: greg
   created_by: greg
 
@@ -1712,6 +1794,7 @@ name_two_for_eflora:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: aee
   updated_by: greg
   created_by: greg
 
@@ -1728,6 +1811,7 @@ name_two_for_eflora_with_extra:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: aef
   updated_by: greg
   created_by: greg
 
@@ -1744,6 +1828,7 @@ name_three_for_eflora:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: aeg
   updated_by: greg
   created_by: greg
 
@@ -1761,6 +1846,7 @@ name_three_for_eflora_duplicate:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: aeh
   updated_by: greg
   created_by: greg
 
@@ -1778,6 +1864,7 @@ name_four_for_eflora_multi_1:
   parent: a_genus
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: aei
   updated_by: greg
   created_by: greg
 
@@ -1794,6 +1881,7 @@ name_four_for_eflora_multi_2:
   parent: a_genus
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: aej
   updated_by: greg
   created_by: greg
 
@@ -1810,31 +1898,23 @@ has_no_authors:
   parent: a_genus
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: aek
   updated_by: greg
   created_by: greg
 
 has_no_parent:
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
-  simple_name: has no parent
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
-  simple_name_html: has no parent
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
   name_element: has no parent
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  simple_name: has no parent
   full_name: has no parent
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
   full_name_html: has no parent
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  simple_name_html: has no parent
   name_rank: species
   name_status: legitimate
   name_type: scientific
   namespace: apni
+  family: a_family
+  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: ael
   updated_by: greg
   created_by: greg
 
@@ -1848,6 +1928,7 @@ has_no_duplicate_of:
   name_status: legitimate
   name_type: scientific
   namespace: apni
+  uri: aem
   updated_by: greg
   created_by: greg
 
@@ -1861,6 +1942,7 @@ name_matches_another_1:
   name_status: legitimate
   name_type: scientific
   namespace: apni
+  uri: aen
   updated_by: greg
   created_by: greg
 
@@ -1874,6 +1956,7 @@ name_matches_another_2:
   name_status: legitimate
   name_type: scientific
   namespace: apni
+  uri: aeo
   updated_by: greg
   created_by: greg
 
@@ -1887,6 +1970,7 @@ name_to_delete:
   name_status: legitimate
   name_type: scientific
   namespace: apni
+  uri: aep
   updated_by: greg
   created_by: greg
     
@@ -1901,6 +1985,7 @@ a_cultivar:
   parent: angophora
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: aeq
   updated_by: greg
   created_by: greg
     
@@ -1915,11 +2000,10 @@ a_cultivar_hybrid:
   name_type: cultivar_hybrid
   namespace: apni
   parent: a_species
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
   second_parent: another_species
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: aer
   updated_by: greg
   created_by: greg
     
@@ -1934,11 +2018,10 @@ a_cultivar_hybrid_formula:
   name_type: cultivar_hybrid_formula
   namespace: apni
   parent: a_species
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
   second_parent: another_species
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: aes
   updated_by: greg
   created_by: greg
 
@@ -1952,6 +2035,7 @@ boronia_lipstick:
   name_status: default
   name_type: cultivar_hybrid
   namespace: apni
+  uri: aet
   updated_by: greg
   created_by: greg
 
@@ -1962,11 +2046,10 @@ dummy_name_1:
   name_type: cultivar_hybrid
   namespace: apni
   parent: a_species
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
   second_parent: another_species
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: aeu
   updated_by: greg
   created_by: greg
 
@@ -1979,6 +2062,7 @@ in_apc:
   parent: a_genus
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: aev
   updated_by: greg
   created_by: greg
 
@@ -2008,6 +2092,7 @@ grevillea_genus:
   parent: proteaceae
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: aew
   namespace: apni
   updated_by: greg
   created_by: greg
@@ -2021,11 +2106,10 @@ grevillea_cultivar_hybrid:
   name_status: na
   name_type: cultivar_hybrid
   parent: grevillea_genus
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
   second_parent: grevillea_genus
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: aex
   namespace: apni
   updated_by: greg
   created_by: greg
@@ -2041,11 +2125,10 @@ dummy_name_2:
   name_type: cultivar_hybrid
   namespace: apni
   parent: a_species
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
   second_parent: another_species
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: aey
   updated_by: greg
   created_by: greg
 
@@ -2060,11 +2143,10 @@ dummy_name_3:
   name_type: cultivar_hybrid
   namespace: apni
   parent: a_species
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
   second_parent: another_species
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: aez
   updated_by: greg
   created_by: greg
 
@@ -2081,31 +2163,23 @@ orth_var_for_tax_nov:
   parent: angophora
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: afa
   updated_by: greg
   created_by: greg
 
 common_with_second_parent:
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
   name_element: common with second parent
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
   full_name: common with second parent
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
   simple_name: common with second parent
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
   name_rank: unranked
   name_status: na
   name_type: common
   namespace: apni
   parent: a_genus
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
   parent: a_species
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: afb
   author: bentham
   updated_by: greg
   created_by: greg
@@ -2123,6 +2197,7 @@ orth_var_with_earliest_inst_sec_ref:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: afc
   updated_by: greg
   created_by: greg
 
@@ -2139,6 +2214,7 @@ orth_var_with_not_earliest_inst_sec_ref:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: afd
   updated_by: greg
   created_by: greg
 
@@ -2155,6 +2231,7 @@ genus_or_above_to_be_synonymised:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: afe
   updated_by: greg
   created_by: greg
 
@@ -2171,6 +2248,7 @@ species_or_below_to_be_synonym:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: aff
   updated_by: greg
   created_by: greg
 
@@ -2187,6 +2265,7 @@ for_simple_name_test:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: afg
   updated_by: greg
   created_by: greg
 
@@ -2203,6 +2282,7 @@ for_name_element_test:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: afh
   updated_by: greg
   created_by: greg
 
@@ -2219,27 +2299,16 @@ autonym_with_mismatched_name:
   parent: parent_of_autonym_with_mismatched_name
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: afi
   updated_by: greg
   created_by: greg
 
 parent_of_autonym_with_mismatched_name:
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
   simple_name: parent of autonym with mismatched name
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
   simple_name_html: parent of autonym with mismatched name
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
   name_element: parent of autonym with mismatched name
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
   full_name: parent of autonym with mismatched name
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
   full_name_html: parent of autonym with mismatched name
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
   name_rank: genus
   name_status: legitimate
   name_type: scientific
@@ -2247,6 +2316,7 @@ parent_of_autonym_with_mismatched_name:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: afj
   updated_by: greg
   created_by: greg
 
@@ -2263,27 +2333,16 @@ hybrid_autonym_with_mismatched_name:
   parent: parent_of_hybrid_autonym_with_mismatched_name
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: afk
   updated_by: greg
   created_by: greg
 
 parent_of_hybrid_autonym_with_mismatched_name:
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
   simple_name: parent of hybrid autonym with mismatched name
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
   simple_name_html: parent of hybrid autonym with mismatched name
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
   name_element: parent of hybrid autonym with mismatched name
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
   full_name: parent of hybrid autonym with mismatched name
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
   full_name_html: parent of hybrid autonym with mismatched name
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
   name_rank: genus
   name_status: legitimate
   name_type: scientific
@@ -2291,6 +2350,7 @@ parent_of_hybrid_autonym_with_mismatched_name:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: afl
   updated_by: greg
   created_by: greg
 
@@ -2307,27 +2367,16 @@ named_hybrid_autonym_with_mismatched_name:
   parent: parent_of_named_hybrid_autonym_with_mismatched_name
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: afm
   updated_by: greg
   created_by: greg
 
 parent_of_named_hybrid_autonym_with_mismatched_name:
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
   simple_name: parent of named hybrid autonym with mismatched name
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
   simple_name_html: parent of named hybrid autonym with mismatched name
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
   name_element: parent of named hybrid autonym with mismatched name
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
   full_name: parent of named hybrid autonym with mismatched name
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
   full_name_html: parent of named hybrid autonym with mismatched name
-  family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
   name_rank: genus
   name_status: legitimate
   name_type: scientific
@@ -2335,6 +2384,7 @@ parent_of_named_hybrid_autonym_with_mismatched_name:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: afn
   updated_by: greg
   created_by: greg
 
@@ -2349,6 +2399,7 @@ a_name_without_instances:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: afo
   updated_by: greg
   created_by: greg
 
@@ -2363,6 +2414,7 @@ earliest_instance_not_primary:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: afp
   updated_by: greg
   created_by: greg
 
@@ -2377,6 +2429,7 @@ name_in_secondary_ref:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: afq
   updated_by: greg
   created_by: greg
 
@@ -2392,6 +2445,7 @@ to_have_a_double_synonym:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: afr
   updated_by: greg
   created_by: greg
 
@@ -2407,6 +2461,7 @@ to_be_a_double_synonym:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: afs
   updated_by: greg
   created_by: greg
 
@@ -2422,6 +2477,7 @@ to_be_placed:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: aft
   updated_by: greg
   created_by: greg
 
@@ -2438,6 +2494,7 @@ deletable_apart_from_duplicate:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: afu
   updated_by: greg
   created_by: greg
 
@@ -2454,6 +2511,7 @@ duplicate_of_deletable_apart_from_duplicate:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: afv
   duplicate_of: deletable_apart_from_duplicate
   updated_by: greg
   created_by: greg
@@ -2470,6 +2528,7 @@ to_have_double_primary:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: afw
   updated_by: greg
   created_by: greg
 
@@ -2486,6 +2545,7 @@ no_instances:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: afx
   updated_by: greg
   created_by: greg
 
@@ -2501,5 +2561,6 @@ x_vappaculum:
   parent: a_family
   family: a_family
   name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  uri: afy
   updated_by: greg
   created_by: greg
