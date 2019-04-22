@@ -51,6 +51,7 @@ module NameValidatable
                               less_than_or_equal_to: Date.current.year,
                               only_integer: true },
               allow_blank: true
+    validates :uri, uniqueness: true, allow_blank: true
   end
 
   def name_element_is_stripped

@@ -1,4 +1,10 @@
 ---
+- :date: 05-04-2019
+  :jira_id: '3182'
+  :description: |-
+    Fixed the copy name feature.
+- :date: 05-Apr-2019
+  :release: true
 - :date: 02-04-2019
   :jira_id: '614'
   :description: |-
