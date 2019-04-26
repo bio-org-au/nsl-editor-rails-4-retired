@@ -870,6 +870,7 @@ inst_for_name_earliest_instance_not_primary:
   created_by: tester
   updated_by: tester
 
+
 # Relationship instance - synonymy
 name_in_secondary_ref_marked_as_basionym_synonym:
   reference: dummy_reference_2
@@ -942,6 +943,33 @@ first_instance_for_to_have_double_primary:
   name: to_have_double_primary
   reference: dummy
   instance_type: tax_nov
+  page: exclude-from-ordering-test
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+
+unsourced_misapplied_example:
+  name: dummy_name_for_unsourced_misapps
+  reference: dummy_reference_1
+  instance_type: unsourced_misapplied
+  page: exclude-from-ordering-test
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+
+unsourced_pro_parte_misapplied_example:
+  name: dummy_name_for_pro_parte_misapps
+  reference: dummy_reference_1
+  instance_type: unsourced_pro_parte_misapplied
+  page: exclude-from-ordering-test
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+
+unsourced_doubtful_pro_parte_misapplied_example:
+  name: dummy_name_for_unsourced_doubtful_pro_parte_misapps
+  reference: dummy_reference_1
+  instance_type: unsourced_doubtful_pro_parte_misapplied
   page: exclude-from-ordering-test
   namespace: apni
   created_by: tester
