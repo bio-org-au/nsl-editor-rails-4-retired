@@ -488,6 +488,7 @@ class Instance < ActiveRecord::Base
   end
 
   # simple i.e. not a relationship instance
+  # Should be based on instance_type.relationship flag
   def relationship?
     !simple?
   end
@@ -498,6 +499,18 @@ class Instance < ActiveRecord::Base
 
   def misapplied?
     instance_type.misapplied?
+  end
+
+  def unsourced?
+    instance_type.unsourced?
+  end
+
+  def accepts_notes?
+    !relationship? || (misapplied? && unsourced?)
+  end
+
+  def accepts_adnots?
+    !relationship?
   end
 
   def self.find_references

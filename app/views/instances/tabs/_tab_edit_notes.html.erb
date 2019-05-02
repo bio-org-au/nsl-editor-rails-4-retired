@@ -1,10 +1,12 @@
-<div id="search-result-details-info-message-container" 
-     class="message-container">
-</div>
-<div id="search-result-details-error-message-container" 
-     class="message-container">
-</div>
-<% increment_tab_index(0) %>
-
-<%= render partial: 'instances/tabs/non_apc_note_widgets' %>
-
+<% if @instance.accepts_notes? %>
+  <div id="search-result-details-info-message-container" 
+       class="message-container">
+  </div>
+  <div id="search-result-details-error-message-container" 
+       class="message-container">
+  </div>
+  <% increment_tab_index(0) %>
+  <%= render partial: 'instances/tabs/non_apc_note_widgets' %>
+<% else %>
+  This type of instance doesn't accept Notes.
+<% end %>

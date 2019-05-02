@@ -11,7 +11,11 @@
         </div>
     <% end %>
 
-<h5>Add Comment</h5>
+<% if @instance.accepts_adnots? %>
+  <h5>Add</h5>
     <%= render partial: 'comments/form_new', locals: {comment: Comment.new, parent_entity_type: 'instance', parent_id: @instance.id} %>
-</div>
+<% else %>
+  This type of instance doesn't accept adnots.
+<% end %>
+  </div>
 
