@@ -1,4 +1,8 @@
 ---
+- :date: 03-05-2019
+  :jira_id: '3189'
+  :description: |-
+    Added two name search directives: accepted-in-accepted-tree and excluded-in-accepted-tree.
 - :date: 02-May-2019
   :release: true
 - :date: 26-04-2019
