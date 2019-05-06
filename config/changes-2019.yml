@@ -1,4 +1,9 @@
 ---
+- :date: 06-05-2019
+  :jira_id: '3161'
+  :description: |-
+    Show the excluded name icon for excluded names on the instance details tab
+    wherever we show the accepted name icon for accepted names.
 - :date: 03-05-2019
   :jira_id: '3189'
   :description: |-
