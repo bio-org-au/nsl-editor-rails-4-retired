@@ -1,5 +1,9 @@
-<%= link_to("#{@instance.name.try('full_name')} #{search_icon_on_tab}".html_safe, search_path(query_target: 'name', query_string: "id: #{@instance.name_id} show-instances:"), title: 'Search for the name with its instances', class: 'name') %>
-<% if @instance.name.accepted_concept? %>
+<%= link_to("#{@instance.name.try('full_name')} #{search_icon_on_tab}".html_safe,
+            search_path(query_target: 'name',
+            query_string: "id: #{@instance.name_id} show-instances:"),
+            title: 'Search for the name with its instances',
+            class: 'name') %>
+<% if @instance.name.accepted_concept? || @instance.name.excluded_concept? %>
     <%= render(partial: 'instances/apc/widgets', locals: { instance: @instance }) %>
 <% end %>
 &nbsp;
