@@ -272,6 +272,8 @@
 <table class="table table-striped">
   <% [
       {field_name: 'in-accepted-tree:', description: "restrict names to those explicitly accepted in or excluded from the accepted tree"},
+      {field_name: 'accepted-in-accepted-tree:', description: "restrict names to those explicitly accepted in the accepted tree"},
+      {field_name: 'excluded-in-accepted-tree:', description: "restrict names to those explicitly excluded from the accepted tree"},
       {field_name: 'not-in-accepted-tree:', description: "restrict names to those not explicitly accepted in or excluded from the accepted tree"},
       ].each do |val| %>
   <tr>
