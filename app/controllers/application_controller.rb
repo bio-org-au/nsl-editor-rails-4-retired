@@ -24,7 +24,8 @@ class ApplicationController < ActionController::Base
                 :check_system_broadcast,
                 :authenticate,
                 :check_authorization
-
+  around_action :user_tagged_logging
+ 
   rescue_from ActionController::InvalidAuthenticityToken, with: :show_login_page
   rescue_from CanCan::AccessDenied do |_exception|
     logger.error("Access Denied")
@@ -45,6 +46,8 @@ class ApplicationController < ActionController::Base
 
   def username
     @current_user.username
+  rescue
+    'no current user'
   end
 
   protected
@@ -147,4 +150,11 @@ class ApplicationController < ActionController::Base
   def pick_a_tab_index
     @tab_index = (params[:tabIndex] || "1").to_i
   end
+
+  def user_tagged_logging
+    logger.tagged(username || 'Anonymous') do
+      yield
+    end
+  end
+
 end
