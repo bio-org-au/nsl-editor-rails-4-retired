@@ -1,50 +1,50 @@
 ---
 - :date: 09-May-2019
   :release: true
-- :date: 06-05-2019
+- :date: 06-May-2019
   :jira_id: '3161'
   :description: |-
     Show the excluded name icon for excluded names on the instance details tab
     wherever we show the accepted name icon for accepted names.
-- :date: 03-05-2019
+- :date: 03-May-2019
   :jira_id: '3189'
   :description: |-
     Added two name search directives: accepted-in-accepted-tree and excluded-in-accepted-tree.
 - :date: 02-May-2019
   :release: true
-- :date: 26-04-2019
+- :date: 26-Apr-2019
   :jira_id: '2343'
   :description: |-
     Prevent addition of notes and adnots in most synonymy instances.
 - :date: 18-Apr-2019
   :release: true
-- :date: 05-04-2019
+- :date: 05-Apr-2019
   :jira_id: '3182'
   :description: |-
     Fixed the copy name feature.
 - :date: 05-Apr-2019
   :release: true
-- :date: 02-04-2019
+- :date: 02-Apr-2019
   :jira_id: '614'
   :description: |-
     Add ability to change password.
-- :date: 27-03-2019
+- :date: 27-Mar-2019
   :jira_id: '3235'
   :description: |-
     Remove special formatting for old versions of firefox.
 - :date: 07-Mar-2019
   :release: true
-- :date: 06-03-2019
+- :date: 06-Mar-2019
   :jira_id: '3173'
   :description: |-
     Change placement of edition on reference details tab.
-- :date: 26-02-2019
+- :date: 26-Feb-2019
   :jira_id: '2426'
   :description: |-
     Search for text in a particular type of instance note.
 - :date: 22-Feb-2019
   :release: true
-- :date: 20-02-2019
+- :date: 20-Feb-2019
   :jira_id: '3217'
   :description: |-
     Extract and display the error message from the name delete service when it fails.
