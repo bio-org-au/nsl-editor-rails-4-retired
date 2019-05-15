@@ -1,4 +1,9 @@
 <%= text_area_tag("update_distribution[distribution]", @tree_version_element.distribution, title: 'Edit distribution', rows: 2, class: 'form-control', tabindex: increment_tab_index) %>
+<div>
+  <%= select_tag("update_distribution[dist]", options_from_collection_for_select(TreeElement.dist_options, "display", "display"), multiple: true, class: "dist-select form-control") %>
+</div>
+
+</select>
 
 <button type="submit"
         id="update_distribution_btn"
@@ -39,3 +44,24 @@
   </button>
   <% increment_tab_index %>
 </div>
+
+<script>
+  $(document).ready(function () {
+    $('.dist-select').select2();
+    $('.dist-select').on('select2:select', function (e) {
+      console.log('Selected something');
+      console.log(e.params.data);
+      var m = e.params.data.id.split(' ')[0];
+      $('option[value^=' + m + ']').attr('disabled', 'disabled');
+      $('.dist-select').select2().select2('open');
+    });
+    $('.dist-select').on('select2:unselect', function (e) {
+      console.log('Selected something');
+      console.log(e.params.data);
+      var m = e.params.data.id.split(' ')[0];
+      $('option[value^=' + m + ']').removeAttr('disabled');
+      $('.dist-select').select2().select2('open');
+    });
+
+  })
+</script>

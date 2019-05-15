@@ -29,6 +29,22 @@ class TreeElement < ActiveRecord::Base
   has_many :tree_version_elements,
            foreign_key: "tree_element_id"
 
+  has_many :dist_entries,
+           foreign_key: "tree_element_id"
+
+  def self.dist_options
+    opts = []
+    for region in DistRegion.all
+      for status in DistStatus.all
+        opts << DistOption.new(region, [status])
+        for comb in status.dist_statuses
+          opts << DistOption.new(region, [status, comb])
+        end
+      end
+    end
+    return opts
+  end
+
   def distribution_value
     profile[distribution_key]["value"]
   end
@@ -39,6 +55,13 @@ class TreeElement < ActiveRecord::Base
 
   def distribution_key
     profile_key(/Dist/)
+  end
+
+  def construct_distribution_string
+    dist_entries
+        .sort {|a, b| a.dist_region.sort_order <=> b.dist_region.sort_order}
+        .collect {|de| de.entry}
+        .join(', ')
   end
 
   def comment?
@@ -63,6 +86,6 @@ class TreeElement < ActiveRecord::Base
   end
 
   def profile_key(key_string)
-    profile.keys.find { |key| key_string == key } if profile.present?
+    profile.keys.find {|key| key_string == key} if profile.present?
   end
 end

@@ -1,0 +1,129 @@
+WA:
+  name: 'WA'
+  deprecated: false
+  description_html: "description_html"
+  def_link: 'http://somewhere'
+  sort_order: 1
+CoI:
+  name: 'CoI'
+  deprecated: false
+  description_html: "Western Australia"
+  def_link: 'http://somewhere'
+  sort_order: 2
+ChI:
+  name: 'ChI'
+  deprecated: false
+  description_html: "Cocos (Keeling) Islands"
+  def_link: 'http://somewhere'
+  sort_order: 3
+AR:
+  name: 'AR'
+  deprecated: false
+  description_html: "Christmas Island"
+  def_link: 'http://somewhere'
+  sort_order: 4
+CaI:
+  name: 'CaI'
+  deprecated: false
+  description_html: "Ashmore Reef"
+  def_link: 'http://somewhere'
+  sort_order: 5
+NT:
+  name: 'NT'
+  deprecated: false
+  description_html: "Cartier Island"
+  def_link: 'http://somewhere'
+  sort_order: 6
+SA:
+  name: 'SA'
+  deprecated: false
+  description_html: "Northern Territory"
+  def_link: 'http://somewhere'
+  sort_order: 7
+Qld:
+  name: 'Qld'
+  deprecated: false
+  description_html: "South Australia"
+  def_link: 'http://somewhere'
+  sort_order: 8
+CSI:
+  name: 'CSI'
+  deprecated: false
+  description_html: "Queensland"
+  def_link: 'http://somewhere'
+  sort_order: 9
+NSW:
+  name: 'NSW'
+  deprecated: false
+  description_html: "Coral Sea Islands"
+  def_link: 'http://somewhere'
+  sort_order: 10
+LHI:
+  name: 'LHI'
+  deprecated: false
+  description_html: "New South Wales"
+  def_link: 'http://somewhere'
+  sort_order: 11
+
+NI:
+  name: 'NI'
+  deprecated: false
+  description_html: "Lord Howe Island"
+  def_link: 'http://somewhere'
+  sort_order: 12
+ACT:
+  name: 'ACT'
+  deprecated: false
+  description_html: "Norfolk Island"
+  def_link: 'http://somewhere'
+  sort_order: 13
+Vic:
+  name: 'Vic'
+  deprecated: false
+  description_html: "Australian Capital Australian Capital Territory excl. Jervis Bay"
+  def_link: 'http://somewhere'
+  sort_order: 14
+Tas:
+  name: 'Tas'
+  deprecated: false
+  description_html: "Victoria"
+  def_link: 'http://somewhere'
+  sort_order: 15
+HI:
+  name: 'HI'
+  deprecated: false
+  description_html: "Tasmainia"
+  def_link: 'http://somewhere'
+  sort_order: 16
+MDI:
+  name: 'MDI'
+  deprecated: false
+  description_html: "Heard Island"
+  def_link: 'http://somewhere'
+  sort_order: 17
+MI:
+  name: 'MI'
+  deprecated: false
+  description_html: "McDonald Island"
+  def_link: 'http://somewhere'
+  sort_order: 18
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
