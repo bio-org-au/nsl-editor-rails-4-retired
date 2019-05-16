@@ -34,10 +34,10 @@ class TreeElement < ActiveRecord::Base
 
   def self.dist_options
     opts = []
-    for region in DistRegion.all
-      for status in DistStatus.all
+    for region in DistRegion.all.sort {|a, b| a.sort_order <=> b.sort_order}
+      for status in DistStatus.all.sort {|a, b| a.sort_order <=> b.sort_order}
         opts << DistOption.new(region, [status])
-        for comb in status.dist_statuses
+        for comb in status.dist_statuses.sort {|a, b| a.sort_order <=> b.sort_order}
           opts << DistOption.new(region, [status, comb])
         end
       end
