@@ -57,6 +57,27 @@ class TreeElement < ActiveRecord::Base
     profile_key(/Dist/)
   end
 
+  def dist_options_disabled
+    disabled_options = []
+    all = TreeElement.dist_options
+    for n in dist_entries.collect {|it| it.region}
+      disabled_options.concat(all.find_all {|opt| opt.region.name == n}.collect {|it| it.display})
+    end
+    disabled_options
+  end
+
+  def current_dist_options_selected
+    current_dist_options.collect {|it| it.display}
+  end
+
+  def current_dist_options
+    current_options = []
+    for entry in dist_entries
+      current_options << DistOption.new(entry.dist_region, entry.dist_statuses)
+    end
+    current_options
+  end
+
   def construct_distribution_string
     dist_entries
         .sort {|a, b| a.dist_region.sort_order <=> b.dist_region.sort_order}

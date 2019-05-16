@@ -17,7 +17,8 @@
 #
 class DistOption
   attr_reader :display
-  attr_reader :id
+  attr_reader :region
+  attr_reader :statuses
 
   def initialize(region, status_list)
     @region = region

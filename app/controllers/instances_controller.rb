@@ -36,7 +36,6 @@ class InstancesController < ApplicationController
     unless @working_draft.blank?
       @tree_version_element = @working_draft.name_in_version(@instance.name)
       @parent_tve = find_a_parent(@instance.name)
-      @distribution_options = DistRegion.all
     end
     @accepted_tve = @instance.name.accepted_tree_version_element
     render "show", layout: false

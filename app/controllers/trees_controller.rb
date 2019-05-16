@@ -215,8 +215,9 @@ class TreesController < ApplicationController
   end
 
   def update_distribution
-    logger.info "update distribution #{update_distribution_params[:element_link]} #{update_distribution_params[:distribution]}"
+    logger.info "update distribution #{update_distribution_params[:element_link]} #{update_distribution_params[:dist]}"
     tve = TreeVersionElement.find(update_distribution_params[:element_link])
+    # TODO update the profile tve.tree_element
     profile_data = Tree::ProfileData.new(current_user, tve.tree_version, tve.tree_element.profile || {})
     profile_data.update_distribution(update_distribution_params[:distribution])
     profile = Tree::Workspace::Profile.new(username: current_user.username,
