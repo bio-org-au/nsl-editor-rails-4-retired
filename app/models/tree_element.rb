@@ -29,20 +29,15 @@ class TreeElement < ActiveRecord::Base
   has_many :tree_version_elements,
            foreign_key: "tree_element_id"
 
-  has_many :dist_entries,
-           foreign_key: "tree_element_id"
+  has_and_belongs_to_many :dist_entries,
+                          class_name: "DistEntry",
+                          join_table: "tree_element_distribution_entries",
+                          foreign_key: "tree_element_id"
 
   def self.dist_options
-    opts = []
-    for region in DistRegion.all.sort {|a, b| a.sort_order <=> b.sort_order}
-      for status in DistStatus.all.sort {|a, b| a.sort_order <=> b.sort_order}
-        opts << DistOption.new(region, [status])
-        for comb in status.dist_statuses.sort {|a, b| a.sort_order <=> b.sort_order}
-          opts << DistOption.new(region, [status, comb])
-        end
-      end
-    end
-    return opts
+    DistEntry.all.sort do |a, b|
+      a.sort_order <=> b.sort_order
+    end.collect(&:display)
   end
 
   def distribution_value
@@ -59,29 +54,21 @@ class TreeElement < ActiveRecord::Base
 
   def dist_options_disabled
     disabled_options = []
-    all = TreeElement.dist_options
-    for n in dist_entries.collect {|it| it.region}
-      disabled_options.concat(all.find_all {|opt| opt.region.name == n}.collect {|it| it.display})
+    all = DistEntry.all
+    for n in dist_entries.collect(&:region)
+      disabled_options.concat(all.find_all {|opt| opt.dist_region.name == n}.collect(&:display))
     end
     disabled_options
   end
 
-  def current_dist_options_selected
-    current_dist_options.collect {|it| it.display}
-  end
-
   def current_dist_options
-    current_options = []
-    for entry in dist_entries
-      current_options << DistOption.new(entry.dist_region, entry.dist_statuses)
-    end
-    current_options
+    dist_entries.collect(&:display)
   end
 
   def construct_distribution_string
     dist_entries
         .sort {|a, b| a.dist_region.sort_order <=> b.dist_region.sort_order}
-        .collect {|de| de.entry}
+        .collect(&:entry)
         .join(', ')
   end
 

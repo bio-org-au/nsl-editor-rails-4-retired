@@ -28,17 +28,15 @@ class DistEntry < ActiveRecord::Base
                           join_table: "dist_entry_dist_status",
                           foreign_key: "dist_entry_status_id"
 
-  def status
-    dist_statuses
-        .sort {|a, b| a.sort_order <=> b.sort_order}
-        .collect {|it| it.name}.join(" and ")
-  end
+  has_and_belongs_to_many :tree_elements,
+                          join_table: "tree_element_distribution_entries",
+                          foreign_key: "dist_entry_id"
 
   def region
     dist_region.name
   end
 
   def entry
-    "#{region} (#{status})".gsub(" (native)", '')
+    :display
   end
 end
