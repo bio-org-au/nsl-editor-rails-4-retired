@@ -37,7 +37,7 @@
     </dd>
 
     <dt><%= @tree_version_element.distribution_key %></dt>
-    <dd>
+    <dd><%= @tree_version_element.distribution %>
       <%= form_tag({controller: 'trees', action: 'update_distribution'}, {method: :post, remote: true}) do %>
         <%= hidden_field_tag("update_distribution[element_link]", @tree_version_element.element_link) %>
         <% if @tree_version_element.distribution.blank? %>
