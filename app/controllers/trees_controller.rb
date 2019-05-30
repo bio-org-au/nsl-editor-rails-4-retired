@@ -316,8 +316,8 @@ class TreesController < ApplicationController
                 :parent_element_link,
                 :instance_id,
                 :comment,
-                :distribution,
-                :excluded)
+                :excluded,
+                distribution: [])
   end
 
   def place_name_params
@@ -326,10 +326,11 @@ class TreesController < ApplicationController
                 :instance_id,
                 :parent_element_link,
                 :comment,
-                :distribution,
                 :excluded,
                 :version_id,
-                :parent_name_typeahead_string)
+                :parent_name_typeahead_string,
+                :place,
+                distribution: [])
   end
 
   def update_comment_params

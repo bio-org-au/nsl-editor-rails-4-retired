@@ -1,0 +1,31 @@
+<div>
+  <%= select_tag("place_name[distribution]", options_for_select(TreeElement.dist_options,
+                                                                selected: [],
+                                                                disabled: []),
+                 multiple: true, class: "dist-select form-control") %>
+</div>
+<button type="button"
+        class="btn btn-warning clear-area"
+        onclick="$('option').removeAttr('disabled'); $('.dist-select').val(null).trigger('change');$('.dist-select').select2();">Clear
+  distribution
+</button>
+<script>
+  $(document).ready(function () {
+    $('.dist-select').select2();
+    $('.dist-select').on('select2:select', function (e) {
+      console.log('Selected something');
+      console.log(e.params.data);
+      var m = e.params.data.id.split(' ')[0];
+      $('option[value^=' + m + ']').attr('disabled', 'disabled');
+      $('.dist-select').select2().select2('open');
+    });
+    $('.dist-select').on('select2:unselect', function (e) {
+      console.log('Selected something');
+      console.log(e.params.data);
+      var m = e.params.data.id.split(' ')[0];
+      $('option[value^=' + m + ']').removeAttr('disabled');
+      $('.dist-select').select2();//.select2('open');
+    });
+
+  })
+</script>

@@ -31,11 +31,7 @@
           </dd>
           <dt><%= @working_draft.distribution_key %></dt>
           <dd>
-            <%= text_area_tag("place_name[distribution]", '', title: 'Edit distribution', rows: 2, class: 'form-control') %>
-            <button type="button"
-                    class="btn btn-warning clear-area"
-                    onclick="$('#place_name_distribution').val('');">Clear distribution
-            </button>
+            <%= render partial: "trees/new_distribution" %>
           </dd>
         </dl>
       </div>
@@ -48,7 +44,7 @@
               name="place_name[place]"
               tabindex="<%= increment_tab_index %>"
               title="Place the name on the tree."
-              onclick="$('#new_name_placement_btn').find('i.fa').addClass('fa-spin');"
+              onclick="$('#new_name_placement_btn').find('i.fa').addClass('fa-spin'); $('option').removeAttr('disabled');"
       >Place <i class="fa fa-refresh"></i></button>
 
       <div id="placement-message-container" class="message-container hidden"></div>

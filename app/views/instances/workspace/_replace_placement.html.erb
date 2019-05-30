@@ -35,11 +35,7 @@
         </dd>
         <dt><%= @tree_version_element.distribution_key %></dt>
         <dd>
-          <%= text_area_tag("move_placement[distribution]", @tree_version_element.distribution, title: 'Edit distribution', rows: 2, class: 'form-control') %>
-          <button type="button"
-                  class="btn btn-warning clear-area"
-                  onclick="$('#move_placement_distribution').val('');">Clear distribution
-          </button>
+          <%= render partial: "trees/move_distribution", locals: {tree_version_element: @tree_version_element} %>
         </dd>
       </dl>
 
@@ -51,7 +47,7 @@
               name="move_placement[update]"
               tabindex="<%= increment_tab_index %>"
               title="Update the name on the tree."
-              onclick="$('#update-name-placement-btn').find('i.fa').addClass('fa-spin');"
+              onclick="$('#update-name-placement-btn').find('i.fa').addClass('fa-spin'); $('option').removeAttr('disabled');"
       >Use this instance <i class="fa fa-refresh"></i></button>
 
       <div id="movement-message-container"

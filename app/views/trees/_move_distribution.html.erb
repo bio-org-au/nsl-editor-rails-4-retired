@@ -1,19 +1,16 @@
 <div>
-  <%= select_tag("update_distribution[dist]", options_for_select(TreeElement.dist_options,
-                                                                 selected: @tree_version_element.tree_element.current_dist_options,
-                                                                 disabled: @tree_version_element.tree_element.dist_options_disabled),
+  <%= select_tag("move_placement[distribution]", options_for_select(TreeElement.dist_options,
+                                                                    selected: @tree_version_element.tree_element.current_dist_options,
+                                                                    disabled: @tree_version_element.tree_element.dist_options_disabled),
                  multiple: true, class: "dist-select form-control") %>
 </div>
 
-<button type="submit"
-        id="update_distribution_btn"
-        class="btn btn-primary left"
-        name="update_distribution[update]"
-        tabindex="<%= increment_tab_index %>"
-        title="Update this distribution"
-        onclick="$('#update_distribution_btn').find('i.fa').addClass('fa-spin'); $('option').removeAttr('disabled');"
->Add distribution <i class="fa fa-refresh"></i>
+<button type="button"
+        class="btn btn-warning clear-area"
+        onclick="$('option').removeAttr('disabled'); $('.dist-select').val(null).trigger('change');$('.dist-select').select2();">Clear
+  distribution
 </button>
+
 <script>
   $(document).ready(function () {
     $('.dist-select').select2();
