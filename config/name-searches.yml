@@ -339,21 +339,6 @@ from comment where comment.name_id = name.id)"
                        'nom. et stat. nov.')
            ) ) )
   :order: name.sort_name
-'accepted-name-synonym-of-accepted-name:':
-  :where_clause: "id in\n                         (SELECT distinct n.id FROM name
-    n\n                         JOIN tree_node nd ON nd.name_id = n.id\n                         AND
-    nd.type_uri_id_part = 'ApcConcept'\n                         AND nd.next_node_id
-    IS NULL\n                         AND nd.checked_in_at_id is not null\n                         JOIN
-    tree_arrangement a ON nd.tree_arrangement_id\n                         = a.id
-    AND a.label = 'APC'\n                         JOIN instance i ON nd.instance_id
-    = i.id\n                         JOIN instance s ON s.cited_by_id = i.id\n                         JOIN
-    instance_type t ON s.instance_type_id = t.id\n                         AND NOT
-    t.misapplied and not t.pro_parte\n                         JOIN name sname ON
-    s.name_id = sname.id\n                         JOIN tree_node snode ON s.name_id
-    = snode.name_id\n                         AND snode.next_node_id IS NULL\n                         and
-    snode.checked_in_at_id is not null\n                         AND snode.tree_arrangement_id
-    = a.id\n                         AND snode.type_uri_id_part = 'ApcConcept') "
-  :order: name.sort_name
 'name-synonym-of-itself:':
   :where_clause: |2-
       name.id in (

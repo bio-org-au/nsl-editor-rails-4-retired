@@ -1,4 +1,13 @@
 ---
+- :date: 03-June-2019
+  :jira_id: '1951'
+  :description: |-
+    Removed the "accepted-name-synony-of-accepted-name" report as it used the old tree and didn't work. Functionality
+    replaced by tree validation report.
+- :date: 30-May-2019
+  :jira_id: '1622'
+  :description: |-
+    New distribution editing for the tree.
 - :date: 09-May-2019
   :release: true
 - :date: 06-May-2019
