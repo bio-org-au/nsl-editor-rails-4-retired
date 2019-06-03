@@ -1,5 +1,9 @@
 ---
 - :date: 03-June-2019
+  :jira_id: '3303'
+  :description: |-
+    Added report excluded-name-with-distribution: to list excluded names with a distribution.
+- :date: 03-June-2019
   :jira_id: '1951'
   :description: |-
     Removed the "accepted-name-synony-of-accepted-name" report as it used the old tree and didn't work. Functionality
