@@ -2,7 +2,7 @@
   <%= select_tag("update_distribution[dist]", options_for_select(TreeElement.dist_options,
                                                                  selected: @tree_version_element.tree_element.current_dist_options,
                                                                  disabled: @tree_version_element.tree_element.dist_options_disabled),
-                 multiple: true, class: "dist-select form-control") %>
+                 multiple: true, class: "dist-select form-control", tabindex: increment_tab_index) %>
 </div>
 
 <button type="submit"
@@ -47,21 +47,6 @@
 
 <script>
   $(document).ready(function () {
-    $('.dist-select').select2();
-    $('.dist-select').on('select2:select', function (e) {
-      console.log('Selected something');
-      console.log(e.params.data);
-      var m = e.params.data.id.split(' ')[0];
-      $('option[value^=' + m + ']').attr('disabled', 'disabled');
-      $('.dist-select').select2().select2('open');
-    });
-    $('.dist-select').on('select2:unselect', function (e) {
-      console.log('Selected something');
-      console.log(e.params.data);
-      var m = e.params.data.id.split(' ')[0];
-      $('option[value^=' + m + ']').removeAttr('disabled');
-      $('.dist-select').select2().select2('open');
-    });
-
+    initDistSelect();
   })
 </script>
