@@ -1,11 +1,14 @@
 wa_entry_1:
+  display: WA (native and naturalised)
   region_id: WA
   dist_statuses: native, naturalised
 
 act_entry_1:
+  display: ACT
   region_id: ACT
   dist_statuses: native
 
 nsw_entry_1:
+  display: NSW
   region_id: NSW
   dist_statuses: native
