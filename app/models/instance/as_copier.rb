@@ -60,7 +60,5 @@ class Instance::AsCopier < Instance
       end
     end
     new
-  rescue => e
-    raise "Copy failed: #{e}"
   end
 end

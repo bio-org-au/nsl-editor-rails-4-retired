@@ -30,8 +30,8 @@ class InstAsCopierWNewRefSAloneMustSupplyITypeTest < ActiveSupport::TestCase
     params = ActionController::Parameters.new(
       reference_id: target_reference.id.to_s
     )
-    err_str = "Copy failed: Validation failed: Instance type cannot be empty."
-    err = assert_raises RuntimeError, err_str do
+    err_str = "Validation failed: Instance type cannot be empty."
+    err = assert_raises Exception, err_str do
       master_instance.copy_with_citations_to_new_reference(
         params, dummy_username
       )

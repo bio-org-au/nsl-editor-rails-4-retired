@@ -1,7 +1,26 @@
-$('#copy-instance-info-message-container').html('');
-$('#copy-instance-info-message-container').addClass('hidden');
-$('#copy-instance-error-message-container').html('<%=j "#{icon('warning red')} #{@message}".html_safe %>');
-$('#copy-instance-error-message-container').removeClass('hidden');
-<% if @multiple_primary_warning %>
-  $('#extra-primary-warning').removeClass('hidden');
+$('.message-container').html('').addClass('hidden');
+$('.error-container').html('').addClass('hidden');
+$('.override-container').addClass('hidden');
+
+<% if @message.size > 1 %>
+    $('#copy-instance-error-message-container').html('<%=j "#{icon('warning red')} #{'Multiple errors (No overrides are available when there are multiple errors)'}".html_safe %>');
+   $('#copy-instance-error-message-container').removeClass('hidden');
+   <% @message.each_with_index do |m,i| %>
+     <% tag_id = "#search-result-details-error-message-container-#{i}" %>
+     $('<%= tag_id %>').html('<%= escape_javascript((i+1).to_s + '. ' + m) %>');
+     $('<%= tag_id %>').removeClass('hidden');
+   <% end %>
+<% else %>
+   $('#copy-instance-error-message-container').html('<%=j "#{icon('warning red')} #{@message.first}".html_safe %>');
+   $('#copy-instance-error-message-container').removeClass('hidden');
+   <% if @multiple_primary_override %>
+     $('#multiple-primary-override').removeClass('hidden');
+   <% end %>
+   <% if @duplicate_instance_override %>
+     $('#duplicate-instance-override').removeClass('hidden');
+   <% end %>
 <% end %>
+
+
+
+

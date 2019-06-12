@@ -42,10 +42,10 @@ class InstancesCreateCitesAndCitedByByEdDupErrTest < ActionController::TestCase
 
   def check_assertions
     assert_response 422, "Response should be 422, unprocessable entity."
-    assert_match(/Validation failed: Name already has instance with same ref/,
+    assert_match(/Name already has an instance with the same reference, type and page/,
                  response.body,
                  "Unexpected error message part 1")
-    assert_match(/ef, type and page, A name cannot be placed in synonymy twice/,
+    assert_match(/A name cannot be placed in synonymy twice/,
                  response.body,
                  "Unexpected error message part 2")
   end

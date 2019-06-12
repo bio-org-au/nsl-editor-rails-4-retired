@@ -1,8 +1,10 @@
 $('.message-container').html('');
+$('.error-container').html('');
+$('.override-container').addClass('hidden');
 $('#show-instances-for-name-btn').removeClass('hidden');
 $('#search-result-details-info-message-container').html('Record created. (Refresh tab to create another.)');
 $('#save-new-instance-btn').remove();
 $('#refresh-page-from-details-link').removeClass('hidden');
 $('.instance-form-success-message').removeClass('hidden');
-$('#extra-primary-warning').addClass('hidden');
+$('#multiple-primary-override').addClass('hidden');
 $("#new_instance :input").prop("disabled", true);

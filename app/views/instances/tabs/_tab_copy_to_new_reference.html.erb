@@ -132,16 +132,28 @@ The copied instance will remain attached to:
                 hide_this_id: "confirm-or-cancel-copy-instance-link-container"})
     %>
   </div>
+  <div class="layout-artifact">&nbsp;</div>
   <div id="copy-instance-info-message-container" class="message-container hidden"></div>
   <div id="copy-instance-error-message-container" class="error-container hidden"></div>
-</div>
+  <div id="search-result-details-error-message-container-0" class="error-container"></div>
+  <div id="search-result-details-error-message-container-1" class="error-container"></div>
+  <div id="search-result-details-error-message-container-2" class="error-container"></div>
+  <div id="search-result-details-error-message-container-3" class="error-container"></div>
+
 
     <br>
-    <div id="extra-primary-warning" class="hidden form-check">
+    <div id="multiple-primary-override" class="hidden form-check override-container">
       <br>
       <label class="green form-check-label">
-      <%= f.check_box(:extra_primary_override,{title: "Override the warning message"}) %>
+      <%= f.check_box(:multiple_primary_override,{title: "Override the warning message"}) %>
         Ignore the warning and create the extra primary instance.
+      </label>
+    </div>
+    <div id="duplicate-instance-override" class="hidden form-check override-container">
+      <br>
+      <label class="green form-check-label">
+      <%= f.check_box(:duplicate_instance_override,{title: "Override the duplicate instance error message"}) %>
+        Ignore the error and create a duplicate instance.
       </label>
     </div>
 <% end %>

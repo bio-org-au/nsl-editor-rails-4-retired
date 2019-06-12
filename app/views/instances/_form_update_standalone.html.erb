@@ -55,11 +55,20 @@
     <br>
   <div id="form-update-info-message-container" class="message-container"></div>
   <div id="form-update-error-message-container" class="message-container error-container"></div>
-    <div id="extra-primary-warning" class="hidden form-check">
+    <br>
+    <div id="multiple-primary-override" class="hidden form-check override-container">
       <br>
       <label class="green form-check-label">
-      <%= f.check_box(:extra_primary_override,{title: "Override the warning message"}) %>
+      <%= f.check_box(:multiple_primary_override,{title: "Override the warning about multiple primary instances"}) %>
         Ignore the warning and create the extra primary instance.
+      </label>
+    </div>
+    <br>
+    <div id="duplicate-instance-override" class="hidden form-check override-container">
+      <br>
+      <label class="green form-check-label">
+      <%= f.check_box(:duplicate_instance_override,{title: "Override the duplicate instance error message"}) %>
+        Ignore the error and create a duplicate instance.
       </label>
     </div>
     <br>
