@@ -1,4 +1,8 @@
 ---
+- :date: 12-June-2019
+  :jira_id: '3281'
+  :description: |-
+    Allow override for creating or updating duplicate standalone or additional primary instances.
 - :date: 03-June-2019
   :jira_id: '3303'
   :description: |-

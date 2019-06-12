@@ -62,10 +62,10 @@
   <%= hidden_field :instance, :id, value: @instance.id, name: 'for-bloodhound-js-use-only' %>
   <%= f.hidden_field :name_id, value: @instance.name_id %>
   <%= f.hidden_field :cites_id, value: @instance.cites_id %>
-  <div id="extra-primary-warning" class="form-check hidden">
+  <div id="multiple-primary-override" class="form-check hidden">
     <br>
     <label class="green form-check-label">
-      <%= f.check_box(:extra_primary_override, {title: "Over-ride the warning message"}) %>
+      <%= f.check_box(:multiple_primary_override, {title: "Over-ride the warning message"}) %>
       Ignore the warning and create an extra primary.
     </label>
   </div>

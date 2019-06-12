@@ -24,7 +24,9 @@ class Instance::AsEdited < Instance
       self.updated_by = username
       # We do this because the clean_all params below resets the attributes we've set
       self.concept_warning_bypassed = params[:concept_warning_bypassed] == "1"
-      self.extra_primary_override = params[:extra_primary_override] == "1"
+      self.multiple_primary_override = params[:multiple_primary_override] == "1"
+      self.duplicate_instance_override = params[:duplicate_instance_override] == "1"
+      prevent_double_overrides
       save!
       "Updated"
     else
@@ -38,6 +40,12 @@ class Instance::AsEdited < Instance
 
   private
 
+  def prevent_double_overrides
+    if multiple_primary_override && duplicate_instance_override
+      self.multiple_primary_override = self.duplicate_instance_override = false
+    end
+  end
+  private :prevent_double_overrides
   # Prevent empty or blank-filled params being treated as changes to empty
   # columns.
   def clean(param)

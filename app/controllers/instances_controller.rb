@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -21,7 +22,6 @@ class InstancesController < ApplicationController
   before_filter :find_instance, only: [:show, :tab, :destroy]
   # todo refactor validation error checks to not rely on a copied string comparison as this is very fragile
   CONCEPT_WARNING = "Validation failed: You are trying to change an accepted concept's synonymy."
-  EXTRA_PRIMARY_WARNING = "Validation failed: This would result in multiple primary instances"
 
   # GET /instances/1
   # GET /instances/1/tab/:tab
@@ -79,10 +79,7 @@ class InstancesController < ApplicationController
   # Sometimes we need to massage the params (safely) before calling this create.
   def create(the_params = instance_params, view_to_render = "create")
     @instance = Instance.new(the_params)
-    @instance.concept_warning_bypassed =
-      instance_params[:concept_warning_bypassed] == "1"
-    @instance.extra_primary_override =
-      instance_params[:extra_primary_override] == "1"
+    check_for_overrides
     @instance.save_with_username(current_user.username)
     render view_to_render
   rescue ActiveRecord::RecordNotUnique
@@ -91,19 +88,59 @@ class InstancesController < ApplicationController
     handle_other_errors(e)
   end
 
+  def check_for_overrides
+    @instance.concept_warning_bypassed =
+      instance_params[:concept_warning_bypassed] == "1"
+    @instance.multiple_primary_override =
+      instance_params[:multiple_primary_override] == "1"
+    @instance.duplicate_instance_override =
+      instance_params[:duplicate_instance_override] == "1"
+    prevent_double_overrides
+  end
+  private :check_for_overrides
+
+  def prevent_double_overrides
+    if @instance.multiple_primary_override &&
+        @instance.duplicate_instance_override
+      @instance.multiple_primary_override = false
+      @instance.duplicate_instance_override = false
+    end
+  end
+  private :prevent_double_overrides
+
+  # Copy an instance with its citations
+  def copy_standalone
+    logger.debug("copy_standalone")
+    current_instance = Instance::AsCopier.find(params[:id])
+    current_instance.multiple_primary_override =
+      instance_params[:multiple_primary_override] == "1"
+    current_instance.duplicate_instance_override =
+      instance_params[:duplicate_instance_override] == "1"
+    @instance = current_instance.copy_with_citations_to_new_reference(
+      instance_params, current_user.username
+    )
+    @message = "Instance was copied"
+    render "instances/copy_standalone/success.js"
+  rescue => e
+    handle_other_errors(e,'instances/copy_standalone/error.js')
+  end
+
   def handle_not_unique
     @message = "Error: duplicate record"
     render "create_error.js", status: :unprocessable_entity
   end
   private :handle_not_unique
 
-  def handle_other_errors(e)
-    @allow_bypass = e.to_s.match(/\A#{CONCEPT_WARNING}\z/)
-    @multiple_primary_warning =
-      e.to_s.match(/#{Instance::MULTIPLE_PRIMARY_WARNING}\z/)
-    @message = e.to_s
-    logger.error("Error in handle_other_errors: #{@message}")
-    render "create_error.js", status: :unprocessable_entity
+  def handle_other_errors(e, file_to_render = "create_error.js")
+    logger.debug('handle_other_errors')
+    errors = ErrorAsArrayOfMessages.new(e).error_array
+    if errors.size <= 1
+      @allow_bypass = errors.first.match(/\A#{CONCEPT_WARNING}\z/)
+      @multiple_primary_override = errors.first.match(/#{Instance::MULTIPLE_PRIMARY_WARNING}\z/) ? true : false
+      @duplicate_instance_override = errors.first.match(/#{Instance::DUPLICATE_INSTANCE_WARNING}\z/) ? true : false
+    end
+    @message = errors
+    render file_to_render, status: :unprocessable_entity
   end
   private :handle_other_errors
 
@@ -111,16 +148,11 @@ class InstancesController < ApplicationController
   # PUT /instances/1.json
   def update
     @instance = Instance::AsEdited.find(params[:id])
-    # @instance.concept_warning_bypassed and @instance.extra_primary_override are set in AsEdited
     @message = @instance.update_if_changed(instance_params,
                                            current_user.username)
     render "update.js"
   rescue => e
-    @multiple_primary_warning =
-      e.to_s.match(/#{Instance::MULTIPLE_PRIMARY_WARNING}\z/)
-    @allow_bypass = e.to_s.match(/\A#{CONCEPT_WARNING}\z/)
-    @message = e.to_s
-    render "update_error.js", status: :unprocessable_entity
+    handle_other_errors(e, 'update_error.js')
   end
 
   # PUT /instances/reference/1
@@ -169,24 +201,6 @@ class InstancesController < ApplicationController
     render json: typeahead.references
   end
 
-  # Copy an instance with its citations
-  def copy_standalone
-    current_instance = Instance::AsCopier.find(params[:id])
-    current_instance.extra_primary_override =
-      instance_params[:extra_primary_override] == "1"
-    @instance = current_instance.copy_with_citations_to_new_reference(
-      instance_params, current_user.username
-    )
-    @message = "Instance was copied"
-    render "instances/copy_standalone/success.js"
-  rescue => e
-    logger.error("There was a problem copying that instance: #{e}")
-    @multiple_primary_warning =
-      e.to_s.match(/#{Instance::MULTIPLE_PRIMARY_WARNING}\z/)
-    @message = e.to_s
-    render "instances/copy_standalone/error.js"
-  end
-
   private
 
   def find_instance
@@ -207,7 +221,8 @@ class InstancesController < ApplicationController
                                      :cited_by_id,
                                      :bhl_url,
                                      :concept_warning_bypassed,
-                                     :extra_primary_override,
+                                     :multiple_primary_override,
+                                     :duplicate_instance_override,
                                      :draft)
   end
 
@@ -304,5 +319,4 @@ class InstancesController < ApplicationController
     end
     @working_draft.tree_version_elements.order(tree_element_id: 'asc').first
   end
-
 end
