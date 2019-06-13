@@ -31,9 +31,11 @@ class Instance < ActiveRecord::Base
                 :show_primary_instance_type, :data_fix_in_process,
                 :consider_apc,
                 :concept_warning_bypassed,
-                :extra_primary_override
+                :multiple_primary_override,
+                :duplicate_instance_override
   SEARCH_LIMIT = 50
-  MULTIPLE_PRIMARY_WARNING = "This would result in multiple primary instances"
+  MULTIPLE_PRIMARY_WARNING = "Saving this instance would result in multiple primary instances for the same name."
+  DUPLICATE_INSTANCE_WARNING = "already has an instance with the same reference, type and page."
 
   def self.to_csv
     attributes = %w(id)
@@ -170,13 +172,14 @@ class Instance < ActiveRecord::Base
                         message: "cannot be empty."
 
   validates :name_id,
+            unless: :duplicate_instance_override?,
             uniqueness:
                 {scope: [:reference_id,
                          :instance_type_id,
                          :cites_id,
                          :cited_by_id,
                          :page],
-                 message: "already has instance with same ref, type and page"}
+                         message: "already has an instance with the same reference, type and page."}
 
   validate :relationship_ref_must_match_cited_by_instance_ref,
            :synonymy_name_must_match_cites_instance_name,
@@ -196,6 +199,10 @@ class Instance < ActiveRecord::Base
 
   def draft?
     draft
+  end
+
+  def duplicate_instance_override?
+    @duplicate_instance_override || false
   end
 
   def restrict_change_to_accepted_concept_synonymy
@@ -224,12 +231,12 @@ class Instance < ActiveRecord::Base
   # Okay if updating but instance_type has not changed
   # Otherwise, reject
   def only_one_primary_instance_per_name
-    return if extra_primary_override == true
+    return if multiple_primary_override
     return unless instance_type_is_primary?
     return if name.primary_instances.empty?
     return if current_record_is_the_only_primary_instance?
     return if an_update_not_changing_type?
-    errors[:base] << "This would result in multiple primary instances"
+    errors[:base] << MULTIPLE_PRIMARY_WARNING 
   end
 
   def instance_type_is_primary?

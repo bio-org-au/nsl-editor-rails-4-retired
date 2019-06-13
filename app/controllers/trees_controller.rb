@@ -215,10 +215,11 @@ class TreesController < ApplicationController
   end
 
   def update_distribution
-    logger.info "update distribution #{update_distribution_params[:element_link]} #{update_distribution_params[:distribution]}"
+    logger.info "update distribution #{update_distribution_params[:element_link]} #{update_distribution_params[:dist]}"
     tve = TreeVersionElement.find(update_distribution_params[:element_link])
+    dist = update_distribution_params[:dist]
     profile_data = Tree::ProfileData.new(current_user, tve.tree_version, tve.tree_element.profile || {})
-    profile_data.update_distribution(update_distribution_params[:distribution])
+    profile_data.update_distribution(dist)
     profile = Tree::Workspace::Profile.new(username: current_user.username,
                                            element_link: tve.element_link,
                                            profile_data: profile_data)
@@ -315,8 +316,8 @@ class TreesController < ApplicationController
                 :parent_element_link,
                 :instance_id,
                 :comment,
-                :distribution,
-                :excluded)
+                :excluded,
+                distribution: [])
   end
 
   def place_name_params
@@ -325,10 +326,11 @@ class TreesController < ApplicationController
                 :instance_id,
                 :parent_element_link,
                 :comment,
-                :distribution,
                 :excluded,
                 :version_id,
-                :parent_name_typeahead_string)
+                :parent_name_typeahead_string,
+                :place,
+                distribution: [])
   end
 
   def update_comment_params
@@ -344,7 +346,8 @@ class TreesController < ApplicationController
         .permit(:element_link,
                 :distribution,
                 :update,
-                :delete)
+                :delete,
+                dist: [])
   end
 
   def update_parent_params

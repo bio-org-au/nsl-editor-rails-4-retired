@@ -190,29 +190,6 @@
   <% end %>
 </table>
 
-<h5>Accepted names that are synonyms of another accepted name via the accepted instance (NSL-1951)</h5>
-<table class="example-searches table table-striped">
-  <% [
-      {search_target: 'Names',
-       search_string: "accepted-name-synonym-of-accepted-name: limit: 10",
-       explanation: %Q(Accepted name synonym of accepted name.) },
-      {search_target: 'Names',
-       search_string: "accepted-name-synonym-of-accepted-name: show-instances: limit: 10",
-       explanation: %Q(Accepted name synonym of accepted name, showing instances.) },
-      ].each do |val| %>
-  <tr>
-    <td class="width-30-percent">
-      <%= link_to(val[:search_string],
-                  search_path(query_string: val[:search_string],
-                              query_target: val[:search_target]),
-                  class:'blue',
-                  title: "Run the report.") %>
-    </td>
-    <td><%= val[:explanation].html_safe %></td>
-  </tr>
-  <% end %>
-</table>
-
 <h5>Name is listed as a synonym of itself (NSL-1974)</h5>
 <table class="example-searches table table-striped">
   <% [
@@ -298,7 +275,27 @@ misapplications (NSL-1974)</h5>
   <% end %>
 </table>
 
-<h5>Reference with no year reports</h5>
+    <h5>Excluded names on accepted tree with a distribution.</h5>
+    <table class="example-searches table table-striped">
+      <% [
+             {search_target: 'Names',
+              search_string: "excluded-name-with-distribution:",
+              explanation: %Q(excluded Names on the accepted tree with a distribution.)}
+         ].each do |val| %>
+        <tr>
+          <td class="width-30-percent">
+            <%= link_to(val[:search_string],
+                        search_path(query_string: val[:search_string],
+                                    query_target: val[:search_target]),
+                        class: 'blue',
+                        title: "Run the report.") %>
+          </td>
+          <td><%= val[:explanation].html_safe %></td>
+        </tr>
+      <% end %>
+    </table>
+
+    <h5>Reference with no year reports</h5>
 <table class="example-searches table table-striped">
   <% [
       {search_target: 'References',

@@ -1,0 +1,67 @@
+presumed_extinct:
+  lock_version: 0
+  deprecated: false
+  description_html: "a native taxon that no longer occurs in the given jurisdiction"
+  def_link:
+  name: "presumed extinct"
+  sort_order: 4
+
+doubtfully_naturalised:
+  lock_version: 0
+  deprecated: false
+  description_html: "taxa that are represented by one or more naturalised populations in a given jurisdiction
+   def_link: but the extent of naturalisation is uncertain and populations may or may not persist in the longer term."
+  name: "doubtfully naturalised"
+  sort_order: 3
+
+formerly_naturalised:
+  lock_version: 0
+  deprecated: false
+  description_html: "non-native or native taxa previously recorded as being naturalised in a given jurisdiction but of
+  which no collections have been made within a defined timeframe."
+  def_link:
+  name: "formerly naturalised"
+  sort_order: 2
+
+native:
+  lock_version: 0
+  deprecated: false
+  description_html: "taxa that have originated in a given area without human involvement or that have arrived there
+  without intentional or unintentional intervention of humans from an area in which they are native (definition from Pysek et al. (2004))."
+  def_link:
+  name: "native"
+  sort_order: 0
+uncertain_origin:
+  lock_version: 0
+  deprecated: false
+  description_html: "For some taxa there is uncertainty as to whether the populations present in a given jurisdiction
+  represent native or naturalised plants or a combination of the two former categories. In these cases
+  the jurisdiction is listed with the parenthetical qualifier “(uncertain origin)”. Comment fields may be added under
+  the APC reference to indicate the nature of this uncertainty."
+  def_link:
+  name: "uncertain origin"
+  sort_order: 5
+
+Excluded:
+  lock_version: 0
+  deprecated: false
+  description_html: "plant names may be excluded from the Australian Plant Census for a variety of reasons including
+  taxonomic change insufficient information to identify the taxon and erroneous reports. Introduced taxa may be excluded
+  on the basis of their distribution when they have recorded as occurring within a given jurisdiction but there is no
+  evidence of their occurrence or establishment. This includes taxa that may have been reported as naturalised but that
+  are subsequently determined to be present only in cultivation."
+  def_link:
+  name: "Excluded"
+  sort_order: 6
+
+naturalised:
+  lock_version: 0
+  deprecated: false
+  description_html: "<p>plant taxa in a given jurisdiction where:</p>
+    <ul>
+      <li>a native taxon has become naturalised outside of its natural range within that jurisdiction or;</li>
+      <li>a native or non-native taxon that did not originate in a given jurisdiction but has since arrived and become established there.</li>
+    </ul>"
+  def_link:
+  name: "naturalised"
+  sort_order: 1

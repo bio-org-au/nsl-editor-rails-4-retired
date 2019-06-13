@@ -1,6 +1,6 @@
 $('.message-container').html('');
 <% unless @multiple_primary_warning %>
-  $('#extra-primary-warning').addClass('hidden');
+  $('#multiple-primary-override').addClass('hidden');
 <% end %>
 $('select#name_name_type_id').focus();
 $('#form-update-info-message-container').html('<%= @message %>');

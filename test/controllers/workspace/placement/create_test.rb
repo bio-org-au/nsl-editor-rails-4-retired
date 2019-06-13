@@ -64,7 +64,7 @@ class TreePlacementCreateTest < ActionController::TestCase
                         instance_id: @instance.id,
                         parent_element_link: 'tree/123/456',
                         comment: 'yo',
-                        distribution: 'ACT,Wa',
+                        distribution: ['ACT', 'Wa'],
                         excluded: false,
                         version_id: @workspace.id,
                         parent_name_typeahead_string: @parent.full_name

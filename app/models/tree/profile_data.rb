@@ -35,7 +35,8 @@ class Tree::ProfileData
   end
 
   def update_distribution(distribution)
-    update_profile(@tree_version.distribution_key, distribution)
+    dist_str = distribution&.join(', ') || ''
+    update_profile(@tree_version.distribution_key, dist_str)
   end
 
   def update_profile(key, value)

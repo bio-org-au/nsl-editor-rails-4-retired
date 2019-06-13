@@ -1,5 +1,11 @@
 <% increment_tab_index(0) %>
 
+  <div id="search-result-details-info-message-container" class="message-container"></div>
+  <div id="search-result-details-error-message-container" class="message-container"></div>
+  <div id="search-result-details-error-message-container-0" class="error-container"></div>
+  <div id="search-result-details-error-message-container-1" class="error-container"></div>
+  <div id="search-result-details-error-message-container-2" class="error-container"></div>
+  <div id="search-result-details-error-message-container-3" class="error-container"></div>
 <% if @instance.standalone? %>
 
   <%= render 'form_update_standalone' %>
@@ -22,9 +28,6 @@
 <%= divider %>
 
 <%= render 'delete_widgets' %>
-
-<div id="search-result-details-info-message-container" class="message-container"></div>
-<div id="search-result-details-error-message-container" class="message-container"></div>
 
 <br>
 <br>
