@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+
 # Reference Duplicate Of typeahead params are resolvable.
 module ReferenceDuplicateOfResolvable
   extend ActiveSupport::Concern

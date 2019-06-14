@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+
 # Author Author resolvable typeahead parameters
 module AuthorAuthorResolvable
   extend ActiveSupport::Concern

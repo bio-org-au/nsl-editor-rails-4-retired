@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 #   Copyright 2018 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.

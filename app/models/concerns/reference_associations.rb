@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+
 # Reference Associations
 module ReferenceAssociations
   extend ActiveSupport::Concern

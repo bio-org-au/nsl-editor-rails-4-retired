@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+
 # Name Duplicate Of resolvable typeahead parameters
 module NameDuplicateOfResolvable
   extend ActiveSupport::Concern

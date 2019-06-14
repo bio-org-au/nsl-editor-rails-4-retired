@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+
 # Name scopes
 module NameScopable
   extend ActiveSupport::Concern

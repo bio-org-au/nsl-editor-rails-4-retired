@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+
 # Name validations
 module NameValidatable
   extend ActiveSupport::Concern

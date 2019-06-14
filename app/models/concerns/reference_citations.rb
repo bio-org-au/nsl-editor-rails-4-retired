@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+
 # Reference Citations
 module ReferenceCitations
   extend ActiveSupport::Concern

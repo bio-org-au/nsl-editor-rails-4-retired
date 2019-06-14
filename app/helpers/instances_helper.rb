@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+
 # Help for Instance display
 module InstancesHelper
   def citation_summary(instance)

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+
 # Reference Author typeahead params are resolvable.
 module ReferenceAuthorResolvable
   extend ActiveSupport::Concern
