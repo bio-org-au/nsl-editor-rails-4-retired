@@ -50,7 +50,7 @@ class ReferencesController < ApplicationController
 
   # POST /references
   def create
-    @reference = Reference::AsEdited.create(reference_params,
+    @reference = Reference::AsEdited.create(filtered_ref_params,
                                             typeahead_params,
                                             current_user.username)
     render "create.js"
@@ -150,7 +150,7 @@ class ReferencesController < ApplicationController
             :issn, :language_id, :notes, :pages, :publication_date, :published,
             :published_location, :publisher, :ref_author_role_id, :ref_type_id,
             :title, :tl2, :verbatim_author, :verbatim_citation,
-            :verbatim_reference, :volume, :year
+            :verbatim_reference, :volume, :year, :month, :day
           )
   end
 

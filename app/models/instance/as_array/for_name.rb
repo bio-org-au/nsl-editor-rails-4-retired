@@ -58,7 +58,7 @@ class Instance::AsArray::ForName < Array
   end
 
   def sort_fields(instance)
-    [instance.reference.year || instance.reference.part_parent_year || NO_YEAR,
+    [instance.reference.iso_publication_date || instance.reference.part_parent_year || NO_YEAR,
      instance.instance_type.primaries_first,
      instance.reference.author.try("name") || "x"]
   end

@@ -18,6 +18,17 @@
   <%= hidden_field('form','name', value: 'form_2') %>
 	
   <div class="form-group">
+    <label for="reference_publication_date">Publication date</label>
+    <%= f.text_field :publication_date, class: 'form-control', title: "Enter publication date", tabindex: increment_tab_index %>
+    <p>e.g. 3-5 Oct. 1776</p>
+  </div>
+
+  <div class="form-group">
+    <label for="reference_notes">Notes</label>
+    <%= f.text_area :notes, class: 'form-control', title: "Enter notes", tabindex: increment_tab_index %>
+  </div>
+
+ <div class="form-group">
     <label for="notes">Publisher</label>
     <%= f.text_field :publisher, class: 'form-control give-me-focus', title: 'Enter publisher', tabindex: increment_tab_index  %>
   </div>

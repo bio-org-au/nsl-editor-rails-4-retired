@@ -48,7 +48,7 @@ is cited under
 <br>
 by
 <br>
-<%= link_to("#{@instance.reference.citation}#{":" if @instance.page.present?}#{@instance.page} #{search_icon_on_tab}".html_safe,
+<%= link_to("#{@instance.reference.citation} #{formatted_date(@instance.reference.iso_publication_date) unless @instance.reference.iso_publication_date.blank?}#{":" if @instance.page.present?}#{@instance.page} #{search_icon_on_tab}".html_safe,
             search_path(query_string: "id: #{@instance.reference_id}",
                         query_target: 'reference'), title: 'Search for the reference this is cited by.') %>
 <br>
