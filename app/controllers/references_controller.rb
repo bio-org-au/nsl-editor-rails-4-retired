@@ -50,7 +50,7 @@ class ReferencesController < ApplicationController
 
   # POST /references
   def create
-    @reference = Reference::AsEdited.create(filtered_ref_params,
+    @reference = Reference::AsEdited.create(reference_params,
                                             typeahead_params,
                                             current_user.username)
     render "create.js"
