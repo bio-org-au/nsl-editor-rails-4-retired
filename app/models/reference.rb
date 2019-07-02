@@ -23,6 +23,8 @@ class Reference < ActiveRecord::Base
   include ReferenceAssociations
   include ReferenceScopes
   include ReferenceValidations
+  include ReferenceIsoDateValidations
+  include ReferenceIsoDateParts
   include ReferenceRefTypeValidations
   include ReferenceCitations
   require "open-uri"
@@ -36,66 +38,6 @@ class Reference < ActiveRecord::Base
   before_validation :set_defaults
   before_create :set_defaults
   before_save :validate
-
-  def day
-    return nil if iso_publication_date.nil?
-    return nil if iso_publication_date.length < 9
-    iso_publication_date.match(/..\z/)
-  end
-
-  def day=(dd)
-    return if month.blank?
-    return if dd == 0
-    if dd.nil?
-      Rails.logger.debug("we have at most year and month")
-      if month.nil?
-        self.iso_publication_date = year
-      else
-        self.iso_publication_date = "#{year}-#{month}"
-      end
-    else
-      unless iso_publication_date.nil? || iso_publication_date.length < 7
-        self.iso_publication_date = "#{iso_publication_date.match(/^....-../)}-#{dd.to_s.rjust(2, "0")}"
-      end
-    end
-  end
-
-  def month
-    return nil if iso_publication_date.nil?
-    return nil if iso_publication_date.length < 7
-    return iso_publication_date.scan(/..\z/).first if iso_publication_date.length == 7 
-    return iso_publication_date.scan(/(?<=....\-)..(?=-..)/).first
-  end
-
-  def month=(mm)
-    Rails.logger.debug("month= for mm: #{mm}")
-    return if iso_publication_date.nil?
-    return if year.blank?
-    if mm.nil?
-      Rails.logger.debug("we have just year")
-      self.iso_publication_date = year
-    elsif iso_publication_date.length == 4 || iso_publication_date.length == 7    # yyyy or yyyy-mm
-      self.iso_publication_date = "#{iso_publication_date.match(/^..../)}-#{mm.to_s.rjust(2, '0')}"
-    elsif iso_publication_date.length == 10 # yyyy-mm-dd
-      self.iso_publication_date = "#{iso_publication_date.match(/^..../)}-#{mm.to_s.rjust(2, '0')}-#{day}"
-    end
-  end
-
-  def year
-    return nil if iso_publication_date.nil?
-    return nil if iso_publication_date.length < 4
-    return iso_publication_date.scan(/\A..../).first
-  end
-
-  def year=(yyyy)
-    if iso_publication_date.nil? || iso_publication_date.length <= 4
-      self.iso_publication_date = yyyy
-    elsif iso_publication_date.length == 7
-      self.iso_publication_date = "#{yyyy}-#{month}"
-    elsif iso_publication_date.length == 10
-      self.iso_publication_date = "#{yyyy}-#{month}-#{day}"
-    end
-  end
 
   def children?
     children.size.positive?
@@ -188,6 +130,6 @@ class Reference < ActiveRecord::Base
 
   def part_parent_year
     return nil unless ref_type.part?
-    parent.year
+    parent.iso_publication_date
   end
 end

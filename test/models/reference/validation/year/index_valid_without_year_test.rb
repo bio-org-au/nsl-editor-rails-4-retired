@@ -20,9 +20,9 @@ require "test_helper"
 
 # Single Reference model test.
 class RefValIndexValidWithoutYearTest < ActiveSupport::TestCase
-  test "ref of type index valid without a year" do
+  test "ref of type index valid without a date" do
     reference = references(:ref_type_is_index)
-    reference.year = ""
-    assert reference.valid?, "Index should be valid without year"
+    reference.iso_publication_date = ""
+    assert reference.valid?, "Index should be valid without date"
   end
 end

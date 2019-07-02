@@ -99,18 +99,55 @@
     {field_name: 'edition:', description: "edition"},
     {field_name: 'isbn:', description: "ISBN"},
     {field_name: 'issn:', description: "ISSN"},
-    {field_name: 'publication-date:', description: "publication date"},
     {field_name: 'is-published:', description: "published (also listed as an assertion)"},
     {field_name: 'is-not-published:', description: "not published (also listed as an assertion)"},
     {field_name: 'published-location:', description: "published location"},
     {field_name: 'publisher:', description: "publisher"},
     {field_name: 'volume:', description: "volume"},
-    {field_name: 'year:', description: "year - 4 digit integer field, do not use wildcards"},
-    {field_name: 'after-year:', description: "year greater than or after an integer"},
-    {field_name: 'before-year:', description: "year less than or before an integer"},
-    {field_name: 'pub-date-matches:',
-     description: "publication date matches the regular expression you
-     provide. (Case insensitive; asterisk is not available.)"},
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+        <a href="javascript:void(0)" class="searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
+          <span class="blue"><%= val[:field_name] %></span>
+        </a>
+    </td>
+    <td><%= val[:description].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+<br>
+
+<h5>Publication date queries</h5>
+<p>Historically publication date data has been stored in two fields: </p>
+<ul>
+  <li>a <strong>year</strong> field, which was just an integer within a range e.g. 1700 - the current year, and
+    <li>a text field called <strong>publication_date</strong>, but which really held any textual information about publication dates.
+</ul>
+<p>In July 2019 the year data was moved into a text field that allows for data
+in the following formats:</p>
+<ul>
+  <li>Year: yyyy  e.g. 2019
+  <li>Year and month: yyyy-mm  e.g. 2019-07
+  <li>Year, month and day: yyyy-mm-dd  e.g. 2019-07-19
+</ul>
+<p>Data entry will support dates in any of these formats - assembled from the new "day", "month", and "year" fields.</p>
+<p>These formats are subsets of an international date standard called ISO8601.</p>
+<p>For clarity we are calling this field the iso_publication_date.  That's an internal name designed to distinguish the data from the unformatted publication_date field.  Sometimes that internal name will appear in documentation, as now.</p>
+<p>The old year field, which held 4-digit integers, is deprecated and will disappear in the future.</p>
+<p>It's necessary to understand the possible formats of this data to make sense of the following searches, which is the reason for this explanation.</p>
+<p>The publication_date unformatted text field is still there and still available for searching.</p>
+<p>In sum, the new "date" field is a strictly formatted string that can be queried as a string, including with regular expressions, remembering the format is one of those listed above. 
+<table class="table table-striped">
+  <% [
+    {field_name: 'publication-date:', description: "Publication date is the original string field containing information in no particular format."},
+    {field_name: 'published-in-or-on:', description: "searches on iso_publication_date and automatically appends a wildcard to the search term, can handle multiple comma-separated values. You can also user 'date:' and 'iso:'."},
+    {field_name: 'published-after:', description: "searches on the iso_publication_date"},
+    {field_name: 'published-before:', description: "searches on the iso_publication_date"},
+    {field_name: 'year:', description: "Provided for backward compatibility, it looks at the iso_publication_date, and can handle multiple comma-separated values. Same as published-in-or-on:"},
+    {field_name: 'after-year:', description: "For backward compatibility, looks at the iso_publication_date"},
+    {field_name: 'before-year:', description: "For backward compatibility, looks at the iso_publication_date"},
+    {field_name: 'date-matches:',
+     description: "does a regular expression match against the strictly formatted data in iso_publication_date. Case insensitive, asterisk is not available.  You can also use 'iso-pub-date-matches:', and 'pub-date-matches:'"},
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">

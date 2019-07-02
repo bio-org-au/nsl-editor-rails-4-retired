@@ -30,9 +30,9 @@ module ReferenceValidations
                               greater_than_or_equal_to: 1000,
                               less_than_or_equal_to: ->(_reference) { Date.current.year } },
               allow_nil: true
-    validates :year, exclusion: { in: [nil],
-                                  message: "is required",
-                                  if: :year_required? }
+    validates :iso_publication_date, exclusion: { in: [nil],
+                                     message: "is required",
+                                     if: :iso_publication_date_required? }
     validates_exclusion_of :parent_id,
                            in: ->(reference) { [reference.id] },
                            allow_blank: true,
@@ -45,10 +45,7 @@ module ReferenceValidations
     validate :validate_parent
     validate :validate_fields_for_part
     validate :validate_uniqueness
-  end
-
-  def year_required?
-    ref_type.reference_year_required?
+    validate :validate_iso_publication_date
   end
 
   def validate_uniqueness
@@ -106,7 +103,9 @@ module ReferenceValidations
   end
 
   def a_part_ref_cannot_have_publication_details_date
-    errors.add(:year, "is not allowed for a Part") if year.present?
+    if iso_publication_date.present?
+      errors.add(:iso_publication_date, "is not allowed for a Part")
+    end
     if publication_date.present?
       errors.add(:publication_date,
                  "is not allowed for a Part")

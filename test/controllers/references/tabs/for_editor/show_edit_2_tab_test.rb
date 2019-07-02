@@ -36,6 +36,8 @@ class ReferenceEditorShowEdit2Test < ActionController::TestCase
                   /Edit\.\./,
                   "Should show 'Edit...' tab."
     assert_select "form", true
+    assert_select "input#reference_publication_date", true
+    assert_select "textarea#reference_notes", true
     # assert_select 'select#reference_ref_type_id', true
     # assert_select 'input#reference-parent-typeahead', true
     # assert_select 'input#reference_title', true

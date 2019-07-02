@@ -85,6 +85,64 @@
 </table>
 <br>
 
+<h5>Publication date queries</h5>
+<p>Reference publication dates are stored in a flexible field (iso_publication_date) that allows for data
+in the following formats:</p>
+<ul>
+  <li>Year: yyyy  e.g. 2019
+  <li>Year and month: yyyy-mm  e.g. 2019-07
+  <li>Year, month and day: yyyy-mm-dd  e.g. 2019-07-19
+</ul>
+<p>The following searches use the iso_publication_date string.  In technical terms this is a search based on text matching and lexicographical ordering (for before and after), and a wildcard is automatically appended to your search term.</p>
+<p>It is necessary to understand the possible formats of this data to make sense of the following searches, which is why we've explained the formats here.</p>
+<p>When a leading search term like 'chah' is added, that term is matched against citation, as usual.</p>
+
+<table class="example-searches table table-striped">
+  <% [
+      {search_target: 'References', search_string: "published-in-or-on: 1934",explanation: %Q(Would include dates such as '1934', '1934-03', '1934-07-21')},
+      {search_target: 'References', search_string: "published-in-or-on: 1934, 1964",explanation: %Q(Would include dates such as '1934', '1934-03', '1934-07-21', '1964', etc)},
+      {search_target: 'References', search_string: "published-in-or-on: *4*",explanation: %Q(Would include any dates that include the digit '4')},
+      {search_target: 'References', search_string: "chah published-in-or-on: 2018",explanation: %Q(Would include dates such as '2018', '2018-03', '2018-07-21', etc)},
+      {search_target: 'References', search_string: "chah published-in-or-on: 2018-05",explanation: %Q(Would include dates such as '2018-05', '2018-05-03', '2018-05-21', etc)},
+      {search_target: 'References', search_string: "chah published-after: 2018",explanation: %Q(Wouldn't include dates such as '2018' (alone), but would include '2018-01-01', '2018-02', '2018-12-31', '2019', etc)},
+      {search_target: 'References', search_string: "chah published-after: 2017-12-31",explanation: %Q(Would include dates such as '2018' (alone), '2018-02', '2018-12-31', '2019', etc)},
+      {search_target: 'References', search_string: "chah published-after: 2018 published-before: 2019",explanation: %Q(Would exclude chah 2018, but would include chah 2018-01, etc )},
+      {search_target: 'References', search_string: "chah published-after: 2017-12-31 published-before: 2019",explanation: %Q(Would include every chah in 2018. )},
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent">
+      <%= link_to(val[:search_string], search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue', title: "Run the described search.") %>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+<p>Note that you can use "year:" instead of "published-in-or-on:", "year-after:" instead of "published-after:", and "year-before:" instead of "published-after:".  These are provided to be compatible with previously supported searches, but they now search against the iso_publication_date field.  We may eventually stop supporting these search directives.</p>
+<br>
+
+<h5>Publication date regular expression matches</h5>
+<p>Regular expressions provide advanced search techniques.  The following searches match regular expressions against the iso_publication_date text field, but we've used the briefer token 'date-matche:' interchangeably to show the two are equivalent.</p>
+<table class="example-searches table table-striped">
+  <% [
+      {search_target: 'References', search_string: "chah iso-pub-date-matches: .",explanation: %Q(Any chah with a non-null iso_publication_date)},
+      {search_target: 'References', search_string: "chah date-matches: ^....$",explanation: %Q(Any chah with only a year specied)},
+      {search_target: 'References', search_string: "chah iso-pub-date-matches: ^....-..$",explanation: %Q(Any chah with a year and month specied but no day)},
+      {search_target: 'References', search_string: "chah date-matches: ^....-02",explanation: %Q(Any chah published in February (any February))},
+      {search_target: 'References', search_string: "chah iso-pub-date-matches: ^....-..-31",explanation: %Q(Any chah published on the 31st day of any month)},
+      {search_target: 'References', search_string: "chah date-matches: 31$",explanation: %Q(Any chah published on the 31st day of any month (another way of expressing it))},
+      {search_target: 'References', search_string: "iso-pub-date-matches: ^177",explanation: %Q(Anything published in the 1770s)},
+      {search_target: 'References', search_string: "date-matches: ^..4",explanation: %Q(Anything that has a 4 as the 3rd character)},
+      {search_target: 'References', search_string: "iso-pub-date-matches: ^....-..-..$",explanation: %Q(Anything that has a fully qualified date)},
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent">
+      <%= link_to(val[:search_string], search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue', title: "Run the described search.") %>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+
 </div>
 
 

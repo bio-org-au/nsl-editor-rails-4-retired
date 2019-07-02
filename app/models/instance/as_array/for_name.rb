@@ -33,7 +33,7 @@
 #
 class Instance::AsArray::ForName < Array
   attr_reader :results
-  NO_YEAR = 0
+  NO_YEAR = ''
 
   def initialize(name)
     @results = []
@@ -96,7 +96,7 @@ class Instance::AsArray::ForName < Array
             .includes(:instance_type)
             .where(cited_by_id: instance.id)
             .in_nested_instance_type_order
-            .order("reference.year,lower(name.full_name)")
+            .order("reference.iso_publication_date,lower(name.full_name)")
   end
 
   def show_relationship_instance(name, instance)

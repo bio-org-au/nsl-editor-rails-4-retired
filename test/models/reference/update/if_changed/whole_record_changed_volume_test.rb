@@ -26,7 +26,7 @@ class WholeRecordChangedVolumeTest < ActiveSupport::TestCase
     )
 
     @params = { "title" => @reference.title,
-                "year" => @reference.year,
+                "iso_publication_date" => @reference.iso_publication_date,
                 "volume" => (@reference.volume || "") + "x",
                 "pages" => @reference.pages,
                 "edition" => @reference.edition,

@@ -140,7 +140,7 @@
 
   <div class="form-group">
     <label for="reference_month">Optional Publication Month</label>
-    <%= select(:reference, :month, options_for_select(month_array_for_select, @reference.month.to_i), {include_blank: ''}, {class: 'form-control', title: 'Enter optional publication month (required if you enter day).'}) %>
+    <%= select(:reference, :month, options_for_select(month_array_for_select, @reference.month.to_i), {include_blank: ''}, {class: 'form-control', title: 'Enter optional publication month (required if you enter day).', tabindex: increment_tab_index}) %>
     <p>Required if you enter a publication day</p>
   </div>
 

@@ -33,7 +33,7 @@ class Instance::AsTypeahead::ForNameShowingReferences
   end
 
   def sql_string
-    "select i.id,r.citation,r.year, r.pages, r.source_system,
+    "select i.id,r.citation,r.iso_publication_date, r.pages, r.source_system,
     t.name instance_type
     from reference r
     inner join author a on r.author_id = a.id
@@ -41,11 +41,11 @@ class Instance::AsTypeahead::ForNameShowingReferences
     inner join instance_type t on i.instance_type_id = t.id
     where i.name_id = (select name_id from instance where id = ?)
       and i.id != ?
-      and lower(r.citation) like lower('%'||?||'%') order by r.year,a.name"
+      and lower(r.citation) like lower('%'||?||'%') order by r.iso_publication_date,a.name"
   end
 
   def formatted_reference(ref)
-    "#{ref.citation}:#{ref.year} #{formatted_pages(ref)} #{formatted_type(ref)}
+    "#{ref.citation}:#{ref.iso_publication_date} #{formatted_pages(ref)} #{formatted_type(ref)}
     #{'[' + ref.source_system.downcase + ']' unless ref.source_system.blank?}"
   end
 

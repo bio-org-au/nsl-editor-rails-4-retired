@@ -26,7 +26,7 @@ class WholeRecordUnchangedTest < ActiveSupport::TestCase
     )
 
     params = { "title" => reference.title,
-               "year" => reference.year,
+               "iso_publication_date" => reference.iso_publication_date,
                "volume" => reference.volume,
                "pages" => reference.pages,
                "edition" => reference.edition,
