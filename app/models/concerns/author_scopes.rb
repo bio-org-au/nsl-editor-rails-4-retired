@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+
 # Author scopes
 module AuthorScopes
   extend ActiveSupport::Concern

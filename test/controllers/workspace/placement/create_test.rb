@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 #   Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -36,7 +37,6 @@ class TreePlacementCreateTest < ActionController::TestCase
     stub_request(:put, "#{url}#{params}")
         .with(:headers => {'Accept' => 'application/json',
                            'Accept-Encoding' => 'gzip, deflate',
-                           'Content-Length' => '328',
                            'Content-Type' => 'application/json',
                            'Host' => 'localhost:9090',
                            'User-Agent' => /ruby/})

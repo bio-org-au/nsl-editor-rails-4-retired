@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+
 # Reference scopes
 module ReferenceScopes
   extend ActiveSupport::Concern

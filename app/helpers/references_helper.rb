@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+
 # Reference-specific helpers
 module ReferencesHelper
   def display_pages(pages = "")

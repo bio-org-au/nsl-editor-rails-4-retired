@@ -2,12 +2,19 @@
 
 # Help for Instance display
 module InstancesHelper
-  def citation_summary(instance)
-    instance.citations.collect do |c|
-      c.instance_type.name
-    end.collect.each_with_object(Hash.new(0)) do |o, h|
+  def instance_citation_types_names(instance)
+    instance.citations.collect { |c| c.instance_type.name }
+  end
+
+  def array_of_counted_types(type_names_array)
+    type_names_array.collect.each_with_object(Hash.new(0)) do |o, h|
       h[o] += 1
-    end.collect {|k, v| pluralize(v, k)}.join(" and ")
+    end
+  end
+
+  def citation_summary(instance)
+    array_of_counted_types(instance_citation_types_names(instance))
+      .collect { |k, v| pluralize(v, k) }.join(" and ")
   end
 
   def show_field_as_linked_lookup(label,
@@ -52,38 +59,48 @@ module InstancesHelper
   end
 
   def tab_for_instance_type(tab, row_type)
-    if tab == "tab_show_1" ||
-        tab == "tab_edit" ||
-        tab == "tab_edit_notes" ||
-        tab == "tab_comments"
+    if %w[tab_show_1 tab_edit tab_edit_notes tab_comments].include?(tab)
       tab
-    elsif row_type == "instance_record"
-      if tab == "tab_synonymy" ||
-          tab == "tab_unpublished_citation" ||
-          tab == "tab_classification" ||
-          tab == "tab_copy_to_new_reference"
-        tab
-      else
-        "tab_empty"
-      end
+    else
+      tab_for_instance_using_row_type(tab, row_type)
+    end
+  end
+
+  def tab_for_instance_using_row_type(tab, row_type)
+    if row_type == "instance_record"
+      tab_for_instance_record(tab)
     elsif row_type == "instance_as_part_of_concept_record"
-      if tab == "tab_synonymy" ||
-          tab == "tab_unpublished_citation" ||
-          tab == "tab_classification" ||
-          tab == "tab_copy_to_new_reference"
-        tab
-      else
-        "tab_empty"
-      end
+      tab_for_iapo_concept_record(tab)
     elsif row_type == "citing_instance_within_name_search"
-      if tab == "tab_synonymy" ||
-          tab == "tab_create_unpublished_citation"
-        tab
-      elsif tab == "tab_copy_to_new_reference"
-        "tab_copy_to_new_reference_na"
-      else
-        "tab_empty"
-      end
+      tab_for_citing_instance_in_name_search(tab)
+    else
+      "tab_empty"
+    end
+  end
+
+  def tab_for_instance_record(tab)
+    if %w[tab_synonymy tab_unpublished_citation tab_classification \
+          tab_copy_to_new_reference].include?(tab)
+      tab
+    else
+      "tab_empty"
+    end
+  end
+
+  def tab_for_iapo_concept_record(tab)
+    if %w[tab_synonymy tab_unpublished_citation tab_classification
+          tab_copy_to_new_reference].include?(tab)
+      tab
+    else
+      "tab_empty"
+    end
+  end
+
+  def tab_for_citing_instance_in_name_search(tab)
+    if %w[tab_synonymy tab_create_unpublished_citation].include?(tab)
+      tab
+    elsif tab == "tab_copy_to_new_reference"
+      "tab_copy_to_new_reference_na"
     else
       "tab_empty"
     end

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+
 # Author validations
 module AuthorValidations
   extend ActiveSupport::Concern

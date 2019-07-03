@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+
 # Name Parent resolvable typeahead parameters
 module NameParentResolvable
   extend ActiveSupport::Concern

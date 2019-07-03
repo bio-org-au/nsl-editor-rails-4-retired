@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+
 # Reference validations
 module ReferenceValidations
   extend ActiveSupport::Concern

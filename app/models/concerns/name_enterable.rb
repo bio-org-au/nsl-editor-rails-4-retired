@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+
 # Name fields that are offered for the various types and categories of names.
 module NameEnterable
   extend ActiveSupport::Concern
