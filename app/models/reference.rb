@@ -107,8 +107,6 @@ class Reference < ActiveRecord::Base
 
   def typeahead_display_value
     type = ref_type.name.downcase
-    #"#{citation} |#{' [' + pages + ']' unless pages_useless?} [#{type}] #{ iso_publication_date.strftime("%d-%b-%Y") unless iso_publication_date.blank?}"
-    #"<nobr>#{citation} |#{' [' + pages + ']' unless pages_useless?} [#{type}] #{ iso_publication_date unless iso_publication_date.blank? }</nobr>"
     "#{citation} |#{' [' + pages + ']' unless pages_useless?} [#{type}]"
   end
 
