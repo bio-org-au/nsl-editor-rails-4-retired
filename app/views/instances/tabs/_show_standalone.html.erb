@@ -26,7 +26,7 @@
 <br>
 appears in
 <br>
-<%= link_to("#{@instance.reference.citation} #{formatted_date(@instance.reference.iso_publication_date) unless @instance.reference.iso_publication_date.blank?} #{search_icon_on_tab}".html_safe,
+<%= link_to("#{@instance.reference.citation} #{search_icon_on_tab}".html_safe,
             search_path(query_string: "id: #{@instance.reference_id}",
                         query_target: 'reference'),
             title: "Search for the reference.",
