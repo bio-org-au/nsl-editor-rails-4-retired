@@ -36,19 +36,11 @@ class ReferenceEditorShowEdit2Test < ActionController::TestCase
                   /Edit\.\./,
                   "Should show 'Edit...' tab."
     assert_select "form", true
-    assert_select "input#reference_publication_date", true
-    assert_select "textarea#reference_notes", true
-    # assert_select 'select#reference_ref_type_id', true
-    # assert_select 'input#reference-parent-typeahead', true
-    # assert_select 'input#reference_title', true
-    # assert_select 'input#reference_published', true
-    # assert_select 'input#reference-author-typeahead', true
-    # assert_select 'select#reference_ref_author_role_id', true
-    # assert_select 'input#reference_edition', true
-    # assert_select 'input#reference_volume', true
-    # assert_select 'input#reference_pages', true
-    # assert_select 'input#reference_year', true
-    # assert_select 'input#reference_publication_date', true
-    # assert_select 'textarea#reference_notes', true
+    assert_select 'input#reference_publisher', true
+    assert_select 'input#reference_published_location', true
+    assert_select 'input#reference_abbrev_title', true
+    assert_select 'input#reference_display_title', true
+    assert_select 'select#reference_language_id', true
+    assert_select 'input#reference_duplicate_of_id', true
   end
 end
