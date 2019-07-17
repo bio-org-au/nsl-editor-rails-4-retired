@@ -8,14 +8,12 @@ module ReferenceIsoDateParts
   end
 
   def day
-    Rails.logger.debug('day')
     return nil if iso_publication_date.nil?
     return nil if iso_publication_date.length < 9
     iso_publication_date.scan(/..\z/).first
   end
 
   def day=(dd)
-    Rails.logger.debug('day=')
     return if dd == '0'
     return if dd == '00'
     return if dd == 0
@@ -33,7 +31,6 @@ module ReferenceIsoDateParts
   end
   
   def month
-    Rails.logger.debug('month')
     return nil if iso_publication_date.nil?
     return nil if iso_publication_date.length < 7
     return iso_publication_date.scan(/..\z/).first if iso_publication_date.length == 7 
@@ -41,7 +38,6 @@ module ReferenceIsoDateParts
   end
 
   def month=(mm)
-    Rails.logger.debug('month=')
     if mm.blank?
       self.iso_publication_date = year
     elsif iso_publication_date.length == 4 || iso_publication_date.length == 7    # yyyy or yyyy-mm
@@ -52,7 +48,6 @@ module ReferenceIsoDateParts
   end
 
   def year
-    Rails.logger.debug('year')
     return nil if iso_publication_date.blank?
     return nil if iso_publication_date.nil?
     return nil if iso_publication_date.length < 4
@@ -60,7 +55,6 @@ module ReferenceIsoDateParts
   end
 
   def year=(yyyy)
-    Rails.logger.debug('year=')
     if iso_publication_date.nil? || iso_publication_date.length <= 4
       self.iso_publication_date = yyyy
     elsif iso_publication_date.length == 7
