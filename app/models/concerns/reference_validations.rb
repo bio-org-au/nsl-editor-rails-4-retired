@@ -58,7 +58,7 @@ module ReferenceValidations
                        .where(["coalesce(edition,'no edition data') = coalesce(?,'no edition data')", edition])
                        .where(["coalesce(volume,'no volume data') = coalesce(?,'no volume data')", volume])
                        .where(["coalesce(pages,'no pages data') = coalesce(?,'no pages data')", pages])
-                       .where(["coalesce(year,0) = coalesce(?,0)", year])
+                       .where(["coalesce(iso_publication_date,'0') = coalesce(?,'0')", iso_publication_date])
                        .where(["coalesce(publication_date,'no publication date data') = coalesce(?,'no publication date data')", publication_date])
                        .where(["coalesce(notes,'no notes data') = coalesce(?,'no notes data')", notes])
                        .where.not(id: id)
