@@ -30,6 +30,11 @@
 <% else %>
   Unpublished.
 <% end %>
+<% if @reference.iso_publication_date.present? %>
+  <br>
+  <span title="Optional full publication date"><%= formatted_date(@reference.iso_publication_date) %></span>
+
+<% end %>
 <%= '<br>'.html_safe unless @reference.notes.blank? %>
 <%= @reference.notes %>
 <% if @reference.children && @reference.children.size != 0 %>

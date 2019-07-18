@@ -73,7 +73,7 @@
     JOIN name_status ns\n                               ON n.name_status_id = ns.id\n
     \                      INNER JOIN instance_type it\n                               ON
     i.instance_type_id = it.id\n                WHERE  it.secondary_instance\n                       AND
-    ns.NAME = 'orth. var.'\n                       AND r.year = (SELECT Min(r2.year)\n
+    ns.NAME = 'orth. var.'\n                       AND r.iso_publication_date = (SELECT Min(r2.iso_publication_date)\n
     \                                    FROM   reference r2\n                                            INNER
     JOIN instance i2\n                                                    ON r2.id
     = i2.reference_id\n                                            INNER JOIN NAME
@@ -211,7 +211,7 @@ from comment where comment.name_id = name.id)"
     \                      INNER JOIN instance_type it\n                               ON
     i.instance_type_id = it.id\n                WHERE  not it.primary_instance\n                       AND
     ns.NAME = 'orth. var.'\n                       AND i.cites_id IS NULL\n                       AND
-    i.cited_by_id IS NULL\n                       AND r.year = (SELECT Min(r2.year)\n
+    i.cited_by_id IS NULL\n                       AND r.iso_publication_date = (SELECT Min(r2.iso_publication_date)\n
     \                                    FROM   reference r2\n                                            INNER
     JOIN instance i2\n                                                    ON r2.id
     = i2.reference_id\n                                            INNER JOIN NAME
@@ -226,7 +226,7 @@ from comment where comment.name_id = name.id)"
     \                      INNER JOIN instance_type it\n                               ON
     i.instance_type_id = it.id\n                WHERE      NOT it.primary_instance\n
     \                      AND NOT it.secondary_instance\n                       AND
-    ns.NAME = 'orth. var.'\n                       AND r.year = (SELECT Min(r2.year)\n
+    ns.NAME = 'orth. var.'\n                       AND r.iso_publication_date = (SELECT Min(r2.iso_publication_date)\n
     \                                    FROM   reference r2\n                                            INNER
     JOIN instance i2\n                                                    ON r2.id
     = i2.reference_id\n                                            INNER JOIN NAME
@@ -254,7 +254,7 @@ from comment where comment.name_id = name.id)"
        and nt.scientific
        and not ns.nom_inval
        and ns.name != 'isonym'
-       and r.year = (select min(year)
+       and r.iso_publication_date = (select min(iso_publication_date)
                        from name n2
                       inner join instance i2
                          on n2.id = i2.name_id
@@ -273,7 +273,7 @@ from comment where comment.name_id = name.id)"
                            on i3.reference_id = r3.id
                         where n3.id = n.id
                           and (it3.primary_instance or it3.name = 'autonym')
-                          and r3.year = r.year)
+                          and r3.iso_publication_date = r.iso_publication_date)
           )
 'ref-title:':
   :where_clause: |-

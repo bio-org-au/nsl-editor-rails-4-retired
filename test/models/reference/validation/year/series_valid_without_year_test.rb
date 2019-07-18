@@ -20,9 +20,9 @@ require "test_helper"
 
 # Single Reference model test.
 class RefValSeriesValidWithoutYearTest < ActiveSupport::TestCase
-  test "ref of type series valid without a year" do
+  test "ref of type series valid without a date" do
     reference = references(:ref_type_is_series)
-    reference.year = ""
-    assert reference.valid?, "Series should be valid without year"
+    reference.iso_publication_date = ""
+    assert reference.valid?, "Series should be valid without date"
   end
 end

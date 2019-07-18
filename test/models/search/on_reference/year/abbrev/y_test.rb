@@ -21,11 +21,11 @@ load "test/models/search/users.rb"
 
 # Single Search model test for Reference target.
 class SearchOnReferenceYearAbbrevYTest < ActiveSupport::TestCase
-  test "search on year abbrev Y" do
+  test "search on date abbrev Y" do
     reference = references(:paper_by_brassard)
     params =  ActiveSupport::HashWithIndifferentAccess
               .new(query_target: "reference",
-                   query_string: "y: #{reference.year}",
+                   query_string: "y: #{reference.iso_publication_date}",
                    include_common_and_cultivar_session: true,
                    current_user: build_edit_user)
     search = Search::Base.new(params)

@@ -50,6 +50,7 @@ class ReferencesController < ApplicationController
 
   # POST /references
   def create
+    check_date_params
     @reference = Reference::AsEdited.create(reference_params,
                                             typeahead_params,
                                             current_user.username)
@@ -64,6 +65,7 @@ class ReferencesController < ApplicationController
   # Ajax only
   # Makes this compatible with create error processing.
   def update
+    check_date_params
     @form = params[:form][:name] if params[:form]
     update_reference
     render "update.js"
@@ -143,6 +145,9 @@ class ReferencesController < ApplicationController
     redirect_to references_path
   end
 
+  # Note: the order of the :year, :month, :day params is critical to 
+  # successfully processing these fields on insert and combining them into 
+  # the iso_publication_date field.
   def reference_params
     params.require(:reference)
           .permit(
@@ -150,7 +155,7 @@ class ReferencesController < ApplicationController
             :issn, :language_id, :notes, :pages, :publication_date, :published,
             :published_location, :publisher, :ref_author_role_id, :ref_type_id,
             :title, :tl2, :verbatim_author, :verbatim_citation,
-            :verbatim_reference, :volume, :year
+            :verbatim_reference, :volume, :year, :month, :day
           )
   end
 
@@ -170,5 +175,15 @@ class ReferencesController < ApplicationController
   def copy_reference
     reference = @reference
     @reference = Reference.new reference.attributes
+  end
+
+  # Do this before getting to the model - much more control.
+  def check_date_params
+    if reference_params[:year].blank?
+      raise 'Month entered but no year' unless reference_params[:month].blank?
+    end
+    if reference_params[:month].blank?
+      raise 'Day entered but no month' unless reference_params[:day].blank?
+    end
   end
 end

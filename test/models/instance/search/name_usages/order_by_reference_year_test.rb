@@ -45,7 +45,7 @@ class NameUsagesOrderByReferenceYear < ActiveSupport::TestCase
     assert_equal @first_ref.id,
                  results[1].reference_id,
                  "Instance for ref with no year should be first: \
-                 #{results[1].reference.year}"
+                 #{results[1].reference.iso_publication_date}"
     assert_equal @second_ref.id,
                  results[2].reference_id,
                  "Second reference wrong"
@@ -60,7 +60,8 @@ class NameUsagesOrderByReferenceYear < ActiveSupport::TestCase
   def print_data(results)
     results.each do |r|
       if r.class == Instance
-        puts "#{r.reference.citation}; year: #{r.reference.year}"
+        puts
+        "#{r.reference.citation}; date: #{r.reference.iso_publication_date}"
       end
     end
   end

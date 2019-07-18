@@ -42,7 +42,7 @@ class Instance::ForName
   end
 
   def sort_fields(instance)
-    [instance.reference.year || 9999,
+    [instance.reference.iso_publication_date || 9999,
      instance.instance_type.primaries_first,
      instance.reference.author.try("name") || "x"]
   end
@@ -76,7 +76,7 @@ class Instance::ForName
     Instance.joins(:instance_type, :name, :reference)
             .where(cited_by_id: instance.id)
             .in_nested_instance_type_order
-            .order("reference.year,lower(name.full_name)")
+            .order("reference.iso_publication_date,lower(name.full_name)")
   end
 
   def show_relationship_instance(name, instance)

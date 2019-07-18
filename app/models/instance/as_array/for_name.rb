@@ -33,7 +33,7 @@
 #
 class Instance::AsArray::ForName < Array
   attr_reader :results
-  NO_YEAR = 0
+  NO_YEAR = ''
 
   def initialize(name)
     @results = []
@@ -58,8 +58,9 @@ class Instance::AsArray::ForName < Array
   end
 
   def sort_fields(instance)
-    [instance.reference.year || instance.reference.part_parent_year || NO_YEAR,
+    [instance.reference.year || instance.reference.try('parent').try('year') || NO_YEAR,
      instance.instance_type.primaries_first,
+     instance.reference.iso_publication_date || instance.reference.try('parent').try('iso_publication_date') || NO_YEAR,
      instance.reference.author.try("name") || "x"]
   end
 
@@ -96,7 +97,7 @@ class Instance::AsArray::ForName < Array
             .includes(:instance_type)
             .where(cited_by_id: instance.id)
             .in_nested_instance_type_order
-            .order("reference.year,lower(name.full_name)")
+            .order("reference.iso_publication_date,lower(name.full_name)")
   end
 
   def show_relationship_instance(name, instance)

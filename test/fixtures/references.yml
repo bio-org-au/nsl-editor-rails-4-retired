@@ -44,7 +44,7 @@ paper_by_brassard:
   namespace: apni
   ref_author_role: dash
   ref_type: paper
-  year: 1987
+  iso_publication_date: 1987
   created_by: tester
   updated_by: tester
 
@@ -99,7 +99,7 @@ orphan_book_edited_by_brassard_with_year_no_publication_date:
   namespace: apni
   ref_author_role: editor
   ref_type: book
-  year: 1797
+  iso_publication_date: 1797
   created_by: tester
   updated_by: tester
 
@@ -113,7 +113,7 @@ orphan_book_edited_by_brassard_with_year_and_publication_date:
   namespace: apni
   ref_author_role: editor
   ref_type: book
-  year: 1790
+  iso_publication_date: 1790
   publication_date: (1848) 
   created_by: tester
   updated_by: tester
@@ -142,7 +142,7 @@ series_edited_by_joe:
   namespace: apni
   ref_author_role: editor
   ref_type: series
-  year: 1980
+  iso_publication_date: 1980
   created_by: tester
   updated_by: tester
 
@@ -299,7 +299,7 @@ paper_within_journal:
   namespace: apni
   ref_author_role: dash
   ref_type: paper
-  year: 1690
+  iso_publication_date: 1690
   publication_date: (1648) 
   parent: journal_with_papers
   edition: 1
@@ -334,7 +334,7 @@ book_by_brassard:
   namespace: apni
   ref_author_role: author
   ref_type: book
-  year: 1799
+  iso_publication_date: 1799
   publication_date: (1849) 
   edition: 1
   volume: 2
@@ -351,7 +351,7 @@ book_with_extra_space_in_title:
   namespace: apni
   ref_author_role: author
   ref_type: book
-  year: 1799
+  iso_publication_date: 1799
   publication_date: (1849) 
   created_by: tester
   updated_by: tester
@@ -367,7 +367,7 @@ book_with_ellipses_in_title:
   namespace: apni
   ref_author_role: author
   ref_type: book
-  year: 1799
+  iso_publication_date: 1799
   publication_date: (1849) 
   created_by: tester
   updated_by: tester
@@ -382,7 +382,7 @@ paper_within_journal_title_has_full_stop:
   namespace: apni
   ref_author_role: dash
   ref_type: paper
-  year: 1690
+  iso_publication_date: 1690
   publication_date: (1648) 
   parent: journal_with_papers
   edition: 1
@@ -400,7 +400,7 @@ paper_with_extra_space_in_title:
   namespace: apni
   ref_author_role: dash
   ref_type: paper
-  year: 1690
+  iso_publication_date: 1690
   publication_date: (1648) 
   parent: journal_with_papers
   edition: 1
@@ -418,7 +418,7 @@ unknown_in_journal_with_hooker_author_of_both:
   namespace: apni
   ref_author_role: dash
   ref_type: paper
-  year: 1690
+  iso_publication_date: 1690
   publication_date: (1648) 
   parent: journal_by_hooker
   edition: 1
@@ -436,7 +436,7 @@ journal_by_hooker:
   namespace: apni
   ref_author_role: dash
   ref_type: paper
-  year: 1845
+  iso_publication_date: 1845
   publication_date: (1845)
   edition: 1
   volume: 2
@@ -453,7 +453,7 @@ JRSWA30:
   namespace: apni
   ref_author_role: unknown
   ref_type: journal
-  year: 1946
+  iso_publication_date: 1946
   volume: 30
   created_by: tester
   updated_by: tester
@@ -468,7 +468,7 @@ burbidge_1946_JRSWA30:
   namespace: apni
   ref_author_role: dash
   ref_type: unknown
-  year: 1946
+  iso_publication_date: 1946
   publication_date: (1648) 
   parent: JRSWA30
   created_by: tester
@@ -484,7 +484,7 @@ hooker_jd_botany_of_the_antarctic_voyage:
   namespace: apni
   ref_author_role: unknown
   ref_type: unknown
-  year: 1844
+  iso_publication_date: 1844
   volume: 1(6)
   created_by: tester
   updated_by: tester
@@ -499,7 +499,7 @@ sturm_enumerato_plantarum:
   language: undetermined
   namespace: apni
   ref_type: unknown
-  year: 1858
+  iso_publication_date: 1858
   volume: 1(6)
   created_by: tester
   updated_by: tester
@@ -514,7 +514,7 @@ distens_author_bentham:
   language: undetermined
   namespace: apni
   ref_type: unknown
-  year: 1858
+  iso_publication_date: 1858
   volume: 1(6)
   created_at: 2014-02-11 11:02:57
   created_by: tester
@@ -530,7 +530,7 @@ book_with_name_and_common_name:
   language: undetermined
   namespace: apni
   ref_type: book
-  year: 1978
+  iso_publication_date: 1978
   volume: 1(6)
   created_at: 2015-01-12 11:02:57
   created_by: tester
@@ -561,7 +561,7 @@ paper_by_britten_on_angophora:
   language: undetermined
   namespace: apni
   ref_type: paper
-  year: 1916
+  iso_publication_date: 1916
   volume: 54
   parent: journal_of_botany_british_and_foreign
   created_at: 2015-01-12 11:02:57
@@ -578,7 +578,7 @@ de_fructibus_et_seminibus_plantarum:
   language: undetermined
   namespace: apni
   ref_type: book
-  year: 1788
+  iso_publication_date: 1788
   volume: 1
   created_by: tester
   updated_by: tester
@@ -593,7 +593,7 @@ handbook_of_the_vascular_plants_of_sydney:
   language: undetermined
   namespace: apni
   ref_type: book
-  year: 1962
+  iso_publication_date: 1962
   created_by: tester
   updated_by: tester
 
@@ -686,7 +686,7 @@ telford_in_nuytsia:
   namespace: apni
   ref_author_role: author
   ref_type: paper
-  year: 2015
+  iso_publication_date: 2015
   volume: 25
   created_by: tester
   updated_by: tester
@@ -701,7 +701,7 @@ by_author_with_just_one_reference:
   namespace: apni
   ref_author_role: author
   ref_type: book
-  year: 2015
+  iso_publication_date: 2015
   volume: 25
   created_by: tester
   updated_by: tester
@@ -716,7 +716,7 @@ maslin_wattle_book:
   namespace: apni
   ref_author_role: author
   ref_type: book
-  year: 2001
+  iso_publication_date: 2001
   published: true
   created_by: tester
   updated_by: tester
@@ -731,7 +731,7 @@ adams_paper_in_walsh_book:
   namespace: apni
   ref_author_role: author
   ref_type: paper
-  year: 1996
+  iso_publication_date: 1996
   created_by: tester
   updated_by: tester
 
@@ -745,7 +745,7 @@ walsh_paper_in_walsh_book:
   namespace: apni
   ref_author_role: author
   ref_type: paper
-  year: 1999
+  iso_publication_date: 1999
   created_by: tester
   updated_by: tester
 
@@ -759,7 +759,7 @@ chaplin_book:
   namespace: apni
   ref_author_role: author
   ref_type: book
-  year: 1996
+  iso_publication_date: 1996
   created_by: tester
   updated_by: tester
 
@@ -773,7 +773,7 @@ chaplin_chaplin_book:
   namespace: apni
   ref_author_role: author
   ref_type: book
-  year: 1996
+  iso_publication_date: 1996
   created_by: tester
   updated_by: tester
 
@@ -787,7 +787,7 @@ chaplin_chaplin_chaplin_book:
   namespace: apni
   ref_author_role: author
   ref_type: book
-  year: 1996
+  iso_publication_date: 1996
   created_by: tester
   updated_by: tester
 
@@ -801,7 +801,7 @@ chaplin_journal:
   namespace: apni
   ref_author_role: author
   ref_type: journal
-  year: 1996
+  iso_publication_date: 1996
   created_by: tester
   updated_by: tester
 
@@ -815,7 +815,7 @@ chaplin_chaplin_journal:
   namespace: apni
   ref_author_role: author
   ref_type: journal
-  year: 1996
+  iso_publication_date: 1996
   created_by: tester
   updated_by: tester
 
@@ -829,7 +829,7 @@ chaplin_chaplin_chaplin_journal:
   namespace: apni
   ref_author_role: editor
   ref_type: journal
-  year: 1996
+  iso_publication_date: 1996
   created_by: tester
   updated_by: tester
 
@@ -843,7 +843,7 @@ for_change_detection:
   namespace: apni
   ref_author_role: author
   ref_type: series
-  year: 1999
+  iso_publication_date: 1999
   created_by: tester
   updated_by: tester
 
@@ -858,7 +858,7 @@ for_resolving_typeaheads:
   parent: unpublished_book_for_change_detection
   ref_author_role: author
   ref_type: book
-  year: 1999
+  iso_publication_date: 1999
   created_by: tester
   updated_by: tester
 
@@ -872,7 +872,7 @@ for_whole_record_change_detection:
   language: undetermined
   namespace: apni
   ref_type: section
-  year: 1999
+  iso_publication_date: 1999
   published: true
   parent: for_resolving_typeaheads
   created_by: tester
@@ -888,7 +888,7 @@ paper_in_bulletin_of_torrey_botanical_club:
   language: undetermined
   namespace: apni
   ref_type: paper
-  year: 1907
+  iso_publication_date: 1907
   published: true
   parent: bulletin_of_torrey_botanical_club
   created_by: tester
@@ -919,7 +919,7 @@ unpublished_book_for_change_detection:
   namespace: apni
   ref_author_role: author
   ref_type: book
-  year: 2001
+  iso_publication_date: 2001
   published: false
   parent: bulletin_of_torrey_botanical_club
   created_by: tester
@@ -935,7 +935,7 @@ mueller_1882_section:
   namespace: apni
   ref_author_role: author
   ref_type: section
-  year: 1882
+  iso_publication_date: 1882
   published: true
   publication_date: 1882
   created_by: tester
@@ -951,7 +951,7 @@ australasian_chemist_and_druggist:
   namespace: apni
   ref_author_role: unknown
   ref_type: unknown
-  year: 1881
+  iso_publication_date: 1881
   published: true
   publication_date: (Apr. 1882)
   created_by: tester
@@ -967,7 +967,7 @@ bailey_catalogue_qld_plants:
   namespace: apni
   ref_author_role: unknown
   ref_type: section
-  year: 1913
+  iso_publication_date: 1913
   published: true
   publication_date: early 1913
   created_by: tester
@@ -1018,7 +1018,7 @@ stanley_and_ross_1986_flora_of_se_qld:
   verbatim_citation: 
   verbatim_reference: 
   volume: 
-  year: 
+  iso_publication_date: 
   
 stanley_in_stanley_and_ross:
   author: stanley
@@ -1045,7 +1045,7 @@ stanley_in_stanley_and_ross:
   verbatim_citation: Stanley, T.D. in Stanley, T.D. & Ross, E.M., (1986) <i>Flora of South-eastern Queensland</i> 2.
   verbatim_reference: 
   volume: '2'
-  year: 1986
+  iso_publication_date: 1986
 
 cavanilles_icones:
   title: Not set 
@@ -1057,7 +1057,7 @@ cavanilles_icones:
   namespace: apni
   ref_author_role: unknown
   ref_type: section
-  year: 1797
+  iso_publication_date: 1797
   published: true
   publication_date: Sep. Dec. 1797
   created_by: tester
@@ -1073,7 +1073,7 @@ never_used:
   namespace: apni
   ref_author_role: unknown
   ref_type: section
-  year: 1797
+  iso_publication_date: 1797
   published: true
   publication_date: Sep. Dec. 1797
   created_by: tester
@@ -1089,7 +1089,7 @@ master:
   namespace: apni
   ref_author_role: unknown
   ref_type: section
-  year: 1797
+  iso_publication_date: 1797
   published: true
   publication_date: Sep. Dec. 1797
   created_by: tester
@@ -1105,7 +1105,7 @@ duplicate:
   namespace: apni
   ref_author_role: unknown
   ref_type: section
-  year: 1797
+  iso_publication_date: 1797
   published: true
   publication_date: Sep. Dec. 1797
   created_by: tester
@@ -1122,7 +1122,7 @@ dummy_reference_for_eflora_service:
   namespace: apni
   ref_author_role: dash
   ref_type: paper
-  year: 1987
+  iso_publication_date: 1987
   created_by: tester
   updated_by: tester
 
@@ -1149,7 +1149,7 @@ chapter_without_parent:
   namespace: apni
   ref_author_role: dash
   ref_type: chapter
-  year: 1990
+  iso_publication_date: 1990
   created_by: tester
   updated_by: tester
 
@@ -1163,7 +1163,7 @@ database_record_without_parent:
   namespace: apni
   ref_author_role: dash
   ref_type: database_record
-  year: 1990
+  iso_publication_date: 1990
   created_by: tester
   updated_by: tester
 
@@ -1177,7 +1177,7 @@ paper_without_parent:
   namespace: apni
   ref_author_role: dash
   ref_type: paper
-  year: 1990
+  iso_publication_date: 1990
   created_by: tester
   updated_by: tester
 
@@ -1187,7 +1187,7 @@ section_without_parent:
   citation_html: section without parent
   display_title: section without parent
   author: unknown
-  year: 1990
+  iso_publication_date: 1990
   language: undetermined
   namespace: apni
   ref_author_role: dash
@@ -1245,7 +1245,7 @@ chapter_with_book_parent:
   namespace: apni
   ref_author_role: dash
   ref_type: chapter
-  year: 1990
+  iso_publication_date: 1990
   parent: a_book
   created_by: tester
   updated_by: tester
@@ -1260,7 +1260,7 @@ parent_series:
   namespace: apni
   ref_author_role: editor
   ref_type: series
-  year: 1989
+  iso_publication_date: 1989
   created_by: tester
   updated_by: tester
 
@@ -1289,7 +1289,7 @@ section_with_book_parent:
   ref_author_role: dash
   ref_type: section
   parent: a_book
-  year: 1990
+  iso_publication_date: 1990
   created_by: tester
   updated_by: tester
 
@@ -1303,7 +1303,7 @@ paper_with_journal_parent:
   namespace: apni
   ref_author_role: dash
   ref_type: paper
-  year: 1990
+  iso_publication_date: 1990
   parent: a_journal
   created_by: tester
   updated_by: tester
@@ -1318,7 +1318,7 @@ chapter_by_dummy:
   namespace: apni
   ref_author_role: dash
   ref_type: chapter
-  year: 1987
+  iso_publication_date: 1987
   created_by: tester
   updated_by: tester
 
@@ -1333,7 +1333,7 @@ ref_type_is_book:
   ref_author_role: dash
   ref_type: book
   bhl_url: a_bhl_url 
-  year: 1990
+  iso_publication_date: 1990
   created_by: tester
   updated_by: tester
 
@@ -1347,7 +1347,7 @@ ref_type_is_chapter:
   namespace: apni
   ref_author_role: dash
   ref_type: chapter
-  year: 1990
+  iso_publication_date: 1990
   created_by: tester
   updated_by: tester
 
@@ -1376,7 +1376,7 @@ ref_type_is_herbarium_annotation:
   namespace: apni
   ref_author_role: dash
   ref_type: herbarium_annotation
-  year: 1990
+  iso_publication_date: 1990
   created_by: tester
   updated_by: tester
 
@@ -1390,7 +1390,7 @@ ref_type_is_index:
   namespace: apni
   ref_author_role: dash
   ref_type: index
-  year: 1990
+  iso_publication_date: 1990
   created_by: tester
   updated_by: tester
 
@@ -1430,7 +1430,7 @@ ref_type_is_personal_communication:
   namespace: apni
   ref_author_role: dash
   ref_type: personal_communication
-  year: 1990
+  iso_publication_date: 1990
   created_by: tester
   updated_by: tester
 
@@ -1444,7 +1444,7 @@ ref_type_is_database_record:
   namespace: apni
   ref_author_role: dash
   ref_type: database_record
-  year: 1990
+  iso_publication_date: 1990
   created_by: tester
   updated_by: tester
 
@@ -1458,7 +1458,7 @@ ref_type_is_paper:
   namespace: apni
   ref_author_role: dash
   ref_type: paper
-  year: 1990
+  iso_publication_date: 1990
   created_by: tester
   updated_by: tester
 
@@ -1472,7 +1472,7 @@ ref_type_is_section:
   namespace: apni
   ref_author_role: dash
   ref_type: section
-  year: 1990
+  iso_publication_date: 1990
   created_by: tester
   updated_by: tester
 
@@ -1709,7 +1709,7 @@ database_record_with_database_parent:
   namespace: apni
   ref_author_role: dash
   ref_type: database_record
-  year: 1990
+  iso_publication_date: 1990
   parent: database_with_parent
   created_by: tester
   updated_by: tester
@@ -1724,7 +1724,7 @@ herbarium_annotation_with_parent:
   namespace: apni
   ref_author_role: dash
   ref_type: herbarium_annotation
-  year: 1990
+  iso_publication_date: 1990
   parent: book_by_brassard
   created_by: tester
   updated_by: tester
@@ -1784,7 +1784,7 @@ personal_communication_with_parent:
   namespace: apni
   ref_author_role: dash
   ref_type: personal_communication
-  year: 1990
+  iso_publication_date: 1990
   parent: book_by_brassard
   created_by: tester
   updated_by: tester
@@ -1799,7 +1799,7 @@ series_a_b:
   namespace: apni
   ref_author_role: editor
   ref_type: series
-  year: 1989
+  iso_publication_date: 1989
   created_by: tester
   updated_by: tester
 
@@ -1869,7 +1869,7 @@ a_book:
   language: undetermined
   namespace: apni
   ref_type: book
-  year: 1978
+  iso_publication_date: 1978
   volume: 1(6)
   created_at: 2015-01-12 11:02:57
   created_by: tester
@@ -1886,7 +1886,7 @@ dummy_reference_1:
   language: undetermined
   namespace: apni
   ref_type: book
-  year: 1987
+  iso_publication_date: 1987
   volume: 1(6)
   created_at: 2015-01-12 11:02:57
   created_by: tester
@@ -2001,7 +2001,7 @@ ref_for_earliest_inst_sec_ref:
   namespace: apni
   ref_author_role: author
   ref_type: book
-  year: 1700
+  iso_publication_date: 1700
   created_by: tester
   updated_by: tester
 
@@ -2015,7 +2015,7 @@ ref_for_not_earliest_inst_sec_ref:
   namespace: apni
   ref_author_role: author
   ref_type: book
-  year: 1700
+  iso_publication_date: 1700
   created_by: tester
   updated_by: tester
 
@@ -2029,7 +2029,7 @@ ref_for_later_inst_sec_ref:
   namespace: apni
   ref_author_role: author
   ref_type: book
-  year: 1800
+  iso_publication_date: 1800
   created_by: tester
   updated_by: tester
     
@@ -2043,7 +2043,7 @@ ref_4_species_or_below_to_be_synonymised:
   namespace: apni
   ref_author_role: author
   ref_type: book
-  year: 1900
+  iso_publication_date: 1900
   created_by: tester
   updated_by: tester
     
@@ -2059,7 +2059,7 @@ ref_4_genus_or_above_to_be_synonym:
   namespace: apni
   ref_author_role: author
   ref_type: book
-  year: 1890
+  iso_publication_date: 1890
   created_by: tester
   updated_by: tester
 
@@ -2073,7 +2073,7 @@ dummy_reference_2:
   language: undetermined
   namespace: apni
   ref_type: book
-  year: 1987
+  iso_publication_date: 1987
   volume: 1(6)
   created_at: 2015-01-12 11:02:57
   created_by: tester
@@ -2221,7 +2221,7 @@ for_name_to_be_placed:
 
 part_about_metrosideros_costata: 
   title: part about metrosideros costata
-  citation: part about metrosideros costata parent year is 1900
+  citation: part about metrosideros costata parent iso_publication_date is 1900
   citation_html: part about metrosideros costata
   display_title: part about metrosideros costata
   author: unknown
@@ -2241,7 +2241,7 @@ paper_has_part_about_metrosideros_costata:
   display_title: paper has part about metrosideros costata
   author: unknown
   language: undetermined
-  year: 1900
+  iso_publication_date: 1900
   namespace: apni
   ref_author_role: dash
   ref_type: paper

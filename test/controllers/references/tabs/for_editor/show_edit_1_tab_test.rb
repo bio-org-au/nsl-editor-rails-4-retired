@@ -45,6 +45,8 @@ class ReferenceEditorShowEdit1TabTest < ActionController::TestCase
     assert_select "input#reference_edition", true
     assert_select "input#reference_volume", true
     assert_select "input#reference_pages", true
+    assert_select "input#reference_day", true
+    assert_select "select#reference_month", true
     assert_select "input#reference_year", true
     assert_select "input#reference_publication_date", true
     assert_select "textarea#reference_notes", true

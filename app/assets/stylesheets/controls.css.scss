@@ -279,3 +279,21 @@ a.no-highlight button:focus {
   text-decoration:underline;
   outline: 5px;
 }
+
+.day-of-month-field {
+  width: 4rem;
+}
+
+.year-field {
+  width: 5rem;
+}
+
+.month-select {
+    line-height: 1.3;
+    height: 1.8em;
+    box-sizing: border-box;
+    box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
+    background-color: #fff;
+}
+
+
