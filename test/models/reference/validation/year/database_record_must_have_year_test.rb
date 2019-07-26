@@ -20,11 +20,11 @@ require "test_helper"
 
 # Single Reference model test.
 class RefValYearDatabaseRecordMustHaveYearTest < ActiveSupport::TestCase
-  test "ref of type database record must have a year" do
+  test "ref of type database record must have a date" do
     reference = references(:ref_type_is_database_record)
-    reference.year = 2000
+    reference.iso_publication_date = 2000
     assert reference.valid?, "Should start out valid"
-    reference.year = ""
-    assert_not reference.valid?, "Record should be invalid without year"
+    reference.iso_publication_date = ""
+    assert_not reference.valid?, "Record should be invalid without date"
   end
 end

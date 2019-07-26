@@ -26,7 +26,10 @@ class Search::OnInstance::FieldRule
                                  multiple_values_where_clause: " id in (?)" },
       "year:"                 => { where_clause: " exists (select null from
                                  reference ref where instance.reference_id =
-                                 ref.id and ref.year = ?)" },
+                                 ref.id and ref.iso_publication_date like ? || '%')" },
+      "date:"                 => { where_clause: " exists (select null from
+                                 reference ref where instance.reference_id =
+                                 ref.id and ref.iso_publication_date like ? || '%')" },
       "name:"                 => { where_clause: "exists (select null
                                  from name n
                                  where instance.name_id = n.id

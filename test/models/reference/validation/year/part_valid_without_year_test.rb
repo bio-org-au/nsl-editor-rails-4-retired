@@ -20,9 +20,9 @@ require "test_helper"
 
 # Single Reference model test.
 class RefValPartValidWithoutYearTest < ActiveSupport::TestCase
-  test "ref of type part valid without a year" do
+  test "ref of type part valid without a date" do
     reference = references(:ref_type_is_part)
-    reference.year = ""
-    assert reference.valid?, "Part should be valid without year"
+    reference.iso_publication_date = ""
+    assert reference.valid?, "Part should be valid without date"
   end
 end

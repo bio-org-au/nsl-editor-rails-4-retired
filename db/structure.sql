@@ -2100,7 +2100,8 @@ CREATE TABLE public.reference
     verbatim_reference character varying(1000),
     volume             character varying(100),
     year               integer,
-    uri                text
+    uri                text,
+    iso_publication_date character varying(10)
 );
 
 

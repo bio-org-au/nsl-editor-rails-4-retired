@@ -134,12 +134,19 @@
   </div>
 
   <div class="form-group">
-    <label for="reference_year">Year</label>
-    <%= f.text_field :year, type: 'number', min: '1000', max: "#{Time.new.year}", step: '1', class: 'form-control', title: "Enter year of publication (4-digit number)", tabindex: increment_tab_index %>
-  </div>
+    <label for="reference_day">Publication date</label><br>
 
+    <%= f.text_field :day, type: 'number', min: '1', max: '31', step: '1', class: 'xform-control day-of-month-field', title: "Enter an optional day of publication", tabindex: increment_tab_index %>
+
+    <%= select(:reference, :month, options_for_select(month_array_for_select, @reference.month.to_i), {include_blank: ''}, {class: 'xform-control month-select', title: 'Enter optional publication month (required if you enter day).', tabindex: increment_tab_index}) %>
+
+    <%= f.text_field :year, type: 'number', min: '1000', max: "#{Time.new.year}", step: '1', class: 'xform-control year-field', title: "Enter year of publication (4-digit number)", tabindex: increment_tab_index %>
+
+    <p>Strictly formatted, partial or full date: day-month-year, month-year, or just year.</p>
+  </div>
+	
   <div class="form-group">
-    <label for="reference_publication_date">Publication date</label>
+    <label for="reference_publication_date">Publication date text</label>
     <%= f.text_field :publication_date, class: 'form-control', title: "Enter publication date", tabindex: increment_tab_index %>
     <p>e.g. 3-5 Oct. 1776</p>
   </div>

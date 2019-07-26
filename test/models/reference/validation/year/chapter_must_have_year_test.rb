@@ -20,12 +20,12 @@ require "test_helper"
 
 # Single Reference model test.
 class RefValYearChapterMustHaveYearTest < ActiveSupport::TestCase
-  test "ref of type chapter must have a year" do
+  test "ref of type chapter must have a date" do
     reference = references(:ref_type_is_chapter)
-    reference.year = 2000
+    reference.iso_publication_date = 2000
     assert reference.valid?, "Should start out valid"
-    reference.year = ""
-    assert_not reference.valid?, "Chapter should not be valid without year"
-    assert reference.errors.full_messages.include?("Year is required")
+    reference.iso_publication_date = ""
+    assert_not reference.valid?, "Chapter should not be valid without date"
+    assert reference.errors.full_messages.include?("Iso publication date is required")
   end
 end

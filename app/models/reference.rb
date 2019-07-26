@@ -23,6 +23,8 @@ class Reference < ActiveRecord::Base
   include ReferenceAssociations
   include ReferenceScopes
   include ReferenceValidations
+  include ReferenceIsoDateValidations
+  include ReferenceIsoDateParts
   include ReferenceRefTypeValidations
   include ReferenceCitations
   require "open-uri"
@@ -126,6 +128,6 @@ class Reference < ActiveRecord::Base
 
   def part_parent_year
     return nil unless ref_type.part?
-    parent.year
+    parent.iso_publication_date
   end
 end

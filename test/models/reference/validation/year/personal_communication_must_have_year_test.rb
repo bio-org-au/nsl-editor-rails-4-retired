@@ -20,12 +20,17 @@ require "test_helper"
 
 # Single Reference model test.
 class RefValYearPersCommMustHaveYearTest < ActiveSupport::TestCase
-  test "ref of type personal communication must have a year" do
-    reference = references(:ref_type_is_personal_communication)
-    reference.year = 2000
-    assert reference.valid?, "Should start out valid"
-    reference.year = ""
-    assert_not reference.valid?, "Personal comm. should be invalid without year"
-    assert reference.errors.full_messages.include?("Year is required")
+  def setup
+    @reference = references(:ref_type_is_personal_communication)
+    @reference.iso_publication_date = 2000
+  end
+
+  test "ref of type personal communication must have a date" do
+    assert @reference.valid?, "Should start out valid"
+    @reference.iso_publication_date = ""
+    assert_not @reference.valid?,
+               "Personal comm. should be invalid without date"
+    assert @reference.errors.full_messages
+                     .include?("Iso publication date is required")
   end
 end

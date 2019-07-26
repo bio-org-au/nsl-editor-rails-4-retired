@@ -21,14 +21,17 @@ load "test/models/search/users.rb"
 
 # Single Search model test for Reference target.
 class SearchOnReferenceYearSimpleTest < ActiveSupport::TestCase
-  test "search on year simple" do
-    reference = references(:paper_by_brassard)
-    params =  ActiveSupport::HashWithIndifferentAccess
+  def setup
+    @reference = references(:paper_by_brassard)
+    @params =  ActiveSupport::HashWithIndifferentAccess
               .new(query_target: "reference",
-                   query_string: "year: #{reference.year}",
+                   query_string: "year: #{@reference.iso_publication_date}",
                    include_common_and_cultivar_session: true,
                    current_user: build_edit_user)
-    search = Search::Base.new(params)
+  end
+
+  test "search on year simple" do
+    search = Search::Base.new(@params)
     assert_equal search.executed_query.results.class,
                  Reference::ActiveRecord_Relation,
                  "Results should be a Reference::ActiveRecord_Relation."
