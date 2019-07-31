@@ -1,5 +1,9 @@
 ---
 - :date: 31-Jul-2019
+  :jira_id: '3339'
+  :description: |-
+    Widen Reference edit year field.
+- :date: 31-Jul-2019
   :release: true
 - :date: 18-Jul-2019
   :jira_id: '3311'
