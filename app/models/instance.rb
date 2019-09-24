@@ -492,7 +492,7 @@ class Instance < ActiveRecord::Base
 
   # simple i.e. not a relationship instance
   def simple?
-    cites_id.blank? && cited_by_id.blank?
+    standalone?
   end
 
   # simple i.e. not a relationship instance
