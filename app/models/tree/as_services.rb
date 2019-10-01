@@ -18,9 +18,12 @@
 
 #  Tree services
 class Tree::AsServices
+
+#Services
+  API_KEY = "apiKey=#{Rails.configuration.api_key}"
+
   SERVICES_ADDRESS = Rails.configuration.services
   CLIENT_SIDE_SERVICES = Rails.configuration.services_clientside_root_url
-  INT_LINKER_ADDRESS = Rails.configuration.nsl_linker
   PLACEMENT_PATH = "api/treeElement/placeElement"
   TOP_PLACEMENT_PATH = "api/treeElement/placeTopElement"
   REPLACE_ELEMENT = "api/treeElement/replaceElement"
@@ -38,9 +41,11 @@ class Tree::AsServices
   SYN_UPDATE_LINK = "tree-element/update-synonymy-by-event"
   SYN_UPDATE_INST_LINK = "tree-element/update-synonymy-by-instance"
 
-  API_KEY = "apiKey=#{Rails.configuration.api_key}"
-  PREFERRED_LINK = "broker/preferredLink"
-  ADD_IDENTIFIER = "admin/addIdentifier"
+# Mapper
+  MAPPER_API_URL = Rails.configuration.try("nsl_linker") || Rails.configuration.x.mapper_api.url
+  MAPPER_API_VERSION = Rails.configuration.x.mapper_api.try("version") || 1
+  MAPPER_PWD = Rails.configuration.x.mapper_api.try("password")
+  MAPPER_USER = Rails.configuration.x.mapper_api.try("username")
 
   def self.placement_url(username, top)
     if top
@@ -62,10 +67,12 @@ class Tree::AsServices
     "#{SERVICES_ADDRESS}#{REMOVE_PLACEMENT}?#{API_KEY}&as=#{username}"
   end
 
-  def self.preferred_link_url(instance_id)
-    ShardConfig.name_space
-    target = "nameSpace=#{ShardConfig.name_space.downcase}&objectType=instance&idNumber=#{instance_id}"
-    "#{INT_LINKER_ADDRESS}#{PREFERRED_LINK}?#{target}"
+  def self.preferred_link_url_v1(instance_id)
+    "#{MAPPER_API_URL}broker/preferredLink?nameSpace=#{ShardConfig.name_space.downcase}&objectType=instance&idNumber=#{instance_id}"
+  end
+
+  def self.preferred_link_url_v2(instance_id)
+    "#{MAPPER_API_URL}preferred-link/instance/#{ShardConfig.name_space.downcase}/#{instance_id}"
   end
 
   def self.profile_url(username)
@@ -84,16 +91,20 @@ class Tree::AsServices
     "#{SERVICES_ADDRESS}#{PUBLISH_VERSION}?#{API_KEY}&as=#{username}"
   end
 
-  def self.add_instance_identifier_url(instance_id)
-    "#{INT_LINKER_ADDRESS}#{ADD_IDENTIFIER}?#{API_KEY}&#{add_identity_param_string(instance_id)}"
+  def self.add_instance_identifier_url_v1(instance_id)
+    "#{MAPPER_API_URL}admin/addIdentifier?#{API_KEY}&#{add_identity_param_string(instance_id)}"
   end
 
   def self.add_identity_param_string(instance_id)
     "nameSpace=#{ShardConfig.name_space.downcase}&objectType=instance&idNumber=#{instance_id}&versionNumber=&uri="
   end
 
+  def self.add_instance_identifier_url_v2(instance_id)
+    "#{MAPPER_API_URL}add/instance/#{ShardConfig.name_space.downcase}/#{instance_id}"
+  end
+
   def self.instance_url(instance_id)
-    url = preferred_link_url(instance_id)
+    url = MAPPER_API_VERSION == 1 ? preferred_link_url_v1(instance_id) : preferred_link_url_v2(instance_id)
     Rails.logger.info "calling #{url}"
     response = RestClient.get(url, {content_type: :json, accept: :json})
     json = JSON.parse(response.body, object_class: OpenStruct)
@@ -108,14 +119,56 @@ class Tree::AsServices
     raise
   end
 
+#Mostly this won't get called because the services will pick up a new instance and add the URI before this is needed.
+# This will most probably happen if the services are busy, or the update polling is paused.
   def self.add_instance_link(instance_id)
-    url = add_instance_identifier_url(instance_id)
+    if MAPPER_API_VERSION == 1
+      add_instance_link_v1(instance_id)
+    else
+      add_instance_link_v2(instance_id)
+    end
+  end
+
+  def self.add_instance_link_v1(instance_id)
+    url = add_instance_identifier_url_v1(instance_id)
     Rails.logger.info "calling #{url}"
-    response = RestClient.put(url, {content_type: :json, accept: :json})
+    response = RestClient.put(url, {}.to_json, {content_type: :json, accept: :json})
     json = JSON.parse(response.body, object_class: OpenStruct)
     json.preferredURI
   rescue => e
     Rails.logger.error("Tree::Workspace::Placement error: #{e.response}")
+    raise
+  end
+
+  def self.add_instance_link_v2(instance_id)
+    jwt = mapper_auth
+    url = add_instance_identifier_url_v2(instance_id)
+    Rails.logger.info "calling #{url}"
+    response = RestClient.put(url, {}.to_json, {content_type: :json, accept: :json, authorization: "Bearer #{jwt.access_token}"})
+    json = JSON.parse(response.body, object_class: OpenStruct)
+    json.uri
+  rescue => e
+    Rails.logger.error("Tree::Workspace::Placement error: #{e.response}")
+    raise
+  end
+
+  def self.mapper_auth
+    #using a class variable because we need a singleton instance variable to keep this. Login should only be called
+    #when we don't have the tokens
+    $jwt ||= Tree::AsServices.mapper_login
+    return $jwt
+  end
+
+  def self.mapper_login
+    if MAPPER_USER
+      url = "#{MAPPER_API_URL}login"
+      payload = {username: MAPPER_USER, password: MAPPER_PWD}.to_json
+      Rails.logger.info("Logging into mapper. #{url} #{payload}")
+      response = RestClient.post(url, payload, {content_type: :json, accept: :json})
+      JSON.parse(response.body, object_class: OpenStruct)
+    end
+  rescue => e
+    Rails.logger.error("Tree::Workspace::Mapper error: Can't log in #{e}")
     raise
   end
 
