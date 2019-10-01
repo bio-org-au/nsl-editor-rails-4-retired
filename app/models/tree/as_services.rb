@@ -20,7 +20,7 @@
 class Tree::AsServices
   SERVICES_ADDRESS = Rails.configuration.services
   CLIENT_SIDE_SERVICES = Rails.configuration.services_clientside_root_url
-  LINKER_ADDRESS = Rails.configuration.nsl_linker
+  INT_LINKER_ADDRESS = Rails.configuration.nsl_linker
   PLACEMENT_PATH = "api/treeElement/placeElement"
   TOP_PLACEMENT_PATH = "api/treeElement/placeTopElement"
   REPLACE_ELEMENT = "api/treeElement/replaceElement"
@@ -65,7 +65,7 @@ class Tree::AsServices
   def self.preferred_link_url(instance_id)
     ShardConfig.name_space
     target = "nameSpace=#{ShardConfig.name_space.downcase}&objectType=instance&idNumber=#{instance_id}"
-    "#{LINKER_ADDRESS}#{PREFERRED_LINK}?#{target}"
+    "#{INT_LINKER_ADDRESS}#{PREFERRED_LINK}?#{target}"
   end
 
   def self.profile_url(username)
@@ -85,7 +85,7 @@ class Tree::AsServices
   end
 
   def self.add_instance_identifier_url(instance_id)
-    "#{LINKER_ADDRESS}#{ADD_IDENTIFIER}?#{API_KEY}&#{add_identity_param_string(instance_id)}"
+    "#{INT_LINKER_ADDRESS}#{ADD_IDENTIFIER}?#{API_KEY}&#{add_identity_param_string(instance_id)}"
   end
 
   def self.add_identity_param_string(instance_id)
