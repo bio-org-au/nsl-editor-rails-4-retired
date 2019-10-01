@@ -90,8 +90,17 @@ module ApplicationHelper
   end
 
   def mapper_link(type, id)
-    # we want to replace this with data pulled from the shard config table
-    %(<a href="#{Rails.configuration.mapper_root_url}#{type}/#{Rails.configuration.mapper_shard}/#{id}" title="#{type.capitalize} #{id}"><i class="fa fa-link"></i></a>).html_safe
+    #this is brittle. Replace with getting the URI from the object or the mapper directly.
+    #see name and instance examples below.
+    %(<a href="#{Rails.configuration.mapper_root_url}#{type}/#{ShardConfig.name_space.downcase}/#{id}" title="#{type.capitalize} #{id}"><i class="fa fa-link"></i></a>).html_safe
+  end
+
+  def mapper_instance_link(instance)
+    %(<a href="#{Rails.configuration.mapper_root_url}#{instance.uri}" title="INSTANCE #{instance.id}"><i class="fa fa-link"></i></a>).html_safe
+  end
+
+  def mapper_name_link(name)
+    %(<a href="#{Rails.configuration.mapper_root_url}#{name.uri}" title="NAME #{name.id}"><i class="fa fa-link"></i></a>).html_safe
   end
 
   def page_title

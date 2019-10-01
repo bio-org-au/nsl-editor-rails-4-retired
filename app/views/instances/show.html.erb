@@ -10,7 +10,7 @@
         search_path(query_string: "id: #{@instance.id}",
                     query_target: 'instance'), 
                     title:"Query this instance." %>
-        <span class="pull-right"><%= mapper_link('instance', @instance.id)%></span>
+      <span class="pull-right"><%= mapper_instance_link(@instance) %></span>
     </h3>
 
     <%= render partial: "#{'instances/tabs/tabs'}" %>
