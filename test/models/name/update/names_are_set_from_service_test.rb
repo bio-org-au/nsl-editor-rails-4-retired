@@ -22,7 +22,7 @@ require "test_helper"
 class NamesAreSetFromServiceTest < ActiveSupport::TestCase
   setup do
     stub_request(:get, %r{#{address}[0-9]{8,}/api/name-strings})
-      .with(headers: { "Accept" => "*/*",
+      .with(headers: { "Accept" => "text/json",
                        "Accept-Encoding" =>
                        "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
                        "User-Agent" => "Ruby" })

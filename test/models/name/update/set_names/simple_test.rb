@@ -23,7 +23,7 @@ class NameUpdateSetNamesSimpleTest < ActiveSupport::TestCase
   setup do
     @name = names(:a_species)
     stub_request(:get, "#{address}#{@name.id}/api/name-strings")
-      .with(headers: { "Accept" => "*/*",
+      .with(headers: { "Accept" => "text/json",
                        "Accept-Encoding" =>
                        "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
                        "User-Agent" => "Ruby" })
