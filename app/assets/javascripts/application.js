@@ -21,7 +21,6 @@
 //= require navigation.js
 //= require keymaster.js
 //= require keys.js
-//= require services/environment.js
 //= require jquery.scrollintoview.js
 //= require typeahead.bundle.js
 //= require bloodhounds.js

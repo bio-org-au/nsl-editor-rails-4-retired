@@ -1,5 +1,16 @@
-== README
-
+= README
+:imagesdir: resources/images/
+:toc: left
+:toclevels: 4
+:toc-class: toc2
+:icons: font
+:iconfont-cdn: //cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css
+:stylesdir: resources/style/
+:stylesheet: asciidoctor.css
+:description: Editor Readme
+:keywords: documentation, NSL, editor
+:links:
+:numbered:
 
 This is the NSL (National Species List) Editor Application developed at the Australian National Botanic Gardens in
 association with CHAH, the ALA and the IBIS team.
@@ -140,3 +151,28 @@ We run the app under JRuby because Tomcat.
     Style/ClassAndModuleChildren:
       Enabled: false
 
+== Production build war
+
+Run the `build.sh` bash script to build a war file using JRuby and Warbler.
+The build script will download a version of JRuby and cache it in the bin directory for use in the build.
+You just need to supply a version of Java.
+
+If you don't have Java 8 installed use https://sdkman.io/install[SDKMan] and try `sdk install java 1.8.0-adpt` for example to install a JDK.
+
+build.sh will create a production nsl-editor.war file in the project directory ready to use in tomcat or Docker
+
+== Docker
+
+You can run the editor in Docker using the `Dockerfile`.
+The following will build a docker image from the war file and expose it on port 8080 on your machine.
+
+    docker build -t nsl-editor .
+    && docker run
+    -p 0.0.0.0:8080:8080
+    -v $HOME/.nsl:/etc/nsl:ro
+    --env EDITOR_CONFIG_FILE=/etc/nsl/editor-config.rb
+    --env EDITOR_CONFIGDB_FILE=/etc/nsl/editor-database.yml
+    --env SECRET_KEY_BASE=7ae05570f6be2b9746464db89555b0cb2f4e499307a021774f011a0c686ecc057b8f3e55921d4410e2988358f138342cd325d1c289856e686281cb3af94b495b
+    nsl-editor
+
+The `dockerize.sh` will build tag and push the docker image to dockerhub, but currently uses my personal dockerhub account.
