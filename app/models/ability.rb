@@ -57,6 +57,7 @@ class Ability
   def basic_auth_1
     can "application",        "set_include_common_cultivars"
     can "authors",            "tab_show_1"
+    can "orchids",            "tab_show_1"
     can "help",               :all
     can "history",            :all
     can "instance_types",     "index"
@@ -94,6 +95,7 @@ class Ability
   end
 
   def qa_auth
+    can "orchids",            :all
   end
 
   # TODO: remove this - NSL-2007

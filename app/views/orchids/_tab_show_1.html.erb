@@ -1,0 +1,185 @@
+<% increment_tab_index(0) %>
+
+<%= render partial: 'detail_line', locals: {info: @orchid.taxon, label: 'taxon'} %>
+<%= render partial: 'detail_line', locals: {info: @orchid.record_type, label: 'record type'} %>
+<% if @orchid.child? %>
+  <%= render partial: 'detail_line', 
+           locals: {info: link_to("Query parent (accepted name with synonyms)",
+                                  search_path(query_target: "orchids", query_string: "id-with-children:#{@orchid.parent_id}"),
+                                  title: 'See parent',
+                                  class: 'underline'), 
+                    label: ''} %>
+<% else %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.children.size, label: 'number of children'} %>
+  <%= render partial: 'detail_line', 
+           locals: {info: link_to("Query self (accepted name with synonyms)",
+                                  search_path(query_target: "orchids", query_string: "id-with-children:#{@orchid.id}"),
+                                  title: 'See this record with synonyms',
+                                  class: 'underline'), 
+                    label: ''} %>
+<% end %>
+
+<%= divider %>
+<% if @orchid.names_simple_name_matching_taxon.empty? %>
+  <div class="bggray big-vertical-padding" ><h4 class="white">No Matching Names</h4></div>
+<% else %>
+Matching names: 
+<%= @orchid.names_simple_name_matching_taxon.size %>
+<% end %>
+<% if @orchid.names_simple_name_matching_taxon.size > 0 %>
+  <% if @orchid.names_simple_name_matching_taxon.size > 1 %>
+    <div class="bggray big-vertical-padding" ><h4 class="white">Too Many Matching Names</h4></div>
+  <% end %>
+  <ul>
+  <% @orchid.names_simple_name_matching_taxon.each do |name| %>
+    <li> <%= name.simple_name %> <%= name.name_status.name_for_instance_display %>
+         &nbsp;
+         | <%= link_to(%Q(#{name.full_name}).html_safe,
+                                        search_path(query_string: "id: #{name.id} show-instances:",query_target: 'names'),
+                          tabindex: increment_tab_index,
+                          title: "Search for #{name.full_name}",
+                          class: '') %>
+        <br>
+        <% name.primary_instances.each do |p_i| %>
+        Primary Instance: <%= p_i.reference.citation %>
+        <% end %>
+        <br>
+        <br>
+   </li>
+  <% end %>
+  </ul>
+<% end %>
+<%= divider %>
+<%= form_for(@orchid, as: 'orchid', role: 'form', remote: true) do |f| %>
+  <% @orchid.names_simple_name_matching_taxon.each do |name| %>
+        <br>
+        <%= f.radio_button(:name_id, name.id) %>
+        <%= label_tag(:"orchid_name_id_#{name.id}", name.full_name) %>
+  <% end %><br>
+  <br>
+  <%= f.submit "Save", id: 'save-orchid', tabindex: increment_tab_index, title: 'Save changes', class: 'btn btn-primary width-5em', disabled: false %>
+<% end %>
+<span id="search-result-details-info-message-container" class="message-container"></span>
+
+
+<%= divider %>
+<h4>Info from Rex</h4>
+<% unless @orchid.ex_base_author.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.ex_base_author, label: 'ex base author'} %>
+  <br>
+<% end %>
+<% unless @orchid.base_author.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.base_author, label: 'base author'} %>
+  <br>
+<% end %>
+<% unless @orchid.ex_author.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.ex_author, label: 'ex author'} %>
+  <br>
+<% end %>
+<%= render partial: 'detail_line', locals: {info: @orchid.author, label: 'author'} unless @orchid.author.blank? %>
+<% unless @orchid.isonym.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.isonym, label: 'isonym'} %>
+  <br>
+<% end %>
+<% unless @orchid.partly.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.partly, label: 'partly'} %>
+  <br>
+<% end %>
+<% unless @orchid.auct_non.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.auct_non, label: 'auct_non'} %>
+  <br>
+<% end %>
+<% unless @orchid.synonym_type.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.synonym_type, label: 'synonym type'} %>
+  <br>
+<% end %>
+<% unless @orchid.doubtful.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.doubtful, label: 'doubtful'} %>
+  <br>
+<% end %>
+<% unless @orchid.article_author.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.article_author, label: 'article author'} %>
+  <br>
+<% end %>
+<% unless @orchid.article_title.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.article_title, label: 'article title'} %>
+  <br>
+<% end %>
+<% unless @orchid.article_title_full.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.article_title_full, label: 'article title full'} %>
+  <br>
+<% end %>
+<% unless @orchid.in_flag.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.in_flag, label: 'in flag'} %>
+  <br>
+<% end %>
+<% unless @orchid.author_2.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.author_2, label: 'author 2'} %>
+  <br>
+<% end %>
+<% unless @orchid.title.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.title, label: 'title'} %>
+  <br>
+<% end %>
+<% unless @orchid.title_full.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.title_full, label: 'title full'} %>
+  <br>
+<% end %>
+<% unless @orchid.edition.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.edition, label: 'edition'} %>
+  <br>
+<% end %>
+<% unless @orchid.volume.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.volume, label: 'volume'} %>
+  <br>
+<% end %>
+<% unless @orchid.page.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.page, label: 'page'} %>
+  <br>
+<% end %>
+<% unless @orchid.year.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.year, label: 'year'} %>
+  <br>
+<% end %>
+<% unless @orchid.date_.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.date_, label: 'date_'} %>
+  <br>
+<% end %>
+<% unless @orchid.publ_partly.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.publ_partly, label: 'publ_partly'} %>
+  <br>
+<% end %>
+<% unless @orchid.publ_note.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.publ_note, label: 'publ_note'} %>
+  <br>
+<% end %>
+<% unless @orchid.note.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.note, label: 'note'} %>
+  <br>
+<% end %>
+<% unless @orchid.footnote.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.footnote, label: 'footnote'} %>
+  <br>
+<% end %>
+<% unless @orchid.distribution.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.distribution, label: 'distribution'} %>
+  <br>
+<% end %>
+<% unless @orchid.comment.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.comment, label: 'comment'} %>
+  <br>
+<% end %>
+<% unless @orchid.remark.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.remark, label: 'remark'} %>
+  <br>
+<% end %>
+<% unless @orchid.original_text.blank? %>
+  <%= divider %>
+  <h5>Original Text</h5>
+  <%= render partial: 'detail_line', locals: {info: @orchid.original_text, label: ''} %>
+  <br>
+<% end %>
+<%= divider %>
+<%= created_by_whom_and_when(@orchid).html_safe %>
+<br>
+<%= updated_by_whom_and_when(@orchid).html_safe %>

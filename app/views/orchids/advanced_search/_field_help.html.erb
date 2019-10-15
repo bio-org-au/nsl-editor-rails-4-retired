@@ -1,0 +1,53 @@
+  <h4>Directives</h4>
+<table class="table table-striped">
+  <tr><th>Field</th><th>Description</th></tr>
+  <% [
+    {field_name: '',
+     description: "Default search is the same as taxon: search"},
+    {field_name: 'taxon:',
+     description: "search on taxon from the CSV, case-insensitive, trailing wildcard added automatically"},
+    {field_name: 'taxon-no-wildcard:',
+     description: "as for taxon:, but no automatic trailing wildcard"},
+    {field_name: 'one-taxon-with-syn:',
+     description: "as for taxon-no-wildcard, but attached synonyms are listed (note: fails if more than one taxon is matched)"},
+    {field_name: 'id:',
+     description: "search on the id from the CSV file"},
+    {field_name: 'ids:',
+     description: "search on CSV ids in comma-separated list"},
+    {field_name: 'id-with-syn:',
+     description: "match on a single id from the CSV file, then show any associated synonyms"},
+    {field_name: 'is-syn:',
+     description: "match only on CSV synonyms"},
+    {field_name: 'is-not-syn:',
+     description: "match only on CSV accepted names"},
+    {field_name: 'no-name-match:',
+     description: "match only on CSV data with no matching NSL name"},
+    {field_name: 'same-name-match:',
+     description: "match only on CSV data with at least one matching NSL name"},
+    {field_name: 'many-name-match:',
+     description: "match only on CSV data with more than 1 matching NSL name"},
+    {field_name: 'one-name-match:',
+     description: "match only on CSV data with exactly one matching NSL name"},
+    {field_name: 'name-match-eq:',
+     description: "match only on CSV data with a number of matching NSL names equal to the supplied number"},
+    {field_name: 'name-match-gt:',
+     description: "match only on CSV data with a number of matching NSL names greater than the supplied number"},
+    {field_name: 'name-match-gte:',
+     description: "match only on CSV data with a number of matching NSL names greater than or equal to the supplied number"},
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+      <a href="javascript:void(0)" class="xyz searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
+        <span class="blue"><%= val[:field_name] %></span>
+      </a>
+    </td>
+    <td><%= val[:description].html_safe %></td>
+    <% if val[:partial].present? %>
+      <td><%= render partial: val[:partial] %></td>
+    <% else %>
+      <td></td>
+    <% end %>
+  </tr>
+  <% end %>
+</table>
+

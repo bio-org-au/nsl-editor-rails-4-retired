@@ -61,6 +61,8 @@ class Search::ParsedRequest
     "references" => "reference",
     "ref" => "reference",
     "tree" => "tree",
+    "orchid" => "orchids",
+    "orchids" => "orchids",
   }.freeze
 
   def initialize(params)

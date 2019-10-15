@@ -69,5 +69,7 @@ class Search::Mapper::Extras
     "references/advanced_search/shared_names/examples",
     "references-shared-names-search-advanced" =>
     "references/advanced_search/shared_names/advanced",
+    "orchids-search-help" => "orchids/advanced_search/help",
+    "orchids-search-examples" => "orchids/advanced_search/examples",
   }.freeze
 end

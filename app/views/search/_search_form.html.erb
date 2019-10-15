@@ -38,6 +38,16 @@
                  data-advanced="name-plus-instances-search-advanced" 
               >Names plus instances</a>
           </li>
+          <% if Rails.configuration.try(:look_for_orchids_table) %>
+            <li><a id="search-target-item-orchid-names" 
+                   href="#" 
+                   title="Set the search to target orchid names" 
+                   data-help="orchids-search-help" 
+                   data-examples="orchids-search-examples"
+                   data-advanced="orchids-search-advanced" 
+                >Orchids</a>
+            </li>
+          <% end %>
 
           <li role="separator" class="divider"></li>
 

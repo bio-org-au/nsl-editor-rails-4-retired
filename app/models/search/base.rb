@@ -76,6 +76,7 @@ class Search::Base
       when /author/ then Search::OnAuthor::Base.new(@parsed_request)
       when /instance/ then Search::OnInstance::Base.new(@parsed_request)
       when /reference/ then Search::OnReference::Base.new(@parsed_request)
+      when /orchids/ then Search::OnOrchids::Base.new(@parsed_request)
       else Search::OnName::Base.new(@parsed_request)
       end
   end

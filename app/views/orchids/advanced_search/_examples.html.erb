@@ -1,0 +1,18 @@
+<div id="example-search-name" class="example-search-tab">
+<h4>Orchids search examples</h4>
+<br>
+
+<h5 class=""></h5>
+<table class="example-searches table table-striped">
+  <% [
+      {search_target: 'Orchids', search_string: "no-name-match:",explanation: %Q(List CSV taxa with no matching name.)},
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent">
+      <%= link_to(val[:search_string], search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue', title: "Run the described search.") %>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+

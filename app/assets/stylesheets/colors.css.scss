@@ -90,6 +90,8 @@ common element.yellow {color: $nsl-theme-color;}
 *.hover-white:hover    {color: white}
 a:hover.blue           { color: blue; }
 
+*.big-vertical-padding  { padding: 0.6em 0.4em 0.6em 0.4em; }
+
 /*
 *.name,name-hover {color: darkgreen;}
 *.ref,ref-hover  {color: brown;}
