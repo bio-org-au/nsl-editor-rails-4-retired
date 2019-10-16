@@ -5,15 +5,15 @@
 <% if @orchid.child? %>
   <%= render partial: 'detail_line', 
            locals: {info: link_to("Query parent (accepted name with synonyms)",
-                                  search_path(query_target: "orchids", query_string: "id-with-children:#{@orchid.parent_id}"),
+                                  search_path(query_target: "orchids", query_string: "id-with-syn:#{@orchid.parent_id}"),
                                   title: 'See parent',
                                   class: 'underline'), 
                     label: ''} %>
 <% else %>
-  <%= render partial: 'detail_line', locals: {info: @orchid.children.size, label: 'number of children'} %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.children.size, label: 'number of synonyms'} %>
   <%= render partial: 'detail_line', 
            locals: {info: link_to("Query self (accepted name with synonyms)",
-                                  search_path(query_target: "orchids", query_string: "id-with-children:#{@orchid.id}"),
+                                  search_path(query_target: "orchids", query_string: "id-with-syn:#{@orchid.id}"),
                                   title: 'See this record with synonyms',
                                   class: 'underline'), 
                     label: ''} %>
