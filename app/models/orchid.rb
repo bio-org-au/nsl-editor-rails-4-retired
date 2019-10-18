@@ -42,6 +42,41 @@ class Orchid < ActiveRecord::Base
   end
 
   def names_simple_name_matching_taxon
-    Name.where(simple_name: taxon)
+    Name.where(simple_name: taxon).joins(:name_type).where(name_type: {scientific: true}).order("simple_name, name.id")
+  end
+
+  def matches
+    names_simple_name_matching_taxon
+  end
+
+  def name_match_no_primary
+    !Name.where(["exists (select null from name_type nt where name.name_type_id = nt.id and nt.scientific and exists (select null from name where name.simple_name = ? and not exists (select null from instance i join instance_type t on i.instance_type_id = t.id where i.name_id = name.id and t.primary_instance)))",taxon]).empty?
+  end
+
+  def name_match_no_primary
+    !Name.where(["name.simple_name = ? and exists (select null from name_type nt where name.name_type_id = nt.id and scientific) and not exists (select null from instance i join instance_type t on i.instance_type_id = t.id where i.name_id = name.id and t.primary_instance)",taxon]).empty?
+  end
+
+  def synonym_type_with_interpretation
+    "#{synonym_type} (#{interpreted_synonym_type})"
+  end
+
+  def interpreted_synonym_type
+    case synonym_type
+    when 'homotypic'
+      'nomenclatural'
+    when 'heterotypic'
+      'taxonomic'
+    else
+      'unknown'
+    end
+  end
+
+  def has_parent?
+    !parent_id.blank?
+  end
+
+  def misapplied?
+    record_type == 'misapplied'
   end
 end

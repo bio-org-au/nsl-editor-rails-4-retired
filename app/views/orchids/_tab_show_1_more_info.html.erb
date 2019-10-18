@@ -1,0 +1,108 @@
+<h4>More info from Rex</h4>
+<% unless @orchid.ex_base_author.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.ex_base_author, label: 'ex base author'} %>
+  <br>
+<% end %>
+<% unless @orchid.base_author.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.base_author, label: 'base author'} %>
+  <br>
+<% end %>
+<% unless @orchid.ex_author.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.ex_author, label: 'ex author'} %>
+  <br>
+<% end %>
+<%= render partial: 'detail_line', locals: {info: @orchid.author, label: 'author'} unless @orchid.author.blank? %>
+<% unless @orchid.isonym.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.isonym, label: 'isonym'} %>
+  <br>
+<% end %>
+<% unless @orchid.auct_non.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.auct_non, label: 'auct_non'} %>
+  <br>
+<% end %>
+<% unless @orchid.doubtful.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.doubtful, label: 'doubtful'} %>
+  <br>
+<% end %>
+<% unless @orchid.article_author.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.article_author, label: 'article author'} %>
+  <br>
+<% end %>
+<% unless @orchid.article_title.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.article_title, label: 'article title'} %>
+  <br>
+<% end %>
+<% unless @orchid.article_title_full.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.article_title_full, label: 'article title full'} %>
+  <br>
+<% end %>
+<% unless @orchid.in_flag.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.in_flag, label: 'in flag'} %>
+  <br>
+<% end %>
+<% unless @orchid.author_2.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.author_2, label: 'author 2'} %>
+  <br>
+<% end %>
+<% unless @orchid.title.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.title, label: 'title'} %>
+  <br>
+<% end %>
+<% unless @orchid.title_full.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.title_full, label: 'title full'} %>
+  <br>
+<% end %>
+<% unless @orchid.edition.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.edition, label: 'edition'} %>
+  <br>
+<% end %>
+<% unless @orchid.volume.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.volume, label: 'volume'} %>
+  <br>
+<% end %>
+<% unless @orchid.page.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.page, label: 'page'} %>
+  <br>
+<% end %>
+<% unless @orchid.year.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.year, label: 'year'} %>
+  <br>
+<% end %>
+<% unless @orchid.date_.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.date_, label: 'date_'} %>
+  <br>
+<% end %>
+<% unless @orchid.publ_partly.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.publ_partly, label: 'publ_partly'} %>
+  <br>
+<% end %>
+<% unless @orchid.publ_note.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.publ_note, label: 'publ_note'} %>
+  <br>
+<% end %>
+<% unless @orchid.note.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.note, label: 'note'} %>
+  <br>
+<% end %>
+<% unless @orchid.footnote.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.footnote, label: 'footnote'} %>
+  <br>
+<% end %>
+<% unless @orchid.distribution.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.distribution, label: 'distribution'} %>
+  <br>
+<% end %>
+<% unless @orchid.comment.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.comment, label: 'comment'} %>
+  <br>
+<% end %>
+<% unless @orchid.remark.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.remark, label: 'remark'} %>
+  <br>
+<% end %>
+<% unless @orchid.original_text.blank? %>
+  <%= divider %>
+  <h5>Original Text</h5>
+  <%= render partial: 'detail_line', locals: {info: @orchid.original_text, label: ''} %>
+  <br>
+<% end %>

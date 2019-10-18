@@ -598,6 +598,10 @@ and (max-device-width : 1024px) {
     width: 35%;
     max-width: 600px;
   }
+  div#search-result-details.orchids {
+    width: 55%;
+    max-width: 900px;
+  }
   input#search-field.form-control {
     width: 100%;
   }

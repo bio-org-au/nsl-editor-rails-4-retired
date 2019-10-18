@@ -1,0 +1,51 @@
+  <% @orchid.names_simple_name_matching_taxon.each_with_index do |name, index| %>
+    <%  if index > 0 %><br><% end %>
+
+
+    <br>
+    <b>
+    <%= "#{name.full_name} #{name.name_status.name_for_instance_display}" %>
+    </b>
+    <% unless name.orchid_ids.empty? || (name.id == @orchid.name_id && name.orchid_ids.size == 1) %>
+    <br>
+     Already the preferred match for:
+     <ul>
+       <b>
+       <% name.orchid_ids.each do |orchid| %>
+         <li><%= link_to(orchid.taxon,search_path(query_target: "orchids", query_string: "id:#{orchid.id}"),
+                         title: "See #{orchid.taxon}",
+                         class: 'underline') %>
+       <% end %>
+       </b>
+     </ul>
+     <br>
+    <% end %>
+     | <%= link_to('query name', search_path(query_string: "id: #{name.id} show-instances:",query_target: 'names'),
+                      tabindex: increment_tab_index,
+                      title: "Search for #{name.full_name}",
+                      class: '') %>
+
+
+<% i_count = 0 %>
+<%= form_for(@orchid, as: 'orchid', role: 'form', remote: true) do |f| %>
+  <% name.instances.sort{|x,y| x.reference.iso_publication_date <=> y.reference.iso_publication_date}.each do |instance| %>
+      <% unless instance.instance_type.relationship? %>
+        <%  if i_count > 0 %><br><% end %>
+        <% i_count += 1 %>
+
+        <br>
+        <%= f.radio_button(:instance_id, instance.id) %>
+        <%= label_tag(:"orchid_name_id_#{instance.id}", 
+                      "<span class='brown'>#{instance.instance_type.name}</span><br> #{instance.reference.citation} #{instance.page}".html_safe) %>
+        <% end %>
+      <% end %>
+      <% if i_count > 0 %>
+        <br>
+        <%= f.submit "Save", id: 'save-orchid', tabindex: increment_tab_index, title: 'Save changes', class: 'btn btn-primary width-5em', disabled: true %>
+      <% else %>
+        <% if name_match_count > 0 %>
+          [No non-relationship instances.]
+        <% end %>
+      <% end %>
+   <% end %>
+<% end %>

@@ -1,3 +1,4 @@
+
   <h4>Directives</h4>
 <table class="table table-striped">
   <tr><th>Field</th><th>Description</th></tr>
@@ -8,21 +9,71 @@
      description: "search on taxon from the CSV, case-insensitive, trailing wildcard added automatically"},
     {field_name: 'taxon-no-wildcard:',
      description: "as for taxon:, but no automatic trailing wildcard"},
-    {field_name: 'one-taxon-with-syn:',
-     description: "as for taxon-no-wildcard, but attached synonyms are listed (note: fails if more than one taxon is matched)"},
+    {field_name: 'taxon-with-syn:',
+     description: "as for taxon-no-wildcard, but attached synonyms are listed"},
     {field_name: 'id:',
      description: "search on the id from the CSV file"},
     {field_name: 'ids:',
      description: "search on CSV ids in comma-separated list"},
     {field_name: 'id-with-syn:',
      description: "match on a single id from the CSV file, then show any associated synonyms"},
+    {field_name: 'has-parent:',
+     description: "match only if parent exists in the CSV file"},
+    {field_name: 'has-no-parent:',
+     description: "match only if no parent in the CSV file"},
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+      <a href="javascript:void(0)" class="xyz searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
+        <span class="blue"><%= val[:field_name] %></span>
+      </a>
+    </td>
+    <td><%= val[:description].html_safe %></td>
+    <% if val[:partial].present? %>
+      <td><%= render partial: val[:partial] %></td>
+    <% else %>
+      <td></td>
+    <% end %>
+  </tr>
+  <% end %>
+</table>
+
+  <h4>Record Type Directives</h4>
+<table class="table table-striped">
+  <tr><th>Field</th><th>Description</th></tr>
+  <% [
+    {field_name: 'is-accepted:',
+     description: "match only CSV data with record type 'accepted'"},
     {field_name: 'is-syn:',
-     description: "match only on CSV synonyms"},
-    {field_name: 'is-not-syn:',
-     description: "match only on CSV accepted names"},
+     description: "match only CSV data with record type 'synonym'"},
+    {field_name: 'is-misapplied:',
+     description: "match only CSV data with record type 'misapplied'"},
+    {field_name: 'is-hybrid-cross:',
+     description: "match only CSV data with record type 'hybrid-cross'"},
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+      <a href="javascript:void(0)" class="xyz searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
+        <span class="blue"><%= val[:field_name] %></span>
+      </a>
+    </td>
+    <td><%= val[:description].html_safe %></td>
+    <% if val[:partial].present? %>
+      <td><%= render partial: val[:partial] %></td>
+    <% else %>
+      <td></td>
+    <% end %>
+  </tr>
+  <% end %>
+</table>
+
+  <h4>Name Matching Directives</h4>
+<table class="table table-striped">
+  <tr><th>Field</th><th>Description</th></tr>
+  <% [
     {field_name: 'no-name-match:',
      description: "match only on CSV data with no matching NSL name"},
-    {field_name: 'same-name-match:',
+    {field_name: 'some-name-match:',
      description: "match only on CSV data with at least one matching NSL name"},
     {field_name: 'many-name-match:',
      description: "match only on CSV data with more than 1 matching NSL name"},
@@ -34,6 +85,61 @@
      description: "match only on CSV data with a number of matching NSL names greater than the supplied number"},
     {field_name: 'name-match-gte:',
      description: "match only on CSV data with a number of matching NSL names greater than or equal to the supplied number"},
+    {field_name: 'name-match-no-primary:',
+     description: "match only on CSV data with at least one matching NSL name that has no primary instance"},
+    {field_name: 'taxon-sharing-name-id:',
+     description: "match only on CSV data orchid that shares a preferred name ID with at least one other CSV data orchid"},
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+      <a href="javascript:void(0)" class="xyz searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
+        <span class="blue"><%= val[:field_name] %></span>
+      </a>
+    </td>
+    <td><%= val[:description].html_safe %></td>
+    <% if val[:partial].present? %>
+      <td><%= render partial: val[:partial] %></td>
+    <% else %>
+      <td></td>
+    <% end %>
+  </tr>
+  <% end %>
+</table>
+
+  <h4>Some More Interesting Directives</h4>
+<table class="table table-striped">
+  <tr><th>Field</th><th>Description</th></tr>
+  <% [
+    {field_name: 'partly:',
+     description: "match only on CSV data where the partly field has any data in it, which is uniformly 'p.p.' - it's essentially a flag where p.p. means true"},
+    {field_name: 'not-partly:',
+     description: "match only on CSV data where the partly field has no data"},
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+      <a href="javascript:void(0)" class="xyz searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
+        <span class="blue"><%= val[:field_name] %></span>
+      </a>
+    </td>
+    <td><%= val[:description].html_safe %></td>
+    <% if val[:partial].present? %>
+      <td><%= render partial: val[:partial] %></td>
+    <% else %>
+      <td></td>
+    <% end %>
+  </tr>
+  <% end %>
+</table>
+
+  <h4>Two little beauties for checking your progress</h4>
+  Use these alone for an overview, or in combination with other search directives to drill into progress - see query examples.
+<table class="table table-striped">
+  <tr><th>Field</th><th>Description</th></tr>
+  <% [
+    {field_name: 'has-preferred-name:',
+     description: "match only on CSV taxon data where the preferred name ID has been set"},
+    {field_name: 'has-no-preferred-name:',
+     description: "match only on CSV taxon data where the preferred name ID has NOT been set"},
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">

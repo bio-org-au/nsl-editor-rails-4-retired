@@ -66,9 +66,9 @@ input[type="checkbox"]:not([title]) {
     <div id="main-content" class="container-fluid">
 
       <% if @no_search_result_details %>
-        <div id="search-result-details" class="hidden" > </div>
+        <div id="search-result-details" class="hidden <%= 'orchids' if params[:query_target] == 'Orchids' %>"> </div>
       <% else %>
-        <div id="search-result-details" > </div>
+        <div id="search-result-details" class="<%= 'orchids' if params[:query_target] == 'Orchids' %>"> </div>
       <% end %>
 
 

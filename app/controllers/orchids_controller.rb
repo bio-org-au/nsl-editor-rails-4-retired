@@ -47,7 +47,7 @@ class OrchidsController < ApplicationController
   end
 
   def orchid_params
-    params.require(:orchid).permit(:taxon, :name_id)
+    params.require(:orchid).permit(:taxon, :name_id, :instance_id)
   end
 
   def set_tab

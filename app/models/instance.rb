@@ -615,4 +615,8 @@ class Instance < ActiveRecord::Base
   def can_have_apc_dist?
     instance_notes.to_a.keep_if {|n| n.instance_note_key.apc_dist?}.size.zero?
   end
+
+  def year
+    reference.year
+  end
 end

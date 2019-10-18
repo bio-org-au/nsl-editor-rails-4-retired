@@ -1,6 +1,32 @@
-<% if search_result.synonym? %>
+<% if search_result.has_parent? %>
   --
 <% end %>
 <%= "#{search_result.taxon}" %>
+| <%= search_result.matches.size %>
+<% if search_result.name_id.blank? %>
+  <% case search_result.matches.size %>
+  <% when 0 %>
+    <span class="no-matches">No Matches</span>
+  <% when 1 %>
+    <% if search_result.name_match_no_primary %>
+      <span class="no-primary">No Primary</span>
+    <% end %>
+  <% else %>
+    <span class="too-many-matches">Too many matches</span>
+    <% if search_result.name_match_no_primary %>
+      <span class="no-primary">No Primary</span>
+    <% end %>
+  <% end %>
+<% else %>
+  <span class="preferred-name">preferred name: <%= search_result.name_id %></span>
+<% end %>
 
 
+<% case search_result.record_type %>
+<% when 'accepted' %>
+<% when 'synonym' %>
+<% when 'misapplied' %>
+  <span class="misapplied">Misapplied</span>
+<% when 'hybrid_cross' %>
+  <span class="hybrid-cross">Hybrid Cross</span>
+<% end %>

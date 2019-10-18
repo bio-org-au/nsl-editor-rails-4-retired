@@ -6,6 +6,9 @@
 <table class="example-searches table table-striped">
   <% [
       {search_target: 'Orchids', search_string: "no-name-match:",explanation: %Q(List CSV taxa with no matching name.)},
+      {search_target: 'Orchids', search_string: "many-name-match:",explanation: %Q(List CSV taxa with multiple matching names.)},
+      {search_target: 'Orchids', search_string: "many-name-match: has-preferred-name:",explanation: %Q(List CSV taxa with multiple matching names but also a preferred name match recorded.)},
+      {search_target: 'Orchids', search_string: "many-name-match: has-no-preferred-name:",explanation: %Q(List CSV taxa with multiple matching names and no preferred name match recorded.)},
       ].each do |val| %>
   <tr>
     <td class="width-30-percent">

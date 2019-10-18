@@ -21,9 +21,6 @@
       title="Orchid record. Select to show details."
       id="<%= %Q(#{search_result.class}-#{search_result.id}) %>">
       <%= render partial: 'orchid_name_link_text', locals: {search_result: search_result} %>
-      <% unless search_result.name_id.blank? %>
-        <span class="black">preferred name: <%= search_result.name_id %></span>
-      <% end %>
     </a>
   </td>
   <td class="takes-focus width-5-percent filler">&nbsp;</td>
