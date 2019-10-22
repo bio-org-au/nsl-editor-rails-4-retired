@@ -17,7 +17,7 @@
         <br>
         <% orchid_name_ids = @orchid.orchids_name.collect {|oname| oname.name_id} %>
         <%= f.radio_button(:name_id, matching_name.id, checked: orchid_name_ids.include?(matching_name.id), disabled: disable_radio_button) %>
-        <%= label_tag(:"orchid_name_id_#{matching_name.id}", "#{matching_name.id} #{matching_name.full_name} #{matching_name.name_status.name_for_instance_display}") %>
+        <%= label_tag(:"orchid_name_id_#{matching_name.id}", "#{matching_name.full_name} #{matching_name.name_status.name_for_instance_display}", title: "Name ID: #{matching_name.id}") %>
          | <%= link_to('query name', search_path(query_string: "id: #{matching_name.id} show-instances:",query_target: 'names'),
                           tabindex: increment_tab_index,
                           title: "Search for #{matching_name.full_name}",
@@ -37,7 +37,7 @@
         <% end %>
         <% matching_name.primary_instances.each do |p_i| %>
           <br>
-          <span class="brown"><%= p_i.instance_type.name %></span>&nbsp;<%= p_i.reference.citation %>:&nbsp;<%= p_i.page %>
+          <span class="brown"><%= p_i.instance_type.name %></span>&nbsp;<span title="Instance ID: <%= p_i.id %>"><%= p_i.reference.citation %>:&nbsp;<%= p_i.page %></span>
         <% end %>
  <% end %>
   <br>

@@ -1,5 +1,9 @@
 ---
-- :date: 18-Oct-2019
+- :date: 22-Oct-2019
+  :jira_id: '3397'
+  :description: |-
+    Now adding instances and instance type for every preferred name link.
+- :date: 21-Oct-2019
   :jira_id: '3397'
   :description: |-
     Orchid data loading now allows multiple preferred name/instances for misapplieds - other related changes.

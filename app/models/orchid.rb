@@ -82,4 +82,19 @@ class Orchid < ActiveRecord::Base
   def misapplied?
     record_type == 'misapplied'
   end
+
+  def homotypic?
+    synonym_type == 'homotypic'
+  end
+
+  def heterotypic?
+    synonym_type == 'heterotypic'
+  end
+
+  def riti
+    return InstanceType.find_by_name('misapplied').id if misapplied?
+    return InstanceType.find_by_name('nomenclatural synonym').id if homotypic?
+    return InstanceType.find_by_name('taxonomic synonym').id if heterotypic?
+    return InstanceType.unknown.id
+  end
 end

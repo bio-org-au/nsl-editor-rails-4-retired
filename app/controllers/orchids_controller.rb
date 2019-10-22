@@ -34,7 +34,8 @@ class OrchidsController < ApplicationController
     orchids_name = OrchidsName.new
     orchids_name.orchid_id = @orchid.id
     orchids_name.name_id = orchid_params[:name_id]
-    orchids_name.instance_id = orchid_params[:instance_id]
+    orchids_name.instance_id = orchid_params[:instance_id] || Name.find(orchid_params[:name_id]).primary_instances.first.id
+    orchids_name.relationship_instance_type_id = @orchid.riti
     orchids_name.created_by = orchids_name.updated_by = username
     orchids_name.save!
   rescue => e
@@ -92,7 +93,8 @@ class OrchidsController < ApplicationController
   def remove_unwanted_orchid_names
     return if @orchids_names.blank? 
     @orchids_names.each do |orchid_name|
-      unless orchid_name.name_id == orchid_params[:name_id].to_i
+      unless orchid_name.name_id == orchid_params[:name_id].to_i &&
+             orchid_name.instance_id == orchid_params[:instance_id].to_i
         orchid_name.delete
       end
     end

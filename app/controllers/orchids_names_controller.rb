@@ -26,6 +26,7 @@ class OrchidsNamesController < ApplicationController
       orn.name_id = orchids_name_params[:name_id]
       orn.orchid_id = orchids_name_params[:orchid_id]
       orn.instance_id = orchids_name_params[:instance_id]
+      orn.relationship_instance_type_id = Orchid.find(orchids_name_params[:orchid_id]).riti
       orn.save!
     end
     @instance_id = orchids_name_params[:instance_id]
