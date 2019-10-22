@@ -1,31 +1,41 @@
+<% @orchid.orchids_name.each do |orchid_name| %>
+  <% unless @orchid.names_simple_name_matching_taxon.collect {|n| n.id}.include?(orchid_name.name_id) %>
+    <span class="red">
+    Currently linked to <%= orchid_name.name.full_name %><%= orchid_name.name.name_status.name_for_instance_display %><br>
+    </span>
+  <% end %>
+<% end %>
+
+
+
 <% pi_count = 0 %>
 <%= form_for(@orchid, as: 'orchid', role: 'form', remote: true) do |f| %>
-  <% @orchid.names_simple_name_matching_taxon.each_with_index do |name, index| %>
+  <% @orchid.names_simple_name_matching_taxon.each_with_index do |matching_name, index| %>
     <%  if index > 0 %><br><% end %>
-    <% disable_radio_button = !name.has_primary_instance? %>
+    <% disable_radio_button = !matching_name.has_primary_instance? %>
         <% pi_count += 1 unless disable_radio_button %>
         <br>
-        <%= f.radio_button(:name_id, name.id, disabled: disable_radio_button) %>
-        <%= label_tag(:"orchid_name_id_#{name.id}", "#{name.full_name} #{name.name_status.name_for_instance_display}") %>
-        <% unless name.orchid_ids.empty? || (name.id == @orchid.name_id && name.orchid_ids.size == 1) %>
-        <br>
-         Already the preferred match for:
-         <ul>
-           <b>
-           <% name.orchid_ids.each do |orchid| %>
-             <li><%= link_to(orchid.taxon,search_path(query_target: "orchids", query_string: "id:#{orchid.id}"),
-                             title: "See #{orchid.taxon}",
-                             class: 'underline') %>
-           <% end %>
-           </b>
-         </ul>
-         <br>
-        <% end %>
-         | <%= link_to('query name', search_path(query_string: "id: #{name.id} show-instances:",query_target: 'names'),
+        <% orchid_name_ids = @orchid.orchids_name.collect {|oname| oname.name_id} %>
+        <%= f.radio_button(:name_id, matching_name.id, checked: orchid_name_ids.include?(matching_name.id), disabled: disable_radio_button) %>
+        <%= label_tag(:"orchid_name_id_#{matching_name.id}", "#{matching_name.id} #{matching_name.full_name} #{matching_name.name_status.name_for_instance_display}") %>
+         | <%= link_to('query name', search_path(query_string: "id: #{matching_name.id} show-instances:",query_target: 'names'),
                           tabindex: increment_tab_index,
-                          title: "Search for #{name.full_name}",
+                          title: "Search for #{matching_name.full_name}",
                           class: '') %>
-        <% name.primary_instances.each do |p_i| %>
+
+        <% if OrchidsName.where(name_id: matching_name.id).where.not(orchid_id: @orchid.id).size > 0 %>
+          <br> Already the preferred match for:
+          <ul>
+            <b>
+            <% OrchidsName.where(name_id: matching_name.id).where.not(orchid_id: @orchid.id).each do |orchids_name| %>
+              <li><%= link_to(orchids_name.orchid.taxon,search_path(query_target: "orchids", query_string: "id:#{orchids_name.orchid_id}"),
+                              title: "See #{orchids_name.orchid}",
+                              class: 'underline') %>
+            <% end %>
+            </b>
+          </ul>
+        <% end %>
+        <% matching_name.primary_instances.each do |p_i| %>
           <br>
           <span class="brown"><%= p_i.instance_type.name %></span>&nbsp;<%= p_i.reference.citation %>:&nbsp;<%= p_i.page %>
         <% end %>

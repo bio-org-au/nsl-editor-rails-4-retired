@@ -18,4 +18,13 @@
 #
 # Orchids table
 class OrchidsName < ActiveRecord::Base
+  belongs_to :name
+  belongs_to :instance
+  belongs_to :instance_type
+  belongs_to :orchid
+  validates :name_id, uniqueness: { scope: :orchid_id, message: 'Cannot reuse same name for the same orchid taxon'},
+            unless: Proc.new {|a| a.orchid.record_type == 'misapplied'}
+
+  validates :orchid_id, uniqueness: true,
+            unless: Proc.new {|a| a.orchid.record_type == 'misapplied'}
 end

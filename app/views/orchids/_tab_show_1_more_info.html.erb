@@ -1,21 +1,4 @@
 <h4>More info from Rex</h4>
-<% unless @orchid.ex_base_author.blank? %>
-  <%= render partial: 'detail_line', locals: {info: @orchid.ex_base_author, label: 'ex base author'} %>
-  <br>
-<% end %>
-<% unless @orchid.base_author.blank? %>
-  <%= render partial: 'detail_line', locals: {info: @orchid.base_author, label: 'base author'} %>
-  <br>
-<% end %>
-<% unless @orchid.ex_author.blank? %>
-  <%= render partial: 'detail_line', locals: {info: @orchid.ex_author, label: 'ex author'} %>
-  <br>
-<% end %>
-<%= render partial: 'detail_line', locals: {info: @orchid.author, label: 'author'} unless @orchid.author.blank? %>
-<% unless @orchid.isonym.blank? %>
-  <%= render partial: 'detail_line', locals: {info: @orchid.isonym, label: 'isonym'} %>
-  <br>
-<% end %>
 <% unless @orchid.auct_non.blank? %>
   <%= render partial: 'detail_line', locals: {info: @orchid.auct_non, label: 'auct_non'} %>
   <br>

@@ -96,6 +96,7 @@ class Ability
 
   def qa_auth
     can "orchids",            :all
+    can "orchids_names",      :all
   end
 
   # TODO: remove this - NSL-2007

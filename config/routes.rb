@@ -177,6 +177,8 @@ Rails.application.routes.draw do
 
   resources :orchids, only: [:new, :create, :update, :destroy]
   match "orchids/:id/tab/:tab", as: "orchid_tab", to: "orchids#tab", via: :get
+  match "orchids/:id", as: "orchid_update", to: "orchids#update", via: :post
+  resources :orchids_names, only: [:new, :create, :update, :destroy]
 
   match "references/typeahead/on_citation/duplicate_of/:id",
         as: "references_typeahead_on_citation_duplicate_of_current",

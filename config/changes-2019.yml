@@ -2,6 +2,10 @@
 - :date: 18-Oct-2019
   :jira_id: '3397'
   :description: |-
+    Orchid data loading now allows multiple preferred name/instances for misapplieds - other related changes.
+- :date: 18-Oct-2019
+  :jira_id: '3397'
+  :description: |-
     Orchid data loading features for vascular shard - switchable via configuration, so should not impact other shards.
 - :date: 31-Jul-2019
   :release: true

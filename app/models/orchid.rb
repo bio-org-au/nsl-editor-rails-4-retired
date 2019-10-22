@@ -18,11 +18,14 @@
 #
 # Orchids table
 class Orchid < ActiveRecord::Base
+  attr_accessor :name_id
+  attr_accessor :instance_id
     belongs_to :parent, class_name: "Orchid", foreign_key: "parent_id"
     has_many :children,
              class_name: "Orchid",
              foreign_key: "parent_id",
              dependent: :restrict_with_exception
+    has_many :orchids_name
 
 
   def display_as

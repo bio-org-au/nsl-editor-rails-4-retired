@@ -47,8 +47,8 @@ class Search::OnOrchids::FieldRule
     "name-match-gte:"     => { where_clause: "? <=  (select count(*) from name where taxon = name.simple_name and exists (select null from name_Type nt where name.name_type_id = nt.id and nt.scientific))" },
     "partly:"             => { where_clause: "partly is not null"},
     "not-partly:"         => { where_clause: "partly is null"},
-    "taxon-sharing-name-id:" => { where_clause: "name_id in (select name_id from orchids where name_id is not null group by name_id having count(*) > 1)"},
-    "has-preferred-name:"   => { where_clause: "name_id is not null"},
+    "taxon-sharing-name-id:" => { where_clause: " id in (select orchid_id from orchids_names where name_id in (select name_id from orchids_names group by name_id having count(*) > 1))"},
+    "has-preferred-name:"   => { where_clause: " exists (select null from orchids_names where orchids.id = orchids_names.orchid_id)"},
     "has-no-preferred-name:"=> { where_clause: "name_id is null"},
   }.freeze
 end

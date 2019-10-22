@@ -28,13 +28,27 @@ class OrchidsController < ApplicationController
   alias tab show
 
   def update
-    @orchid.name_id = orchid_params[:name_id]
-    @orchid.updated_by = username
-    @orchid.save!
+    @orchids_names = OrchidsName.where(orchid_id: @orchid.id)
+    stop_if_nothing_changed
+    remove_unwanted_orchid_names
+    orchids_name = OrchidsName.new
+    orchids_name.orchid_id = @orchid.id
+    orchids_name.name_id = orchid_params[:name_id]
+    orchids_name.instance_id = orchid_params[:instance_id]
+    orchids_name.created_by = orchids_name.updated_by = username
+    orchids_name.save!
+  rescue => e
+    logger.error(e.to_s)
+    @message = e.to_s
+    render 'update_error', format: :js
   end
-
+ 
   def destroy
     throw 'destroy!'
+  end
+
+  def create
+    throw 'create!'
   end
 
   private
@@ -60,5 +74,27 @@ class OrchidsController < ApplicationController
 
   def set_tab_index
     @tab_index = (params[:tabIndex] || "1").to_i
+  end
+
+  def stop_if_nothing_changed
+    return if @orchids_names.blank? 
+    changed = false
+    @orchids_names.each do |orchid_name|
+      unless orchid_name.name_id == orchid_params[:name_id].to_i &&
+             orchid_name.instance_id == orchid_params[:instance_id]
+        changed = true
+      end
+    end
+    raise 'no change required' unless changed
+  end
+
+  # Doesn't handle multiple name_ids being passed in params
+  def remove_unwanted_orchid_names
+    return if @orchids_names.blank? 
+    @orchids_names.each do |orchid_name|
+      unless orchid_name.name_id == orchid_params[:name_id].to_i
+        orchid_name.delete
+      end
+    end
   end
 end

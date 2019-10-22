@@ -3,7 +3,7 @@
 <% end %>
 <%= "#{search_result.taxon}" %>
 | <%= search_result.matches.size %>
-<% if search_result.name_id.blank? %>
+<% if search_result.orchids_name.blank? %>
   <% case search_result.matches.size %>
   <% when 0 %>
     <span class="no-matches">No Matches</span>
@@ -18,7 +18,7 @@
     <% end %>
   <% end %>
 <% else %>
-  <span class="preferred-name">preferred name: <%= search_result.name_id %></span>
+  <span class="preferred-name">preferred name/instance: <%= search_result.orchids_name.collect{|o| "#{o.name_id}/#{o.instance_id}" }.join(',') %></span>
 <% end %>
 
 
