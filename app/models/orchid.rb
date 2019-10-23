@@ -91,10 +91,29 @@ class Orchid < ActiveRecord::Base
     synonym_type == 'heterotypic'
   end
 
+  def pp?
+    partly == 'p.p.'
+  end
+
   def riti
     return InstanceType.find_by_name('misapplied').id if misapplied?
-    return InstanceType.find_by_name('nomenclatural synonym').id if homotypic?
-    return InstanceType.find_by_name('taxonomic synonym').id if heterotypic?
+    if heterotypic?
+      if pp?
+        return InstanceType.find_by_name('pro parte taxonomic synonym').id
+      else
+        return InstanceType.find_by_name('taxonomic synonym').id
+      end
+    end
+    if homotypic?
+      Rails.logger.debug('homotypic')
+      if pp?
+        Rails.logger.debug('pp')
+        return InstanceType.find_by_name('pro parte nomenclatural synonym').id
+      else
+        return InstanceType.find_by_name('nomenclatural synonym').id
+      end
+    end
+    Rails.logger.debug('Will be unknown')
     return InstanceType.unknown.id
   end
 end

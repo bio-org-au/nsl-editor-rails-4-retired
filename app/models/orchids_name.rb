@@ -20,7 +20,7 @@
 class OrchidsName < ActiveRecord::Base
   belongs_to :name
   belongs_to :instance
-  belongs_to :instance_type
+  belongs_to :instance_type, foreign_key: :relationship_instance_type_id
   belongs_to :orchid
   validates :name_id, uniqueness: { scope: :orchid_id, message: 'Cannot reuse same name for the same orchid taxon'},
             unless: Proc.new {|a| a.orchid.record_type == 'misapplied'}

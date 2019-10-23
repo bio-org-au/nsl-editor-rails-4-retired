@@ -1,5 +1,9 @@
 ---
-- :date: 22-Oct-2019
+- :date: 23-Oct-2019
+  :jira_id: '3397'
+  :description: |-
+    Now has an edit tab for orchids allowing fine tuning of instance type.  Also honouring the partly (p.p.) field when assigning instance type.
+- :date: 23-Oct-2019
   :jira_id: '3397'
   :description: |-
     Now adding instances and instance type for every preferred name link.
