@@ -26,6 +26,18 @@ class Orchid < ActiveRecord::Base
              foreign_key: "parent_id",
              dependent: :restrict_with_exception
     has_many :orchids_name
+    scope :avoids_id, ->(avoid_id) { where("orchids.id != ?", avoid_id) }
+
+  def self.create(params, username)
+    orchid = Orchid.new(params)
+    orchid.id = next_sequence_id
+    orchid.family = 'Orchidaceae'
+    if orchid.save_with_username(username)
+      orchid
+    else
+      raise orchid.errors.full_messages.first.to_s
+    end
+  end
 
 
   def display_as
@@ -116,4 +128,42 @@ class Orchid < ActiveRecord::Base
     Rails.logger.debug('Will be unknown')
     return InstanceType.unknown.id
   end
+
+  def save_with_username(username)
+    self.created_by = self.updated_by = username
+    save
+  end
+
+  # We use a custom sequence because the data is initially loaded from a CSV file with allocated IDs.
+  # This is only for subsequent records we add.
+  def self.next_sequence_id
+    ActiveRecord::Base.connection.execute("select nextval('orchids_seq')").first['nextval']
+  end
+
+  def update_if_changed(params, username)
+    params = empty_strings_should_be_nils(params)
+    assign_attributes(params)
+    if changed?
+      self.updated_by = username
+      save!
+      "Updated"
+    else
+      "No change"
+    end
+  end
+
+  # Empty strings as parameters for string fields are interpreted as a change.
+  def empty_strings_should_be_nils(params)
+    %w(hybrid, family, hr_comment, subfamily, tribe, subtribe, rank, nsl_rank, taxon,
+ ex_base_author, base_author, ex_author, author, author_rank, name_status, name_comment,
+ partly, auct_non, synonym_type, doubtful, hybrid_level, isonym, article_author, article_title,
+ article_title_full, in_flag, author_2, title, title_full, edition, volume, page,
+ year, date_, publ_partly, publ_note, note, footnote, distribution, comment,
+ remark, original_text).each do |field|
+    params[field] = nil if params[field] == ""
+    end
+    params
+  end
+
+
 end

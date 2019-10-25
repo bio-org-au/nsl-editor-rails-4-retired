@@ -91,5 +91,17 @@
                     tabindex: '-1' %>
         </li>
 
+      <% if Rails.configuration.try('look_for_orchids_table') %>
+      <li role="presentation" class="divider"></li>
+
+        <li role="presentation">
+          <%= link_to "Orchid",
+                    orchid_new_row_path,
+                    title: 'Add a new orchid (raw data)',
+                    remote: true,
+                    tabindex: '-1' %>
+        </li>
+      <% end %>
+
     </ul>
 </li>

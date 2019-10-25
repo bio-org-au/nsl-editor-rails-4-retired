@@ -28,6 +28,14 @@ class OrchidsController < ApplicationController
   alias tab show
 
   def update
+    if orchid_params[:name_id].blank?
+      update_the_raw_record
+    else
+      update_matching_name
+    end
+  end
+
+  def update_matching_name
     @orchids_names = OrchidsName.where(orchid_id: @orchid.id)
     stop_if_nothing_changed
     remove_unwanted_orchid_names
@@ -43,13 +51,55 @@ class OrchidsController < ApplicationController
     @message = e.to_s
     render 'update_error', format: :js
   end
+
+  def update_the_raw_record
+    @orchid = Orchid.find(params[:id])
+    @message = @orchid.update_if_changed(orchid_params, current_user.username)
+    render "update.js"
+  rescue => e
+    logger.error("Orchid#update_the_raw_record rescuing #{e}")
+    @message = e.to_s
+    render "update_error.js", status: :unprocessable_entity
+  end
+
  
   def destroy
     throw 'destroy!'
   end
 
+  # GET /orchids/new_row
+  def new_row
+    @random_id = (Random.new.rand * 10_000_000_000).to_i
+    respond_to do |format|
+      format.html { redirect_to new_search_path }
+      format.js {}
+    end
+  end
+
+  # GET /orchids/new
+  def new
+    @orchid = Orchid.new
+    @no_search_result_details = true
+    @tab_index = (params[:tabIndex] || "40").to_i
+    respond_to do |format|
+      format.html {}
+      format.js {}
+    end
+  end
+
+  # POST /orchids
   def create
-    throw 'create!'
+    @orchid = Orchid.create(orchid_params, current_user.username)
+    render "create.js"
+  rescue => e
+    logger.error("Controller:Authors:create:rescuing exception #{e}")
+    @error = e.to_s
+    render "create_error.js", status: :unprocessable_entity
+  end  # For the typeahead search.
+
+  def parent_suggestions
+    typeahead = Orchid::AsTypeahead::ForParent.new(params)
+    render json: typeahead.suggestions
   end
 
   private
@@ -62,7 +112,7 @@ class OrchidsController < ApplicationController
   end
 
   def orchid_params
-    params.require(:orchid).permit(:taxon, :name_id, :instance_id)
+    params.require(:orchid).permit(:taxon, :name_id, :instance_id, :record_type, :parent, :parent_id)
   end
 
   def set_tab

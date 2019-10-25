@@ -20,6 +20,16 @@
                                       prev_tab: '', 
                                       next_tab: '.search-result.showing-details'} %> 
 
+  <%= render partial: 'tab', locals: {first: false,
+                                      last: false,
+                                      this_tab: 'tab_chosen', 
+                                      link_text: 'Chosen', 
+                                      link_id: 'orchids-chosen-tab', 
+                                      link_title: 'Chosen orchid.',
+                                      tab_index: increment_tab_index,
+                                      prev_tab: '', 
+                                      next_tab: '.search-result.showing-details'} %> 
+
   <% end %>
 
 </ul>
