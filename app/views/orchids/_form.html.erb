@@ -22,8 +22,9 @@
 
     <div class="form-group">
       <label for="taxon">Record type*</label>
-      <%= f.select :record_type, ['', 'accepted','hybrid_cross','misapplied','synonym'],{}, required: true, class: 'form-control give-me-focus', title: "Enter record_type", tabindex: increment_tab_index, autofocus: true %>
+      <%= f.select :record_type, ['', 'accepted','hybrid_cross','misapplied','synonym'],{}, required: true, class: 'form-control', title: "Enter record_type", tabindex: increment_tab_index, autofocus: true %>
     </div>
+    <%= render partial: "synonym_type", locals: {f: f} %>
 
     <div class="form-group">
       <label for="orchid-parent-typeahead">Parent</label>
@@ -36,8 +37,21 @@
              title="Orchids parents"
              value="<%= @orchid.parent.try('taxon') %>"/>
     </div>
-    <%= f.text_field(:parent_id, {}) %>
-    <hr>
+    <%= f.hidden_field(:parent_id, {}) %>
+    <script>setUpOrchidParentTypeahead();</script>
+
+    <%= render partial: "name_status", locals: {f: f} %>
+    <%= render partial: "authors", locals: {f: f} %>
+
+    <div class="form-group">
+      <label for="comment">Comment*</label>
+      <%= f.text_area :comment, class: 'form-control', title: "Enter comment", tabindex: increment_tab_index, autofocus: true %>
+    </div>
+
+    <div class="form-group">
+      <label for="taxon">Seq*</label>
+      <%= f.text_field(:seq, {class: 'form-control', title: 'For placing the taxon in the correct alphabetical/hierarchical order'}) %>
+    </div>
 
     <div class="form-group align-right">
       <% if @orchid.id.blank? %>
@@ -45,6 +59,5 @@
       <% end %>
       <%= f.submit "Save", id: 'orchid-save', class: 'btn btn-primary width-5em', title: "Save changes", tabindex: increment_tab_index, disabled: false %>
     </div>
-    <script>setUpOrchidParentTypeahead();</script>
 
 <% end %>

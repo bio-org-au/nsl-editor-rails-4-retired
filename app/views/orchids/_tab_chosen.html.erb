@@ -1,6 +1,6 @@
 <% increment_tab_index(0) %>
-<%= render partial: 'tab_show_1_core_info' %>
-<%= divider %>
+<%#= render partial: 'tab_show_1_core_info' %>
+<%#= divider %>
 
 <h4><%= pluralize(@orchid.orchids_name.size,'Match') %> Chosen </h4>
 <ol>
@@ -38,10 +38,10 @@
 </ol>
 <span id="search-result-details-info-message-container" class="message-container"></span>
 <span id="search-result-details-error-message-container" class="error-container"></span>
-
-<%= divider %>
-<%= render partial: 'tab_show_1_more_info' %>
-<%= divider %>
-<%= created_by_whom_and_when(@orchid).html_safe %>
 <br>
-<%= updated_by_whom_and_when(@orchid).html_safe %>
+<% unless @orchid.original_text.blank? %>
+  <%= divider %>
+  <h5>Original Text</h5>
+  <%= render partial: 'detail_line', locals: {info: @orchid.original_text, label: ''} %>
+  <br>
+<% end %>

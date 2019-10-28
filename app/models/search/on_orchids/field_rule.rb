@@ -23,7 +23,7 @@ class Search::OnOrchids::FieldRule
     "taxon-no-wildcard:"  => { where_clause: " lower(taxon) like ?" },
     "taxon-with-syn:"      => { trailing_wildcard: false,
                                where_clause: " (lower(taxon) like ? and record_type = 'accepted') or (parent_id in (select id from orchids where lower(taxon) like ? and record_type = 'accepted'))",
-                               order: "id"},
+                               order: "seq"},
     "id:"                 => { multiple_values: true,
                                where_clause: "id = ? ",
                                multiple_values_where_clause: " id in (?)" },
@@ -50,6 +50,10 @@ class Search::OnOrchids::FieldRule
     "taxon-sharing-name-id:" => { where_clause: " id in (select orchid_id from orchids_names where name_id in (select name_id from orchids_names group by name_id having count(*) > 1))"},
     "has-preferred-name:"   => { where_clause: " exists (select null from orchids_names where orchids.id = orchids_names.orchid_id)"},
     "has-no-preferred-name:"=> { where_clause: "name_id is null"},
+    "created-by:"=> { where_clause: "created_by = ?"},
+    "updated-by:"=> { where_clause: "updated_by = ?"},
+    "not-created-by:"=> { where_clause: "created_by != ?"},
+    "not-created-by-batch:"=> { where_clause: "created_by != 'batch'"},
   }.freeze
 end
 
