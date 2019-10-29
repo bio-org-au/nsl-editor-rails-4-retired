@@ -116,7 +116,8 @@ class OrchidsController < ApplicationController
                                    :record_type, :parent, :parent_id, 
                                    :name_status, :ex_base_author,
                                    :base_author, :ex_author, :author,
-                                   :synonym_type, :comment, :seq)
+                                   :synonym_type, :comment, :seq,
+                                   :alt_taxon_for_matching)
   end
 
   def set_tab

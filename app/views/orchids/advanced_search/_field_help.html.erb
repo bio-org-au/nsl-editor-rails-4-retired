@@ -157,3 +157,64 @@
   <% end %>
 </table>
 
+  <h4>Hybrid-related queries</h4>
+<table class="table table-striped">
+  <tr><th>Field</th><th>Description</th></tr>
+  <% [
+    {field_name: 'original-text-has-×:',
+     description: "original text includes a cross symbol"},
+    {field_name: 'original-text-has-x:',
+     description: "original text includes a cross symbol (directive has an ex character)"},
+    {field_name: 'hybrid-level:',
+     description: "hybrid_level matches"},
+    {field_name: 'hybrid-level-has-value:',
+     description: "hybrid_level isn't empty i.e. has some value, any value"},
+    {field_name: 'alt-taxon-for-matching:',
+     description: "searches on the alternative taxon"},
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+      <a href="javascript:void(0)" class="xyz searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
+        <span class="blue"><%= val[:field_name] %></span>
+      </a>
+    </td>
+    <td><%= val[:description].html_safe %></td>
+    <% if val[:partial].present? %>
+      <td><%= render partial: val[:partial] %></td>
+    <% else %>
+      <td></td>
+    <% end %>
+  </tr>
+  <% end %>
+</table>
+
+
+  <h4>Metadata queries</h4>
+<table class="table table-striped">
+  <tr><th>Field</th><th>Description</th></tr>
+  <% [
+    {field_name: 'created-by:',
+     description: "match on created by field"},
+    {field_name: 'updated-by:',
+     description: "match on updated by field"},
+    {field_name: 'not-created-by:',
+     description: "non-match on created by field"},
+    {field_name: 'not-created-by-batch:',
+     description: "records note created by batch"},
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+      <a href="javascript:void(0)" class="xyz searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
+        <span class="blue"><%= val[:field_name] %></span>
+      </a>
+    </td>
+    <td><%= val[:description].html_safe %></td>
+    <% if val[:partial].present? %>
+      <td><%= render partial: val[:partial] %></td>
+    <% else %>
+      <td></td>
+    <% end %>
+  </tr>
+  <% end %>
+</table>
+

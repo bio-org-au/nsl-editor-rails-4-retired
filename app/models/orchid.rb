@@ -57,7 +57,8 @@ class Orchid < ActiveRecord::Base
   end
 
   def names_simple_name_matching_taxon
-    Name.where(simple_name: taxon).joins(:name_type).where(name_type: {scientific: true}).order("simple_name, name.id")
+    #Name.where(simple_name: taxon).joins(:name_type).where(name_type: {scientific: true}).order("simple_name, name.id")
+    Name.where(["simple_name = ? or simple_name = ?",taxon, alt_taxon_for_matching]).joins(:name_type).where(name_type: {scientific: true}).order("simple_name, name.id")
   end
 
   def matches
