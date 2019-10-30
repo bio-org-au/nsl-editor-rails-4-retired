@@ -17,7 +17,7 @@
 #   limitations under the License.
 #
 class OrchidsController < ApplicationController
-  before_filter :find_orchid, only: [:show, :update, :tab]
+  before_filter :find_orchid, only: [:show, :update, :tab, :destroy]
 
   def show
     set_tab
@@ -28,17 +28,35 @@ class OrchidsController < ApplicationController
   alias tab show
 
   def update
-    if orchid_params[:name_id].blank?
+    if orchid_params.blank?
+      @message = "No change"
+      render 'update_no_change'
+    elsif orchid_params[:name_id].blank?
       update_the_raw_record
     else
       update_matching_name
     end
+  rescue => e
+    logger.error(e.to_s)
+    @message = e.to_s
+    render 'update_error', format: :js
   end
 
   def update_matching_name
     @orchids_names = OrchidsName.where(orchid_id: @orchid.id)
     stop_if_nothing_changed
     remove_unwanted_orchid_names
+    set_a_preferred_match unless clearing_all_preferred_matches?
+  end
+
+  # The clear form sends a name_id of -1
+  # The aim of clear is to remove all chosen matches
+  # i.e. don't set a preferred match
+  def clearing_all_preferred_matches?
+    orchid_params[:name_id].to_i < 0
+  end
+
+  def set_a_preferred_match
     orchids_name = OrchidsName.new
     orchids_name.orchid_id = @orchid.id
     orchids_name.name_id = orchid_params[:name_id]
@@ -46,10 +64,6 @@ class OrchidsController < ApplicationController
     orchids_name.relationship_instance_type_id = @orchid.riti
     orchids_name.created_by = orchids_name.updated_by = username
     orchids_name.save!
-  rescue => e
-    logger.error(e.to_s)
-    @message = e.to_s
-    render 'update_error', format: :js
   end
 
   def update_the_raw_record
@@ -61,10 +75,13 @@ class OrchidsController < ApplicationController
     @message = e.to_s
     render "update_error.js", status: :unprocessable_entity
   end
-
  
   def destroy
-    throw 'destroy!'
+    @orchid.delete
+  rescue => e
+    logger.error("Orchid#destroy rescuing #{e}")
+    @message = e.to_s
+    render "destroy_error.js", status: :unprocessable_entity
   end
 
   # GET /orchids/new_row
@@ -112,6 +129,7 @@ class OrchidsController < ApplicationController
   end
 
   def orchid_params
+    return nil if params[:orchid].blank?
     params.require(:orchid).permit(:taxon, :name_id, :instance_id,
                                    :record_type, :parent, :parent_id, 
                                    :name_status, :ex_base_author,

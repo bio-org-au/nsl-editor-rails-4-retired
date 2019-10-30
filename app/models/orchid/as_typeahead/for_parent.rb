@@ -51,7 +51,7 @@ class Orchid::AsTypeahead::ForParent
     @qry = core_query
     @qry = @qry.select('id, taxon')
                .collect do |n|
-      {value: "#{n.taxon} ",
+      {value: "#{n.taxon} (#{n.id}) ",
        id: n.id}
     end
   end

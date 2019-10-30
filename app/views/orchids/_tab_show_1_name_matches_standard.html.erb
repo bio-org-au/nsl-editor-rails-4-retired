@@ -23,31 +23,44 @@
                           title: "Search for #{matching_name.full_name}",
                           class: '') %>
 
-        <% if OrchidsName.where(name_id: matching_name.id).where.not(orchid_id: @orchid.id).size > 0 %>
-          <br> Already the preferred match for:
-          <ul>
-            <b>
-            <% OrchidsName.where(name_id: matching_name.id).where.not(orchid_id: @orchid.id).each do |orchids_name| %>
-              <li><%= link_to(orchids_name.orchid.taxon,search_path(query_target: "orchids", query_string: "id:#{orchids_name.orchid_id}"),
-                              title: "See #{orchids_name.orchid}",
-                              class: 'underline') %>
-            <% end %>
-            </b>
-          </ul>
-        <% end %>
+                     <% if OrchidsName.where(name_id: matching_name.id).where.not(orchid_id: @orchid.id).size > 0 %>
+                       <br> Already the preferred match for:
+                       <ul>
+                         <b>
+                         <% OrchidsName.where(name_id: matching_name.id).where.not(orchid_id: @orchid.id).each do |orchids_name| %>
+                           <li><%= link_to(orchids_name.orchid.taxon,search_path(query_target: "orchids", query_string: "id:#{orchids_name.orchid_id}"),
+                                           title: "See #{orchids_name.orchid}",
+                                           class: 'underline') %>
+                         <% end %>
+                         </b>
+                       </ul>
+                     <% end %>
         <% matching_name.primary_instances.each do |p_i| %>
-          <br>
           <span class="brown"><%= p_i.instance_type.name %></span>&nbsp;<span title="Instance ID: <%= p_i.id %>"><%= p_i.reference.citation %>:&nbsp;<%= p_i.page %></span>
         <% end %>
  <% end %>
   <br>
+
  <% if pi_count > 0 %>
   <br>
   <%= f.submit "Save", id: 'save-orchid', tabindex: increment_tab_index, title: 'Save changes', class: 'btn btn-primary width-5em', disabled: false %>
+
 <% else %>
   <% if name_match_count > 0 %>
     [No primary instance.]
   <% end %>
  <% end %>
 <% end %>
+
+<% unless @orchid.orchids_name.empty? %>
+  <%= divider %>
+  This button lets you remove the existing preferred match without setting a new one.
+  <br>
+  <br>
+  <%= form_for(@orchid, as: 'orchid', role: 'form', remote: true) do |f| %>
+    <%= f.hidden_field(:name_id, value: -1) %>
+    <%= f.submit "Clear", id: 'save-orchid', tabindex: increment_tab_index, title: 'Clear selected matches', class: 'btn btn-primary width-5em', disabled: false %>
+  <% end %>
+<% end %>
+
 

@@ -166,5 +166,7 @@ class Orchid < ActiveRecord::Base
     params
   end
 
-
+  def ok_to_delete?
+    children.empty? && orchids_name.empty?
+  end
 end
