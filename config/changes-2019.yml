@@ -1,4 +1,8 @@
 ---
+- :date: 31-Oct-2019
+  :jira_id: '3418'
+  :description: |-
+    Fix display bug noticed on Wednesday, show record type beside 'Already the preferred match for...'
 - :date: 30-Oct-2019
   :jira_id: '3418'
   :description: |-

@@ -30,7 +30,7 @@
                          <% OrchidsName.where(name_id: matching_name.id).where.not(orchid_id: @orchid.id).each do |orchids_name| %>
                            <li><%= link_to(orchids_name.orchid.taxon,search_path(query_target: "orchids", query_string: "id:#{orchids_name.orchid_id}"),
                                            title: "See #{orchids_name.orchid}",
-                                           class: 'underline') %>
+                                           class: 'underline') %> (<%= orchids_name.orchid.record_type %>)
                          <% end %>
                          </b>
                        </ul>

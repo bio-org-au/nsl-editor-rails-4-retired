@@ -12,7 +12,7 @@
      Already the preferred match for:
      <ul>
        <b>
-       <% matching_name.orchid_ids.each do |orchid| %>
+       <% matching_name.orchids.each do |orchid| %>
          <li><%= link_to(orchid.taxon,search_path(query_target: "orchids", query_string: "id:#{orchid.id}"),
                          title: "See #{orchid.taxon}",
                          class: 'underline') %>
@@ -25,8 +25,6 @@
                       tabindex: increment_tab_index,
                       title: "Search for #{matching_name.full_name}",
                       class: '') %>
-
-
   <% @orchid.name_id = matching_name.id %>
   <br>
   <% matching_name.instances.sort{|x,y| x.reference.iso_publication_date <=> y.reference.iso_publication_date}.each do |instance| %>
@@ -57,3 +55,4 @@
 
    <% end %>
  <% end %>
+
