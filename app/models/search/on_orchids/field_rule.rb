@@ -49,7 +49,7 @@ class Search::OnOrchids::FieldRule
     "not-partly:"         => { where_clause: "partly is null"},
     "taxon-sharing-name-id:" => { where_clause: " id in (select orchid_id from orchids_names where name_id in (select name_id from orchids_names group by name_id having count(*) > 1))"},
     "has-preferred-name:"   => { where_clause: " exists (select null from orchids_names where orchids.id = orchids_names.orchid_id)"},
-    "has-no-preferred-name:"=> { where_clause: "name_id is null"},
+    "has-no-preferred-name:"   => { where_clause: " not exists (select null from orchids_names where orchids.id = orchids_names.orchid_id)"},
     "created-by:"=> { where_clause: "created_by = ?"},
     "updated-by:"=> { where_clause: "updated_by = ?"},
     "not-created-by:"=> { where_clause: "created_by != ?"},
