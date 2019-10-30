@@ -1,5 +1,6 @@
 <h4>Core Raw Data</h4>
 <%= render partial: 'detail_line', locals: {info: @orchid.id, label: 'ID'} %>
+<%= render partial: 'detail_line', locals: {info: @orchid.seq, label: 'Position in sequence', title: 'Ror displaying in alphabetical then hierarchical order.'} %>
 <%= render partial: 'detail_line', locals: {info: @orchid.taxon, label: 'taxon'} %>
 <%= render partial: 'detail_line', locals: {info: @orchid.record_type, label: 'record type'} %>
 <% unless @orchid.ex_base_author.blank? %>

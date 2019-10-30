@@ -1,5 +1,9 @@
 ---
 - :date: 30-Oct-2019
+  :jira_id: '3418'
+  :description: |-
+    More hybrid-related queries, with examples.  Other minor fixes.
+- :date: 30-Oct-2019
   :jira_id: '3417'
   :description: |-
     Orchid loading: you can now delete raw records, provided they have no synonyms or preferred matches; also you can now clear out preferred matches for a raw record.

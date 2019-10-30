@@ -22,9 +22,9 @@
                           tabindex: increment_tab_index,
                           title: "Search for #{matching_name.full_name}",
                           class: '') %>
-
+         <br>
                      <% if OrchidsName.where(name_id: matching_name.id).where.not(orchid_id: @orchid.id).size > 0 %>
-                       <br> Already the preferred match for:
+                       Already the preferred match for:
                        <ul>
                          <b>
                          <% OrchidsName.where(name_id: matching_name.id).where.not(orchid_id: @orchid.id).each do |orchids_name| %>

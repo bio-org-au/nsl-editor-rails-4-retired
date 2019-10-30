@@ -30,7 +30,8 @@ class Search::OnOrchids::FieldRule
     "ids:"                => { multiple_values: true,
                                where_clause: " id = ?",
                                multiple_values_where_clause: " id in (?)" },
-    "id-with-syn:"        => { where_clause: "id = ? or parent_id = ?" },
+    "id-with-syn:"        => { where_clause: "id = ? or parent_id = ?",
+                               order: "seq"},
     "has-parent:"         => { where_clause: "parent_id is not null" },
     "has-no-parent:"      => { where_clause: "parent_id is null" },
     "is-accepted:"        => { where_clause: "record_type = 'accepted'" },
@@ -59,6 +60,10 @@ class Search::OnOrchids::FieldRule
     "original-text-has-x:"=> { where_clause: "lower(original_text) like '%×%'"},
     "hybrid-level:"=> { where_clause: "lower(hybrid_level) like ?"},
     "hybrid-level-has-value:"=> { where_clause: "hybrid_level is not null"},
+    "hybrid-level-has-no-value:"=> { where_clause: "hybrid_level is null"},
+    "hybrid:"=> { where_clause: "hybrid = ?"},
+    "hybrid-has-value:"=> { where_clause: "hybrid is not null"},
+    "hybrid-has-no-value:"=> { where_clause: "hybrid is null"},
     "alt-taxon-for-matching:"=> { where_clause: "lower(alt_taxon_for_matching) like ?"},
   }.freeze
 end
