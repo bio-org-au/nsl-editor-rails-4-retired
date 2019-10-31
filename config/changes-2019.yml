@@ -1,4 +1,8 @@
 ---
+- :date: 01-Nov-2019
+  :jira_id: '3418'
+  :description: |-
+    Add 'Created' message for create Orchid raw synonym.
 - :date: 31-Oct-2019
   :jira_id: '3418'
   :description: |-
