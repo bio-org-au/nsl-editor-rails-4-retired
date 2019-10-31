@@ -31,13 +31,22 @@
                                       prev_tab: '', 
                                       next_tab: '.search-result.showing-details'} %> 
 
-
   <%= render partial: 'tab', locals: {first: false,
                                       last: false,
                                       this_tab: 'tab_delete', 
                                       link_text: 'Delete Raw', 
                                       link_id: 'orchids-delete-tab', 
                                       link_title: 'Delete raw orchid record.',
+                                      tab_index: increment_tab_index,
+                                      prev_tab: '', 
+                                      next_tab: '.search-result.showing-details'} %> 
+
+  <%= render partial: 'tab', locals: {first: false,
+                                      last: true,
+                                      this_tab: 'tab_create_syn', 
+                                      link_text: 'Create synonym', 
+                                      link_id: 'orchids-create-syn-tab', 
+                                      link_title: 'Create a synonym for an accepted orchid record.',
                                       tab_index: increment_tab_index,
                                       prev_tab: '', 
                                       next_tab: '.search-result.showing-details'} %> 

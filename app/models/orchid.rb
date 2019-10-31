@@ -167,4 +167,8 @@ class Orchid < ActiveRecord::Base
   def ok_to_delete?
     children.empty? && orchids_name.empty?
   end
+
+  def accepted?
+    record_type == 'accepted'
+  end
 end

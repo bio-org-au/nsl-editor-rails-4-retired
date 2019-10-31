@@ -1,4 +1,4 @@
 <% increment_tab_index(0) %>
 <h4>Raw Orchid data</h4>
-<%= render 'form' %>
+<%= render partial: 'form', locals: {orchid: @orchid, record_types: ['', 'accepted','hybrid_cross','misapplied','synonym']} %>
 

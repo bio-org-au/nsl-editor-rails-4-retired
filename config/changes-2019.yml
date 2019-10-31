@@ -2,7 +2,7 @@
 - :date: 31-Oct-2019
   :jira_id: '3418'
   :description: |-
-    Fix display bug noticed on Wednesday, show record type beside 'Already the preferred match for...'
+    Fix display bug noticed on Wednesday, show record type beside 'Already the preferred match for...' (including for misapplieds); now also allowing Create Synonym for an accepted taxon.
 - :date: 30-Oct-2019
   :jira_id: '3418'
   :description: |-

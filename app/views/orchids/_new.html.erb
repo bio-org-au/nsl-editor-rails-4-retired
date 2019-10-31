@@ -4,7 +4,6 @@
     <h4>New Orchid</h4>
 
     <hr>
-    <%= render partial: 'form' %>
-
+    <%= render partial: 'form', locals: {orchid: @orchid, record_types: ['', 'accepted','hybrid_cross','misapplied','synonym']} %>
   </div>
 </div>

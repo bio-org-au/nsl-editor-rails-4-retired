@@ -15,7 +15,8 @@
        <% matching_name.orchids.each do |orchid| %>
          <li><%= link_to(orchid.taxon,search_path(query_target: "orchids", query_string: "id:#{orchid.id}"),
                          title: "See #{orchid.taxon}",
-                         class: 'underline') %>
+                         class: 'underline') %> (<%= orchid.record_type %>)
+
        <% end %>
        </b>
      </ul>
