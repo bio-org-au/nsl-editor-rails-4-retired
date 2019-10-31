@@ -13,6 +13,7 @@ fi
 
 export PATH=$JRUBY_HOME/bin:$PATH
 export EDITOR_CONFIG_FILE=editor-build-config.rb
+export EDITOR_CONFIGDB_FILE=editor-build-database.yml
 
 echo "** info"
 echo PATH:- $PATH
