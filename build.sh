@@ -12,6 +12,7 @@ if [ ! -d "$JRUBY_HOME" ]; then
 fi
 
 export PATH=$JRUBY_HOME/bin:$PATH
+export EDITOR_CONFIG_FILE=editor-build-config.rb
 
 echo "** info"
 echo PATH:- $PATH
