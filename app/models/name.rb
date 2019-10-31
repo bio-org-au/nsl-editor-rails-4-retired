@@ -154,9 +154,10 @@ class Name < ActiveRecord::Base
     parents
   end
 
-  def orchid_ids
+  def orchids
     if Rails.configuration.try(:look_for_orchids_table)
-     Orchid.where(name_id: id)
+     #Orchid.where(name_id: id)
+      OrchidsName.where(name_id: id).collect {|orcn| orcn.orchid}
     else
       []
     end

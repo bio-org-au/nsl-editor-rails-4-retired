@@ -1,4 +1,8 @@
 <h4>Name Matches: <%= name_match_count = @orchid.names_simple_name_matching_taxon.size %></h4>
+<% unless @orchid.alt_taxon_for_matching.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @orchid.alt_taxon_for_matching, label: 'alternative taxon for matching'} %>
+  <br>
+<% end %>
 <% if @orchid.names_simple_name_matching_taxon.empty? %>
   <div class="bggray big-vertical-padding" ><h4 class="white">No Matching Names</h4></div>
 <% end %>

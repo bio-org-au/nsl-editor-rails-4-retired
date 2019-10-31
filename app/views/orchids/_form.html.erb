@@ -21,13 +21,18 @@
     </div>
 
     <div class="form-group">
-      <label for="taxon">Record type*</label>
+      <label for="alt_taxon_for_matching">Alternative taxon for matching</label>
+      <%= f.text_field :alt_taxon_for_matching, class: 'form-control give-me-focus', title: "This an optional alternative taxon to use for matching names", tabindex: increment_tab_index, autofocus: true %>
+    </div>
+
+    <div class="form-group">
+      <label for="record_type">Record type*</label>
       <%= f.select :record_type, ['', 'accepted','hybrid_cross','misapplied','synonym'],{}, required: true, class: 'form-control', title: "Enter record_type", tabindex: increment_tab_index, autofocus: true %>
     </div>
     <%= render partial: "synonym_type", locals: {f: f} %>
 
     <div class="form-group">
-      <label for="orchid-parent-typeahead">Parent</label>
+      <label for="orchid-parent-typeahead">Accepted Taxon (for synonyms, misapplied)</label>
       <input id="orchid-parent-typeahead"
              name="orchid[parent_typeahead]"
              class="typeahead form-control"
@@ -49,8 +54,8 @@
     </div>
 
     <div class="form-group">
-      <label for="taxon">Seq*</label>
-      <%= f.text_field(:seq, {class: 'form-control', title: 'For placing the taxon in the correct alphabetical/hierarchical order'}) %>
+      <label for="seq">Seq*</label>
+      <%= f.text_field(:seq, {class: 'form-control', title: 'For listing the taxon in the correct alphabetical/hierarchical order'}) %>
     </div>
 
     <div class="form-group align-right">

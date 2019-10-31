@@ -1,12 +1,28 @@
 ---
+- :date: 31-Oct-2019
+  :jira_id: '3418'
+  :description: |-
+    Fix display bug noticed on Wednesday, show record type beside 'Already the preferred match for...'
+- :date: 30-Oct-2019
+  :jira_id: '3418'
+  :description: |-
+    More hybrid-related queries, with examples.  Other minor fixes.
+- :date: 30-Oct-2019
+  :jira_id: '3417'
+  :description: |-
+    Orchid loading: you can now delete raw records, provided they have no synonyms or preferred matches; also you can now clear out preferred matches for a raw record.
+- :date: 29-Oct-2019
+  :jira_id: '3418'
+  :description: |-
+    Orchid loading: now showing all raw fields; added hybrid-related queries; added alt_taxon_for_matching which you can enter and query and which is used for matching.
 - :date: 23-Oct-2019
   :jira_id: '3397'
   :description: |-
-    Now has an edit tab for orchids allowing fine tuning of instance type.  Also honouring the partly (p.p.) field when assigning instance type.
+    Orchid loading: now has an edit tab for orchids allowing fine tuning of instance type.  Also honouring the partly (p.p.) field when assigning instance type.
 - :date: 23-Oct-2019
   :jira_id: '3397'
   :description: |-
-    Now adding instances and instance type for every preferred name link.
+    Orchid loading: now adding instances and instance type for every preferred name link.
 - :date: 21-Oct-2019
   :jira_id: '3397'
   :description: |-

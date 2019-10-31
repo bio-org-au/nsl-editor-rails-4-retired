@@ -18,8 +18,7 @@
 #
 # Orchids table
 class Orchid < ActiveRecord::Base
-  attr_accessor :name_id
-  attr_accessor :instance_id
+  attr_accessor :name_id, :instance_id
     belongs_to :parent, class_name: "Orchid", foreign_key: "parent_id"
     has_many :children,
              class_name: "Orchid",
@@ -57,7 +56,7 @@ class Orchid < ActiveRecord::Base
   end
 
   def names_simple_name_matching_taxon
-    Name.where(simple_name: taxon).joins(:name_type).where(name_type: {scientific: true}).order("simple_name, name.id")
+    Name.where(["simple_name = ? or simple_name = ?",taxon, alt_taxon_for_matching]).joins(:name_type).where(name_type: {scientific: true}).order("simple_name, name.id")
   end
 
   def matches
@@ -165,5 +164,7 @@ class Orchid < ActiveRecord::Base
     params
   end
 
-
+  def ok_to_delete?
+    children.empty? && orchids_name.empty?
+  end
 end
