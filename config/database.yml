@@ -1,10 +1,7 @@
-
-
 # Get database config and credentials.
-
-<% File.open("#{ENV['HOME']}/.nsl/editor-database.yml", 'r') do |file| %>
-<% while line = file.gets %>
-<%= line %>
-<% end %>
+<% if ENV['EDITOR_CONFIGDB_FILE'] %>
+<%= ERB.new(File.read("#{ENV['EDITOR_CONFIGDB_FILE']}")).result %>
+<% else %>
+<%= ERB.new(File.read("#{ENV['HOME']}/.nsl/editor-database.yml")).result %>
 <% end %>
 

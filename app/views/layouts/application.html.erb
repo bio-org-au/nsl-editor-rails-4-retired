@@ -57,7 +57,8 @@ input[type="checkbox"]:not([title]) {
         data-active-reference-tab="tab_show_1"
         data-active-name-tab="tab_details"
         data-active-author-tab="tab_show_1"
-        data-active-instance-tab="tab_show_1">
+        data-active-instance-tab="tab_show_1"
+        data-active-orchid-tab="tab_show_1">
 
     <div id="screen-too-small-msg">Sorry.... your window is too small to show the editor.  It needs to be wider.</div>
     <%= render partial: 'search/big_navbar' %>
@@ -65,9 +66,9 @@ input[type="checkbox"]:not([title]) {
     <div id="main-content" class="container-fluid">
 
       <% if @no_search_result_details %>
-        <div id="search-result-details" class="hidden" > </div>
+        <div id="search-result-details" class="hidden <%= 'orchids' if params[:query_target] == 'Orchids' %>"> </div>
       <% else %>
-        <div id="search-result-details" > </div>
+        <div id="search-result-details" class="<%= 'orchids' if params[:query_target] == 'Orchids' %>"> </div>
       <% end %>
 
 

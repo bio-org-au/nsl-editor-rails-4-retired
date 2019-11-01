@@ -492,7 +492,7 @@ class Instance < ActiveRecord::Base
 
   # simple i.e. not a relationship instance
   def simple?
-    cites_id.blank? && cited_by_id.blank?
+    standalone?
   end
 
   # simple i.e. not a relationship instance
@@ -614,5 +614,9 @@ class Instance < ActiveRecord::Base
 
   def can_have_apc_dist?
     instance_notes.to_a.keep_if {|n| n.instance_note_key.apc_dist?}.size.zero?
+  end
+
+  def year
+    reference.year
   end
 end

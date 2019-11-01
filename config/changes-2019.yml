@@ -1,4 +1,42 @@
 ---
+- :date: 01-Nov-2019
+  :jira_id: '3418'
+  :description: |-
+    Add 'Created' message for create Orchid raw synonym.
+- :date: 31-Oct-2019
+  :jira_id: '3418'
+  :description: |-
+    Fix display bug noticed on Wednesday, show record type beside 'Already the preferred match for...' (including for misapplieds); now also allowing Create Synonym for an accepted taxon.
+- :date: 30-Oct-2019
+  :jira_id: '3418'
+  :description: |-
+    More hybrid-related queries, with examples.  Other minor fixes.
+- :date: 30-Oct-2019
+  :jira_id: '3417'
+  :description: |-
+    Orchid loading: you can now delete raw records, provided they have no synonyms or preferred matches; also you can now clear out preferred matches for a raw record.
+- :date: 29-Oct-2019
+  :jira_id: '3418'
+  :description: |-
+    Orchid loading: now showing all raw fields; added hybrid-related queries; added alt_taxon_for_matching which you can enter and query and which is used for matching.
+- :date: 23-Oct-2019
+  :jira_id: '3397'
+  :description: |-
+    Orchid loading: now has an edit tab for orchids allowing fine tuning of instance type.  Also honouring the partly (p.p.) field when assigning instance type.
+- :date: 23-Oct-2019
+  :jira_id: '3397'
+  :description: |-
+    Orchid loading: now adding instances and instance type for every preferred name link.
+- :date: 21-Oct-2019
+  :jira_id: '3397'
+  :description: |-
+    Orchid data loading now allows multiple preferred name/instances for misapplieds - other related changes.
+- :date: 18-Oct-2019
+  :jira_id: '3397'
+  :description: |-
+    Orchid data loading features for vascular shard - switchable via configuration, so should not impact other shards.
+- :date: 31-Jul-2019
+  :release: true
 - :date: 31-Jul-2019
   :jira_id: '3339'
   :description: |-

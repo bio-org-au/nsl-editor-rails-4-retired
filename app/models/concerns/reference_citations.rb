@@ -16,7 +16,7 @@ module ReferenceCitations
 
   def citation_json
     resource = Reference::AsServices.citation_strings_url(id)
-    JSON.load(open(resource))
+    JSON.load(open(resource, "Accept" => "text/json"))
   rescue => e
     logger.error("Exception rescued in ReferencesController#citation_json!")
     logger.error(e.to_s)

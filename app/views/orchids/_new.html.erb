@@ -1,0 +1,9 @@
+<div class="focus-details unsaved-record">
+  <div id="new-orchid-form-container" class="new-record-form-container">
+            
+    <h4>New Orchid</h4>
+
+    <hr>
+    <%= render partial: 'form', locals: {orchid: @orchid, record_types: ['', 'accepted','hybrid_cross','misapplied','synonym']} %>
+  </div>
+</div>

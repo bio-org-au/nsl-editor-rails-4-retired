@@ -1,0 +1,57 @@
+<ul class="nav nav-tabs">
+  <%= render partial: 'tab', locals: {first: true,
+                                      last: false,
+                                      this_tab: 'tab_show_1', 
+                                      link_text: 'Details', 
+                                      link_id: 'orchids-show-tab', 
+                                      link_title: 'View a summary',
+                                      tab_index: @tab_index,
+                                      prev_tab: '.search-result.show-details', 
+                                      next_tab: '' } %> 
+  <% if can? 'orchids', 'update' %>
+
+  <%= render partial: 'tab', locals: {first: false,
+                                      last: false,
+                                      this_tab: 'tab_edit', 
+                                      link_text: 'Edit Raw', 
+                                      link_id: 'orchids-edit-tab', 
+                                      link_title: 'Edit orchid.',
+                                      tab_index: increment_tab_index,
+                                      prev_tab: '', 
+                                      next_tab: '.search-result.showing-details'} %> 
+
+
+  <%= render partial: 'tab', locals: {first: false,
+                                      last: false,
+                                      this_tab: 'tab_chosen', 
+                                      link_text: 'Edit Match', 
+                                      link_id: 'orchids-chosen-tab', 
+                                      link_title: 'Chosen orchid.',
+                                      tab_index: increment_tab_index,
+                                      prev_tab: '', 
+                                      next_tab: '.search-result.showing-details'} %> 
+
+  <%= render partial: 'tab', locals: {first: false,
+                                      last: false,
+                                      this_tab: 'tab_delete', 
+                                      link_text: 'Delete Raw', 
+                                      link_id: 'orchids-delete-tab', 
+                                      link_title: 'Delete raw orchid record.',
+                                      tab_index: increment_tab_index,
+                                      prev_tab: '', 
+                                      next_tab: '.search-result.showing-details'} %> 
+
+  <%= render partial: 'tab', locals: {first: false,
+                                      last: true,
+                                      this_tab: 'tab_create_syn', 
+                                      link_text: 'Create synonym', 
+                                      link_id: 'orchids-create-syn-tab', 
+                                      link_title: 'Create a synonym for an accepted orchid record.',
+                                      tab_index: increment_tab_index,
+                                      prev_tab: '', 
+                                      next_tab: '.search-result.showing-details'} %> 
+
+  <% end %>
+
+</ul>
+

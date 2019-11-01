@@ -1,0 +1,10 @@
+<% unless @orchid.accepted? %>
+  Not an accepted raw taxon, so you cannot create a synonym for it.
+<% else %>
+  <h4>Create Orchid synonym for <%= @orchid.taxon %></h4>
+  <% orchid = Orchid.new %>
+  <% orchid.parent_id = @orchid.id %>
+  <% orchid.seq = @orchid.seq + 1 %>
+  <%= render partial: 'form', locals: {orchid: orchid, record_types:  ['', 'hybrid_cross','misapplied','synonym']} %>
+<% end %>
+

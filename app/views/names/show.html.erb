@@ -5,7 +5,7 @@
   <br>
 
   <%= link_to(@name.full_name, search_path(query_target: 'names', query_string: "id:#{@name.id}"),id: 'tab-heading',title: 'Query this name') %>
-  <span class="pull-right"><%= mapper_link('name', @name.id)%></span>
+  <span class="pull-right"><%= mapper_name_link(@name) %></span>
 
   <div>&nbsp;</div>
 

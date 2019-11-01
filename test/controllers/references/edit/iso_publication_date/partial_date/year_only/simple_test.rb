@@ -54,7 +54,7 @@ class ReferencesesUpdateIsoPartialYearOnlyTest < ActionController::TestCase
   def stub_it
     stub_request(:get, %r{http://#{host}/#{path}/\d+/api/citation-strings})
       .with(
-        headers: { "Accept" => "*/*",
+        headers: { "Accept" => "text/json",
                    "Accept-Encoding" => encoding,
                    "User-Agent" => "Ruby" }
       )

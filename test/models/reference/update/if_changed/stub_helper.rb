@@ -33,7 +33,7 @@ end
 def stub_it
   stub_request(:get,
                %r{http://#{a}/nsl/services/rest/#{b}/apni/[0-9]{8,}/api/#{c}})
-    .with(headers: { "Accept" => "*/*",
+    .with(headers: { "Accept" => "text/json",
                      "Accept-Encoding" =>
                      "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
                      "User-Agent" => "Ruby" })

@@ -175,6 +175,20 @@ Rails.application.routes.draw do
         to: "authors#show",
         via: :get, defaults: { tab: "tab_show_1" }
 
+  resources :orchids, only: [:new, :create, :update, :destroy]
+  match "orchids/:id/tab/:tab", as: "orchid_tab", to: "orchids#tab", via: :get
+  match "orchids/:id", as: "orchid_update", to: "orchids#update", via: :post
+  resources :orchids_names, only: [:new, :create, :update, :destroy]
+  match "orchids/new_row",
+        as: "orchid_new_row", to: "orchids#new_row", via: :get
+  match "orchids/new/:random_id",
+        as: "new_orchid_with_random_id", to: "orchids#new", via: :get
+
+  match "orchids/parent_suggestions",
+        as: "orchid_parent_suggestions",
+        to: "orchids#parent_suggestions",
+        via: :get
+
   match "references/typeahead/on_citation/duplicate_of/:id",
         as: "references_typeahead_on_citation_duplicate_of_current",
         to: "references#typeahead_on_citation_duplicate_of_current", via: :get

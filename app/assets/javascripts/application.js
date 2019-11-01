@@ -21,7 +21,6 @@
 //= require navigation.js
 //= require keymaster.js
 //= require keys.js
-//= require services/environment.js
 //= require jquery.scrollintoview.js
 //= require typeahead.bundle.js
 //= require bloodhounds.js
@@ -55,6 +54,10 @@
 //= require typeahead/for_reference/author.js
 //= require typeahead/for_reference/duplicate.js
 //= require typeahead/for_reference/parent.js
+//
+//= require typeahead/for_orchids/parent.js
+//= require typeahead/for_orchids/bloodhounds.js
+//
 //= require underscore
 //= require new-search
 //= require tabs

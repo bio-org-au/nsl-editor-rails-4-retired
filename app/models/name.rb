@@ -77,6 +77,10 @@ class Name < ActiveRecord::Base
     instances.where("instance_type_id in (select id from instance_type where primary_instance)")
   end
 
+  def has_primary_instance?
+    !primary_instances.empty?
+  end
+
   def save_with_username(username)
     self.created_by = self.updated_by = username
     save
@@ -148,6 +152,15 @@ class Name < ActiveRecord::Base
       parents.push(name)
     end
     parents
+  end
+
+  def orchids
+    if Rails.configuration.try(:look_for_orchids_table)
+     #Orchid.where(name_id: id)
+      OrchidsName.where(name_id: id).collect {|orcn| orcn.orchid}
+    else
+      []
+    end
   end
 
   private

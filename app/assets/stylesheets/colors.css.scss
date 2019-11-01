@@ -90,6 +90,38 @@ common element.yellow {color: $nsl-theme-color;}
 *.hover-white:hover    {color: white}
 a:hover.blue           { color: blue; }
 
+*.big-vertical-padding  { padding: 0.6em 0.4em 0.6em 0.4em; }
+.search-result .no-matches {
+  background: slategray;
+  color: white;
+  padding: 0.6em 0.4em 0.4em 0.4em;
+}
+.search-result .too-many-matches {
+  background: dimgray;
+  color: white;
+  padding: 0.6em 0.4em 0.4em 0.4em;
+}
+.search-result .no-primary {
+  background: darkslategray;
+  color: white;
+  padding: 0.6em 0.4em 0.4em 0.4em;
+}
+.search-result .misapplied {
+  background: darkslateblue;
+  color: white;
+  padding: 0.6em 0.4em 0.4em 0.4em;
+}
+.search-result .hybrid-cross {
+  background: darkseagreen;
+  color: white;
+  padding: 0.6em 0.4em 0.4em 0.4em;
+}
+.search-result .preferred-name{
+  background: darkslateblue;
+  color: white;
+  padding: 0.6em 0.4em 0.4em 0.4em;
+}
+
 /*
 *.name,name-hover {color: darkgreen;}
 *.ref,ref-hover  {color: brown;}

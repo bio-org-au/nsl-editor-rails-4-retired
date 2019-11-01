@@ -18,7 +18,12 @@
 #
 class Search::NextCriterion
   def initialize(criteria_string)
+    debug(criteria_string)
     @criteria_string = criteria_string
+  end
+
+  def debug(s)
+    Rails.logger.debug("Search::NextCriterion - #{s}")
   end
 
   def get

@@ -43,4 +43,8 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
 end
 
-load "#{ENV['HOME']}/.nsl/development/editor-config.rb"
+if ENV['EDITOR_CONFIG_FILE']
+  load "#{ENV['EDITOR_CONFIG_FILE']}"
+else
+  load "#{ENV['HOME']}/.nsl/development/editor-config.rb"
+end

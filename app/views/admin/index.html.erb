@@ -139,7 +139,7 @@
     <tr><td class="width-5-percent">&nbsp;</td></tr>
     </table>
 
-    <h5>ICN/ICZN Switches</h4>
+    <h4>ICN/ICZN Switches</h4>
     <table class="table table-condensed search-results width-100-percent">
     <tr><td class="width-40-percent min-width-10em">Rails.configuration.allow_name_changed_combination </td><td> <%= Rails.configuration.try(:allow_name_changed_combination) %> </td></tr>
     <tr><td class="width-40-percent min-width-10em">Rails.configuration.allow_name_ex_author </td><td> <%= Rails.configuration.try(:allow_name_ex_author) %> </td></tr>
@@ -147,6 +147,11 @@
     <tr><td class="width-40-percent min-width-10em">Rails.configuration.allow_name_ex_base_author </td><td> <%= Rails.configuration.try(:allow_name_ex_base_author) %> </td></tr>
     <tr><td class="width-40-percent min-width-10em">Rails.configuration.allow_name_sanctioning_author </td><td> <%= Rails.configuration.try(:allow_name_sanctioning_author) %> </td></tr>
     <tr><td class="width-5-percent">&nbsp;</td></tr>
+    </table>
+
+    <h4>Extra tables</h4>
+    <table class="table table-condensed search-results width-100-percent">
+    <tr><td class="width-40-percent min-width-10em">Rails.configuration.look_for_orchids_table </td><td> <%= Rails.configuration.try(:look_for_orchids_table) || false %> </td></tr>
     </table>
 
   </div>

@@ -86,4 +86,8 @@ Rails.application.configure do
   config.action_controller.relative_url_root = "/nsl/editor"
 end
 
-load "#{ENV['HOME']}/.nsl/editor-config.rb"
+if ENV['EDITOR_CONFIG_FILE']
+  load "#{ENV['EDITOR_CONFIG_FILE']}"
+else
+  load "#{ENV['HOME']}/.nsl/editor-config.rb"
+end

@@ -56,7 +56,7 @@ class NameAsCopierWithAllInstancesSimpleTest < ActiveSupport::TestCase
   end
 
   def headers
-    { "Accept" => "*/*",
+    { "Accept" => "text/json",
       "Accept-Encoding" => "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
       "User-Agent" => "Ruby" }
   end
