@@ -6,17 +6,17 @@ default: &default
 production:
   <<: *default
   database: nsl
-  username: postgres
-  password: ''
+  username: nsl
+  password: nsl
 
 development:
   <<: *default
   database: nsl
-  username: postgres
-  password: ''
+  username: nsl
+  password: nsl
 
 test:
   <<: *default
   database: nsl
-  username: postgres
-  password: ''
+  username: nsl
+  password: nsl
