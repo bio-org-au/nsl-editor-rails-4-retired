@@ -7,16 +7,16 @@ production:
   <<: *default
   database: nsl
   username: postgres
-  password: blank
+  password: ''
 
 development:
   <<: *default
   database: nsl
   username: postgres
-  password: blank
+  password: ''
 
 test:
   <<: *default
   database: nsl
   username: postgres
-  password: blank
+  password: ''
