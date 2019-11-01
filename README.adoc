@@ -12,6 +12,8 @@
 :links:
 :numbered:
 
+image:https://travis-ci.org/bio-org-au/nsl-editor.svg?branch=master["Build Status", link="https://travis-ci.org/bio-org-au/nsl-editor"]
+
 This is the NSL (National Species List) Editor Application developed at the Australian National Botanic Gardens in
 association with CHAH, the ALA and the IBIS team.
 
