@@ -1,3 +1,4 @@
+# The travis build has been disabled because it's borked
 language: ruby #
 rvm:
   - jruby-9.1.12.0
@@ -12,7 +13,5 @@ services:
 script:
   - psql -c 'create database nsl;' -U postgres
   - ./build.sh
-  - curl -F "file=@nsl-editor.war" https://file.io > curl-out.txt
-  - cat curl-out.txt
 #  - echo "$docker_token" | docker login -u "$docker_user" --password-stdin
 #  - ./dockerize.sh
