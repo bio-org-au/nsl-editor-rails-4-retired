@@ -1,17 +1,17 @@
 #! /bin/bash
 
-#JRUBY_ZIP=bin/jruby-dist-9.1.12.0-bin.zip
-#export JAVA_OPTS='-server -d64'
-#export JRUBY_HOME=./bin/jruby-9.1.12.0
-#
-#if [ ! -d "$JRUBY_HOME" ]; then
-#  if [ ! -f "$JRUBY_ZIP" ]; then
-#    curl https://repo1.maven.org/maven2/org/jruby/jruby-dist/9.1.12.0/jruby-dist-9.1.12.0-bin.zip --output $JRUBY_ZIP
-#  fi
-#  unzip -d bin $JRUBY_ZIP
-#fi
-#
-#export PATH=$JRUBY_HOME/bin:$PATH
+JRUBY_ZIP=bin/jruby-dist-9.1.12.0-bin.zip
+export JAVA_OPTS='-server -d64'
+export JRUBY_HOME=./bin/jruby-9.1.12.0
+
+if [ ! -d "$JRUBY_HOME" ]; then
+  if [ ! -f "$JRUBY_ZIP" ]; then
+    curl https://repo1.maven.org/maven2/org/jruby/jruby-dist/9.1.12.0/jruby-dist-9.1.12.0-bin.zip --output $JRUBY_ZIP
+  fi
+  unzip -d bin $JRUBY_ZIP
+fi
+
+export PATH=$JRUBY_HOME/bin:$PATH
 export EDITOR_CONFIG_FILE=editor-build-config.rb
 export EDITOR_CONFIGDB_FILE=editor-build-database.yml
 
