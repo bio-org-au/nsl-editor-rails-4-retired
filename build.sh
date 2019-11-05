@@ -28,8 +28,8 @@ echo "** remove existing war files"
 rm ./*.war || echo "no war files"
 
 echo "** gem install"
-jruby -S bin/jruby-9.1.12.0/bin/gem install bundler
-jruby -S bin/jruby-9.1.12.0/bin/bundle install --without development test
+jruby -S gem install bundler
+jruby -S bundle install --without development test
 
 echo "** compile assets"
 bundle exec rake assets:clobber
