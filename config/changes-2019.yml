@@ -1,4 +1,14 @@
 ---
+- :date: 06-Nov-2019
+  :jira_id: '3424'
+  :description: |-
+    More Orchids tweaks: distinguish misapps and hybrids in result lists; widen the details area for smaller screen resolutions.
+- :date: 05-Nov-2019
+  :jira_id: '3424'
+  :description: |-
+    Tweak the Orchids interface based on feedback, including bolding accepted names and clarifying the way misapplieds are listed and any multiple preferred matches are counted, also moved save buttons up.
+- :date: 04-Nov-2019
+  :release: true
 - :date: 01-Nov-2019
   :jira_id: '3418'
   :description: |-

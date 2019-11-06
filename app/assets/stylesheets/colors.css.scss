@@ -107,7 +107,7 @@ a:hover.blue           { color: blue; }
   padding: 0.6em 0.4em 0.4em 0.4em;
 }
 .search-result .misapplied {
-  background: darkslateblue;
+  background: #555569;
   color: white;
   padding: 0.6em 0.4em 0.4em 0.4em;
 }
@@ -121,6 +121,21 @@ a:hover.blue           { color: blue; }
   color: white;
   padding: 0.6em 0.4em 0.4em 0.4em;
 }
+
+.accepted-taxon {
+  font-weight: bold;
+}
+
+.has-parent {
+  padding-left: 2em;
+}
+/*
+.synonym-taxon {
+}
+
+.misapplied-taxon {
+}
+*/
 
 /*
 *.name,name-hover {color: darkgreen;}

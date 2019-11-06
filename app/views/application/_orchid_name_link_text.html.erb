@@ -1,7 +1,20 @@
 <% if search_result.has_parent? %>
-  --
+  <span class="has-parent">
+    <% case search_result.record_type %>
+    <% when 'accepted' %>
+      wat?
+    <% when 'synonym' %>
+      &mdash;&nbsp;
+    <% when 'misapplied' %>
+      ^^&nbsp;
+    <% when 'hybrid_cross' %>
+      //&nbsp;
+    <% end %>
+  </span>
 <% end %>
+<span class='<%= "#{search_result.record_type}-taxon" %>'>
 <%= "#{search_result.taxon}" %>
+</span>
 | <%= search_result.matches.size %>
 <% if search_result.orchids_name.blank? %>
   <% case search_result.matches.size %>
@@ -18,15 +31,19 @@
     <% end %>
   <% end %>
 <% else %>
-  <span class="preferred-name">preferred name/instance: <%= search_result.orchids_name.collect{|o| "#{o.name_id}/#{o.instance_id}" }.join(',') %></span>
+  <% preferreds = search_result.orchids_name.collect{|o| "#{o.name_id}/#{o.instance_id}" } %>
+  <span class="preferred-name">preferred name/instance: <%= "[#{preferreds.size}]" if preferreds.size > 1 %> <%= preferreds.join(',') %></span>
 <% end %>
-
 
 <% case search_result.record_type %>
 <% when 'accepted' %>
 <% when 'synonym' %>
 <% when 'misapplied' %>
-  <span class="misapplied">Misapplied</span>
+  <% if preferreds.blank? %>
+    <span class="misapplied">Misapplied</span>
+  <% end %>
 <% when 'hybrid_cross' %>
-  <span class="hybrid-cross">Hybrid Cross</span>
+  <% if preferreds.blank? %>
+    <span class="hybrid-cross">Hybrid Cross</span>
+  <% end %>
 <% end %>
