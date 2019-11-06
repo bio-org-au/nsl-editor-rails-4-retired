@@ -1,4 +1,8 @@
 ---
+- :date: 06-Nov-2019
+  :jira_id: '3424'
+  :description: |-
+    More Orchids tweaks: distinguish misapps and hybrids in result lists; widen the details area for smaller screen resolutions.
 - :date: 05-Nov-2019
   :jira_id: '3424'
   :description: |-

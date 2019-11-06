@@ -523,6 +523,10 @@ and (max-device-width : 1024px) {
   div#search-result-details {
     width: 36%;
   }
+  div#search-result-details.orchids {
+    width: 55%;
+    max-width: 900px;
+  }
   /* font-size is different on iPad Safari, compared to equivalent size browser window. */
   /* We could change it here, but that affects browser-on-Mac etc. */
   #search-result-details span.field-label.has-data,
@@ -569,6 +573,10 @@ and (max-device-width : 1024px) {
   div#search-result-details {
     width: 36%;
   }
+  div#search-result-details.orchids {
+    width: 55%;
+    max-width: 900px;
+  }
   input#search-field.form-control {
     width: 100%;
   }
@@ -582,6 +590,10 @@ and (max-device-width : 1024px) {
   #media-screen-lg { display: inline; background: rgba(65, 105, 225, 0.6); } // royalBlue
   div#search-result-details {
     width: 36%;
+  }
+  div#search-result-details.orchids {
+    width: 55%;
+    max-width: 900px;
   }
   input#search-field.form-control {
     width: 100%;

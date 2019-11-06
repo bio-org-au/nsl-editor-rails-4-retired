@@ -1,5 +1,16 @@
 <% if search_result.has_parent? %>
-  <span class="has-parent">&mdash;&nbsp;</span>
+  <span class="has-parent">
+    <% case search_result.record_type %>
+    <% when 'accepted' %>
+      wat?
+    <% when 'synonym' %>
+      &mdash;&nbsp;
+    <% when 'misapplied' %>
+      ~~&nbsp;
+    <% when 'hybrid_cross' %>
+      //&nbsp;
+    <% end %>
+  </span>
 <% end %>
 <span class='<%= "#{search_result.record_type}-taxon" %>'>
 <%= "#{search_result.taxon}" %>
@@ -32,5 +43,7 @@
     <span class="misapplied">Misapplied</span>
   <% end %>
 <% when 'hybrid_cross' %>
-  <span class="hybrid-cross">Hybrid Cross</span>
+  <% if preferreds.blank? %>
+    <span class="hybrid-cross">Hybrid Cross</span>
+  <% end %>
 <% end %>
