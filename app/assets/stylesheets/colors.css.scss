@@ -122,6 +122,11 @@ a:hover.blue           { color: blue; }
   padding: 0.6em 0.4em 0.4em 0.4em;
 }
 
+.search-result .exclude-from-further-processing {
+  background: dimgray;
+  color: white;
+  padding: 0.6em 0.4em 0.4em 0.4em;
+}
 .accepted-taxon {
   font-weight: bold;
 }

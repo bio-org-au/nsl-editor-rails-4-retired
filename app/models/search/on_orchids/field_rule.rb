@@ -21,7 +21,7 @@ class Search::OnOrchids::FieldRule
     "taxon:"              => { trailing_wildcard: true,
                                where_clause: " lower(taxon) like ?" },
     "taxon-no-wildcard:"  => { where_clause: " lower(taxon) like ?" },
-    "taxon-with-syn:"      => { trailing_wildcard: false,
+    "taxon-with-syn:"      => { trailing_wildcard: true,
                                where_clause: " (lower(taxon) like ? and record_type = 'accepted') or (parent_id in (select id from orchids where lower(taxon) like ? and record_type = 'accepted'))",
                                order: "seq"},
     "id:"                 => { multiple_values: true,
@@ -65,5 +65,7 @@ class Search::OnOrchids::FieldRule
     "hybrid-has-value:"=> { where_clause: "hybrid is not null"},
     "hybrid-has-no-value:"=> { where_clause: "hybrid is null"},
     "alt-taxon-for-matching:"=> { where_clause: "lower(alt_taxon_for_matching) like ?"},
+    "no-further-processing:"=> { where_clause: " exclude_from_further_processing or exists (select null from orchids kids where kids.parent_id = orchids.id and kids.exclude_from_further_processing) or exists (select null from orchids pa where pa.id = orchids.parent_id and pa.exclude_from_further_processing)",
+                               order: "seq"},
   }.freeze
 end
