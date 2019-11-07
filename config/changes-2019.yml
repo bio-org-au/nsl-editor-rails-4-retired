@@ -1,8 +1,12 @@
 ---
 - :date: 07-Nov-2019
+  :release: true
+- :date: 07-Nov-2019
   :jira_id: '3428'
   :description: |-
     Orchids bug fix: synonym type now works properly on the Edit tab.
+- :date: 06-Nov-2019
+  :release: true
 - :date: 06-Nov-2019
   :jira_id: '3424'
   :description: |-
