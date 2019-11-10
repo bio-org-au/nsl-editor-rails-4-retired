@@ -1,4 +1,8 @@
 ---
+- :date: 11-Nov-2019
+  :jira_id: '3430'
+  :description: |-
+    Orchids: "No primary instance" flag should now be present even if the taxon has smart quotes.
 - :date: 07-Nov-2019
   :jira_id: '3422'
   :description: |-
