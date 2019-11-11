@@ -1,5 +1,7 @@
 ---
 - :date: 11-Nov-2019
+  :release: true
+- :date: 11-Nov-2019
   :jira_id: '3429'
   :description: |-
     Orchids with wider implications: Remove old, unused feature that ignored search targets like "reference", "orchid" in the search field.
