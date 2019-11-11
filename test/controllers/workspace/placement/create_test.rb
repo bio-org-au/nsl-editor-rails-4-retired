@@ -36,7 +36,7 @@ class TreePlacementCreateTest < ActionController::TestCase
     # removed body from stub because the timestamps change and we can't guess that from here.    # body = '{"instanceUri":"http://localhost:7070/nsl-mapper/instance/apni/481811","parentElementUri":"tree/123/456","excluded":false,"profile":{"APC Comment":{"value":"yo","updated_by":"fred","updated_at":"2018-05-23T04:32:07Z"},"APC Dist.":{"value":"ACT,Wa","updated_by":"fred","updated_at":"2018-05-23T04:32:07Z"}},"versionId":131443681}'
     stub_request(:put, "#{url}#{params}")
         .with(:headers => {'Accept' => 'application/json',
-                           'Accept-Encoding' => 'gzip, deflate',
+                           "Accept-Encoding" => /gzip.*/,
                            'Content-Type' => 'application/json',
                            'Host' => 'localhost:9090',
                            'User-Agent' => /ruby/})
@@ -47,7 +47,7 @@ class TreePlacementCreateTest < ActionController::TestCase
     uri = "#{Rails.configuration.nsl_linker}broker/preferredLink?idNumber=#{@instance.id}&nameSpace=anamespace&objectType=instance"
     stub_request(:get, uri)
         .with(:headers => {"Accept" => "application/json",
-                           "Accept-Encoding" => "gzip, deflate",
+                           "Accept-Encoding" => /gzip.*/,
                            "Content-Type" => "application/json",
                            "Host" => Rails.configuration.nsl_linker
                                           .sub(%r{^http://},'')

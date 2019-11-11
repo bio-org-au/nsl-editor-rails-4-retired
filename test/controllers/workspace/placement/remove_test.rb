@@ -38,7 +38,7 @@ class TreePlacementRemoveTest < ActionController::TestCase
     stub_request(:post, "#{url}#{params}")
         .with(body: body,
               headers: {'Accept' => 'application/json',
-                        'Accept-Encoding' => 'gzip, deflate',
+                        'Accept-Encoding' => /gzip.*/,
                         'Content-Length' => '27',
                         'Content-Type' => 'application/json',
                         'Host' => 'localhost:9090',

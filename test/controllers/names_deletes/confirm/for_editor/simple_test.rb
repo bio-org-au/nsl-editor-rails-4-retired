@@ -40,7 +40,7 @@ class NamesDeleteConfirmForEditorSimpleTest < ActionController::TestCase
   def stub_it
     stub_request(:delete, "#{a}#{b}")
       .with(headers: { "Accept" => "application/json",
-                       "Accept-Encoding" => "gzip, deflate",
+                       "Accept-Encoding" => /.*/,
                        "Host" => "localhost:9090",
                        "User-Agent" => /ruby/ })
       .to_return(status: 200, body: "", headers: {})

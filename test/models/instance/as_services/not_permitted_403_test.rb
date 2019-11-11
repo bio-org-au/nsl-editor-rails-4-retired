@@ -35,7 +35,7 @@ class InstanceDeleteServiceNotPermitted403Test < ActiveSupport::TestCase
 
   def headers
     { "Accept" => "application/json",
-      "Accept-Encoding" => "gzip, deflate",
+      "Accept-Encoding" => /gzip.*/,
       "Host" => "localhost:9090",
       "User-Agent" => /ruby/ }
   end
