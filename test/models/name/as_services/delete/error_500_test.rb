@@ -23,7 +23,7 @@ class NameAsServicesDeleteError500Test < ActiveSupport::TestCase
   setup do
     stub_request(:delete, "#{s1}#{s2}")
       .with(headers: { "Accept" => "application/json",
-                       "Accept-Encoding" => /gzip.*/,
+                       "Accept-Encoding" => "gzip, deflate",
                        "Host" => "localhost:9090",
                        "User-Agent" => /ruby/ })
       .to_return(status: 500, body: "", headers: {})

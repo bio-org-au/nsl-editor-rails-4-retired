@@ -25,7 +25,7 @@ class InstanceAsServicesTrueSuccess200Test < ActiveSupport::TestCase
     stub_request(:delete,
                  "#{action}?apiKey=test-api-key&reason=Edit")
       .with(headers: { "Accept" => "application/json",
-                       "Accept-Encoding" => /gzip.*/,
+                       "Accept-Encoding" => "gzip, deflate",
                        "Host" => "localhost:9090",
                        "User-Agent" => /ruby/ })
       .to_return(status: 200,

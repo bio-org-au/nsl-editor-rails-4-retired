@@ -23,7 +23,7 @@ class NameAsServicesDeleteFalseSuccessTest < ActiveSupport::TestCase
   setup do
     stub_request(:delete, /#{sub1}.*[0-9]{9,}#{sub2}.*/)
       .with(headers: { "Accept" => "application/json",
-                       "Accept-Encoding" => /gzip.*/,
+                       "Accept-Encoding" => "gzip, deflate",
                        "Host" => "localhost:9090",
                        "User-Agent" => /ruby/ })
       .to_return(status: 200, body: body, headers: {})

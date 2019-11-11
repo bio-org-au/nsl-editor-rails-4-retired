@@ -36,7 +36,7 @@ class InstanceDeleteService200WithErrorMessageTest < ActiveSupport::TestCase
 
   def headers
     { "Accept" => "application/json",
-      "Accept-Encoding" => /gzip.*/,
+      "Accept-Encoding" => "gzip, deflate",
       "Host" => "localhost:9090",
       "User-Agent" => /ruby/ }
   end
