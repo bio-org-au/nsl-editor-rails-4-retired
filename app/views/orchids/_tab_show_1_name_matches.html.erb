@@ -11,6 +11,12 @@
     <div class="bggray big-vertical-padding" ><h4 class="white">Too Many Matching Names</h4></div>
   <% end %>
 <% end %>
+<% if @orchid.exclude_from_further_processing? %>
+  <div class="bggray big-vertical-padding" ><h4 class="white">No Further Processing</h4></div>
+<% end %>
+<% if @orchid.try('parent').try('exclude_from_further_processing?') %>
+  <div class="bggray big-vertical-padding" ><h4 class="white">No Further Processing via parent</h4></div>
+<% end %>
 
 <% if @orchid.misapplied? %>
   <%= render partial: 'tab_show_1_name_matches_misapplied', locals: {name_match_count: name_match_count} %>

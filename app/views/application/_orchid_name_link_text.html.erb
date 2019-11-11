@@ -47,3 +47,10 @@
     <span class="hybrid-cross">Hybrid Cross</span>
   <% end %>
 <% end %>
+
+<% if search_result.exclude_from_further_processing? %>
+    <span class="exclude-from-further-processing">No further processing</span>
+<% end %>
+<% if search_result.try('parent').try('exclude_from_further_processing?') %>
+    <span class="exclude-from-further-processing">No further processing via parent</span>
+<% end %>

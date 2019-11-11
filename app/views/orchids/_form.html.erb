@@ -63,4 +63,14 @@
       <label for="seq">Seq*</label>
       <%= f.text_field(:seq, {class: 'form-control', title: 'For listing the taxon in the correct alphabetical/hierarchical order'}) %>
     </div>
+
+    <% unless orchid.id.blank? %>
+      <div class="form-group">
+        <br>
+      <label class="form-check-label">
+        <%= f.check_box(:exclude_from_further_processing, {class: 'xform-control', title: 'Exclude this record and any of its synonyms from further bulk processing.'}) %>
+        Exclude this record from further bulk processing
+      </label>
+      </div>
+    <% end %>
 <% end %>

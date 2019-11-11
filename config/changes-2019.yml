@@ -1,8 +1,28 @@
 ---
+- :date: 11-Nov-2019
+  :jira_id: '3429'
+  :description: |-
+    Orchids with wider implications: Remove old, unused feature that ignored search targets like "reference", "orchid" in the search field.
+- :date: 11-Nov-2019
+  :jira_id: '3431'
+  :description: |-
+    Orchids: Order all search directive results by seq.
+- :date: 11-Nov-2019
+  :jira_id: '3430'
+  :description: |-
+    Orchids: "No primary instance" flag should now be present even if the taxon has smart quotes because the alternative matching name is now also included in the search.
+- :date: 07-Nov-2019
+  :jira_id: '3422'
+  :description: |-
+    Orchids: add checkbox to exclude a record from being bulk processed, with an accompanying query directive and display notifications.
+- :date: 07-Nov-2019
+  :release: true
 - :date: 07-Nov-2019
   :jira_id: '3428'
   :description: |-
     Orchids bug fix: synonym type now works properly on the Edit tab.
+- :date: 06-Nov-2019
+  :release: true
 - :date: 06-Nov-2019
   :jira_id: '3424'
   :description: |-

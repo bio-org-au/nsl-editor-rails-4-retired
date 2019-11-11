@@ -241,7 +241,6 @@ class Search::ParsedRequest
       if SIMPLE_QUERY_TARGETS.key?(@query_target)
         @target_table = SIMPLE_QUERY_TARGETS[@query_target]
         @target_button_text = @target_table.capitalize.pluralize
-        tokens = tokens.drop(1) if SIMPLE_QUERY_TARGETS.key?(tokens.first)
       else
         raise "Cannot parse target: #{@query_target}"
       end
