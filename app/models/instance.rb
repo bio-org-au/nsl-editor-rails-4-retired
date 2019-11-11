@@ -37,6 +37,11 @@ class Instance < ActiveRecord::Base
   SEARCH_LIMIT = 50
   MULTIPLE_PRIMARY_WARNING = "Saving this instance would result in multiple primary instances for the same name."
   DUPLICATE_INSTANCE_WARNING = "already has an instance with the same reference, type and page."
+  belongs_to :parent, class_name: "Instance", foreign_key: "parent_id"
+  has_many :children,
+           class_name: "Instance",
+           foreign_key: "parent_id",
+           dependent: :restrict_with_exception
 
   def self.to_csv
     attributes = %w(id)
@@ -478,7 +483,8 @@ class Instance < ActiveRecord::Base
         reverse_of_this_cites.blank? &&
         reverse_of_this_is_cited_by.blank? &&
         comments.blank? &&
-        !in_apc?
+        !in_apc? &&
+        children.empty?
   end
 
   def anchor_id

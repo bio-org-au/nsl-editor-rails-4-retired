@@ -224,7 +224,8 @@ class InstancesController < ApplicationController
                                      :concept_warning_bypassed,
                                      :multiple_primary_override,
                                      :duplicate_instance_override,
-                                     :draft)
+                                     :draft,
+                                     :parent_id)
   end
 
   def instance_name_params
