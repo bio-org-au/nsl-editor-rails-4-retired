@@ -10,8 +10,12 @@
       <li><%= orcn.name.full_name %></li>
       <li><%= orcn.instance.reference.citation %></li>
       <li><%= orcn.instance.page %></li>
-      <li><%= orcn.instance.instance_type.name %></li>
-      <li><%= orcn.instance_type.name %></li>
+          <% if @orchid.accepted? %>
+            (No instance type to edit for accepted names.)
+          <% else %>
+            <li><%= orcn.instance.instance_type.name %></li>
+            <li><%= orcn.instance_type.name %></li>
+
           <%= form_for(orcn, as: 'orchid_name', role: 'form', remote: true) do |f| %>
 
             <%= f.select(:relationship_instance_type_id,
@@ -25,6 +29,8 @@
               tabindex: increment_tab_index,
               title: 'Change instance type',
               class: 'bgdarkslateblue btn btn-primary width-6em' %>
+
+          <% end %>
 <% end %>
 
     </ul>

@@ -38,7 +38,7 @@
   <% end %>
 </table>
 
-  <h4>Record Type Directives</h4>
+  <h4>Record Type Directives or Similar</h4>
 <table class="table table-striped">
   <tr><th>Field</th><th>Description</th></tr>
   <% [
@@ -50,6 +50,10 @@
      description: "match only CSV data with record type 'misapplied'"},
     {field_name: 'is-hybrid-cross:',
      description: "match only CSV data with record type 'hybrid-cross'"},
+    {field_name: 'is-isonym:',
+     description: "match records with any value in the isonym field"},
+    {field_name: 'is-orth-var:',
+     description: "match records with a name status value starting with 'orth'"},
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">
@@ -114,6 +118,8 @@
      description: "match only on CSV data where the partly field has any data in it, which is uniformly 'p.p.' - it's essentially a flag where p.p. means true"},
     {field_name: 'not-partly:',
      description: "match only on CSV data where the partly field has no data"},
+    {field_name: 'name-status:',
+     description: "match fragment on the name status field (leading and trailing wildcards added automatically)"},
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">

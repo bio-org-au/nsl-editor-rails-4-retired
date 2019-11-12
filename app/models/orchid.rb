@@ -25,6 +25,7 @@ class Orchid < ActiveRecord::Base
              foreign_key: "parent_id",
              dependent: :restrict_with_exception
     has_many :orchids_name
+    has_many :preferred_match, class_name: :OrchidsName, foreign_key: :orchid_id
     scope :avoids_id, ->(avoid_id) { where("orchids.id != ?", avoid_id) }
 
   def self.create(params, username)
@@ -103,6 +104,7 @@ class Orchid < ActiveRecord::Base
   end
 
   def riti
+    return nil if accepted?
     return InstanceType.find_by_name('misapplied').id if misapplied?
     if heterotypic?
       if pp?
@@ -120,8 +122,7 @@ class Orchid < ActiveRecord::Base
         return InstanceType.find_by_name('nomenclatural synonym').id
       end
     end
-    Rails.logger.debug('Will be unknown')
-    return InstanceType.unknown.id
+    nil
   end
 
   def save_with_username(username)
@@ -166,5 +167,28 @@ class Orchid < ActiveRecord::Base
 
   def accepted?
     record_type == 'accepted'
+  end
+
+  def create_preferred_match
+    AsInstanceCreator.new(self).do
+  end
+
+  def self.create_preferred_matches_for(taxon_s)
+    self.where(["taxon like ?", taxon_s]).where(record_type: 'accepted').order(:id).each do |match|
+      match.create_preferred_match
+      match.children.each do |child|
+        child.create_preferred_match
+      end
+    end
+  end
+
+  def isonym?
+    return false if isonym.blank?
+    true
+  end
+
+  def orth_var?
+    return false if name_status.blank?
+    name_status.downcase.match(/\Aorth/)
   end
 end

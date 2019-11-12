@@ -103,5 +103,13 @@ class Search::OnOrchids::FieldRule
                                       order: "seq"},
     "no-further-processing:"=> { where_clause: " exclude_from_further_processing or exists (select null from orchids kids where kids.parent_id = orchids.id and kids.exclude_from_further_processing) or exists (select null from orchids pa where pa.id = orchids.parent_id and pa.exclude_from_further_processing)",
                                order: "seq"},
+    "is-isonym:"=> { where_clause: "isonym is not null",
+                                      order: "seq"},
+    "is-orth-var:"=> { where_clause: "name_status like 'orth%'",
+                                      order: "seq"},
+    "name-status:"=> { where_clause: "name_status like ?",
+                       leading_wildcard: true,
+                       trailing_wildcard: true,
+                       order: "seq"},
   }.freeze
 end
