@@ -68,6 +68,14 @@
     <span title="See the Adnot tab."><%= "Instance Adnot: #{@instance.comments.size} (see the 'Adnot' tab)" %></span>
     <br>
   <% end %>
+  <% unless @instance.children.empty? %>
+    Instance <%= @instance.id %> has children: <%= @instance.children.collect {|i| i.id}.join(',') %>
+    <br>
+    <%= link_to("See instance and children".html_safe,
+                search_path(query_string: "id: #{@instance.id},#{@instance.children.collect {|i| i.id}.join(',')}", query_target: 'instances'),
+                title: "Query the instances.") %>
+    <br> 
+  <% end %>
   <br>
 <% end %>
 <br>

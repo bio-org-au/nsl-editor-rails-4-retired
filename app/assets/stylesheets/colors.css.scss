@@ -92,17 +92,17 @@ a:hover.blue           { color: blue; }
 
 *.big-vertical-padding  { padding: 0.6em 0.4em 0.6em 0.4em; }
 .search-result .no-matches {
-  background: slategray;
+  background: rosybrown;
   color: white;
   padding: 0.6em 0.4em 0.4em 0.4em;
 }
 .search-result .too-many-matches {
-  background: dimgray;
+  background: maroon;
   color: white;
   padding: 0.6em 0.4em 0.4em 0.4em;
 }
 .search-result .no-primary {
-  background: darkslategray;
+  background: chocolate;
   color: white;
   padding: 0.6em 0.4em 0.4em 0.4em;
 }
@@ -116,17 +116,32 @@ a:hover.blue           { color: blue; }
   color: white;
   padding: 0.6em 0.4em 0.4em 0.4em;
 }
-.search-result .preferred-name{
-  background: darkslateblue;
+.search-result .preferred-name,
+.search-result .isonym-has-preferred-name,
+.search-result .orth-var-has-preferred-name{
+  background: gray;
   color: white;
   padding: 0.6em 0.4em 0.4em 0.4em;
 }
 
 .search-result .exclude-from-further-processing {
-  background: dimgray;
+  background: sienna;
   color: white;
   padding: 0.6em 0.4em 0.4em 0.4em;
 }
+
+.search-result .isonym {
+  background: peru;
+  color: white;
+  padding: 0.6em 0.4em 0.4em 0.4em;
+}
+
+.search-result .orth-var {
+  background: firebrick;
+  color: white;
+  padding: 0.6em 0.4em 0.4em 0.4em;
+}
+
 .accepted-taxon {
   font-weight: bold;
 }

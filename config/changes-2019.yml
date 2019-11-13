@@ -1,4 +1,14 @@
 ---
+- :date: 13-Nov-2019
+  :jira_id: '3422'
+  :description: |-
+    We can now create preferred matches with a (programmer) script; there's an adjusted notification color scheme, notifications for orth.vars and isonyms, and accompanying queries with examples.
+- :date: 11-Nov-2019
+  :jira_id: '3432'
+  :description: |-
+    Delete instance button is now aware of instance children.
+- :date: 11-Nov-2019
+  :release: true
 - :date: 11-Nov-2019
   :jira_id: '3429'
   :description: |-
