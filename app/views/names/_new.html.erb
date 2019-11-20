@@ -1,7 +1,7 @@
 <div class="focus-details unsaved-record">
   <div id="new-name-form-container" class="new-record-form-container">
             
-    <h4>New <%= @name.name_category.name.titleize %> Name</h4>
+    <h4><%= "New #{@name.name_category.name.titleize} Name".sub(/Name Name/,'Name') %></h4>
     <hr>
     <%= render partial: 'names/form/base' %>
 
