@@ -1,3 +1,8 @@
+<% unless @orchid.notes.blank? %>
+  <h4>Notes</h4>
+  <%= @orchid.notes.html_safe %>
+  <%= divider %>
+<% end %>
 <h4>More Raw Data</h4>
 <% unless @orchid.name_status.blank? %>
   <%= render partial: 'detail_line', locals: {info: @orchid.name_status, label: 'name status'} %>

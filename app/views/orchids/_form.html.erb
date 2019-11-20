@@ -64,6 +64,11 @@
       <%= f.text_field(:seq, {class: 'form-control', title: 'For listing the taxon in the correct alphabetical/hierarchical order'}) %>
     </div>
 
+    <div class="form-group">
+      <label for="notes">Notes</label>
+      <%= f.text_area :notes, class: 'form-control', title: "Enter notes", tabindex: increment_tab_index, autofocus: true %>
+    </div>
+
     <% unless orchid.id.blank? %>
       <div class="form-group">
         <br>
