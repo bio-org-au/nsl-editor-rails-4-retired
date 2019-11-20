@@ -1,4 +1,8 @@
 ---
+- :date: 20-Nov-2019
+  :jira_id: '3449'
+  :description: |-
+    Phrase Names: change form heading from 'New Phrase Name Name' to 'New Phrase Name'; only show parent 1 help text brackets if there is parent 1 help text to display inside the brackets.
 - :date: 14-Nov-2019
   :release: true
 - :date: 13-Nov-2019
