@@ -46,9 +46,10 @@
 <h5 class="">More examples</h5>
 <table class="example-searches table table-striped">
   <% [
-      {search_target: 'Orchids', search_string: "is-isonym:",explanation: %Q(List isonyms.)},
-      {search_target: 'Orchids', search_string: "is-orth-var:",explanation: %Q(List orth. vars.)},
+      {search_target: 'Orchids', search_string: "is-isonym:",explanation: %Q(List isonyms)},
+      {search_target: 'Orchids', search_string: "is-orth-var:",explanation: %Q(List orth. vars)},
       {search_target: 'Orchids', search_string: "name-status: nom",explanation: %Q(List any records with 'nom' in the name status field)},
+      {search_target: 'Orchids', search_string: "notes: *",explanation: %Q(Has a value in notes)},
       ].each do |val| %>
   <tr>
     <td class="width-30-percent">

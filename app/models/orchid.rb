@@ -18,6 +18,7 @@
 #
 # Orchids table
 class Orchid < ActiveRecord::Base
+  REF_ID = 51316736
   attr_accessor :name_id, :instance_id
     belongs_to :parent, class_name: "Orchid", foreign_key: "parent_id"
     has_many :children,
@@ -169,8 +170,16 @@ class Orchid < ActiveRecord::Base
     record_type == 'accepted'
   end
 
+  def hybrid_cross?
+    record_type == 'hybrid_cross'
+  end
+
+  def misapplied?
+    record_type == 'misapplied'
+  end
+
   def create_preferred_match
-    AsInstanceCreator.new(self).do
+    AsNameMatcher.new(self).set_preferred_match
   end
 
   def self.create_preferred_matches_for(taxon_s)
@@ -180,6 +189,23 @@ class Orchid < ActiveRecord::Base
         child.create_preferred_match
       end
     end
+  end
+
+  def self.create_instance_for_preferred_matches_for(taxon_s)
+    @ref = Reference.find(REF_ID)
+    puts "Using ref: #{@ref.citation}"
+    self.where(["taxon like ?", taxon_s]).where(record_type: 'accepted').order(:id).each do |match|
+      match.create_instance_for_preferred_matches
+      match.children.each do |child|
+        child.create_instance_for_preferred_matches
+      end
+    end
+  end
+
+  def create_instance_for_preferred_matches
+    @ref = Reference.find(REF_ID) if @ref.blank?
+    throw 'No ref!' if @ref.blank?
+    AsInstanceCreator.new(self,@ref).create_instance_for_preferred_matches
   end
 
   def isonym?
@@ -192,3 +218,4 @@ class Orchid < ActiveRecord::Base
     name_status.downcase.match(/\Aorth/)
   end
 end
+

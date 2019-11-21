@@ -14,6 +14,7 @@
 *.sienna         { color: sienna; }
 *.white          { color: white; }
 *.yellow         { color: yellow; }
+*.darkorchid     { color: darkorchid; }
 
 /* Prevent full_name_html class setting color */
 common element.blue {color: $nsl-theme-color;}
@@ -84,7 +85,8 @@ common element.yellow {color: $nsl-theme-color;}
 *.bgred            { background-color: red; }
 *.bgsienna         { background-color: sienna; }
 *.bgwhite          { background-color: white; }
-*.bgyellow           { background-color: yellow; }
+*.bgyellow         { background-color: yellow; }
+*.bgdarkorchid     { background-color: darkorchid; }
 
 
 *.hover-white:hover    {color: white}
@@ -120,6 +122,18 @@ a:hover.blue           { color: blue; }
 .search-result .isonym-has-preferred-name,
 .search-result .orth-var-has-preferred-name{
   background: gray;
+  color: white;
+  padding: 0.6em 0.4em 0.4em 0.4em;
+}
+
+.search-result .standalone-count {
+  background: darkslateblue;
+  color: white;
+  padding: 0.6em 0.4em 0.4em 0.4em;
+}
+
+.search-result .relationship-count {
+  background: darkorchid;
   color: white;
   padding: 0.6em 0.4em 0.4em 0.4em;
 }

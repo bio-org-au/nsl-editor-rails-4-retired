@@ -111,5 +111,9 @@ class Search::OnOrchids::FieldRule
                        leading_wildcard: true,
                        trailing_wildcard: true,
                        order: "seq"},
+    "notes:"=> { where_clause: "lower(notes) like ?",
+                       leading_wildcard: true,
+                       trailing_wildcard: true,
+                       order: "seq"},
   }.freeze
 end

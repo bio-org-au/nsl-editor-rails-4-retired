@@ -15,7 +15,7 @@
 <span class='<%= "#{search_result.record_type}-taxon" %>'>
 <%= "#{search_result.taxon}" %>
 </span>
-| <%= search_result.matches.size %>
+| <%= search_result.matches.size %>m
 <% if search_result.orchids_name.blank? %>
   <% case search_result.matches.size %>
   <% when 0 %>
@@ -38,7 +38,16 @@
   <% end %>
 <% else %>
   <% preferreds = search_result.orchids_name.collect{|o| "#{o.name_id}/#{o.instance_id}" } %>
-  <span class="preferred-name"><%= preferreds.size %></span>
+  <span class="preferred-name"><%= preferreds.size %>p</span>
+  <% standalones = search_result.orchids_name.select {|orcn| orcn.standalone_instance_id.present?} %>
+  <% if standalones.size > 0 %>
+    <span class="standalone-count"><%= "#{standalones.size}i" %></span>
+  <% end %>
+  <% relationships = search_result.orchids_name.select {|orcn| orcn.relationship_instance_id.present?} %>
+  <% if relationships.size > 0 %>
+    <span class="relationship-count"><%= "#{relationships.size}c" %></span>
+  <% end %>
+
   <% if search_result.isonym? %>
     <span class="isonym-has-preferred-name">Isonym</span>
   <% end %>

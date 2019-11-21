@@ -1,4 +1,14 @@
 ---
+- :date: 21-Nov-2019
+  :jira_id: '3422'
+  :description: |-
+    Further refinements to the interface, more batch processing code for adding instances, and other processing improvements.
+- :date: 21-Nov-2019
+  :jira_id: '3450'
+  :description: |-
+    Add notes field to orchid loader with an accompanying search directive.
+- :date: 21-Nov-2019
+  :release: true
 - :date: 20-Nov-2019
   :jira_id: '3449'
   :description: |-

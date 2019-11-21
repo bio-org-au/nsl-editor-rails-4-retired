@@ -41,26 +41,16 @@
  <% end %>
   <br>
 
- <% if pi_count > 0 %>
+  <% if pi_count > 0 && pi_count > @orchid.orchids_name.size  %>
   <br>
   <%= f.submit "Save", id: 'save-orchid', tabindex: increment_tab_index, title: 'Save changes', class: 'btn btn-primary width-5em', disabled: false %>
-
-<% else %>
-  <% if name_match_count > 0 %>
-    [No primary instance.]
   <% end %>
- <% end %>
-<% end %>
 
-<% unless @orchid.orchids_name.empty? %>
-  <%= divider %>
-  This button lets you remove the existing preferred match without setting a new one.
-  <br>
-  <br>
-  <%= form_for(@orchid, as: 'orchid', role: 'form', remote: true) do |f| %>
-    <%= f.hidden_field(:name_id, value: -1) %>
-    <%= f.submit "Clear", id: 'save-orchid', tabindex: increment_tab_index, title: 'Clear selected matches', class: 'btn btn-primary width-5em', disabled: false %>
+  <% unless pi_count > 0 %>
+    <% if name_match_count > 0 %>
+      [No primary instance.]
+    <% end %>
   <% end %>
 <% end %>
 
-
+<%= render partial: 'tab_show_standard_preferred_match_info' %>
