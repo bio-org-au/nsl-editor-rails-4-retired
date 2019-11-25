@@ -32,7 +32,7 @@
   <br>
   <% @orchid.name_id = matching_name.id %>
   <br>
-  <% matching_name.instances.sort{|x,y| x.reference.iso_publication_date <=> y.reference.iso_publication_date}.each do |instance| %>
+  <% matching_name.instances.sort{|x,y| x.reference.iso_pub_date_for_sorting <=> y.reference.iso_pub_date_for_sorting}.each do |instance| %>
       <% unless instance.instance_type.relationship? %>
 
         <% orchid_name = OrchidsName.new %>
