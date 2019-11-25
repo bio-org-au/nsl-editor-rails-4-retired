@@ -1,5 +1,7 @@
 ---
 - :date: 21-Nov-2019
+  :release: true
+- :date: 21-Nov-2019
   :jira_id: '3422'
   :description: |-
     Further refinements to the interface, more batch processing code for adding instances, and other processing improvements.
