@@ -130,4 +130,8 @@ class Reference < ActiveRecord::Base
     return nil unless ref_type.part?
     parent.iso_publication_date
   end
+
+  def iso_pub_date_for_sorting
+    iso_publication_date || parent.iso_publication_date || '9999'
+  end
 end
