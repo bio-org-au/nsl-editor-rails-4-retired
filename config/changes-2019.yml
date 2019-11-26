@@ -1,6 +1,14 @@
 ---
+- :date: 26-Nov-2019
+  :jira_id: '3458'
+  :description: |-
+    Stop Orchids notes search returning false positives by correctly converting empty strings to nulls before saving.
 - :date: 25-Nov-2019
   :release: true
+- :date: 21-Nov-2019
+  :jira_id: '3456'
+  :description: |-
+    Fix Orchids details tab which was failing when trying to sort instances for which it couldn't find an iso publication date.
 - :date: 21-Nov-2019
   :jira_id: '3456'
   :description: |-

@@ -18,6 +18,7 @@
 #
 # Orchids table
 class Orchid < ActiveRecord::Base
+  strip_attributes
   REF_ID = 51316736
   attr_accessor :name_id, :instance_id
     belongs_to :parent, class_name: "Orchid", foreign_key: "parent_id"
