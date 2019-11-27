@@ -110,9 +110,11 @@ class OrchidsName < ActiveRecord::Base
   end
 
   def relationship_instance?
+    return false if orchid.parent.orchids_name.blank?
+    return false if orchid.parent.orchids_name.first.try('standalone_instance_id').blank?
     instances = Instance.where(name_id: name_id)
                         .where(cites_id: instance_id)
-                        .where(cited_by_id: orchid.parent.orchids_name.first.standalone_instance_id)
+                        .where(cited_by_id: orchid.parent.orchids_name.first.try('standalone_instance_id'))
     if instances.blank?
       return false
     else
@@ -124,6 +126,7 @@ class OrchidsName < ActiveRecord::Base
 
   # 
   def create_relationship_instance
+    return false if orchid.parent.orchids_name.first.try('standalone_instance_id').blank?
     debug('Create relationship instance')
     new_instance = Instance.new
     new_instance.draft = true
