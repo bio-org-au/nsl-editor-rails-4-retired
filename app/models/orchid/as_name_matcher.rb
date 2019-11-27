@@ -25,22 +25,19 @@ class Orchid::AsNameMatcher
   end
 
   def set_preferred_match
-    return stop('excluded') if @orchid.exclude_from_further_processing?
-    return stop("couldn't find or make one") unless find_or_make_one?
-    debug('There is a preferred match.')
-    announce "Finished setting preferred match for Orchid: #{@orchid.taxon}"
-  rescue => e
-    record_failure(e.to_s)
+    if @orchid.exclude_from_further_processing?
+      return 0
+    elsif preferred_match?
+      return 0
+    elsif make_preferred_match?
+      return 1
+    else
+      return 0
+    end
   end
 
   def stop(msg)
     puts "Stopping because: #{msg}"
-  end
-
-  def find_or_make_one?
-    debug '    Find or make a one preferred match'
-    return true if preferred_match?
-    return make_preferred_match? 
   end
 
   def preferred_match?

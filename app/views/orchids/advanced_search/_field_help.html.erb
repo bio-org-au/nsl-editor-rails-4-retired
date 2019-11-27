@@ -56,6 +56,10 @@
      description: "match records with any value in the isonym field"},
     {field_name: 'is-orth-var:',
      description: "match records with a name status value starting with 'orth'"},
+    {field_name: 'is-doubtful:',
+     description: "match records with a value in the doubtful column"},
+    {field_name: 'is-not-doubtful:',
+     description: "match records with no value in the doubtful column"},
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">

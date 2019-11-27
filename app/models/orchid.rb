@@ -184,29 +184,42 @@ class Orchid < ActiveRecord::Base
   end
 
   def self.create_preferred_matches_for(taxon_s)
-    self.where(["taxon like ?", taxon_s]).where(record_type: 'accepted').order(:id).each do |match|
-      match.create_preferred_match
+    records = 0
+    self.where(["taxon like ?", taxon_s.gsub(/\*/,'%')])
+        .where(record_type: 'accepted')
+        .order(:id).each do |match|
+      records += match.create_preferred_match
       match.children.each do |child|
-        child.create_preferred_match
+        records += child.create_preferred_match
       end
     end
+    records
   end
 
   def self.create_instance_for_preferred_matches_for(taxon_s)
+    records = 0
     @ref = Reference.find(REF_ID)
-    puts "Using ref: #{@ref.citation}"
-    self.where(["taxon like ?", taxon_s]).where(record_type: 'accepted').order(:id).each do |match|
-      match.create_instance_for_preferred_matches
+    #debug "Using ref: #{@ref.citation}"
+    self.where(["taxon like ?", taxon_s.gsub(/\*/,'%')])
+        .where(record_type: 'accepted').order(:id).each do |match|
+      records += match.create_instance_for_preferred_matches
       match.children.each do |child|
-        child.create_instance_for_preferred_matches
+        records += child.create_instance_for_preferred_matches
       end
     end
+    records
   end
 
   def create_instance_for_preferred_matches
     @ref = Reference.find(REF_ID) if @ref.blank?
     throw 'No ref!' if @ref.blank?
     AsInstanceCreator.new(self,@ref).create_instance_for_preferred_matches
+  end
+
+  def self.add_to_tree_for(taxon_s)
+    self.where(["taxon like ?", taxon_s]).where(record_type: 'accepted').order(:id).each do |match|
+      placer = AsTreePlacer.new('Minor Edits 19 November 2019', match)
+    end
   end
 
   def isonym?
@@ -218,5 +231,10 @@ class Orchid < ActiveRecord::Base
     return false if name_status.blank?
     name_status.downcase.match(/\Aorth/)
   end
+
+  def debug(msg)
+    Rails.logger.debug(msg)
+  end
+
 end
 

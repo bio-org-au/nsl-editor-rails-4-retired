@@ -20,7 +20,7 @@
 class Search::OnOrchids::WhereClauses
   attr_reader :sql
 
-  DEFAULT_FIELD = "taxon:"
+  DEFAULT_FIELD = "taxon-with-syn:"
 
   def initialize(parsed_request, incoming_sql)
     @parsed_request = parsed_request

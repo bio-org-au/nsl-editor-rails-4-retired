@@ -6,8 +6,8 @@
                                       link_id: 'orchids-show-tab', 
                                       link_title: 'View a summary',
                                       tab_index: @tab_index,
-                                      prev_tab: '.search-result.show-details', 
-                                      next_tab: '' } %> 
+                                      prev_tab: '.search-result.orchids-batch-tab', 
+                                      next_tab: '.search-result.orchids-edit-tab' } %> 
   <% if can? 'orchids', 'update' %>
 
   <%= render partial: 'tab', locals: {first: false,
@@ -17,19 +17,19 @@
                                       link_id: 'orchids-edit-tab', 
                                       link_title: 'Edit orchid.',
                                       tab_index: increment_tab_index,
-                                      prev_tab: '', 
-                                      next_tab: '.search-result.showing-details'} %> 
+                                      prev_tab: '.search-result.orchids-show-tab', 
+                                      next_tab: '.search-result.orchids-edit-match-tab'} %> 
 
 
   <%= render partial: 'tab', locals: {first: false,
                                       last: false,
                                       this_tab: 'tab_chosen', 
                                       link_text: 'Edit Match', 
-                                      link_id: 'orchids-chosen-tab', 
+                                      link_id: 'orchids-edit-match-tab', 
                                       link_title: 'Chosen orchid.',
                                       tab_index: increment_tab_index,
-                                      prev_tab: '', 
-                                      next_tab: '.search-result.showing-details'} %> 
+                                      prev_tab: '.search-result.orchids-edit-tab', 
+                                      next_tab: '.search-result.orchids-delete-tab'} %> 
 
   <%= render partial: 'tab', locals: {first: false,
                                       last: false,
@@ -38,17 +38,37 @@
                                       link_id: 'orchids-delete-tab', 
                                       link_title: 'Delete raw orchid record.',
                                       tab_index: increment_tab_index,
-                                      prev_tab: '', 
-                                      next_tab: '.search-result.showing-details'} %> 
+                                      prev_tab: 'orchids-edit-tab', 
+                                      next_tab: '.search-result.orchids-create-syn-tab'} %> 
 
   <%= render partial: 'tab', locals: {first: false,
-                                      last: true,
+                                      last: false,
                                       this_tab: 'tab_create_syn', 
                                       link_text: 'Create synonym', 
                                       link_id: 'orchids-create-syn-tab', 
                                       link_title: 'Create a synonym for an accepted orchid record.',
                                       tab_index: increment_tab_index,
-                                      prev_tab: '', 
+                                      prev_tab: 'orchids-delete-tab', 
+                                      next_tab: '.search-result.orchids-batch-tab'} %> 
+
+  <%= render partial: 'tab', locals: {first: false,
+                                      last: false,
+                                      this_tab: 'tab_stats', 
+                                      link_text: 'Stats', 
+                                      link_id: 'orchids-stats-tab', 
+                                      link_title: 'View stats.',
+                                      tab_index: increment_tab_index,
+                                      prev_tab: 'orchids-create-syn-tab', 
+                                      next_tab: '.orchids-stats-tab'} %> 
+
+  <%= render partial: 'tab', locals: {first: false,
+                                      last: true,
+                                      this_tab: 'tab_batch', 
+                                      link_text: 'Batch', 
+                                      link_id: 'orchids-batch-tab', 
+                                      link_title: 'Batch operations.',
+                                      tab_index: increment_tab_index,
+                                      prev_tab: 'orchids-stats-tab', 
                                       next_tab: '.search-result.showing-details'} %> 
 
   <% end %>

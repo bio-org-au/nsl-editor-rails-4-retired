@@ -115,5 +115,13 @@ class Search::OnOrchids::FieldRule
                        leading_wildcard: true,
                        trailing_wildcard: true,
                        order: "seq"},
+    "rank:"         => { where_clause: "lower(rank) like ?",
+                                      order: "seq"},
+    "rank-is-null:"         => { where_clause: "rank is null",
+                                      order: "seq"},
+    "is-doubtful:"=> { where_clause: "doubtful is not null",
+                                      order: "seq"},
+    "is-not-doubtful:"=> { where_clause: "doubtful is null",
+                                      order: "seq"},
   }.freeze
 end

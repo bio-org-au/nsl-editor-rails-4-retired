@@ -15,6 +15,7 @@
 *.white          { color: white; }
 *.yellow         { color: yellow; }
 *.darkorchid     { color: darkorchid; }
+*.blueviolet     { color: blueviolet; }
 
 /* Prevent full_name_html class setting color */
 common element.blue {color: $nsl-theme-color;}
@@ -87,6 +88,7 @@ common element.yellow {color: $nsl-theme-color;}
 *.bgwhite          { background-color: white; }
 *.bgyellow         { background-color: yellow; }
 *.bgdarkorchid     { background-color: darkorchid; }
+*.bgblueviolet     { background-color: blueviolet; }
 
 
 *.hover-white:hover    {color: white}
@@ -94,66 +96,68 @@ a:hover.blue           { color: blue; }
 
 *.big-vertical-padding  { padding: 0.6em 0.4em 0.6em 0.4em; }
 .search-result .no-matches {
-  background: rosybrown;
+  background: chocolate;
   color: white;
-  padding: 0.6em 0.4em 0.4em 0.4em;
 }
 .search-result .too-many-matches {
   background: maroon;
   color: white;
-  padding: 0.6em 0.4em 0.4em 0.4em;
 }
 .search-result .no-primary {
   background: chocolate;
   color: white;
-  padding: 0.6em 0.4em 0.4em 0.4em;
 }
 .search-result .misapplied {
   background: #555569;
   color: white;
-  padding: 0.6em 0.4em 0.4em 0.4em;
 }
 .search-result .hybrid-cross {
   background: darkseagreen;
   color: white;
-  padding: 0.6em 0.4em 0.4em 0.4em;
 }
-.search-result .preferred-name,
+.search-result .preferred-name {
+  background: gray;
+  color: white;
+}
+
 .search-result .isonym-has-preferred-name,
 .search-result .orth-var-has-preferred-name{
   background: gray;
   color: white;
-  padding: 0.6em 0.4em 0.4em 0.4em;
 }
 
-.search-result .standalone-count {
+.standalone-count {
   background: darkslateblue;
   color: white;
-  padding: 0.6em 0.4em 0.4em 0.4em;
 }
 
-.search-result .relationship-count {
-  background: darkorchid;
+.relationship-count {
+  background: darkslateblue;
   color: white;
-  padding: 0.6em 0.4em 0.4em 0.4em;
 }
 
-.search-result .exclude-from-further-processing {
+.on-tree-indicator {
+  background: blueviolet;
+  color: white;
+}
+ 
+.exclude-from-further-processing {
   background: sienna;
   color: white;
-  padding: 0.6em 0.4em 0.4em 0.4em;
+}
+
+.search-result .flag {
+  padding: 0.4em 0.3em 0.2em 0.4em;
 }
 
 .search-result .isonym {
   background: peru;
   color: white;
-  padding: 0.6em 0.4em 0.4em 0.4em;
 }
 
 .search-result .orth-var {
   background: firebrick;
   color: white;
-  padding: 0.6em 0.4em 0.4em 0.4em;
 }
 
 .accepted-taxon {
@@ -163,6 +167,7 @@ a:hover.blue           { color: blue; }
 .has-parent {
   padding-left: 2em;
 }
+
 /*
 .synonym-taxon {
 }
