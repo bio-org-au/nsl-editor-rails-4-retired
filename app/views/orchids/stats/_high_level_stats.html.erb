@@ -19,7 +19,7 @@
                       title: "Search for genera",
                       class: 'blue') %>
 <br>
-<%= Orchid.where(record_type: 'hybrid-cross').where('doubtful is null').count %>
+<%= Orchid.where(record_type: 'hybrid_cross').where('doubtful is null').count %>
 <%= link_to('Hybrid cross and not doubtful', search_path(query_string: 'is-hybrid-cross: is-not-doubtful:',query_target: 'orchids'),
                       tabindex: increment_tab_index,
                       title: "Search for genera",
@@ -44,7 +44,7 @@
                       title: "Search for genera",
                       class: 'blue') %>
 <br>
-<%= Orchid.where(record_type: 'hybrid-cross').where('doubtful is not null').count %>
+<%= Orchid.where(record_type: 'hybrid_cross').where('doubtful is not null').count %>
 <%= link_to('Hybrid cross and doubtful', search_path(query_string: 'is-hybrid-cross: is-doubtful:',query_target: 'orchids'),
                       tabindex: increment_tab_index,
                       title: "Search for genera",
