@@ -3,21 +3,21 @@
 
 <h5>Create preferred matches for ...</h5>
 
-<form accept-charset="UTF-8" action="/orchids/create/preferred/matches" data-remote="true" method="post">
+<%= form_tag({controller: "orchids_batch", action: "create_preferred_matches"}, method: "post", remote: true) do %>
   <input name="authenticity_token" type="hidden" value="J7CBxfHalt49OSHp27hblqK20c9PgwJ108nDHX/8Cts=" />
   <input name="taxon_string" type="text" value="<%= @orchid.taxon %>" class="xform-control" required title="taxon string for batch" />
   <input name="submit" type="submit" value="Submit" class="btn btn-primary width-5em" title="Submit the form" />
-</form>
+<% end %>
 
 <%= divider %>
 
 <h5>Create instances for preferred matches for ...</h5>
 
-<form accept-charset="UTF-8" action="/orchids/create/instances/for/preferred/matches" data-remote="true" method="post">
+<%= form_tag({controller: "orchids_batch", action: "create_instances_for_preferred_matches"}, method: "post", remote: true) do %>
   <input name="authenticity_token" type="hidden" value="J7CBxfHalt49OSHp27hblqK20c9PgwJ108nDHX/8Cts=" />
   <input name="taxon_string" type="text" value="<%= @orchid.taxon %>" class="xform-control" required title="taxon string for batch" />
   <input name="submit" type="submit" value="Submit" class="btn btn-primary width-5em" title="Submit the form" />
-</form>
+<% end %>
 
 <%= divider %>
 

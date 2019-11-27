@@ -2,7 +2,7 @@
 - :date: 27-Nov-2019
   :jira_id: '3422'
   :description: |-
-    Orchids refinements including new searches and batch processing, and the first appearance of the Stats and Batch tabs.
+    Orchids refinements including new searches and batch processing, and the first appearance of the Stats and Batch tabs (with fixes).
 - :date: 26-Nov-2019
   :jira_id: '3458'
   :description: |-
