@@ -48,7 +48,7 @@ class DuplicateInstanceNotAllowedTest < ActionController::TestCase
 
   def check_assertions
     assert_response 422, "Response should be 422, unprocessable entity."
-    es = "Name already has an instance with the same reference, type and page."
+    es = "already exists with the same reference, type and page."
     assert_match(/#{es}/,
                  response.body,
                  "Expected error message did not appear")

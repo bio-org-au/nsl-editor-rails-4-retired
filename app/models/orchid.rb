@@ -89,23 +89,37 @@ class Orchid < ActiveRecord::Base
     !parent_id.blank?
   end
 
+  def misapp?
+    misapplied?
+  end
+
   def misapplied?
     record_type == 'misapplied'
   end
 
   def homotypic?
-    synonym_type == 'homotypic'
+    synonym_type == 'homotypic' || 
+      synonym_type == 'nomenclatural synonym'
+  end
+
+  def nomenclatural?
+    homotypic?
   end
 
   def heterotypic?
-    synonym_type == 'heterotypic'
+    synonym_type == 'heterotypic' || 
+      synonym_type == 'taxonomic synonym'
+  end
+
+  def taxonomic?
+    heterotypic?
   end
 
   def pp?
     partly == 'p.p.'
   end
 
-  def riti
+  def riti_old
     return nil if accepted?
     return InstanceType.find_by_name('misapplied').id if misapplied?
     if heterotypic?
@@ -114,8 +128,7 @@ class Orchid < ActiveRecord::Base
       else
         return InstanceType.find_by_name('taxonomic synonym').id
       end
-    end
-    if homotypic?
+    elsif homotypic?
       Rails.logger.debug('homotypic')
       if pp?
         Rails.logger.debug('pp')
@@ -123,8 +136,33 @@ class Orchid < ActiveRecord::Base
       else
         return InstanceType.find_by_name('nomenclatural synonym').id
       end
+    else
+      throw "Neither accepted nor misapplied nor heterotypic nor homotypic: orchid: #{id}: #{taxon} #{record_type}"
     end
-    nil
+    throw "No relationship instance type id for orchid: #{id}: #{taxon}"
+  end
+
+  def riti
+    return nil if accepted?
+    return InstanceType.find_by_name('misapplied').id if misapplied?
+    if taxonomic?
+      if pp?
+        return InstanceType.find_by_name('pro parte taxonomic synonym').id
+      else
+        return InstanceType.find_by_name('taxonomic synonym').id
+      end
+    elsif nomenclatural?
+      if pp?
+        return InstanceType.find_by_name('pro parte nomenclatural synonym').id
+      else
+        return InstanceType.find_by_name('nomenclatural synonym').id
+      end
+    elsif InstanceType.where(name: synonym_type).size == 1
+      return InstanceType.find_by_name(synonym_type).id
+    else
+      throw "Cannot work out instance type for orchid: #{id}: #{taxon} #{record_type} #{synonym_type}"
+    end
+    throw "No relationship instance type id for orchid: #{id}: #{taxon}"
   end
 
   def save_with_username(username)
@@ -180,14 +218,29 @@ class Orchid < ActiveRecord::Base
   end
 
   def create_preferred_match
-    AsNameMatcher.new(self).set_preferred_match
+    AsNameMatcher.new(self).find_or_create_preferred_match
   end
 
   def self.create_preferred_matches_for(taxon_s)
+    throw 'deprecated'
+    debug("create_preferred_matches_for #{taxon_s}")
     records = 0
     self.where(["taxon like ?", taxon_s.gsub(/\*/,'%')])
-        .where(record_type: 'accepted')
-        .order(:id).each do |match|
+        .order(:seq).each do |match|
+      records += match.create_preferred_match
+      match.children.each do |child|
+        records += child.create_preferred_match
+      end
+    end
+    records
+  end
+
+  def self.create_preferred_matches_for_accepted_taxa(taxon_s)
+    debug("create_preferred_matches_for_accepted_taxa matching #{taxon_s}")
+    records = 0
+    self.where(record_type: 'accepted')
+        .where(["taxon like ?", taxon_s.gsub(/\*/,'%')])
+        .order(:seq).each do |match|
       records += match.create_preferred_match
       match.children.each do |child|
         records += child.create_preferred_match
@@ -233,6 +286,10 @@ class Orchid < ActiveRecord::Base
   end
 
   def debug(msg)
+    Rails.logger.debug(msg)
+  end
+
+  def self.debug(msg)
     Rails.logger.debug(msg)
   end
 

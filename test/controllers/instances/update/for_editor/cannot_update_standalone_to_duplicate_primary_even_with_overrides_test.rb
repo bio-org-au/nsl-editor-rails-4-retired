@@ -51,7 +51,7 @@ class CannotUpdateStandaloneToDupPrimEvenWOverrides < ActionController::TestCase
     assert_match(/#{es}/,
                  response.body,
                  "Expected multiple errors message did not appear")
-    es = "Name already has an instance with the same reference, type and page."
+    es = "already exists with the same reference, type and page."
     assert_match(/#{es}/,
                  response.body,
                  "Expected error message did not appear")

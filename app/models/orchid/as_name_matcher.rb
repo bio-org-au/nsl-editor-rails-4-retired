@@ -24,7 +24,7 @@ class Orchid::AsNameMatcher
     @orchid = orchid
   end
 
-  def set_preferred_match
+  def find_or_create_preferred_match
     if @orchid.exclude_from_further_processing?
       return 0
     elsif preferred_match?
@@ -46,15 +46,15 @@ class Orchid::AsNameMatcher
   end
 
   def make_preferred_match?
-    debug '      Make preferred match'
+    debug "      Make preferred match for #{@orchid.id} #{@orchid.taxon} #{@orchid.record_type}"
     if exactly_one_matching_name? &&
-           matching_name_has_primary? &&
-           matching_name_has_exactly_one_primary?
+         matching_name_has_primary? &&
+         matching_name_has_exactly_one_primary?
       pref = @orchid.orchids_name.new
       pref.name_id = @orchid.matches.first.id
       pref.instance_id = @orchid.matches.first.primary_instances.first.id
+      pref.relationship_instance_type_id = @orchid.riti
       pref.created_by = pref.updated_by = 'batch'
-      pref.relationship_instance_type_id = relationship_instance_type_id
       pref.save!
       true
     else
@@ -106,6 +106,6 @@ class Orchid::AsNameMatcher
   end
 
   def debug(msg)
-    puts "#{msg}"
+    Rails.logger.debug("#{msg}")
   end
 end

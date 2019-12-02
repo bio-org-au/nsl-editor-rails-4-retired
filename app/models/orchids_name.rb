@@ -18,6 +18,7 @@
 #
 # Orchids table
 class OrchidsName < ActiveRecord::Base
+  strip_attributes
   belongs_to :name
   belongs_to :instance
   belongs_to :standalone_instance, class_name: 'Instance', foreign_key: 'standalone_instance_id'
@@ -29,6 +30,7 @@ class OrchidsName < ActiveRecord::Base
 
   validates :orchid_id, uniqueness: true,
             unless: Proc.new {|a| a.orchid.record_type == 'misapplied'}
+  validates :relationship_instance_type_id, :presence => true, :unless => "orchid.accepted?"
 
   ###########################################################
   #
@@ -59,9 +61,9 @@ class OrchidsName < ActiveRecord::Base
   end
 
   def create_or_find_standalone_instance
-    puts 'create_or_find_standalone_instance'
+    debug 'create_or_find_standalone_instance'
     return if standalone_instance?
-    puts 'no standalone instance'
+    debug 'no standalone instance'
     create_standalone_instance
   end
 
@@ -99,13 +101,14 @@ class OrchidsName < ActiveRecord::Base
 
   def create_or_find_relationship_instance
     if relationship_instance_id.present?
-      puts '        Relationship instance already there'
+      debug '        Relationship instance already there'
       return
     end
     if relationship_instance?
-      puts '        Relationship instance found'
+      debug '        Relationship instance found'
       return
     end
+    debug('need to create a relationship instance')
     create_relationship_instance
   end
 
@@ -118,24 +121,38 @@ class OrchidsName < ActiveRecord::Base
     if instances.blank?
       return false
     else
-      puts '        relationship instance!'
-      puts "        relationship instances: #{instances.size}"
+      debug '        relationship instance!'
+      debug "        relationship instances: #{instances.size}"
       return true
     end
   end
 
   # 
   def create_relationship_instance
-    return false if orchid.parent.orchids_name.first.try('standalone_instance_id').blank?
-    debug('Create relationship instance')
+    debug('create_relationship_instance start')
+    if orchid.parent.orchids_name.first.try('standalone_instance_id').blank?
+      debug('parent has no standalone instance so cannot create relationship instance')
+      return false
+    end
+    debug('Going on to create relationship instance')
     new_instance = Instance.new
     new_instance.draft = true
+    debug('before....a')
     new_instance.cited_by_id = orchid.parent.orchids_name.first.standalone_instance_id
+    debug('before....b')
     new_instance.reference_id = orchid.parent.orchids_name.first.standalone_instance.reference_id
+    debug('before....c')
     new_instance.cites_id = instance_id
+    debug('before....d')
     new_instance.name_id = instance.name_id
+    debug('before....e')
+    throw "No relationship instance type id for #{orchid_id} #{orchid.taxon}" if relationship_instance_type_id.blank?
+    debug("relationship_instance_type_id: #{relationship_instance_type_id}")
     new_instance.instance_type_id = relationship_instance_type_id
+    debug('before....f')
     new_instance.created_by = new_instance.updated_by = 'nsl-3422'
+    debug('before....g')
+    debug('about to save the instance')
     new_instance.save!
     debug("new relationship instance: #{new_instance.inspect}")
     self.relationship_instance_created = true
@@ -146,18 +163,18 @@ class OrchidsName < ActiveRecord::Base
   # create_or_find_relationship_instance
   def create_or_find_misapplied_instance
     if relationship_instance_id.present?
-      puts '        misapplied instance already there'
+      debug '        misapplied instance already there'
       return
     end
     if relationship_instance?
-      puts '        misapplied instance found'
+      debug '        misapplied instance found'
       return
     end
     create_misapplied_instance
   end
 
   def create_misapplied_instance
-    puts('        Create misapplied instance')
+    debug('        Create misapplied instance')
     new_instance = Instance.new
     new_instance.draft = true
     new_instance.cited_by_id = orchid.parent.orchids_name.first.standalone_instance_id
@@ -174,7 +191,7 @@ class OrchidsName < ActiveRecord::Base
   end
 
   def debug(msg)
-    puts "OrchidsName: #{msg}"
+    Rails.logger.debug("OrchidsName: #{msg}")
   end
 end
 

@@ -14,7 +14,7 @@
             (No instance type to edit for accepted names.)
           <% else %>
             <li><%= orcn.instance.instance_type.name %></li>
-            <li><%= orcn.instance_type.name %></li>
+            <li><%= orcn.instance_type.try('name') %></li>
 
           <%= form_for(orcn, as: 'orchid_name', role: 'form', remote: true) do |f| %>
 

@@ -189,6 +189,10 @@ Rails.application.routes.draw do
         to: "orchids#parent_suggestions",
         via: :get
 
+  match "orchids/stats",
+        as: "orchid_stats",
+        to: "orchids#stats", via: :get
+
   match "orchids/create/preferred/matches",
         as: "create_preferred_matches",
         to: "orchids_batch#create_preferred_matches", via: :post

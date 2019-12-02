@@ -53,13 +53,13 @@
 
   <%= render partial: 'tab', locals: {first: false,
                                       last: false,
-                                      this_tab: 'tab_stats', 
-                                      link_text: 'Stats', 
-                                      link_id: 'orchids-stats-tab', 
-                                      link_title: 'View stats.',
+                                      this_tab: 'tab_create_misapp', 
+                                      link_text: 'Create misapp', 
+                                      link_id: 'orchids-create-misapp-tab', 
+                                      link_title: 'Create a misapp for an accepted orchid record.',
                                       tab_index: increment_tab_index,
-                                      prev_tab: 'orchids-create-syn-tab', 
-                                      next_tab: '.orchids-stats-tab'} %> 
+                                      prev_tab: 'orchids-delete-tab', 
+                                      next_tab: '.search-result.orchids-batch-tab'} %> 
 
   <%= render partial: 'tab', locals: {first: false,
                                       last: true,
@@ -68,7 +68,7 @@
                                       link_id: 'orchids-batch-tab', 
                                       link_title: 'Batch operations.',
                                       tab_index: increment_tab_index,
-                                      prev_tab: 'orchids-stats-tab', 
+                                      prev_tab: 'orchids-create-syn-tab', 
                                       next_tab: '.search-result.showing-details'} %> 
 
   <% end %>

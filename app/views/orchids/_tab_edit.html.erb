@@ -1,4 +1,14 @@
 <% increment_tab_index(0) %>
-<h4>Raw Orchid data</h4>
-<%= render partial: 'form', locals: {orchid: @orchid, record_types: ['', 'accepted','hybrid_cross','misapplied','synonym']} %>
+<h4>Raw Orchid <%= @orchid.record_type.capitalize %></h4>
+<% if @orchid.accepted? %>
+  <%= render partial: 'form_for_accepted', locals: { orchid: @orchid } %>
+<% elsif @orchid.synonym? %>
+  <%= render partial: 'form_for_synonym', locals: { orchid: @orchid } %>
+<% elsif @orchid.misapp? %>
+  <%= render partial: 'form_for_misapp', locals: { orchid: @orchid } %>
+<% elsif @orchid.hybrid_cross? %>
+  <%= render partial: 'form_for_hybrid_cross', locals: { orchid: @orchid } %>
+<% else %>
+  blah
+<% end %>
 

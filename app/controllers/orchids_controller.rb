@@ -119,9 +119,7 @@ class OrchidsController < ApplicationController
     render json: typeahead.suggestions
   end
 
-  def create_preferred_matches
-    throw 'crate pref matches'
-    render 'create preferred matches'
+  def stats
   end
 
   private

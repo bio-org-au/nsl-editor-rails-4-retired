@@ -1,4 +1,12 @@
 ---
+- :date: 02-Dec-2019
+  :jira_id: '3460'
+  :description: |-
+    Orchids: improved create and edit forms and validations for raw data, including synonyms; also allow NSL set of "synonym types" in raw orchid record.
+- :date: 29-Nov-2019
+  :jira_id: '3422'
+  :description: |-
+    Orchids refinements including moving Stats tab alongside the Reports tab, and interative improvements to batch processing and its tab.
 - :date: 27-Nov-2019
   :jira_id: '3422'
   :description: |-

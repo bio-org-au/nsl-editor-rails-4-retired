@@ -1,3 +1,5 @@
+<div id="stats-inner" class="reports-inner">
+<h4>Orchid Stats</h4>
 <%= Orchid.all.count %> Orchids
 <%= divider %>
 <%= Orchid.where(record_type: 'accepted').count %> Accepted
@@ -63,3 +65,5 @@
 
 <%= divider %>
 <%= render partial: 'orchids/stats/rank_stats' %>
+
+</div>

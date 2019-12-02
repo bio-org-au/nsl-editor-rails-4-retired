@@ -1,16 +1,40 @@
+  <h4>Default Search - the good, the bad... </h4>
+  <h5>TLDR; If you are getting no results for a search, try the <i>taxon:</i> search directive.  </h5>
+  <h5>The Good</h5>
+  When searching through orchids raw data we understand that you almost always want to search for "accepted" taxa and their synonyms.
+  <br>
+  Fortunately there's a search directive for that and it's called <i>taxon-with-syn:</i>, which is short for <i>accepted taxon with synonyms</i>.
+  <br>
+  <h5>The Really Good</h5>
+Because <i>taxon-with-syn:</i> is so frequently used, we've made it the default.  This means that you don't even have to enter the directive, it will be assumed.
+  <br>
+  Specifically, if you enter a taxon name fragment into the search field without a directive, the search will assume you want to use the <i>taxon-with-syn:</i> directive.
 
-  <h4>Directives</h4>
+  <br>
+  <h5>The Not-So-Good</h5>
+  We've noticed that sometimes this can cause a problem if you are searching for a taxon name fragment that matches a synonym.  For example, if you enter
+  <blockquote>
+  Dendrobium pugioniforme
+  </blockquote>
+  and hit enter, you would get no results, because that string matches a synonym not an "accepted" taxon.  This can be confusing, even to programmers!  Fortunately using the <i>taxon:</i> search directive helps. For example, entering 
+  <blockquote>
+  taxon: Dendrobium pugioniforme
+  </blockquote>
+  searches for any matching orchid taxon, and that will return results.
+  <br>
+  <br>
+  <h4>Orchid Search Directives</h4>
 <table class="table table-striped">
   <tr><th>Field</th><th>Description</th></tr>
   <% [
     {field_name: '',
-     description: "Default search is the same as taxon: search"},
+     description: "Default search is the same as taxon-with-syn: search"},
+    {field_name: 'taxon-with-syn:',
+     description: "matches against 'accepted' taxa and any attached synonyms are also listed in the results; case-insensitive, trailing wildcard added automatically."},
     {field_name: 'taxon:',
-     description: "search on taxon from the CSV, case-insensitive, trailing wildcard added automatically"},
+     description: "Match on the taxon name string from the CSV, case-insensitive, trailing wildcard added automatically"},
     {field_name: 'taxon-no-wildcard:',
      description: "as for taxon:, but no automatic trailing wildcard"},
-    {field_name: 'taxon-with-syn:',
-     description: "as for taxon-no-wildcard, but attached synonyms are listed"},
     {field_name: 'id:',
      description: "search on the id from the CSV file"},
     {field_name: 'ids:',

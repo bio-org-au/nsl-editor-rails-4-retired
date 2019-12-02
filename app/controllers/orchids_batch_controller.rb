@@ -19,7 +19,7 @@
 class OrchidsBatchController < ApplicationController
 
   def create_preferred_matches
-    records = Orchid.create_preferred_matches_for(params[:taxon_string])
+    records = Orchid.create_preferred_matches_for_accepted_taxa(params[:taxon_string])
     @message = "Created #{records} matches for #{params[:taxon_string]}"
     render 'create'
   rescue => e
@@ -31,9 +31,9 @@ class OrchidsBatchController < ApplicationController
     records = Orchid.create_instance_for_preferred_matches_for(params[:taxon_string])
     @message = "Created #{records} instances for #{params[:taxon_string]}"
     render 'create'
-  #rescue => e
-    #@message = e.to_s.sub(/uncaught throw/,'').gsub(/"/,'')
-    #render 'error'
+  rescue => e
+    @message = e.to_s.sub(/uncaught throw/,'').gsub(/"/,'')
+    render 'error'
   end
 
   private
