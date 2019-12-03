@@ -138,7 +138,7 @@ class OrchidsController < ApplicationController
                                    :name_status, :ex_base_author,
                                    :base_author, :ex_author, :author,
                                    :synonym_type, :comment, :seq,
-                                   :alt_taxon_for_matching,
+                                   :alt_taxon_for_matching, :doubtful,
                                    :exclude_from_further_processing, :notes)
   end
 

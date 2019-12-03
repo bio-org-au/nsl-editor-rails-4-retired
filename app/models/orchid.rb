@@ -217,6 +217,10 @@ class Orchid < ActiveRecord::Base
     record_type == 'misapplied'
   end
 
+  def doubtful?
+    doubtful == true
+  end
+
   def create_preferred_match
     AsNameMatcher.new(self).find_or_create_preferred_match
   end

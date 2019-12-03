@@ -24,7 +24,7 @@ class Search::OnOrchids::FieldRule
     "taxon-no-wildcard:"  => { where_clause: " lower(taxon) like ?",
                                       order: "seq"},
     "taxon-with-syn:"      => { trailing_wildcard: true,
-                               where_clause: " (lower(taxon) like ? and record_type = 'accepted') or (parent_id in (select id from orchids where lower(taxon) like ? and record_type = 'accepted'))",
+                               where_clause: " (lower(taxon) like ? and record_type = 'accepted' and not doubtful) or (parent_id in (select id from orchids where lower(taxon) like ? and record_type = 'accepted' and not doubtful))",
                                order: "seq"},
     "id:"                 => { multiple_values: true,
                                where_clause: "id = ? ",
@@ -119,9 +119,13 @@ class Search::OnOrchids::FieldRule
                                       order: "seq"},
     "rank-is-null:"         => { where_clause: "rank is null",
                                       order: "seq"},
-    "is-doubtful:"=> { where_clause: "doubtful is not null",
+    "is-doubtful:"=> { where_clause: "doubtful",
                                       order: "seq"},
-    "is-not-doubtful:"=> { where_clause: "doubtful is null",
+    "is-not-doubtful:"=> { where_clause: "doubtful",
                                       order: "seq"},
+    "excluded-with-syn:"   => { trailing_wildcard: true,
+                           where_clause: " (lower(taxon) like ? and record_type = 'accepted' and doubtful) or (parent_id in (select id from orchids where lower(taxon) like ? and record_type = 'accepted' and doubtful))",
+                               order: "seq"},
+
   }.freeze
 end

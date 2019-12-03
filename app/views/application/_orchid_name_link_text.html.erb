@@ -70,6 +70,9 @@
 
 <% case search_result.record_type %>
 <% when 'accepted' %>
+  <% if search_result.doubtful? %>
+    <span class="flag misapplied">Excluded</span>
+  <% end %>
 <% when 'synonym' %>
 <% when 'misapplied' %>
   <% if preferreds.blank? %>

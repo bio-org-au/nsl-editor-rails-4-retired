@@ -1,4 +1,12 @@
 ---
+- :date: 03-Dec-2019
+  :jira_id: '3407'
+  :description: |-
+    Orchids: switched the doubtful field to a non-nullable boolean, added an accompanying search directive "exc:", altered the default query "taxon-with-syn:" to exclude excluded-accepted records, and adjusted all other doubtful-related queries. Note also some new aliases for common search directives, like "acc:" for "taxon-with-syn:", listed in the query help.
+- :date: 03-Dec-2019
+  :jira_id: '3460'
+  :description: |-
+    Orchids: added a checkbox for 'doubtful' on the 'accepted' taxon edit form.
 - :date: 02-Dec-2019
   :jira_id: '3460'
   :description: |-

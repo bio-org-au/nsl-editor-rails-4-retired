@@ -18,5 +18,8 @@
 #
 class Search::OnOrchids::FieldAbbrev
   ABBREVS = {
+    "accepted-with-syn:" => "taxon-with-syn:",
+    "acc:" => "taxon-with-syn:",
+    "exc:" => "excluded-with-syn:",
   }.freeze
 end

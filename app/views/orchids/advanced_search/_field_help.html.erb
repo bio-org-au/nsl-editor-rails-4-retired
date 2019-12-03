@@ -30,7 +30,9 @@ Because <i>taxon-with-syn:</i> is so frequently used, we've made it the default.
     {field_name: '',
      description: "Default search is the same as taxon-with-syn: search"},
     {field_name: 'taxon-with-syn:',
-     description: "matches against 'accepted' taxa and any attached synonyms are also listed in the results; case-insensitive, trailing wildcard added automatically."},
+     description: "The default. Matching 'accepted' taxa and any attached synonyms are returned; doesn't include 'accepted' taxa marked as doubtful, which filters out 'doubtful or excluded' taxa; case-insensitive, trailing wildcard added automatically."},
+    {field_name: 'accepted-with-syn:', description: "Abbreviation for taxon-with-syn:."},
+    {field_name: 'acc:', description: "Abbreviation for accepted-with-syn:."},
     {field_name: 'taxon:',
      description: "Match on the taxon name string from the CSV, case-insensitive, trailing wildcard added automatically"},
     {field_name: 'taxon-no-wildcard:',
@@ -49,6 +51,9 @@ Because <i>taxon-with-syn:</i> is so frequently used, we've made it the default.
      description: "match on the notes field - case-insensitive, leading and trailing wildcards added automatically"},
     {field_name: 'rank:',
      description: "match on the rank field - case-insensitive"},
+    {field_name: 'excluded-with-syn: or exc: for short',
+     description: "Matching 'accepted' taxa that are also doubtful, and any attached synonyms are returned; i.e. 'doubtful or excluded' taxa; case-insensitive, trailing wildcard added automatically."},
+    {field_name: 'exc:', description: "Abbreviation for excluded-with-syn:."},
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">
