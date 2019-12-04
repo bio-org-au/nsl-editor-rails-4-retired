@@ -57,6 +57,8 @@ jQuery ->
   $('body').on('click','#confirm-name-refresh-children-button', (event) -> confirmNameRefreshChildrenButtonClick(event,$(this)))
   $('body').on('keydown','#copy-name-form', (event) ->                     copyNameFormEnter(event,$(this)))
   $('body').on('click','#create-copy-of-name', (event) ->                  createCopyOfNameClick(event,$(this)))
+  $('body').on('click','#create-instances-batch-submit', (event) ->        createInstancesBatchSubmit(event,$(this)))
+  $('body').on('click','#create-matches-batch-submit', (event) ->          createMatchesBatchSubmit(event,$(this)))
   debug("on load - search-target-button-text: " + $('#search-target-button-text').text().trim())
 
   # When tabbing to search-result record, need to click to trigger retrieval of details.
@@ -112,9 +114,17 @@ copyNameFormEnter = (event,$the_button) ->
 createCopyOfNameClick = (event,$the_element) ->
   debug('createCopyOfNameClick')
   $('#copy-name-error-message-container').html('')
-  $('#copy-name-error-message-container').addClass('hidden');
+  $('#copy-name-error-message-container').addClass('hidden')
   $('#copy-name-info-message-container').html('')
-  $('#copy-name-info-message-container').addClass('hidden');
+  $('#copy-name-info-message-container').addClass('hidden')
+  return true
+
+createMatchesBatchSubmit = (event,$the_element) ->
+  $('#search-result-details-info-message-container').html('Working....')
+  return true
+
+createInstancesBatchSubmit = (event,$the_element) ->
+  $('#search-result-details-info-message-container').html('Working....')
   return true
 
 nameDeleteFormSubmit = (event,$element) ->
