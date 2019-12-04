@@ -16,7 +16,7 @@
                       class: 'blue') %>
 <br>
 <%= Orchid.where(record_type: 'synonym').where('not doubtful').count %>
-<%= link_to('Synonym and not doubtful', search_path(query_string: 'is-synonym: is-not-doubtful:',query_target: 'orchids'),
+<%= link_to('Synonym and not doubtful', search_path(query_string: 'is-syn: is-not-doubtful:',query_target: 'orchids'),
                       tabindex: increment_tab_index,
                       title: "Search for genera",
                       class: 'blue') %>
@@ -41,7 +41,7 @@
                       class: 'blue') %>
 <br>
 <%= Orchid.where(record_type: 'synonym').where('doubtful').count %>
-<%= link_to('Accepted and doubtful', search_path(query_string: 'is-accepted: is-doubtful:',query_target: 'orchids'),
+<%= link_to('Synonym and doubtful', search_path(query_string: 'is-syn: is-doubtful:',query_target: 'orchids'),
                       tabindex: increment_tab_index,
                       title: "Search for genera",
                       class: 'blue') %>

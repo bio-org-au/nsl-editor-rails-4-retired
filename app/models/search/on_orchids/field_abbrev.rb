@@ -21,5 +21,6 @@ class Search::OnOrchids::FieldAbbrev
     "accepted-with-syn:" => "taxon-with-syn:",
     "acc:" => "taxon-with-syn:",
     "exc:" => "excluded-with-syn:",
+    "is-synonym:" => "is-syn:",
   }.freeze
 end

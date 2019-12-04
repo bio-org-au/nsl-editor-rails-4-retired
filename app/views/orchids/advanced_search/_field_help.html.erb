@@ -51,6 +51,8 @@ Because <i>taxon-with-syn:</i> is so frequently used, we've made it the default.
      description: "match on the notes field - case-insensitive, leading and trailing wildcards added automatically"},
     {field_name: 'rank:',
      description: "match on the rank field - case-insensitive"},
+    {field_name: 'not-rank:',
+     description: "match on the rank field not matching the argument - case-insensitive"},
     {field_name: 'excluded-with-syn: or exc: for short',
      description: "Matching 'accepted' taxa that are also doubtful, and any attached synonyms are returned; i.e. 'doubtful or excluded' taxa; case-insensitive, trailing wildcard added automatically."},
     {field_name: 'exc:', description: "Abbreviation for excluded-with-syn:."},
