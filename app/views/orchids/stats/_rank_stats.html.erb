@@ -35,7 +35,7 @@
                       class: 'blue') %>
 <br>
 <%= Orchid.where(rank: nil).count %>
-<%= link_to('No rank given', search_path(query_string: 'rank-is-null:',query_target: 'orchids'),
+<%= link_to('No rank given', search_path(query_string: 'no-rank:',query_target: 'orchids'),
                       tabindex: increment_tab_index,
                       title: "Search for No rank given",
                       class: 'blue') %>

@@ -2,7 +2,7 @@
 - :date: 03-Dec-2019
   :jira_id: '3407'
   :description: |-
-    Orchids: fix the stats page queries where doubtful is involved; also added the not-rank:, nsl-rank:, and not-nsl-rank: queries.
+    Orchids: fix the stats page queries where doubtful is involved; also added the not-rank:, no-rank:, nsl-rank:, not-nsl-rank:, and no-nsl-rank: queries.
 - :date: 03-Dec-2019
   :jira_id: '3407'
   :description: |-

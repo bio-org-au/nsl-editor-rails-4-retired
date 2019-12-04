@@ -49,13 +49,42 @@ Because <i>taxon-with-syn:</i> is so frequently used, we've made it the default.
      description: "match only if no parent in the CSV file"},
     {field_name: 'notes:',
      description: "match on the notes field - case-insensitive, leading and trailing wildcards added automatically"},
+    {field_name: 'excluded-with-syn: or exc: for short',
+     description: "Matching 'accepted' taxa that are also doubtful, and any attached synonyms are returned; i.e. 'doubtful or excluded' taxa; case-insensitive, trailing wildcard added automatically."},
+    {field_name: 'exc:', description: "Abbreviation for excluded-with-syn:."},
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+      <a href="javascript:void(0)" class="xyz searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
+        <span class="blue"><%= val[:field_name] %></span>
+      </a>
+    </td>
+    <td><%= val[:description].html_safe %></td>
+    <% if val[:partial].present? %>
+      <td><%= render partial: val[:partial] %></td>
+    <% else %>
+      <td></td>
+    <% end %>
+  </tr>
+  <% end %>
+</table>
+
+  <h4>Rank Search Directives</h4>
+<table class="table table-striped">
+  <tr><th>Field</th><th>Description</th></tr>
+  <% [
     {field_name: 'rank:',
      description: "match on the rank field - case-insensitive"},
     {field_name: 'not-rank:',
      description: "match on the rank field not matching the argument - case-insensitive"},
-    {field_name: 'excluded-with-syn: or exc: for short',
-     description: "Matching 'accepted' taxa that are also doubtful, and any attached synonyms are returned; i.e. 'doubtful or excluded' taxa; case-insensitive, trailing wildcard added automatically."},
-    {field_name: 'exc:', description: "Abbreviation for excluded-with-syn:."},
+    {field_name: 'no-rank:',
+     description: "no value in the rank field"},
+    {field_name: 'nsl-rank:',
+     description: "match on the nsl-rank field - case-insensitive"},
+    {field_name: 'not-nsl-rank:',
+     description: "match on the nsl-rank field not matching the argument - case-insensitive"},
+    {field_name: 'no-nsl-rank:',
+     description: "no value in the nsl-rank field"},
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">

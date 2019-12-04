@@ -125,6 +125,8 @@ class Search::OnOrchids::FieldRule
                                       order: "seq"},
     "not-nsl-rank:"         => { where_clause: "lower(nsl_rank) not like ?",
                                       order: "seq"},
+    "nsl-rank-is-null:"         => { where_clause: "nsl_rank is null",
+                                      order: "seq"},
     "is-doubtful:"=> { where_clause: "doubtful",
                                       order: "seq"},
     "is-not-doubtful:"=> { where_clause: "not doubtful",
