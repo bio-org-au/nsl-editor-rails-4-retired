@@ -1,4 +1,8 @@
 ---
+- :date: 09-Dec-2019
+  :jira_id: '3472'
+  :description: |-
+    Orchids: sort the dropdown list of name status values for raw orchid records.
 - :date: 03-Dec-2019
   :jira_id: '3407'
   :description: |-
