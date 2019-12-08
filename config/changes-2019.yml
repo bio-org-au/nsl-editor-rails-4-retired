@@ -1,5 +1,9 @@
 ---
 - :date: 09-Dec-2019
+  :jira_id: '3473'
+  :description: |-
+    Orchids: don't offer matches with names marked as duplicates or without instances.
+- :date: 09-Dec-2019
   :jira_id: '3472'
   :description: |-
     Orchids: sort the dropdown list of name status values for raw orchid records.

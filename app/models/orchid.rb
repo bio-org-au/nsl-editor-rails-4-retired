@@ -58,8 +58,13 @@ class Orchid < ActiveRecord::Base
     !parent_id.blank?
   end
 
+  # Note: not case-insensitive. Perhaps should be.
   def names_simple_name_matching_taxon
-    Name.where(["simple_name = ? or simple_name = ?",taxon, alt_taxon_for_matching]).joins(:name_type).where(name_type: {scientific: true}).order("simple_name, name.id")
+    Name.where(["simple_name = ? or simple_name = ?",taxon, alt_taxon_for_matching])
+        .where(["duplicate_of_id is null"])
+        .where("exists (select null from instance where name_id = name.id)")
+        .joins(:name_type).where(name_type: {scientific: true})
+        .order("simple_name, name.id")
   end
 
   def matches
