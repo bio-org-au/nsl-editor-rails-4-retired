@@ -25,18 +25,21 @@ class Orchid::AsInstanceCreator
   end
 
   def create_instance_for_preferred_matches
+    records = 0
     debug('  Create instance for preferred matches')
-    return if stop_everything?
-    debug('    Proceeding')
+    return 0 if stop_everything?
     @orchid.preferred_match.each do |preferred_match|
-      if preferred_match.standalone_instance_created ||
-         preferred_match.standalone_instance_found
-        debug("      Instance already created or found")
+      if preferred_match.standalone_instance_created
+        return 1
+      elsif preferred_match.standalone_instance_found
+        return 0
       else
         debug('      Create instance')
         preferred_match.create_instance(@ref)
+        records += 1
       end
     end
+    records
   end
 
   def stop_everything?
@@ -71,6 +74,6 @@ class Orchid::AsInstanceCreator
   end
 
   def debug(msg)
-    puts "#{msg}"
+    Rails.logger.debug(msg)
   end
 end

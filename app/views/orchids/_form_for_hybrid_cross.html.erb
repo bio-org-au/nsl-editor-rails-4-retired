@@ -33,19 +33,19 @@
 
     <div class="form-group">
       <label for="record_type">Record type*</label>
-      <%= f.select :record_type, record_types,{}, required: true, class: 'form-control', title: "Enter record_type", tabindex: increment_tab_index, autofocus: true %>
+      <%= f.hidden_field :record_type, value: 'hybrid_cross' %>
+      <%= f.text_field :record_type, class: 'form-control', value: 'hybrid-cross', disabled: true %>
     </div>
-    <%= render partial: "synonym_type", locals: {f: f} %>
 
     <div class="form-group">
-      <label for="orchid-parent-typeahead">Accepted Taxon (for synonyms, misapplied)</label>
+      <label for="orchid-parent-typeahead">Accepted Taxon</label>
       <input id="orchid-parent-typeahead"
              name="orchid[parent_typeahead]"
              class="typeahead form-control"
              data-orchid-id="<%= orchid.id %>"
              type="text" 
              tabindex="<%= increment_tab_index %>"
-             title="Orchids parents"
+             title="Raw orchid taxon that contains this orchid"
              value="<%= orchid.parent.try('taxon') %>"/>
     </div>
     <%= f.hidden_field(:parent_id, {}) %>

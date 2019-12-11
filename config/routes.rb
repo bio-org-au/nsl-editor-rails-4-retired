@@ -189,6 +189,18 @@ Rails.application.routes.draw do
         to: "orchids#parent_suggestions",
         via: :get
 
+  match "orchids/stats",
+        as: "orchid_stats",
+        to: "orchids#stats", via: :get
+
+  match "orchids/create/preferred/matches",
+        as: "create_preferred_matches",
+        to: "orchids_batch#create_preferred_matches", via: :post
+
+  match "orchids/create/instances/for/preferred/matches",
+        as: "create_instances_for_preferred_matches",
+        to: "orchids_batch#create_instances_for_preferred_matches", via: :post
+
   match "references/typeahead/on_citation/duplicate_of/:id",
         as: "references_typeahead_on_citation_duplicate_of_current",
         to: "references#typeahead_on_citation_duplicate_of_current", via: :get

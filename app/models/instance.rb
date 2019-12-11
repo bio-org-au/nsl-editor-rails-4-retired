@@ -185,7 +185,10 @@ class Instance < ActiveRecord::Base
                          :cites_id,
                          :cited_by_id,
                          :page],
-                         message: "already has an instance with the same reference, type and page."}
+                         message: ->(object, data) do
+        " - instance for Name #{data[:value]} already exists with the same reference, type and page."
+                         end
+                 }
 
   validate :relationship_ref_must_match_cited_by_instance_ref,
            :synonymy_name_must_match_cites_instance_name,

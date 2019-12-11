@@ -1,4 +1,46 @@
 ---
+- :date: 09-Dec-2019
+  :jira_id: '3473'
+  :description: |-
+    Orchids: don't offer matches with names marked as duplicates or without instances.
+- :date: 09-Dec-2019
+  :jira_id: '3472'
+  :description: |-
+    Orchids: sort the dropdown list of name status values for raw orchid records.
+- :date: 03-Dec-2019
+  :jira_id: '3407'
+  :description: |-
+    Orchids: fix the stats page queries where doubtful is involved; also added the not-rank:, no-rank:, nsl-rank:, not-nsl-rank:, and no-nsl-rank: queries; more stats queries.
+- :date: 03-Dec-2019
+  :jira_id: '3407'
+  :description: |-
+    Orchids: switched the doubtful field to a non-nullable boolean, added an accompanying search directive "exc:", altered the default query "taxon-with-syn:" to exclude excluded-accepted records, and adjusted all other doubtful-related queries. Note also some new aliases for common search directives, like "acc:" for "taxon-with-syn:", listed in the query help.
+- :date: 03-Dec-2019
+  :jira_id: '3460'
+  :description: |-
+    Orchids: added a checkbox for 'doubtful' on the 'accepted' taxon edit form.
+- :date: 02-Dec-2019
+  :jira_id: '3460'
+  :description: |-
+    Orchids: improved create and edit forms and validations for raw data, including synonyms; also allow NSL set of "synonym types" in raw orchid record.
+- :date: 29-Nov-2019
+  :jira_id: '3422'
+  :description: |-
+    Orchids refinements including moving Stats tab alongside the Reports tab, and interative improvements to batch processing and its tab.
+- :date: 27-Nov-2019
+  :jira_id: '3422'
+  :description: |-
+    Orchids refinements including new searches and batch processing, and the first appearance of the Stats and Batch tabs (with fixes).
+- :date: 26-Nov-2019
+  :jira_id: '3458'
+  :description: |-
+    Stop Orchids notes search returning false positives by correctly converting empty strings to nulls before saving.
+- :date: 25-Nov-2019
+  :release: true
+- :date: 21-Nov-2019
+  :jira_id: '3456'
+  :description: |-
+    Fix Orchids details tab which was failing when trying to sort instances for which it couldn't find an iso publication date.
 - :date: 21-Nov-2019
   :jira_id: '3456'
   :description: |-

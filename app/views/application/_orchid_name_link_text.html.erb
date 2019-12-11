@@ -19,59 +19,74 @@
 <% if search_result.orchids_name.blank? %>
   <% case search_result.matches.size %>
   <% when 0 %>
-    <span class="no-matches">No Matches</span>
+    <span class="flag no-matches">No Matches</span>
   <% when 1 %>
     <% if search_result.name_match_no_primary %>
-      <span class="no-primary">No Primary</span>
+      <span class="flag no-primary">No Primary</span>
     <% end %>
   <% else %>
-    <span class="too-many-matches">Too many matches</span>
+    <span class="flag too-many-matches">Too many matches</span>
     <% if search_result.name_match_no_primary %>
-      <span class="no-primary">No Primary</span>
+      <span class="flag no-primary">No Primary</span>
     <% end %>
   <% end %>
   <% if search_result.isonym? %>
-    <span class="isonym">Isonym</span>
+    <span class="flag isonym">Isonym</span>
   <% end %>
   <% if search_result.orth_var? %>
-    <span class="orth-var">Orth. Var.</span>
+    <span class="flag orth-var">Orth. Var.</span>
   <% end %>
 <% else %>
   <% preferreds = search_result.orchids_name.collect{|o| "#{o.name_id}/#{o.instance_id}" } %>
-  <span class="preferred-name"><%= preferreds.size %>p</span>
+  <span class="flag preferred-name"><%= preferreds.size %>p</span>
   <% standalones = search_result.orchids_name.select {|orcn| orcn.standalone_instance_id.present?} %>
   <% if standalones.size > 0 %>
-    <span class="standalone-count"><%= "#{standalones.size}i" %></span>
+    <span class="flag standalone-count"><%= "#{standalones.size}i" %></span>
+    <% if standalones.size > 1 %>
+      <span class="flag standalone-count"><%= "#{standalones.size}i too many!" %></span>
+    <% else %>
+      <% if standalones.first.drafted? %>
+        <span class='flag on-tree-indicator'>drafted</span>
+      <% end %>
+      <% if @working_draft.present? && standalones.first.standalone_instance.in_workspace?(@working_draft) %>
+        <span class='flag on-tree-indicator'>current draft</span>
+      <% end %>
+    <% end %>
   <% end %>
   <% relationships = search_result.orchids_name.select {|orcn| orcn.relationship_instance_id.present?} %>
   <% if relationships.size > 0 %>
-    <span class="relationship-count"><%= "#{relationships.size}c" %></span>
+    <span class="flag relationship-count"><%= "#{relationships.size}c" %></span>
   <% end %>
+ 
+
 
   <% if search_result.isonym? %>
-    <span class="isonym-has-preferred-name">Isonym</span>
+    <span class="flag isonym-has-preferred-name">Isonym</span>
   <% end %>
   <% if search_result.orth_var? %>
-    <span class="orth-var-has-preferred-name">Orth. Var.</span>
+    <span class="flag orth-var-has-preferred-name">Orth. Var.</span>
   <% end %>
 <% end %>
 
 <% case search_result.record_type %>
 <% when 'accepted' %>
+  <% if search_result.doubtful? %>
+    <span class="flag misapplied">Excluded</span>
+  <% end %>
 <% when 'synonym' %>
 <% when 'misapplied' %>
   <% if preferreds.blank? %>
-    <span class="misapplied">Misapplied</span>
+    <span class="flag misapplied">Misapplied</span>
   <% end %>
 <% when 'hybrid_cross' %>
   <% if preferreds.blank? %>
-    <span class="hybrid-cross">Hybrid Cross</span>
+    <span class="flag hybrid-cross">Hybrid Cross</span>
   <% end %>
 <% end %>
 
 <% if search_result.exclude_from_further_processing? %>
-    <span class="exclude-from-further-processing">No further processing</span>
+    <span class="flag exclude-from-further-processing">No further processing</span>
 <% end %>
 <% if search_result.try('parent').try('exclude_from_further_processing?') %>
-    <span class="exclude-from-further-processing">No further processing via parent</span>
+    <span class="flag exclude-from-further-processing">No further processing via parent</span>
 <% end %>

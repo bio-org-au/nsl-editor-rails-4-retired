@@ -63,8 +63,7 @@ class NoOverrideForTwoErrorsTest < ActionController::TestCase
     assert_match(/#{error_s}/,
                  response.body,
                  "Expected error message did not appear")
-    error_s = "Name already has an instance with the same reference"
-    error_s += ", type and page."
+    error_s = "already exists with the same reference, type and page."
     assert_match(/#{error_s}/,
                  response.body,
                  "Expected error message did not appear")

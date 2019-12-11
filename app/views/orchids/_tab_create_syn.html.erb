@@ -4,7 +4,8 @@
   <h4>Create Orchid synonym for <%= @orchid.taxon %></h4>
   <% orchid = Orchid.new %>
   <% orchid.parent_id = @orchid.id %>
+  <% orchid.record_type = 'synonym' %>
   <% orchid.seq = @orchid.seq + 1 %>
-  <%= render partial: 'form', locals: {orchid: orchid, record_types:  ['', 'hybrid_cross','misapplied','synonym']} %>
+  <%= render partial: 'form_for_synonym', locals: {orchid: orchid} %>
 <% end %>
 

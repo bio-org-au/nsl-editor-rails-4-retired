@@ -132,6 +132,6 @@ class Reference < ActiveRecord::Base
   end
 
   def iso_pub_date_for_sorting
-    iso_publication_date || parent.iso_publication_date || '9999'
+    iso_publication_date || parent.try('iso_publication_date') || '9999'
   end
 end

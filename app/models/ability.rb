@@ -96,6 +96,7 @@ class Ability
 
   def qa_auth
     can "orchids",            :all
+    can "orchids_batch",      :all
     can "orchids_names",      :all
   end
 

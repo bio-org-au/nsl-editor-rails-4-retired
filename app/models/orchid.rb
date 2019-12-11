@@ -18,6 +18,7 @@
 #
 # Orchids table
 class Orchid < ActiveRecord::Base
+  strip_attributes
   REF_ID = 51316736
   attr_accessor :name_id, :instance_id
     belongs_to :parent, class_name: "Orchid", foreign_key: "parent_id"
@@ -57,8 +58,13 @@ class Orchid < ActiveRecord::Base
     !parent_id.blank?
   end
 
+  # Note: not case-insensitive. Perhaps should be.
   def names_simple_name_matching_taxon
-    Name.where(["simple_name = ? or simple_name = ?",taxon, alt_taxon_for_matching]).joins(:name_type).where(name_type: {scientific: true}).order("simple_name, name.id")
+    Name.where(["simple_name = ? or simple_name = ?",taxon, alt_taxon_for_matching])
+        .where(["duplicate_of_id is null"])
+        .where("exists (select null from instance where name_id = name.id)")
+        .joins(:name_type).where(name_type: {scientific: true})
+        .order("simple_name, name.id")
   end
 
   def matches
@@ -88,23 +94,37 @@ class Orchid < ActiveRecord::Base
     !parent_id.blank?
   end
 
+  def misapp?
+    misapplied?
+  end
+
   def misapplied?
     record_type == 'misapplied'
   end
 
   def homotypic?
-    synonym_type == 'homotypic'
+    synonym_type == 'homotypic' || 
+      synonym_type == 'nomenclatural synonym'
+  end
+
+  def nomenclatural?
+    homotypic?
   end
 
   def heterotypic?
-    synonym_type == 'heterotypic'
+    synonym_type == 'heterotypic' || 
+      synonym_type == 'taxonomic synonym'
+  end
+
+  def taxonomic?
+    heterotypic?
   end
 
   def pp?
     partly == 'p.p.'
   end
 
-  def riti
+  def riti_old
     return nil if accepted?
     return InstanceType.find_by_name('misapplied').id if misapplied?
     if heterotypic?
@@ -113,8 +133,7 @@ class Orchid < ActiveRecord::Base
       else
         return InstanceType.find_by_name('taxonomic synonym').id
       end
-    end
-    if homotypic?
+    elsif homotypic?
       Rails.logger.debug('homotypic')
       if pp?
         Rails.logger.debug('pp')
@@ -122,8 +141,33 @@ class Orchid < ActiveRecord::Base
       else
         return InstanceType.find_by_name('nomenclatural synonym').id
       end
+    else
+      throw "Neither accepted nor misapplied nor heterotypic nor homotypic: orchid: #{id}: #{taxon} #{record_type}"
     end
-    nil
+    throw "No relationship instance type id for orchid: #{id}: #{taxon}"
+  end
+
+  def riti
+    return nil if accepted?
+    return InstanceType.find_by_name('misapplied').id if misapplied?
+    if taxonomic?
+      if pp?
+        return InstanceType.find_by_name('pro parte taxonomic synonym').id
+      else
+        return InstanceType.find_by_name('taxonomic synonym').id
+      end
+    elsif nomenclatural?
+      if pp?
+        return InstanceType.find_by_name('pro parte nomenclatural synonym').id
+      else
+        return InstanceType.find_by_name('nomenclatural synonym').id
+      end
+    elsif InstanceType.where(name: synonym_type).size == 1
+      return InstanceType.find_by_name(synonym_type).id
+    else
+      throw "Cannot work out instance type for orchid: #{id}: #{taxon} #{record_type} #{synonym_type}"
+    end
+    throw "No relationship instance type id for orchid: #{id}: #{taxon}"
   end
 
   def save_with_username(username)
@@ -178,34 +222,66 @@ class Orchid < ActiveRecord::Base
     record_type == 'misapplied'
   end
 
+  def doubtful?
+    doubtful == true
+  end
+
   def create_preferred_match
-    AsNameMatcher.new(self).set_preferred_match
+    AsNameMatcher.new(self).find_or_create_preferred_match
   end
 
   def self.create_preferred_matches_for(taxon_s)
-    self.where(["taxon like ?", taxon_s]).where(record_type: 'accepted').order(:id).each do |match|
-      match.create_preferred_match
+    throw 'deprecated'
+    debug("create_preferred_matches_for #{taxon_s}")
+    records = 0
+    self.where(["taxon like ?", taxon_s.gsub(/\*/,'%')])
+        .order(:seq).each do |match|
+      records += match.create_preferred_match
       match.children.each do |child|
-        child.create_preferred_match
+        records += child.create_preferred_match
       end
     end
+    records
+  end
+
+  def self.create_preferred_matches_for_accepted_taxa(taxon_s)
+    debug("create_preferred_matches_for_accepted_taxa matching #{taxon_s}")
+    records = 0
+    self.where(record_type: 'accepted')
+        .where(["taxon like ?", taxon_s.gsub(/\*/,'%')])
+        .order(:seq).each do |match|
+      records += match.create_preferred_match
+      match.children.each do |child|
+        records += child.create_preferred_match
+      end
+    end
+    records
   end
 
   def self.create_instance_for_preferred_matches_for(taxon_s)
+    records = 0
     @ref = Reference.find(REF_ID)
-    puts "Using ref: #{@ref.citation}"
-    self.where(["taxon like ?", taxon_s]).where(record_type: 'accepted').order(:id).each do |match|
-      match.create_instance_for_preferred_matches
+    #debug "Using ref: #{@ref.citation}"
+    self.where(["taxon like ?", taxon_s.gsub(/\*/,'%')])
+        .where(record_type: 'accepted').order(:id).each do |match|
+      records += match.create_instance_for_preferred_matches
       match.children.each do |child|
-        child.create_instance_for_preferred_matches
+        records += child.create_instance_for_preferred_matches
       end
     end
+    records
   end
 
   def create_instance_for_preferred_matches
     @ref = Reference.find(REF_ID) if @ref.blank?
     throw 'No ref!' if @ref.blank?
     AsInstanceCreator.new(self,@ref).create_instance_for_preferred_matches
+  end
+
+  def self.add_to_tree_for(taxon_s)
+    self.where(["taxon like ?", taxon_s]).where(record_type: 'accepted').order(:id).each do |match|
+      placer = AsTreePlacer.new('Minor Edits 19 November 2019', match)
+    end
   end
 
   def isonym?
@@ -217,5 +293,14 @@ class Orchid < ActiveRecord::Base
     return false if name_status.blank?
     name_status.downcase.match(/\Aorth/)
   end
+
+  def debug(msg)
+    Rails.logger.debug(msg)
+  end
+
+  def self.debug(msg)
+    Rails.logger.debug(msg)
+  end
+
 end
 
