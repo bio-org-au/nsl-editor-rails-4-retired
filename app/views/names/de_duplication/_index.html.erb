@@ -1,0 +1,70 @@
+
+  <h5><%= @name.full_name %> is marked as a duplicate of <%= @name.duplicate_of.full_name %></h5>
+  <h6><%= @name.full_name %> (duplicate) has </h6>
+  <% @name.de_dupe_preview.each do |key, value|  %>
+    <%= key %>: <%= value %> <%= link_to 'transfer', {}, class: "bgorange white btn-slim", title: "Transfer to master" %>
+    <br>
+  <% end %>
+
+  <%= divider %>
+
+  <% @name.tree_elements.each do |te| %>
+    <%= te.tree_version_elements.size %><br>
+    <% te.tree_version_elements.each do |tve| %>
+      <%= tve.tree_version.draft_name %><br>
+      <%= tve.tree_version.tree.name %>
+    <% end %>
+  <% end %>
+
+  <%= divider %>
+
+  <h6><%= @name.duplicate_of.full_name %> (master) has </h6>
+  <% @name.duplicate_of.has_dependents.overview.each do |key, value|  %>
+    <%= key %>: <%= value %><br>
+  <% end %>
+
+  <%= divider %>
+
+  <h5><%= @name.full_name %> is marked as a duplicate of <%= @name.duplicate_of.full_name %></h5>
+  <h6><%= @name.full_name %> (duplicate) has </h6>
+  <table width="100%">
+    <tr>
+      <th>Dependent type</th>
+      <th>Duplicate has</th>
+      <th></th>
+      <th>Master has</th>
+    </tr>
+  <% @name.de_dupe_preview.each do |key, value|  %>
+    <tr>
+      <td><%= key %></td>
+      <td><%= value %></td>
+      <td>
+        <%= link_to 'transfer', {}, class: "bgorange white btn-slim", title: "Transfer to master" %>
+      </td>
+      <td>
+        <%= @name.duplicate_of.has_dependents.overview[key] %>
+      </td>
+    </tr>
+    <br>
+  <% end %>
+  <table>
+
+  <%= divider %>
+
+  <% @name.tree_elements.each do |te| %>
+    <%= te.tree_version_elements.size %><br>
+    <% te.tree_version_elements.each do |tve| %>
+      <%= tve.tree_version.draft_name %><br>
+      <%= tve.tree_version.tree.name %>
+    <% end %>
+  <% end %>
+
+  <%= divider %>
+
+  <h6><%= @name.duplicate_of.full_name %> (master) has </h6>
+  <% @name.duplicate_of.has_dependents.overview.each do |key, value|  %>
+    <%= key %>: <%= value %><br>
+  <% end %>
+
+
+

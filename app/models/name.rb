@@ -65,7 +65,8 @@ class Name < ActiveRecord::Base
   has_many :comments
   has_many :name_tag_names
   has_many :name_tags, through: :name_tag_names
-  has_many :tree_nodes
+  has_many :tree_nodes  # not sure what this is, looks like a thought bubble
+  has_many :tree_elements
 
   SEARCH_LIMIT = 50
   DECLARED_BT = "DeclaredBt"
@@ -161,6 +162,24 @@ class Name < ActiveRecord::Base
     else
       []
     end
+  end
+
+  def de_dupe
+    dd = Name::DeDuper.new(self)
+    dd.de_dupe
+  end
+
+  def de_dupe_preview
+    dd = Name::DeDuper.new(self)
+    dd.preview
+  end
+
+  def de_duper
+    Name::DeDuper.new(self)
+  end
+
+  def has_dependents
+    Name::HasDependents.new(self)
   end
 
   private
