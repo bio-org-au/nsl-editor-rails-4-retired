@@ -1,4 +1,8 @@
 ---
+- :date: 19-Dec-2019
+  :jira_id: '3394'
+  :description: |-
+    Name duplicate rewiring at record-level and in bulk, associated new Batch page tab, and associated consolidation/re-arrangement of Name detail tabs.
 - :date: 11-Dec-2019
   :release: true
 - :date: 09-Dec-2019

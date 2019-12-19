@@ -1,0 +1,47 @@
+
+  <table border="1" width="100%">
+    <tr>
+      <th colspan="2"><%= @name.full_name %> (duplicate)</th>
+      <th> </th> 
+      <th colspan="1"><%= @name.duplicate_of.full_name %> (master)</th>
+    </tr>
+    <tr>
+      <th>Dependent type</th>
+      <th>Duplicate has</th>
+      <th></th>
+      <th>Master has</th>
+    </tr>
+    <% @name.de_dupe_preview.sort.each do |key, value|  %>
+    <tr>
+      <td><%= key %></td>
+      <td><%= value %></td>
+      <td>
+        <% if value.to_i > 0 && ['children','in_family','duplicates_of','instances'].include?(key.to_s) %>
+          <%= link_to 'transfer',
+            name_transfer_dependents_path(@name.id,key.to_s),
+            method: :post,
+            remote: true,
+            class: "bgorange white btn-slim",
+            title: "Transfer dependents to the master record",
+            onclick: "$('#de-duplicate-info-message-container').html('Working'); return true;"
+          %>
+        <% end %>
+      </td>
+      <td>
+        <%= @name.duplicate_of.has_dependents.overview[key] %>
+      </td>
+    </tr>
+  <% end %>
+  </table>
+
+<span id="de-duplicate-info-message-container" class="message-container"></span>
+<span id="de-duplicate-error-message-container" class="error-container"></span>
+<div id="refresh-this-tab-link-container" class="hidden">
+  <span class="bglightgray btn-slim">
+  <a href="#0" class="refresh-this-tab-link"
+               title="Refresh this tab"
+               onclick="$('ul.nav-tabs li.active a.tab').click();">Refresh tab
+  </a>
+  </span>
+</div>
+

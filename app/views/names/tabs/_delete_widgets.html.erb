@@ -19,7 +19,6 @@
 </div>
 <% else %>
   Cannot delete:
-  <br>
   <% if @name.instances.size > 0 %>
     <br>
     <%= link_to("#{pluralize(@name.instances.size,'instance')} #{icon('search')}".html_safe, 
@@ -28,8 +27,7 @@
                         query_field: 'name-instances'),
                         tabindex: increment_tab_index,
                         title: "Search for the #{pluralize(@name.instances.size,'instance')}",
-                        class: 'give-me-focus') %>
-  <br>
+                        class: '') %>
   <% end %>
   <% if @name.children.size > 0 %>
     <br>
@@ -39,7 +37,6 @@
                         tabindex: increment_tab_index,
                         title: "Retrieve #{pluralize(@name.children.size,'child')}.",
                         class: '') %>
-  <br>
   <% end %>
   <% if @name.comments.size > 0  %>
     <br>
