@@ -20,7 +20,7 @@
   <ul>
     <li><%= pluralize(Name.children_of_duplicates_count,'child') %>
     <%= link_to 'Transfer all children from duplicate to master',
-                name_transfer_all_dependents_path('childrenx'),
+                name_transfer_all_dependents_path('children'),
                 method: :post, remote: true, class: "bgorange white btn-slim",
                 title: "Transfer dependents to the master record",
                 onclick: "$('#batch-de-duplicate-info-message-container').html('Working'); return true;"
@@ -30,7 +30,7 @@
 
     <li><%= pluralize(Name.instances_of_duplicates_count,'instance') %>
     <%= link_to 'Transfer all instances from duplicate to master',
-                name_transfer_all_dependents_path('instancesx'),
+                name_transfer_all_dependents_path('instances'),
                 method: :post, remote: true, class: "bgorange white btn-slim",
                 title: "Transfer dependents to the master record",
                 onclick: "$('#batch-de-duplicate-info-message-container').html('Working'); return true;"
@@ -40,7 +40,7 @@
       
     <li><%= pluralize(Name.family_members_of_duplicates_count,'family member') %>
     <%= link_to 'Transfer all family members from duplicate to master',
-                name_transfer_all_dependents_path('in_familyx'),
+                name_transfer_all_dependents_path('in_family'),
                 method: :post, remote: true, class: "bgorange white btn-slim",
                 title: "Transfer dependents to the master record",
                 onclick: "$('#batch-de-duplicate-info-message-container').html('Working'); return true;"
