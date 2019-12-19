@@ -25,7 +25,7 @@ class Name::DeDuper
     @duplicate = duplicate_name
     identify_master
     identify_dependencies
-    debug("De-duplicating name: #{@duplicate.id} #{@duplicate.full_name}")
+    debug("Name::DeDuper#initialize - de-duplicating name: #{@duplicate.id} #{@duplicate.full_name}")
   end
 
   def de_dupe
@@ -85,6 +85,68 @@ class Name::DeDuper
                                                   tve.tree_version.published.to_s}
         end
     t
+  end
+
+  def transfer_dependents(type)
+    case type
+    when "in_family"
+      transfer_family_members
+    when "children"
+      transfer_children
+    when "instances"
+      transfer_instances
+    else
+      throw "Editor doesn't transfer dependent #{type}"
+    end
+  end
+
+  # Family members, in this case, do not include direct children.
+  def transfer_family_members
+    @transferred_count = 0
+    @duplicate.members.each do |family_member|
+      family_member.update_attribute(:family_id, @master.id)
+      family_member.update_attribute(:updated_by, 'duplicate-rewiring')
+      @transferred_count += 1
+    end
+    @transferred_count
+  end
+
+  # Children are not the same as family members.
+  def transfer_children
+    @transferred_count = 0
+    @duplicate.children.each do |child|
+      child.update_attribute(:parent_id, @master.id)
+      child.update_attribute(:updated_by, 'duplicate-rewiring')
+      @transferred_count += 1
+    end
+    @transferred_count
+  end
+
+  def transfer_instances
+    @transferred_count = 0
+    @duplicate.instances.each do |instance|
+      #unless instance.tree_elements.size > 0
+        instance.update_attribute(:name_id, @master.id)
+        instance.update_attribute(:updated_by, 'duplicate-rewiring')
+        @transferred_count += 1
+      #end
+    end
+    @transferred_count
+  end
+
+  def notyettransfer_tree_elements
+    @transferred_count = 0
+    ActiveRecord::Base.transaction do
+      @duplicate.tree_elements.each do |tree_element|
+        tree_element.name_id = @master.id
+        tree_element.name_element = @master.name_element
+        tree_element.name_element = @master.name_element
+        tree_element.name_link = tree_element.name_link.sub(/#{@duplicate.id}/, @master.id)
+        tree_element.simple_name = @master.simple_name
+        @transferred_count += 1
+      end
+    end
+    @transferred_count
   end
  
   private

@@ -98,6 +98,7 @@ class Ability
     can "orchids",            :all
     can "orchids_batch",      :all
     can "orchids_names",      :all
+    can "batches",            :all
   end
 
   # TODO: remove this - NSL-2007

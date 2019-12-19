@@ -19,19 +19,23 @@
 require "test_helper"
 
 # Single controller test.
-class NameForbidMoreTabForReaderTest < ActionController::TestCase
+# Tests permission to show copy tabs to editor.
+class NameShowOtherTabForEditorTest < ActionController::TestCase
   tests NamesController
   setup do
     @name = names(:a_species)
   end
 
-  test "reader requests forbidden more tab" do
+  test "should show other tab" do
     @request.headers["Accept"] = "application/javascript"
     get(:show,
-        { id: @name.id, tab: "tab_more" },
+        { id: @name.id, tab: "tab_other" },
         username: "fred",
         user_full_name: "Fred Jones",
-        groups: [])
-    assert_response :forbidden
+        groups: ["edit"])
+    assert_response :success
+    assert_select "li.active a#name-other-tab",
+                  "Other",
+                  "Should show 'Other' tab."
   end
 end

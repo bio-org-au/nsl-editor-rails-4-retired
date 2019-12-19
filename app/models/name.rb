@@ -51,6 +51,7 @@ class Name < ActiveRecord::Base
 
   belongs_to :duplicate_of, class_name: "Name", foreign_key: "duplicate_of_id"
   belongs_to :family, class_name: "Name"
+  has_many   :members, class_name: "Name", foreign_key: "family_id"
 
   has_many :duplicates,
            class_name: "Name",
@@ -180,6 +181,38 @@ class Name < ActiveRecord::Base
 
   def has_dependents
     Name::HasDependents.new(self)
+  end
+
+  def transfer_dependents(dependent_type)
+    dd = Name::DeDuper.new(self)
+    dd.transfer_dependents(dependent_type)
+  end
+
+  def self.children_of_duplicates_count 
+    sql = "select count(*) total from name n join name parent on n.parent_id = parent.id where parent.duplicate_of_id is not null"
+    records_array = ActiveRecord::Base.connection.execute(sql)
+    records_array.first['total'] 
+  end
+
+  def self.instances_of_duplicates_count 
+    sql = "select count(*) total from name join instance on name.id = instance.name_id where name.duplicate_of_id is not null"
+    records_array = ActiveRecord::Base.connection.execute(sql)
+    records_array.first['total'] 
+  end
+
+  def self.family_members_of_duplicates_count 
+    sql = "select count(*) total from name join name family on name.family_id = family.id where family.duplicate_of_id is not null"
+    records_array = ActiveRecord::Base.connection.execute(sql)
+    records_array.first['total'] 
+  end
+
+  def self.transfer_all_dependents(dependent_type)
+    total = 0
+    Name.where('duplicate_of_id is not null').each do |duplicate|
+      dd = Name::DeDuper.new(duplicate)
+      total += dd.transfer_dependents(dependent_type)
+    end
+    total
   end
 
   private

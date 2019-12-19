@@ -354,12 +354,14 @@ tr.search-result.fresh td.main-content {
   background: rgb(238, 238, 255);
 }
 
-.message-container {
+.message-container,
+.batch-message-container {
   margin-top: 1em;
   font-size: 13px;
   color: green;
 }
 
+.batch-error-container,
 .error-container,
 .error {
   color: red;
@@ -374,6 +376,14 @@ tr.search-result.fresh td.main-content {
 }
 
 #search-result-details-error-message-container {
+  color: red;
+}
+
+#batch-info-message-container {
+  color: green;
+}
+
+#batch-error-message-container {
   color: red;
 }
 
