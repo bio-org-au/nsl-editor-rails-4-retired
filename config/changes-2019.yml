@@ -1,4 +1,8 @@
 ---
+- :date: 20-Dec-2019
+  :jira_id: '3480'
+  :description: |-
+    Orchids: added a list of name status values with query links to the Stats tab, then moved the Stats page info to the bottom of the Query Examples tab and removed the Stats tab.
 - :date: 19-Dec-2019
   :jira_id: '3394'
   :description: |-

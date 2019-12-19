@@ -119,9 +119,6 @@ class OrchidsController < ApplicationController
     render json: typeahead.suggestions
   end
 
-  def stats
-  end
-
   private
 
   def find_orchid

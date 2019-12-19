@@ -135,7 +135,7 @@ $(document).ready(function () {
       debug(e.target.dataset.help);
       showHelpForSearchTarget(e.target.dataset.help);
       showExamplesForSearchTarget(e.target.dataset.examples);
-      showAdvancedForSearchTarget(e.target.dataset.advanced);
+      //showAdvancedForSearchTarget(e.target.dataset.advanced);
     }
   });
 

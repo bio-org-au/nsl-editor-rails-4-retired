@@ -294,6 +294,13 @@ class Orchid < ActiveRecord::Base
     name_status.downcase.match(/\Aorth/)
   end
 
+  def self.name_statuses
+    sql = "select name_status, count(*) total from orchids where name_status is not null group by name_status order by name_status"
+    records_array = ActiveRecord::Base.connection.execute(sql)
+  end
+
+  private
+
   def debug(msg)
     Rails.logger.debug(msg)
   end

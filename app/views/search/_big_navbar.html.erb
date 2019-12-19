@@ -74,15 +74,6 @@
                       title: "Tree info" %>
         </li>
       <% end %>
-      <% if params[:query_target] && params[:query_target].match(/orchid/i) %>
-        <li role="presentation" class="">
-          <%= link_to "Stats",
-                    orchid_stats_path,
-                      class: "main-body-tab-link",
-                      remote: true,
-                      title: "Stats" %>
-        </li>
-      <% end %>
       <li role="presentation" class="">
         <%= link_to "Batch",
                     batch_index_path,

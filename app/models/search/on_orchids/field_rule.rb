@@ -111,6 +111,8 @@ class Search::OnOrchids::FieldRule
                        leading_wildcard: true,
                        trailing_wildcard: true,
                        order: "seq"},
+    "name-status-empty-string:"=> { where_clause: "name_status = ''",
+                       order: "seq"},
     "notes:"=> { where_clause: "lower(notes) like ?",
                        leading_wildcard: true,
                        trailing_wildcard: true,
