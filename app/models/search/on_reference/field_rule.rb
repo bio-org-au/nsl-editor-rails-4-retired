@@ -146,7 +146,7 @@ inner join ref_type child_rt on child.ref_type_id = child_rt.id
 where (rt.name,child_rt.name) not in (select xrt.name, xcrt.name
 from ref_type xrt
 inner join ref_type xcrt on xrt.id = xcrt.parent_id))" },
-    "no-year:" => { where_clause: " year is null " },
+    "no-year:" => { where_clause: " iso_publication_date is null " },
     "pub-date-is-year:" => {
       where_clause: "publication_date ~ '^\\(*[0-9][0-9][0-9][0-9]\\)*$' "
     },
@@ -176,5 +176,6 @@ inner join ref_type xcrt on xrt.id = xcrt.parent_id))" },
     "not-language:" => { multiple_values: true,
                          where_clause: " language_id != (select id from language where lower(name) = lower(?) ) ",
                          multiple_values_where_clause: " language_id not in (select id from language where lower(name) in (?))" },
+    "no-publication-date:" => { where_clause: " publication_date is null " },
   }.freeze
 end

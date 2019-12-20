@@ -1,5 +1,9 @@
 ---
 - :date: 20-Dec-2019
+  :jira_id: '3469'
+  :description: |-
+    Added ref type example queries for references with no iso publication date and references with neither iso nor textual publication dates.
+- :date: 20-Dec-2019
   :jira_id: '3479'
   :description: |-
     Orchids: added an extra 'Save' button at the bottom of the raw edit form.

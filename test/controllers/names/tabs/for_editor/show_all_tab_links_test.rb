@@ -35,7 +35,7 @@ class NameEditorShowAllTabsTest < ActionController::TestCase
     assert_response :success
     assert_select "a#name-details-tab", true, "Should show 'Detail' tab."
     assert_select "a#name-edit-tab", true, "Should show 'Edit' tab."
-    assert_select "a#name-comment-tab", true, "Should show 'Comment' tab."
+    assert_select "a#name-comments-tab", true, "Should show 'Comment' tab."
     assert_select "a#name-instances-tab", true, "Should show 'Instance' tab."
     assert_select "a#name-other-tab", true, "Should show 'Other' tab."
   end
