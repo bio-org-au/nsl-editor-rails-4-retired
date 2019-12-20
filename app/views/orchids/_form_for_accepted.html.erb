@@ -72,4 +72,10 @@
       </label>
       </div>
     <% end %>
+    <div class="form-group align-right">
+      <% if orchid.id.blank? %>
+          <%= link_to 'Cancel', '/cancel-new-form', class: "btn btn-primary cancel-new-record-link", title: "Cancel new orchid", tabindex: increment_tab_index, data: {element_id: "new-orchid-#{params[:random_id]}"} %>
+      <% end %>
+      <%= f.submit "Save", id: 'orchid-save', class: 'btn btn-primary width-5em', title: "Save changes", tabindex: increment_tab_index, disabled: false %>
+    </div>
 <% end %>
