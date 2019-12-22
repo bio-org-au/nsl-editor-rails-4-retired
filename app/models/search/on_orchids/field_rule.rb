@@ -113,6 +113,8 @@ class Search::OnOrchids::FieldRule
                        order: "seq"},
     "name-status-empty-string:"=> { where_clause: "name_status = ''",
                        order: "seq"},
+    "name-status-exact:"=> { where_clause: "name_status like ?",
+                       order: "seq"},
     "notes:"=> { where_clause: "lower(notes) like ?",
                        leading_wildcard: true,
                        trailing_wildcard: true,

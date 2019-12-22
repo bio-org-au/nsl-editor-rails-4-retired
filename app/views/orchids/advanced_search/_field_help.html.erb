@@ -188,6 +188,8 @@ Because <i>taxon-with-syn:</i> is so frequently used, we've made it the default.
      description: "match only on CSV data where the partly field has no data"},
     {field_name: 'name-status:',
      description: "match fragment on the name status field (leading and trailing wildcards added automatically)"},
+    {field_name: 'name-status-exact:',
+     description: "match fragment on the name status field (no wildcards added, but you can add them)"},
     {field_name: 'name-status-empty-string:',
      description: "orchids with an empty string in name status (these came about during early raw editing of orchid data when empty fields were mistakenly saved as empty strings)"},
       ].each do |val| %>

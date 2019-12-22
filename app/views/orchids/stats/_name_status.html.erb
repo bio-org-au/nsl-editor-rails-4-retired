@@ -12,7 +12,7 @@
                       class: 'blue') %>
       <% else %>
         <%= link_to(record['name_status'],
-                      search_path(query_string: "name-status: #{record['name_status']}",
+                      search_path(query_string: "name-status-exact: #{record['name_status']}",
                                   query_target: 'orchids'),
                       tabindex: increment_tab_index,
                       title: "Search for name status ",
