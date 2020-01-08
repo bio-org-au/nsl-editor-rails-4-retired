@@ -28,12 +28,12 @@ class NameShowCommentTabForEditorTest < ActionController::TestCase
   test "should show comments tab" do
     @request.headers["Accept"] = "application/javascript"
     get(:show,
-        { id: @name.id, tab: "tab_comments" },
+        { id: @name.id, tab: "tab_more" },
         username: "fred",
         user_full_name: "Fred Jones",
         groups: ["edit"])
     assert_response :success
-    assert_select "li.active a#name-comments-tab",
+    assert_select "li.active a#name-comment-tab",
                   "Comment",
                   "Should show 'Comment' tab."
   end

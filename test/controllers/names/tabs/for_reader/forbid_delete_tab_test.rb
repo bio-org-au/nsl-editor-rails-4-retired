@@ -19,25 +19,19 @@
 require "test_helper"
 
 # Single controller test.
-class NameEditorShowAllTabsTest < ActionController::TestCase
+class NameForbidDeleteTabForReaderTest < ActionController::TestCase
   tests NamesController
   setup do
     @name = names(:a_species)
   end
 
-  test "should show all tabs if editor requests details tab" do
+  test "reader requests forbidden delete tab" do
     @request.headers["Accept"] = "application/javascript"
     get(:show,
-        { id: @name.id, tab: "tab_edit" },
+        { id: @name.id, tab: "tab_delete" },
         username: "fred",
         user_full_name: "Fred Jones",
-        groups: ["edit"])
-    assert_response :success
-    assert_select "a#name-details-tab", true, "Should show 'Detail' tab."
-    assert_select "a#name-edit-tab", true, "Should show 'Edit' tab."
-    assert_select "a#name-instances-tab", true, "Should show 'New instance' tab."
-    assert_select "a#name-copy-tab", true, "Should show 'Copy' tab."
-    assert_select "a#name-delete-tab", true, "Should show 'Delete' tab."
-    assert_select "a#name-more-tab", true, "Should show 'More' tab."
+        groups: [])
+    assert_response :forbidden
   end
 end

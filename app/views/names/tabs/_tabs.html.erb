@@ -21,16 +21,6 @@
                                             tab_index: increment_tab_index,
                                             prev_tab: '', 
                                             next_tab: ''} %>
-
-        <%= render partial: 'names/tabs/tab', locals: {first: false,
-                                            last: false,
-                                            this_tab: 'tab_comments', 
-                                            link_text: "Comment".html_safe,
-                                            link_id: 'name-comments-tab', 
-                                            link_title: 'Add, remove or edit comments about the name.',
-                                            tab_index: increment_tab_index,
-                                            prev_tab: '', 
-                                            next_tab: ''} %>
       <% end %>
 
       <% if can? 'instances', 'create' %>
@@ -38,22 +28,46 @@
         <%= render partial: 'names/tabs/tab', locals: {first: false,
                                             last: false,
                                             this_tab: 'tab_instances',
-                                            link_text: "Add".html_safe,
+                                            link_text: "New instance".html_safe,
                                             link_id: 'name-instances-tab',
-                                            link_title: 'Add an instance for the name.',
+                                            link_title: 'Create an instance for the name.',
                                             tab_index: increment_tab_index,
                                             prev_tab: '',
                                             next_tab: ''} %>
+
+        <%= render partial: 'names/tabs/tab', locals: {first: false,
+                                            last: false,
+                                            this_tab: 'tab_copy', 
+                                            link_text: "Copy".html_safe,
+                                            link_id: 'name-copy-tab', 
+                                            link_title: 'Copy the name.',
+                                            tab_index: increment_tab_index,
+                                            prev_tab: '', 
+                                            next_tab: ''} %>
+      <% end %>
+
+      <% if can? 'names', 'delete' %>
+
+        <%= render partial: 'names/tabs/tab', locals: {first: false,
+                                            last: false,
+                                            this_tab: 'tab_delete', 
+                                            link_text: "Delete".html_safe,
+                                            link_id: 'name-delete-tab', 
+                                            link_title: 'Delete name.',
+                                            tab_index: increment_tab_index,
+                                            prev_tab: '', 
+                                            next_tab: ''} %>
+  
       <% end %>
 
       <% if can? 'names', 'update' %>
 
         <%= render partial: 'names/tabs/tab', locals: {first: false,
                                             last: false,
-                                            this_tab: 'tab_other', 
-                                            link_text: "Other".html_safe,
-                                            link_id: 'name-other-tab', 
-                                            link_title: 'Other operations.',
+                                            this_tab: 'tab_more', 
+                                            link_text: "More".html_safe,
+                                            link_id: 'name-more-tab', 
+                                            link_title: 'Show more tabs',
                                             tab_index: increment_tab_index,
                                             prev_tab: '', 
                                             next_tab: ''} %>
