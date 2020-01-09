@@ -12,15 +12,18 @@
                                             prev_tab: '', 
                                             next_tab: ''} %>
   
-        <%= render partial: 'names/tabs/tab', locals: {first: false,
-                                            last: false,
-                                            this_tab: 'tab_tag', 
-                                            link_text: "Tag".html_safe,
-                                            link_id: 'name-tags-tab', 
-                                            link_title: 'Add or remove tags for the name.',
-                                            tab_index: increment_tab_index,
-                                            prev_tab: '', 
-                                            next_tab: ''} %>
+        <% if NameTag.all.count > 0 %>
+
+          <%= render partial: 'names/tabs/tab', locals: {first: false,
+                                              last: false,
+                                              this_tab: 'tab_tag', 
+                                              link_text: "Tag".html_safe,
+                                              link_id: 'name-tags-tab', 
+                                              link_title: 'Add or remove tags for the name.',
+                                              tab_index: increment_tab_index,
+                                              prev_tab: '', 
+                                              next_tab: ''} %>
+        <% end %>
   
         <%= render partial: 'names/tabs/tab', locals: {first: false,
                                             last: true,
