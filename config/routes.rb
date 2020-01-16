@@ -17,6 +17,7 @@
 #   limitations under the License.
 #
 Rails.application.routes.draw do
+  resources :batches
   match "/feedback", as: "feedback", to: "feedback#index", via: :get
   match "/ping", as: "ping_service", to: "services#ping", via: :get
   match "services", as: "services", to: "services#index", via: :get
@@ -156,6 +157,16 @@ Rails.application.routes.draw do
         to: "names_deletes#confirm",
         via: :delete
 
+  match "names/duplicate/:id/transfer/dependents/:dependent_type/to/master",
+        as: "name_transfer_dependents",
+        to: "names#transfer_dependents",
+        via: :post
+
+  match "names/duplicate/transfer/all/dependents/:dependent_type/to/master",
+        as: "name_transfer_all_dependents",
+        to: "names#transfer_all_dependents",
+        via: :post
+
   match "authors/typeahead_on_abbrev",
         as: "authors_typeahead_on_abbrev",
         to: "authors#typeahead_on_abbrev", via: :get
@@ -188,10 +199,6 @@ Rails.application.routes.draw do
         as: "orchid_parent_suggestions",
         to: "orchids#parent_suggestions",
         via: :get
-
-  match "orchids/stats",
-        as: "orchid_stats",
-        to: "orchids#stats", via: :get
 
   match "orchids/create/preferred/matches",
         as: "create_preferred_matches",
@@ -347,6 +354,11 @@ Rails.application.routes.draw do
   match "search/reports",
         as: "search_reports",
         to: "search#reports",
+        via: :get
+
+  match "batch",
+        as: "batch_index",
+        to: "batches#index",
         via: :get
 
   match "password",

@@ -19,7 +19,7 @@
 require "test_helper"
 
 # Single controller test.
-class NameShowDeleteTabForReadOnlyTest < ActionController::TestCase
+class NameShowDeleteTabForEditorTest < ActionController::TestCase
   tests NamesController
   setup do
     @name = names(:a_species)

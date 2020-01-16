@@ -19,7 +19,6 @@
 require "test_helper"
 
 # Single controller test.
-# Tests permission to show copy tabs to editor.
 class NameShowCopyTabForEditorTest < ActionController::TestCase
   tests NamesController
   setup do

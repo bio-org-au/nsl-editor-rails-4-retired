@@ -1,25 +1,11 @@
-<%= render partial: 'names/tabs/tabs2' %>
-<br>
-  <div>
-    <strong class="pull-left">Refresh the constructed fields &nbsp;</strong>
-    <br>
-    <%= render 'names/refresh/widgets' %>
-  </div>
-  <span id="name-refresh-info-message-container" class="message-container"></span>
-  <span id="name-refresh-error-message-container" class="error-container"></span>
+<%= render partial: 'names/tabs/tabs_row_2' %>
+<% increment_tab_index %>
+
+<div>
+<h5>Refresh</h5>
+<%= render partial: 'names/tabs/refresh_widgets' %>
+</div>
 
 
-<br>
-<br>
-<br>
-<% if @name.sub_tree_size > 0 %>
-  <div>
-    <strong class="pull-left">Refresh the constructed fields of descendant names&nbsp;</strong>
-    <br>
-    <%= render 'names/refresh_children/widgets' %>
-  </div>
-  <br>
-<% end %>
-
-  <span id="name-refresh-children-info-message-container" class="message-container"></span>
-  <span id="name-refresh-children-error-message-container" class="error-container"></span>
+<div id="search-result-details-info-message-container" class="message-container"></div>
+<div id="search-result-details-error-message-container" class="message-container"></div>

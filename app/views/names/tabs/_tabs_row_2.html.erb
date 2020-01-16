@@ -1,0 +1,55 @@
+    <ul class="nav nav-tabs">
+
+      <% if can? 'names', 'update' %>
+
+        <%= render partial: 'names/tabs/tab', locals: {first: false,
+                                            last: false,
+                                            this_tab: 'tab_comments', 
+                                            link_text: "Comment".html_safe,
+                                            link_id: 'name-comment-tab', 
+                                            link_title: 'Add, remove or edit comments about the name.',
+                                            tab_index: increment_tab_index,
+                                            prev_tab: '', 
+                                            next_tab: ''} %>
+  
+        <% if NameTag.all.count > 0 %>
+
+          <%= render partial: 'names/tabs/tab', locals: {first: false,
+                                              last: false,
+                                              this_tab: 'tab_tag', 
+                                              link_text: "Tag".html_safe,
+                                              link_id: 'name-tags-tab', 
+                                              link_title: 'Add or remove tags for the name.',
+                                              tab_index: increment_tab_index,
+                                              prev_tab: '', 
+                                              next_tab: ''} %>
+        <% end %>
+  
+        <%= render partial: 'names/tabs/tab', locals: {first: false,
+                                            last: true,
+                                            this_tab: 'tab_refresh',
+                                            link_text: "Refresh",
+                                            link_id: 'name-refresh-tab',
+                                            link_title: 'Refresh the constructed elements of the name or of its children.',
+                                            tab_index: increment_tab_index,
+                                            prev_tab: '',
+                                            next_tab: ''} %>
+
+      <% end %>
+
+      <% if @name.duplicate? && can?('names', 'update') %>
+
+        <%= render partial: 'names/tabs/tab', locals: {first: false,
+                                            last: false,
+                                            this_tab: 'tab_de_duplicate', 
+                                            link_text: "De-duplicate".html_safe,
+                                            link_id: 'name-de-duplicate-tab', 
+                                            link_title: 'De-duplicate the name.',
+                                            tab_index: increment_tab_index,
+                                            prev_tab: '', 
+                                            next_tab: ''} %>
+  
+      <% end %>
+    </ul>
+
+

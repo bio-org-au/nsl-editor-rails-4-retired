@@ -19,7 +19,7 @@
 require "test_helper"
 
 # Single controller test.
-class NameShowTagTabForReadOnlyTest < ActionController::TestCase
+class NameMoreShouldShowTagTabForEditorTest < ActionController::TestCase
   tests NamesController
   setup do
     @name = names(:a_species)
@@ -28,11 +28,13 @@ class NameShowTagTabForReadOnlyTest < ActionController::TestCase
   test "should show tag tab" do
     @request.headers["Accept"] = "application/javascript"
     get(:show,
-        { id: @name.id, tab: "tab_name_tags" },
+        { id: @name.id, tab: "tab_more" },
         username: "fred",
         user_full_name: "Fred Jones",
         groups: ["edit"])
     assert_response :success
-    assert_select "li.active a#name-tags-tab", "Tag", "Should show 'Tag' tab."
+    assert_select "li a#name-tags-tab",
+                  "Tag",
+                  "Should show 'Tag' tab."
   end
 end

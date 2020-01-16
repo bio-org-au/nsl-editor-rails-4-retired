@@ -1,0 +1,31 @@
+<h5>Ref Type Examples</h5>
+<table border='1'>
+  <% RefType.all.sort {|x,y| x.name <=> y.name}.each do |record| %>
+  <tr>
+    <td>
+        <%= link_to(record['name'],
+                      search_path(query_string: "ref-type: #{record['name']}",
+                                  query_target: 'reference'),
+                      tabindex: increment_tab_index,
+                      title: "Search for ref type ",
+                      class: 'blue') %>
+    </td>
+    <td>
+        <%= link_to('No iso publication date',
+                      search_path(query_string: "ref-type: #{record['name']} no-year:",
+                                  query_target: 'reference'),
+                      tabindex: increment_tab_index,
+                      title: "Search for ref type #{record['name']} with no year (iso publication date)",
+                      class: 'blue') %>
+    </td>
+    <td>
+        <%= link_to('No iso publication date, no publication date',
+                      search_path(query_string: "ref-type: #{record['name']} no-year: no-publication-date:",
+                                  query_target: 'reference'),
+                      tabindex: increment_tab_index,
+                      title: "Search for ref type #{record['name']} with no year (iso publication date)",
+                      class: 'blue') %>
+    </td>
+  </tr>
+<% end %>
+</table>

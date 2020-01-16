@@ -34,16 +34,40 @@
                                             tab_index: increment_tab_index,
                                             prev_tab: '',
                                             next_tab: ''} %>
+
+        <%= render partial: 'names/tabs/tab', locals: {first: false,
+                                            last: false,
+                                            this_tab: 'tab_copy', 
+                                            link_text: "Copy".html_safe,
+                                            link_id: 'name-copy-tab', 
+                                            link_title: 'Copy the name.',
+                                            tab_index: increment_tab_index,
+                                            prev_tab: '', 
+                                            next_tab: ''} %>
+      <% end %>
+
+      <% if can? 'names', 'delete' %>
+
+        <%= render partial: 'names/tabs/tab', locals: {first: false,
+                                            last: false,
+                                            this_tab: 'tab_delete', 
+                                            link_text: "Delete".html_safe,
+                                            link_id: 'name-delete-tab', 
+                                            link_title: 'Delete name.',
+                                            tab_index: increment_tab_index,
+                                            prev_tab: '', 
+                                            next_tab: ''} %>
+  
       <% end %>
 
       <% if can? 'names', 'update' %>
-  
+
         <%= render partial: 'names/tabs/tab', locals: {first: false,
                                             last: false,
                                             this_tab: 'tab_more', 
                                             link_text: "More".html_safe,
                                             link_id: 'name-more-tab', 
-                                            link_title: 'See more tabs.',
+                                            link_title: 'Show more tabs',
                                             tab_index: increment_tab_index,
                                             prev_tab: '', 
                                             next_tab: ''} %>

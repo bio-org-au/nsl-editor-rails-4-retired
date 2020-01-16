@@ -1,6 +1,6 @@
 <% this_tab_re = Regexp.new(this_tab) %>
 <% active_tab = (@tab.match(this_tab_re) && !this_tab.match(/tab_more/)) || (@tab.match(/tab_more/) && this_tab.match(/tab_comments/)) %>
-<% semi_active_tab = (@tab.match(/tab_comments|tab_name_tags|tab_copy|tab_delete/) && this_tab.match(/tab_more/)) %>
+<% semi_active_tab = (@tab.match(/tab_comments|tab_name_tags|tab_refresh|tab_de_duplicate/) && this_tab.match(/tab_more/)) %>
 <% semi_active_tab = semi_active_tab || (@tab.match(/tab_more/) && this_tab.match(/tab_more/)) %>
 
 <% data = Hash.new %>
@@ -10,6 +10,7 @@
 <% data['tab-name'] = this_tab %>
 
 <li class='first <%= active_tab ? "active" : "non-active" %> <%= semi_active_tab ? "semi-active" : "" %>'>
+
  <%= link_to link_text,
              '#',
              id: link_id,
@@ -18,5 +19,4 @@
              tabindex: tab_index,
              data: data %>
 </li>
-
 

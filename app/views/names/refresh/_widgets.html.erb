@@ -2,7 +2,7 @@
   <% refresh_link = link_to("Refresh...",
                            '#',
                            id: "name-refresh-link",
-                           class: "btn btn-primary unconfirmed-action-link pull-right",
+                           class: "btn btn-warning unconfirmed-action-link pull-right",
                            title: "Refresh constructed parts of #{@name.full_name}.",
                            tabindex: increment_tab_index,
                            data: {show_this_id: "confirm-or-cancel-refresh-link-container"})

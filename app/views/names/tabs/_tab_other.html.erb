@@ -1,0 +1,39 @@
+<div id="search-result-details-info-message-container" class="message-container"></div>
+<div id="search-result-details-error-message-container" class="message-container"></div>
+<% increment_tab_index %>
+
+<br>
+<div>
+<h5>Copy</h5>
+<%= render partial: 'names/form/copy' %>
+</div>
+<br>
+<%= divider %>
+<% if @name.duplicate? %>
+  <h5>Rewire duplicate</h5>
+  <div>
+  <%= render partial: 'names/de_duplication/index' %>
+  </div>
+  <%= divider %>
+<% end %>
+
+<h5>Delete</h5>
+<%= render 'names/tabs/delete_widgets' %>
+<%= divider %>
+
+<div>
+<h5>Refresh</h5>
+<%= render partial: 'names/tabs/refresh_widgets' %>
+</div>
+<%= divider %>
+
+<% if NameTag.all.count > 0 %>
+  <div>
+  <h5>Tags</h5>
+  <%= render partial: 'names/tabs/name_tag_widgets' %>
+  </div>
+<% end %>
+
+<div id="search-result-details-info-message-container" class="message-container"></div>
+<div id="search-result-details-error-message-container" class="message-container"></div>
+

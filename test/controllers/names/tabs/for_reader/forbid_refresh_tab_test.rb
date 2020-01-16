@@ -19,16 +19,16 @@
 require "test_helper"
 
 # Single controller test.
-class NameForbidNameTagsTabForReaderTest < ActionController::TestCase
+class NameForbidRefreshTabForReaderTest < ActionController::TestCase
   tests NamesController
   setup do
     @name = names(:a_species)
   end
 
-  test "reader requests forbidden tags tab" do
+  test "reader requests forbidden refresh tab" do
     @request.headers["Accept"] = "application/javascript"
     get(:show,
-        { id: @name.id, tab: "tab_name_tags" },
+        { id: @name.id, tab: "tab_refresh" },
         username: "fred",
         user_full_name: "Fred Jones",
         groups: [])

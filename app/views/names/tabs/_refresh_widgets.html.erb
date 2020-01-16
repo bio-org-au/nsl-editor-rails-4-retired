@@ -1,0 +1,20 @@
+  <div>
+    <strong class="pull-left">Refresh the constructed fields &nbsp;</strong>
+    <%= render 'names/refresh/widgets' %>
+  </div>
+  <span id="name-refresh-info-message-container" class="message-container"></span>
+  <span id="name-refresh-error-message-container" class="error-container"></span>
+
+<br>
+<br>
+<% if @name.sub_tree_size > 0 %>
+  <div>
+    <strong class="pull-left">Refresh the constructed fields of descendant names&nbsp;</strong>
+    <br>
+    <%= render 'names/refresh_children/widgets' %>
+  </div>
+  <br>
+<% end %>
+
+  <span id="name-refresh-children-info-message-container" class="message-container"></span>
+  <span id="name-refresh-children-error-message-container" class="error-container"></span>

@@ -63,54 +63,8 @@
 <h5>Ranks</h5>
 <%= render partial: 'orchids/stats/rank_stats' %>
 <%= divider %>
-<h5>NSL Ranks</h5>
-<table border="1">
-  <tr>
-    <td>
-      <b>All</b>
-    </td>
-    <td>
-      <b>'Accepted'</b>
-    </td>
-    <td>
-      <b>'Synonyms'</b>
-    </td>
-    <td>
-      <b>'Misapps'</b>
-    </td>
-    <td>
-      <b>'Hybrid Crosses'</b>
-    </td>
-    <td>
-      <b>Really Accepted</b>
-    </td>
-    <td>
-      <b>Really Excluded</b>
-    </td>
-  </tr>
-  <tr>
-    <td>
-<%= render partial: 'orchids/stats/nsl_rank_stats' %>
-    </td>
-    <td>
-<%= render partial: 'orchids/stats/nsl_rank_accepted_stats' %>
-    </td>
-    <td>
-<%= render partial: 'orchids/stats/nsl_rank_synonym_stats' %>
-    </td>
-    <td>
-<%= render partial: 'orchids/stats/nsl_rank_misapps_stats' %>
-    </td>
-    <td>
-<%= render partial: 'orchids/stats/nsl_rank_hybrid_cross_stats' %>
-    </td>
-    <td>
-<%= render partial: 'orchids/stats/nsl_rank_really_accepted_stats' %>
-    </td>
-    <td>
-<%= render partial: 'orchids/stats/nsl_rank_really_excluded_stats' %>
-    </td>
-  </tr>
-</table>
-
-</div>
+<h5>Ranks by record type</h5>
+<%= render partial: 'orchids/stats/ranks_by_record_type' %>
+<%= divider %>
+<h5>Name status</h5>
+<%= render partial: 'orchids/stats/name_status' %>

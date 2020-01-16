@@ -170,7 +170,9 @@ class Instance < ActiveRecord::Base
   #         where ink.name in ('APC Comment', 'APC Dist.')" }
 
   has_many :comments
+  # ToDo: remove if redundant
   has_many :nodes, class_name: "TreeNode"
+  has_many :tree_elements
 
   validates_presence_of :name_id,
                         :reference_id,

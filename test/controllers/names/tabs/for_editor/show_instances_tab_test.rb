@@ -25,7 +25,7 @@ class NameShowInstanceTabForReadOnlyTest < ActionController::TestCase
     @name = names(:a_species)
   end
 
-  test "should show instance tab" do
+  test "should show new instance tab" do
     @request.headers["Accept"] = "application/javascript"
     get(:show,
         { id: @name.id, tab: "tab_instances" },
@@ -35,6 +35,6 @@ class NameShowInstanceTabForReadOnlyTest < ActionController::TestCase
     assert_response :success
     assert_select "li.active a#name-instances-tab",
                   "New instance",
-                  "Should show 'Instance' tab."
+                  "Should show 'New instance' tab."
   end
 end

@@ -19,19 +19,22 @@
 require "test_helper"
 
 # Single controller test.
-class NameForbidMoreTabForReaderTest < ActionController::TestCase
+class NameShowRefreshTabForEditorTest < ActionController::TestCase
   tests NamesController
   setup do
     @name = names(:a_species)
   end
 
-  test "reader requests forbidden more tab" do
+  test "should show refresh tab" do
     @request.headers["Accept"] = "application/javascript"
     get(:show,
         { id: @name.id, tab: "tab_more" },
         username: "fred",
         user_full_name: "Fred Jones",
-        groups: [])
-    assert_response :forbidden
+        groups: ["edit"])
+    assert_response :success
+    assert_select "li a#name-refresh-tab",
+                  "Refresh",
+                  "Should show 'Refresh' tab."
   end
 end

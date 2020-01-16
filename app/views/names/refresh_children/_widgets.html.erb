@@ -3,7 +3,7 @@
   <%= link_to("Refresh descendant names...",
               '#',
               id: "name-refresh-children-link",
-              class: "btn btn-primary unconfirmed-action-link pull-right",
+              class: "btn btn-warning unconfirmed-action-link pull-right",
               title: "Refresh constructed parts of names descended from #{@name.full_name}.",
               tabindex: increment_tab_index,
               data: {show_this_id: "confirm-or-cancel-refresh-children-link-container"})

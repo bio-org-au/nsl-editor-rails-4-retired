@@ -19,13 +19,13 @@
 require "test_helper"
 
 # Single controller test.
-class NameShowMoreTabForReadOnlyTest < ActionController::TestCase
+class NameShowDeDuplicateTabForEditorTest < ActionController::TestCase
   tests NamesController
   setup do
-    @name = names(:a_species)
+    @name = names(:a_duplicate_species)
   end
 
-  test "should show more tab" do
+  test "should show refresh tab" do
     @request.headers["Accept"] = "application/javascript"
     get(:show,
         { id: @name.id, tab: "tab_more" },
@@ -33,8 +33,8 @@ class NameShowMoreTabForReadOnlyTest < ActionController::TestCase
         user_full_name: "Fred Jones",
         groups: ["edit"])
     assert_response :success
-    assert_select "li.active a#name-comments-tab",
-                  "Comments",
-                  "Should show 'Comments' tab."
+    assert_select "li a#name-de-duplicate-tab",
+                  "De-duplicate",
+                  "Should show 'De-duplicate' tab."
   end
 end

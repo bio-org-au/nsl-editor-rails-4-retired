@@ -19,7 +19,7 @@
 require "test_helper"
 
 # Single controller test.
-class NameShowCommentsTabForReadOnlyTest < ActionController::TestCase
+class NameShowCommentTabForEditorTest < ActionController::TestCase
   tests NamesController
   setup do
     @name = names(:a_species)
@@ -28,13 +28,13 @@ class NameShowCommentsTabForReadOnlyTest < ActionController::TestCase
   test "should show comments tab" do
     @request.headers["Accept"] = "application/javascript"
     get(:show,
-        { id: @name.id, tab: "tab_comments" },
+        { id: @name.id, tab: "tab_more" },
         username: "fred",
         user_full_name: "Fred Jones",
         groups: ["edit"])
     assert_response :success
-    assert_select "li.active a#name-comments-tab",
-                  "Comments",
-                  "Should show 'Comments' tab."
+    assert_select "li.active a#name-comment-tab",
+                  "Comment",
+                  "Should show 'Comment' tab."
   end
 end

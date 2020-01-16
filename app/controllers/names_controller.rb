@@ -26,7 +26,7 @@ class NamesController < ApplicationController
   before_filter :javascript_only, except: [:rules, :refresh_children]
   before_filter :find_name,
                 only: [:show, :tab, :edit_as_category,
-                       :refresh, :refresh_children]
+                       :refresh, :refresh_children, :transfer_dependents]
 
   # GET /names/1
   # GET /names/1.json
@@ -183,6 +183,25 @@ class NamesController < ApplicationController
     render "names/refresh_children/error.js"
   end
 
+  def transfer_dependents
+    @dependent_type = dependent_params[:dependent_type]
+    count = @name.transfer_dependents(@dependent_type)
+    @message = "#{count} transferred"
+    render 'names/de_duplication/transfer_dependents/success'
+  rescue => e
+    @message = e.to_s.sub(/uncaught throw/,'').sub(/\A *"/,'').sub(/" *\z/,'')
+    render 'names/de_duplication/transfer_dependents/error'
+  end
+ 
+  def transfer_all_dependents
+    @dependent_type = dependent_params[:dependent_type]
+    count = Name.transfer_all_dependents(@dependent_type)
+    @message = "#{count} transferred"
+    render 'names/de_duplication/transfer_all_dependents/success'
+  rescue => e
+    @message = e.to_s.sub(/uncaught throw/,'').sub(/\A *"/,'').sub(/" *\z/,'')
+    render 'names/de_duplication/transfer_all_dependents/error'
+  end
   private
 
   def find_name
@@ -274,5 +293,9 @@ class NamesController < ApplicationController
                                  :second_parent_typeahead,
                                  :duplicate_of_id,
                                  :duplicate_of_typeahead)
+  end
+
+  def dependent_params
+    params.permit(:id, :dependent_type)
   end
 end
