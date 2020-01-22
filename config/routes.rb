@@ -251,6 +251,7 @@ Rails.application.routes.draw do
   match "help/ref_type_rules",
         to: "help#ref_type_rules", as: "ref_type_rules", via: :get
   match "help/typeaheads", to: "help#typeaheads", as: "typeaheads", via: :get
+  match "history/2020", to: "history#y2020", as: "history_2020", via: :get
   match "history/2019", to: "history#y2019", as: "history_2019", via: :get
   match "history/2018", to: "history#y2018", as: "history_2018", via: :get
   match "history/2017", to: "history#y2017", as: "history_2017", via: :get

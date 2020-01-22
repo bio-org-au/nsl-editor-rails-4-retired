@@ -41,6 +41,22 @@
     </td>
     </tr>
     <tr>
+      <td colspan="3">
+          <br>
+          <%= created_by_whom_and_when(instance_note).html_safe %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">
+          <%= updated_by_whom_and_when(instance_note).html_safe %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        &nbsp;
+      </td>
+    </tr>
+    <tr>
       <td>
         <%= f.submit id: "instance-note-save-btn-#{@instance_note.id}", 
           class: 'btn btn-primary width-6em', 

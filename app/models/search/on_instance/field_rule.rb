@@ -270,7 +270,9 @@ where rb.sort_order >= (select sort_order from name_rank where name = 'Species')
                                                                  from comment c
                                                                 where c.instance_id = i.id)
                                                 )",
-                           order: "instance.id" }
+                           order: "instance.id" },
+"note-updated-by:"   => { where_clause: " exists (select null from instance_note n where n.instance_id = instance.id and lower(n.updated_by) like ?) "},
+"note-has-carriage-return:"   => { where_clause: " exists (select null from instance_note n where n.instance_id = instance.id and n.value like '%' || chr(13) || '%') "},
   }.freeze
 
   def self.resolve(field)

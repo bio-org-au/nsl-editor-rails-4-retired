@@ -97,7 +97,9 @@ word "darwin" followed by a space, one or more other characters followed by "bar
          {field_name: 'tree-comment-matches:', description: "Regular expression matches on the Comment profile on the accepted tree.  Case-sensitive."},
          {field_name: 'non-tree-drafts:', description: "Find draft instances that are not on any tree."},
          {field_name: 'syn-with-note:', description: "Synonyms with at least one note."},
-         {field_name: 'syn-with-adnot:', description: "Synonyms with at least one adnot."}
+         {field_name: 'syn-with-adnot:', description: "Synonyms with at least one adnot."},
+         {field_name: 'note-has-carriage-return:', description: "Find instances that have at least one instance note containing at least one carriage return. No argument is allowed or required for this directive."},
+         {field_name: 'note-updated-by:', description: "Find instances that have at least one instance note last updated by the person (or jira number) you enter."},
      ].each do |val| %>
     <tr>
       <td class="width-20-percent">

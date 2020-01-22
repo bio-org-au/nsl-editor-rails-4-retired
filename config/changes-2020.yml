@@ -1,0 +1,6 @@
+- :date: 17-Jan-2020
+  :jira_id: '3495'
+  :description: |-
+    Two new instance query directives: note-has-carriage-return and note-updated-by, with query help and examples; also showing meta data for instance notes.
+- :date: 16-Jan-2020
+  :release: true
