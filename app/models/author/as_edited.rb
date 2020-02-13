@@ -19,7 +19,6 @@
 # Author Editing
 class Author::AsEdited < Author::AsTypeahead
   include AuthorAuthorResolvable
-  AED = "Author::AsEdited:"
   def self.create(params, typeahead_params, username)
     author = Author::AsEdited.new(params)
     author.resolve_typeahead_params(typeahead_params)
