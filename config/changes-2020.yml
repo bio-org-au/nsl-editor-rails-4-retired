@@ -1,3 +1,7 @@
+- :date: 25-Feb-2020
+  :jira_id: '3524'
+  :description: |-
+    Orchids: add query to find raw data synonyms missing a synonym type - 'is-syn-but-no-syn-type:' 
 - :date: 03-Feb-2020
   :release: true
 - :date: 28-Jan-2020
