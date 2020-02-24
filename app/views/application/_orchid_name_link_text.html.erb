@@ -55,7 +55,7 @@
   <% end %>
   <% relationships = search_result.orchids_name.select {|orcn| orcn.relationship_instance_id.present?} %>
   <% if relationships.size > 0 %>
-    <span class="flag relationship-count"><%= "#{relationships.size}c" %></span>
+    <span class="flag relationship-statement"><%= "#{relationships.size}c" %></span>
   <% end %>
  
 
