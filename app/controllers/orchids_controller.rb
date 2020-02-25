@@ -28,6 +28,7 @@ class OrchidsController < ApplicationController
   alias tab show
 
   def update
+    logger.debug("OrchidsController#update")
     if orchid_params.blank?
       @message = "No change"
       render 'update_no_change'
@@ -37,7 +38,8 @@ class OrchidsController < ApplicationController
       update_matching_name
     end
   rescue => e
-    logger.error(e.to_s)
+    logger.error("OrchidsController#update: #{e.to_s}")
+    logger.error e.backtrace.join("\n")
     @message = e.to_s
     render 'update_error', format: :js
   end

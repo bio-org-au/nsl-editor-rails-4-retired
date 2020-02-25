@@ -23,15 +23,21 @@ class OrchidsBatchController < ApplicationController
     @message = "Created #{records} matches for #{params[:taxon_string]}"
     render 'create'
   rescue => e
+    logger.error("OrchidsBatchController#create_preferred_matches: #{e.to_s}")
+    logger.error e.backtrace.join("\n")
     @message = e.to_s.sub(/uncaught throw/,'').gsub(/"/,'')
     render 'error'
   end
 
   def create_instances_for_preferred_matches
+    logger.debug("OrchidsBatchController#create_instances_for_preferred_matches")
     records = Orchid.create_instance_for_preferred_matches_for(params[:taxon_string])
+    Rails.logger.debug("records: #{records}")
     @message = "Created #{records} instances for #{params[:taxon_string]}"
     render 'create'
   rescue => e
+    logger.error("OrchidsBatchController#create_instances_for_preferred_matches: #{e.to_s}")
+    logger.error e.backtrace.join("\n")
     @message = e.to_s.sub(/uncaught throw/,'').gsub(/"/,'')
     render 'error'
   end

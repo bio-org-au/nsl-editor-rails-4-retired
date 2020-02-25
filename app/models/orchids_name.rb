@@ -48,26 +48,31 @@ class OrchidsName < ActiveRecord::Base
   #
   ###########################################################
   def create_instance(ref)
+    debug("create_instance")
     @ref = ref
     if orchid.accepted?
-      create_or_find_standalone_instance
+      debug("OrchidsName#create_instance orchid is accepted")
+      return create_or_find_standalone_instance
     elsif orchid.synonym?
-      create_or_find_relationship_instance
+      debug("OrchidsName#create_instance orchid is synonym")
+      return create_or_find_relationship_instance
     elsif orchid.hybrid?
+      debug("OrchidsName#create_instance orchid is hybrid")
       throw 'dont know how to handle hybrid'
     elsif orchid.misapplied?
-      create_or_find_misapplied_instance
+      return create_or_find_misapplied_instance
     end
   end
 
   def create_or_find_standalone_instance
     debug 'create_or_find_standalone_instance'
-    return if standalone_instance?
-    debug 'no standalone instance'
+    return 0 if standalone_instance?
+    debug 'no standalone instance, so we will create one'
     create_standalone_instance
   end
 
   def create_standalone_instance
+    debug('create_standalone_instance')
     instance = Instance.new
     instance.draft = true
     instance.name_id = name_id
@@ -78,6 +83,12 @@ class OrchidsName < ActiveRecord::Base
     self.standalone_instance_created = true
     self.standalone_instance_id = instance.id
     self.save!
+    return 1
+  rescue => e
+    logger.error("OrchidsName#create_standalone_instance: #{e.to_s}")
+    logger.error e.backtrace.join("\n")
+    @message = e.to_s.sub(/uncaught throw/,'').gsub(/"/,'')
+    render 'error'
   end
 
   # Is there already instance linking the name to the chah 2018 ref?
@@ -101,15 +112,15 @@ class OrchidsName < ActiveRecord::Base
 
   def create_or_find_relationship_instance
     if relationship_instance_id.present?
-      debug '        Relationship instance already there'
-      return
+      debug '        Relationship instance already there returning 0'
+      return 0
     end
     if relationship_instance?
-      debug '        Relationship instance found'
-      return
+      debug '        Relationship instance found returning 0'
+      return 0
     end
     debug('need to create a relationship instance')
-    create_relationship_instance
+    return create_relationship_instance
   end
 
   def relationship_instance?
@@ -132,43 +143,34 @@ class OrchidsName < ActiveRecord::Base
     debug('create_relationship_instance start')
     if orchid.parent.orchids_name.first.try('standalone_instance_id').blank?
       debug('parent has no standalone instance so cannot create relationship instance')
-      return false
+      return 0
     end
     debug('Going on to create relationship instance')
     new_instance = Instance.new
     new_instance.draft = true
-    debug('before....a')
     new_instance.cited_by_id = orchid.parent.orchids_name.first.standalone_instance_id
-    debug('before....b')
     new_instance.reference_id = orchid.parent.orchids_name.first.standalone_instance.reference_id
-    debug('before....c')
     new_instance.cites_id = instance_id
-    debug('before....d')
     new_instance.name_id = instance.name_id
-    debug('before....e')
     throw "No relationship instance type id for #{orchid_id} #{orchid.taxon}" if relationship_instance_type_id.blank?
-    debug("relationship_instance_type_id: #{relationship_instance_type_id}")
     new_instance.instance_type_id = relationship_instance_type_id
-    debug('before....f')
     new_instance.created_by = new_instance.updated_by = 'nsl-3422'
-    debug('before....g')
-    debug('about to save the instance')
     new_instance.save!
-    debug("new relationship instance: #{new_instance.inspect}")
     self.relationship_instance_created = true
     self.relationship_instance_id = new_instance.id
     self.save!
+    return 1
   end
 
   # create_or_find_relationship_instance
   def create_or_find_misapplied_instance
     if relationship_instance_id.present?
       debug '        misapplied instance already there'
-      return
+      return 0
     end
     if relationship_instance?
       debug '        misapplied instance found'
-      return
+      return 0
     end
     create_misapplied_instance
   end
@@ -184,10 +186,14 @@ class OrchidsName < ActiveRecord::Base
     new_instance.instance_type_id = relationship_instance_type_id
     new_instance.created_by = new_instance.updated_by = 'nsl-3422'
     new_instance.save!
-    debug("new misapplied instance: #{new_instance.inspect}")
     self.relationship_instance_created = true
     self.relationship_instance_id = new_instance.id
     self.save!
+    return 1
+  rescue => e
+    logger.error("OrchidsName#create_misapplied_instance: #{e.to_s}")
+    logger.error e.backtrace.join("\n")
+    return 0
   end
 
   def debug(msg)

@@ -124,29 +124,10 @@ class Orchid < ActiveRecord::Base
     partly == 'p.p.'
   end
 
-  def riti_old
-    return nil if accepted?
-    return InstanceType.find_by_name('misapplied').id if misapplied?
-    if heterotypic?
-      if pp?
-        return InstanceType.find_by_name('pro parte taxonomic synonym').id
-      else
-        return InstanceType.find_by_name('taxonomic synonym').id
-      end
-    elsif homotypic?
-      Rails.logger.debug('homotypic')
-      if pp?
-        Rails.logger.debug('pp')
-        return InstanceType.find_by_name('pro parte nomenclatural synonym').id
-      else
-        return InstanceType.find_by_name('nomenclatural synonym').id
-      end
-    else
-      throw "Neither accepted nor misapplied nor heterotypic nor homotypic: orchid: #{id}: #{taxon} #{record_type}"
-    end
-    throw "No relationship instance type id for orchid: #{id}: #{taxon}"
-  end
-
+  # r relationship
+  # i instance
+  # t type
+  # i id
   def riti
     return nil if accepted?
     return InstanceType.find_by_name('misapplied').id if misapplied?
@@ -165,9 +146,9 @@ class Orchid < ActiveRecord::Base
     elsif InstanceType.where(name: synonym_type).size == 1
       return InstanceType.find_by_name(synonym_type).id
     else
-      throw "Cannot work out instance type for orchid: #{id}: #{taxon} #{record_type} #{synonym_type}"
+      throw "Orchid#riti cannot work out an instance type for orchid: #{id}: #{taxon} #{record_type} #{synonym_type}"
     end
-    throw "No relationship instance type id for orchid: #{id}: #{taxon}"
+    throw "Orchid#riti is stuck with no relationship instance type id for orchid: #{id}: #{taxon}"
   end
 
   def save_with_username(username)
@@ -259,9 +240,9 @@ class Orchid < ActiveRecord::Base
   end
 
   def self.create_instance_for_preferred_matches_for(taxon_s)
+    debug('create_instance_for_preferred_matches_for')
     records = 0
     @ref = Reference.find(REF_ID)
-    #debug "Using ref: #{@ref.citation}"
     self.where(["taxon like ?", taxon_s.gsub(/\*/,'%')])
         .where(record_type: 'accepted').order(:id).each do |match|
       records += match.create_instance_for_preferred_matches
@@ -273,6 +254,7 @@ class Orchid < ActiveRecord::Base
   end
 
   def create_instance_for_preferred_matches
+    debug("create_instance_for_preferred_matches")
     @ref = Reference.find(REF_ID) if @ref.blank?
     throw 'No ref!' if @ref.blank?
     AsInstanceCreator.new(self,@ref).create_instance_for_preferred_matches
@@ -302,11 +284,11 @@ class Orchid < ActiveRecord::Base
   private
 
   def debug(msg)
-    Rails.logger.debug(msg)
+    Rails.logger.debug("Orchid##{msg}")
   end
 
   def self.debug(msg)
-    Rails.logger.debug(msg)
+    Rails.logger.debug("Orchid##{msg}")
   end
 
 end
