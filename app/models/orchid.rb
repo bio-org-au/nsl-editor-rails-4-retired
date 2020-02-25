@@ -41,6 +41,10 @@ class Orchid < ActiveRecord::Base
     end
   end
 
+  validates :synonym_type,
+            presence: { if: "record_type == 'synonym'",
+                        message: "is required." }
+ 
 
   def display_as
     'Orchid'

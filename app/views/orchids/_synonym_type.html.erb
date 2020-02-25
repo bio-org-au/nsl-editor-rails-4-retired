@@ -1,6 +1,6 @@
 
   <div class="form-group">
-    <label for="synonym_type">Synonym type<%= "*" unless @orchid.accepted? %>
+    <label for="synonym_type">Synonym type*
     </label>
     <%= f.select :synonym_type, 
       ['',
@@ -16,6 +16,6 @@
        'taxonomic synonym'],
     {}, class: 'form-control',
     title: "Synonym type (only if record type is synonym)",
-    #{"required: true," unless @orchid.accepted?}
+    required: true,
     tabindex: increment_tab_index %>
   </div>

@@ -1,4 +1,8 @@
 - :date: 25-Feb-2020
+  :jira_id: '3525'
+  :description: |-
+    Orchids: synonym type is now required and you cannot add or save a synonym without a synonym type
+- :date: 25-Feb-2020
   :jira_id: '3524'
   :description: |-
     Orchids: add query to find raw data synonyms missing a synonym type - 'is-syn-but-no-syn-type:' 
