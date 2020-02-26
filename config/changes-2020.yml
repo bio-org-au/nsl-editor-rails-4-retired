@@ -1,7 +1,7 @@
 - :date: 25-Feb-2020
   :jira_id: '3525'
   :description: |-
-    Orchids: synonym type is now required and you cannot add or save a synonym without a synonym type
+    Orchids: synonym type is now required and you cannot add or save a synonym without a synonym type; also the drop-down list of synonym type options has no blank entry now.
 - :date: 25-Feb-2020
   :jira_id: '3524'
   :description: |-
