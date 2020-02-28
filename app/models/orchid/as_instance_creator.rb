@@ -25,18 +25,15 @@ class Orchid::AsInstanceCreator
   end
 
   def create_instance_for_preferred_matches
+    debug("Orchid::AsInstanceCreator#create_instance_for_preferred_matches")
     records = 0
-    debug('  Create instance for preferred matches')
     return 0 if stop_everything?
     @orchid.preferred_match.each do |preferred_match|
+      debug(preferred_match.class)
       if preferred_match.standalone_instance_created
-        return 1
       elsif preferred_match.standalone_instance_found
-        return 0
       else
-        debug('      Create instance')
-        preferred_match.create_instance(@ref)
-        records += 1
+        records += preferred_match.create_instance(@ref)
       end
     end
     records
@@ -44,13 +41,11 @@ class Orchid::AsInstanceCreator
 
   def stop_everything?
     if @orchid.exclude_from_further_processing?
-      debug('  Orchid is excluded from further processing.')
       return true
     elsif @orchid.parent.try('exclude_from_further_processing?')
-      debug("  Orchid's parent is excluded from further processing.")
       return true
     elsif @orchid.hybrid_cross?
-      debug("  Orchid is a hybrid cross - not ready to process these.")
+      debug("stop_everything?  Orchid is a hybrid cross - not ready to process these.")
       return true
     end
     false
@@ -64,7 +59,7 @@ class Orchid::AsInstanceCreator
     msg.sub!(/uncaught throw /,'')
     msg.gsub!(/"/,'')
     msg.sub!(/^Failing/,'')
-    debug "Failure: #{msg}"
+    debug "record_failure Failure: #{msg}"
   end
 
   def announce(msg)
@@ -74,6 +69,6 @@ class Orchid::AsInstanceCreator
   end
 
   def debug(msg)
-    Rails.logger.debug(msg)
+    Rails.logger.debug("Orchid##{msg}")
   end
 end
