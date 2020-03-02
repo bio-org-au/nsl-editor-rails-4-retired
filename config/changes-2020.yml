@@ -1,4 +1,10 @@
 - :date: 25-Feb-2020
+  :jira_id: '3461'
+  :description: |-
+    Orchids: the Batch tab now lets you add orchids to the current draft tree.  This is an early version of the feature, released for review and improvement. The feature is switched off by default.
+- :date: 28-Feb-2020
+  :release: true
+- :date: 25-Feb-2020
   :jira_id: '3525'
   :description: |-
     Orchids: synonym type is now required and you cannot add or save a synonym without a synonym type; also the drop-down list of synonym type options has no blank entry now.

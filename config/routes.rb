@@ -208,6 +208,10 @@ Rails.application.routes.draw do
         as: "create_instances_for_preferred_matches",
         to: "orchids_batch#create_instances_for_preferred_matches", via: :post
 
+  match "orchids/add/instances/to/draft/tree",
+        as: "add_instances_to_draft_tree",
+        to: "orchids_batch#add_instances_to_draft_tree", via: :post
+
   match "references/typeahead/on_citation/duplicate_of/:id",
         as: "references_typeahead_on_citation_duplicate_of_current",
         to: "references#typeahead_on_citation_duplicate_of_current", via: :get

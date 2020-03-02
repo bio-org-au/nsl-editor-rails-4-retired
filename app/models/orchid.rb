@@ -264,10 +264,16 @@ class Orchid < ActiveRecord::Base
     AsInstanceCreator.new(self,@ref).create_instance_for_preferred_matches
   end
 
-  def self.add_to_tree_for(taxon_s)
+  # check for preferred name
+  def self.add_to_tree_for(draft_tree, taxon_s)
+    count = 0
+    errors = ''
     self.where(["taxon like ?", taxon_s]).where(record_type: 'accepted').order(:id).each do |match|
-      placer = AsTreePlacer.new('Minor Edits 19 November 2019', match)
+      placer = AsTreePlacer.new(draft_tree, match)
+      count += placer.placed_count
+      errors += placer.error + ';' unless placer.error.blank?
     end
+    return count, errors
   end
 
   def isonym?
