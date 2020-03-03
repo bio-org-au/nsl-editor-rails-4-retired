@@ -174,7 +174,7 @@ class Orchid::AsTreePlacer
     end
     unless @orchid.distribution.blank?
       hash['APC Dist.'] = {
-                             value: @orchid.distribution.split(' | ').join(','),
+                             value: @orchid.distribution.split(' | ').join(', '),
                              updated_by: 'gclarke',
                              updated_at: Time.now.utc.iso8601
                              }
