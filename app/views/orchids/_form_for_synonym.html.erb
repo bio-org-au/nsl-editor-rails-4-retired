@@ -36,6 +36,8 @@
       <%= f.hidden_field :record_type, value: 'synonym' %>
       <%= f.text_field :record_type, class: 'form-control', value: 'synonym', disabled: true %>
     </div>
+    <%= "Current raw synonym type: #{orchid.synonym_type}" %>
+    <br>
     <%= render partial: "synonym_type", locals: {f: f} %>
 
     <div class="form-group">
