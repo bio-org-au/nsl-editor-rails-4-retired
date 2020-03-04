@@ -1,7 +1,7 @@
 - :date: 25-Feb-2020
   :jira_id: '3461'
   :description: |-
-    Orchids: the Batch tab now lets you add orchids to the current draft tree.  This is an early version of the feature, released for review and improvement. The feature is switched off by default. Distribution: space added after comma.
+    Orchids: the Batch tab now lets you add orchids to the current draft tree.  This is an early version of the feature, released for review and improvement. The feature is switched off by default. Distribution: space added after comma. Cross-refs not drafts.
 - :date: 28-Feb-2020
   :release: true
 - :date: 25-Feb-2020
