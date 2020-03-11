@@ -1,4 +1,8 @@
 - :date: 11-Mar-2020
+  :jira_id: 
+  :description: |-
+    Orchids: added search on the comment field, with help and examples - no jira.
+- :date: 11-Mar-2020
   :jira_id: '3529'
   :description: |-
     Orchids: when editing raw synonym data, the synonym type field options include heterotypic and homotypic, so you can see the raw value, but these options are disabled so you cannot choose them.

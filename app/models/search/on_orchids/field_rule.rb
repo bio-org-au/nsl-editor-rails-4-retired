@@ -140,6 +140,10 @@ class Search::OnOrchids::FieldRule
     "excluded-with-syn:"   => { trailing_wildcard: true,
                            where_clause: " (lower(taxon) like ? and record_type = 'accepted' and doubtful) or (parent_id in (select id from orchids where lower(taxon) like ? and record_type = 'accepted' and doubtful))",
                                order: "seq"},
+    "comment:"=> { where_clause: "lower(comment) like ?",
+                       leading_wildcard: true,
+                       trailing_wildcard: true,
+                       order: "seq"},
 
   }.freeze
 end
