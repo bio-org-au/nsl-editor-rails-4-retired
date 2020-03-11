@@ -1,7 +1,11 @@
+- :date: 11-Mar-2020
+  :jira_id: '3529'
+  :description: |-
+    Orchids: when editing raw synonym data, the synonym type field options include heterotypic and homotypic, so you can see the raw value, but these options are disabled so you cannot choose them.
 - :date: 25-Feb-2020
   :jira_id: '3461'
   :description: |-
-    Orchids: the Batch tab now lets you add orchids to the current draft tree.  This is an early version of the feature, released for review and improvement. The feature is switched off by default. Distribution: space added after comma. Cross-refs not drafts.
+    Orchids: the Batch tab now lets you add orchids to the current draft tree.  This is an early version of the feature, released for review and improvement. The feature is switched off by default.
 - :date: 28-Feb-2020
   :release: true
 - :date: 25-Feb-2020
