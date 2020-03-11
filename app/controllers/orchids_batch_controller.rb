@@ -30,13 +30,32 @@ class OrchidsBatchController < ApplicationController
   end
 
   def create_instances_for_preferred_matches
-    logger.debug("OrchidsBatchController#create_instances_for_preferred_matches")
+    logger.debug("#create_instances_for_preferred_matches start")
     records = Orchid.create_instance_for_preferred_matches_for(params[:taxon_string])
-    Rails.logger.debug("records: #{records}")
     @message = "Created #{records} instances for #{params[:taxon_string]}"
     render 'create'
   rescue => e
     logger.error("OrchidsBatchController#create_instances_for_preferred_matches: #{e.to_s}")
+    logger.error e.backtrace.join("\n")
+    @message = e.to_s.sub(/uncaught throw/,'').gsub(/"/,'')
+    render 'error'
+  end
+
+  def add_instances_to_draft_tree
+    logger.debug("#add_instances_to_draft_tree start")
+    records, errors = Orchid.add_to_tree_for(@working_draft, params[:taxon_string])
+    logger.debug("records added to tree: #{records}")
+    @message = %Q(Added #{records} #{'instance'.pluralize(records)})
+    @message += %Q( to tree "#{@working_draft.draft_name}" tree for orchids )
+    @message += %Q( matching "#{params[:taxon_string]}")
+    if errors.strip.blank?
+      @errors = nil
+    else
+      @errors = %Q(Errors not blank: #{errors.length})
+    end
+    render 'create'
+  rescue => e
+    logger.error("OrchidsBatchController#add_instances_to_draft_tree: #{e.to_s}")
     logger.error e.backtrace.join("\n")
     @message = e.to_s.sub(/uncaught throw/,'').gsub(/"/,'')
     render 'error'
@@ -47,5 +66,9 @@ class OrchidsBatchController < ApplicationController
   def orchid_batch_params
     return nil if params[:orchid_batch].blank?
     params.require(:orchid_batch).permit(:taxon_string)
+  end
+
+  def debug(msg)
+    logger.debug('OrchidsBatchController')
   end
 end

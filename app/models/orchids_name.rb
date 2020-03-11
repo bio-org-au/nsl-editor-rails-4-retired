@@ -147,7 +147,7 @@ class OrchidsName < ActiveRecord::Base
     end
     debug('Going on to create relationship instance')
     new_instance = Instance.new
-    new_instance.draft = true
+    new_instance.draft = false
     new_instance.cited_by_id = orchid.parent.orchids_name.first.standalone_instance_id
     new_instance.reference_id = orchid.parent.orchids_name.first.standalone_instance.reference_id
     new_instance.cites_id = instance_id
@@ -178,7 +178,7 @@ class OrchidsName < ActiveRecord::Base
   def create_misapplied_instance
     debug('        Create misapplied instance')
     new_instance = Instance.new
-    new_instance.draft = true
+    new_instance.draft = false
     new_instance.cited_by_id = orchid.parent.orchids_name.first.standalone_instance_id
     new_instance.reference_id = orchid.parent.orchids_name.first.standalone_instance.reference_id
     new_instance.cites_id = instance_id
