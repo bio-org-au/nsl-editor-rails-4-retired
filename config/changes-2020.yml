@@ -1,4 +1,8 @@
-- :date: 11-Mar-2020
+- :date: 12-Mar-2020
+  :jira_id: '3530'
+  :description: |-
+    Orchids: change the name-match-no-primary: directive to find Orchids with at least one matching name but no matching name with a primary instance.
+- :date: 12-Mar-2020
   :jira_id: '3530'
   :description: |-
     Orchids: records were erroneously showing as 'No Primary Instance' when there were multiple matching names, one of which had no primary instance.  Now it has to be all of any matching names having no primary instance.
