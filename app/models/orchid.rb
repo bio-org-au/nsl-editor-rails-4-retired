@@ -79,6 +79,14 @@ class Orchid < ActiveRecord::Base
     !Name.where(["(name.simple_name = ? or name.simple_name = ?) and exists (select null from name_type nt where name.name_type_id = nt.id and scientific) and not exists (select null from instance i join instance_type t on i.instance_type_id = t.id where i.name_id = name.id and t.primary_instance)",taxon, alt_taxon_for_matching]).empty?
   end
 
+  def matches_with_primary
+    Name.where(["(name.simple_name = ? or name.simple_name = ?) and exists (select null from name_type nt where name.name_type_id = nt.id and scientific) and exists (select null from instance i join instance_type t on i.instance_type_id = t.id where i.name_id = name.id and t.primary_instance)", taxon, alt_taxon_for_matching])
+  end
+
+  def no_matches_with_primary?
+    matches_with_primary.empty?
+  end
+  
   def synonym_type_with_interpretation
     "#{synonym_type} (#{interpreted_synonym_type})"
   end
