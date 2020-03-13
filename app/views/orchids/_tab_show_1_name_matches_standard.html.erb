@@ -12,7 +12,12 @@
 <%= form_for(@orchid, as: 'orchid', role: 'form', remote: true) do |f| %>
   <% @orchid.names_simple_name_matching_taxon.each_with_index do |matching_name, index| %>
     <%  if index > 0 %><br><% end %>
-    <% disable_radio_button = !matching_name.has_primary_instance? || matching_name.duplicate? %>
+    <% if @orchid.synonym_without_synonym_type? %>
+      <span class="red">
+      This orchid is a synonym without a synonym type.  You can fix that on the Edit tab.
+      </span>
+    <% end %>
+    <% disable_radio_button = !matching_name.has_primary_instance? || matching_name.duplicate? || @orchid.synonym_without_synonym_type? %>
         <% pi_count += 1 unless !matching_name.has_primary_instance? %>
         <br>
         <% orchid_name_ids = @orchid.orchids_name.collect {|oname| oname.name_id} %>

@@ -155,6 +155,8 @@ class Orchid < ActiveRecord::Base
       end
     elsif InstanceType.where(name: synonym_type).size == 1
       return InstanceType.find_by_name(synonym_type).id
+    elsif synonym_type.blank?
+      throw "The orchid is a synonym with no synonym type - please set a synonym type in 'Edit Raw' then try again."
     else
       throw "Orchid#riti cannot work out an instance type for orchid: #{id}: #{taxon} #{record_type} #{synonym_type}"
     end
@@ -295,6 +297,10 @@ class Orchid < ActiveRecord::Base
   def self.name_statuses
     sql = "select name_status, count(*) total from orchids where name_status is not null group by name_status order by name_status"
     records_array = ActiveRecord::Base.connection.execute(sql)
+  end
+
+  def synonym_without_synonym_type?
+    synonym? & synonym_type.blank?
   end
 
   private

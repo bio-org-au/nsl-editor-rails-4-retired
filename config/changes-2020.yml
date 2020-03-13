@@ -1,4 +1,8 @@
 - :date: 13-Mar-2020
+  :jira_id: '3481'
+  :description: |-
+    Orchids: prevent a match being saved for an orchid that is a synonym-without-a-synonym-type, and make it clear that is a problem the user can fix
+- :date: 13-Mar-2020
   :jira_id: '3530'
   :description: |-
     Orchids: consider a broader set of name matches, particularly on the Details tab, by no longer excluding names that are duplicates or have no instances.
