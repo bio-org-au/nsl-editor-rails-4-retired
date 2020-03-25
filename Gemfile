@@ -89,3 +89,5 @@ gem "acts_as_tree"
 gem "font-awesome-rails"
 gem "comma", "~> 4.1" # csv dsl
 gem "awesome_print"
+
+gem "rubyzip", ">= 1.3.0"
