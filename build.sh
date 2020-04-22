@@ -7,7 +7,7 @@
 mkdir -p vendor/bundle/
 JRUBY_ZIP=bin/jruby-dist-9.1.12.0-bin.zip
 JAVA_OPTS='-server -d64'
-JRUBY_HOME=./bin/jruby-9.1.12.0
+JRUBY_HOME=$PWD/bin/jruby-9.1.12.0
 
 if [ ! -d "$JRUBY_HOME" ]; then
   if [ ! -f "$JRUBY_ZIP" ]; then
