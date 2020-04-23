@@ -49,10 +49,18 @@ class Name::AsEdited < Name::AsTypeahead
     name.name_path = path
   end
 
+  def update_name_path()
+    path = ""
+    path = parent.name_path if parent
+    path += "/" + name_element if name_element
+    self.name_path = path
+  end
+
   def update_if_changed(params, typeahead_params, username)
     params["verbatim_rank"] = nil if params["verbatim_rank"] == ""
     assign_attributes(params)
     resolve_typeahead_params(typeahead_params)
+    update_name_path
     save_updates_if_changed(username)
   end
 
