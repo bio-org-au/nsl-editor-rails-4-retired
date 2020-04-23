@@ -30,6 +30,28 @@
 
 <%= divider %>
 
+<% if Rails.configuration.try('allow_orchid_tree_operations') %>
+
+<h5>Add instances to a draft tree for names identified by this query string</h5>
+
+<% if @working_draft.nil? %>
+  Please choose a draft from the tree menu first.
+<% else %>
+  Draft tree: <%= @working_draft.draft_name %>
+  <br>
+
+  <%= form_tag({controller: "orchids_batch", action: "add_instances_to_draft_tree"}, method: "post", remote: true) do %>
+    <input name="taxon_string" type="text" value="<%= @orchid.taxon %>" class="form-control" required title="taxon string for batch" />
+    <input id="add-instances-to-draft-treebatch-submit" name="submit" type="submit" value="Submit" class="btn btn-primary width-5em" title="Submit the form" />
+  <% end %>
+
+<% end %>
+
+<%= divider %>
+
+<% else %>
+  Orchid tree operations are switched off in this environment.
+<% end %>
 
 <% end %>
 <div id="search-result-details-info-message-container" class="message-container"></div>

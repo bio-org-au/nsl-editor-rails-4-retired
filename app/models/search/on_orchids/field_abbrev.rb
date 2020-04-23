@@ -24,5 +24,6 @@ class Search::OnOrchids::FieldAbbrev
     "is-synonym:" => "is-syn:",
     "no-rank:" => "rank-is-null:",
     "no-nsl-rank:" => "nsl-rank-is-null:",
+    "comments:" => "comment:",
   }.freeze
 end

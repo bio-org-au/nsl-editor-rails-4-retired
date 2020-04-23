@@ -17,6 +17,13 @@
       <% if orchids_name.standalone_instance.name.accepted_concept? || orchids_name.standalone_instance.name.excluded_concept? %>
         <%= render(partial: 'instances/apc/widgets', locals: {instance: orchids_name.standalone_instance}) %>
       <% end %>
+      <br>
+      <% unless orchids_name.standalone_instance.name.draft_instance_id(@working_draft).blank? %>
+        Name is already in workspace <b><%= @working_draft.draft_name %></b>
+        <% unless orchids_name.standalone_instance.name.draft_instance_id(@working_draft) == orchids_name.standalone_instance.id %>
+          for a different instance.
+        <% end %>
+      <% end %>
 
       <% if orchids_name.drafted? %>
         <br><span class='on-tree-indicator'>Drafted</span>

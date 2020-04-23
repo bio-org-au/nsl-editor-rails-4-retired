@@ -36,7 +36,7 @@
       <%= f.hidden_field :record_type, value: 'synonym' %>
       <%= f.text_field :record_type, class: 'form-control', value: 'synonym', disabled: true %>
     </div>
-    <%= render partial: "synonym_type", locals: {f: f} %>
+    <%= render partial: "synonym_type", locals: {f: f, orchid: orchid} %>
 
     <div class="form-group">
       <label for="orchid-parent-typeahead">Accepted Taxon</label>

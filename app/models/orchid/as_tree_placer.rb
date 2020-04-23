@@ -16,26 +16,57 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-#  Name services
+#  We need to place Orchids on a draft tree.
 class Orchid::AsTreePlacer
-  
-  def initialize(tree_version_draft_name, orchid)
-    debug("tree_version_draft_name: #{tree_version_draft_name}")
+  attr_reader :status, :error, :placed_count
+  ERROR = 'error'
+  def initialize(draft_tree, orchid)
+    @draft_tree = draft_tree
+    @draft_name = draft_tree.draft_name
+    @status = 'started'
     @orchid = orchid
-    @tree_version = Tree::DraftVersion.where(draft_name:
-                                                   tree_version_draft_name)
-                                            .first
-    throw "No such draft #{tree_version_draft_name}" if @tree_version.blank?
-    peek
-    place_or_replace
+    @placed_count = 0
+    @error = ''
+    preflight_checks
+    unless @status == ERROR
+      peek
+      @placed_count = place_or_replace
+    end
+  end
+
+  def preflight_checks
+    case 
+    when @draft_tree.blank?
+      @status = ERROR
+      @error = "No such draft #{@draft_tree.draft_name}"
+    when @orchid.preferred_match.blank?
+      @status = ERROR
+      @error = "No preferred matching name for #{@orchid.taxon}"
+    when @orchid.orchids_name.blank? || @orchid.orchids_name.first.standalone_instance_id.blank?
+      @status = ERROR
+      @error = "No instance identified for #{@orchid.taxon}"
+    when @orchid.orchids_name.first.drafted?
+      @status = ERROR
+      @error = "Stopping because #{@orchid.taxon} is already on the draft tree"
+    when @orchid.exclude_from_further_processing?
+      @status = ERROR
+      @error = "#{@orchid.taxon} is excluded from further processing"
+    when @orchid.parent.try('exclude_from_further_processing?')
+      @status = ERROR
+      @error = "Parent of #{@orchid.taxon} is excluded from further processing"
+    when @orchid.hybrid_cross?
+      @status = ERROR
+      @error = "#{@orchid.taxon} is a hybrid cross - not ready to process these"
+    end
   end
 
   def peek
+    debug("#{'peek '*20}")
     debug("@orchid.class: #{@orchid.class}")
-    debug("@tree_version.class: #{@tree_version.class}")
-    debug("@tree_version.tree.config: #{@tree_version.tree.config}")
-    debug("@tree_version.tree.config['comment_key']: #{@tree_version.tree.config['comment_key']}")
-    debug("@tree_version.tree.config['distribution_key']: #{@tree_version.tree.config['distribution_key']}")
+    debug("@draft_tree.class: #{@draft_tree.class}")
+    debug("@draft_tree.tree.config: #{@draft_tree.tree.config}")
+    debug("@draft_tree.tree.config['comment_key']: #{@draft_tree.tree.config['comment_key']}")
+    debug("@draft_tree.tree.config['distribution_key']: #{@draft_tree.tree.config['distribution_key']}")
   end
 
   # From @orchid work out the name and instance you're interested in.
@@ -50,59 +81,49 @@ class Orchid::AsTreePlacer
   # end
   def place_or_replace
     debug('place_or_replace')
-    return if stop_everything?
-    @orchid.orchids_name.each do |orchids_name|
-      debug "name: #{orchids_name.name_id}; instance: #{orchids_name.standalone_instance_id}"
-      if orchids_name.standalone_instance_id.blank?
+    @orchid.orchids_name.each do |one_orchid_name|
+      debug("one_orchid_name: id #{one_orchid_name.id}")
+      debug("one_orchid_name.standalone_instance: #{one_orchid_name.standalone_instance}")
+      debug("one_orchid_name.standalone_instance.name: #{one_orchid_name.standalone_instance.name}")
+      debug("one_orchid_name.standalone_instance.name.simple_name: #{one_orchid_name.standalone_instance.name.simple_name}")
+      debug("@draft_tree.id: #{@draft_tree.inspect}")
+      debug("one_orchid_name.standalone_instance.name.draft_instance_id(@draft_tree): #{one_orchid_name.standalone_instance.name.draft_instance_id(@draft_tree)}")
+      debug "name: #{one_orchid_name.name_id}; instance: #{one_orchid_name.standalone_instance_id}"
+      if one_orchid_name.standalone_instance_id.blank?
         debug "No instance identified, therefore cannot place this on the APC Tree."
-      elsif orchids_name.drafted?
+      elsif one_orchid_name.drafted?
         debug "Stopping because already drafted."
       else
-          tree_version_element = @tree_version.name_in_version(orchids_name.name)
+        @tree_version_element = @draft_tree.name_in_version(one_orchid_name.name)
         if @tree_version_element.present?
           debug 'name is on the draft: replace it'
-          replace_name(orchids_name)
+          return replace_name(one_orchid_name)
+        #elsif one_orchid_name.name.draft_instance_id(@draft_tree).present?
+        #elsif one_orchid_name.standalone_instance.name.draft_instance_id(@draft_tree) != one_orchid_name.standalone_instance.id
+          #debug 'name is in the draft already'
+          #replace_name(one_orchid_name)
         else
           debug 'name is not on the draft: just place it'
-          place_name(orchids_name)
+          return place_name(one_orchid_name)
         end
       end
     end
   end
 
-  def stop_everything?
-    if @orchid.exclude_from_further_processing?
-      debug('  Orchid is excluded from further processing.')
-      return true
-    elsif @orchid.parent.try('exclude_from_further_processing?')
-      debug("  Orchid's parent is excluded from further processing.")
-      return true
-    elsif @orchid.hybrid_cross?
-      debug("  Orchid is a hybrid cross - not ready to process these.")
-      return true
-    end
-    false
-  end
-
-  def name_is_on_the_draft?(the_name)
-    @tree_version_element = @tree_version.name_in_version(the_name)
-    return @tree_version_element.present?
-  end
-
   def place_name(orchids_name)
-    tree_version = @tree_version
+    tree_version = @draft_tree
     debug("parent_element_link: #{parent_tve(orchids_name).element_link}")
     placement = Tree::Workspace::Placement.new(username: 'gclarke',
                                                parent_element_link: parent_tve(orchids_name).element_link,
                                                instance_id: orchids_name.standalone_instance_id,
                                                excluded: false,
                                                profile: profile,
-                                               version_id: @tree_version.id)
+                                               version_id: @draft_tree.id)
     response = placement.place
     debug(json_result(response))
     orchids_name.drafted = true
     orchids_name.save!
-    'placed'
+    1
   end
 
   def replace_name(orchids_name)
@@ -112,6 +133,8 @@ class Orchid::AsTreePlacer
     debug("parent_tve.element_link: #{parent_tve.element_link}")
     debug("parent_tve.name_path: #{parent_tve.name_path}")
     debug("parent_tve.tree_version.draft_name: #{parent_tve.tree_version.draft_name}")
+    debug("@tree_version_element: #{@tree_version_element}")
+    debug("@draft_tree.name_in_version(orchids_name.name): #{@draft_tree.name_in_version(orchids_name.name)}")
 
     replacement = Tree::Workspace::Replacement.new(username: 'gclarke',
                                                  target: @tree_version_element,
@@ -119,15 +142,17 @@ class Orchid::AsTreePlacer
                                                  instance_id: orchids_name.standalone_instance_id,
                                                  excluded: false,
                                                  profile: profile)
+    debug('after call to Tree::Workspace::Replacement')
     response = replacement.replace
+    debug('after call to replacement.replace')
     debug(json_result(response))
     orchids_name.drafted = true
     orchids_name.save!
-    'replaced'
+    1
   end 
 
   def parent_tve(orchids_name)
-    @tree_version.name_in_version(orchids_name.name.parent)
+    @draft_tree.name_in_version(orchids_name.name.parent)
   end
 
   def json_result(result)
@@ -149,7 +174,7 @@ class Orchid::AsTreePlacer
     end
     unless @orchid.distribution.blank?
       hash['APC Dist.'] = {
-                             value: @orchid.distribution.split(' | ').join(','),
+                             value: @orchid.distribution.split(' | ').join(', '),
                              updated_by: 'gclarke',
                              updated_at: Time.now.utc.iso8601
                              }
@@ -158,8 +183,9 @@ class Orchid::AsTreePlacer
     hash
   end
 
+  private
+
   def debug(msg)
-    puts msg
+    Rails.logger.debug("Orchid::AsTreePlacer #{msg}")
   end
 end
-

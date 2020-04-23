@@ -52,6 +52,8 @@ Because <i>taxon-with-syn:</i> is so frequently used, we've made it the default.
     {field_name: 'excluded-with-syn: or exc: for short',
      description: "Matching 'accepted' taxa that are also doubtful, and any attached synonyms are returned; i.e. 'doubtful or excluded' taxa; case-insensitive, trailing wildcard added automatically."},
     {field_name: 'exc:', description: "Abbreviation for excluded-with-syn:."},
+    {field_name: 'comment:',
+     description: "match on the comment field - case-insensitive, leading and trailing wildcards added automatically"},
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">
@@ -160,7 +162,7 @@ Because <i>taxon-with-syn:</i> is so frequently used, we've made it the default.
     {field_name: 'name-match-gte:',
      description: "match only on CSV data with a number of matching NSL names greater than or equal to the supplied number"},
     {field_name: 'name-match-no-primary:',
-     description: "match only on CSV data with at least one matching NSL name that has no primary instance"},
+     description: "find Orchids with at least one matching name but no matching name with a primary instance"},
     {field_name: 'taxon-sharing-name-id:',
      description: "match only on CSV data orchid that shares a preferred name ID with at least one other CSV data orchid"},
       ].each do |val| %>
