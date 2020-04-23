@@ -21,12 +21,12 @@
   <% when 0 %>
     <span class="flag no-matches">No Matches</span>
   <% when 1 %>
-    <% if search_result.name_match_no_primary %>
+    <% if search_result.name_match_no_primary? %>
       <span class="flag no-primary">No Primary</span>
     <% end %>
   <% else %>
     <span class="flag too-many-matches">Too many matches</span>
-    <% if search_result.name_match_no_primary %>
+    <% if search_result.name_match_no_primary? %>
       <span class="flag no-primary">No Primary</span>
     <% end %>
   <% end %>

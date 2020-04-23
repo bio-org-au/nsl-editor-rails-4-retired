@@ -76,7 +76,7 @@ class Orchid::AsNameMatcher
   end
 
   def matching_name_has_primary?
-    !@orchid.name_match_no_primary
+    !@orchid.name_match_no_primary?
   end
 
   def matching_name_has_exactly_one_primary?

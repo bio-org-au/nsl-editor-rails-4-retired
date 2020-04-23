@@ -145,6 +145,11 @@ a:hover.blue           { color: blue; }
   background: sienna;
   color: white;
 }
+ 
+.matching-name-is-a-duplicate {
+  background: gray;
+  color: white;
+}
 
 .search-result .flag {
   padding: 0.4em 0.3em 0.2em 0.4em;

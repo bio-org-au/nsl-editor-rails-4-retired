@@ -65,8 +65,6 @@ class Orchid < ActiveRecord::Base
   # Note: not case-insensitive. Perhaps should be.
   def names_simple_name_matching_taxon
     Name.where(["simple_name = ? or simple_name = ?",taxon, alt_taxon_for_matching])
-        .where(["duplicate_of_id is null"])
-        .where("exists (select null from instance where name_id = name.id)")
         .joins(:name_type).where(name_type: {scientific: true})
         .order("simple_name, name.id")
   end
@@ -75,10 +73,18 @@ class Orchid < ActiveRecord::Base
     names_simple_name_matching_taxon
   end
 
-  def name_match_no_primary
+  def name_match_no_primary?
     !Name.where(["(name.simple_name = ? or name.simple_name = ?) and exists (select null from name_type nt where name.name_type_id = nt.id and scientific) and not exists (select null from instance i join instance_type t on i.instance_type_id = t.id where i.name_id = name.id and t.primary_instance)",taxon, alt_taxon_for_matching]).empty?
   end
 
+  def matches_with_primary
+    Name.where(["(name.simple_name = ? or name.simple_name = ?) and exists (select null from name_type nt where name.name_type_id = nt.id and scientific) and exists (select null from instance i join instance_type t on i.instance_type_id = t.id where i.name_id = name.id and t.primary_instance)", taxon, alt_taxon_for_matching])
+  end
+
+  def no_matches_with_primary?
+    matches_with_primary.empty?
+  end
+  
   def synonym_type_with_interpretation
     "#{synonym_type} (#{interpreted_synonym_type})"
   end
@@ -149,6 +155,8 @@ class Orchid < ActiveRecord::Base
       end
     elsif InstanceType.where(name: synonym_type).size == 1
       return InstanceType.find_by_name(synonym_type).id
+    elsif synonym_type.blank?
+      throw "The orchid is a synonym with no synonym type - please set a synonym type in 'Edit Raw' then try again."
     else
       throw "Orchid#riti cannot work out an instance type for orchid: #{id}: #{taxon} #{record_type} #{synonym_type}"
     end
@@ -289,6 +297,10 @@ class Orchid < ActiveRecord::Base
   def self.name_statuses
     sql = "select name_status, count(*) total from orchids where name_status is not null group by name_status order by name_status"
     records_array = ActiveRecord::Base.connection.execute(sql)
+  end
+
+  def synonym_without_synonym_type?
+    synonym? & synonym_type.blank?
   end
 
   private
