@@ -49,18 +49,28 @@ class Name::AsEdited < Name::AsTypeahead
     name.name_path = path
   end
 
-  def update_name_path()
+  def update_name_path(old_path, new_path)
+    # not using binds (which would be good) because I can't figure out why they don't work.
+    query = "update Name
+set name_Path = regexp_replace(name_path, '#{old_path}', '#{new_path}')
+where name_path ~ '#{old_path}'"
+    Name.connection.exec_update(query, "SQL", [])
+  end
+
+  def make_name_path
     path = ""
     path = parent.name_path if parent
     path += "/" + name_element if name_element
-    self.name_path = path
+    path
   end
 
   def update_if_changed(params, typeahead_params, username)
+    old_path = name_path
     params["verbatim_rank"] = nil if params["verbatim_rank"] == ""
     assign_attributes(params)
     resolve_typeahead_params(typeahead_params)
-    update_name_path
+    new_path = make_name_path #only after params updated
+    update_name_path(old_path, new_path)
     save_updates_if_changed(username)
   end
 
