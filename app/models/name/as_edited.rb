@@ -50,10 +50,11 @@ class Name::AsEdited < Name::AsTypeahead
   end
 
   def update_name_path(old_path, new_path)
-    # not using binds (which would be good) because I can't figure out why they don't work.
+    op = old_path.to_s.gsub(/'[^']/, "''")
+    np = new_path.to_s.gsub(/'[^']/, "''")
     query = "update Name
-set name_Path = regexp_replace(name_path, '#{old_path}', '#{new_path}')
-where name_path ~ '#{old_path}'"
+set name_Path = regexp_replace(name_path, '#{op}', '#{np}')
+where name_path ~ '#{op}'"
     Name.connection.exec_update(query, "SQL", [])
   end
 
