@@ -1,3 +1,7 @@
+- :date: 24-Mar-2020
+  :jira_id: '3542'
+  :description: |-
+    Changed update name_path to do a bulk update of name paths to update all child names.
 - :date: 24-Apr-2020
   :release: true
 - :date: 13-Mar-2020
