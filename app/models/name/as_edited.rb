@@ -49,12 +49,13 @@ class Name::AsEdited < Name::AsTypeahead
     name.name_path = path
   end
 
-  def update_name_path(old_path, new_path)
-    op = old_path.to_s.gsub(/'[^']/, "''")
-    np = new_path.to_s.gsub(/'[^']/, "''")
+  def bulk_patch_name_path_and_child_name_paths(old_path, new_path)
+    op = Name.connection.quote(old_path.to_s.gsub(/([().*])/, '\\\\\1'))
+    np = Name.connection.quote(new_path)
+
     query = "update Name
-set name_Path = regexp_replace(name_path, '#{op}', '#{np}')
-where name_path ~ '#{op}'"
+set name_Path = regexp_replace(name_path, #{op}, #{np})
+where name_path ~ #{op}"
     Name.connection.exec_update(query, "SQL", [])
   end
 
@@ -71,7 +72,7 @@ where name_path ~ '#{op}'"
     assign_attributes(params)
     resolve_typeahead_params(typeahead_params)
     new_path = make_name_path #only after params updated
-    update_name_path(old_path, new_path)
+    bulk_patch_name_path_and_child_name_paths(old_path, new_path)
     save_updates_if_changed(username)
   end
 
