@@ -1,3 +1,7 @@
+- :date: 30-Apr-2020
+  :jira_id: '3547'
+  :description: |-
+    Refine the many-name-match search so it excludes orchids which have a saved match; keep the old-style search as many-name-match-raw; show the Save button only when no match has been saved
 - :date: 24-Apr-2020
   :jira_id: '3542'
   :description: |-

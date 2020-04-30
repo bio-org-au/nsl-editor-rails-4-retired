@@ -6,11 +6,16 @@
 <% if @orchid.names_simple_name_matching_taxon.empty? %>
   <div class="bggray big-vertical-padding" ><h4 class="white">No Matching Names</h4></div>
 <% end %>
-<% if name_match_count > 0 %>
-  <% if name_match_count > 1 %>
-    <div class="bggray big-vertical-padding" ><h4 class="white">Too Many Matching Names</h4></div>
+<% if @orchid.matched? %>
+  <div class="bggray big-vertical-padding" ><h4 class="white">Matching Name Saved</h4></div>
+<% else %>
+  <% if name_match_count > 0 %>
+    <% if name_match_count > 1 %>
+      <div class="bggray big-vertical-padding" ><h4 class="white">Too Many Matching Names</h4></div>
+    <% end %>
   <% end %>
 <% end %>
+
 <% if @orchid.exclude_from_further_processing? %>
   <div class="bggray big-vertical-padding" ><h4 class="white">No Further Processing</h4></div>
 <% end %>

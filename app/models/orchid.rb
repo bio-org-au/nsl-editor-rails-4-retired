@@ -303,6 +303,10 @@ class Orchid < ActiveRecord::Base
     synonym? & synonym_type.blank?
   end
 
+  def matched?
+    orchids_name.present?
+  end
+
   private
 
   def debug(msg)
