@@ -19,17 +19,19 @@
 require "test_helper"
 
 # Single controller test.
-class GenusNameUpdateWithNoNameChangeTest < ActionController::TestCase
+class HybridFormulaFirstParentChangeTest < ActionController::TestCase
   tests NamesController
 
   setup do
-    @genus = names(:acacia)
-    @species = names(:another_species)
-    @subspecies = names(:hybrid_formula)
-    @request.headers["Accept"] = "application/javascript"
     stub_it
+    @hybrid_formula = names(:hybrid_formula)
+    @new_first_parent = names(:angophora_costata)
+    @nfp_typeahead_string = "Angophora costata (Gaertn.) Britten | Species"
+    @request.headers["Accept"] = "application/javascript"
+    @expected_name_element = "costata x another-species"
+    @expected_name_path = "Plantae/Magnoliophyta/a_family/a_genus/thing/" +
+                          @expected_name_element
   end
-
   def a
     "localhost:9090"
   end
@@ -55,21 +57,30 @@ class GenusNameUpdateWithNoNameChangeTest < ActionController::TestCase
         "simpleName": "simple name for id 91755" } }).to_json, headers: {})
   end
 
-  test "genus name update with no name change" do
+  test "hybrid formula 1st parent change flows to name element and name path" do
     post(:update,
-         { name: { "name_element" => "Acacia", "verbatim_name" => "fred" },
-           id: @genus.id },
+         { name: { "parent_id" => @new_first_parent.id.to_s,
+                   "parent_typeahead" => @nfp_typeahead_string },
+           id: @hybrid_formula.id },
          username: "fred",
          user_full_name: "Fred Jones",
          groups: ["edit"])
     assert_response :success
     sleep(2) # to allow for the asynch job
-    species_afterwards = Name.find(@species.id)
-    assert @species.full_name == species_afterwards.full_name,
-           "Genus name not changed so species's name should not change"
-    subspecies_afterwards = Name.find(@subspecies.id)
-    assert @subspecies.full_name == subspecies_afterwards.full_name,
-           "Genus name has not changed so subspecies's name. should not change"
+    hybrid_after_change = Name.find(@hybrid_formula.id)
+    assert @hybrid_formula.name_element != hybrid_after_change.name_element,
+           "Name element should change"
+    assert hybrid_after_change.name_element == @expected_name_element,
+           "Name element should change to '#{@expected_name_element}'"
+    assert @hybrid_formula.name_path != hybrid_after_change.name_path,
+           "Name path should change"
+    assert hybrid_after_change.name_path == @expected_name_path,
+           "Name path should change to: '#{@expected_name_path}'"
+  end
+
+  def debug(name, comment)
+    puts("#{comment} full_name: #{name.full_name}")
+    puts("#{comment} name_element: #{name.name_element}")
+    puts("#{comment} name_path: #{name.name_path}")
   end
 end
-

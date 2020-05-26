@@ -42,6 +42,12 @@ class Name::AsEdited < Name::AsTypeahead
     end
   end
 
+  def build_hybrid_name_element
+    if name_category.scientific_hybrid_formula?
+      self.name_element = "#{self.parent.name_element} #{self.name_type.connector} #{self.second_parent.name_element}"
+    end
+  end
+
   def self.create_name_path(name)
     path = ""
     path = name.parent.name_path if name.parent
@@ -49,30 +55,12 @@ class Name::AsEdited < Name::AsTypeahead
     name.name_path = path
   end
 
-  def bulk_patch_name_path_and_child_name_paths(old_path, new_path)
-    op = Name.connection.quote(old_path.to_s.gsub(/([().*])/, '\\\\\1'))
-    np = Name.connection.quote(new_path)
-
-    query = "update Name
-set name_Path = regexp_replace(name_path, #{op}, #{np})
-where name_path ~ #{op}"
-    Name.connection.exec_update(query, "SQL", [])
-  end
-
-  def make_name_path
-    path = ""
-    path = parent.name_path if parent
-    path += "/" + name_element if name_element
-    path
-  end
-
   def update_if_changed(params, typeahead_params, username)
-    old_path = name_path
     params["verbatim_rank"] = nil if params["verbatim_rank"] == ""
     assign_attributes(params)
     resolve_typeahead_params(typeahead_params)
-    new_path = make_name_path #only after params updated
-    bulk_patch_name_path_and_child_name_paths(old_path, new_path)
+    build_hybrid_name_element
+    build_name_path
     save_updates_if_changed(username)
   end
 

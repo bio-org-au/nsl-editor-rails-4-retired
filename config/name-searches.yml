@@ -614,3 +614,5 @@ from comment where comment.name_id = name.id)"
      group by name_id
      having count(*) > 1)"
   :order: name.sort_name
+'name-path:':
+  :where_clause: " lower(name_path) like ? "

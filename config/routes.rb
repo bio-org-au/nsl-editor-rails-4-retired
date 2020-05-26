@@ -87,6 +87,7 @@ Rails.application.routes.draw do
   match "instances/:id/tab/:tab",
         as: "instance_tab", to: "instances#tab", via: :get
 
+  match "name/refresh_name_path/:id", as: "refresh_name_path", to: "names#refresh_name_path_field", via: :post
   match "name/refresh/:id", as: "refresh_name", to: "names#refresh", via: :get
   match "name/refresh/children/:id",
         as: "refresh_children_name",
