@@ -1,7 +1,7 @@
 - :date: 26-May-2020
   :jira_id: '3551'
   :description: |-
-    Update the name element for a hybrid when a parent is changed, so that name path will be updated correctly too; you can now refresh name path and see name element and name path in the details.
+    Behind the scenes, update the name element for a hybrid formula when either parent is changed. This is so the name path will also be updated correctly behind the scenes; to make this more visible, you can now see name path, name element, sort name in the details.  The refresh tab now lets you refresh name path - likely to be rarely used, but handy if you ever need it.
 - :date: 30-Apr-2020
   :jira_id: '3547'
   :description: |-
