@@ -623,27 +623,24 @@ CREATE FUNCTION public.author_notification() RETURNS trigger
 BEGIN
   IF (TG_OP = 'DELETE')
   THEN
-    INSERT INTO notification (id, version, message, object_id)
+    INSERT INTO notification (version, message, object_id)
       SELECT
-        nextval('hibernate_sequence'),
         0,
         'author deleted',
         OLD.id;
     RETURN OLD;
   ELSIF (TG_OP = 'UPDATE')
     THEN
-      INSERT INTO notification (id, version, message, object_id)
+      INSERT INTO notification (version, message, object_id)
         SELECT
-          nextval('hibernate_sequence'),
           0,
           'author updated',
           NEW.id;
       RETURN NEW;
   ELSIF (TG_OP = 'INSERT')
     THEN
-      INSERT INTO notification (id, version, message, object_id)
+      INSERT INTO notification (version, message, object_id)
         SELECT
-          nextval('hibernate_sequence'),
           0,
           'author created',
           NEW.id;
@@ -933,27 +930,24 @@ CREATE FUNCTION public.instance_notification() RETURNS trigger
 BEGIN
   IF (TG_OP = 'DELETE')
   THEN
-    INSERT INTO notification (id, version, message, object_id)
+    INSERT INTO notification (version, message, object_id)
       SELECT
-        nextval('hibernate_sequence'),
         0,
         'instance deleted',
         OLD.id;
     RETURN OLD;
   ELSIF (TG_OP = 'UPDATE')
     THEN
-      INSERT INTO notification (id, version, message, object_id)
+      INSERT INTO notification (version, message, object_id)
         SELECT
-          nextval('hibernate_sequence'),
           0,
           'instance updated',
           NEW.id;
       RETURN NEW;
   ELSIF (TG_OP = 'INSERT')
     THEN
-      INSERT INTO notification (id, version, message, object_id)
+      INSERT INTO notification (version, message, object_id)
         SELECT
-          nextval('hibernate_sequence'),
           0,
           'instance created',
           NEW.id;
@@ -1156,27 +1150,24 @@ CREATE FUNCTION public.name_notification() RETURNS trigger
 BEGIN
   IF (TG_OP = 'DELETE')
   THEN
-    INSERT INTO notification (id, version, message, object_id)
+    INSERT INTO notification (version, message, object_id)
       SELECT
-        nextval('hibernate_sequence'),
         0,
         'name deleted',
         OLD.id;
     RETURN OLD;
   ELSIF (TG_OP = 'UPDATE')
     THEN
-      INSERT INTO notification (id, version, message, object_id)
+      INSERT INTO notification (version, message, object_id)
         SELECT
-          nextval('hibernate_sequence'),
           0,
           'name updated',
           NEW.id;
       RETURN NEW;
   ELSIF (TG_OP = 'INSERT')
     THEN
-      INSERT INTO notification (id, version, message, object_id)
+      INSERT INTO notification (version, message, object_id)
         SELECT
-          nextval('hibernate_sequence'),
           0,
           'name created',
           NEW.id;
@@ -1352,27 +1343,24 @@ CREATE FUNCTION public.reference_notification() RETURNS trigger
 BEGIN
   IF (TG_OP = 'DELETE')
   THEN
-    INSERT INTO notification (id, version, message, object_id)
+    INSERT INTO notification (version, message, object_id)
       SELECT
-        nextval('hibernate_sequence'),
         0,
         'reference deleted',
         OLD.id;
     RETURN OLD;
   ELSIF (TG_OP = 'UPDATE')
     THEN
-      INSERT INTO notification (id, version, message, object_id)
+      INSERT INTO notification (version, message, object_id)
         SELECT
-          nextval('hibernate_sequence'),
           0,
           'reference updated',
           NEW.id;
       RETURN NEW;
   ELSIF (TG_OP = 'INSERT')
     THEN
-      INSERT INTO notification (id, version, message, object_id)
+      INSERT INTO notification (version, message, object_id)
         SELECT
-          nextval('hibernate_sequence'),
           0,
           'reference created',
           NEW.id;
@@ -2974,7 +2962,7 @@ CREATE TABLE public.namespace (
 --
 
 CREATE TABLE public.notification (
-    id bigint NOT NULL,
+    id serial primary key,
     version bigint NOT NULL,
     message character varying(255) NOT NULL,
     object_id bigint
@@ -3923,8 +3911,8 @@ ALTER TABLE ONLY public.instance
 -- Name: notification notification_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.notification
-    ADD CONSTRAINT notification_pkey PRIMARY KEY (id);
+-- ALTER TABLE ONLY public.notification
+    -- ADD CONSTRAINT notification_pkey PRIMARY KEY (id);
 
 
 --
