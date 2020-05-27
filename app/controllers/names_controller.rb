@@ -175,7 +175,7 @@ class NamesController < ApplicationController
     @name = Name::AsEdited.find(params[:id])
     @name.build_name_path
     if @name.changed?
-      @name.save!
+      @name.save!(touch: false)
       render "names/refresh_name_path/ok.js"
     else
       render "names/refresh_name_path/no_change.js"
