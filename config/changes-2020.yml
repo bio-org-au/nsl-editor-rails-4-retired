@@ -1,3 +1,7 @@
+- :date: 03-Jun-2020
+  :jira_id: '3551'
+  :description: |-
+    Make sure the name_path update ripple through the children does not set the updated_at timestamp.
 - :date: 26-May-2020
   :jira_id: '3551'
   :description: |-
