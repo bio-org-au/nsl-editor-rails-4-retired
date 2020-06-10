@@ -1,3 +1,21 @@
+- :date: 03-Jun-2020
+  :jira_id: '3551'
+  :description: |-
+    Make sure the name_path update ripple through the children does not set the updated_at timestamp.
+- :date: 26-May-2020
+  :jira_id: '3551'
+  :description: |-
+    Behind the scenes, update the name element for a hybrid formula when either parent is changed. This is so the name path will also be updated correctly behind the scenes; to make this more visible, you can now see name path, name element, sort name in the details.  The refresh tab now lets you refresh name path - likely to be rarely used, but handy if you ever need it.
+- :date: 30-Apr-2020
+  :jira_id: '3547'
+  :description: |-
+    Refine the many-name-match search so it excludes orchids which have a saved match; keep the old-style search as many-name-match-raw; show the Save button only when no match has been saved
+- :date: 24-Apr-2020
+  :jira_id: '3542'
+  :description: |-
+    Changed update name_path to do a bulk update of name paths to update all child names.
+- :date: 24-Apr-2020
+  :release: true
 - :date: 13-Mar-2020
   :jira_id: '3481'
   :description: |-

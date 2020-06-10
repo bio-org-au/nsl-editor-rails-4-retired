@@ -25,6 +25,7 @@ class Name < ActiveRecord::Base
   include NameValidatable
   include NameParentable
   include NameFamilyable
+  include NameNamePathable
   include NameTreeable
   include NameNamable
   include NameAuthorable

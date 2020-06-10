@@ -28,6 +28,7 @@ class NamesController < ApplicationController
                 only: [:show, :tab, :edit_as_category,
                        :refresh, :refresh_children, :transfer_dependents]
 
+
   # GET /names/1
   # GET /names/1.json
   # Sets up RHS details panel on the search results page.
@@ -168,6 +169,20 @@ class NamesController < ApplicationController
   rescue => e
     @message = e.to_s
     render "names/refresh/error.js"
+  end
+
+  def refresh_name_path_field
+    @name = Name::AsEdited.find(params[:id])
+    @name.build_name_path
+    if @name.changed?
+      @name.save!(touch: false)
+      render "names/refresh_name_path/ok.js"
+    else
+      render "names/refresh_name_path/no_change.js"
+    end
+  rescue => e
+    @message = e.to_s
+    render "names/refresh_name_path/error.js"
   end
 
   def refresh_children

@@ -1,0 +1,13 @@
+  <%= link_to("Refresh name path",
+              refresh_name_path_path,
+              id: "name-refresh-name-path-link",
+              class: "btn btn-primary pull-right",
+              title: "Refresh name path.",
+              remote: true,
+              method: :post,
+              tabindex: increment_tab_index)
+   %>
+
+ <br>
+ <br>
+ <span id="name-path-to-refresh"><%= @name.name_path %></span>

@@ -27,7 +27,7 @@ class InstancesCreateCitedByWNameTextMatching1Test < ActionController::TestCase
     @request.headers["Accept"] = "application/javascript"
   end
 
-  test "should be able to create unpub citation" do
+  test "create unpub citation typeahead exact match" do
     assert_difference("Instance.count") do
       post(:create_cited_by,
            { instance: { "name_typeahead" => "argyle apple",

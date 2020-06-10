@@ -75,7 +75,7 @@ module NameNamable
     self.simple_name = names_json["result"]["simpleName"]
     self.simple_name_html = names_json["result"]["simpleMarkedUpName"]
     self.sort_name = names_json["result"]["sortName"]
-    save!
+    save!(touch: false)
   rescue => e
     logger.error("set_names! exception: #{e}")
     raise

@@ -42,6 +42,12 @@ class Name::AsEdited < Name::AsTypeahead
     end
   end
 
+  def build_hybrid_name_element
+    if name_category.scientific_hybrid_formula?
+      self.name_element = "#{self.parent.name_element} #{self.name_type.connector} #{self.second_parent.name_element}"
+    end
+  end
+
   def self.create_name_path(name)
     path = ""
     path = name.parent.name_path if name.parent
@@ -53,6 +59,8 @@ class Name::AsEdited < Name::AsTypeahead
     params["verbatim_rank"] = nil if params["verbatim_rank"] == ""
     assign_attributes(params)
     resolve_typeahead_params(typeahead_params)
+    build_hybrid_name_element
+    build_name_path
     save_updates_if_changed(username)
   end
 

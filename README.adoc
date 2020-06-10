@@ -1,12 +1,9 @@
 = README
-:imagesdir: resources/images/
 :toc: left
 :toclevels: 4
 :toc-class: toc2
 :icons: font
 :iconfont-cdn: //cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css
-:stylesdir: resources/style/
-:stylesheet: asciidoctor.css
 :description: Editor Readme
 :keywords: documentation, NSL, editor
 :links:
@@ -174,7 +171,7 @@ The following will build a docker image from the war file and expose it on port 
     -v $HOME/.nsl:/etc/nsl:ro
     --env EDITOR_CONFIG_FILE=/etc/nsl/editor-config.rb
     --env EDITOR_CONFIGDB_FILE=/etc/nsl/editor-database.yml
-    --env SECRET_KEY_BASE=7ae05570f6be2b9746464db89555b0cb2f4e499307a021774f011a0c686ecc057b8f3e55921d4410e2988358f138342cd325d1c289856e686281cb3af94b495b
+    --env SECRET_KEY_BASE=A-random-key-generated-by-a-rake-task-that-is-very-very-very-long
     nsl-editor
 
 The `dockerize.sh` will build tag and push the docker image to dockerhub, but currently uses my personal dockerhub account.

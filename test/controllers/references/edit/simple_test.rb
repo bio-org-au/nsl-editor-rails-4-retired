@@ -70,7 +70,6 @@ class ReferencesesUpdateSimpleTest < ActionController::TestCase
                           "author_id" => authors(:dash),
                           "author_typeahead" => "-",
                           "published" => true,
-                          "parent_typeahead" => @parent_typeahead,
                           "ref_author_role_id" => ref_author_roles(:author) } },
            username: "fred",
            user_full_name: "Fred Jones",

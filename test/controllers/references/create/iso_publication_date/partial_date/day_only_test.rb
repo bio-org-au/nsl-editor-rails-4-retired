@@ -22,45 +22,6 @@ require "test_helper"
 class ReferencesesCreateDayOnlyTest < ActionController::TestCase
   tests ReferencesController
 
-  setup do
-    stub_it
-  end
-
-  def host
-    "localhost:9090"
-  end
-
-  def path
-    "nsl/services/rest/reference/apni"
-  end
-
-  def encoding
-    "gzip;q=1.0,deflate;q=0.6,identity;q=0.3"
-  end
-
-  def body
-    %({"action":"citation-strings",\
-       "reference":{"class": "au.org.biodiversity.nsl.Reference", \
-                    "_links":{"permalink":{"link":"junk", \
-                                           "preferred":true, \
-                                           "resources":1}}, \
-                              "citation":"the citation", \
-                              "citationHtml":"the html citation", \
-                              "citationAuthYear":"blah blah"}, \
-                    "result":{"citationHtml":"the html citation",\
-                              "citation":"the citation"}})
-  end
-
-  def stub_it
-    stub_request(:get, %r{http://#{host}/#{path}/\d+/api/citation-strings})
-      .with(
-        headers: { "Accept" => "*/*",
-                   "Accept-Encoding" => encoding,
-                   "User-Agent" => "Ruby" }
-      )
-      .to_return(status: 200, body: body, headers: {})
-  end
-
   test "create reference day only" do
     @request.headers["Accept"] = "application/javascript"
     assert_no_difference("Reference.count") do
@@ -70,7 +31,6 @@ class ReferencesesCreateDayOnlyTest < ActionController::TestCase
                           "author_id" => authors(:dash),
                           "author_typeahead" => "-",
                           "published" => true,
-                          "parent_typeahead" => @parent_typeahead,
                           "ref_author_role_id" => ref_author_roles(:author),
                           "day" => "03" } },
            username: "fred",

@@ -15,4 +15,13 @@
 <%= render partial: 'names/details/apc_tree' %>
 <%= render partial: "names/details/comments" %>
 <%= divider %>
+Name path (used for sorting):<br>
+<%= @name.name_path %>
+<%= divider %>
+<%= @name.name_element %>
+<span class="pull-right">Name element</span>
+<br>
+<%= @name.sort_name %>
+<span class="pull-right">Sort name</span>
+<%= divider %>
 <%= render partial: "names/details/meta" %>

@@ -70,7 +70,6 @@ class ReferencesesUpdateValidFullDateTest < ActionController::TestCase
                           "author_id" => authors(:dash),
                           "author_typeahead" => "-",
                           "published" => true,
-                          "parent_typeahead" => @parent_typeahead,
                           "ref_author_role_id" => ref_author_roles(:author),
                           "year" => "1999",
                           "month" => "3",
