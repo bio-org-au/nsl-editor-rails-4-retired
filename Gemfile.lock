@@ -167,7 +167,7 @@ GEM
     mocha (1.1.0)
       metaclass (~> 0.0.1)
     multi_json (1.14.1)
-    net-ldap (0.16.1)
+    net-ldap (0.16.2)
     netrc (0.11.0)
     nio4r (2.5.2)
     nio4r (2.5.2-java)
@@ -327,7 +327,7 @@ DEPENDENCIES
   minitest-rails
   minitest-reporters
   mocha (~> 1.1.0)
-  net-ldap (~> 0.16.0)
+  net-ldap (~> 0.16.2)
   pg (~> 0.21)
   pg_search
   pry-rails
